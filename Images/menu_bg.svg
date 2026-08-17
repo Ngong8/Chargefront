@@ -1,0 +1,102 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" preserveAspectRatio="xMidYMid slice">
+  <defs>
+    <radialGradient id="bg" cx="50%" cy="38%" r="80%">
+      <stop offset="0%" stop-color="#1b0e30"/>
+      <stop offset="55%" stop-color="#0d0618"/>
+      <stop offset="100%" stop-color="#06030c"/>
+    </radialGradient>
+    <radialGradient id="vialGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#63ffd6" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#63ffd6" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="helixGlow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#ff5ce1" stop-opacity="0.6"/>
+      <stop offset="100%" stop-color="#ff5ce1" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="glass" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7ee7ff" stop-opacity="0.18"/>
+      <stop offset="50%" stop-color="#bff5ff" stop-opacity="0.04"/>
+      <stop offset="100%" stop-color="#7ee7ff" stop-opacity="0.26"/>
+    </linearGradient>
+    <linearGradient id="cap" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#2c2546"/>
+      <stop offset="100%" stop-color="#151124"/>
+    </linearGradient>
+    <filter id="soft" x="-60%" y="-60%" width="220%" height="220%">
+      <feGaussianBlur stdDeviation="18"/>
+    </filter>
+  </defs>
+
+  <!-- base -->
+  <rect width="1600" height="900" fill="url(#bg)"/>
+
+  <!-- faint particles -->
+  <g fill="#a97cff">
+    <circle cx="120" cy="180" r="2" opacity="0.5"/>
+    <circle cx="300" cy="90" r="1.5" opacity="0.4"/>
+    <circle cx="520" cy="230" r="2" opacity="0.35"/>
+    <circle cx="700" cy="120" r="1.5" opacity="0.45"/>
+    <circle cx="880" cy="300" r="2" opacity="0.3"/>
+    <circle cx="1400" cy="160" r="2" opacity="0.4"/>
+    <circle cx="1500" cy="520" r="1.5" opacity="0.35"/>
+    <circle cx="260" cy="620" r="2" opacity="0.3"/>
+    <circle cx="420" cy="760" r="1.5" opacity="0.4"/>
+    <circle cx="900" cy="780" r="2" opacity="0.3"/>
+    <circle cx="1320" cy="780" r="2" opacity="0.35"/>
+  </g>
+
+  <!-- abandoned facility silhouettes (left side) -->
+  <g fill="#0b0614">
+    <rect x="0" y="660" width="240" height="240"/>
+    <rect x="190" y="580" width="210" height="320"/>
+    <rect x="360" y="700" width="180" height="200"/>
+    <rect x="0" y="500" width="140" height="400"/>
+  </g>
+  <g stroke="#4fe0ff" stroke-width="3" opacity="0.35" fill="none">
+    <line x1="240" y1="660" x2="240" y2="900"/>
+    <line x1="190" y1="580" x2="190" y2="900"/>
+    <line x1="400" y1="580" x2="400" y2="900"/>
+  </g>
+  <g fill="#3b2354" opacity="0.7">
+    <rect x="36" y="552" width="10" height="26"/>
+    <rect x="36" y="612" width="10" height="26"/>
+    <rect x="228" y="632" width="10" height="26"/>
+  </g>
+
+  <!-- glass vial + floating DNA pendrive (right side) -->
+  <g>
+    <!-- ground glow -->
+    <ellipse cx="1150" cy="730" rx="420" ry="70" fill="url(#vialGlow)" filter="url(#soft)"/>
+
+    <!-- vial body -->
+    <rect x="1030" y="200" width="240" height="540" rx="72" fill="url(#glass)" stroke="#4fe0ff" stroke-opacity="0.6" stroke-width="4"/>
+    <!-- inner liquid sheen -->
+    <rect x="1058" y="250" width="34" height="420" rx="17" fill="#ffffff" opacity="0.14"/>
+    <rect x="1230" y="270" width="12" height="360" rx="6" fill="#ffffff" opacity="0.08"/>
+    <!-- vial cap -->
+    <rect x="1076" y="150" width="148" height="62" rx="14" fill="url(#cap)" stroke="#4fe0ff" stroke-opacity="0.5" stroke-width="3"/>
+
+    <!-- floating DNA pendrive -->
+    <g transform="translate(1150 470) rotate(-9)">
+      <circle cx="-40" cy="0" r="90" fill="url(#helixGlow)" filter="url(#soft)"/>
+      <!-- usb body -->
+      <rect x="-85" y="-40" width="180" height="80" rx="12" fill="#151722" stroke="#4fe0ff" stroke-width="2.5"/>
+      <!-- connector -->
+      <rect x="85" y="-28" width="54" height="56" rx="7" fill="#c8d2ff"/>
+      <rect x="133" y="-24" width="12" height="48" fill="#f5f8ff"/>
+      <!-- circuit traces -->
+      <path d="M-60 -14 H18 M-60 14 H6" stroke="#63ffd6" stroke-width="2" fill="none" opacity="0.85"/>
+      <!-- glowing double helix core -->
+      <g stroke="#ff5ce1" stroke-width="6" fill="none" stroke-linecap="round" opacity="0.95">
+        <path d="M-40 -58 C -8 0, -8 0, -40 58"/>
+        <path d="M-40 -58 C -72 0, -72 0, -40 58"/>
+      </g>
+      <g stroke="#63ffd6" stroke-width="3" opacity="0.9">
+        <path d="M-34 -40 H-10 M-32 -20 H-10 M-32 0 H-10 M-32 20 H-10 M-34 40 H-10"/>
+      </g>
+    </g>
+  </g>
+
+  <!-- foreground haze -->
+  <rect x="0" y="820" width="1600" height="80" fill="#06030c" opacity="0.6"/>
+</svg>

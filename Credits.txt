@@ -1,0 +1,46 @@
+CHARGE FRONT
+============
+First-person tactical shooter — recover a lost clone-DNA vial-pendrive from an
+abandoned facility on a purple-spotted infested planet. Advance a 4-man squad,
+power 3 relays (each power-up draws the horde — hold the ground), then extract.
+
+Built with:
+  - LittleJS (MIT) — tiny HTML5 game engine by Frank Force
+    https://github.com/KilledByAPixel/LittleJS
+  - Three.js (MIT) — 3D library
+    https://github.com/mrdoob/three.js
+
+Music (from OpenGameArt, composed by Tsorthan Grove):
+  - "Corrupt Data Stream"  — horde defenses / combat
+    https://opengameart.org/content/corrupt-data-stream
+  - "Streets After Midnight" â€” relay power-up defenses
+    https://opengameart.org/content/streets-after-midnight
+  - "Safe Space"           — landing, travel, calm sections
+    https://opengameart.org/content/safe-space-0
+  - "Dreams of a Silver Tower" — abandoned facility / final extraction
+    https://opengameart.org/content/dreams-of-a-silver-tower
+
+Font:
+  - Glitch Slap, from https://www.dafont.com/glitch-slap.font
+    used for the title and HUD headings
+
+Sound effects:
+  - Extracted from Soundly (https://soundly.com) — shipped in the SFX/ folder:
+      * LaserGun0-3.wav, LaserGunSparks0-1.wav  (player/squad laser + impact sparks)
+      * LaserGunReload0-2.wav, LaserGunEmpty.wav (weapon reload / dry fire)
+      * UnitHit0-2.wav, UnitArmorHit.wav         (player hurt / squad armor hit)
+      * AlienCreatureDead0-1.wav                 (enemy death)
+      * AlienCreatureNormal0-1.wav, AlienCreatureRoar.wav (creature aggro / boss roar)
+      * Unburrow0-1.wav                          (creature emerging from the ground)
+      * FootstepPebble0-4.wav, FootstepMetal0-4.wav (footsteps — wastes vs. facility)
+      * GrenadeExplosion.wav                     (grenade blast)
+      * AccessValid.wav, AccessInvalid.wav       (crafting / UI confirm & deny)
+      * DroneHit0-2.wav                          (facility security drone hits)
+      * SpaceshipLandingLoop.wav, SpaceshipLanded.wav (intro landing cutscene)
+    Originals (24-bit) are kept in SFX/original/; the playable copies are 16-bit.
+  - Remaining game sounds (screech, spit, relay hum/power, pickup blip, jump,
+    throw, revive, command, vial, ambient wind) are synthesized in-browser via
+    LittleJS's bundled ZzFX generator.
+
+Open chargefront.html in a browser to play.
+Tip: open with ?preview=1 for a cinematic flyover of the terrain.

@@ -131,9 +131,9 @@ import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/l
    Three.js (3D world & models) via the official LittleJS Three.js plugin.
 
    Mission:  recover a lost clone-DNA vial-pendrive from an abandoned facility
-             on a purple-spotted infested planet. Advance a 4-man squad,
-             power 3 relays (each power-up draws the horde — hold the ground),
-             then extract the vial.
+             on a purple-spotted infested planet. Advance a 4-man squad
+             (you + ROOK / VEX / KADE), power 3 relays (each power-up draws
+             the horde — hold the ground), then extract the vial.
 
    Music:    "Corrupt Data Stream" / "Safe Space" / "Dreams of a Silver Tower"
              by Tsorthan Grove (opengameart.org) — see Credits.txt
@@ -4598,7 +4598,14 @@ if (document.fonts && document.fonts.load) {
 }
 const HFONT = () => (fontReady ? 'Glitch Slap' : 'Arial');
 
-function gameRender() { }
+let coverPose = null;   // debug: cover-art camera pose (set via __cf.setCoverPose) — [px,py,pz,tx,ty,tz]
+function gameRender() {
+    /* debug: freeze a cinematic camera pose for cover-art / playtest shots */
+    if (coverPose) {
+        camera.position.set(coverPose[0], coverPose[1], coverPose[2]);
+        camera.lookAt(coverPose[3], coverPose[4], coverPose[5]);
+    }
+}
 
 function gameRenderPost() {
     const W = LJS.mainCanvasSize.x, H = LJS.mainCanvasSize.y;
@@ -5500,6 +5507,12 @@ window.__cf = {
         }
         return null;
     },
+    /* cover-art / screenshot staging hooks */
+    get renderer() { return threeJS.renderer; },
+    render() { if (threeJS && threeJS.renderer) threeJS.renderer.render(scene, camera); },
+    pause(on) { LJS.setPaused(!!on); },
+    setCoverPose(p) { coverPose = p ? [p[0], p[1], p[2], p[3], p[4], p[5]] : null; },
+    hideViewmodel(on) { viewModel.visible = !on; },
 };
 </script>
 </body>

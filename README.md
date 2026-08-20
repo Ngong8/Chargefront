@@ -1,7 +1,3 @@
-<p align="center">
-  <img src="screenshots/cover_hero.png" alt="CHARGE FRONT" width="720"/>
-</p>
-
 # CHARGE FRONT
 
 **First-person tactical shooter.** Land on a purple-spotted alien world, command your squad into an abandoned bio-research facility, and recover a lost clone-DNA vial before the horde overwhelms you.
@@ -35,15 +31,6 @@ Your dropship sets down on a hostile frontier. The mission:
 5. **Extract** with the vial at the landing zone.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
-
----
-
-## 📸 Screenshots
-
-| | |
-|---|---|
-| ![Wasteland](screenshots/screenshot_wasteland.png) | ![Relay](screenshots/screenshot_relay.png) |
-| ![Facility](screenshots/screenshot_facility.png) | ![Vault](screenshots/screenshot_vault.png) |
 
 ---
 

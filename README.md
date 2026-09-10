@@ -1,6 +1,6 @@
 # CHARGE FRONT
 
-**First-person tactical shooter.** Land on a purple-spotted alien world, command your squad into an abandoned bio-research facility, and recover a lost clone-DNA vial before the horde overwhelms you.
+**First-person tactical shooter.** Land on a purple-spotted alien world, restore an abandoned bio-research facility with your squad, recover its lost clone-DNA vial, and fight to extract before the horde overwhelms you.
 
 > Recover the sample · Restore the relays · Survive the horde.
 
@@ -22,13 +22,14 @@ open chargefront.html
 
 ## 🎮 Gameplay
 
-Your dropship sets down on a hostile frontier. The mission:
+Four independently replayable operations share one hostile frontier while using distinct deployment points, routes, objectives, and combat rhythms:
 
-1. **Infiltrate** the abandoned bio-research facility.
-2. **Power three external relays** — ALPHA, BETA, GAMMA — to unlock the main vault.
-3. **Caution:** activating a relay emits a high-energy signature that **draws nearby creatures** to your position. Power it up, then hold the ground.
-4. **Recover the clone-DNA sample** from the vault.
-5. **Extract** with the vial at the landing zone.
+1. **Dead Signal** — land at the old LZ, follow the abandoned facility road, recover the Emergency Maintenance Battery, restore local power, and discover why the clone-DNA sample remains sealed inside the bio-lab. An optional Auxiliary Field Cell can power either tactical sensors or a field-gear locker.
+2. **Power Through** — deploy from the facility staging yard, traverse the lowland Alpha yard, elevated Beta ridge, and contaminated Gamma crater, survive distinct enemy responses, and reopen laboratory access. A service-dock Survey Drone provides an optional forward escort and tactical scan without blocking relay progress.
+3. **Sample Zero** — breach the reopened laboratory, bypass corrupted containment security, retrieve the DNA sample, and protect its portable containment sync. An optional security-turret restoration provides automated support and local hostile intel.
+4. **Break Contact** — continue seamlessly from Sample Zero or deploy from Mission Select with the sample already secured, escape through the east maintenance breach, request extraction, hold the restoration LZ for two minutes, and board the transport.
+
+Use **Select Mission** to replay any unlocked mission directly. **Endless Horde** remains a separate mode with randomized arenas, mutator contracts, DNA progression, and six-wave extraction milestones.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
 
@@ -47,8 +48,10 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 | `SHIFT` | Sprint (uses stamina) |
 | `SPACE` | Jump |
 | `R` | Reload (consumes 1 cartridge) |
-| `E` | Interact — hold to power relays, revive squadmates, take the vial |
+| `E` | Interact — hold to use consoles, power relays, revive squadmates, secure the sample, and board extraction |
 | `G` | Throw an **ESG-180** grenade |
+| `Q` | Cycle weapon — rifle / scattergun / ARC / plasma HE |
+| `F` | Use SURGE PULSE |
 | `M` | Cycle sound mode — music / highlights / all sounds |
 
 ### Squad
@@ -56,6 +59,9 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 | Key | Action |
 |---|---|
 | `1 / 2 / 3` | Squad command — ASSIST / SPREAD / HOLD |
+| `Z / X / Y` | Use ROOK / VEX / KADE squad abilities |
+| `N` | Choose the next Endless mutator contract at the relay |
+| `K` | Extract from Endless after a six-wave milestone |
 | `T` | Give a spare cartridge to the neediest squadmate |
 | `T` (aiming) | Give a cartridge to the squadmate under your crosshair (within 5 m) |
 | `H` (aiming) | Use a medkit on the hurt squadmate under your crosshair (within 5 m) |

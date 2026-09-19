@@ -221,15 +221,21 @@ const CAMPAIGN_MISSIONS = [
     },
 ];
 const CAMPAIGN_MISSION_BY_ID = Object.fromEntries(CAMPAIGN_MISSIONS.map((mission) => [mission.id, mission]));
+const CAMPAIGN_RUN_ORIGIN = Object.freeze({
+    NEW_CAMPAIGN: 'new_campaign',
+    CONTINUE_CAMPAIGN: 'continue_campaign',
+    MISSION_SELECT: 'mission_select',
+});
 function defaultCampaignProfile() {
     const missions = {};
     for (const mission of CAMPAIGN_MISSIONS) missions[mission.id] = { unlocked: !!mission.unlockedByDefault, completed: false, checkpoint: mission.checkpoint, bestOptional: 0 };
-    return { version: 3, campaignComplete: false, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
+    return { version: 3, campaignStarted: false, campaignComplete: false, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
 }
 function loadCampaignProfile() {
     const profile = defaultCampaignProfile();
     try {
         const saved = JSON.parse(localStorage[CAMPAIGN_SAVE_KEY] || '{}');
+        profile.campaignStarted = !!saved.campaignStarted || !!saved.campaignComplete || CAMPAIGN_MISSIONS.some((mission) => !!(saved.missions && saved.missions[mission.id] && saved.missions[mission.id].completed));
         profile.campaignComplete = !!saved.campaignComplete;
         profile.lastMission = CAMPAIGN_MISSION_BY_ID[saved.lastMission] ? saved.lastMission : profile.lastMission;
         if (saved.operation && CAMPAIGN_MISSION_BY_ID[saved.operation.worldSnapshot]) {
@@ -270,7 +276,8 @@ function saveCampaignProfile() { try { localStorage[CAMPAIGN_SAVE_KEY] = JSON.st
 function resetCampaignProfile() { campaignProfile = defaultCampaignProfile(); saveCampaignProfile(); }
 function campaignMission(id = activeMissionId) { return CAMPAIGN_MISSION_BY_ID[id] || CAMPAIGN_MISSIONS[0]; }
 let activeMissionId = 'dead_signal';
-let campaignLaunchSource = 'campaign';
+let campaignRunOrigin = CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN;
+function isPersistentCampaignRun() { return campaignRunOrigin !== CAMPAIGN_RUN_ORIGIN.MISSION_SELECT; }
 let campaignWorldBuilt = false;
 let campaignRun = { mainIndex: 0, optional: {}, worldState: {}, enemyIntel: false, completion: null };
 
@@ -2889,7 +2896,8 @@ let damageFlashT = 0, hitMarkerT = 0, wildAlertT = 0;
 let gameplayFade = 0;   // fade-in from black when gameplay begins (after the intro)
 let squadCommand = 'assist';   // assist | spread | hold
 let heldInteract = 0;
-let missionTransition = null;
+let chapterDialogue = null;
+let campaignCheckpointT = 0;
 const craft = { scraps: 0, powerCells: 0, medkits: 3 };   // start at the carried-medkit cap, NO scrap/cells
 const campaignContent = {
     scan: null, scanT: 0, scanThreatTriggered: false, scanned: false,
@@ -3524,11 +3532,12 @@ function resetEndlessRun() {
     kills = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     player.dead = false;
     player.maxHp = 100; player.hp = 100; player.maxShield = 100; player.shield = 100; player.stamina = 100;
+    player.shieldDelayT = 0; player.hpDelayT = 0;
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
     player.weaponStates = {}; player.weaponIndex = 0; player.weapon = weaponTemplate('rifle'); setViewmodelWeapon(player.weapon);
-    player.fireT = 0; player.swapT = 0; player.holsterT = 0; player.sprintBlend = 0; player.adsBlend = 0;
+    player.fireT = 0; player.swapT = 0; player.holsterT = 0; player.pendingWeapon = null; player.pendingWeaponIndex = -1; player.grenadeCd = 0; player.sprintBlend = 0; player.adsBlend = 0;
     player.swayX = 0; player.swayY = 0; player.swayRoll = 0; player.swayPosX = 0; player.swayPosY = 0;
     player.moveAmount = 0; player.moveBlend = 0; player.moveBobX = 0; player.moveBobY = 0; player.moveBobVX = 0; player.moveBobVY = 0;
     player.viewmodelState = 'IDLE'; player.reloadPhase = 'COMPLETE';
@@ -3579,7 +3588,7 @@ function startEndless() {
     if (menuBackdrop) menuBackdrop.group.visible = false;
     beginEndless();
 }
-function beginEndless() {
+function beginEndless(waitForLockGesture = true) {
     const startEl = document.getElementById('start-screen');
     if (startEl) startEl.classList.add('hidden');
     ensureSfxCtx();
@@ -3594,7 +3603,7 @@ function beginEndless() {
     viewModel.visible = true;
     notify('ENDLESS RUN — ' + endlessRun.arena.name + '. Survive contracts, bank DNA.', '#d6a6ff');
     notify('Hold E at the relay to start wave 1', '#d6a6ff');
-    lockOnNextGesture();
+    if (waitForLockGesture) lockOnNextGesture();
 }
 /* ── endless HUD extras ── */
 function drawEndlessMarkers(W, H) {
@@ -5080,7 +5089,7 @@ function noteAttacker(x, y, kind) {
 }
 
 function playerTakeDamage(dmg, fromEnemy) {
-    if (player.dead || missionTransition || phase === P.M4_DEPART) return;
+    if (player.dead || phase === P.M4_DEPART) return;
     if (player.debugImmortal) { player.hp = player.maxHp; player.shield = player.maxShield; return; }
     dmg *= (player.dmgTakenMult || 1);                                     // THICK SKIN (DNA ladder)
     if (mode === 'endless' && endlessRun.shieldArrayT > 0) dmg *= 0.5;     // SHIELD ARRAY (relay)
@@ -6060,7 +6069,7 @@ class SquadMember extends LJS.ThreeJSObject {
         squadMembers.push(this);
     }
     takeDamage(dmg) {
-        if (this.downed || missionTransition || phase === P.M4_DEPART) return;
+        if (this.downed || phase === P.M4_DEPART) return;
         dmg *= (this.dmgTakenMult || 1);                                   // THICK SKIN (DNA ladder)
         if (this.bulwarkT > 0) dmg *= 0.45;
         if (mode === 'endless' && endlessRun.shieldArrayT > 0) dmg *= 0.5; // SHIELD ARRAY (relay)
@@ -7242,6 +7251,8 @@ const STAGING_SHIP = LJS.vec2(FACILITY_STAGING.x, FACILITY_STAGING.y - 20);
 let intro = null;
 let introSfxEl = null;
 let introSkipFn = null;   // active during the cutscene — any key/click skips to gameplay
+let pointerLockGestureFn = null;
+let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
     mode = 'campaign';
@@ -7249,7 +7260,7 @@ function resetCampaignRun() {
     kills = 0; cacheFound = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     craft.scraps = 0; craft.powerCells = 0; craft.medkits = snapshot.combat.medkits;
     bossSpawned = false; finaleT = 0; finaleDroneWaveT = 0; activeRelay = null; deployT = 0; doneT = 0;
-    missionTransition = null;
+    chapterDialogue = null; campaignCheckpointT = 0;
     removeCampaignShip();
     clearExtractionInfestationDefenders();
     const startPos = snapshot.start, startTarget = snapshot.target;
@@ -7343,27 +7354,36 @@ function applyCampaignWorldSnapshot() {
     else ensureCampaignShipLanded(snapshot.spacecraftState);
 }
 function initializeCampaignMission() {
-    const entryMode = campaignLaunchSource === 'replay' ? 'standalone' : activeMissionId === 'dead_signal' ? 'campaign_start' : 'campaign_resume';
+    const entryMode = campaignRunOrigin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT ? 'standalone'
+        : campaignRunOrigin === CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN ? 'campaign_start' : 'campaign_resume';
     campaignRun = makeCampaignRun(entryMode);
     applyCampaignWorldSnapshot();
-    campaignProfile.lastMission = activeMissionId;
-    campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: campaignSnapshot().spacecraftState };
-    saveCampaignProfile();
+    if (isPersistentCampaignRun()) {
+        campaignProfile.campaignStarted = true;
+        campaignProfile.lastMission = activeMissionId;
+        campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: campaignSnapshot().spacecraftState, continuedState: null };
+        saveCampaignProfile();
+    }
 }
-function startCampaignMission(missionId, launchSource = 'campaign', newCampaign = false, continuedState = null) {
+function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign = false, continuedState = null) {
     if (newCampaign) resetCampaignProfile();
     const mission = CAMPAIGN_MISSION_BY_ID[missionId];
     if (!mission) return false;
     const state = campaignProfile.missions[mission.id];
     if (!mission.implemented || !state || !state.unlocked) return false;
-    const savedContinuation = continuedState || (launchSource === 'campaign' && missionId === 'break_contact' && campaignProfile.operation.worldSnapshot === missionId ? campaignProfile.operation.continuedState : null);
+    const savedContinuation = continuedState || (origin === CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN && campaignProfile.operation.worldSnapshot === missionId ? campaignProfile.operation.continuedState : null);
     activeMissionId = mission.id;
-    campaignLaunchSource = launchSource;
+    campaignRunOrigin = origin;
     resetCampaignRun();
     if (!campaignWorldBuilt) buildCampaignWorld();
     initializeCampaignMission();
-    startIntro();
-    if (savedContinuation) applyContinuedMission4Snapshot(savedContinuation);
+    if (savedContinuation) {
+        if (missionId === 'break_contact') applyContinuedMission4Snapshot(savedContinuation);
+        else applyCampaignCheckpointSnapshot(savedContinuation);
+    } else if (isPersistentCampaignRun()) checkpointCampaignState();
+    const playsIntro = activeMissionId === 'dead_signal' && campaignRunOrigin !== CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN;
+    if (playsIntro) startIntro();
+    else beginGameplay();
     return true;
 }
 function playIntroSfx(src, loop, vol) {
@@ -7411,16 +7431,9 @@ function startIntro() {
     LJS.setInputPreventDefault(true);
     /* any key/click skips the cutscene (listeners removed in endIntro) */
     if (!introSkipFn) {
-        introSkipFn = (e) => { if (intro) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(); } };
-        /* The START GAME click is still bubbling when this function runs.  Adding
-           the window pointer handler synchronously made that same click skip the
-           entire intro immediately.  Register after the current event finishes. */
-        setTimeout(() => {
-            if (intro && introSkipFn) {
-                window.addEventListener('keydown', introSkipFn);
-                window.addEventListener('pointerdown', introSkipFn);
-            }
-        }, 0);
+        introSkipFn = (e) => { if (intro) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(true); } };
+        window.addEventListener('keydown', introSkipFn);
+        window.addEventListener('pointerdown', introSkipFn);
     }
 }
 function updateIntro(dt) {
@@ -7536,7 +7549,7 @@ function introShotCam(lt, ship, profile = 'landing', shotTimes = SHOT_TIMES) {
     const sinceCut = lt - shotTimes[si];
     return { p, t, inside, cutFade: clamp(1 - sinceCut / 0.22, 0, 1) * 0.48 };
 }
-function endIntro() {
+function endIntro(lockImmediately = false) {
     stopIntroSfx();
     if (intro && intro.ship) {
         ship.group = intro.ship;
@@ -7555,10 +7568,10 @@ function endIntro() {
     }
     intro = null;
     viewModel.visible = true;
-    beginGameplay();
+    beginGameplay(lockImmediately);
 }
 /* hand the player control (called at the end of the intro cutscene) */
-function beginGameplay() {
+function beginGameplay(lockImmediately = false) {
     const startEl = document.getElementById('start-screen');
     if (startEl) startEl.classList.add('hidden');
     ensureSfxCtx();                       // also a user gesture → start the SFX context now
@@ -7578,20 +7591,29 @@ function beginGameplay() {
             : activeMissionId === 'sample_zero' ? 'Bio-lab access confirmed — breach from command'
                 : 'DNA sample secured — use the east maintenance breach';
     notify(opening, '#d6a6ff');
-    /* pointer lock must happen inside a user gesture — the intro ended from the game
-       loop (not a click), so grab the lock on the next pointer/keydown instead */
-    lockOnNextGesture();
+    if (lockImmediately) {
+        focusGameCanvas();
+        requestLock();
+        clearPointerLockGesture();
+        if (!LJS.pointerLockIsActive()) lockOnNextGesture();
+    } else lockOnNextGesture();
 }
 /* request pointer lock on the next user gesture (the cutscene ends without one) */
+function clearPointerLockGesture() {
+    if (!pointerLockGestureFn) return;
+    window.removeEventListener('pointerdown', pointerLockGestureFn);
+    window.removeEventListener('keydown', pointerLockGestureFn);
+    pointerLockGestureFn = null;
+}
 function lockOnNextGesture() {
     if (LJS.pointerLockIsActive && LJS.pointerLockIsActive()) return;
-    const tryLock = () => {
+    clearPointerLockGesture();
+    pointerLockGestureFn = () => {
         requestLock();
-        window.removeEventListener('pointerdown', tryLock);
-        window.removeEventListener('keydown', tryLock);
+        clearPointerLockGesture();
     };
-    window.addEventListener('pointerdown', tryLock);
-    window.addEventListener('keydown', tryLock);
+    window.addEventListener('pointerdown', pointerLockGestureFn);
+    window.addEventListener('keydown', pointerLockGestureFn);
 }
 /* wrap long briefing lines so they fit the subtitle box (max 3 short lines) */
 let introMeasureCtx = null;
@@ -7849,58 +7871,98 @@ function startMission3Stabilization() {
     setFinalMissionWorldState();
     playSnd(sfx.vial, 0.95); playFileSfx('accessOk', 0.75); music.play('combat', 0.9);
     notify('DNA SAMPLE SECURED — portable containment sync 34 seconds', '#66ffcc');
-    setTimeout(() => notify('ANALYSIS: sample signatures overlap the altered local biosphere', '#ffbbdd'), 2100);
+    clearTimeout(missionAnalysisTimer);
+    missionAnalysisTimer = setTimeout(() => {
+        missionAnalysisTimer = 0;
+        notify('ANALYSIS: sample signatures overlap the altered local biosphere', '#ffbbdd');
+    }, 2100);
 }
 
 function recordCampaignMissionCompletion(mission = campaignMission()) {
-    const state = campaignProfile.missions[mission.id];
     const optionalCount = completedOptionalCount();
-    state.completed = true; state.checkpoint = mission.checkpoint; state.bestOptional = Math.max(state.bestOptional, optionalCount);
     let nextUnlocked = false;
-    if (mission.nextMission && campaignProfile.missions[mission.nextMission]) {
-        nextUnlocked = !campaignProfile.missions[mission.nextMission].unlocked;
-        campaignProfile.missions[mission.nextMission].unlocked = true;
-        campaignProfile.lastMission = mission.nextMission;
-        campaignProfile.operation = { worldSnapshot: mission.nextMission, spacecraftState: campaignSnapshot(mission.nextMission).spacecraftState };
-    } else {
-        campaignProfile.campaignComplete = true; campaignProfile.lastMission = mission.id;
-        for (const entry of CAMPAIGN_MISSIONS) campaignProfile.missions[entry.id].unlocked = true;
-        campaignProfile.operation = { worldSnapshot: mission.id, spacecraftState: ship.campaignState };
+    if (isPersistentCampaignRun()) {
+        const state = campaignProfile.missions[mission.id];
+        state.completed = true; state.checkpoint = mission.checkpoint; state.bestOptional = Math.max(state.bestOptional, optionalCount);
+        if (mission.nextMission && campaignProfile.missions[mission.nextMission]) {
+            nextUnlocked = !campaignProfile.missions[mission.nextMission].unlocked;
+            campaignProfile.missions[mission.nextMission].unlocked = true;
+            campaignProfile.lastMission = mission.nextMission;
+            campaignProfile.operation = { worldSnapshot: mission.nextMission, spacecraftState: campaignSnapshot(mission.nextMission).spacecraftState, continuedState: null };
+        } else {
+            campaignProfile.campaignComplete = true; campaignProfile.lastMission = mission.id;
+            for (const entry of CAMPAIGN_MISSIONS) campaignProfile.missions[entry.id].unlocked = true;
+            campaignProfile.operation = { worldSnapshot: mission.id, spacecraftState: ship.campaignState, continuedState: null };
+        }
+        saveCampaignProfile();
     }
-    const completion = { missionId: mission.id, nextMission: mission.nextMission, nextUnlocked, optionalCount, optionalTotal: mission.optionalObjectives.length, launchSource: campaignLaunchSource };
-    saveCampaignProfile();
+    const completion = { missionId: mission.id, nextMission: mission.nextMission, nextUnlocked, optionalCount, optionalTotal: mission.optionalObjectives.length, origin: campaignRunOrigin };
     return completion;
 }
 
+const CHAPTER_DIALOGUE = Object.freeze({
+    power_through: [
+        { speaker: 'ROOK', text: 'Auxiliary systems are holding.' },
+        { speaker: 'VEX', text: 'Relay grid is still dead. Alpha, Beta and Gamma are all offline.' },
+        { speaker: 'COMMAND', text: 'Bring the network back up. Move.' },
+    ],
+    sample_zero: [
+        { speaker: 'KADE', text: 'Relay synchronization complete.' },
+        { speaker: 'ROOK', text: 'Bio-Lab access just unlocked.' },
+        { speaker: 'COMMAND', text: 'Push inside. Find the DNA sample.' },
+    ],
+    break_contact: [
+        { speaker: 'VEX', text: 'DNA package secured.' },
+        { speaker: 'KADE', text: 'Containment alarms just went critical.' },
+        { speaker: 'ROOK', text: "That's our cue to leave." },
+        { speaker: 'COMMAND', text: 'Get back to the transport.' },
+    ],
+});
+function startChapterDialogue(missionId) {
+    const lines = CHAPTER_DIALOGUE[missionId];
+    chapterDialogue = lines ? { missionId, lines, t: 0, lineDuration: 2.7 } : null;
+}
+function updateChapterDialogue(dt) {
+    if (!chapterDialogue) return;
+    chapterDialogue.t += dt;
+    if (chapterDialogue.t >= chapterDialogue.lines.length * chapterDialogue.lineDuration) chapterDialogue = null;
+}
 function beginCampaignChapterTransition(completion) {
-    if (missionTransition || !completion || !completion.nextMission) return;
+    if (!completion || !completion.nextMission) return;
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
     campaignRun.encounter.active = false;
-    activeMissionId = toId; campaignLaunchSource = 'campaign';
+    activeMissionId = toId;
     campaignRun = makeCampaignRun('continued', { worldState: carriedTurret ? { securityTurret: true } : {}, enemyIntel: carriedTurret });
     applyCampaignWorldSnapshot();
-    missionTransition = { fromId, toId, t: 0, duration: 4.4, completion };
+    const snapshot = campaignSnapshot(toId);
+    phase = snapshot.firstPhase; campaignRun.mainIndex = snapshot.firstMainIndex;
     heldInteract = 0; interactPrompt = null; interactProgress = 0;
     missionTime = 0; kills = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0; deployT = 0;
-    campaignProfile.lastMission = toId;
-    campaignProfile.operation = { worldSnapshot: toId, spacecraftState: campaignSnapshot(toId).spacecraftState };
-    saveCampaignProfile();
-    if (toId === 'sample_zero') {
-        const bioDoor = facilityDoors.find((door) => door.id === 'bio_lab');
-        if (bioDoor) bioDoor.forceOpen = true;
-        if (campaignContent.lab) campaignContent.lab.accessDoor.forceOpen = true;
+    if (isPersistentCampaignRun()) {
+        campaignProfile.campaignStarted = true;
+        campaignProfile.lastMission = toId;
+        campaignProfile.operation = { worldSnapshot: toId, spacecraftState: snapshot.spacecraftState, continuedState: null };
+        saveCampaignProfile();
     }
     if (toId === 'break_contact') {
         sanitizeContinuedMission4State();
         checkpointMission4State();
     }
+    if (toId === 'power_through') {
+        spawnInitialFacilityDrones(2);
+        music.play('safe', 0.74); notify('MISSION 2 — POWER THROUGH: restore Alpha, Beta and Gamma', '#d6a6ff');
+    } else if (toId === 'sample_zero') {
+        spawnLaboratoryConflict(); music.play('facility', 0.8); notify('MISSION 3 — SAMPLE ZERO: enter the unlocked bio-lab', '#88ddff');
+    } else {
+        spawnMission4BreakContacts(); music.play('combat', 0.92); notify('MISSION 4 — BREAK CONTACT: use the east maintenance breach', '#ffcc66');
+    }
+    checkpointCampaignState();
+    startChapterDialogue(toId);
     playFileSfx(toId === 'break_contact' ? 'accessDeny' : 'accessOk', 0.8);
 }
 
 function beginMission4Transition() {
-    if (missionTransition) return;
-    if (campaignLaunchSource === 'replay') { completeCampaignMission(); return; }
     const completion = recordCampaignMissionCompletion(campaignMission());
     beginCampaignChapterTransition(completion);
     notify('CONTAINMENT FAILURE — immediate extraction ordered', '#ff6655');
@@ -7914,24 +7976,6 @@ function sanitizeContinuedMission4State() {
         if (member.downed || member.hp <= 0) { member.downed = false; member.hp = Math.round(member.maxHp * 0.35); member.shield = 0; member.mesh.rotation.x = 0; }
         if (member.mag <= 0 && member.reserve <= 0) member.reserve = 1;
         member.target = null; member.engageTarget = null;
-    }
-}
-
-function finishCampaignChapterTransition() {
-    const transition = missionTransition;
-    if (!transition) return;
-    const snapshot = campaignSnapshot(transition.toId);
-    const bioDoor = facilityDoors.find((door) => door.id === 'bio_lab');
-    if (bioDoor) bioDoor.forceOpen = false;
-    if (campaignContent.lab) campaignContent.lab.accessDoor.forceOpen = false;
-    phase = snapshot.firstPhase; campaignRun.mainIndex = snapshot.firstMainIndex; missionTransition = null; deployT = 0; gameplayFade = 0.3;
-    if (activeMissionId === 'power_through') {
-        spawnInitialFacilityDrones(2);
-        music.play('safe', 0.74); notify('MISSION 2 — POWER THROUGH: restore Alpha, Beta and Gamma', '#d6a6ff');
-    } else if (activeMissionId === 'sample_zero') {
-        spawnLaboratoryConflict(); music.play('facility', 0.8); notify('MISSION 3 — SAMPLE ZERO: enter the unlocked bio-lab', '#88ddff');
-    } else {
-        spawnMission4BreakContacts(); music.play('combat', 0.92); notify('MISSION 4 — BREAK CONTACT: use the east maintenance breach', '#ffcc66');
     }
 }
 
@@ -7994,18 +8038,6 @@ function updateExtractionInfestation() {
         }
     }
     if (remaining === 0) completeExtractionInfestation();
-}
-
-function updateMissionTransition(dt) {
-    missionTransition.t += dt;
-    const transition = missionTransition;
-    updateFacilityDoors(dt);
-    const focus = transition.toId === 'power_through' ? FACILITY_STAGING : transition.toId === 'sample_zero' ? LJS.vec2(360, 660) : LAB_EMERGENCY_EXIT;
-    const cameraPos = transition.toId === 'power_through' ? [390, 615, 17] : transition.toId === 'sample_zero' ? [390, 642, 5.2] : [394, 764, 5.5];
-    camera.position.set(cameraPos[0], cameraPos[1], cameraPos[2]);
-    camera.lookAt(focus.x, focus.y, terrainHeight(focus.x, focus.y) + 2.6);
-    LJS.setCameraPos(focus.copy());
-    if (transition.t >= transition.duration) finishCampaignChapterTransition();
 }
 
 function startExtractionHoldout() {
@@ -8129,22 +8161,21 @@ function gameUpdate() {
         updateIntro(dt);
         return;
     }
-    if (missionTransition) {
-        updateMissionTransition(dt);
-        return;
-    }
     if (!gameActive) {
         updateMenuBackdrop(dt);
         return;
     }
+    updateChapterDialogue(dt);
+    if (mode === 'campaign' && isPersistentCampaignRun() && phase !== P.DEAD && phase !== P.DONE) {
+        campaignCheckpointT -= dt;
+        if (campaignCheckpointT <= 0) checkpointCampaignState();
+    }
 
     if (phase === P.DEAD) {
-        if (doneT > 2 && LJS.mouseWasPressed(0)) restartCurrentRun();
         doneT += dt;
         return;
     }
     if (phase === P.DONE) {
-        if (mode === 'endless' && doneT > 3 && LJS.mouseWasPressed(0)) restartCurrentRun();
         doneT += dt;
         updateRelays(dt);
         return;
@@ -8505,10 +8536,11 @@ function completeCampaignMission() {
     if (phase === P.DONE) return;
     const mission = campaignMission();
     const completion = recordCampaignMissionCompletion(mission);
-    if (mission.nextMission && campaignLaunchSource === 'campaign') {
+    if (mission.nextMission) {
         beginCampaignChapterTransition(completion);
         return;
     }
+    chapterDialogue = null;
     campaignRun.completion = completion;
     phase = P.DONE; doneT = 0; music.play('facility', 0.8);
     LJS.pointerLockExit();
@@ -8786,30 +8818,26 @@ function gameRenderPost() {
         return;
     }
     if (intro) { drawIntro(W, H); return; }
-    if (missionTransition) { drawMissionTransition(W, H); return; }
     if (debugHideHud) return;   // playtest: clean 3D-only view
     drawHUD(W, H);
+    drawChapterDialogue(W, H);
     if (gameplayFade > 0.001) LJS.drawRect(LJS.vec2(W / 2, H / 2), LJS.vec2(W, H), LJS.rgb(0, 0, 0, gameplayFade), 0, false, true);
 }
 
-function drawMissionTransition(W, H) {
-    const transition = missionTransition;
-    if (!transition) return;
-    const t = transition.t, duration = transition.duration;
-    const alpha = smooth(clamp(t / 0.45, 0, 1)) * smooth(clamp((duration - t) / 0.5, 0, 1));
-    const from = campaignMission(transition.fromId), to = campaignMission(transition.toId);
-    const detail = transition.fromId === 'dead_signal' ? 'RELAY LOCKOUT IDENTIFIED'
-        : transition.fromId === 'power_through' ? 'BIO-LAB ACCESS RESTORED' : 'SAMPLE SECURED // CONTAINMENT FAILURE';
-    const directive = transition.toId === 'power_through' ? 'RESTORE ALPHA, BETA, GAMMA'
-        : transition.toId === 'sample_zero' ? 'SECURE THE DNA SAMPLE' : 'BREAK CONTACT // REACH EXTRACTION';
-    /* Keep the live canonical location faintly visible behind the chapter card. */
-    LJS.drawRect(LJS.vec2(W / 2, H / 2), LJS.vec2(W, H), LJS.rgb(0.01, 0.005, 0.02, 0.82 * alpha), 0, false, true);
-    hudText('MISSION ' + from.number + ' COMPLETE', LJS.vec2(W / 2, H / 2 - 72), 28, LJS.rgb(0.95, 0.88, 1, alpha), 'center');
-    hudText(from.name, LJS.vec2(W / 2, H / 2 - 38), 18, LJS.rgb(0.7, 0.84, 1, alpha), 'center');
-    hudText(detail, LJS.vec2(W / 2, H / 2 - 10), 14, LJS.rgb(0.5, 1, 0.78, alpha), 'center');
-    LJS.drawRect(LJS.vec2(W / 2, H / 2 + 9), LJS.vec2(360, 2), LJS.rgb(0.4, 0.78, 1, alpha), 0, false, true);
-    hudText('MISSION ' + to.number + ' — ' + to.name, LJS.vec2(W / 2, H / 2 + 48), 30, LJS.rgb(1, 0.72, 0.55, alpha), 'center');
-    hudText(directive, LJS.vec2(W / 2, H / 2 + 82), 16, LJS.rgb(0.75, 0.9, 1, alpha), 'center');
+function drawChapterDialogue(W, H) {
+    const dialogue = chapterDialogue;
+    if (!dialogue) return;
+    const lineIndex = Math.floor(dialogue.t / dialogue.lineDuration);
+    const line = dialogue.lines[lineIndex];
+    if (!line) return;
+    const localT = dialogue.t - lineIndex * dialogue.lineDuration;
+    const alpha = smooth(clamp(localT / 0.2, 0, 1)) * smooth(clamp((dialogue.lineDuration - localT) / 0.35, 0, 1));
+    const lines = wrapBriefing(line.text, Math.min(700, W * 0.72), 16);
+    const boxW = Math.min(760, W * 0.78), boxH = 34 + lines.length * 21;
+    const cy = H * 0.66;
+    LJS.drawRect(LJS.vec2(W / 2, cy), LJS.vec2(boxW, boxH), LJS.rgb(0.02, 0.01, 0.05, 0.48 * alpha), 0, false, true);
+    hudText(line.speaker, LJS.vec2(W / 2, cy - boxH / 2 - 11), 12, LJS.rgb(0.48, 0.82, 1, alpha), 'center');
+    for (let i = 0; i < lines.length; i++) hudText(lines[i], LJS.vec2(W / 2, cy - (lines.length - 1) * 10.5 + i * 21), 16, LJS.rgb(0.96, 0.97, 1, alpha), 'center');
 }
 
 /* heading compass — thin strip with N/E/S/W + a center heading marker */
@@ -9150,11 +9178,136 @@ function drawHUD(W, H) {
 
 /* result screen state — counts up each stat, fading them in one by one with a chime */
 let resultScreen = null;
+let resultInputHandler = null;
+let menuLaunchTimer = 0;
+let menuLaunchFade = null;
+const CAMPAIGN_CHECKPOINT_PHASES = Object.freeze({
+    dead_signal: [P.M1_MOVE_FAC, P.M1_INVESTIGATE, P.M1_RESTORE_POWER, P.M1_COMMAND],
+    power_through: [P.MOVE_R1, P.DEFEND_R1, P.MOVE_R2, P.DEFEND_R2, P.MOVE_R3, P.DEFEND_R3, P.M2_CONFIRM],
+    sample_zero: [P.M3_ENTER_LAB, P.M3_REACH_SECURITY, P.M3_OVERRIDE, P.M3_REACH_SAMPLE, P.M3_STABILIZE],
+});
+function checkpointPhaseForMission(missionId, currentPhase) {
+    const phases = CAMPAIGN_CHECKPOINT_PHASES[missionId] || [];
+    if (currentPhase === P.DEFEND_R1) return P.MOVE_R1;
+    if (currentPhase === P.DEFEND_R2) return P.MOVE_R2;
+    if (currentPhase === P.DEFEND_R3) return P.MOVE_R3;
+    return phases.includes(currentPhase) ? currentPhase : campaignSnapshot(missionId).firstPhase;
+}
+function createCampaignCheckpointSnapshot() {
+    if (!CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return null;
+    const savedPhase = checkpointPhaseForMission(activeMissionId, phase);
+    return {
+        missionId: activeMissionId,
+        phase: savedPhase,
+        mainIndex: phase === P.DEPLOY ? campaignSnapshot().firstMainIndex : campaignRun.mainIndex,
+        missionTime, kills, totalAmmoCrafted, totalMedkitsCrafted,
+        worldState: JSON.parse(JSON.stringify(campaignRun.worldState || {})),
+        optional: Object.assign({}, campaignRun.optional),
+        enemyIntel: !!campaignRun.enemyIntel,
+        player: {
+            hp: player.hp, shield: player.shield, grenades: player.grenades, weaponIndex: player.weaponIndex,
+            position: { x: player.pos.x, y: player.pos.y }, yaw: player.yaw,
+            weapon: { id: player.weapon.id, mag: player.weapon.mag, reserve: player.weapon.reserve, magSize: player.weapon.magSize, spread: player.weapon.spread, dmgMult: player.weapon.dmgMult, rateMult: player.weapon.rateMult },
+            weaponStates: JSON.parse(JSON.stringify(player.weaponStates || {})),
+        },
+        craft: { scraps: craft.scraps, powerCells: craft.powerCells, medkits: craft.medkits },
+        squad: squadMembers.map((member) => ({ hp: member.hp, shield: member.shield, mag: member.mag, reserve: member.reserve, downed: member.downed, position: { x: member.pos.x, y: member.pos.y } })),
+        mission: {
+            maintenanceBatteryCarried: !!campaignContent.maintenanceBatteryCarried,
+            scanned: !!campaignContent.scanned,
+            cellCarried: !!campaignContent.cellCarried,
+            cellUsed: !!campaignContent.cellUsed,
+            cellDestination: campaignContent.cellDestination || null,
+            relays: relays.map((relay) => ({ powered: !!relay.powered })),
+            surveyComplete: !!campaignRun.optional.escort_drone,
+            encounter: Object.assign({}, campaignRun.encounter),
+        },
+    };
+}
+function applyCampaignCheckpointSnapshot(snapshot) {
+    if (!snapshot || snapshot.missionId !== activeMissionId || !CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return false;
+    const boundary = JSON.parse(JSON.stringify(snapshot));
+    campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
+    campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
+    campaignRun.optional = Object.assign({}, campaignRun.optional, boundary.optional || {});
+    campaignRun.enemyIntel = !!boundary.enemyIntel;
+    const mission = boundary.mission || {};
+    if (activeMissionId === 'power_through' && Array.isArray(mission.relays) && mission.relays.length && mission.relays.every((relay) => relay.powered)) campaignRun.worldState.relaysOnline = true;
+    applyCampaignWorldSnapshot();
+    phase = checkpointPhaseForMission(activeMissionId, boundary.phase);
+    campaignRun.mainIndex = Math.max(0, boundary.mainIndex | 0);
+    missionTime = Math.max(0, Number(boundary.missionTime) || 0); kills = Math.max(0, boundary.kills | 0);
+    totalAmmoCrafted = Math.max(0, boundary.totalAmmoCrafted | 0); totalMedkitsCrafted = Math.max(0, boundary.totalMedkitsCrafted | 0);
+    const savedPlayer = boundary.player || {};
+    player.hp = clamp(Number(savedPlayer.hp) || 1, 1, player.maxHp); player.shield = clamp(Number(savedPlayer.shield) || 0, 0, player.maxShield);
+    player.grenades = clamp(savedPlayer.grenades || 0, 0, grenadeCap());
+    player.weaponStates = JSON.parse(JSON.stringify(savedPlayer.weaponStates || {}));
+    const savedWeapon = savedPlayer.weapon || {};
+    const weaponIndex = PLAYER_WEAPONS.findIndex((weapon) => weapon.id === savedWeapon.id);
+    player.weaponIndex = weaponIndex >= 0 ? weaponIndex : clamp(savedPlayer.weaponIndex || 0, 0, PLAYER_WEAPONS.length - 1);
+    player.weapon = weaponTemplate(PLAYER_WEAPONS[player.weaponIndex].id); Object.assign(player.weapon, savedWeapon);
+    player.pendingWeapon = null; player.pendingWeaponIndex = -1; player.swapT = 0; setViewmodelWeapon(player.weapon);
+    if (savedPlayer.position && Number.isFinite(savedPlayer.position.x) && Number.isFinite(savedPlayer.position.y)) {
+        player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, WORLD - 2);
+        player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true;
+    }
+    if (Number.isFinite(savedPlayer.yaw)) player.yaw = savedPlayer.yaw;
+    const savedCraft = boundary.craft || {};
+    craft.scraps = Math.max(0, savedCraft.scraps || 0); craft.powerCells = Math.max(0, savedCraft.powerCells || 0); craft.medkits = clamp(savedCraft.medkits || 0, 0, medkitCap());
+    for (let i = 0; i < squadMembers.length; i++) {
+        const member = squadMembers[i], saved = boundary.squad && boundary.squad[i];
+        if (!saved) continue;
+        member.hp = clamp(saved.hp || 1, 1, member.maxHp); member.shield = clamp(saved.shield || 0, 0, member.maxShield);
+        member.mag = Math.max(0, saved.mag || 0); member.reserve = Math.max(0, saved.reserve || 0); member.downed = !!saved.downed; member.mesh.rotation.x = member.downed ? Math.PI / 2 : 0;
+        if (saved.position && Number.isFinite(saved.position.x) && Number.isFinite(saved.position.y)) {
+            member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, WORLD - 2); member.z = terrainHeight(member.pos.x, member.pos.y);
+        }
+    }
+    if (activeMissionId === 'dead_signal') {
+        campaignContent.maintenanceBatteryCarried = !!mission.maintenanceBatteryCarried;
+        campaignContent.scanned = !!mission.scanned || !!campaignRun.optional.scan_growth;
+        campaignContent.cellCarried = !!mission.cellCarried; campaignContent.cellUsed = !!mission.cellUsed; campaignContent.cellDestination = mission.cellDestination || null;
+        if (campaignContent.scan) campaignContent.scan.group.visible = !campaignContent.scanned;
+        if (campaignContent.cell) campaignContent.cell.group.visible = !campaignContent.cellCarried && !campaignContent.cellUsed && !campaignRun.optional.portable_cell;
+        if (campaignContent.maintenanceBatteryCarried && !campaignRun.worldState.maintenanceBatteryInstalled && campaignContent.maintenanceBattery) campaignContent.maintenanceBattery.group.visible = false;
+        if (phase === P.M1_RESTORE_POWER && campaignContent.maintenanceBatteryCarried) {
+            spawnTypedGroup(campaignContent.maintenanceBattery.pos, 18, 32, ['runner', 'skitter', 'spitter'], 1, player, { source: 'm1_battery', essential: true });
+        }
+        ensureCampaignShipLanded(SPACECRAFT_STATE.LANDED_LOCKED);
+    } else if (activeMissionId === 'power_through') {
+        const savedRelays = Array.isArray(mission.relays) ? mission.relays : [];
+        for (let i = 0; i < relays.length; i++) {
+            const powered = !!(savedRelays[i] && savedRelays[i].powered);
+            relays[i].powered = powered; relays[i].powering = false; relays[i].progress = powered ? 1 : 0;
+            setRelayVisualState(relays[i], powered ? 'online' : 'offline');
+        }
+        activeRelay = null;
+        if (mission.surveyComplete && campaignContent.escort) {
+            const escort = campaignContent.escort;
+            escort.state = SURVEY_DRONE_STATE.COMPLETE; escort.active = false; escort.downed = true; escort.group.visible = true;
+            escort.pos.copy(SURVEY_DRONE_ROUTE[SURVEY_DRONE_ROUTE.length - 1]); escort.group.position.set(escort.pos.x, escort.pos.y, terrainHeight(escort.pos.x, escort.pos.y) + 3);
+            setSurveyDroneVisual(escort, 0x66ffcc, 2.25);
+        } else if (relays[0] && relays[0].powered) makeSurveyDroneAvailable();
+    } else if (activeMissionId === 'sample_zero') {
+        campaignRun.encounter = Object.assign(campaignRun.encounter, mission.encounter || {});
+        campaignRun.worldState.labConflictSpawned = false;
+        if (campaignRun.worldState.dnaSecured) {
+            vial.picked = true; vial.group.visible = false; vial.light.intensity = 0;
+            if (campaignContent.lab) campaignContent.lab.field.visible = false;
+        } else spawnLaboratoryConflict();
+        setFinalMissionWorldState();
+    }
+    camera.position.set(player.pos.x, player.pos.y, player.zPos + player.eye);
+    camera.lookAt(player.pos.x + Math.cos(player.yaw), player.pos.y + Math.sin(player.yaw), player.zPos + player.eye);
+    return true;
+}
 function createContinuedMission4Snapshot() {
     const resumablePhases = [P.M4_BREAK_CONTACT, P.M4_REACH_LZ, P.M4_CALL_EXTRACTION, P.M4_HOLD_LZ, P.M4_BOARD];
     const savedPhase = phase === P.M4_DEPART ? P.M4_BOARD : resumablePhases.includes(phase) ? phase : P.M4_BREAK_CONTACT;
     const extraction = campaignContent.extraction;
     return {
+        missionId: 'break_contact',
+        missionTime, kills, totalAmmoCrafted, totalMedkitsCrafted,
         player: {
             hp: player.hp, shield: player.shield, grenades: player.grenades, weaponIndex: player.weaponIndex,
             position: { x: player.pos.x, y: player.pos.y }, yaw: player.yaw,
@@ -9174,20 +9327,37 @@ function createContinuedMission4Snapshot() {
         },
     };
 }
+function checkpointCampaignState() {
+    if (mode !== 'campaign' || !isPersistentCampaignRun() || phase === P.DEAD || phase === P.DONE) return false;
+    if (activeMissionId === 'break_contact') { checkpointMission4State(); return true; }
+    const snapshot = createCampaignCheckpointSnapshot();
+    if (!snapshot) return false;
+    campaignRun.restartSnapshot = snapshot;
+    campaignProfile.campaignStarted = true;
+    campaignProfile.lastMission = activeMissionId;
+    campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: ship.campaignState, continuedState: snapshot };
+    saveCampaignProfile();
+    campaignCheckpointT = 10;
+    return true;
+}
 function checkpointMission4State() {
     if (activeMissionId !== 'break_contact') return;
     const snapshot = createContinuedMission4Snapshot();
     campaignRun.restartSnapshot = snapshot;
-    if (campaignLaunchSource !== 'campaign') return;
+    if (!isPersistentCampaignRun()) return;
+    campaignProfile.campaignStarted = true;
     campaignProfile.lastMission = activeMissionId;
     campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: ship.campaignState, continuedState: snapshot };
     saveCampaignProfile();
+    campaignCheckpointT = 10;
 }
 function applyContinuedMission4Snapshot(snapshot) {
     if (!snapshot || activeMissionId !== 'break_contact') return;
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'continued'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState.securityTurret = !!boundary.securityTurret; campaignRun.enemyIntel = !!boundary.enemyIntel;
+    missionTime = Math.max(0, Number(boundary.missionTime) || 0); kills = Math.max(0, boundary.kills | 0);
+    totalAmmoCrafted = Math.max(0, boundary.totalAmmoCrafted | 0); totalMedkitsCrafted = Math.max(0, boundary.totalMedkitsCrafted | 0);
     const savedPlayer = boundary.player || {};
     player.hp = clamp(savedPlayer.hp || 18, 1, player.maxHp); player.shield = clamp(savedPlayer.shield || 0, 0, player.maxShield);
     player.grenades = clamp(savedPlayer.grenades || 0, 0, grenadeCap());
@@ -9217,6 +9387,8 @@ function applyContinuedMission4Snapshot(snapshot) {
     const resumablePhases = [P.M4_BREAK_CONTACT, P.M4_REACH_LZ, P.M4_CALL_EXTRACTION, P.M4_HOLD_LZ, P.M4_BOARD];
     phase = resumablePhases.includes(savedExtraction.phase) ? savedExtraction.phase : P.M4_BREAK_CONTACT;
     campaignRun.mainIndex = Math.max(0, savedExtraction.mainIndex | 0);
+    campaignRun.worldState.breakContactsSpawned = phase !== P.M4_BREAK_CONTACT;
+    if (phase === P.M4_BREAK_CONTACT) spawnMission4BreakContacts();
     campaignRun.worldState.extractionInfestationStarted = !!savedExtraction.started;
     campaignRun.worldState.extractionInfestationCleared = !!savedExtraction.cleared || phase === P.M4_BOARD;
     const validNodeIds = new Set((campaignContent.extraction.infestation.nodes || []).map((node) => node.id));
@@ -9237,14 +9409,66 @@ function applyContinuedMission4Snapshot(snapshot) {
     setExtractionInfestationVisuals();
     checkpointMission4State();
 }
+function clearResultInputHandler() {
+    if (!resultInputHandler) return;
+    document.removeEventListener('pointerdown', resultInputHandler);
+    document.removeEventListener('keydown', resultInputHandler);
+    resultInputHandler = null;
+}
+function clearEndlessCombatEntities() {
+    for (const enemy of [...enemies]) enemy.destroy(true);
+    while (acid.length) acid[acid.length - 1].removeSelf();
+    while (acidPools.length) acidPools[acidPools.length - 1].removeSelf();
+    while (enemyShots.length) enemyShots[enemyShots.length - 1].removeSelf();
+    for (const grenade of grenades) scene.remove(grenade);
+    grenades.length = 0;
+    for (const shot of shots) { scene.remove(shot.bolt); scene.remove(shot.glow); shotPool.push(shot); }
+    shots.length = 0;
+    for (const pickup of pickups) scene.remove(pickup.group);
+    pickups.length = 0;
+    for (const impact of impacts) { scene.remove(impact.mesh); impactPool.push(impact); }
+    impacts.length = 0;
+    for (const spark of sparks) { scene.remove(spark.line); sparkPool.push(spark); }
+    sparks.length = 0;
+    for (const ejection of plasmaEjections) { scene.remove(ejection.cell); ejection.cell.material.dispose(); }
+    plasmaEjections.length = 0;
+    for (const arc of electricArcs) { scene.remove(arc.line); electricArcPool.push(arc); }
+    electricArcs.length = 0;
+}
+function focusGameCanvas() {
+    const canvas = LJS.mainCanvas;
+    if (!canvas) return;
+    if (!canvas.hasAttribute('tabindex')) canvas.setAttribute('tabindex', '-1');
+    try { canvas.focus({ preventScroll: true }); } catch (e) { canvas.focus(); }
+}
+function restartEndlessRun() {
+    focusGameCanvas();
+    requestLock();
+    clearResultInputHandler();
+    clearEndlessCombatEntities();
+    const currentArena = endlessRun.arena;
+    resetEndlessRun();
+    endlessRun.arena = currentArena;
+    placeEndlessSquad();
+    resultScreen = null; doneT = 0; lastAttackerPos = null; lastAttackerT = 0; damageFlashT = 0;
+    document.getElementById('campaign-result-screen').classList.add('hidden');
+    document.getElementById('pause-screen').classList.add('hidden');
+    LJS.setPaused(false);
+    beginEndless(false);
+}
 function restartCurrentRun() {
+    if (mode === 'endless') {
+        restartEndlessRun();
+        return;
+    }
     try {
-        if (mode === 'endless') sessionStorage.cf_endless_autostart = '1';
-        else sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, source: campaignLaunchSource, continuedState: campaignRun.restartSnapshot || null });
+        const restartOrigin = isPersistentCampaignRun() ? CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN : CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
+        sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, origin: restartOrigin, continuedState: campaignRun.restartSnapshot || null });
     } catch (e) { }
     location.reload();
 }
 function enterResultScreen() {
+    clearResultInputHandler();
     resultScreen = { startMs: performance.now(), chimed: {} };
     LJS.setPaused(true);                       // the mission result screen pauses the game
     if (mode === 'campaign' && phase === P.DONE) {
@@ -9254,9 +9478,13 @@ function enterResultScreen() {
     }
     const minDelay = phase === P.DEAD ? 2000 : 3000;
     const startMs = performance.now();
-    const onInput = () => { if (performance.now() - startMs >= minDelay) restartCurrentRun(); };
-    document.addEventListener('pointerdown', onInput);
-    document.addEventListener('keydown', onInput);
+    resultInputHandler = () => {
+        if (performance.now() - startMs < minDelay) return;
+        clearResultInputHandler();
+        restartCurrentRun();
+    };
+    document.addEventListener('pointerdown', resultInputHandler);
+    document.addEventListener('keydown', resultInputHandler);
 }
 const RESULT_STATS = [
     { label: 'TIME',       fmt: (p) => formatClock(missionTime * p) },
@@ -9285,19 +9513,17 @@ function showCampaignResultPanel() {
     const completion = campaignRun.completion;
     const mission = campaignMission(completion.missionId);
     const nextMission = completion.nextMission ? campaignMission(completion.nextMission) : null;
-    document.getElementById('campaign-result-title').textContent = nextMission ? 'MISSION ' + mission.number + ' COMPLETE' : 'CAMPAIGN COMPLETE';
+    const standalone = completion.origin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
+    document.getElementById('campaign-result-title').textContent = standalone || nextMission ? 'MISSION ' + mission.number + ' COMPLETE' : 'CAMPAIGN COMPLETE';
     document.getElementById('campaign-result-name').textContent = mission.name;
     document.getElementById('campaign-result-summary').innerHTML =
         '<b>' + campaignResultLine(mission.id) + '</b><br>' +
         'Time: ' + formatClock(missionTime) + ' &nbsp; • &nbsp; Kills: ' + kills + '<br>' +
         'Crafted: ' + totalAmmoCrafted + ' cartridges &nbsp; • &nbsp; ' + totalMedkitsCrafted + ' medkits<br>' +
         (completion.optionalTotal ? 'Optional objectives: ' + completion.optionalCount + ' / ' + completion.optionalTotal + '<br>' : '') +
-        (nextMission ? 'Mission ' + nextMission.number + ' — ' + nextMission.name + (completion.nextUnlocked ? ' unlocked' : ' available') : 'Campaign complete');
-    const continueButton = document.getElementById('btn-result-continue');
-    continueButton.classList.toggle('hidden', !nextMission || !nextMission.implemented);
-    if (nextMission && nextMission.implemented) continueButton.textContent = 'CONTINUE TO MISSION ' + nextMission.number;
+        (standalone ? 'Standalone mission complete' : nextMission ? 'Mission ' + nextMission.number + ' — ' + nextMission.name + (completion.nextUnlocked ? ' unlocked' : ' available') : 'Campaign complete');
     document.getElementById('btn-result-endless').classList.toggle('hidden', !!nextMission);
-    document.getElementById('btn-result-missions').textContent = completion.launchSource === 'replay' ? 'RETURN TO MISSION SELECT' : 'SELECT MISSION';
+    document.getElementById('btn-result-missions').textContent = standalone ? 'RETURN TO MISSION SELECT' : 'SELECT MISSION';
     panel.classList.remove('hidden');
 }
 function drawResultScreen(W, H) {
@@ -9689,6 +9915,44 @@ function requestLock() {
         if (p && p.catch) p.catch(() => {});
     } catch (e) { /* pointer lock unsupported */ }
 }
+function clearTransientSessionState() {
+    gameActive = false;
+    started = false;
+    clearTimeout(menuLaunchTimer); menuLaunchTimer = 0;
+    if (menuLaunchFade && menuLaunchFade.parentNode) menuLaunchFade.parentNode.removeChild(menuLaunchFade);
+    menuLaunchFade = null;
+    clearTimeout(missionAnalysisTimer); missionAnalysisTimer = 0;
+    stopIntroSfx();
+    if (introSkipFn) {
+        window.removeEventListener('keydown', introSkipFn);
+        window.removeEventListener('pointerdown', introSkipFn);
+        introSkipFn = null;
+    }
+    if (pointerLockGestureFn) {
+        window.removeEventListener('pointerdown', pointerLockGestureFn);
+        window.removeEventListener('keydown', pointerLockGestureFn);
+        pointerLockGestureFn = null;
+    }
+    clearResultInputHandler();
+    intro = null; chapterDialogue = null; resultScreen = null; upgradeMenu = false;
+    heldInteract = 0; interactPrompt = null; interactProgress = 0; doneT = 0; gameplayFade = 0;
+    toastText = ''; toastT = 0;
+    const pause = document.getElementById('pause-screen');
+    const result = document.getElementById('campaign-result-screen');
+    if (pause) pause.classList.add('hidden');
+    if (result) result.classList.add('hidden');
+    LJS.setPaused(false);
+    LJS.setInputPreventDefault(false);
+    LJS.pointerLockExit();
+}
+function reloadToMainMenu(openMissionSelect = false) {
+    if (openMissionSelect) {
+        try { sessionStorage.cf_open_mission_select = '1'; } catch (e) { }
+    }
+    checkpointCampaignState();
+    clearTransientSessionState();
+    location.reload();
+}
 /* start / pause overlays are appended after the canvas so they paint on top */
 function buildOverlays() {
     const start = document.createElement('div');
@@ -9838,7 +10102,6 @@ function buildOverlays() {
             <div class="cf-sub" id="campaign-result-name"></div>
             <div class="cf-result-summary" id="campaign-result-summary"></div>
             <div class="cf-result-actions">
-                <button class="cf-menu-btn" id="btn-result-continue">CONTINUE</button>
                 <button class="cf-menu-btn hidden" id="btn-result-endless">ENTER ENDLESS HORDE</button>
                 <button class="cf-menu-btn" id="btn-result-missions">SELECT MISSION</button>
                 <button class="cf-menu-btn" id="btn-result-menu">RETURN TO MAIN MENU</button>
@@ -9903,19 +10166,18 @@ async function boot() {
         start.querySelector('.cf-title').classList.toggle('hidden', id !== 'menu-buttons');   // title only on the main menu
         if (id) el(id).classList.remove('hidden');
     };
-    let pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', source: 'campaign', newCampaign: true };
+    let pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true };
     const continueMissionId = campaignContinueMissionId();
     const continueButton = el('btn-continue-campaign');
-    const hasProgress = CAMPAIGN_MISSIONS.some((mission) => campaignProfile.missions[mission.id].completed);
-    continueButton.classList.toggle('hidden', !continueMissionId || !hasProgress);
+    continueButton.classList.toggle('hidden', !continueMissionId || !campaignProfile.campaignStarted);
     if (continueMissionId) continueButton.textContent = 'CONTINUE CAMPAIGN — MISSION ' + campaignMission(continueMissionId).number;
-    el('btn-start').addEventListener('click', () => { pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', source: 'campaign', newCampaign: true }; refreshSoundModeButtons(); showPanel('sound-panel'); });
-    continueButton.addEventListener('click', () => { if (!continueMissionId) return; pendingLaunch = { mode: 'campaign', missionId: continueMissionId, source: 'campaign', newCampaign: false }; refreshSoundModeButtons(); showPanel('sound-panel'); });
+    el('btn-start').addEventListener('click', () => { pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true }; refreshSoundModeButtons(); showPanel('sound-panel'); });
+    continueButton.addEventListener('click', () => { if (!continueMissionId) return; pendingLaunch = { mode: 'campaign', missionId: continueMissionId, origin: CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, newCampaign: false }; refreshSoundModeButtons(); showPanel('sound-panel'); });
     el('btn-select-mission').addEventListener('click', () => { renderMissionSelect(); showPanel('mission-panel'); });
     el('mission-list').addEventListener('click', (event) => {
         const button = event.target.closest('[data-mission-id]');
         if (!button || button.disabled) return;
-        pendingLaunch = { mode: 'campaign', missionId: button.dataset.missionId, source: 'replay', newCampaign: false };
+        pendingLaunch = { mode: 'campaign', missionId: button.dataset.missionId, origin: CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign: false };
         refreshSoundModeButtons(); showPanel('sound-panel');
     });
     document.querySelectorAll('[data-sound-mode]').forEach((button) => button.addEventListener('click', () => {
@@ -9924,17 +10186,21 @@ async function boot() {
     el('btn-sound-back').addEventListener('click', () => showPanel('menu-buttons'));
     el('btn-mission-back').addEventListener('click', () => showPanel('menu-buttons'));
     el('btn-sound-start').addEventListener('click', () => {
+        if (menuLaunchTimer) return;
         if (opts.soundMode !== 'music') { activateSfxPlayback(); playFileSfx('accessOk', 0.5); }
+        if (pendingLaunch.mode === 'campaign') { focusGameCanvas(); requestLock(); }
         start.classList.add('hidden');
         /* fade to black over 2 s, then load the intro briefing cutscene */
-        const fade = document.createElement('div');
-        fade.style.cssText = 'position:fixed;inset:0;z-index:200;background:#000;opacity:0;pointer-events:none;transition:opacity 2s ease;';
-        document.body.appendChild(fade);
-        requestAnimationFrame(() => { fade.style.opacity = '1'; });
-        setTimeout(() => {
-            if (fade.parentNode) fade.parentNode.removeChild(fade);
+        menuLaunchFade = document.createElement('div');
+        menuLaunchFade.style.cssText = 'position:fixed;inset:0;z-index:200;background:#000;opacity:0;pointer-events:none;transition:opacity 2s ease;';
+        document.body.appendChild(menuLaunchFade);
+        requestAnimationFrame(() => { if (menuLaunchFade) menuLaunchFade.style.opacity = '1'; });
+        menuLaunchTimer = setTimeout(() => {
+            menuLaunchTimer = 0;
+            if (menuLaunchFade && menuLaunchFade.parentNode) menuLaunchFade.parentNode.removeChild(menuLaunchFade);
+            menuLaunchFade = null;
             if (pendingLaunch.mode === 'endless') startEndless();
-            else startCampaignMission(pendingLaunch.missionId, pendingLaunch.source, pendingLaunch.newCampaign);
+            else startCampaignMission(pendingLaunch.missionId, pendingLaunch.origin, pendingLaunch.newCampaign);
         }, 2000);
     });
     el('btn-endless').addEventListener('click', () => { pendingLaunch = { mode: 'endless' }; refreshSoundModeButtons(); showPanel('sound-panel'); });
@@ -9958,15 +10224,9 @@ async function boot() {
     });
     el('btn-credits-back').addEventListener('click', () => showPanel('menu-buttons'));
 
-    el('btn-result-continue').addEventListener('click', () => {
-        const nextMission = campaignRun.completion && campaignRun.completion.nextMission;
-        if (!nextMission || !campaignMission(nextMission).implemented) return;
-        try { sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: nextMission, source: 'campaign' }); } catch (e) { }
-        location.reload();
-    });
-    el('btn-result-missions').addEventListener('click', () => { try { sessionStorage.cf_open_mission_select = '1'; } catch (e) { } location.reload(); });
-    el('btn-result-endless').addEventListener('click', () => { try { sessionStorage.cf_endless_autostart = '1'; } catch (e) { } location.reload(); });
-    el('btn-result-menu').addEventListener('click', () => location.reload());
+    el('btn-result-missions').addEventListener('click', () => reloadToMainMenu(true));
+    el('btn-result-endless').addEventListener('click', () => { try { sessionStorage.cf_endless_autostart = '1'; } catch (e) { } clearTransientSessionState(); location.reload(); });
+    el('btn-result-menu').addEventListener('click', () => reloadToMainMenu());
 
     /* UI click feedback on every menu button (Soundly interface tap) */
     document.addEventListener('click', (e) => {
@@ -10011,7 +10271,7 @@ async function boot() {
     };
     el('btn-resume').addEventListener('click', resumeGame);
     el('btn-restart').addEventListener('click', restartCurrentRun);
-    el('btn-quit-to-menu').addEventListener('click', () => { gameActive = false; location.reload(); });
+    el('btn-quit-to-menu').addEventListener('click', () => reloadToMainMenu());
     el('btn-pause-options').addEventListener('click', () => {
         pauseEl.classList.add('hidden');
         el('start-screen').classList.remove('hidden');
@@ -10035,7 +10295,7 @@ async function boot() {
         const queued = JSON.parse(sessionStorage.cf_campaign_autostart || 'null');
         if (queued && queued.missionId) {
             delete sessionStorage.cf_campaign_autostart;
-            startCampaignMission(queued.missionId, queued.source || 'campaign', false, queued.continuedState || null);
+            startCampaignMission(queued.missionId, queued.origin || CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, false, queued.continuedState || null);
         } else if (sessionStorage.cf_endless_autostart === '1') {
             delete sessionStorage.cf_endless_autostart;
             startEndless();
@@ -10061,11 +10321,12 @@ window.__cf = {
     get phaseName() { return CF_NAMES[phase] || String(phase); },
     get mode() { return mode; },
     get missionId() { return activeMissionId; },
+    get runOrigin() { return campaignRunOrigin; },
     get mission() { return campaignMission(); },
     get campaignProfile() { return campaignProfile; },
     get campaignRun() { return campaignRun; },
     get campaignContent() { return campaignContent; },
-    get missionTransition() { return missionTransition; },
+    get chapterDialogue() { return chapterDialogue; },
     get extractionShipState() { return ship.state; },
     get spacecraftState() { return ship.campaignState; },
     spacecraftInfo() {
@@ -10078,15 +10339,14 @@ window.__cf = {
     },
     get worldSnapshot() { return campaignSnapshot(); },
     get extractionShipTime() { return ship.t; },
-    startMission(id, source = 'replay') { return startCampaignMission(id, source, false); },
+    startMission(id, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT) { return startCampaignMission(id, origin, false); },
     startEndlessMode() { startEndless(); return mode; },
     resetCampaignProgress() { resetCampaignProfile(); return campaignProfile; },
     completeMission() { completeCampaignMission(); return campaignProfile; },
     completeRelay(i) { const relay = relays[i]; if (!relay) return false; relay.defenseT = 0; updateRelays(0); return relay.powered; },
     restoreLabTurret() { restoreLaboratoryTurret(); return !!campaignRun.optional.security_turret; },
     advanceFinalEncounter(seconds) { updateFinalCampaignEncounter(Math.max(0, seconds || 0)); return { phase: CF_NAMES[phase] || String(phase), time: campaignRun.encounter.t, stage: campaignRun.encounter.stage, paused: !!campaignRun.encounter.pausedWarned }; },
-    completeStabilization() { if (phase !== P.M3_STABILIZE) return false; campaignRun.encounter.t = campaignRun.encounter.duration; updateFinalCampaignEncounter(0); return !!missionTransition; },
-    finishMissionTransition() { if (!missionTransition) return false; missionTransition.t = missionTransition.duration; updateMissionTransition(0); return activeMissionId; },
+    completeStabilization() { if (phase !== P.M3_STABILIZE) return false; campaignRun.encounter.t = campaignRun.encounter.duration; updateFinalCampaignEncounter(0); return activeMissionId === 'break_contact'; },
     startExtraction() { startExtractionHoldout(); return CF_NAMES[phase] || String(phase); },
     completeExtractionHoldout() {
         if (phase !== P.M4_HOLD_LZ) return false;

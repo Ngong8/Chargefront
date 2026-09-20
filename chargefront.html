@@ -389,6 +389,19 @@ function pointOnPath(path, tt) {
 /* Mission 2's sites occupy three recognizable elevations: Alpha's maintenance
    lowland, Beta's ridge and Gamma's shallow contaminated crater. */
 const FLATS = [[450, 80, 62, 0], [360, 580, 56, 0], [205, 575, 42, 2], [245, 748, 46, 22], [575, 585, 48, 1], [360, 650, 52, 0], [360, 720, 58, 0], [370, 770, 58, 0]];
+/* Stage 3.5A — deliberate local terrain shaping: berms, raised edges and shallow
+   depressions that give the outdoor combat spaces more tactically readable
+   ground without touching the canonical layout.  Each entry is
+   [x, y, radius, amplitude]; positive raises, negative cuts.  They sit off the
+   canonical routes and clear of the relay pads, facility footprint, deep lab and
+   extraction apron, so objectives, navigation and transition coordinates are
+   unaffected.  A cheap radius gate keeps the extra math out of the hot path. */
+const TERRAIN_SHAPES = [
+    [472, 322, 26, 2.0], [352, 300, 30, -1.4], [300, 545, 22, 1.6],
+    [178, 700, 24, 1.8], [628, 528, 28, -1.6], [405, 172, 26, 1.8],
+    [250, 640, 24, -1.6], [520, 640, 24, 1.5],
+    [270, 792, 22, 2.4], [210, 800, 20, 2.0], [612, 560, 26, -2.0], [548, 620, 22, 1.6],
+];
 function terrainHeight(x, y) {
     if (mode === 'endless') return endlessTerrainHeight(x, y);
     let h = 0;
@@ -407,6 +420,14 @@ function terrainHeight(x, y) {
     for (let i = 0; i < FLATS.length; i++) {
         const w = gaussWeight(x, y, FLATS[i][0], FLATS[i][1], FLATS[i][2]);
         if (w > 0.01) h = h * (1 - w) + FLATS[i][3] * w;
+    }
+    for (let i = 0; i < TERRAIN_SHAPES.length; i++) {
+        const s = TERRAIN_SHAPES[i];
+        const dx = x - s[0], dy = y - s[1];
+        const r2 = dx * dx + dy * dy;
+        const lim = s[2] * 2.5;
+        if (r2 > lim * lim) continue;                 // outside the shaping footprint → no cost
+        h += Math.exp(-r2 / (2 * s[2] * s[2])) * s[3];
     }
     /* wide landing-zone apron — pull everything near spawn down to level ground */
     const lzw = gaussWeight(x, y, LZ.x, LZ.y, 110);
@@ -1495,8 +1516,21 @@ function makeGrenadePickup() {
 }
 
 /* ─── world objects & collision ─────────────────────────────────────────── */
-const SOLIDS = [];   // {x0,y0,x1,y1}
-function addSolid(x0, y0, x1, y1) { const solid = { x0, y0, x1, y1 }; SOLIDS.push(solid); return solid; }
+const SOLIDS = [];   // {x0,y0,x1,y1, topY, bottomY}
+/* Footprint (x0,y0,x1,y1) drives ground movement.  Vertical bounds (bottomY..topY)
+   drive projectile and line-of-sight blocking so low cover can be shot over while
+   walls still block.  Unspecified legacy solids default to full height (safe). */
+const SOLID_FULL_TOP = 1e6;
+const SOLID_FULL_BOTTOM = -1e6;
+function addSolid(x0, y0, x1, y1, topY, bottomY) {
+    const solid = {
+        x0, y0, x1, y1,
+        topY: topY === undefined ? SOLID_FULL_TOP : topY,
+        bottomY: bottomY === undefined ? SOLID_FULL_BOTTOM : bottomY,
+    };
+    SOLIDS.push(solid);
+    return solid;
+}
 const SOLID_CELL_SIZE = 32;
 const solidGrid = new Map();
 let solidGridCount = -1, solidQueryStamp = 0;
@@ -1557,7 +1591,7 @@ function addWallPanel(cx, cy, w, d, h, color) {
     m.position.set(cx, cy, h / 2);
     m.castShadow = true; m.receiveShadow = true;
     scene.add(m);
-    addSolid(cx - w / 2, cy - d / 2, cx + w / 2, cy + d / 2);
+    addSolid(cx - w / 2, cy - d / 2, cx + w / 2, cy + d / 2, h, 0);
     return m;
 }
 function makeFacilitySign(text, width, accent = '#66d8ff') {
@@ -1598,8 +1632,8 @@ function addSlidingDoor(x, y, axis, gapHalf, panelW, panelH, id = '') {
     }
     /* collision strip across the doorway — disabled while the door is open */
     const solid = axis === 'x'
-        ? { x0: x - gapHalf, y0: y - 0.5, x1: x + gapHalf, y1: y + 0.5, disabled: false }
-        : { x0: x - 0.5, y0: y - gapHalf, x1: x + 0.5, y1: y + gapHalf, disabled: false };
+        ? { x0: x - gapHalf, y0: y - 0.5, x1: x + gapHalf, y1: y + 0.5, topY: panelH, bottomY: 0, disabled: false }
+        : { x0: x - 0.5, y0: y - gapHalf, x1: x + 0.5, y1: y + gapHalf, topY: panelH, bottomY: 0, disabled: false };
     SOLIDS.push(solid);
     door.solid = solid;
     facilityDoors.push(door);
@@ -1667,7 +1701,7 @@ function buildRelays() {
         const relayLight = new THREE.PointLight(0xaa66ff, 45, 110, 1.8);   // guide beacon light at each relay
         relayLight.position.set(R.pos.x, R.pos.y, terrainHeight(R.pos.x, R.pos.y) + 6.2);
         site.add(relayLight);
-        const relaySolid = addSolid(R.pos.x - 2.6, R.pos.y - 2.6, R.pos.x + 2.6, R.pos.y + 2.6);
+        const relaySolid = addSolid(R.pos.x - 2.6, R.pos.y - 2.6, R.pos.x + 2.6, R.pos.y + 2.6, terrainHeight(R.pos.x, R.pos.y) + 8, terrainHeight(R.pos.x, R.pos.y));
         relaySolid.disabled = activeMissionId !== 'power_through';
         const relay = {
             R, model, pos: R.pos, powered: false, powering: false, offline: false,
@@ -1677,6 +1711,7 @@ function buildRelays() {
             takeDamage(dmg) { this.hp -= dmg; },
         };
         buildRelayArena(relay);
+        buildRelayIdentity(relay);
         relays.push(relay);
     }
 }
@@ -1690,7 +1725,7 @@ function buildRelayArena(relay) {
     };
     const solidBox = (wx, wy, w, d, h, color, opts) => {
         const mesh = placeBox(wx, wy, w, d, h, color, opts);
-        relay.siteSolids.push(addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2));
+        relay.siteSolids.push(addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy)));
         return mesh;
     };
     const lane = (wx, wy, w, d, color) => { const mesh = placeBox(wx, wy, w, d, 0.08, color, EMISSIVE(color, 0.35)); relay.arenaConduits.push(mesh.material); return mesh; };
@@ -1729,7 +1764,7 @@ function buildRelayArena(relay) {
         lane(x, y, 42, 0.32, 0x70c8ff); lane(x, y - 12, 0.32, 24, 0x70c8ff);
         const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 1.1, 22, 6), mat(0x596477, { metalness: 0.72, roughness: 0.38 }));
         mast.rotation.x = Math.PI / 2; mast.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 11); mast.castShadow = true; g.add(mast);
-        relay.siteSolids.push(addSolid(x - 14.2, y + 6.8, x - 11.8, y + 9.2));
+        relay.siteSolids.push(addSolid(x - 14.2, y + 6.8, x - 11.8, y + 9.2, terrainHeight(x - 13, y + 8) + 22, terrainHeight(x - 13, y + 8)));
         const dish = new THREE.Mesh(new THREE.SphereGeometry(3.2, 14, 7, 0, TAU, 0, Math.PI / 2), mat(0x77859d, { metalness: 0.76, roughness: 0.3, side: THREE.DoubleSide }));
         dish.scale.z = 0.3; dish.rotation.set(0.7, 0.25, -0.45); dish.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 21); g.add(dish);
         for (const [ox, oy, w, d] of [[13, 10, 5, 2.2], [14, -9, 4, 2.2], [-4, -15, 6, 2.0], [-20, -7, 4, 2.2]]) solidBox(x + ox, y + oy, w, d, 1.35, 0x586579);
@@ -1844,7 +1879,7 @@ function buildFacility() {
     tube.group.scale.setScalar(0.6);
     tube.group.position.set(px, py, 0);
     scene.add(tube.group);
-    vial.solid = addSolid(px - 1.45, py - 1.45, px + 1.45, py + 1.45);   // tube base footprint
+    vial.solid = addSolid(px - 1.45, py - 1.45, px + 1.45, py + 1.45, 3.5, 0);   // tube base footprint
     vial.group = tube.group;
     vial.light = tube.light;
     vial.tube = tube;
@@ -1854,7 +1889,7 @@ function buildFacility() {
         const m = box(w, d, h, col, Object.assign({ metalness: 0.4, roughness: 0.6 }, opts));
         m.position.set(gx, gy, h / 2); m.castShadow = true; m.receiveShadow = true;
         scene.add(m);
-        addSolid(gx - w / 2, gy - d / 2, gx + w / 2, gy + d / 2);
+        addSolid(gx - w / 2, gy - d / 2, gx + w / 2, gy + d / 2, h, 0);
         return m;
     };
 
@@ -1881,7 +1916,7 @@ function buildFacility() {
         const tx2 = 342 + i * 36, ty2 = 656;
         const tank = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 3.0, 10), mat(0x5a4a3a, { metalness: 0.4, roughness: 0.5 }));
         tank.rotation.x = Math.PI / 2; tank.position.set(tx2, ty2, 1.5); tank.castShadow = true; scene.add(tank);
-        addSolid(tx2 - 1, ty2 - 1, tx2 + 1, ty2 + 1);
+        addSolid(tx2 - 1, ty2 - 1, tx2 + 1, ty2 + 1, 3.0, 0);
         const valve = new THREE.Mesh(new THREE.SphereGeometry(0.18, 6, 5), mat(0xffcc66, EMISSIVE(0xffaa33, 1.2)));
         valve.position.set(tx2, ty2, 3.1); scene.add(valve);
     }
@@ -1956,7 +1991,7 @@ function buildFacility() {
     tower.rotation.x = Math.PI / 2; tower.position.set(tx, ty, 13); tower.castShadow = true; scene.add(tower);
     const towerTip = new THREE.Mesh(new THREE.SphereGeometry(0.7, 8, 6), mat(0xff5566, EMISSIVE(0xff2233, 1.2)));
     towerTip.position.set(tx, ty, 27); scene.add(towerTip);
-    addSolid(tx - 1, ty - 1, tx + 1, ty + 1);
+    addSolid(tx - 1, ty - 1, tx + 1, ty + 1, 26, 0);
 
     /* ── wall-top hazard trim (finished compound look) ─────────────── */
     const wallTrim = (x0, y0, x1, y1) => {
@@ -1984,7 +2019,7 @@ function buildFacility() {
         conduit.position.set(p[0], p[1] + (horizontal ? -0.12 : 0), 6.2); scene.add(conduit);
     }
 
-    /* ── ruined shipping containers + debris (outside the compound) ── */
+    /* ── ruined storage yard (NE corner) — a deliberate cluster, not scatter ── */
     const contCol = 0x5a4a3a;
     const container = (cx, cy, rot, w, d, h) => {
         const c = box(w, d, h, contCol, { roughness: 0.9, metalness: 0.1 });
@@ -1992,19 +2027,18 @@ function buildFacility() {
         scene.add(c);
         const stripe = box(w - 0.4, 0.4, 0.14, 0xd8b322, EMISSIVE(0xd8b322, 0.5));
         stripe.position.set(cx, cy, h + 0.07); scene.add(stripe);
-        addSolid(cx - w / 2, cy - d / 2, cx + w / 2, cy + d / 2);
+        addSolid(cx - w / 2, cy - d / 2, cx + w / 2, cy + d / 2, h, 0);
     };
-    container(340, 700, 0.2, 5.2, 2.6, 2.8);
-    container(416, 706, -0.35, 4.0, 2.4, 2.6);
-    container(298, 636, 0.5, 5.2, 2.6, 2.8);
-    container(420, 598, -0.2, 4.0, 2.4, 2.6);
-    container(296, 690, 0.4, 4.0, 2.4, 2.6);
+    container(424, 700, 0.06, 5.2, 2.6, 2.8);
+    container(418, 693, -0.04, 5.2, 2.6, 2.8);
+    container(427, 706, 0.02, 4.0, 2.4, 2.6);
+    container(296, 690, 0.4, 4.0, 2.4, 2.6);   // west service unit, clear of the deep lab
 
     /* pylons / pipe clusters outside */
     const pylon = (cx, cy, h, r) => {
         const p = new THREE.Mesh(new THREE.CylinderGeometry(r * 0.72, r, h, 6), mat(0x4a4e60, { metalness: 0.5, roughness: 0.5 }));
         p.rotation.x = Math.PI / 2; p.position.set(cx, cy, h / 2); p.castShadow = true; scene.add(p);
-        addSolid(cx - r * 0.6, cy - r * 0.6, cx + r * 0.6, cy + r * 0.6);
+        addSolid(cx - r * 0.6, cy - r * 0.6, cx + r * 0.6, cy + r * 0.6, h, 0);
     };
     pylon(296, 660, 6.0, 1.0);
     pylon(426, 650, 6.0, 1.0);
@@ -2023,7 +2057,7 @@ function buildFacility() {
     wreck.position.set(fx + 68, fy - 54, 0);
     wreck.rotation.z = 0.85;
     scene.add(wreck);
-    addSolid(fx + 65.5, fy - 57.5, fx + 70.5, fy - 50.5);
+    addSolid(fx + 65.5, fy - 57.5, fx + 70.5, fy - 50.5, 1.8, 0);
 
     /* spore-infested patches well outside the compound walls */
     for (let i = 0; i < 5; i++) {
@@ -2084,13 +2118,13 @@ function buildFacility() {
     /* toppled rack + barrels tucked into the corners */
     const toppled = box(1.8, 2.5, 1.2, 0x1e222c, { metalness: 0.5, roughness: 0.55 });
     toppled.position.set(337, 656, 0.9); toppled.rotation.z = 1.35; toppled.castShadow = true; scene.add(toppled);
-    addSolid(335.5, 654.5, 338.5, 657.5);
+    addSolid(335.5, 654.5, 338.5, 657.5, 1.4, 0);
     for (const [bx, by, br] of [[377, 655, 0.35], [380, 656, -0.2]]) {
         const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 1.0, 8), mat(0x6a5a3a, { metalness: 0.5, roughness: 0.5 }));
         barrel.rotation.x = Math.PI / 2; barrel.position.set(bx, by, 0.5); barrel.rotation.z = br; barrel.castShadow = true; scene.add(barrel);
         const band = new THREE.Mesh(new THREE.CylinderGeometry(0.43, 0.43, 0.1, 8), mat(0xd8b322, EMISSIVE(0xd8b322, 0.3)));
         band.rotation.x = Math.PI / 2; band.position.set(bx, by, 0.5); scene.add(band);
-        addSolid(bx - 0.5, by - 0.5, bx + 0.5, by + 0.5);
+        addSolid(bx - 0.5, by - 0.5, bx + 0.5, by + 0.5, 1.1, 0);
     }
 
     /* ── vault: a glowing containment ring on the floor around the specimen tube ── */
@@ -2186,7 +2220,7 @@ function buildFacilityExpansion() {
     const placedBox = (group, x, y, w, d, h, color, opts = {}, solids = null) => {
         const mesh = box(w, d, h, color, Object.assign({ metalness: 0.55, roughness: 0.5 }, opts));
         mesh.position.set(x, y, terrainHeight(x, y) + h / 2); mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
-        if (solids) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2));
+        if (solids) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y)));
         return mesh;
     };
     const floodlight = (group, x, y, color) => {
@@ -2240,7 +2274,7 @@ function buildFacilityExpansion() {
     /* Gamma powers a direct east-side service return. The visible energy field
        closes the route before the network is restored, then retracts cleanly. */
     const shortcutField = placedBox(powerThrough, 455, 625, 0.35, 20, 4.2, 0xff754f, { emissive: 0xff321c, emissiveIntensity: 1.15, transparent: true, opacity: 0.62 });
-    const shortcutSolid = addSolid(454.6, 615, 455.4, 635);
+    const shortcutSolid = addSolid(454.6, 615, 455.4, 635, terrainHeight(455, 625) + 4.2, terrainHeight(455, 625));
     shortcutSolid.disabled = activeMissionId !== 'power_through';
     const shortcutLights = [];
     for (const y of [613.5, 636.5]) {
@@ -2281,7 +2315,7 @@ function buildDeepLaboratory() {
     const placed = (group, x, y, w, d, h, color, opts = {}, collision = false) => {
         const mesh = box(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.48 }, opts));
         mesh.position.set(x, y, h / 2); mesh.castShadow = h > 0.5; mesh.receiveShadow = true; group.add(mesh);
-        if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2));
+        if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, h, 0));
         return mesh;
     };
     const wall = (x, y, w, d) => placed(root, x, y, w, d, 9, 0x384354, {}, true);
@@ -2376,7 +2410,7 @@ function buildDeepLaboratory() {
     chamberRing.position.set(LAB_CONTAINMENT.x, LAB_CONTAINMENT.y, 0.4); root.add(chamberRing);
     for (const x of [344, 376]) for (const y of [754, 782]) {
         const pod = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.25, 4.5, 10), mat(0x5a465f, { metalness: 0.42, roughness: 0.4, emissive: 0x351847, emissiveIntensity: 0.4 }));
-        pod.rotation.x = Math.PI / 2; pod.position.set(x, y, 2.3); root.add(pod); solids.push(addSolid(x - 1.1, y - 1.1, x + 1.1, y + 1.1));
+        pod.rotation.x = Math.PI / 2; pod.position.set(x, y, 2.3); root.add(pod); solids.push(addSolid(x - 1.1, y - 1.1, x + 1.1, y + 1.1, 4.5, 0));
     }
 
     /* Emergency overlay changes the same lab without duplicating its geometry. */
@@ -2403,7 +2437,7 @@ function buildExtractionZone() {
     const placed = (x, y, w, d, h, color, opts = {}, collision = false) => {
         const mesh = box(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.48 }, opts));
         mesh.position.set(x, y, terrainHeight(x, y) + h / 2); mesh.castShadow = h > 0.5; mesh.receiveShadow = true; root.add(mesh);
-        if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2));
+        if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y)));
         return mesh;
     };
     const pad = new THREE.Mesh(new THREE.RingGeometry(12, 13.2, 36), mat(0x66dfff, { emissive: 0x2288bb, emissiveIntensity: 1.2, transparent: true, opacity: 0.72, side: THREE.DoubleSide }));
@@ -2446,8 +2480,37 @@ function buildExtractionZone() {
         core.position.z = 0.72; group.add(core);
         const ring = new THREE.Mesh(new THREE.TorusGeometry(2.25, 0.13, 7, 24), mat(0xff6644, { emissive: 0xff2211, emissiveIntensity: 1.8, transparent: true, opacity: 0.9 }));
         ring.position.z = 0.2; group.add(ring);
-        return Object.assign(definition, { group, core, ring, cleared: false, guardiansSpawned: false });
+        /* 3.5F presentation-only infestation dressing.  It lives inside the node
+           group, so purging the node withers its growth with no extra mechanic. */
+        const mound = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 2.4, 0.4, 10), mat(0x3a2a4e, { roughness: 0.88 }));
+        mound.rotation.x = Math.PI / 2; mound.position.z = 0.14; group.add(mound);
+        for (let s = 0; s < 3; s++) {
+            const spore = new THREE.Mesh(new THREE.SphereGeometry(rand(0.16, 0.3), 7, 6), mat(0xff55ff, { emissive: 0xaa22ff, emissiveIntensity: 2.0, roughness: 0.4 }));
+            spore.position.set(rand(-1.7, 1.7), rand(-1.7, 1.7), rand(0.4, 1.3)); group.add(spore);
+        }
+        const patch = new THREE.Mesh(new THREE.CircleGeometry(2.5, 18), mat(0x5a2a6a, { emissive: 0x3a1050, emissiveIntensity: 0.95, transparent: true, opacity: 0.6, side: THREE.DoubleSide }));
+        patch.position.z = 0.06; group.add(patch);
+        const burrow = new THREE.Mesh(new THREE.ConeGeometry(0.9, 1.1, 8), mat(0x2a1a36, { roughness: 0.9 }));
+        burrow.rotation.x = Math.PI / 2; burrow.position.set(rand(-2.4, 2.4), rand(-2.4, 2.4), 0.5); group.add(burrow);
+        return Object.assign(definition, { group, core, ring, mound, cleared: false, guardiansSpawned: false });
     });
+    /* Growth along the landing-pad supports and around the parked transport.
+       Added to the shared infestation root, so the whole dressing disappears
+       once the perimeter is purged. */
+    for (const a of [0, Math.PI / 2, Math.PI, -Math.PI / 2]) {
+        const sx = EXTRACTION_BOARD.x + Math.cos(a) * 12.6, sy = EXTRACTION_BOARD.y + Math.sin(a) * 12.6;
+        const strut = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.34, 3.4, 7), mat(0x465064, { metalness: 0.6, roughness: 0.42 }));
+        strut.rotation.x = Math.PI / 2; strut.position.set(sx, sy, terrainHeight(sx, sy) + 1.7); infestationRoot.add(strut);
+        const climb = makeInfestedTree(0.34); climb.position.set(sx, sy, terrainHeight(sx, sy)); climb.rotation.z = a; infestationRoot.add(climb);
+        const spore = new THREE.Mesh(new THREE.SphereGeometry(0.26, 7, 6), mat(0xff55ff, { emissive: 0xaa22ff, emissiveIntensity: 1.9 }));
+        spore.position.set(sx, sy, terrainHeight(sx, sy) + 2.2); infestationRoot.add(spore);
+    }
+    const contamination = new THREE.Mesh(new THREE.RingGeometry(13.4, 15.6, 36), mat(0x6a2a74, { emissive: 0x3a1050, emissiveIntensity: 0.9, transparent: true, opacity: 0.5, side: THREE.DoubleSide }));
+    contamination.position.set(EXTRACTION_BOARD.x, EXTRACTION_BOARD.y, terrainHeight(EXTRACTION_BOARD.x, EXTRACTION_BOARD.y) + 0.06); infestationRoot.add(contamination);
+    for (const [dx, dy] of [[-7, 11], [6, -10], [12, 8], [-12, -6]]) {
+        const gx = PARKED_SHIP.x + dx, gy = PARKED_SHIP.y + dy;
+        const creep = makeInfestedTree(0.3); creep.position.set(gx, gy, terrainHeight(gx, gy)); creep.rotation.z = rand(TAU); infestationRoot.add(creep);
+    }
     const lockVisuals = [];
     const lockRing = new THREE.Mesh(new THREE.TorusGeometry(5.5, 0.22, 8, 32), mat(0xff493d, { emissive: 0xff1f18, emissiveIntensity: 2.2, transparent: true, opacity: 0.9 }));
     lockRing.position.set(EXTRACTION_BOARD.x, EXTRACTION_BOARD.y, terrainHeight(EXTRACTION_BOARD.x, EXTRACTION_BOARD.y) + 0.3); root.add(lockRing); lockVisuals.push(lockRing);
@@ -2518,6 +2581,7 @@ function setFinalMissionWorldState() {
         if (vial.solid) vial.solid.disabled = !vial.group.visible;
         if (vial.light) vial.light.intensity = vial.group.visible ? 4 : 0;
     }
+    applyEnvironmentWorldState();   // Stage 3.5E — same authoritative worldState drives the dressing
 }
 
 function spawnIndoorEnemy(type, x, y, target = player, options = {}) {
@@ -2661,7 +2725,7 @@ function buildDecor() {
         rock.rotation.z = rand(TAU);
         rock.castShadow = true;
         scene.add(rock);
-        addSolid(wx - sc * 0.75, wy - sc * 0.75, wx + sc * 0.75, wy + sc * 0.75);
+        addSolid(wx - sc * 0.75, wy - sc * 0.75, wx + sc * 0.75, wy + sc * 0.75, h + sc * 1.6, h - 0.3);
         n++;
     }
     /* strange purple infested trees with exact (solid) collision */
@@ -2686,7 +2750,7 @@ function buildDecor() {
         tree.rotation.z = rand(TAU);
         tree.castShadow = true;
         scene.add(tree);
-        addSolid(wx - 0.55 * sc, wy - 0.55 * sc, wx + 0.55 * sc, wy + 0.55 * sc);
+        addSolid(wx - 0.55 * sc, wy - 0.55 * sc, wx + 0.55 * sc, wy + 0.55 * sc, h + 4.8 * sc, h);
         n++;
     }
     /* small loose pebbles — visual only, no collision */
@@ -2830,6 +2894,552 @@ function buildDecor() {
         pl.position.set(pp[0], pp[1], pp[2] + 1.7);
         scene.add(addBudgetLight(pl));
     }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   STAGE 3.5 — ENVIRONMENT & COMBAT-SPACE POLISH
+   The campaign has always changed the STATE of one physical world (access,
+   power, lighting, activity).  This section extends that same idea to terrain
+   shaping, combat-space cover, relay identity, facility detail, mission-state
+   dressing and extraction infestation.  It never selects new terrain and never
+   builds a second map.  All state is derived from the authoritative
+   campaignRun.worldState / activeMissionId, so checkpoint restores and Mission
+   Select start in the correct visual state immediately.
+   ═══════════════════════════════════════════════════════════════════════════ */
+const ENV_COLORS = Object.freeze({
+    steel: 0x465064, steelDark: 0x333b46, steelLight: 0x5b6878,
+    utility: 0x4a5361, hazard: 0xd8b322, service: 0xe0a84a,
+    comms: 0x70c8ff, hostile: 0x8dff5e, lab: 0x66ddff, bio: 0xff6688,
+    crisis: 0xff493d, dead: 0x3a3340, concrete: 0x6b6f7c, rust: 0x735c3c,
+});
+
+/* Milestone 3.5 geometry/material reuse: repeated same-size boxes share a single
+   geometry, and repeated static (never-animated) materials share one instance.
+   Animated emissive materials keep their own instance so per-lamp flicker phase
+   survives. */
+const ENV_BOX_GEO = new Map();
+function envBoxGeometry(w, d, h) {
+    const key = w.toFixed(2) + 'x' + d.toFixed(2) + 'x' + h.toFixed(2);
+    let geo = ENV_BOX_GEO.get(key);
+    if (!geo) { geo = new THREE.BoxGeometry(w, h, d); ENV_BOX_GEO.set(key, geo); }
+    return geo;
+}
+function envBoxMesh(w, d, h, color, opts = {}) {
+    const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), mat(color, opts));
+    mesh.rotation.x = Math.PI / 2;
+    return mesh;
+}
+const ENV_MAT_CACHE = new Map();
+function envMat(color, opts = {}) {
+    const emissiveKey = opts.emissive !== undefined
+        ? (typeof opts.emissive === 'number' ? opts.emissive.toString(16) : '#' + opts.emissive.getHexString())
+        : '';
+    const key = color.toString(16) + '|' + (opts.roughness || 0) + '|' + (opts.metalness || 0)
+        + '|' + emissiveKey + '|' + (opts.emissiveIntensity || 0) + '|' + (opts.transparent || 0)
+        + '|' + (opts.opacity || 0) + '|' + (opts.side || 0);
+    let m = ENV_MAT_CACHE.get(key);
+    if (!m) { m = mat(color, opts); ENV_MAT_CACHE.set(key, m); }
+    return m;
+}
+
+/* place a vertical box on the terrain (optionally solid).  Only structural cover
+   casts shadows; decorative/emissive boxes stay shadow-free. */
+function envBox(parent, x, y, w, d, h, color, opts = {}, solid = false) {
+    const castShadow = opts.castShadow === true || solid;
+    const matOpts = Object.assign({}, opts); delete matOpts.castShadow;
+    const mesh = envBoxMesh(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.55 }, matOpts));
+    mesh.position.set(x, y, terrainHeight(x, y) + h / 2);
+    mesh.castShadow = castShadow; mesh.receiveShadow = castShadow;
+    parent.add(mesh);
+    if (solid) addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y));
+    return mesh;
+}
+/* horizontal pipe / conduit spanning two terrain points */
+function envPipe(parent, ax, ay, bx, by, z, radius, color, intensity = 0.32) {
+    const az = terrainHeight(ax, ay) + z, bz = terrainHeight(bx, by) + z;
+    const from = new THREE.Vector3(ax, ay, az), to = new THREE.Vector3(bx, by, bz);
+    const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, from.distanceTo(to), 7),
+        mat(color, { metalness: 0.65, roughness: 0.42, emissive: color, emissiveIntensity: intensity }));
+    mesh.position.copy(from).add(to).multiplyScalar(0.5);
+    mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(from).normalize());
+    parent.add(mesh);
+    return mesh;
+}
+/* never let authored dressing land inside a relay pad, facility, deep lab or
+   the extraction apron */
+function envClearPoint(x, y) {
+    if (Math.hypot(x - FACILITY.x, y - FACILITY.y) < 34) return false;
+    if (x > 320 && x < 460 && y > 675 && y < 805) return false;     // deep lab footprint
+    if (x > 400 && x < 500 && y > 30 && y < 125) return false;      // extraction apron
+    for (const rel of RELAYS) if (Math.hypot(x - rel.pos.x, y - rel.pos.y) < 13) return false;
+    return true;
+}
+
+/* The engine only has axis-aligned rectangle solids (SOLIDS), so a rotated cover
+   piece is approximated by small axis-aligned squares laid along its long axis.
+   This keeps player/projectile/LOS collision in step with the visible geometry
+   without adding an oriented-collision system. */
+function addRotatedSolid(cx, cy, w, d, rot, topY, bottomY) {
+    const seg = Math.max(2, Math.round(w / Math.max(d, 0.8)));
+    const segLen = w / seg;
+    const r = Math.max(d, segLen) / 2;
+    const cos = Math.cos(rot), sin = Math.sin(rot);
+    for (let i = 0; i < seg; i++) {
+        const t = -w / 2 + segLen * (i + 0.5);
+        addSolid(cx + t * cos - r, cy + t * sin - r, cx + t * cos + r, cy + t * sin + r, topY, bottomY);
+    }
+}
+
+/* ─── 3.5A combat-space cover clusters + landmarks ─────────────────────── */
+function buildCombatSpaces() {
+    const root = new THREE.Group(); root.name = 'CombatSpaces'; scene.add(root);
+    /* Tiered cover so visible height matches projectile blocking:
+       low (1.05m) is shootable over, medium (1.5m) blocks body shots, the service
+       module (2.5m) is reliable full cover. */
+    const lowCover = (x, y, w, d, color) => envBox(root, x, y, w, d, 1.05, color || 0x5a4a3a, { metalness: 0.35, roughness: 0.7 }, true);
+    const midCover = (x, y, w, d, color) => envBox(root, x, y, w, d, 1.5, color || 0x465064, { metalness: 0.42, roughness: 0.62 }, true);
+    const tallModule = (x, y, w, d, color, accent) => {
+        const m = envBox(root, x, y, w, d, 2.5, color, { metalness: 0.6, roughness: 0.42 }, true);
+        if (accent !== undefined) envBox(root, x, y - d / 2 - 0.05, w - 0.6, 0.12, 0.2, accent, EMISSIVE(accent, 1.3));
+        return m;
+    };
+    const barrier = (x, y, len, rot) => {
+        const m = envBox(root, x, y, len, 0.5, 1.15, 0x5a4d45, { metalness: 0.42, roughness: 0.68, castShadow: true });
+        m.rotation.z = rot || 0;
+        addRotatedSolid(x, y, len, 0.5, rot || 0, terrainHeight(x, y) + 1.15, terrainHeight(x, y));
+        const stripe = envBox(root, x, y, len - 0.45, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.1));
+        stripe.rotation.z = rot || 0; stripe.position.z += 0.58;
+        return m;
+    };
+    /* author one deliberate cover group to one side of a path, always clear of
+       every route.  Fewer, meaningful groups keep open ground between them. */
+    const cluster = (path, t, side, style) => {
+        const rp = pointOnPath(path, t);
+        let dx = rp.bx - rp.ax, dy = rp.by - rp.ay;
+        const len = Math.hypot(dx, dy) || 1; dx /= len; dy /= len;
+        const nx = -dy * side, ny = dx * side;
+        let off = 8, x = rp.x + nx * off, y = rp.y + ny * off, guard = 0;
+        while ((distToRoute(x, y) < 7.5 || !envClearPoint(x, y)) && guard++ < 12) {
+            off += 2.5; x = rp.x + nx * off; y = rp.y + ny * off;
+        }
+        if (guard >= 12) return;
+        if (style === 'roadblock') {
+            barrier(x, y, 6.5, rand(-0.1, 0.1));
+            lowCover(x + dx * 4.4 + nx * 1.8, y + dy * 4.4 + ny * 1.8, 2.2, 1.9);
+            midCover(x - dx * 4.2 + nx * 1.6, y - dy * 4.2 + ny * 1.6, 2.0, 1.8, 0x4a5361);
+        } else if (style === 'checkpoint') {
+            /* entry gantry — two full-height posts + overhead span (landmark) */
+            envBox(root, x, y, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
+            const post2 = envBox(root, x + dx * 7 + nx * 0.4, y + dy * 7 + ny * 0.4, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
+            const span = envBox(root, (x + post2.position.x) / 2, (y + post2.position.y) / 2, 7.4, 0.35, 3.0, ENV_COLORS.steel, {});
+            span.position.z = terrainHeight(span.position.x, span.position.y) + 4.55;
+            envBox(root, (x + post2.position.x) / 2, (y + post2.position.y) / 2, 5.6, 0.18, 0.5, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 1.2)).position.z += 5.5;
+            lowCover(x + dx * 3.4 + nx * 2.2, y + dy * 3.4 + ny * 2.2, 2.0, 1.8, 0x4a5361);
+        } else if (style === 'service') {
+            tallModule(x, y, 3.4, 2.3, ENV_COLORS.steel, ENV_COLORS.service);
+            lowCover(x + dx * 3.6 + nx * 1.4, y + dy * 3.6 + ny * 1.4, 1.8, 1.6);
+        }
+    };
+    /* Sparse traversal rhythm: checkpoint → open → roadblock → open → depot */
+    cluster(MISSION1_ROUTE, 0.26, 1, 'checkpoint');
+    cluster(MISSION1_ROUTE, 0.68, -1, 'roadblock');
+    cluster(MISSION2_ROUTE, 0.34, 1, 'service');
+    cluster(MISSION2_ROUTE, 0.74, -1, 'roadblock');
+
+    /* Navigational landmarks — distinct silhouettes that let the player orient
+       themselves without relying on the HUD. */
+    const landmark = (x, y) => {
+        if (!envClearPoint(x, y) || distToRoute(x, y) < 8) return false;
+        return true;
+    };
+    /* fuel depot beside the M1 approach */
+    {
+        const rp = pointOnPath(MISSION1_ROUTE, 0.32);
+        let dx = rp.bx - rp.ax, dy = rp.by - rp.ay; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+        const x = rp.x - dy * 13, y = rp.y + dx * 13;
+        if (landmark(x, y)) {
+            for (const o of [-2.4, 2.4]) {
+                const tank = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 3.8, 12), mat(0x596579, { metalness: 0.6, roughness: 0.4 }));
+                tank.rotation.x = Math.PI / 2; tank.position.set(x + o, y, terrainHeight(x + o, y) + 1.9); tank.castShadow = true; root.add(tank);
+                addSolid(x + o - 1.5, y - 1.5, x + o + 1.5, y + 1.5, terrainHeight(x + o, y) + 3.8, terrainHeight(x + o, y));
+            }
+            envBox(root, x, y + 3.2, 6, 0.5, 1.1, 0x5a4d45, { metalness: 0.4, roughness: 0.7 }, true);
+            envBox(root, x, y + 3.2, 5.0, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.2)).position.z += 0.6;
+            envBox(root, x, y - 3.4, 1.1, 1.1, 4.2, ENV_COLORS.steelDark, {}, true);
+            envBox(root, x, y - 3.4, 0.7, 0.7, 0.6, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 2.0)).position.z += 4.3;
+        }
+    }
+    /* watchtower landmark on the M2 corridor */
+    {
+        const rp = pointOnPath(MISSION2_ROUTE, 0.40);
+        let dx = rp.bx - rp.ax, dy = rp.by - rp.ay; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+        const x = rp.x - dy * 15, y = rp.y + dx * 15;
+        if (landmark(x, y)) {
+            const tower = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 1.5, 11, 6), mat(0x4a5361, { metalness: 0.6, roughness: 0.42 }));
+            tower.rotation.x = Math.PI / 2; tower.position.set(x, y, terrainHeight(x, y) + 5.5); tower.castShadow = true; root.add(tower);
+            addSolid(x - 1, y - 1, x + 1, y + 1, terrainHeight(x, y) + 11, terrainHeight(x, y));
+            envBox(root, x, y, 3.2, 3.2, 2.2, ENV_COLORS.steelDark, { metalness: 0.6, roughness: 0.4 }, false).position.z = terrainHeight(x, y) + 10.2;
+            envBox(root, x, y, 2.2, 2.2, 0.3, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 1.6)).position.z = terrainHeight(x, y) + 11.5;
+        }
+    }
+}
+
+/* ─── 3.5B relay identities (keeps each relay at its canonical coordinates) ─ */
+function buildRelayIdentity(relay) {
+    const g = relay.site, R = relay.R, x = R.pos.x, y = R.pos.y;
+    const place = (wx, wy, w, d, h, color, opts, solid) => {
+        const castShadow = (opts && opts.castShadow === true) || !!solid;
+        const matOpts = Object.assign({}, opts || {}); delete matOpts.castShadow;
+        const mesh = envBoxMesh(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.5 }, matOpts));
+        mesh.position.set(wx, wy, terrainHeight(wx, wy) + h / 2);
+        mesh.castShadow = castShadow; mesh.receiveShadow = castShadow; g.add(mesh);
+        if (solid) relay.siteSolids.push(addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy)));
+        return mesh;
+    };
+    const pipe = (ax, ay, bx, by, z, color, radius = 0.12, intensity = 0.28) => {
+        const az = terrainHeight(ax, ay) + z, bz = terrainHeight(bx, by) + z;
+        const from = new THREE.Vector3(ax, ay, az), to = new THREE.Vector3(bx, by, bz);
+        const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, from.distanceTo(to), 7), mat(color, { metalness: 0.65, roughness: 0.42, emissive: color, emissiveIntensity: intensity }));
+        mesh.position.copy(from).add(to).multiplyScalar(0.5);
+        mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(from).normalize());
+        g.add(mesh); relay.arenaConduits.push(mesh.material); return mesh;
+    };
+    const status = (wx, wy, color, h = 0.22, w = 1.4, d = 0.16) => {
+        const mesh = place(wx, wy, w, d, h, color, EMISSIVE(color, 1.4));
+        relay.arenaWarningMats.push(mesh.material);
+        return mesh;
+    };
+    if (R.id === 1) {
+        /* ALPHA — an open utility installation: one grouped transformer bank with
+           a control module and service conduit.  The arena's service shed carries
+           the rest of the compound, so there is no prop scatter. */
+        for (const [ox, oy] of [[-8, 5], [-3.6, 5], [0.8, 5]]) {
+            place(x + ox, y + oy, 2.2, 1.7, 1.5, ENV_COLORS.utility, { metalness: 0.55, roughness: 0.45 }, true);
+            status(x + ox, y + oy - 0.95, ENV_COLORS.service, 0.18, 1.2, 0.12);
+        }
+        place(x + 6.5, y + 5, 3.6, 2.4, 2.6, 0x465064, {}, true);            // control module
+        pipe(x + 0.8, y + 5, x - 10, y - 2, 0.32, ENV_COLORS.service, 0.13, 0.30);
+        pipe(x + 6.5, y + 5, x + 8, y - 1, 0.34, ENV_COLORS.service, 0.11, 0.24);
+        place(x - 5, y - 8, 6, 0.5, 1.15, 0x5a4d45, { roughness: 0.7 }, true);   // low service barrier
+        status(x - 5, y - 8, ENV_COLORS.service, 0.16, 5.0, 0.12).position.z += 0.65;
+    } else if (R.id === 2) {
+        /* BETA — retaining walls frame the elevated communications platform; a
+           single secondary mast groups the hardware.  No obstacle-field clutter. */
+        place(x - 10, y - 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
+        place(x + 16, y - 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
+        place(x - 10, y + 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
+        place(x + 16, y + 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
+        const mast2 = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.7, 15, 6), mat(0x596477, { metalness: 0.72, roughness: 0.38 }));
+        mast2.rotation.x = Math.PI / 2; mast2.position.set(x + 9, y - 4, terrainHeight(x + 9, y - 4) + 7.5); mast2.castShadow = true; g.add(mast2);
+        relay.siteSolids.push(addSolid(x + 8.3, y - 4.7, x + 9.7, y - 3.3, terrainHeight(x + 9, y - 4) + 15, terrainHeight(x + 9, y - 4)));
+        const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 6), mat(ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 2.0)));
+        beacon.position.set(x + 9, y - 4, terrainHeight(x + 9, y - 4) + 15.2); g.add(beacon);
+        status(x + 14, y + 12, ENV_COLORS.comms, 0.2, 1.6, 0.14);
+        pipe(x - 8, y + 2, x - 13, y + 8, 0.32, ENV_COLORS.comms, 0.12, 0.3);
+    } else {
+        /* GAMMA — collapsed infrastructure: ruptured slabs, a fallen gantry and a
+           broken frame form irregular but readable low cover; heavier infestation. */
+        for (const [ox, oy, tilt] of [[-20, -6, 0.5], [18, 9, -0.35], [2, -20, 0.7]]) {
+            const slab = place(x + ox, y + oy, 4.5, 1.4, 0.7, 0x3a3f3a, { roughness: 0.8, castShadow: true });
+            slab.rotation.z = tilt;
+            addRotatedSolid(x + ox, y + oy, 4.5, 1.4, tilt, terrainHeight(x + ox, y + oy) + 0.7, terrainHeight(x + ox, y + oy));
+            const warn = place(x + ox, y + oy, 3.0, 0.5, 0.16, ENV_COLORS.hostile, EMISSIVE(0x3edb2b, 1.3));
+            warn.rotation.z = tilt; warn.position.z += 0.42;
+            relay.arenaWarningMats.push(warn.material);
+        }
+        const gantry = place(x - 2, y + 17, 6, 0.6, 0.6, 0x40483f, { castShadow: true }); gantry.rotation.z = 0.6;
+        addRotatedSolid(x - 2, y + 17, 6, 0.6, 0.6, terrainHeight(x - 2, y + 17) + 0.6, terrainHeight(x - 2, y + 17));
+        const frame = place(x + 22, y + 16, 0.8, 0.8, 6.5, 0x3f463d, { castShadow: true }); frame.rotation.z = -0.28;
+        addRotatedSolid(x + 22, y + 16, 0.8, 0.8, -0.28, terrainHeight(x + 22, y + 16) + 6.5, terrainHeight(x + 22, y + 16));
+        for (const [ox, oy, s] of [[-26, 4, 0.8], [24, -6, 0.7]]) {
+            const growth = makeInfestedTree(s); growth.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy)); growth.rotation.z = rand(TAU); g.add(growth);
+        }
+        for (const [ox, oy, r] of [[-24, -14, 3.4], [26, 2, 3.0]]) {
+            const pool = new THREE.Mesh(new THREE.CircleGeometry(r, 20), mat(0x68c94a, { emissive: 0x2da82d, emissiveIntensity: 1.15, transparent: true, opacity: 0.68, side: THREE.DoubleSide }));
+            pool.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy) + 0.1); g.add(pool);
+        }
+    }
+}
+
+/* ─── 3.5C facility exterior polish (same footprint, same collision bounds) ─ */
+function buildFacilityExteriorDetail() {
+    const root = new THREE.Group(); root.name = 'FacilityExterior'; scene.add(root);
+    const H = 10;                                  // wall height + cap (matches buildFacility)
+    const placed = (x, y, w, d, h, color, opts = {}) => {
+        const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), envMat(color, Object.assign({ metalness: 0.55, roughness: 0.5 }, opts)));
+        mesh.rotation.x = Math.PI / 2;
+        mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
+        return mesh;
+    };
+    /* one repeated architectural vocabulary: structural buttresses at the four
+       corners, the main gate flanks and one mid-wall pilaster per long side —
+       deliberate framing instead of an evenly scattered prop row */
+    const pillarSpots = [
+        [310, 612], [410, 612], [310, 688], [410, 688],   // corners
+        [350, 608.3], [370, 608.3],                        // main gate flanks
+        [360, 691.7], [306.3, 650], [413.7, 650],          // mid-wall pilasters
+    ];
+    const pillarMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.85, H + 1.6, 0.85), mat(0x3e4658, { metalness: 0.55, roughness: 0.5 }), pillarSpots.length);
+    const trimMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.92, 0.16, 0.92), mat(ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 0.55)), pillarSpots.length);
+    const _rotX = new THREE.Matrix4().makeRotationX(Math.PI / 2), _inst = new THREE.Matrix4();
+    for (let i = 0; i < pillarSpots.length; i++) {
+        const [px, py] = pillarSpots[i];
+        _inst.makeTranslation(px, py, (H + 1.6) / 2); pillarMesh.setMatrixAt(i, _inst.multiply(_rotX));
+        _inst.makeTranslation(px, py, H + 0.9); trimMesh.setMatrixAt(i, _inst.multiply(_rotX));
+    }
+    pillarMesh.computeBoundingSphere(); trimMesh.computeBoundingSphere();
+    root.add(pillarMesh, trimMesh);
+    const vent = (x, y, horiz) => {
+        placed(x, y, horiz ? 2.4 : 0.3, horiz ? 0.3 : 2.4, 1.2, 0x2a3040, { metalness: 0.7, roughness: 0.4 });
+        placed(x, y, horiz ? 1.8 : 0.14, horiz ? 0.14 : 1.8, 0.8, 0x101722, { metalness: 0.4, roughness: 0.8 });
+    };
+    const utilityBox = (x, y, lamp) => {
+        placed(x, y, 1.2, 0.8, 1.0, 0x4a5361, { metalness: 0.6, roughness: 0.42 });
+        placed(x, y, 1.0, 0.14, 0.2, lamp, EMISSIVE(lamp, 1.4));
+    };
+    /* vents — a few deliberate units at the service corners */
+    for (const x of [316, 404]) vent(x, 608.5, true);
+    vent(306.45, 648, false);
+    vent(413.55, 660, false);
+    /* service conduit runs along the outer walls */
+    envPipe(root, 309, 608.6, 411, 608.6, 2.5, 0.1, 0x6f7f9e, 0.5);
+    envPipe(root, 309, 691.4, 411, 691.4, 3.1, 0.1, 0x6f7f9e, 0.5);
+    envPipe(root, 306.5, 612, 306.5, 688, 2.3, 0.09, 0x6f7f9e, 0.45);
+    envPipe(root, 413.5, 612, 413.5, 688, 2.7, 0.09, 0x6f7f9e, 0.45);
+    envPipe(root, 309, 608.6, 306.5, 612, 2.5, 0.09, 0x6f7f9e, 0.45);
+    envPipe(root, 411, 691.4, 413.5, 688, 3.1, 0.09, 0x6f7f9e, 0.45);
+    /* utility boxes with status lamps — service corners only */
+    for (const [x, y, c] of [[320, 608.4, ENV_COLORS.comms], [413.6, 670, ENV_COLORS.service], [398, 691.6, ENV_COLORS.bio]]) utilityBox(x, y, c);
+    /* layered roof structures — a mechanical penthouse over each room */
+    placed(360, 639, 18, 12, 3.0, 0x2e3442, { metalness: 0.55, roughness: 0.5 }).position.z = H + 2.0;
+    placed(360, 639, 14, 8, 1.0, 0x3e4658, { metalness: 0.6, roughness: 0.45 }).position.z = H + 4.0;
+    for (const [x, y] of [[352, 636], [368, 642]]) {
+        const rv = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 1.2, 8), mat(0x4a5361, { metalness: 0.6, roughness: 0.4 }));
+        rv.rotation.x = Math.PI / 2; rv.position.set(x, y, H + 4.9); root.add(rv);
+    }
+    placed(360, 672, 14, 10, 2.2, 0x2e3442, { metalness: 0.55, roughness: 0.5 }).position.z = H + 1.6;
+    placed(360, 672, 10, 6, 0.9, 0x3e4658, { metalness: 0.6, roughness: 0.45 }).position.z = H + 3.1;
+    /* damaged exterior panel with a live hazard seam */
+    placed(342, 608.5, 2.4, 0.2, 2.0, 0x394052, { metalness: 0.68, roughness: 0.4 }).rotation.z = 0.16;
+    placed(342, 608.3, 2.0, 0.1, 0.18, ENV_COLORS.crisis, EMISSIVE(ENV_COLORS.crisis, 1.6)).rotation.z = 0.16;
+    /* east loading/service yard — matches the compound's service vocabulary */
+    placed(432, 668, 9, 6, 0.7, 0x343b47, { metalness: 0.4, roughness: 0.65 });
+    for (const [x, y] of [[429, 665], [435, 671], [430, 672]]) {
+        placed(x, y, 1.8, 1.8, 1.6, 0x5a4a3a, { metalness: 0.35, roughness: 0.72 });
+        placed(x, y, 1.5, 1.5, 0.14, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 0.6));
+    }
+    const craneMast = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.35, 8, 6), mat(0x4a5361, { metalness: 0.65, roughness: 0.4 }));
+    craneMast.rotation.x = Math.PI / 2; craneMast.position.set(437, 674, 4); root.add(craneMast);
+    envPipe(root, 437, 674, 428, 662, 7.6, 0.2, 0x4a5361, 0.1);
+    /* signage + directional markings that read from a distance */
+    const sign = (text, x, y, z, w, color, face) => {
+        const s = makeFacilitySign(text, w, color);
+        s.material.side = THREE.DoubleSide;
+        if (face === 'y') s.rotation.x = Math.PI / 2; else s.rotation.y = Math.PI / 2;
+        s.position.set(x, y, z); root.add(s); return s;
+    };
+    sign('COMPOUND // AUTHORIZED PERSONNEL', 360, 607.6, 8.1, 12, '#66d8ff', 'y');
+    sign('LOADING // SERVICE YARD', 415.4, 668, 7.0, 9, '#ffb24d', 'x');
+    sign('STAGING // FORWARD DEPLOYMENT', 360, 576.8, 6.4, 12, '#ffbf55', 'y');
+    const marking = (x, y, w, d) => {
+        const m = envBoxMesh(w, d, 0.06, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 0.5));
+        m.position.set(x, y, terrainHeight(x, y) + 0.16); root.add(m); return m;
+    };
+    for (let i = 0; i < 4; i++) marking(360 + (i - 1.5) * 2.4, 592 - i * 3, 0.5, 2.2);
+    marking(360, 585, 10, 0.5);
+}
+
+/* ─── 3.5D facility interior identity ──────────────────────────────────── */
+function buildInteriorIdentity() {
+    const root = new THREE.Group(); root.name = 'InteriorIdentity'; scene.add(root);
+    const placed = (x, y, w, d, h, color, opts = {}) => {
+        const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), envMat(color, Object.assign({ metalness: 0.55, roughness: 0.45 }, opts)));
+        mesh.rotation.x = Math.PI / 2;
+        mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
+        return mesh;
+    };
+    /* door framing makes each threshold read as a deliberate zone change */
+    const doorFrame = (x, y, horiz, color) => {
+        const span = 9.2;
+        for (const s of [-1, 1]) {
+            if (horiz) placed(x + s * span / 2, y, 0.4, 0.6, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
+            else placed(x, y + s * span / 2, 0.6, 0.4, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
+        }
+        const glow = horiz ? placed(x, y, span, 0.16, 0.24, color, EMISSIVE(color, 1.5)) : placed(x, y, 0.16, span, 0.24, color, EMISSIVE(color, 1.5));
+        glow.position.z = 8.7;
+    };
+    doorFrame(360, 618, true, ENV_COLORS.service);       // hall entrance — maintenance
+    doorFrame(360, 660, true, ENV_COLORS.bio);           // vault threshold — bio-lab
+    doorFrame(360, 690, true, ENV_COLORS.lab);           // access/decon
+    doorFrame(360, 735, true, ENV_COLORS.service);       // security obstruction
+    doorFrame(410, 752, false, ENV_COLORS.crisis);       // emergency breach
+    /* COMMAND / SECURITY zone — cool blue console bank */
+    for (const y of [640, 646, 652]) placed(386.4, y, 0.9, 2.0, 1.1, 0x2a2e3a, { metalness: 0.5, roughness: 0.5 });
+    placed(386.2, 646, 0.12, 4.6, 0.7, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 1.1)).position.z = 1.35;
+    /* MAINTENANCE / SERVICE zone — amber machinery band by the generator */
+    for (let i = 0; i < 3; i++) {
+        const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.2, 6), mat(ENV_COLORS.service, { metalness: 0.6, roughness: 0.4, emissive: ENV_COLORS.service, emissiveIntensity: 0.35 }));
+        pipe.rotation.x = Math.PI / 2; pipe.position.set(337.6 + i * 0.34, 648, 1.4); root.add(pipe);
+    }
+    placed(334.6, 645, 0.8, 5.0, 1.4, 0x3a3f4b, { metalness: 0.5, roughness: 0.55 });
+    /* UTILITY / POWER zone — breaker panels on the east wall */
+    for (const y of [628, 634, 655]) {
+        placed(388.6, y, 0.5, 2.2, 1.6, 0x2f3542, { metalness: 0.6, roughness: 0.45 });
+        placed(388.4, y, 0.12, 1.6, 0.16, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 1.2)).position.z = 1.0;
+        placed(388.4, y, 0.12, 1.6, 0.16, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 0.9)).position.z = 0.6;
+    }
+    /* BIO-LAB / CONTAINMENT zone — quarantine banding that matches the lab */
+    placed(360, 658.2, 15, 0.16, 0.18, ENV_COLORS.bio, EMISSIVE(ENV_COLORS.bio, 0.8)).position.z = 0.34;
+}
+
+/* ─── 3.5E mission-state environmental progression ───────────────────────
+   One authored world, four states.  Each layer is toggled from the existing
+   authoritative worldState so a restored Mission 3 already looks like Mission 3
+   and a restored Mission 4 already looks like Mission 4. */
+function buildEnvironmentStateLayers() {
+    const root = new THREE.Group(); root.name = 'EnvironmentState'; scene.add(root);
+    const env = campaignContent.env = {
+        root, dead: new THREE.Group(), powered: new THREE.Group(), labActive: new THREE.Group(), crisis: new THREE.Group(),
+        deadMats: [], poweredMats: [], labMats: [], crisisMats: [], spinners: [], sharedBeacons: [], poweredBase: 0.85,
+    };
+    env.dead.name = 'EnvStateDead'; env.powered.name = 'EnvStatePowered';
+    env.labActive.name = 'EnvStateLabActive'; env.crisis.name = 'EnvStateCrisis';
+    root.add(env.dead, env.powered, env.labActive, env.crisis);
+
+    const beacon = (group, x, y, h, color, intensity, matArr) => {
+        const pole = new THREE.Mesh(envBoxGeometry(0.26, 0.26, h), envMat(ENV_COLORS.steelDark, { metalness: 0.6, roughness: 0.4 }));
+        pole.rotation.x = Math.PI / 2;
+        pole.position.set(x, y, terrainHeight(x, y) + h / 2); group.add(pole);
+        const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 6), mat(color, EMISSIVE(color, intensity)));
+        lamp.position.set(x, y, terrainHeight(x, y) + h + 0.22); group.add(lamp);
+        matArr.push(lamp.material);
+        return lamp;
+    };
+    const puck = (group, x, y, color, matArr) => {
+        const m = envBoxMesh(1.1, 1.1, 0.06, color, EMISSIVE(color, 0.55));
+        m.position.set(x, y, terrainHeight(x, y) + 0.18); group.add(m); matArr.push(m.material);
+        return m;
+    };
+    const deadSpots = [[312, 608], [408, 608], [312, 692], [408, 692], [360, 566], [420, 108], [360, 688]];
+    for (const [x, y] of deadSpots) {
+        beacon(env.dead, x, y, 3.2, 0x552233, 0.55, env.deadMats);
+        puck(env.dead, x + 1.6, y, 0x2a2230, env.deadMats);
+    }
+    /* M1 dead-state shutters read as "systems offline".  The east shutter sits on
+       an already-solid wall; the south one is a jammed, partly-raised roller
+       shutter that keeps the (intentionally open) south gate traversable. */
+    {
+        const sh = envBoxMesh(0.5, 6.5, 5.2, 0x2a2f3a, { metalness: 0.6, roughness: 0.5 });
+        sh.position.set(413.0, 660, 2.7); env.dead.add(sh);
+        const seam = envBoxMesh(0.4, 6.56, 0.16, 0x552233, EMISSIVE(0x33111a, 0.7));
+        seam.position.set(413.0, 660, 4.6); env.dead.add(seam); env.deadMats.push(seam.material);
+    }
+    {
+        const drum = envBoxMesh(6.6, 0.5, 0.7, 0x2a2f3a, { metalness: 0.6, roughness: 0.5 });
+        drum.position.set(360, 606.5, 4.9); env.dead.add(drum);
+        const strip = envBoxMesh(3.2, 0.14, 1.9, 0x2a2f3a, { metalness: 0.6, roughness: 0.6 });
+        strip.position.set(358, 606.5, 3.7); strip.rotation.z = 0.09; env.dead.add(strip);
+        const seam = envBoxMesh(6.0, 0.06, 0.16, 0x552233, EMISSIVE(0x33111a, 0.7));
+        seam.position.set(360, 606.5, 4.55); env.dead.add(seam); env.deadMats.push(seam.material);
+    }
+    const poweredSpots = [[312, 608], [408, 608], [312, 692], [408, 692], [360, 566], [420, 108], [360, 688]];
+    for (const [x, y] of poweredSpots) {
+        env.sharedBeacons.push(beacon(env.powered, x, y, 3.2, ENV_COLORS.service, 1.6, env.poweredMats));
+        puck(env.powered, x - 1.6, y, ENV_COLORS.service, env.poweredMats);
+    }
+    const routePucks = (group, path, color, matArr) => {
+        for (let i = 1; i <= 8; i++) {
+            const rp = pointOnPath(path, i / 9);
+            let dx = rp.bx - rp.ax, dy = rp.by - rp.ay; const l = Math.hypot(dx, dy) || 1; dx /= l; dy /= l;
+            const sx = rp.x - dy * 6.5, sy = rp.y + dx * 6.5;
+            if (!envClearPoint(sx, sy) || distToRoute(sx, sy) < 5) continue;
+            puck(group, sx, sy, color, matArr);
+        }
+    };
+    routePucks(env.powered, MISSION1_ROUTE, ENV_COLORS.service, env.poweredMats);
+    routePucks(env.powered, MISSION2_ROUTE, ENV_COLORS.comms, env.poweredMats);
+    /* a pair of active extractor fans sells "infrastructure restored" */
+    for (const [x, y] of [[332, 640], [386, 640]]) {
+        const fan = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 0.22, 12), mat(0x4a5361, { metalness: 0.7, roughness: 0.35 }));
+        fan.rotation.x = Math.PI / 2; fan.position.set(x, y, 6.6); fan.userData.spin = 2.4; env.powered.add(fan); env.spinners.push(fan);
+    }
+    /* Mission 3 — the laboratory/containment end is running hot */
+    beacon(env.labActive, 360, 686, 4.2, ENV_COLORS.lab, 2.0, env.labMats);
+    beacon(env.labActive, 348, 660, 4.2, ENV_COLORS.bio, 2.0, env.labMats);
+    beacon(env.labActive, 360, 658, 4.2, ENV_COLORS.lab, 1.8, env.labMats);
+    for (const [x, y] of [[342, 700], [378, 700], [360, 744], [360, 780]]) {
+        puck(env.labActive, x, y, ENV_COLORS.lab, env.labMats);
+        beacon(env.labActive, x, y, 2.4, ENV_COLORS.lab, 1.6, env.labMats);
+    }
+    /* Mission 4 — facility crisis + chaotic exterior.  The seven shared facility
+       beacon positions are handled by the powered layer (recoloured to alarm
+       during the crisis); these three are crisis-only, non-overlapping extras. */
+    const crisisSpots = [[430, 720], [424, 646], [410, 600]];
+    for (const [x, y] of crisisSpots) {
+        beacon(env.crisis, x, y, 3.4, ENV_COLORS.crisis, 1.8, env.crisisMats);
+    }
+    for (const [x, y, w, d, r] of [[350, 604, 3.2, 0.6, 0.4], [400, 606, 2.6, 0.6, -0.3], [306, 660, 0.6, 3.0, 0.55], [414, 686, 0.6, 2.6, -0.45]]) {
+        const panel = box(w, d, 0.3, 0x2f3542, { metalness: 0.6, roughness: 0.5 });
+        panel.position.set(x, y, terrainHeight(x, y) + 2.4); panel.rotation.z = r; env.crisis.add(panel);
+        const spark = box(w * 0.5, d + 0.04, 0.12, ENV_COLORS.crisis, EMISSIVE(ENV_COLORS.crisis, 1.8));
+        spark.position.set(x, y, terrainHeight(x, y) + 2.6); spark.rotation.z = r; env.crisis.add(spark); env.crisisMats.push(spark.material);
+    }
+    for (const [x, y, r] of [[336, 596, 3.0], [420, 700, 2.6], [470, 250, 3.2], [452, 150, 2.4]]) {
+        const patch = new THREE.Mesh(new THREE.CircleGeometry(r, 18), mat(0x5a2a6a, { emissive: 0x3a1050, emissiveIntensity: 1.0, transparent: true, opacity: 0.6, side: THREE.DoubleSide }));
+        patch.position.set(x, y, terrainHeight(x, y) + 0.1); env.crisis.add(patch);
+    }
+    for (const [x, y, s] of [[318, 600, 0.7], [415, 700, 0.65], [308, 680, 0.6]]) {
+        const growth = makeInfestedTree(s); growth.position.set(x, y, terrainHeight(x, y)); growth.rotation.z = rand(TAU); env.crisis.add(growth);
+    }
+    applyEnvironmentWorldState();
+}
+
+function applyEnvironmentWorldState() {
+    const env = campaignContent.env;
+    if (!env) return;
+    const ws = campaignRun.worldState || {};
+    const localPower = !!ws.localPower;
+    /* M4 (break_contact) is the only full crisis.  A late-M3 emergency keeps the
+       lab-active layer and only switches the shared facility beacons to alarm
+       colour — it never enables the full contamination/infestation dressing. */
+    const crisis = activeMissionId === 'break_contact';
+    const labActive = !!ws.labAccess && activeMissionId === 'sample_zero';
+    env.dead.visible = !localPower;
+    env.powered.visible = localPower;
+    env.labActive.visible = labActive;
+    env.crisis.visible = crisis;
+    env.poweredBase = ws.relaysOnline ? 1.25 : 0.85;
+    for (let i = 0; i < env.deadMats.length; i++) env.deadMats[i].emissiveIntensity = 0.5;
+    for (let i = 0; i < env.poweredMats.length; i++) env.poweredMats[i].emissiveIntensity = env.poweredBase;
+    for (let i = 0; i < env.labMats.length; i++) env.labMats[i].emissiveIntensity = 1.35;
+    for (let i = 0; i < env.crisisMats.length; i++) env.crisisMats[i].emissiveIntensity = 1.4;
+    /* shared facility beacons reflect alarm state only during the M4 crisis */
+    for (let i = 0; i < env.sharedBeacons.length; i++) {
+        env.sharedBeacons[i].material.color.setHex(crisis ? ENV_COLORS.crisis : ENV_COLORS.service);
+        env.sharedBeacons[i].material.emissive.setHex(crisis ? ENV_COLORS.crisis : ENV_COLORS.service);
+    }
+}
+
+function updateEnvironmentFx() {
+    const env = campaignContent.env;
+    if (!env) return;
+    const t = LJS.time, dt = LJS.timeDelta;
+    if (env.crisis.visible) {
+        for (let i = 0; i < env.crisisMats.length; i++) {
+            env.crisisMats[i].emissiveIntensity = 1.15 + Math.sin(t * 7 + i * 1.3) * 0.55 + (Math.random() < 0.04 ? 0.6 : 0);
+        }
+    }
+    if (env.powered.visible) {
+        const base = env.poweredBase || 0.85;
+        for (let i = 0; i < env.poweredMats.length; i++) env.poweredMats[i].emissiveIntensity = base * (0.82 + Math.sin(t * 1.6 + i) * 0.1);
+    }
+    if (env.dead.visible) {
+        for (let i = 0; i < env.deadMats.length; i++) env.deadMats[i].emissiveIntensity = 0.4 + (Math.sin(t * 0.9 + i * 2.1) > 0.96 ? 0.7 : 0);
+    }
+    if (env.labActive.visible) {
+        for (let i = 0; i < env.labMats.length; i++) env.labMats[i].emissiveIntensity = 1.25 + Math.sin(t * 2.2 + i) * 0.3;
+    }
+    for (const s of env.spinners) s.rotation.z += dt * (s.userData.spin || 1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -3009,7 +3619,7 @@ function buildEndlessRelay() {
     pad.rotation.x = Math.PI / 2; pad.position.set(px, py, terrainHeight(px, py) + 0.15); pad.receiveShadow = true; scene.add(pad);
     const relayLight = new THREE.PointLight(0xffc861, 60, 140, 1.8);
     relayLight.position.set(px, py, terrainHeight(px, py) + 8.5); scene.add(relayLight);
-    addSolid(px - 3.6, py - 3.6, px + 3.6, py + 3.6);
+    addSolid(px - 3.6, py - 3.6, px + 3.6, py + 3.6, terrainHeight(px, py) + 9, terrainHeight(px, py));
     endlessRelay = { model, pos: LJS.vec2(px, py), ringAngle: rand(TAU) };
 }
 /* ── DNA vial: the immovable score milestone (bank DNA samples here) ── */
@@ -3019,7 +3629,7 @@ function buildEndlessVial() {
     tube.group.scale.setScalar(0.9);
     tube.group.position.set(px, py, terrainHeight(px, py));
     scene.add(tube.group);
-    addSolid(px - 2.0, py - 2.0, px + 2.0, py + 2.0);
+    addSolid(px - 2.0, py - 2.0, px + 2.0, py + 2.0, terrainHeight(px, py) + 4.5, terrainHeight(px, py));
     endlessVial = { tube, pos: LJS.vec2(px, py), bobT: 0 };
 }
 /* ── alien flora + rocks scattered through the valley (denser arena) ── */
@@ -3040,7 +3650,7 @@ function buildEndlessDecor() {
         const tree = makeInfestedTree(sc);
         tree.position.set(wx, wy, h); tree.rotation.z = rand(TAU); tree.castShadow = true;
         scene.add(tree);
-        addSolid(wx - 0.55 * sc, wy - 0.55 * sc, wx + 0.55 * sc, wy + 0.55 * sc);
+        addSolid(wx - 0.55 * sc, wy - 0.55 * sc, wx + 0.55 * sc, wy + 0.55 * sc, h + 4.8 * sc, h);
         n++;
     }
     /* jagged rocks */
@@ -3056,7 +3666,7 @@ function buildEndlessDecor() {
         const rock = makeWeirdRock(sc);
         rock.position.set(wx, wy, h - 0.2); rock.rotation.z = rand(TAU); rock.castShadow = true;
         scene.add(rock);
-        addSolid(wx - sc * 0.75, wy - sc * 0.75, wx + sc * 0.75, wy + sc * 0.75);
+        addSolid(wx - sc * 0.75, wy - sc * 0.75, wx + sc * 0.75, wy + sc * 0.75, h + sc * 1.6, h - 0.3);
         n++;
     }
     /* alien light plants (instanced, like the campaign) */
@@ -5620,8 +6230,9 @@ class Acid extends THREE.Group {
             this.vel.lerp(dir.multiplyScalar(16), 0.12);
         }
         if (this.gravity) this.vel.z -= this.gravity * dt;
+        const prevX = this.position.x, prevY = this.position.y, prevZ = this.position.z;
         this.position.addScaledVector(this.vel, dt);
-        if (isInsideSolid(this.position.x, this.position.y)) {
+        if (solidBlocksSegment(prevX, prevY, prevZ, this.position.x, this.position.y, this.position.z, 0.05, null)) {
             spawnImpact(this.position.x, this.position.y, this.position.z, 0x66ff88, 2);
             spawnAcidPool(this.position.x, this.position.y, Math.max(this.position.z, terrainHeight(this.position.x, this.position.y)) + 0.03, this.poolDamage);   // acid pools on objects too
             playSnd(sfx.impact, 0.3);
@@ -5755,9 +6366,11 @@ class EnemyShot extends THREE.Group {
             const desired = new THREE.Vector3(tgt.pos.x - this.position.x, tgt.pos.y - this.position.y, targetZ - this.position.z).normalize().multiplyScalar(this.speed);
             this.vel.lerp(desired, 0.14);
         }
+        const prevX = this.position.x, prevY = this.position.y, prevZ = this.position.z;
         this.position.addScaledVector(this.vel, dt);
         this.rotation.z += dt * (this.style.ring ? 9 : 18);
-        if (isInsideSolid(this.position.x, this.position.y) || this.position.z < terrainHeight(this.position.x, this.position.y) + 0.08) {
+        if (this.position.z < terrainHeight(this.position.x, this.position.y) + 0.08
+            || solidBlocksSegment(prevX, prevY, prevZ, this.position.x, this.position.y, this.position.z, 0.05, null)) {
             explodeEnemyShot(this, null);
             this.removeSelf(); return;
         }
@@ -6382,12 +6995,45 @@ function segIntersectsRect(ax, ay, bx, by, rx0, ry0, rx1, ry1) {
     return true;
 }
 
+/* Liang-Barsky entry parameter (t in [0,1]) of segment a->b against an AABB, or -1. */
+function segRectEntry(ax, ay, bx, by, rx0, ry0, rx1, ry1) {
+    let t0 = 0, t1 = 1;
+    const dx = bx - ax, dy = by - ay;
+    const p = [-dx, dx, -dy, dy], q = [ax - rx0, rx1 - ax, ay - ry0, ry1 - ay];
+    for (let i = 0; i < 4; i++) {
+        if (p[i] === 0) { if (q[i] < 0) return -1; }
+        else {
+            const t = q[i] / p[i];
+            if (p[i] < 0) { if (t > t1) return -1; if (t > t0) t0 = t; }
+            else { if (t < t0) return -1; if (t < t1) t1 = t; }
+        }
+    }
+    return t0;
+}
+
+/* Height-aware blocking: a 3D segment is blocked only when it crosses a solid's
+   horizontal footprint at a height inside that solid's [bottomY, topY] bounds.
+   `zAt(t)` lets LOS evaluate a terrain-following eye line; otherwise z is linear. */
+function solidBlocksSegment(ax, ay, az, bx, by, bz, pad, zAt) {
+    let blocked = false;
+    solidQueryBounds(Math.min(ax, bx) - pad, Math.min(ay, by) - pad, Math.max(ax, bx) + pad, Math.max(ay, by) + pad, (s) => {
+        if (s.disabled) return false;
+        const t = segRectEntry(ax, ay, bx, by, s.x0 - pad, s.y0 - pad, s.x1 + pad, s.y1 + pad);
+        if (t < 0) return false;
+        const z = zAt ? zAt(t) : az + (bz - az) * t;
+        if (z >= s.bottomY && z <= s.topY) { blocked = true; return true; }
+        return false;
+    });
+    return blocked;
+}
+
 function hasLOS(x0, y0, x1, y1, margin) {
     const d = Math.hypot(x1 - x0, y1 - y0);
     if (d < 1) return true;
-    /* solid structures (walls, relays, trees) block line of sight */
-    if (solidQueryBounds(Math.min(x0, x1), Math.min(y0, y1), Math.max(x0, x1), Math.max(y0, y1),
-        (s) => !s.disabled && segIntersectsRect(x0, y0, x1, y1, s.x0, s.y0, s.x1, s.y1))) return false;
+    /* Solid structures block the sight line only when it crosses their footprint
+       within their real vertical bounds, so low cover does not read as a wall. */
+    const zEye0 = terrainHeight(x0, y0) + 1.5, zEye1 = terrainHeight(x1, y1) + 1.5;
+    if (solidBlocksSegment(x0, y0, zEye0, x1, y1, zEye1, 0, null)) return false;
     const steps = Math.ceil(d / 4);
     for (let i = 1; i < steps; i++) {
         const t = i / steps;
@@ -6627,13 +7273,14 @@ class Grenade extends THREE.Group {
             if (sp > maxSp) { this.vx *= maxSp / sp; this.vy *= maxSp / sp; this.vz *= maxSp / sp; }
         }
         this.vz -= 24 * dt;
+        const gPrevX = this.position.x, gPrevY = this.position.y, gPrevZ = this.position.z;
         this.position.x += this.vx * dt;
         this.position.y += this.vy * dt;
         this.position.z += this.vz * dt;
         const gh = terrainHeight(this.position.x, this.position.y) + 0.14;
         if (this.position.z < gh) { this.position.z = gh; this.vz *= -0.35; this.vx *= 0.65; this.vy *= 0.65; }
         this.glow.material.opacity = 0.35 + Math.sin(LJS.time * 22) * 0.15;
-        if (isInsideSolid(this.position.x, this.position.y) || this.life <= 0) this.explode();
+        if (solidBlocksSegment(gPrevX, gPrevY, gPrevZ, this.position.x, this.position.y, this.position.z, 0.08, null) || this.life <= 0) this.explode();
     }
     explode() {
         const x = this.position.x, y = this.position.y, z = this.position.z;
@@ -6701,7 +7348,7 @@ function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options) {
     glow.material.color.setHex(color);
     glow.material.opacity = 0.35;
     scene.add(glow);
-    shots.push({ x: ox, y: oy, z: oz, px: ox, py: oy, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85, life: 1.8, dmg, color, owner, bolt, glow, splash: options && options.splash });
+    shots.push({ x: ox, y: oy, z: oz, px: ox, py: oy, pz: oz, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85, life: 1.8, dmg, color, owner, bolt, glow, splash: options && options.splash });
 }
 function explodeEnemyShot(shot, directTarget) {
     if (shot.style.splash) {
@@ -6740,7 +7387,7 @@ function updateShots(dt) {
     for (let i = shots.length - 1; i >= 0; i--) {
         const s = shots[i];
         const step = s.speed * dt;
-        s.px = s.x; s.py = s.y;
+        s.px = s.x; s.py = s.y; s.pz = s.z;
         s.x += s.dx * step; s.y += s.dy * step; s.z += s.dz * step;
         s.life -= dt;
         s.bolt.position.set(s.x, s.y, s.z);
@@ -6751,8 +7398,9 @@ function updateShots(dt) {
             boltImpactSfx(s.x, s.y);
             dead = true;
         }
-        /* solid obstacle hit (bug #1) — walls, relays, structures */
-        if (!dead && (isInsideSolid(s.x, s.y) || isInsideSolid((s.px + s.x) / 2, (s.py + s.y) / 2))) {
+        /* height-aware obstacle hit — low cover only blocks when the bolt is inside
+           its vertical bounds, so shots pass cleanly over waist-high props */
+        if (!dead && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
             spawnImpact(s.x, s.y, s.z, s.color, 1);
             boltImpactSfx(s.x, s.y);
             dead = true;
@@ -6931,8 +7579,8 @@ function addShipHullSolid(shipGroup) {
        but cannot clip through the main transport body. */
     const quarterTurn = Math.abs(Math.sin(shipGroup.rotation.z)) > 0.7;
     const solid = quarterTurn
-        ? { x0: p.x - 2.25, y0: p.y - 6.5, x1: p.x + 2.25, y1: p.y + 8.5 }
-        : { x0: p.x - 6.5, y0: p.y - 2.25, x1: p.x + 8.5, y1: p.y + 2.25 };
+        ? { x0: p.x - 2.25, y0: p.y - 6.5, x1: p.x + 2.25, y1: p.y + 8.5, topY: p.z + 12, bottomY: p.z - 2 }
+        : { x0: p.x - 6.5, y0: p.y - 2.25, x1: p.x + 8.5, y1: p.y + 2.25, topY: p.z + 12, bottomY: p.z - 2 };
     SOLIDS.push(solid);
     shipGroup.userData.hullSolid = solid;
     /* Touchdown may occur during the holdout. Move actors to the nearest clear
@@ -7084,8 +7732,9 @@ function onRelayComplete(r) {
         phase = P.MOVE_R3; campaignRun.mainIndex = 2; music.play('safe', 0.7);
         notify('RELAY BETA ONLINE — shielded response broken. Advance to Gamma.', '#66ffcc');
     } else if (r.R.id === 3 && phase === P.DEFEND_R3) {
-        campaignRun.worldState.labAccess = true; campaignRun.worldState.shortcutOpen = true; campaignRun.mainIndex = 4; phase = P.M2_CONFIRM; music.play('safe', 0.7);
+        campaignRun.worldState.labAccess = true; campaignRun.worldState.shortcutOpen = true; campaignRun.worldState.relaysOnline = true; campaignRun.mainIndex = 4; phase = P.M2_CONFIRM; music.play('safe', 0.7);
         openFacilityShortcut();
+        applyEnvironmentWorldState();   // relay network online -> brighter powered presentation
         notify('RELAY NETWORK ONLINE — east service gate opened. Confirm access at command.', '#66ffcc');
     }
     activeRelay = null;
@@ -7699,6 +8348,10 @@ function buildCampaignWorld() {
     buildFacilityExpansion();
     buildDeepLaboratory();
     buildExtractionZone();
+    buildCombatSpaces();            // Stage 3.5A — cover, sightline shaping, landmarks
+    buildFacilityExteriorDetail();  // Stage 3.5C — modular exterior identity
+    buildInteriorIdentity();        // Stage 3.5D — interior zone identity
+    buildEnvironmentStateLayers();  // Stage 3.5E — M1–M4 environmental progression
     buildDecor();   // after relays/facility so tree & rock collision can avoid their solids
     spawnPickups();
     buildCampaignObjectives();
@@ -8374,6 +9027,7 @@ function updateInteract(dt) {
                 heldInteract = 0;
                 consoleUnit.screen.material.emissiveIntensity = 2.2;
                 if (campaignContent.commandConsole) campaignContent.commandConsole.screen.material.emissiveIntensity = 1.8;
+                applyEnvironmentWorldState();   // reconcile the M3.5 environment immediately (dead -> powered)
                 if (campaignContent.maintenanceBattery) {
                     const battery = campaignContent.maintenanceBattery.group;
                     battery.position.set(341.8, 631.2, terrainHeight(341.8, 631.2) + 0.7); battery.rotation.z = Math.PI / 2; battery.visible = true;
@@ -9902,6 +10556,7 @@ function gameUpdatePost() {
         strip.mat.emissive.setHex(emergency ? 0xff1f18 : strip.color);
         strip.mat.emissiveIntensity = strip.base * (localPower ? (emergency ? 1.0 + Math.sin(LJS.time * 7 + i) * 0.55 : 0.9 + Math.sin(LJS.time * 1.4 + i) * 0.08) : 0.16);
     }
+    updateEnvironmentFx();   // Stage 3.5E — animated mission-state dressing
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -10473,6 +11128,27 @@ window.__cf = {
     jump() { player.zVel = 7.2 * (player.jumpMult || 1); player.grounded = false; },
     move(x, y) { player.pos.x = clamp(player.pos.x + x, 2, WORLD - 2); player.pos.y = clamp(player.pos.y + y, 2, WORLD - 2); player.zPos = terrainHeight(player.pos.x, player.pos.y); },
     insideSolid(x, y) { return isInsideSolid(x, y, 0.4); },
+    /* Milestone 3.5.1 collision probes */
+    probeBlocked(ax, ay, az, bx, by, bz, pad = 0) { return solidBlocksSegment(ax, ay, az, bx, by, bz, pad, null); },
+    routeClearance(name, n = 200) {
+        const path = name === 'm2' ? MISSION2_ROUTE : MISSION1_ROUTE;
+        let blocked = 0; const hits = [];
+        for (let i = 0; i <= n; i++) {
+            const p = pointOnPath(path, i / n);
+            if (isInsideSolid(p.x, p.y, 0.5)) { blocked++; if (hits.length < 8) hits.push([Math.round(p.x), Math.round(p.y)]); }
+        }
+        return { blocked, of: n + 1, hits };
+    },
+    probeLOS(x0, y0, x1, y1, margin = 0.8) { return hasLOS(x0, y0, x1, y1, margin); },
+    solidsAt(x, y) {
+        const out = [];
+        solidQueryBounds(x - 0.02, y - 0.02, x + 0.02, y + 0.02, (s) => {
+            if (s.disabled) return false;
+            if (x >= s.x0 && x <= s.x1 && y >= s.y0 && y <= s.y1) out.push({ topY: +s.topY.toFixed(2), bottomY: +s.bottomY.toFixed(2) });
+            return false;
+        });
+        return out;
+    },
     spawnAcidPoolAt(x, y) { const p = spawnAcidPool(x, y, terrainHeight(x, y) + 0.03, 8); return acidPools.length; },
     get acidPools() { return acidPools; },
     terrainHeight(x, y) { return terrainHeight(x, y); },

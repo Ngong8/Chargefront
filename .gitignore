@@ -1,0 +1,6 @@
+# Facility capture temporary browser profiles
+facility-captures/
+facility-captures-*.zip
+
+# Generated test-run output
+test-results/

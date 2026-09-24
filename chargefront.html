@@ -141,6 +141,8 @@
 { "imports": { "three": "https://unpkg.com/three@0.160.0/build/three.module.js" } }
 </script>
 
+<!-- Classic script keeps local file:// play working; facility geometry is built on campaign startup. -->
+<script src="src/world/facility.js"></script>
 <script type="module">
 import * as THREE from 'three';
 import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/littlejs.esm.min.js';
@@ -161,6 +163,8 @@ import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/l
 
 'use strict';
 const QUERY = new URLSearchParams(location.search);
+const PERF_DIAGNOSTICS = QUERY.get('perfDiagnostics') === '1'; // ?perfDiagnostics=1; remove query to disable
+const PERF_GPU_SYNC = PERF_DIAGNOSTICS && QUERY.get('perfGpuSync') === '1'; // optional GPU/driver ablation, never normal play
 const PREVIEW = QUERY.has('preview');                  // ?preview=1 → cinematic flyover, no input
 const FACILITY_CAPTURE = QUERY.get('facilityCapture') === '1';
 const FACILITY_CAPTURE_VIEW = QUERY.get('facilityView') || 'front';
@@ -329,8 +333,8 @@ const RELAYS = [
 const MISSION1_ROUTE = [LZ, LJS.vec2(445, 235), LJS.vec2(420, 405), LJS.vec2(390, 530), FACILITY_STAGING, LJS.vec2(360, 610)];
 const MISSION2_ROUTE_ALPHA = [FACILITY_STAGING, LJS.vec2(300, 575), RELAYS[0].pos];
 const MISSION2_ROUTE_BETA = [RELAYS[0].pos, LJS.vec2(205, 665), RELAYS[1].pos];
-const FACILITY_BYPASS_WEST = LJS.vec2(285, 585);
-const FACILITY_BYPASS_EAST = LJS.vec2(450, 570);
+const FACILITY_BYPASS_WEST = LJS.vec2(ChargefrontFacility.BYPASS_WEST.x, ChargefrontFacility.BYPASS_WEST.y);
+const FACILITY_BYPASS_EAST = LJS.vec2(ChargefrontFacility.BYPASS_EAST.x, ChargefrontFacility.BYPASS_EAST.y);
 const MISSION2_ROUTE_GAMMA = [RELAYS[1].pos, LJS.vec2(285, 690), FACILITY_BYPASS_WEST, FACILITY_BYPASS_EAST, RELAYS[2].pos];
 const MISSION2_ROUTE = [...MISSION2_ROUTE_ALPHA, ...MISSION2_ROUTE_BETA.slice(1), ...MISSION2_ROUTE_GAMMA.slice(1)];
 const MISSION2_RETURN_ROUTE = [RELAYS[2].pos, LJS.vec2(505, 605), LJS.vec2(455, 625), LJS.vec2(392, 644), FACILITY];
@@ -344,8 +348,8 @@ const EXTRACTION_BOARD = LJS.vec2(450, 80);
 const PARKED_SHIP = LJS.vec2(LZ.x, LZ.y - 6);
 const MISSION3_ROUTE = [LAB_COMMAND, LJS.vec2(360, 662), LAB_DECON, LJS.vec2(360, 710), LAB_SECURITY, LJS.vec2(360, 742), LAB_CONTAINMENT];
 const MISSION4_ROUTE = [LAB_CONTAINMENT, LAB_EMERGENCY_EXIT, LJS.vec2(430, 720), LJS.vec2(424, 646), LJS.vec2(390, 530), LJS.vec2(420, 405), LJS.vec2(445, 235), LJS.vec2(450, 120), EXTRACTION_BEACON];
-const CANONICAL_FACILITY_MAP_SEGMENTS = [[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 636], [390, 652, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684]];
-const CANONICAL_LAB_MAP_SEGMENTS = [[330, 690, 352, 690], [368, 690, 390, 690], [330, 684, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [390, 684, 390, 735], [410, 746, 450, 746], [410, 758, 450, 758]];
+const CANONICAL_FACILITY_MAP_SEGMENTS = ChargefrontFacility.MAP_SEGMENTS;
+const CANONICAL_LAB_MAP_SEGMENTS = ChargefrontFacility.LAB_MAP_SEGMENTS;
 const MISSION2_PATHS = [
     MISSION2_ROUTE,
     MISSION2_RETURN_ROUTE,
@@ -417,18 +421,9 @@ function nextRouteWaypoint(path, x, y, reach = 15) {
 /* M2 agents use direct steering everywhere except when that line would cross the
    canonical facility/lab footprint.  Two broad south-side anchors are enough to
    prevent corner accumulation without introducing a general pathfinding system. */
-const FACILITY_NAV_BLOCK = Object.freeze({ x0: 325, y0: 612, x1: 415, y1: 799 });
 function facilityNavigationWaypoint(fromX, fromY, targetX, targetY) {
     if (mode !== 'campaign' || activeMissionId !== 'power_through') return null;
-    const block = FACILITY_NAV_BLOCK;
-    const fromInside = fromX > block.x0 && fromX < block.x1 && fromY > block.y0 && fromY < block.y1;
-    const targetInside = targetX > block.x0 && targetX < block.x1 && targetY > block.y0 && targetY < block.y1;
-    if (fromInside || targetInside || !segIntersectsRect(fromX, fromY, targetX, targetY, block.x0, block.y0, block.x1, block.y1)) return null;
-    const targetWest = targetX < (block.x0 + block.x1) / 2;
-    const handoffY = 12;
-    if (fromX <= block.x0) return !targetWest && fromY <= FACILITY_BYPASS_WEST.y + handoffY ? FACILITY_BYPASS_EAST : FACILITY_BYPASS_WEST;
-    if (fromX >= block.x1) return targetWest && fromY <= FACILITY_BYPASS_EAST.y + handoffY ? FACILITY_BYPASS_WEST : FACILITY_BYPASS_EAST;
-    return targetWest ? FACILITY_BYPASS_WEST : FACILITY_BYPASS_EAST;
+    return ChargefrontFacility.navigationWaypoint(fromX, fromY, targetX, targetY, segIntersectsRect);
 }
 function pointOnPath(path, tt) {
     let total = 0;
@@ -776,6 +771,12 @@ let terrain;
 let shadowUpdateT = 0;
 const budgetLights = [];
 let budgetLightsT = 0;
+/* Persistent render-side light slots. Authored lights remain attached to their
+   mission/route groups as mutable state, but are never submitted as lights.
+   Changing the number of submitted PointLights changes Three.js shader defines. */
+const LOCAL_LIGHT_SLOTS = 8;
+const localLightSlots = [], localLightSources = [];
+let localLightInRange = 0;
 /* These two sets live far from the playable route.  They use the same renderer as
    the game, but never collide with or reveal the mission map. */
 const MENU_SET = { x: -138, y: -116 };
@@ -821,10 +822,20 @@ function initWorld() {
     playerLight = new THREE.PointLight(0xbfd8ff, 1.1, 80, 1.6);
     camera.add(playerLight);
     scene.add(camera);
-
     /* sky dome (purple gradient) + stars */
     buildSky();
     /* terrain is built lazily per mode (campaign or endless) — see the world builders */
+}
+
+function ensureLocalLightSlots() {
+    if (localLightSlots.length) return;
+    for (let i = 0; i < LOCAL_LIGHT_SLOTS; i++) {
+        const slot = new THREE.PointLight(0xffffff, 0, 1, 1.8);
+        slot.name = 'LocalLightSlot' + i;
+        scene.add(slot);
+        localLightSlots.push(slot);
+        localLightSources.push(null);
+    }
 }
 
 function cameraAlign2D(on) { threeJS.cameraAlign2D = on; }
@@ -1563,8 +1574,8 @@ function buildIntroCabin() {
         const m = makeSoldier(a.c, a.role);
         m.position.set(a.p[0], a.p[1], a.p[2]); m.rotation.z = a.r; g.add(m);
     }
-    const blue = new THREE.PointLight(0x4ecfff, 2.6, 13, 1.8); blue.position.set(0, -0.4, 3.2); g.add(blue);
-    const rim = new THREE.PointLight(0x9b5dff, 1.5, 12, 2); rim.position.set(-5, 2.7, 4.7); g.add(rim);
+    const blue = new THREE.PointLight(0x4ecfff, 2.6, 13, 1.8); blue.position.set(0, -0.4, 3.2); g.add(addBudgetLight(blue));
+    const rim = new THREE.PointLight(0x9b5dff, 1.5, 12, 2); rim.position.set(-5, 2.7, 4.7); g.add(addBudgetLight(rim));
     g.visible = false; scene.add(g);
     return { group: g, holo, holoCore };
 }
@@ -1643,6 +1654,7 @@ let solidGridCount = -1, solidQueryStamp = 0;
 function solidCellKey(x, y) { return x + ',' + y; }
 function rebuildSolidGrid() {
     if (solidGridCount === SOLIDS.length) return;
+    if (PERF_DIAGNOSTICS) perfDiagnostics.count('collisionNavRebuild');
     solidGrid.clear();
     for (const s of SOLIDS) {
         const x0 = Math.floor(s.x0 / SOLID_CELL_SIZE), x1 = Math.floor(s.x1 / SOLID_CELL_SIZE);
@@ -1713,82 +1725,9 @@ function makeFacilitySign(text, width, accent = '#66d8ff') {
     return new THREE.Mesh(new THREE.PlaneGeometry(width, width * 0.1875), new THREE.MeshBasicMaterial({ map: texture, transparent: true }));
 }
 
-/* ─── sliding blast doors (open when the squad approaches, close behind) ── */
-const facilityDoors = [];   // { base:[x,y], axis:'x'|'y', openT, solid, panels:[{g,s,offC,offO}] }
-const facilityCutawayMeshes = [];
-const facilityReferenceLights = [];
-function addSlidingDoor(x, y, axis, gapHalf, panelW, panelH, id = '') {
-    const door = { id, base: [x, y], axis, openT: 0, lastTarget: 0, denied: false, enabled: true, locked: false, forceOpen: false, panels: [] };
-    for (const s of [-1, 1]) {
-        const w = axis === 'x' ? panelW : 0.32;   // panel size along the slide axis vs across it
-        const d = axis === 'x' ? 0.32 : panelW;
-        const g = new THREE.Group();
-        const panel = box(w, d, panelH, 0x3e4658, { metalness: 0.72, roughness: 0.34 });
-        panel.castShadow = true; panel.receiveShadow = true;
-        g.add(panel);
-        /* glowing leading-edge seam faces the doorway centre */
-        const seam = box(axis === 'x' ? 0.14 : d + 0.06, axis === 'x' ? d + 0.06 : 0.14, panelH - 0.9, 0xff9e42, EMISSIVE(0xff6b24, 1.4));
-        seam.position.set(axis === 'x' ? -s * (w * 0.5 - 0.1) : 0, axis === 'x' ? 0 : -s * (d * 0.5 - 0.1), 0);
-        g.add(seam);
-        g.position.z = panelH / 2;
-        const offC = s * (gapHalf * 0.55);
-        const offO = s * (gapHalf + panelW * 0.5 + 0.4);
-        if (axis === 'x') { g.position.x = x + offC; g.position.y = y; }
-        else { g.position.x = x; g.position.y = y + offC; }
-        scene.add(g);
-        door.panels.push({ g, seam, s, offC, offO });
-    }
-    /* collision strip across the doorway — disabled while the door is open */
-    const solid = axis === 'x'
-        ? { x0: x - gapHalf, y0: y - 0.5, x1: x + gapHalf, y1: y + 0.5, topY: panelH, bottomY: 0, disabled: false }
-        : { x0: x - 0.5, y0: y - gapHalf, x1: x + 0.5, y1: y + gapHalf, topY: panelH, bottomY: 0, disabled: false };
-    SOLIDS.push(solid);
-    door.solid = solid;
-    facilityDoors.push(door);
-    return door;
-}
-function updateFacilityDoors(dt) {
-    for (const door of facilityDoors) {
-        if (!door.enabled) {
-            door.solid.disabled = true;
-            for (const p of door.panels) p.g.visible = false;
-            continue;
-        }
-        for (const p of door.panels) p.g.visible = true;
-        let near = Math.hypot(player.pos.x - door.base[0], player.pos.y - door.base[1]) < 4.2;
-        if (!near) {
-            for (const m of squadMembers) {
-                if (!m.downed && Math.hypot(m.pos.x - door.base[0], m.pos.y - door.base[1]) < 4.2) { near = true; break; }
-            }
-        }
-        const locked = !!door.locked || (mode === 'campaign' && door.id === 'bio_lab' && !campaignRun.worldState.labAccess);
-        if (door.id === 'bio_lab' || door.id.startsWith('lab_')) {
-            const color = locked ? 0xff5544 : 0x66ffcc;
-            for (const p of door.panels) {
-                p.seam.material.color.setHex(color); p.seam.material.emissive.setHex(locked ? 0xff2211 : 0x22cc99);
-                p.seam.material.emissiveIntensity = locked ? 1.15 + Math.sin(LJS.time * 2.2) * 0.18 : 1.8;
-            }
-            if (near && locked && !door.denied) {
-                const deniedText = door.id === 'lab_security' ? 'CONTAINMENT LOCKED — use the local security console'
-                    : door.id === 'lab_emergency' ? 'MAINTENANCE PASSAGE SEALED' : 'BIO-LAB SEALED — inspect command records for lock status';
-                door.denied = true; notify(deniedText, '#ff8866'); playFileSfx('accessDeny', 0.45);
-            } else if (!near) door.denied = false;
-        }
-        const target = door.forceOpen ? 1 : near && !locked ? 1 : 0;
-        if (target !== door.lastTarget) {                  // door starts opening/closing → whoosh
-            playFileSfx('slidingDoor', 0.55, 1, door.base[0], door.base[1]);
-            door.lastTarget = target;
-        }
-        door.openT = clamp(door.openT + (target - door.openT) * Math.min(1, dt * 3.2), 0, 1);
-        door.solid.disabled = door.openT > 0.35;   // open wide enough → walkable
-        const t = smooth(door.openT);
-        for (const p of door.panels) {
-            const off = lerp(p.offC, p.offO, t);
-            if (door.axis === 'x') { p.g.position.x = door.base[0] + off; p.g.position.y = door.base[1]; }
-            else { p.g.position.x = door.base[0]; p.g.position.y = door.base[1] + off; }
-        }
-    }
-}
+/* Doors and their collision strips belong to the persistent facility. */
+function addSlidingDoor(...args) { return facilityWorld.addDoor(...args); }
+function updateFacilityDoors(dt) { facilityWorld.updateDoors(dt, player, squadMembers, !!campaignRun.worldState.labAccess, mode === 'campaign'); }
 
 const relays = [];
 function buildRelays() {
@@ -1875,6 +1814,7 @@ function buildRelayArena(relay) {
         relay.siteSolids.push(addSolid(x - 14.2, y + 6.8, x - 11.8, y + 9.2, terrainHeight(x - 13, y + 8) + 22, terrainHeight(x - 13, y + 8)));
         const dish = new THREE.Mesh(new THREE.SphereGeometry(3.2, 14, 7, 0, TAU, 0, Math.PI / 2), mat(0x77859d, { metalness: 0.76, roughness: 0.3, side: THREE.DoubleSide }));
         dish.scale.z = 0.3; dish.rotation.set(0.7, 0.25, -0.45); dish.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 21); g.add(dish);
+        relay.arenaDish = dish; // persistent first-use material prewarm target
         for (const [ox, oy, w, d] of [[13, 10, 5, 2.2], [14, -9, 4, 2.2], [-4, -15, 6, 2.0], [-20, -7, 4, 2.2]]) solidBox(x + ox, y + oy, w, d, 1.35, 0x586579);
         const ridgeLight = new THREE.PointLight(0x66cfff, 38, 85, 1.8);
         ridgeLight.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 22); g.add(addBudgetLight(ridgeLight));
@@ -1915,630 +1855,25 @@ function buildRelayArena(relay) {
 
 const vial = { group: null, light: null, tube: null, solid: null, picked: false, bobT: 0 };
 function buildFacility() {
-    const fx = FACILITY.x, fy = FACILITY.y;
-    const wallC = 0x565a6e, trim = 0x77809a;
-    const H = 9;                                   // wall height
+    const specimen = facilityWorld.buildHall(FACILITY, LAB_CONTAINMENT);
+    vial.solid = specimen.solid;
+    vial.group = specimen.group;
+    vial.light = specimen.light;
+    vial.tube = specimen.tube;
 
-    /* axis-aligned wall segment helper (horizontal or vertical) — adds its own solid */
-    const seg = (x0, y0, x1, y1, h, col) => {
-        const horiz = Math.abs(y1 - y0) < 0.001;
-        const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-        const w = horiz ? Math.abs(x1 - x0) : 2;
-        const d = horiz ? 2 : Math.abs(y1 - y0);
-        return addWallPanel(cx, cy, w, d, h, col || wallC);
-    };
-
-    /* The obsolete 104x80 m compound enclosure was removed for Milestone 3.6.
-       Only the laboratory access facade remains here because it is part of the
-       actual building and gives the access door a real wall to seal. */
-    seg(330, 690, 352, 690, H + 1);
-    seg(368, 690, 390, 690, H + 1);
-
-    /* gate trim */
-    const stripe = box(14, 1.6, 0.4, 0xd8b322, EMISSIVE(0xd8b322, 0.4));
-    stripe.position.set(fx, 610, H + 0.6); scene.add(stripe);
-    /* Open, damaged south gate: visible frame and retracted blast panels without closing the collision gap. */
-    for (const x of [351.2, 368.8]) {
-        const gatePost = box(0.7, 0.65, 7.2, 0x69748d, { metalness: 0.72, roughness: 0.32 });
-        gatePost.position.set(x, 610, 3.6); scene.add(gatePost);
-    }
-    const gateHeader = box(17.6, 0.68, 0.72, 0x69748d, { metalness: 0.72, roughness: 0.32 });
-    gateHeader.position.set(fx, 610, 7.15); scene.add(gateHeader);
-    for (const [x, tilt] of [[347.7, -0.20], [372.3, 0.20]]) {
-        const panel = box(5.8, 0.22, 5.8, 0x394052, { metalness: 0.68, roughness: 0.38 });
-        panel.position.set(x, 610.65, 2.9); panel.rotation.z = tilt; scene.add(panel);
-        const panelLight = box(4.3, 0.08, 0.14, 0xff8b35, EMISSIVE(0xff5b1d, 1.4));
-        panelLight.position.set(x, 610.48, 4.7); panelLight.rotation.z = tilt; scene.add(panelLight);
-    }
-
-    /* ── main hall (large open interior with devices) ─────────────── */
-    const hx0 = 330, hx1 = 390, hy0 = 618, hy1 = 660;
-    seg(hx0, hy0, 352, hy0, H, trim);    // hall south (door gap 352..368)
-    seg(368, hy0, hx1, hy0, H, trim);
-    seg(hx0, hy0, hx0, hy1, H, trim);    // hall west
-    seg(hx1, hy0, hx1, 636, H, trim);    // hall east, service door gap 636..652
-    seg(hx1, 652, hx1, hy1, H, trim);
-    seg(hx0, hy1, 352, hy1, H, trim);    // hall north (door gap 352..368 to vault)
-    seg(368, hy1, hx1, hy1, H, trim);
-
-    const hallRoof = box(hx1 - hx0, hy1 - hy0, 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
-    hallRoof.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, H + 0.5); hallRoof.castShadow = true; scene.add(hallRoof);
-    hallRoof.name = 'FacilityHallRoof'; facilityCutawayMeshes.push(hallRoof);
-    const hallFloor = box(hx1 - hx0, hy1 - hy0, 0.4, 0x3a3e4e, { metalness: 0.3, roughness: 0.6 });
-    hallFloor.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, 0.05); hallFloor.receiveShadow = true; scene.add(hallFloor);
-
-    /* ── vault room (north of the hall, shares the y=660 wall line) ── */
-    const vx0 = 342, vx1 = 378, vy1 = 684;
-    seg(vx0, 660, vx0, vy1, H, trim);    // vault west
-    seg(vx1, 660, vx1, vy1, H, trim);    // vault east
-    seg(vx0, vy1, 352, vy1, H, trim);    // vault north, opening into decontamination airlock
-    seg(368, vy1, vx1, vy1, H, trim);
-    const vaultRoof = box(vx1 - vx0, vy1 - 660, 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
-    vaultRoof.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, H + 0.5); vaultRoof.castShadow = true; scene.add(vaultRoof);
-    vaultRoof.name = 'FacilityVaultRoof'; facilityCutawayMeshes.push(vaultRoof);
-    const vaultFloor = box(vx1 - vx0, vy1 - 660, 0.4, 0x3a3e4e, { metalness: 0.3, roughness: 0.6 });
-    vaultFloor.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, 0.05); vaultFloor.receiveShadow = true; scene.add(vaultFloor);
-
-    /* vault specimen tube — the clone-DNA vial sits in the same containment tube
-       as the main menu (scaled down to fit the vault ceiling) */
-    const px = LAB_CONTAINMENT.x, py = LAB_CONTAINMENT.y;
-    const tube = makeSpecimenTube();
-    tube.group.scale.setScalar(0.6);
-    tube.group.position.set(px, py, 0);
-    scene.add(tube.group);
-    vial.solid = addSolid(px - 1.45, py - 1.45, px + 1.45, py + 1.45, 3.5, 0);   // tube base footprint
-    vial.group = tube.group;
-    vial.light = tube.light;
-    vial.tube = tube;
-
-    /* ── interior devices ─────────────────────────────────────────── */
-    const device = (gx, gy, w, d, h, col, opts) => {
-        const m = box(w, d, h, col, Object.assign({ metalness: 0.4, roughness: 0.6 }, opts));
-        m.position.set(gx, gy, h / 2); m.castShadow = true; m.receiveShadow = true;
-        scene.add(m);
-        addSolid(gx - w / 2, gy - d / 2, gx + w / 2, gy + d / 2, h, 0);
-        return m;
-    };
-
-    /* server racks along the west wall */
-    for (let i = 0; i < 3; i++) {
-        const ry = 626 + i * 12;
-        device(334, ry, 1.8, 2.6, 2.6, 0x22252e);
-        const lights = box(0.5, 2.2, 0.24, 0x66ccff, EMISSIVE(0x33aaff, 1.1));
-        lights.position.set(335.2, ry, 1.7); scene.add(lights);
-    }
-    /* consoles along the east wall (with glowing screens) */
-    for (let i = 0; i < 2; i++) {
-        const cy = 626 + i * 24;
-        device(386, cy, 1.4, 2.6, 1.3, 0x2a2e3a);
-        const screen = box(0.2, 1.8, 0.9, 0x66e0ff, EMISSIVE(0x2ab0d0, 0.9));
-        screen.position.set(385.2, cy, 1.35); scene.add(screen);
-    }
-    /* power generator bank */
-    device(336, 622, 3.0, 3.2, 2.0, 0x4a4e60);
-    const genLight = box(0.4, 0.4, 0.4, 0x66ffcc, EMISSIVE(0x33ffaa, 1.3));
-    genLight.position.set(336, 622, 2.1); scene.add(genLight);
-    /* coolant tanks against the north wall */
-    for (let i = 0; i < 2; i++) {
-        const tx2 = 342 + i * 36, ty2 = 656;
-        const tank = new THREE.Mesh(new THREE.CylinderGeometry(0.9, 0.9, 3.0, 10), mat(0x5a4a3a, { metalness: 0.4, roughness: 0.5 }));
-        tank.rotation.x = Math.PI / 2; tank.position.set(tx2, ty2, 1.5); tank.castShadow = true; scene.add(tank);
-        addSolid(tx2 - 1, ty2 - 1, tx2 + 1, ty2 + 1, 3.0, 0);
-        const valve = new THREE.Mesh(new THREE.SphereGeometry(0.18, 6, 5), mat(0xffcc66, EMISSIVE(0xffaa33, 1.2)));
-        valve.position.set(tx2, ty2, 3.1); scene.add(valve);
-    }
-    /* ceiling pipes running across the hall */
-    for (let i = 0; i < 3; i++) {
-        const py2 = 628 + i * 14;
-        const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 56, 8), mat(0x4a4e60, { metalness: 0.5, roughness: 0.5 }));
-        pipe.rotation.z = Math.PI / 2; pipe.position.set(360, py2, 7.4); scene.add(pipe);
-    }
-    /* ceiling light panels + point lights */
-    const hallLightPos = [[344, 630], [360, 626], [376, 630], [352, 652], [368, 652]];
-    for (let i = 0; i < hallLightPos.length; i++) {
-        const lp = hallLightPos[i];
-        const panel = box(1.4, 0.5, 0.12, 0xfff2cc, EMISSIVE(0xffdd88, 1.5));
-        panel.position.set(lp[0], lp[1], H - 0.4); scene.add(panel);
-        const lgt = new THREE.PointLight(0xffeebb, 24, 36, 1.8);
-        lgt.position.set(lp[0], lp[1], H - 0.8); scene.add(lgt);
-    }
-    /* Wall ribs, dangling cables, hazard panels and wreckage break up the clean hall silhouette. */
-    for (let i = 0; i < 5; i++) {
-        const y = 621 + i * 8;
-        const westRib = box(0.18, 1.4, 6.8, 0x343a4c, { metalness: 0.62, roughness: 0.42 });
-        westRib.position.set(331.1, y, 3.4); scene.add(westRib);
-        const eastRib = box(0.18, 1.4, 6.8, 0x343a4c, { metalness: 0.62, roughness: 0.42 });
-        eastRib.position.set(388.9, y, 3.4); scene.add(eastRib);
-        const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 4.0 + (i % 2) * 1.6, 6), mat(0x171922, { metalness: 0.45, roughness: 0.65 }));
-        cable.rotation.x = Math.PI / 2; cable.position.set(333.0, y + 0.5, 6.4); cable.rotation.z = i % 2 ? 0.22 : -0.16; scene.add(cable);
-    }
-    for (const [x, y, rot] of [[350, 640, 0.48], [367, 636, -0.72], [377, 651, 0.18]]) {
-        const beam = box(9.0, 0.36, 0.36, 0x414858, { metalness: 0.72, roughness: 0.45 });
-        beam.position.set(x, y, 1.55); beam.rotation.z = rot; scene.add(beam);
-        const spar = box(2.0, 0.26, 0.24, 0x735c3c, { metalness: 0.45, roughness: 0.62 });
-        spar.position.set(x + 1.1, y - 0.45, 0.48); spar.rotation.z = rot + 0.6; scene.add(spar);
-    }
-    for (const [x, y] of [[332.0, 634], [388.0, 650]]) {
-        const warningPanel = box(0.12, 3.4, 1.1, 0xffa13e, EMISSIVE(0xff591b, 1.7));
-        warningPanel.position.set(x, y, 4.1); scene.add(warningPanel);
-        for (let j = -1; j <= 1; j++) {
-            const stripeDecal = box(0.13, 0.28, 0.9, 0x241d23, { metalness: 0.25, roughness: 0.85 });
-            stripeDecal.position.set(x + (x < 360 ? 0.07 : -0.07), y + j * 0.85, 4.1); stripeDecal.rotation.z = 0.38; scene.add(stripeDecal);
-        }
-    }
-    const signCanvas = document.createElement('canvas');
-    signCanvas.width = 512; signCanvas.height = 128;
-    const signCtx = signCanvas.getContext('2d');
-    signCtx.fillStyle = '#17131d'; signCtx.fillRect(0, 0, 512, 128);
-    signCtx.strokeStyle = '#ff9e42'; signCtx.lineWidth = 10; signCtx.strokeRect(8, 8, 496, 112);
-    signCtx.fillStyle = '#ffe1a4'; signCtx.font = 'bold 42px sans-serif'; signCtx.textAlign = 'center'; signCtx.textBaseline = 'middle'; signCtx.fillText('BIOHAZARD // QUARANTINE', 256, 68);
-    const signTexture = new THREE.CanvasTexture(signCanvas);
-    const bioSign = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 1.9), new THREE.MeshBasicMaterial({ map: signTexture, transparent: true }));
-    bioSign.rotation.x = Math.PI / 2; bioSign.position.set(360, 619.05, 4.8); scene.add(bioSign);
-    const serviceSign = makeFacilitySign('SERVICE // MAINTENANCE', 8.4, '#ffb24d');
-    serviceSign.rotation.x = Math.PI / 2; serviceSign.position.set(342, 619.0, 6.35); scene.add(serviceSign);
-    const commandSign = makeFacilitySign('COMMAND // SECURITY', 8.0, '#66d8ff');
-    commandSign.rotation.x = Math.PI / 2; commandSign.position.set(382, 659.82, 6.35); scene.add(commandSign);
-    const labSign = makeFacilitySign('BIO-LAB // 3-RELAY LOCK', 10.5, '#ff6655');
-    labSign.rotation.x = Math.PI / 2; labSign.position.set(360, 659.78, 7.35); scene.add(labSign);
-    const sensorSign = makeFacilitySign('SENSORS // INTEL', 5.8, '#66d8ff');
-    sensorSign.rotation.y = -Math.PI / 2; sensorSign.position.set(331.18, 630, 5.55); scene.add(sensorSign);
-    const supplySign = makeFacilitySign('SUPPLY // FIELD GEAR', 6.2, '#ffb24d');
-    supplySign.rotation.y = Math.PI / 2; supplySign.position.set(388.82, 626, 5.55); scene.add(supplySign);
-    for (let i = 0; i < 3; i++) {
-        const indicator = box(1.5, 0.12, 0.24, 0xff5544, EMISSIVE(0xff2211, 1.25));
-        indicator.position.set(357.8 + i * 2.2, 659.64, 5.85); scene.add(indicator); facilityFx.labIndicators.push(indicator.material);
-    }
-    const vaultLight = new THREE.PointLight(0xccbbff, 18, 32, 1.8);
-    vaultLight.position.set(360, 672, 6.0); scene.add(vaultLight);
-
-    /* ── antenna tower (NE corner of the compound) ─────────────────── */
-    const tx = fx + 40, ty = fy + 22;
-    const tower = new THREE.Mesh(new THREE.CylinderGeometry(0.5, 1.6, 26, 6), mat(0x4a4e60, { metalness: 0.5, roughness: 0.5 }));
-    tower.rotation.x = Math.PI / 2; tower.position.set(tx, ty, 13); tower.castShadow = true; scene.add(tower);
-    const towerTip = new THREE.Mesh(new THREE.SphereGeometry(0.7, 8, 6), mat(0xff5566, EMISSIVE(0xff2233, 1.2)));
-    towerTip.position.set(tx, ty, 27); scene.add(towerTip);
-    addSolid(tx - 1, ty - 1, tx + 1, ty + 1, 26, 0);
-
-    /* ── wall-top hazard trim (finished compound look) ─────────────── */
-    const wallTrim = (x0, y0, x1, y1) => {
-        const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-        const horiz = Math.abs(y1 - y0) < 0.001;
-        const w = (horiz ? Math.abs(x1 - x0) : 2) - 0.5;
-        const d = (horiz ? 2 : Math.abs(y1 - y0)) - 0.5;
-        const t = box(w, d, 0.18, 0xd8b322, EMISSIVE(0xd8b322, 0.5));
-        t.position.set(cx, cy, H + 1.15); scene.add(t);
-    };
-    wallTrim(330, 690, 352, 690);
-    wallTrim(368, 690, 390, 690);
-
-    /* Recessed panels now belong only to real building walls; none recreate the
-       removed perimeter or add invisible collision. */
-    const exteriorPanels = [[341, 618, 20, 0.16], [379, 618, 20, 0.16], [330, 639, 0.16, 38], [390, 639, 0.16, 38], [341, 690, 20, 0.16], [379, 690, 20, 0.16]];
-    for (const p of exteriorPanels) {
-        const horizontal = p[2] > p[3];
-        const panel = box(p[2], p[3], 2.5, 0x3e4658, { metalness: 0.68, roughness: 0.42 });
-        panel.position.set(p[0], p[1], 4.2); scene.add(panel);
-        const conduit = box(horizontal ? Math.max(2, p[2] - 3) : 0.10, horizontal ? 0.10 : Math.max(2, p[3] - 3), 0.16, 0x6f7f9e, EMISSIVE(0x173c72, 0.75));
-        conduit.position.set(p[0], p[1] + (horizontal ? -0.12 : 0), 6.2); scene.add(conduit);
-    }
-
-    /* ── ruined storage yard (NE corner) — a deliberate cluster, not scatter ── */
-    const contCol = 0x5a4a3a;
-    const container = (cx, cy, rot, w, d, h) => {
-        const c = box(w, d, h, contCol, { roughness: 0.9, metalness: 0.1 });
-        c.position.set(cx, cy, h / 2); c.rotation.z = rot; c.castShadow = true; c.receiveShadow = true;
-        scene.add(c);
-        const stripe = box(w - 0.4, 0.4, 0.14, 0xd8b322, EMISSIVE(0xd8b322, 0.5));
-        stripe.position.set(cx, cy, h + 0.07); stripe.rotation.z = rot; scene.add(stripe);
-        addRotatedSolid(cx, cy, w, d, rot, h, 0);
-    };
-    container(424, 700, 0.06, 5.2, 2.6, 2.8);
-    container(418, 693, -0.04, 5.2, 2.6, 2.8);
-    container(427, 706, 0.02, 4.0, 2.4, 2.6);
-    container(296, 690, 0.4, 4.0, 2.4, 2.6);   // west service unit, clear of the deep lab
-
-    /* pylons / pipe clusters outside */
-    const pylon = (cx, cy, h, r) => {
-        const p = new THREE.Mesh(new THREE.CylinderGeometry(r * 0.72, r, h, 6), mat(0x4a4e60, { metalness: 0.5, roughness: 0.5 }));
-        p.rotation.x = Math.PI / 2; p.position.set(cx, cy, h / 2); p.castShadow = true; scene.add(p);
-        addSolid(cx - r * 0.6, cy - r * 0.6, cx + r * 0.6, cy + r * 0.6, h, 0);
-    };
-    pylon(296, 660, 6.0, 1.0);
-    pylon(426, 650, 6.0, 1.0);
-    pylon(430, 688, 7.0, 0.9);
-
-    /* wrecked ground vehicle outside the SE corner */
-    const wreck = new THREE.Group();
-    const wBody = box(3.6, 1.3, 1.4, 0x3a3a46, { metalness: 0.5, roughness: 0.6 });
-    wBody.position.set(0, 0, 0.7); wreck.add(wBody);
-    const wCabin = box(1.7, 1.0, 1.1, 0x2a2a34, { metalness: 0.4, roughness: 0.6 });
-    wCabin.position.set(-0.7, 0, 1.4); wreck.add(wCabin);
-    for (let i = 0; i < 3; i++) {
-        const wl = new THREE.Mesh(new THREE.BoxGeometry(0.5, 0.5, 0.5), mat(0x1a1a22));
-        wl.position.set(-1 + i * 1.5, -0.9, 0.42); wreck.add(wl);
-    }
-    wreck.position.set(fx + 68, fy - 54, 0);
-    wreck.rotation.z = 0.85;
-    scene.add(wreck);
-    addRotatedSolid(fx + 68, fy - 54, 3.8, 1.5, 0.85, 1.8, 0);
-
-    /* spore-infested patches well outside the compound walls */
-    for (let i = 0; i < 5; i++) {
-        const a = rand(TAU), r = rand(46, 72);
-        const sx = fx + Math.cos(a) * r, sy = fy + Math.sin(a) * r;
-        const patch = new THREE.Mesh(new THREE.SphereGeometry(rand(0.6, 1.2), 7, 6), mat(0xcc44ff, { emissive: 0xaa22ff, emissiveIntensity: 1.4, roughness: 0.4 }));
-        patch.position.set(sx, sy, 0.35); scene.add(patch);
-        const patchLight = new THREE.PointLight(0xaa44ff, 12, 30, 1.8);
-        patchLight.position.set(sx, sy, 1.2); scene.add(patchLight);
-    }
-
-    /* ═══ INTERIOR DRESSING PASS — doors, props, lighting, atmosphere ═══ */
-
-    /* sliding blast doors — open as the squad approaches, close behind */
-    addSlidingDoor(360, 618, 'x', 8, 9, H);      // hall entrance
-    addSlidingDoor(360, 660, 'x', 8, 9, H, 'bio_lab');      // sealed until the relay network restores containment access
-    addSlidingDoor(390, 644, 'y', 8, 9, H);      // east service entrance
-
-    /* corner pillars frame the two rooms */
-    const pillar = (x, y) => {
-        const p = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.32, H, 6), mat(0x4a5268, { metalness: 0.55, roughness: 0.4 }));
-        p.rotation.x = Math.PI / 2; p.position.set(x, y, H / 2); p.castShadow = true; scene.add(p);
-    };
-    for (const c of [[331.5, 619.5], [388.5, 619.5], [331.5, 658.5], [388.5, 658.5], [343.5, 661.5], [376.5, 661.5], [343.5, 682.5], [376.5, 682.5]]) pillar(c[0], c[1]);
-
-    /* wall-mounted screens (flicker via gameUpdatePost) */
-    const wallScreen = (x, y, w, h, flip) => {
-        const off = flip ? -0.1 : 0.1;
-        const frame = box(0.14, w, h, 0x22262e, { metalness: 0.5, roughness: 0.5 });
-        frame.position.set(x + off, y, 4.2); scene.add(frame);
-        const scr = box(0.18, w - 0.3, h - 0.3, 0x66e0ff, EMISSIVE(0x2ab0d0, 1.3));
-        scr.position.set(x + off * 1.1, y, 4.2); scene.add(scr);
-        facilityFx.screens.push({ mat: scr.material, base: 1.3, seed: rand(TAU) });
-    };
-    wallScreen(331, 624, 1.7, 1.2, false);
-    wallScreen(331, 633, 1.7, 1.2, false);
-    wallScreen(389, 642, 1.7, 1.2, true);
-
-    /* wall sconces — low blue glow near the walls */
-    const sconce = (x, y) => {
-        const off = x < 360 ? 0.12 : -0.12;
-        const strip = box(0.14, 0.2, 0.95, 0x66d8ff, EMISSIVE(0x2ab0d0, 1.6));
-        strip.position.set(x + off, y, 2.6); scene.add(strip);
-        const lgt = new THREE.PointLight(0x2ab0d0, 11, 18, 1.8);
-        lgt.position.set(x + off * 2.6, y, 2.7); scene.add(lgt);
-    };
-    sconce(331, 628); sconce(331, 646);
-    sconce(389, 634); sconce(389, 652);
-
-    /* generator → coolant pipe run + a live gauge */
-    const genPipe = new THREE.Mesh(new THREE.CylinderGeometry(0.09, 0.09, 8, 8), mat(0x6a6f88, { metalness: 0.7, roughness: 0.35 }));
-    genPipe.rotation.x = Math.PI / 2; genPipe.position.set(336, 644, 1.0); scene.add(genPipe);
-    const gauge = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 0.06, 12), mat(0x22262e, { metalness: 0.6, roughness: 0.4 }));
-    gauge.rotation.x = Math.PI / 2; gauge.position.set(336, 623.6, 1.9); scene.add(gauge);
-    const gaugeFace = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.03, 12), mat(0x66ffcc, EMISSIVE(0x33ffaa, 1.5)));
-    gaugeFace.rotation.x = Math.PI / 2; gaugeFace.position.set(336, 623.4, 1.9); scene.add(gaugeFace);
-
-    /* toppled rack + barrels tucked into the corners */
-    const toppled = box(1.8, 2.5, 1.2, 0x1e222c, { metalness: 0.5, roughness: 0.55 });
-    toppled.position.set(337, 656, 0.9); toppled.rotation.z = 1.35; toppled.castShadow = true; scene.add(toppled);
-    addSolid(335.5, 654.5, 338.5, 657.5, 1.4, 0);
-    for (const [bx, by, br] of [[377, 655, 0.35], [380, 656, -0.2]]) {
-        const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 1.0, 8), mat(0x6a5a3a, { metalness: 0.5, roughness: 0.5 }));
-        barrel.rotation.x = Math.PI / 2; barrel.position.set(bx, by, 0.5); barrel.rotation.z = br; barrel.castShadow = true; scene.add(barrel);
-        const band = new THREE.Mesh(new THREE.CylinderGeometry(0.43, 0.43, 0.1, 8), mat(0xd8b322, EMISSIVE(0xd8b322, 0.3)));
-        band.rotation.x = Math.PI / 2; band.position.set(bx, by, 0.5); scene.add(band);
-        addSolid(bx - 0.5, by - 0.5, bx + 0.5, by + 0.5, 1.1, 0);
-    }
-
-    /* ── vault: a glowing containment ring on the floor around the specimen tube ── */
-    const floorRing = new THREE.Mesh(new THREE.RingGeometry(2.7, 3.0, 32), mat(0x66ffcc, { emissive: 0x22ffaa, emissiveIntensity: 1.2, transparent: true, opacity: 0.5, depthWrite: false, side: THREE.DoubleSide }));
-    floorRing.rotation.x = Math.PI / 2; floorRing.position.set(px, py, 0.22); scene.add(floorRing);
-
-    /* ── vault walls: screens + sconces so the room around the tube isn't bare ── */
-    wallScreen(343, 668, 1.7, 1.2, false);
-    wallScreen(343, 676, 1.7, 1.2, false);
-    wallScreen(377, 668, 1.7, 1.2, true);
-    wallScreen(377, 676, 1.7, 1.2, true);
-    sconce(343, 672); sconce(377, 672);
-    const vaultNorthPanel = box(26, 0.14, 1.1, 0x22262e, { metalness: 0.5, roughness: 0.5 });
-    vaultNorthPanel.position.set(360, 682.9, 4.4); scene.add(vaultNorthPanel);
-    const vaultNorthGlow = box(24, 0.18, 0.5, 0x66e0ff, EMISSIVE(0x2ab0d0, 1.3));
-    vaultNorthGlow.position.set(360, 682.8, 4.4); scene.add(vaultNorthGlow);
-    facilityFx.screens.push({ mat: vaultNorthGlow.material, base: 1.3, seed: rand(TAU) });
-
-    /* ── ceilings: trusses + hanging service drops ── */
-    const ceilingBeam = (x, y, horiz, len) => {
-        const m = box(horiz ? len : 0.5, horiz ? 0.5 : len, 0.4, 0x2e3442, { metalness: 0.6, roughness: 0.4 });
-        m.position.set(x, y, 8.1); m.castShadow = true; scene.add(m);
-    };
-    ceilingBeam(360, 624, true, 54);   // hall longitudinal
-    ceilingBeam(360, 652, true, 54);
-    ceilingBeam(340, 639, false, 40);  // hall cross
-    ceilingBeam(380, 639, false, 40);
-    ceilingBeam(360, 670, true, 30);   // vault longitudinal
-    ceilingBeam(352, 672, false, 22);  // vault cross
-    ceilingBeam(368, 672, false, 22);
-    const ceilingDrop = (x, y) => {
-        const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.04, 0.04, 1.6, 6), mat(0x171922, { metalness: 0.45, roughness: 0.65 }));
-        cable.rotation.x = Math.PI / 2; cable.position.set(x, y, 7.9); scene.add(cable);
-        const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.07, 6, 5), mat(0x66d8ff, EMISSIVE(0x2ab0d0, 1.4)));
-        lamp.position.set(x, y, 7.0); scene.add(lamp);
-    };
-    ceilingDrop(348, 630); ceilingDrop(372, 642); ceilingDrop(356, 668);
-
-    /* ── floors: worn plates, threshold hazard bands + a service lane ── */
-    const floorPlate = (x, y, w, d) => {
-        const p = box(w, d, 0.06, 0x2e3442, { metalness: 0.5, roughness: 0.6 });
-        p.position.set(x, y, 0.3); p.receiveShadow = true; scene.add(p);
-    };
-    floorPlate(338, 632, 6, 4); floorPlate(382, 646, 6, 4);
-    floorPlate(360, 664, 8, 4);
-    const floorStripe = (x, y, horiz, len) => {
-        const s = box(horiz ? len : 0.3, horiz ? 0.3 : len, 0.05, 0xd8b322, EMISSIVE(0xd8b322, 0.55));
-        s.position.set(x, y, 0.29); scene.add(s);
-    };
-    floorStripe(360, 619.2, true, 14);     // hall entrance threshold
-    floorStripe(360, 659.8, true, 14);     // vault door threshold
-    const lane = box(0.9, 38, 0.05, 0x2a6a8a, { emissive: 0x1a4a6a, emissiveIntensity: 0.6, metalness: 0.3, roughness: 0.6 });
-    lane.position.set(360, 638, 0.28); scene.add(lane);
-    const zoneStrip = (x, y, w, d, color, base = 0.9) => {
-        const strip = box(w, d, 0.055, color, { emissive: color, emissiveIntensity: base, metalness: 0.25, roughness: 0.58 });
-        strip.position.set(x, y, 0.31); scene.add(strip); facilityFx.powerStrips.push({ mat: strip.material, base, color }); return strip;
-    };
-    zoneStrip(332.2, 639, 0.16, 36, 0xffa64d, 0.72);
-    zoneStrip(387.8, 639, 0.16, 36, 0x66cfff, 0.8);
-    zoneStrip(342, 625, 12, 0.22, 0xffa64d, 0.85);
-    zoneStrip(381, 645, 10, 0.22, 0x66cfff, 0.95);
-    zoneStrip(360, 657.5, 15, 0.24, 0xff5b4d, 1.05);
-    for (const y of [626, 638, 650]) {
-        const seam = box(54, 0.08, 0.06, 0x566477, { emissive: 0x20364f, emissiveIntensity: 0.45, metalness: 0.45, roughness: 0.55 });
-        seam.position.set(360, y, 0.32); scene.add(seam);
-    }
-
-    /* interior dust motes — gently drifting (animated in gameUpdatePost) */
-    {
-        const n = 160;
-        const arr = new Float32Array(n * 3);
-        for (let i = 0; i < n; i++) {
-            const inHall = Math.random() < 0.72;
-            arr[i * 3] = inHall ? 332 + rand(56) : 344 + rand(32);
-            arr[i * 3 + 1] = inHall ? 620 + rand(38) : 662 + rand(20);
-            arr[i * 3 + 2] = rand(0.4, H - 0.4);
-        }
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.BufferAttribute(arr, 3));
-        const dust = new THREE.Points(geo, new THREE.PointsMaterial({ color: 0xcfe2ff, size: 0.07, transparent: true, opacity: 0.45, depthWrite: false }));
-        dust.name = 'facilityDust';
-        scene.add(dust);
-        facilityFx.dust = dust;
-        facilityFx.dustBase = arr.slice();
-    }
 }
 
 function buildFacilityExpansion() {
-    const shared = new THREE.Group(), deadSignal = new THREE.Group(), powerThrough = new THREE.Group();
-    deadSignal.visible = activeMissionId === 'dead_signal'; powerThrough.visible = activeMissionId === 'power_through';
-    scene.add(shared, deadSignal, powerThrough);
-    const sharedSolids = [], deadSignalSolids = [];
-    const placedBox = (group, x, y, w, d, h, color, opts = {}, solids = null) => {
-        const mesh = box(w, d, h, color, Object.assign({ metalness: 0.55, roughness: 0.5 }, opts));
-        mesh.position.set(x, y, terrainHeight(x, y) + h / 2); mesh.castShadow = true; mesh.receiveShadow = true; group.add(mesh);
-        if (solids) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y)));
-        return mesh;
-    };
-    const floodlight = (group, x, y, color) => {
-        placedBox(group, x, y, 0.35, 0.35, 5.5, 0x465064);
-        const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.28, 8, 6), mat(color, EMISSIVE(color, 2.1)));
-        lamp.position.set(x, y, terrainHeight(x, y) + 5.8); group.add(lamp);
-        const light = new THREE.PointLight(color, 26, 62, 1.9);
-        light.position.copy(lamp.position); group.add(addBudgetLight(light));
-    };
-
-    /* The perimeter now reads as a working complex: checkpoint, service yard,
-       utility bank and a clearly lit approach to the sealed command building. */
-    placedBox(shared, 338, 600, 7, 5, 3.2, 0x4c5868, {}, sharedSolids);
-    placedBox(shared, 338, 597.4, 5.4, 0.18, 1.1, 0x78d8ff, EMISSIVE(0x2d9bd8, 1.1));
-    placedBox(shared, 311, 595, 14, 8, 0.35, 0x343b47);
-    placedBox(shared, 305, 594, 4.8, 2.4, 1.45, 0x657082, {}, sharedSolids);
-    placedBox(shared, 317, 594, 4.8, 2.4, 1.45, 0x657082, {}, sharedSolids);
-    placedBox(shared, 434, 621, 8, 7, 3.4, 0x485364, {}, sharedSolids);
-    for (let i = 0; i < 3; i++) placedBox(shared, 430 + i * 4, 614, 2.6, 2.6, 2.1, 0x596579, {}, sharedSolids);
-    for (const [x, y] of [[329, 605], [391, 605], [421, 630], [299, 612]]) floodlight(shared, x, y, 0x8acfff);
-    const statusMast = placedBox(shared, 405, 600, 0.5, 0.5, 8.5, 0x424c5c);
-    const statusLights = [];
-    for (let i = 0; i < 3; i++) {
-        const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.32, 8, 6), mat(0xff5544, EMISSIVE(0xff2211, 1.8)));
-        lamp.position.set(405, 600, terrainHeight(405, 600) + 5.8 + i * 1.05); shared.add(lamp); statusLights.push(lamp.material);
-    }
-
-    /* Dead Signal closes the unneeded service spurs with visible storm damage,
-       leaving the old southern approach as the natural route into the facility. */
-    for (const [x, y, w, d, r] of [[319, 575, 2.2, 22, 0.08], [424, 585, 2.2, 22, -0.1]]) {
-        const barrier = placedBox(deadSignal, x, y, w, d, 1.5, 0x5a4d45);
-        barrier.rotation.z = r;
-        deadSignalSolids.push(...addRotatedSolid(x, y, d, w, r + Math.PI / 2, terrainHeight(x, y) + 1.5, terrainHeight(x, y)));
-        for (let j = -1; j <= 1; j++) placedBox(deadSignal, x, y + j * 6, w + 0.12, 1.1, 0.22, 0xff9b35, EMISSIVE(0xff5b1f, 1.2));
-    }
-    for (const solid of deadSignalSolids) solid.disabled = activeMissionId !== 'dead_signal';
-    for (const [x, y, rot] of [[326, 566, 0.45], [416, 596, -0.55], [322, 585, -0.3]]) {
-        const beam = placedBox(deadSignal, x, y, 7, 0.7, 0.7, 0x363d48);
-        beam.rotation.z = rot;
-    }
-
-    /* Power Through opens with a forward operating point instead of another LZ:
-       command shelter, ammo pallets, route board and amber deployment lights. */
-    placedBox(powerThrough, 333, 579, 12, 8, 3.3, 0x42566a, {}, null);
-    placedBox(powerThrough, 333, 574.9, 8, 0.16, 1.0, 0xffbf55, EMISSIVE(0xff7d22, 1.4));
-    placedBox(powerThrough, 390, 578, 8, 6, 2.5, 0x566172, {}, null);
-    for (const [x, y] of [[345, 573], [375, 573], [345, 589], [375, 589]]) floodlight(powerThrough, x, y, 0xffbd55);
-    const routeBoard = placedBox(powerThrough, 382, 589, 5.8, 0.35, 3.2, 0x303a49);
-    const routeGlow = placedBox(powerThrough, 382, 588.78, 4.8, 0.08, 2.2, 0x70c8ff, EMISSIVE(0x258fdd, 1.35));
-    for (const [x, y] of [[346, 585], [393, 588], [325, 586]]) placedBox(powerThrough, x, y, 3.2, 2.1, 1.2, 0x75633d, {}, null);
-
-    /* Gamma powers a direct east-side service return. The visible energy field
-       closes the route before the network is restored, then retracts cleanly. */
-    const shortcutField = placedBox(powerThrough, 455, 625, 0.35, 20, 4.2, 0xff754f, { emissive: 0xff321c, emissiveIntensity: 1.15, transparent: true, opacity: 0.62 });
-    const shortcutSolid = addSolid(454.6, 615, 455.4, 635, terrainHeight(455, 625) + 4.2, terrainHeight(455, 625));
-    shortcutSolid.disabled = activeMissionId !== 'power_through';
-    const shortcutLights = [];
-    for (const y of [613.5, 636.5]) {
-        placedBox(powerThrough, 455, y, 1.2, 1.2, 6.4, 0x465064);
-        const light = placedBox(powerThrough, 454.35, y, 0.18, 0.7, 0.75, 0xff754f, EMISSIVE(0xff321c, 1.8));
-        shortcutLights.push(light.material);
-    }
-    const shortcutLane = placedBox(powerThrough, 423.5, 634.5, 66, 0.3, 0.07, 0x66cfff, EMISSIVE(0x2288cc, 0.75));
-    shortcutLane.rotation.z = Math.atan2(644 - 625, 392 - 455);
-
-    campaignContent.facilityZones = { shared, dead_signal: deadSignal, power_through: powerThrough, deadSignalSolids, sharedSolids, statusLights, statusMast, routeBoard, routeGlow, shortcut: { field: shortcutField, solid: shortcutSolid, lights: shortcutLights, lane: shortcutLane } };
+    facilityWorld.buildExpansion(activeMissionId);
 }
 
 function setFacilityShortcutState(open) {
-    const zones = campaignContent.facilityZones;
-    const shortcut = zones && zones.shortcut;
-    if (!shortcut) return;
-    const stagingActive = !!campaignSnapshot().stagingActive;
-    shortcut.field.visible = stagingActive && !open; shortcut.solid.disabled = !stagingActive || open;
-    for (const material of shortcut.lights) {
-        material.color.setHex(open ? 0x66ffcc : 0xff754f);
-        material.emissive.setHex(open ? 0x22cc99 : 0xff321c);
-    }
-    shortcut.lane.material.emissiveIntensity = open ? 1.6 : 0.35;
-    if (zones.routeGlow) {
-        zones.routeGlow.material.color.setHex(open ? 0x66ffcc : 0x70c8ff);
-        zones.routeGlow.material.emissive.setHex(open ? 0x22cc99 : 0x258fdd);
-        zones.routeGlow.material.emissiveIntensity = open ? 1.9 : 1.35;
-    }
+    facilityWorld.setShortcutState(open, !!campaignSnapshot().stagingActive);
 }
 function openFacilityShortcut() { setFacilityShortcutState(true); }
 
 function buildDeepLaboratory() {
-    const root = new THREE.Group(), emergency = new THREE.Group();
-    root.name = 'DeepLaboratory'; emergency.name = 'ContainmentEmergency';
-    root.visible = false; emergency.visible = false; scene.add(root, emergency);
-    const solids = [], emergencyMats = [], normalMats = [], lights = [];
-    const placed = (group, x, y, w, d, h, color, opts = {}, collision = false) => {
-        const mesh = box(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.48 }, opts));
-        mesh.position.set(x, y, h / 2); mesh.castShadow = h > 0.5; mesh.receiveShadow = true; group.add(mesh);
-        if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, h, 0));
-        return mesh;
-    };
-    const wall = (x, y, w, d) => placed(root, x, y, w, d, 9, 0x384354, {}, true);
-    const strip = (group, x, y, w, d, color, intensity = 1.2, emergencyStrip = false) => {
-        const mesh = placed(group, x, y, w, d, 0.07, color, { emissive: color, emissiveIntensity: intensity, metalness: 0.2, roughness: 0.5 });
-        (emergencyStrip ? emergencyMats : normalMats).push(mesh.material);
-        return mesh;
-    };
-    const sign = (text, x, y, z, width, color, axis = 'y') => {
-        const mesh = makeFacilitySign(text, width, color);
-        if (axis === 'y') mesh.rotation.x = Math.PI / 2; else mesh.rotation.y = Math.PI / 2;
-        mesh.position.set(x, y, z); root.add(mesh); return mesh;
-    };
-
-    /* Research spine: one readable northbound route with a single security obstruction. */
-    placed(root, 360, 710, 60, 52, 0.35, 0x242c39);
-    placed(root, 370, 765, 80, 60, 0.35, 0x2b2638);
-    placed(root, 410, 752, 40, 14, 0.35, 0x252d38);
-    const researchCeiling = placed(root, 360, 710, 60, 52, 0.65, 0x1c222d);
-    const containmentCeiling = placed(root, 370, 765, 80, 60, 0.65, 0x211b2a);
-    const emergencyCeiling = placed(root, 410, 752, 40, 14, 0.65, 0x1c222d);
-    researchCeiling.position.z = containmentCeiling.position.z = emergencyCeiling.position.z = 9.3;
-    researchCeiling.name = 'ResearchCeiling';
-    containmentCeiling.name = 'ContainmentCeiling';
-    emergencyCeiling.name = 'EmergencyPassageCeiling';
-    facilityCutawayMeshes.push(researchCeiling, containmentCeiling, emergencyCeiling);
-
-    wall(330, 710, 1.4, 52); wall(390, 710, 1.4, 52);
-    wall(341, 735, 22, 1.4); wall(379, 735, 22, 1.4);
-    wall(330, 765, 1.4, 60); wall(370, 795, 80, 1.4);
-    wall(410, 740, 1.4, 10); wall(410, 764, 1.4, 10); wall(410, 782, 1.4, 26);
-    wall(430, 746, 40, 1.4); wall(430, 758, 40, 1.4);
-
-    const accessDoor = addSlidingDoor(360, 690, 'x', 8, 9, 9, 'lab_access');
-    const securityDoor = addSlidingDoor(360, 735, 'x', 8, 9, 9, 'lab_security');
-    const emergencyDoor = addSlidingDoor(410, 752, 'y', 7, 8, 9, 'lab_emergency');
-    accessDoor.enabled = securityDoor.enabled = emergencyDoor.enabled = false;
-
-    /* Access/decontamination chamber. */
-    sign('ACCESS // DECONTAMINATION', 360, 690.82, 6.7, 10.5, '#66ddff');
-    for (const y of [695, 701]) {
-        for (const x of [340, 380]) placed(root, x, y, 0.5, 0.5, 7.8, 0x536174);
-        placed(root, 360, y, 40, 0.35, 0.35, 0x66ddff, EMISSIVE(0x2288cc, 1.4));
-        strip(root, 360, y + 1.2, 17, 0.18, 0x66ddff, 1.25);
-    }
-    for (const x of [348, 360, 372]) {
-        const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.24, 0.9, 7), mat(0x7891a5, { metalness: 0.72, roughness: 0.3 }));
-        nozzle.rotation.x = Math.PI / 2; nozzle.position.set(x, 698, 7.8); root.add(nozzle);
-    }
-    for (const [x, y, color, intensity, distance] of [[360, 699, 0x75cfff, 16, 30], [356, 724, 0xaedfff, 14, 28], [360, 766, 0xff7aa5, 16, 30], [406, 752, 0xffa34d, 12, 24]]) {
-        const light = new THREE.PointLight(color, intensity, distance, 1.7);
-        light.position.set(x, y, 6.4); root.add(addBudgetLight(light)); lights.push({ light, color, intensity });
-    }
-
-    /* Research corridor: windows, ruined benches, specimen hardware and conflict wreckage. */
-    sign('RESEARCH // SAMPLE ZERO', 331.0, 710, 6.4, 9.5, '#b9e7ff', 'x');
-    for (const y of [708, 720, 728]) {
-        placed(root, 334, y, 4.5, 2.1, 1.35, 0x485565, {}, y !== 720);
-        const screen = placed(root, 335.7, y, 0.12, 1.4, 0.62, 0x8edfff, EMISSIVE(0x2a8fc9, 1.2));
-        facilityFx.screens.push({ mat: screen.material, base: 1.2, seed: rand(TAU) });
-    }
-    for (const y of [706, 716, 726]) {
-        const glass = placed(root, 389.18, y, 0.08, 6.4, 4.1, 0x79bfe8, { transparent: true, opacity: 0.2, emissive: 0x173d66, emissiveIntensity: 0.35, depthWrite: false });
-        glass.renderOrder = 2;
-        for (const z of [2.0, 5.7]) placed(root, 389.0, y, 0.2, 6.5, 0.14, 0xb4d8ef, EMISSIVE(0x3b7199, 0.65));
-    }
-    for (const [x, y, r] of [[348, 714, 0.35], [374, 707, -0.6], [382, 727, 0.18]]) {
-        const wreck = placed(root, x, y, 4.4, 1.6, 0.9, 0x252d38); wreck.rotation.z = r;
-        const sparks = placed(root, x + 1, y, 0.55, 0.2, 0.16, 0xff9b45, EMISSIVE(0xff4a1f, 1.5)); sparks.rotation.z = r;
-    }
-
-    /* Security obstruction and optional turret restoration. */
-    const securityConsole = placed(root, LAB_SECURITY.x, LAB_SECURITY.y, 1.6, 1.0, 1.45, 0x4b5565, {}, true);
-    const securityScreen = placed(root, LAB_SECURITY.x, LAB_SECURITY.y - 0.56, 1.25, 0.08, 0.66, 0xffa34d, EMISSIVE(0xff5d22, 1.45)); securityScreen.position.z = 1.42;
-    const turretConsolePos = LJS.vec2(342, 711);
-    const turretConsole = placed(root, turretConsolePos.x, turretConsolePos.y, 1.5, 1.0, 1.35, 0x44505f, {}, true);
-    const turretConsoleScreen = placed(root, turretConsolePos.x, turretConsolePos.y - 0.56, 1.15, 0.08, 0.58, 0x66ccff, EMISSIVE(0x2266aa, 0.7)); turretConsoleScreen.position.z = 1.35;
-    const turretPos = LJS.vec2(342, 744);
-    const turretGroup = new THREE.Group(); turretGroup.position.set(turretPos.x, turretPos.y, 0); root.add(turretGroup);
-    const turretBase = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 1.0, 0.5, 8), mat(0x435061, { metalness: 0.7, roughness: 0.34 })); turretBase.rotation.x = Math.PI / 2; turretBase.position.z = 0.28; turretGroup.add(turretBase);
-    const turretHead = box(1.25, 0.8, 0.62, 0x5b6878, { metalness: 0.72, roughness: 0.3 }); turretHead.position.z = 1.25; turretGroup.add(turretHead);
-    const turretBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.16, 2.2, 7), mat(0x7b8799, { metalness: 0.82, roughness: 0.25 })); turretBarrel.rotation.z = Math.PI / 2; turretBarrel.position.set(1.25, 0, 1.25); turretGroup.add(turretBarrel);
-    const turretLamp = new THREE.Mesh(new THREE.SphereGeometry(0.15, 7, 6), mat(0xff6644, EMISSIVE(0xff2211, 1.5))); turretLamp.position.set(0.62, -0.42, 1.45); turretGroup.add(turretLamp);
-
-    /* Containment wing builds toward one unmistakable luminous sample cradle. */
-    sign('CONTAINMENT // DNA ARCHIVE', 370, 794.15, 6.6, 11.0, '#ff6688');
-    strip(root, 360, 716, 0.32, 43, 0xaedfff, 1.0);
-    strip(root, 360, 761, 0.34, 50, 0xff5577, 1.25);
-    strip(root, 397, 752, 26, 0.3, 0xffa04a, 1.0);
-    for (const [x, y] of [[338, 746], [402, 746], [338, 782], [402, 782]]) {
-        placed(root, x, y, 3.2, 2.2, 2.1, 0x3b3545, {}, true);
-        const warning = placed(root, x, y - 1.2, 2.2, 0.12, 0.26, 0xff5577, EMISSIVE(0xff2244, 1.25)); emergencyMats.push(warning.material);
-    }
-    const field = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 6.5, 24, 1, true), mat(0x66eaff, { transparent: true, opacity: 0.13, emissive: 0x33aadd, emissiveIntensity: 0.8, side: THREE.DoubleSide, depthWrite: false }));
-    field.rotation.x = Math.PI / 2; field.position.set(LAB_CONTAINMENT.x, LAB_CONTAINMENT.y, 3.35); root.add(field);
-    const chamberRing = new THREE.Mesh(new THREE.TorusGeometry(3.4, 0.14, 8, 28), mat(0x7eeeff, EMISSIVE(0x2abddd, 1.8)));
-    chamberRing.position.set(LAB_CONTAINMENT.x, LAB_CONTAINMENT.y, 0.4); root.add(chamberRing);
-    for (const x of [344, 376]) for (const y of [754, 782]) {
-        const pod = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.25, 4.5, 10), mat(0x5a465f, { metalness: 0.42, roughness: 0.4, emissive: 0x351847, emissiveIntensity: 0.4 }));
-        pod.rotation.x = Math.PI / 2; pod.position.set(x, y, 2.3); root.add(pod); solids.push(addSolid(x - 1.1, y - 1.1, x + 1.1, y + 1.1, 4.5, 0));
-    }
-
-    /* Emergency overlay changes the same lab without duplicating its geometry. */
-    for (const y of [694, 704, 724, 742, 760, 786]) strip(emergency, 360, y, 12, 0.22, 0xff3f35, 1.8, true);
-    for (const [x, y, r] of [[395, 750, 0.45], [415, 752, -0.3], [405, 760, 0.75]]) {
-        const debris = placed(emergency, x, y, 5.5, 0.7, 0.7, 0x332936); debris.rotation.z = r;
-    }
-    for (const [x, y] of [[335, 738], [405, 770], [386, 790]]) {
-        const growth = makeInfestedTree(0.42); growth.position.set(x, y, 0); emergency.add(growth);
-    }
-
-    campaignContent.lab = {
-        root, emergency, solids, emergencyMats, normalMats, lights, accessDoor, securityDoor, emergencyDoor,
-        securityConsole: { group: securityConsole, screen: securityScreen, pos: LAB_SECURITY.copy() },
-        turretConsole: { group: turretConsole, screen: turretConsoleScreen, pos: turretConsolePos },
-        turret: { group: turretGroup, head: turretHead, lamp: turretLamp, pos: turretPos, active: false, fireT: 0 },
-        field, chamberRing,
-    };
+    campaignContent.lab = facilityWorld.buildLaboratory(LAB_SECURITY, LAB_CONTAINMENT);
 }
 
 function buildExtractionZone() {
@@ -3018,11 +2353,19 @@ function buildDecor() {
 function updateRouteGuideVisibility() {
     const guides = campaignContent.routeGuides;
     if (!guides) return;
-    guides.dead_signal.visible = activeMissionId === 'dead_signal';
-    guides.power_through.visible = activeMissionId === 'power_through';
+    let changed = false;
+    const deadVisible = activeMissionId === 'dead_signal', powerVisible = activeMissionId === 'power_through';
+    if (guides.dead_signal.visible !== deadVisible || guides.power_through.visible !== powerVisible) changed = true;
+    guides.dead_signal.visible = deadVisible;
+    guides.power_through.visible = powerVisible;
     if (!guides.m2Segments) return;
     const activePath = missionRoute();
-    for (const segment of guides.m2Segments) segment.group.visible = activeMissionId === 'power_through' && segment.path === activePath;
+    for (const segment of guides.m2Segments) {
+        const visible = powerVisible && segment.path === activePath;
+        if (segment.group.visible !== visible) changed = true;
+        segment.group.visible = visible;
+    }
+    if (changed) budgetLightsT = 0; // route-state lights change, static route meshes do not
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -3294,150 +2637,12 @@ function buildRelayIdentity(relay) {
 
 /* ─── 3.5C/3.6 facility exterior polish on the actual building footprint ── */
 function buildFacilityExteriorDetail() {
-    const root = new THREE.Group(); root.name = 'FacilityExterior'; scene.add(root);
-    const H = 10;                                  // wall height + cap (matches buildFacility)
-    const placed = (x, y, w, d, h, color, opts = {}) => {
-        const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), envMat(color, Object.assign({ metalness: 0.55, roughness: 0.5 }, opts)));
-        mesh.rotation.x = Math.PI / 2;
-        mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
-        return mesh;
-    };
-    /* Buttresses frame actual hall/vault walls and doorways.  The old compound
-       corner/pilaster line was removed with the perimeter enclosure. */
-    const pillarSpots = [
-        [331, 619], [389, 619], [331, 659], [389, 659],
-        [343, 683], [377, 683], [351, 689], [369, 689],
-    ];
-    const pillarMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.85, H + 1.6, 0.85), mat(0x3e4658, { metalness: 0.55, roughness: 0.5 }), pillarSpots.length);
-    const trimMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.92, 0.16, 0.92), mat(ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 0.55)), pillarSpots.length);
-    const _rotX = new THREE.Matrix4().makeRotationX(Math.PI / 2), _inst = new THREE.Matrix4();
-    for (let i = 0; i < pillarSpots.length; i++) {
-        const [px, py] = pillarSpots[i];
-        _inst.makeTranslation(px, py, (H + 1.6) / 2); pillarMesh.setMatrixAt(i, _inst.multiply(_rotX));
-        _inst.makeTranslation(px, py, H + 0.9); trimMesh.setMatrixAt(i, _inst.multiply(_rotX));
-    }
-    pillarMesh.computeBoundingSphere(); trimMesh.computeBoundingSphere();
-    root.add(pillarMesh, trimMesh);
-    const vent = (x, y, horiz) => {
-        placed(x, y, horiz ? 2.4 : 0.3, horiz ? 0.3 : 2.4, 1.2, 0x2a3040, { metalness: 0.7, roughness: 0.4 });
-        placed(x, y, horiz ? 1.8 : 0.14, horiz ? 0.14 : 1.8, 0.8, 0x101722, { metalness: 0.4, roughness: 0.8 });
-    };
-    const utilityBox = (x, y, lamp) => {
-        placed(x, y, 1.2, 0.8, 1.0, 0x4a5361, { metalness: 0.6, roughness: 0.42 });
-        placed(x, y, 1.0, 0.14, 0.2, lamp, EMISSIVE(lamp, 1.4));
-    };
-    /* A few service units and split conduits dress the real walls while leaving
-       every door opening visually and physically clear. */
-    vent(338, 616.5, true); vent(382, 616.5, true);
-    vent(328.5, 642, false); vent(391.5, 650, false);
-    envPipe(root, 331, 616.7, 351, 616.7, 2.5, 0.1, 0x6f7f9e, 0.5);
-    envPipe(root, 369, 616.7, 389, 616.7, 2.5, 0.1, 0x6f7f9e, 0.5);
-    envPipe(root, 328.5, 620, 328.5, 658, 2.3, 0.09, 0x6f7f9e, 0.45);
-    envPipe(root, 391.5, 620, 391.5, 635, 2.7, 0.09, 0x6f7f9e, 0.45);
-    envPipe(root, 391.5, 653, 391.5, 658, 2.7, 0.09, 0x6f7f9e, 0.45);
-    envPipe(root, 331, 685.4, 351, 685.4, 3.1, 0.1, 0x6f7f9e, 0.5);
-    envPipe(root, 369, 685.4, 389, 685.4, 3.1, 0.1, 0x6f7f9e, 0.5);
-    /* utility boxes with status lamps — service corners only */
-    for (const [x, y, c] of [[334, 616.5, ENV_COLORS.comms], [391.4, 657, ENV_COLORS.service], [382, 685.5, ENV_COLORS.bio]]) utilityBox(x, y, c);
-    /* layered roof structures — a mechanical penthouse over each room */
-    const hallRoofHousing = placed(360, 639, 18, 12, 3.0, 0x2e3442, { metalness: 0.55, roughness: 0.5 });
-    const hallRoofCap = placed(360, 639, 14, 8, 1.0, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
-    hallRoofHousing.position.z = H + 2.0; hallRoofCap.position.z = H + 4.0;
-    facilityCutawayMeshes.push(hallRoofHousing, hallRoofCap);
-    for (const [x, y] of [[352, 636], [368, 642]]) {
-        const rv = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 0.7, 1.2, 8), mat(0x4a5361, { metalness: 0.6, roughness: 0.4 }));
-        rv.rotation.x = Math.PI / 2; rv.position.set(x, y, H + 4.9); root.add(rv); facilityCutawayMeshes.push(rv);
-    }
-    const vaultRoofHousing = placed(360, 672, 14, 10, 2.2, 0x2e3442, { metalness: 0.55, roughness: 0.5 });
-    const vaultRoofCap = placed(360, 672, 10, 6, 0.9, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
-    vaultRoofHousing.position.z = H + 1.6; vaultRoofCap.position.z = H + 3.1;
-    facilityCutawayMeshes.push(vaultRoofHousing, vaultRoofCap);
-    /* damaged exterior panel with a live hazard seam */
-    placed(342, 608.5, 2.4, 0.2, 2.0, 0x394052, { metalness: 0.68, roughness: 0.4 }).rotation.z = 0.16;
-    placed(342, 608.3, 2.0, 0.1, 0.18, ENV_COLORS.crisis, EMISSIVE(ENV_COLORS.crisis, 1.6)).rotation.z = 0.16;
-    /* east loading/service yard — matches the compound's service vocabulary */
-    placed(432, 668, 9, 6, 0.7, 0x343b47, { metalness: 0.4, roughness: 0.65 });
-    for (const [x, y] of [[429, 665], [435, 671], [430, 672]]) {
-        placed(x, y, 1.8, 1.8, 1.6, 0x5a4a3a, { metalness: 0.35, roughness: 0.72 });
-        placed(x, y, 1.5, 1.5, 0.14, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 0.6));
-    }
-    const craneMast = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.35, 8, 6), mat(0x4a5361, { metalness: 0.65, roughness: 0.4 }));
-    craneMast.rotation.x = Math.PI / 2; craneMast.position.set(437, 674, 4); root.add(craneMast);
-    envPipe(root, 437, 674, 428, 662, 7.6, 0.2, 0x4a5361, 0.1);
-    /* signage + directional markings that read from a distance */
-    const sign = (text, x, y, z, w, color, face) => {
-        const s = makeFacilitySign(text, w, color);
-        s.material.side = THREE.DoubleSide;
-        if (face === 'y') s.rotation.x = Math.PI / 2; else s.rotation.y = Math.PI / 2;
-        s.position.set(x, y, z); root.add(s); return s;
-    };
-    sign('ABANDONED FACILITY // BIO-RESEARCH', 360, 607.6, 8.1, 12, '#66d8ff', 'y');
-    sign('LOADING // SERVICE YARD', 415.4, 668, 7.0, 9, '#ffb24d', 'x');
-    sign('STAGING // FORWARD DEPLOYMENT', 360, 576.8, 6.4, 12, '#ffbf55', 'y');
-    const marking = (x, y, w, d) => {
-        const m = envBoxMesh(w, d, 0.06, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 0.5));
-        m.position.set(x, y, terrainHeight(x, y) + 0.16); root.add(m); return m;
-    };
-    for (let i = 0; i < 4; i++) marking(360 + (i - 1.5) * 2.4, 592 - i * 3, 0.5, 2.2);
-    marking(360, 585, 10, 0.5);
-    /* Sparse ground dashes and offset low cover make the wide Beta→Gamma bypass
-       readable without turning it into another walled corridor. */
-    const bypassPoints = [LJS.vec2(285, 690), FACILITY_BYPASS_WEST, FACILITY_BYPASS_EAST, RELAYS[2].pos];
-    for (let i = 0; i < bypassPoints.length - 1; i++) {
-        const a = bypassPoints[i], b = bypassPoints[i + 1];
-        const angle = Math.atan2(b.y - a.y, b.x - a.x);
-        for (const t of [0.22, 0.5, 0.78]) {
-            const x = lerp(a.x, b.x, t), y = lerp(a.y, b.y, t);
-            const dash = envBoxMesh(4.2, 0.28, 0.06, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 0.55));
-            dash.position.set(x, y, terrainHeight(x, y) + 0.17); dash.rotation.z = angle; root.add(dash);
-        }
-    }
-    envBox(root, 304, 626, 6.0, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
-    envBox(root, 420, 585, 5.2, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
+    facilityWorld.buildExteriorDetail(RELAYS[2].pos);
 }
 
 /* ─── 3.5D facility interior identity ──────────────────────────────────── */
 function buildInteriorIdentity() {
-    const root = new THREE.Group(); root.name = 'InteriorIdentity'; scene.add(root);
-    const placed = (x, y, w, d, h, color, opts = {}) => {
-        const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), envMat(color, Object.assign({ metalness: 0.55, roughness: 0.45 }, opts)));
-        mesh.rotation.x = Math.PI / 2;
-        mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
-        return mesh;
-    };
-    /* door framing makes each threshold read as a deliberate zone change */
-    const doorFrame = (x, y, horiz, color) => {
-        const span = 9.2;
-        for (const s of [-1, 1]) {
-            if (horiz) placed(x + s * span / 2, y, 0.4, 0.6, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
-            else placed(x, y + s * span / 2, 0.6, 0.4, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
-        }
-        const glow = horiz ? placed(x, y, span, 0.16, 0.24, color, EMISSIVE(color, 1.5)) : placed(x, y, 0.16, span, 0.24, color, EMISSIVE(color, 1.5));
-        glow.position.z = 8.7;
-    };
-    doorFrame(360, 618, true, ENV_COLORS.service);       // hall entrance — maintenance
-    doorFrame(390, 644, false, ENV_COLORS.service);      // east service return
-    doorFrame(360, 660, true, ENV_COLORS.bio);           // vault threshold — bio-lab
-    doorFrame(360, 690, true, ENV_COLORS.lab);           // access/decon
-    doorFrame(360, 735, true, ENV_COLORS.service);       // security obstruction
-    doorFrame(410, 752, false, ENV_COLORS.crisis);       // emergency breach
-    /* COMMAND / SECURITY zone — cool blue console bank */
-    for (const y of [640, 646, 652]) placed(386.4, y, 0.9, 2.0, 1.1, 0x2a2e3a, { metalness: 0.5, roughness: 0.5 });
-    placed(386.2, 646, 0.12, 4.6, 0.7, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 1.1)).position.z = 1.35;
-    /* MAINTENANCE / SERVICE zone — amber machinery band by the generator */
-    for (let i = 0; i < 3; i++) {
-        const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.08, 0.08, 3.2, 6), mat(ENV_COLORS.service, { metalness: 0.6, roughness: 0.4, emissive: ENV_COLORS.service, emissiveIntensity: 0.35 }));
-        pipe.rotation.x = Math.PI / 2; pipe.position.set(337.6 + i * 0.34, 648, 1.4); root.add(pipe);
-    }
-    placed(334.6, 645, 0.8, 5.0, 1.4, 0x3a3f4b, { metalness: 0.5, roughness: 0.55 });
-    /* UTILITY / POWER zone — breaker panels on the east wall */
-    for (const y of [628, 634, 655]) {
-        placed(388.6, y, 0.5, 2.2, 1.6, 0x2f3542, { metalness: 0.6, roughness: 0.45 });
-        placed(388.4, y, 0.12, 1.6, 0.16, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 1.2)).position.z = 1.0;
-        placed(388.4, y, 0.12, 1.6, 0.16, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 0.9)).position.z = 0.6;
-    }
-    /* BIO-LAB / CONTAINMENT zone — quarantine banding that matches the lab */
-    placed(360, 658.2, 15, 0.16, 0.18, ENV_COLORS.bio, EMISSIVE(ENV_COLORS.bio, 0.8)).position.z = 0.34;
+    facilityWorld.buildInteriorIdentity();
 }
 
 /* ─── 3.5E mission-state environmental progression ───────────────────────
@@ -3661,8 +2866,17 @@ const campaignContent = {
    HUD so the facility can be inspected and re-dressed without distraction */
 let debugNoAggro = false;       // enemies stop chasing/attacking (stay visible + face the player)
 let debugHideHud = false;       // skip the 2D HUD pass for clean screenshots
-const facilityFx = { dust: null, dustBase: null, screens: [], powerStrips: [], labIndicators: [] };   // animated facility dressing
-let facilityFxUpdateT = 0, facilityFxAccum = 0;
+const facilityWorld = ChargefrontFacility.create({
+    THREE, getScene: () => scene, box, addWallPanel, addSolid, addRotatedSolid, SOLIDS,
+    makeSeam: EMISSIVE, sound: playFileSfx,
+    denied: (text) => notify(text, '#ff8866'), getTime: () => LJS.time,
+    envBoxGeometry, envMat, envBoxMesh, envBox, envPipe, mat, colors: ENV_COLORS,
+    terrainHeight, addBudgetLight, makeFacilitySign, makeInfestedTree, makeSpecimenTube, rand, vec2: LJS.vec2,
+});
+const facilityDoors = facilityWorld.doors;
+const facilityCutawayMeshes = facilityWorld.cutawayMeshes;
+const facilityReferenceLights = facilityWorld.referenceLights;
+const facilityFx = facilityWorld.fx;   // animated facility dressing
 
 /* ═══════════════════════════════════════════════════════════════════════════
    ENDLESS ROGUELIKE MODE — one valley arena, escalating waves, DNA milestones
@@ -4326,6 +3540,7 @@ function placeEndlessSquad() {
     }
 }
 function buildEndlessWorld() {
+    ensureLocalLightSlots();
     buildMapGrid();
     buildTerrain();
     buildEndlessRelay();
@@ -7211,12 +6426,13 @@ function issueCommand(cmd) {
 const impacts = [];
 const impactPool = [];
 const impactGeometry = new THREE.SphereGeometry(0.22, 6, 5);
+function createImpactEffect() {
+    const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.9 });
+    return { mesh: new THREE.Mesh(impactGeometry, material), mat: material, life: 0, base: 0 };
+}
 function spawnImpact(x, y, z, colorHex, size = 1) {
     if (impacts.length > 40) return;
-    const f = impactPool.pop() || (() => {
-        const mat = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.9 });
-        return { mesh: new THREE.Mesh(impactGeometry, mat), mat, life: 0, base: 0 };
-    })();
+    const f = impactPool.pop() || createImpactEffect();
     f.mesh.position.set(x, y, z);
     f.mesh.scale.setScalar(size);
     f.mat.color.setHex(colorHex);
@@ -7246,18 +6462,50 @@ function updateImpacts(dt) {
 /* impact sparks — short bright streaks that burst outward and fade (replaces the big hit-flash) */
 const sparks = [];
 const sparkPool = [];
+let combatEffectsPrewarmed = false;
+let campaignTraversalPrewarmed = false;
+function createSparkEffect() {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
+    return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), vx: 0, vy: 0, vz: 0, life: 0 };
+}
+function prewarmCombatEffects() {
+    if (combatEffectsPrewarmed || mode !== 'campaign') return;
+    combatEffectsPrewarmed = true;
+    // Keep the exact effects as reusable pool entries. Three.js compiles their
+    // material variants against the settled campaign light/fog state; no visible
+    // dummy effect or material disposal is involved.
+    if (!impactPool.length) impactPool.push(createImpactEffect());
+    if (!sparkPool.length) sparkPool.push(createSparkEffect());
+    const group = new THREE.Group();
+    group.add(impactPool[0].mesh, sparkPool[0].line);
+    const start = performance.now();
+    void threeJS.renderer.compileAsync(group, camera, scene).then(() => {
+        if (PERF_DIAGNOSTICS) perfDiagnostics.event('combatShadersReady', { ms: +(performance.now() - start).toFixed(1) });
+    }).catch(error => console.warn('Combat effect shader prewarm failed:', error));
+    if (PERF_DIAGNOSTICS) perfDiagnostics.event('combatPrewarm', { ms: +(performance.now() - start).toFixed(1) });
+}
+function prewarmCampaignTraversalMaterials() {
+    if (campaignTraversalPrewarmed || mode !== 'campaign') return;
+    campaignTraversalPrewarmed = true;
+    // These specific persistent materials would otherwise first link at the
+    // facility corner: Beta's two-sided dish and the local dust PointsMaterial.
+    // Compile against the *settled* gameplay light configuration once, at the
+    // initial mission handoff; nothing is constructed during ordinary movement.
+    const targets = [relays[1]?.arenaDish, facilityFx.dust, facilityFx.vaultFloorRing].filter(Boolean);
+    const start = performance.now();
+    void Promise.all(targets.map(object => threeJS.renderer.compileAsync(object, camera, scene))).then(() => {
+        if (PERF_DIAGNOSTICS) perfDiagnostics.event('traversalShadersReady', { ms: +(performance.now() - start).toFixed(1) });
+    }).catch(error => console.warn('Traversal shader prewarm failed:', error));
+    if (PERF_DIAGNOSTICS) perfDiagnostics.event('traversalPrewarm', { ms: +(performance.now() - start).toFixed(1) });
+}
 function emitSparks(x, y, z, colorHex, n = 5) {
     for (let i = 0; i < n && sparks.length < 160; i++) {
         let vx = rand(-1, 1), vy = rand(-1, 1), vz = rand(-1, 1);
         const vl = Math.max(0.001, Math.hypot(vx, vy, vz));
         vx /= vl; vy /= vl; vz /= vl;
         const sp = rand(3, 8);
-        const s = sparkPool.pop() || (() => {
-            const geo = new THREE.BufferGeometry();
-            geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(6), 3));
-            const line = new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 }));
-            return { line, vx: 0, vy: 0, vz: 0, life: 0 };
-        })();
+        const s = sparkPool.pop() || createSparkEffect();
         s.line.position.set(x, y, z);
         s.line.material.color.setHex(colorHex);
         s.line.material.opacity = 1;
@@ -7698,7 +6946,7 @@ function buildShipModel() {
     commsLight.position.set(-2.4, 2.84, 0); ship.add(commsLight);
     const light = new THREE.PointLight(0x88ccff, 2.2, 90, 1.6);
     light.position.set(0, -1.3, 0);
-    ship.add(light);
+    ship.add(addBudgetLight(light));
     const beam = new THREE.Mesh(new THREE.ConeGeometry(1.4, 9, 12), mat(0x88ccff, { transparent: true, opacity: 0.2, emissive: 0x66aaff, emissiveIntensity: 0.5, depthWrite: false }));
     beam.rotation.x = Math.PI;            // apex → -y (down)
     beam.position.set(0, -5.0, 0);
@@ -7717,22 +6965,78 @@ function setShipThrusters(shipGroup, active) {
 }
 
 function addBudgetLight(light) {
+    light.userData.budgetMode = mode;
+    // Reference captures show the complete authored lighting, as before.
+    // Gameplay renders only the stable-count slots driven by these sources.
+    if (!FACILITY_CAPTURE) light.visible = false;
     budgetLights.push(light);
     return light;
 }
 
+function budgetSourceEnabled(light) {
+    if (light.userData.budgetMode !== mode) return false;
+    for (let parent = light.parent; parent; parent = parent.parent) {
+        if (!parent.visible) return false;
+        if (parent === scene) return true;
+    }
+    return false; // detached intro cabin/ship must never leak into a future selection
+}
+
 function updateBudgetLights(dt) {
     budgetLightsT -= dt;
-    if (budgetLightsT > 0) return;
+    if (budgetLightsT > 0) {
+        // Lab emergencies, relays and extraction alter source color/intensity
+        // between spatial selections; uniforms can follow without new shaders.
+        for (let i = 0; i < localLightSlots.length; i++) {
+            const source = localLightSources[i];
+            if (!source) continue;
+            if (!budgetSourceEnabled(source)) {
+                localLightSlots[i].intensity = 0;
+                budgetLightsT = 0;
+                continue;
+            }
+            localLightSlots[i].color.copy(source.color);
+            localLightSlots[i].intensity = source.intensity;
+        }
+        return;
+    }
     budgetLightsT = 0.25;
     const origin = camera ? camera.position : { x: player.pos.x, y: player.pos.y, z: player.zPos + player.eye };
     const worldPosition = updateBudgetLights.worldPosition || (updateBudgetLights.worldPosition = new THREE.Vector3());
+    const candidates = [];
     for (const light of budgetLights) {
+        if (!budgetSourceEnabled(light) || light.intensity <= 0) continue;
         light.getWorldPosition(worldPosition);
         const influence = Math.max(55, (light.distance || 40) + 35);
         const dx = worldPosition.x - origin.x, dy = worldPosition.y - origin.y, dz = worldPosition.z - origin.z;
-        light.visible = dx * dx + dy * dy + dz * dz <= influence * influence;
+        const distanceSquared = dx * dx + dy * dy + dz * dz;
+        if (distanceSquared > influence * influence) continue;
+        const distance = Math.sqrt(distanceSquared);
+        const ratio = distance / (light.distance || 40);
+        const falloff = Math.max(0, 1 - ratio * ratio * ratio * ratio);
+        candidates.push({ light, x: worldPosition.x, y: worldPosition.y, z: worldPosition.z,
+            score: light.intensity * falloff * falloff / Math.max(16, distanceSquared) });
     }
+    localLightInRange = candidates.length;
+    // Only the most influential sources are copied into the fixed render budget.
+    // A source's color/intensity can still change with relay, lab or purge state.
+    candidates.sort((a, b) => b.score - a.score);
+    let changed = 0;
+    for (let i = 0; i < localLightSlots.length; i++) {
+        const slot = localLightSlots[i], candidate = candidates[i], source = candidate && candidate.light;
+        if (localLightSources[i] !== source) changed++;
+        localLightSources[i] = source || null;
+        if (source) {
+            slot.position.set(candidate.x, candidate.y, candidate.z);
+            slot.color.copy(source.color);
+            slot.intensity = source.intensity;
+            slot.distance = source.distance;
+            slot.decay = source.decay;
+        } else {
+            slot.intensity = 0;
+        }
+    }
+    if (PERF_DIAGNOSTICS && changed) perfDiagnostics.event('budgetLights', { changed, active: Math.min(candidates.length, localLightSlots.length), inRange: candidates.length, slots: localLightSlots.length, total: budgetLights.length });
 }
 function addShipHullSolid(shipGroup) {
     const p = shipGroup.position;
@@ -7762,6 +7066,7 @@ function removeCampaignShip() {
     if (!ship.group) return;
     if (ship.group.userData.hullSolid) ship.group.userData.hullSolid.disabled = true;
     scene.remove(ship.group); ship.group = null; ship.state = 'none'; ship.t = 0;
+    budgetLightsT = 0;
 }
 function ensureCampaignShipLanded(state = SPACECRAFT_STATE.LANDED_LOCKED) {
     if (!ship.group) {
@@ -7878,7 +7183,7 @@ function scatterHorde() {
 function onRelayComplete(r) {
     const indicator = campaignContent.networkIndicators[r.R.id - 1];
     if (indicator) { indicator.color.setHex(0x66ffcc); indicator.emissive.setHex(0x22cc99); indicator.emissiveIntensity = 2.0; }
-    const perimeterIndicator = campaignContent.facilityZones && campaignContent.facilityZones.statusLights[r.R.id - 1];
+    const perimeterIndicator = facilityWorld.zones && facilityWorld.zones.statusLights[r.R.id - 1];
     if (perimeterIndicator) { perimeterIndicator.color.setHex(0x66ffcc); perimeterIndicator.emissive.setHex(0x22cc99); }
     const labIndicator = facilityFx.labIndicators[r.R.id - 1];
     if (labIndicator) { labIndicator.color.setHex(0x66ffcc); labIndicator.emissive.setHex(0x22cc99); labIndicator.emissiveIntensity = 1.8; }
@@ -8059,6 +7364,7 @@ const SHIP_LAND_OFF = 2.3;   // parked dropship: center height so the landing sk
 const LAND = LJS.vec2(LZ.x - 14, LZ.y + 10);   // the intro dropship touches down here
 const STAGING_SHIP = LJS.vec2(FACILITY_STAGING.x, FACILITY_STAGING.y - 20);
 let intro = null;
+let introLoadingEl = null;
 let introSfxEl = null;
 let introSkipFn = null;   // active during the cutscene — any key/click skips to gameplay
 let pointerLockGestureFn = null;
@@ -8136,21 +7442,9 @@ function applyCampaignWorldSnapshot() {
     if (campaignContent.routeGuides) {
         updateRouteGuideVisibility();
     }
-    if (campaignContent.facilityZones) {
-        campaignContent.facilityZones.dead_signal.visible = activeMissionId === 'dead_signal';
-        campaignContent.facilityZones.power_through.visible = snapshot.stagingActive;
-        for (const solid of campaignContent.facilityZones.deadSignalSolids) solid.disabled = activeMissionId !== 'dead_signal';
-        for (const material of campaignContent.facilityZones.statusLights) {
-            material.color.setHex(relaysOnline ? 0x66ffcc : activeMissionId === 'power_through' ? 0xffb84d : 0xff5544);
-            material.emissive.setHex(relaysOnline ? 0x22cc99 : activeMissionId === 'power_through' ? 0xff6a1c : 0xff2211);
-        }
-    }
-    setFacilityShortcutState(!!campaignRun.worldState.shortcutOpen);
+    facilityWorld.applySnapshot({ missionId: activeMissionId, stagingActive: snapshot.stagingActive, relaysOnline, shortcutOpen: !!campaignRun.worldState.shortcutOpen });
     for (const material of campaignContent.networkIndicators) {
         material.color.setHex(relaysOnline ? 0x66ffcc : 0xff5544); material.emissive.setHex(relaysOnline ? 0x22cc99 : 0xff2211); material.emissiveIntensity = relaysOnline ? 2 : 1.5;
-    }
-    for (const material of facilityFx.labIndicators) {
-        material.color.setHex(relaysOnline ? 0x66ffcc : 0xff5544); material.emissive.setHex(relaysOnline ? 0x22cc99 : 0xff2211); material.emissiveIntensity = relaysOnline ? 1.8 : 1.25;
     }
     if (campaignContent.extraction && campaignContent.extraction.infestation) {
         for (const node of campaignContent.extraction.infestation.nodes) {
@@ -8161,6 +7455,7 @@ function applyCampaignWorldSnapshot() {
     setFinalMissionWorldState();
     if (snapshot.spacecraftState === SPACECRAFT_STATE.INSERTION_APPROACH) setCampaignSpacecraftState(snapshot.spacecraftState, true);
     else ensureCampaignShipLanded(snapshot.spacecraftState);
+    budgetLightsT = 0; // mission snapshot changes source groups, never structural geometry
 }
 function initializeCampaignMission() {
     const entryMode = campaignRunOrigin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT ? 'standalone'
@@ -8226,6 +7521,21 @@ function startIntro() {
     const brief = campaignMission().briefingHooks.length ? campaignMission().briefingHooks : INTRO_BRIEF;
     const timing = buildIntroTiming(brief);
     intro = { t: 0, ship: g, cabin, profile, land: introLand, landed: profile !== 'landing', fade: 0, showIdx: -1, stageT: 0, cardAlpha: 1, cutFade: 0, brief, times: timing.times, durations: timing.durations, fadeStart: timing.fadeStart, fadeEnd: timing.fadeEnd, touchdownT: timing.touchdownT, shotTimes: timing.shotTimes };
+    // Shader/geometry first use is rendered behind this cover before cinematic
+    // time advances. LittleJS can run several updates for each rendered frame.
+    intro.prewarmPending = !!cabin;
+    intro.prewarmFrame = 0;
+    intro.lastPrewarmFrame = -1;
+    intro.prewarmStep = -1;
+    if (intro.prewarmPending) {
+        // Leave one cheap rendered frame for the browser to paint the cover
+        // before the first expensive world shader is linked.
+        introLoadingEl = document.createElement('div');
+        introLoadingEl.id = 'cf-intro-loading';
+        introLoadingEl.style.cssText = 'position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:#0d0514;color:#d6a6ff;font:22px "Segoe UI",sans-serif;letter-spacing:.2em';
+        introLoadingEl.textContent = 'PREPARING DEPLOYMENT';
+        document.body.appendChild(introLoadingEl);
+    }
     viewModel.visible = false;
     /* the squad only deploys AFTER the cutscene — keep them hidden until then */
     for (const m of squadMembers) m.mesh.visible = false;
@@ -8235,18 +7545,75 @@ function startIntro() {
     if (profile === 'landing') playIntroSfx(INTRO_SFX.landing, true, 0.7);
     else if (profile === 'staging') playFileSfx('accessOk', 0.45);
     else playFileSfx(profile === 'emergency' ? 'accessDeny' : 'accessOk', 0.5);
+    if (cabin) {
+        // Compile the cabin's actual materials with the campaign scene's fixed
+        // light configuration while the menu still covers the first intro frame.
+        // This is once per intro, never a movement-triggered world rebuild.
+        const start = performance.now();
+        void threeJS.renderer.compileAsync(cabin.group, camera, scene).then(() => {
+            if (PERF_DIAGNOSTICS) perfDiagnostics.event('introCabinShadersReady', { ms: +(performance.now() - start).toFixed(1) });
+        }).catch(error => console.warn('Cabin shader prewarm failed:', error));
+        if (PERF_DIAGNOSTICS) perfDiagnostics.event('introCabinPrewarm', { ms: +(performance.now() - start).toFixed(1),
+            programs: threeJS.renderer.info.programs?.length || 0 });
+    }
+    if (intro.prewarmPending) scene.visible = false;
     const startEl = document.getElementById('start-screen');
-    if (startEl) startEl.classList.add('hidden');
+    if (startEl && !intro.prewarmPending) startEl.classList.add('hidden');
     LJS.setInputPreventDefault(true);
     /* any key/click skips the cutscene (listeners removed in endIntro) */
     if (!introSkipFn) {
-        introSkipFn = (e) => { if (intro) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(true); } };
+        introSkipFn = (e) => { if (intro && !intro.prewarmPending) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(true); } };
         window.addEventListener('keydown', introSkipFn);
         window.addEventListener('pointerdown', introSkipFn);
     }
 }
+function prewarmIntroView(I) {
+    const step = I.prewarmStep++;
+    if (step === -1) {
+        if (PERF_DIAGNOSTICS) perfDiagnostics.event('introPrewarmCoverPaint');
+        return;
+    }
+    scene.visible = true;
+    if (step > 0) threeJS.renderer.getContext().finish(); // only during covered initial load
+    if (step === 0 || step === 1) {
+        I.cabin.group.visible = step === 1;
+        const shot = introShotCam(step ? I.shotTimes[1] : 0, I.ship, I.profile, I.shotTimes);
+        camera.position.set(shot.p[0], shot.p[1], shot.p[2]);
+        camera.lookAt(shot.t[0], shot.t[1], shot.t[2]);
+        LJS.setCameraPos(LJS.vec2(shot.t[0], shot.t[1]));
+        budgetLightsT = 0;
+    } else if (step === 2) {
+        I.cabin.group.visible = false;
+        viewModel.visible = true;
+        for (const member of squadMembers) member.mesh.visible = true;
+        I.ship.position.set(PARKED_SHIP.x, PARKED_SHIP.y, terrainHeight(PARKED_SHIP.x, PARKED_SHIP.y) + SHIP_LAND_OFF);
+        camera.position.set(player.pos.x, player.pos.y, player.zPos + player.eye);
+        camera.lookAt(player.pos.x + Math.cos(player.yaw), player.pos.y + Math.sin(player.yaw), player.zPos + player.eye + Math.sin(player.pitch));
+        LJS.setCameraPos(player.pos.copy());
+        threeJS.renderer.shadowMap.needsUpdate = true;
+        budgetLightsT = 0;
+    } else {
+        viewModel.visible = false;
+        for (const member of squadMembers) member.mesh.visible = false;
+        I.ship.position.set(I.land.x, I.land.y, INTRO_SHIP_ALT0);
+        I.cabin.group.visible = false;
+        I.prewarmPending = false;
+        const startEl = document.getElementById('start-screen');
+        if (startEl) startEl.classList.add('hidden');
+        if (introLoadingEl) { introLoadingEl.remove(); introLoadingEl = null; }
+        budgetLightsT = 0;
+    }
+    if (PERF_DIAGNOSTICS) perfDiagnostics.event('introPrewarmView', { step, programs: threeJS.renderer.info.programs?.length || 0 });
+}
 function updateIntro(dt) {
     const I = intro;
+    if (I.prewarmPending) {
+        if (I.prewarmFrame !== I.lastPrewarmFrame) {
+            I.lastPrewarmFrame = I.prewarmFrame;
+            prewarmIntroView(I);
+        }
+        return;
+    }
     I.t += dt;
     const t = I.t;
     /* stage 1 — black title card: operation keyword + objective */
@@ -8284,7 +7651,18 @@ function updateIntro(dt) {
     if (lt >= I.fadeEnd + 0.2) { endIntro(); return; }
     /* cinematic camera: pick the active shot for this moment of the landing */
     const c = introShotCam(lt, I.ship, I.profile, I.shotTimes);
+    if (PERF_DIAGNOSTICS) {
+        const shot = I.shotTimes.reduce((index, cut, i) => lt >= cut ? i : index, 0);
+        if (I.lastDiagnosticShot !== shot || I.lastDiagnosticInside !== c.inside) {
+            perfDiagnostics.event('introCut', { shot, inside: c.inside, profile: I.profile,
+                elapsed: +lt.toFixed(2), camera: c.p.map(v => +v.toFixed(1)), programs: threeJS.renderer.info.programs?.length || 0 });
+            I.lastDiagnosticShot = shot;
+            I.lastDiagnosticInside = c.inside;
+        }
+    }
     if (I.cabin) {
+        if (I.lastInside !== c.inside) budgetLightsT = 0;
+        I.lastInside = c.inside;
         I.cabin.group.visible = c.inside;
         I.cabin.holo.rotation.z = lt * 0.6;
         I.cabin.holoCore.rotation.z = -lt * 0.8;
@@ -8359,6 +7737,9 @@ function introShotCam(lt, ship, profile = 'landing', shotTimes = SHOT_TIMES) {
     return { p, t, inside, cutFade: clamp(1 - sinceCut / 0.22, 0, 1) * 0.48 };
 }
 function endIntro(lockImmediately = false) {
+    if (introLoadingEl) { introLoadingEl.remove(); introLoadingEl = null; }
+    if (intro) intro.prewarmPending = false;
+    scene.visible = true;
     stopIntroSfx();
     if (intro && intro.ship) {
         ship.group = intro.ship;
@@ -8383,6 +7764,7 @@ function endIntro(lockImmediately = false) {
 function beginGameplay(lockImmediately = false) {
     const startEl = document.getElementById('start-screen');
     if (startEl) startEl.classList.add('hidden');
+    if (menuBackdrop) menuBackdrop.group.visible = false;
     ensureSfxCtx();                       // also a user gesture → start the SFX context now
     warmFileSfx();                        // pre-decode fallback elements (only if XHR was blocked)
     LJS.setInputPreventDefault(true);   // gameplay → block browser defaults (space/arrow scroll)
@@ -8394,6 +7776,8 @@ function beginGameplay(lockImmediately = false) {
     gameplayFade = 1;   // fade in from black into gameplay
     viewModel.visible = true;
     for (const m of squadMembers) m.mesh.visible = true;   // squad deploys once gameplay starts
+    prewarmCombatEffects();
+    prewarmCampaignTraversalMaterials();
     notify('MISSION ' + campaignMission().number + ' — ' + campaignMission().name, '#d6a6ff');
     const opening = activeMissionId === 'dead_signal' ? 'Reach the abandoned facility perimeter'
         : activeMissionId === 'power_through' ? 'Deploy from forward staging to Relay Alpha'
@@ -8501,16 +7885,17 @@ function drawIntro(W, H) {
 
 /* campaign world — built lazily when a campaign run starts (keeps the menu light) */
 function buildCampaignWorld() {
+    ensureLocalLightSlots();
     buildMapGrid();
     buildTerrain();
     buildRelays();
-    buildFacility();
-    buildFacilityExpansion();
-    buildDeepLaboratory();
+    facilityWorld.buildSection('hall', buildFacility);
+    facilityWorld.buildSection('staging', buildFacilityExpansion);
+    facilityWorld.buildSection('laboratory', buildDeepLaboratory);
     buildExtractionZone();
     buildCombatSpaces();            // Stage 3.5A — cover, sightline shaping, landmarks
-    buildFacilityExteriorDetail();  // Stage 3.5C — modular exterior identity
-    buildInteriorIdentity();        // Stage 3.5D — interior zone identity
+    facilityWorld.buildSection('exterior', buildFacilityExteriorDetail);
+    facilityWorld.buildSection('interior', buildInteriorIdentity);
     buildEnvironmentStateLayers();  // Stage 3.5E — M1–M4 environmental progression
     buildDecor();   // after relays/facility so tree & rock collision can avoid their solids
     spawnPickups();
@@ -9057,10 +8442,12 @@ function gameUpdate() {
 
     if (PREVIEW) {
         updatePreviewCamera(dt);
+        updateBudgetLights(dt);
         return;
     }
     if (intro) {
         updateIntro(dt);
+        updateBudgetLights(dt);
         return;
     }
     if (!gameActive) {
@@ -9094,6 +8481,7 @@ function gameUpdate() {
     if (shadowUpdateT <= 0) {
         shadowUpdateT = 1 / 12;
         threeJS.renderer.shadowMap.needsUpdate = true;
+        if (PERF_DIAGNOSTICS) perfDiagnostics.count('shadowRefresh');
     }
 
     const menuOpen = mode === 'endless' && upgradeMenu;   // terminal open → block all gameplay actions until closed
@@ -9726,6 +9114,7 @@ function gameRender() {
 }
 
 function gameRenderPost() {
+    if (intro && intro.prewarmPending) intro.prewarmFrame++;
     const W = LJS.mainCanvasSize.x, H = LJS.mainCanvasSize.y;
     if (PREVIEW) {
         LJS.drawTextScreen('CHARGE FRONT — terrain preview', LJS.vec2(W / 2, 40), 30, LJS.rgb(0.84, 0.65, 1), 0, undefined, 'center', HFONT());
@@ -10800,44 +10189,11 @@ function drawMinimap(W, H) {
 
 function gameUpdatePost() {
     if (!campaignWorldBuilt || mode !== 'campaign') return;
-    const dt = LJS.timeDelta;
-    facilityFxUpdateT -= dt; facilityFxAccum += dt;
-    if (facilityFxUpdateT > 0) return;
-    facilityFxUpdateT = 1 / 12;
-    const fxDt = facilityFxAccum; facilityFxAccum = 0;
     const viewX = camera ? camera.position.x : player.pos.x, viewY = camera ? camera.position.y : player.pos.y;
-    const nearFacility = Math.hypot(viewX - FACILITY.x, viewY - 710) < 190;
-    /* Facility-local particles/materials are irrelevant at the relays and LZ.
-       Updating them at 12 Hz nearby preserves the flicker while avoiding global
-       per-frame buffer writes during most campaign traversal. */
-    if (facilityFx.dust) facilityFx.dust.visible = nearFacility;
-    if (nearFacility && facilityFx.dust && facilityFx.dustBase) {
-        const pos = facilityFx.dust.geometry.attributes.position;
-        const base = facilityFx.dustBase;
-        for (let i = 0; i < pos.count; i++) {
-            pos.setXYZ(i,
-                base[i * 3] + Math.sin(LJS.time * 0.3 + i * 1.7) * 1.2,
-                base[i * 3 + 1] + Math.cos(LJS.time * 0.25 + i * 2.3) * 1.2,
-                base[i * 3 + 2] + Math.sin(LJS.time * 0.6 + i) * 0.8);
-        }
-        pos.needsUpdate = true;
-    }
-    if (nearFacility) {
-        for (const s of facilityFx.screens) {
-            const flick = 0.72 + Math.sin(LJS.time * (6 + s.seed) + s.seed * 13) * 0.22 + (Math.random() < 0.05 ? 0.45 : 0);
-            const power = campaignRun.worldState.localPower ? 1 : 0.12;
-            s.mat.emissiveIntensity = s.base * flick * power;
-        }
-        const localPower = !!campaignRun.worldState.localPower;
-        const emergency = !!campaignRun.worldState.emergency;
-        for (let i = 0; i < facilityFx.powerStrips.length; i++) {
-            const strip = facilityFx.powerStrips[i];
-            strip.mat.color.setHex(emergency ? 0xff493d : strip.color);
-            strip.mat.emissive.setHex(emergency ? 0xff1f18 : strip.color);
-            strip.mat.emissiveIntensity = strip.base * (localPower ? (emergency ? 1.0 + Math.sin(LJS.time * 7 + i) * 0.55 : 0.9 + Math.sin(LJS.time * 1.4 + i) * 0.08) : 0.16);
-        }
-    }
-    updateEnvironmentFx(fxDt);   // Stage 3.5E — animated mission-state dressing
+    const state = facilityWorld.updateFx(LJS.timeDelta, LJS.time, viewX, viewY, !!campaignRun.worldState.localPower, !!campaignRun.worldState.emergency);
+    if (!state) return;
+    if (PERF_DIAGNOSTICS && state.boundary) perfDiagnostics.event('facilityFxBoundary', { nearFacility: state.nearFacility, distance: +state.distance.toFixed(1) });
+    updateEnvironmentFx(state.elapsed);   // Stage 3.5E — animated mission-state dressing
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -11242,6 +10598,262 @@ async function boot() {
     } catch (e) { }
 }
 
+/* Milestone 3.7 temporary traversal profiler. Only installed with ?perfDiagnostics=1.
+   The RAF interval ending NOW contains the preceding game's update + render. The
+   next interval may contain an asynchronously deferred browser/GPU/GC stall. */
+const perfDiagnostics = (() => {
+    if (!PERF_DIAGNOSTICS) return null;
+    const counters = Object.create(null), frames = [], hitches = [], loafs = [];
+    const observedObjects = new WeakSet(), observedGeometries = new WeakSet(), observedMaterials = new WeakSet();
+    const renderer = () => threeJS && threeJS.renderer;
+    let interval = { ops: Object.create(null), events: [], delta: Object.create(null), renderMs: 0 };
+    let lastRAF = 0, worst = 0, lastHud = 0, totalFrames = 0, over33 = 0, over50 = 0, over100 = 0;
+    let lastCounts = { objects: 0, meshes: 0, lights: 0 };
+    const hud = document.createElement('div');
+    hud.id = 'cf-perf-diagnostics';
+    hud.style.cssText = 'position:fixed;z-index:110;top:8px;left:8px;pointer-events:none;white-space:pre;font:12px/1.4 monospace;color:#bff;background:#071323dd;padding:8px;border:1px solid #68b9dc';
+    document.body.appendChild(hud);
+    const count = (key, amount = 1) => {
+        counters[key] = (counters[key] || 0) + amount;
+        interval.delta[key] = (interval.delta[key] || 0) + amount;
+    };
+    const event = (name, detail = {}) => { if (interval.events.length < 50 || name === 'introCut' || name === 'mainThreadHeartbeatLag') interval.events.push({ name, at: +performance.now().toFixed(1), ...detail }); };
+    function observeMaterial(material) {
+        if (Array.isArray(material)) { for (const m of material) observeMaterial(m); return; }
+        if (material && !observedMaterials.has(material)) { observedMaterials.add(material); count('materialsCreated'); }
+    }
+    function observe(object) {
+        if (!object || observedObjects.has(object)) return;
+        observedObjects.add(object);
+        count(object.isMesh || object.isPoints || object.isLine ? 'meshesCreated' : 'groupsObjectsCreated');
+        if (object.geometry && !observedGeometries.has(object.geometry)) { observedGeometries.add(object.geometry); count('geometriesCreated'); }
+        if (object.material) observeMaterial(object.material);
+        for (const child of object.children) observe(child);
+    }
+    const add = THREE.Object3D.prototype.add, remove = THREE.Object3D.prototype.remove;
+    const attachedToScene = object => { for (let p = object; p; p = p.parent) if (scene && p === scene) return true; return false; };
+    THREE.Object3D.prototype.add = function (...objects) {
+        for (const object of objects) observe(object);
+        if (attachedToScene(this)) count('sceneObjectsAdded', objects.length);
+        return add.apply(this, objects);
+    };
+    THREE.Object3D.prototype.remove = function (...objects) {
+        if (attachedToScene(this)) count('sceneObjectsRemoved', objects.length);
+        return remove.apply(this, objects);
+    };
+    for (const [prototype, key] of [[THREE.BufferGeometry.prototype, 'geometryDisposes'], [THREE.Material.prototype, 'materialDisposes']]) {
+        const original = prototype.dispose;
+        prototype.dispose = function (...args) { count(key); return original.apply(this, args); };
+    }
+    function measure(name, fn) {
+        const start = performance.now();
+        try { return fn(); }
+        finally {
+            const ms = performance.now() - start;
+            const op = interval.ops[name] || (interval.ops[name] = { calls: 0, ms: 0, maxMs: 0 });
+            op.calls++; op.ms += ms; op.maxMs = Math.max(op.maxMs, ms);
+            if (name.startsWith('build') || name === 'applyCampaignWorldSnapshot') count(name);
+        }
+    }
+    const percentile = (values, p) => {
+        if (!values.length) return 0;
+        const sorted = values.slice().sort((a, b) => a - b);
+        return +sorted[Math.ceil(p * sorted.length) - 1].toFixed(1);
+    };
+    function state() {
+        const p = player && player.pos;
+        const x = p ? p.x : 0, y = p ? p.y : 0;
+        const nearest = [['LZ', LZ], ['facility', FACILITY], ['facility staging', FACILITY_STAGING], ['Alpha', RELAYS[0].pos], ['Beta', RELAYS[1].pos], ['Gamma', RELAYS[2].pos], ['lab', LAB_CONTAINMENT]]
+            .map(([name, pos]) => ({ name, distance: Math.round(Math.hypot(x - pos.x, y - pos.y)) }))
+            .sort((a, b) => a.distance - b.distance)[0];
+        return { x: +x.toFixed(1), y: +y.toFixed(1), z: +(player ? player.zPos : 0).toFixed(1),
+            mode, mission: activeMissionId, phase: CF_NAMES[phase] || String(phase), relay: relays.map(r => ({ id: r.R.id, powered: !!r.powered, powering: !!r.powering })),
+            objective: typeof objectiveLine === 'function' ? objectiveLine() : '', near: nearest,
+            navigation: { route: mode === 'campaign' ? missionRoute().map(v => [v.x, v.y]) : [], squad: squadCommand, enemyGridCells: enemyGrid.size, solidGridCells: solidGrid.size },
+            enemies: enemies.length, projectiles: shots.length + enemyShots.length + acid.length + grenades.length,
+            world: lastCounts, sceneRoots: scene ? scene.children.length : 0, solids: SOLIDS.length };
+    }
+    function info() {
+        const r = renderer();
+        return r ? { programs: r.info.programs ? r.info.programs.length : null,
+            calls: r.info.render.calls, triangles: r.info.render.triangles,
+            geometries: r.info.memory.geometries, textures: r.info.memory.textures,
+            shadowPending: r.shadowMap.needsUpdate } : null;
+    }
+    function summary() {
+        const values = frames.map(f => f.ms);
+        return { browser: navigator.userAgent, frames: totalFrames, sampleWindow: values.length, averageMs: values.length ? +(values.reduce((a, b) => a + b, 0) / values.length).toFixed(1) : 0,
+            p95Ms: percentile(values, .95), p99Ms: percentile(values, .99), worstMs: +worst.toFixed(1),
+            over33, over50, over100, counters: { ...counters }, hitches: hitches.slice(), longAnimationFrames: loafs.slice() };
+    }
+    function tick(now) {
+        if (lastRAF) {
+            const ms = now - lastRAF;
+            worst = Math.max(worst, ms);
+            totalFrames++; if (ms > 33) over33++; if (ms > 50) over50++; if (ms > 100) over100++;
+            const r = info();
+            const sample = { at: +now.toFixed(1), ms: +ms.toFixed(1), renderMs: +interval.renderMs.toFixed(1), ops: interval.ops,
+                events: interval.events, delta: interval.delta, renderer: r, state: ms > 50 ? state() : null };
+            frames.push(sample);
+            if (frames.length > 3600) frames.shift();
+            if (ms > 50) { hitches.push(sample); if (hitches.length > 2000) hitches.shift(); }
+            if (now - lastHud > 1000) {
+                lastHud = now;
+                const recent = frames.slice(-120).map(f => f.ms);
+                const s = summary();
+                // One scene walk per second, never on every frame or synchronously on a hitch.
+                if (scene) {
+                    const c = { objects: 0, meshes: 0, lights: 0 };
+                    scene.traverse(o => { c.objects++; if (o.isMesh || o.isPoints || o.isLine) c.meshes++; if (o.isLight) c.lights++; });
+                    lastCounts = c;
+                }
+                hud.textContent = `PERF DIAGNOSTICS | ${activeMissionId} ${CF_NAMES[phase] || phase} | ${sample.state ? sample.state.x + ',' + sample.state.y : Math.round(player.pos.x) + ',' + Math.round(player.pos.y)}\n` +
+                    `frame ${ms.toFixed(1)}ms  avg120 ${recent.length ? (recent.reduce((a, b) => a + b, 0) / recent.length).toFixed(1) : 0}  p95 ${percentile(recent, .95)}  p99 ${percentile(recent, .99)}  worst ${s.worstMs}\n` +
+                    `>33 ${s.over33}  >50 ${s.over50}  >100 ${s.over100} | render ${sample.renderMs}ms programs ${r && r.programs} lights ${Math.min(localLightInRange, localLightSlots.length)}/${localLightSlots.length} sources ${localLightInRange}\n` +
+                    `last >50ms: ${hitches.length ? JSON.stringify({ at: hitches[hitches.length - 1].at, x: hitches[hitches.length - 1].state.x, y: hitches[hitches.length - 1].state.y, events: hitches[hitches.length - 1].events.map(e => e.name) }) : 'none'} | __cfPerf.report() / .download()`;
+            }
+        }
+        interval = { ops: Object.create(null), events: [], delta: Object.create(null), renderMs: 0 };
+        lastRAF = now;
+        requestAnimationFrame(tick);
+    }
+    function installRenderer() {
+        const r = renderer();
+        if (!r || r.__cfPerfWrapped) return;
+        r.__cfPerfWrapped = true;
+        const original = r.render;
+        r.render = function (...args) {
+            const before = info(), knownPrograms = new Set((r.info.programs || []).map(program => program.id));
+            const start = performance.now();
+            try { return original.apply(this, args); }
+            finally {
+                const ms = performance.now() - start;
+                interval.renderMs += ms;
+                if (PERF_GPU_SYNC) {
+                    const sync = performance.now();
+                    r.getContext().finish();
+                    const syncMs = performance.now() - sync;
+                    interval.renderMs += syncMs;
+                    if (syncMs > 20) event('gpuFinish', { ms: +syncMs.toFixed(1) });
+                }
+                const after = info();
+                if (before && after && before.programs !== after.programs) {
+                    const added = (r.info.programs || []).filter(program => !knownPrograms.has(program.id));
+                    const newPrograms = added.map(program => ({ id: program.id, key: program.cacheKey.slice(0, 250), owners: [] }));
+                    const newById = new Map(newPrograms.map(program => [program.id, program]));
+                    // Trace only a shader-change frame: match Three's material cache
+                    // back to visible meshes before ephemeral effects are removed.
+                    if (newById.size && scene) scene.traverse(object => {
+                        if (!object.material) return;
+                        for (const material of (Array.isArray(object.material) ? object.material : [object.material])) {
+                            const programs = r.properties.get(material).programs;
+                            if (!programs) continue;
+                            for (const program of programs.values()) {
+                                const target = newById.get(program.id);
+                                if (target && target.owners.length < 3) target.owners.push({ type: material.type, mesh: object.name,
+                                    parent: object.parent?.name, x: +object.position.x.toFixed(1), y: +object.position.y.toFixed(1),
+                                    geometry: object.geometry?.type });
+                            }
+                        }
+                    });
+                    event('shaderPrograms', { before: before.programs, after: after.programs, renderMs: +ms.toFixed(1), newPrograms });
+                }
+            }
+        };
+        const gl = r.getContext();
+        for (const key of ['compileShader', 'linkProgram']) {
+            const originalGl = gl[key];
+            try { gl[key] = function (...args) { const start = performance.now(); try { return originalGl.apply(this, args); } finally { count(key); event(key, { ms: +(performance.now() - start).toFixed(1) }); } }; }
+            catch (e) { event('webglHookUnavailable', { key }); }
+        }
+    }
+    // Distinguishes time inside game/renderer calls from time spent outside
+    // JavaScript on the main thread (scheduling, compositor, audio or GC).
+    let lastHeartbeat = performance.now();
+    const heartbeat = setInterval(() => {
+        const now = performance.now(), lag = now - lastHeartbeat - 100;
+        lastHeartbeat = now;
+        if (lag > 80) event('mainThreadHeartbeatLag', { ms: +lag.toFixed(1), introShot: intro ? intro.lastDiagnosticShot : null,
+            inside: !!(intro && intro.lastDiagnosticInside), phase: CF_NAMES[phase] || String(phase) });
+    }, 100);
+    if (typeof PerformanceObserver !== 'undefined' && PerformanceObserver.supportedEntryTypes && PerformanceObserver.supportedEntryTypes.includes('long-animation-frame')) {
+        try { new PerformanceObserver(list => { for (const e of list.getEntries()) { loafs.push({ at: +e.startTime.toFixed(1), ms: +e.duration.toFixed(1), blockingMs: +e.blockingDuration.toFixed(1) }); if (loafs.length > 200) loafs.shift(); } }).observe({ type: 'long-animation-frame', buffered: true }); }
+        catch (e) { /* RAF + performance.now remain authoritative fallback */ }
+    }
+    requestAnimationFrame(tick);
+    return { count, event, measure, installRenderer, summary,
+        report() { return { ...summary(), frames: frames.slice() }; },
+        reset() { frames.length = 0; hitches.length = 0; loafs.length = 0; worst = 0; totalFrames = over33 = over50 = over100 = 0; for (const key of Object.keys(counters)) delete counters[key]; event('reset'); },
+        mark(label) { event('routeMark', { label: String(label) }); },
+        download() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(this.report())], { type: 'application/json' })); a.download = 'chargefront-perf-' + Date.now() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 10000); },
+    };
+})();
+if (PERF_DIAGNOSTICS) {
+    window.__cfPerf = perfDiagnostics;
+    // Coarse-grained operations: time real call sites without changing their arguments or return values.
+    const instrument = (name, fn) => (...args) => perfDiagnostics.measure(name, () => fn(...args));
+    buildCampaignWorld = instrument('buildCampaignWorld', buildCampaignWorld);
+    buildMapGrid = instrument('buildMapGrid', buildMapGrid);
+    buildTerrain = instrument('buildTerrain', buildTerrain);
+    buildRelays = instrument('buildRelays', buildRelays);
+    buildRelayArena = instrument('buildRelayArena', buildRelayArena);
+    buildRelayIdentity = instrument('buildRelayIdentity', buildRelayIdentity);
+    buildFacility = instrument('buildFacility', buildFacility);
+    buildFacilityExpansion = instrument('buildFacilityExpansion', buildFacilityExpansion);
+    buildDeepLaboratory = instrument('buildDeepLaboratory', buildDeepLaboratory);
+    buildExtractionZone = instrument('buildExtractionZone', buildExtractionZone);
+    buildCombatSpaces = instrument('buildCombatSpaces', buildCombatSpaces);
+    buildFacilityExteriorDetail = instrument('buildFacilityExteriorDetail', buildFacilityExteriorDetail);
+    buildInteriorIdentity = instrument('buildInteriorIdentity', buildInteriorIdentity);
+    buildEnvironmentStateLayers = instrument('buildEnvironmentStateLayers', buildEnvironmentStateLayers);
+    buildDecor = instrument('buildDecor', buildDecor);
+    buildCampaignObjectives = instrument('buildCampaignObjectives', buildCampaignObjectives);
+    spawnPickups = instrument('spawnPickups', spawnPickups);
+    buildEndlessWorld = instrument('buildEndlessWorld', buildEndlessWorld);
+    rebuildSolidGrid = instrument('rebuildSolidGrid', rebuildSolidGrid);
+    rebuildEnemyGrid = instrument('rebuildEnemyGrid', rebuildEnemyGrid);
+    updateBudgetLights = instrument('updateBudgetLights', updateBudgetLights);
+    updateIntro = instrument('updateIntro', updateIntro);
+    introShotCam = instrument('introShotCam', introShotCam);
+    drawIntro = instrument('drawIntro', drawIntro);
+    playIntroSfx = instrument('playIntroSfx', playIntroSfx);
+    startIntro = instrument('startIntro', startIntro);
+    endIntro = instrument('endIntro', endIntro);
+    beginGameplay = instrument('beginGameplay', beginGameplay);
+    ensureSfxCtx = instrument('ensureSfxCtx', ensureSfxCtx);
+    warmFileSfx = instrument('warmFileSfx', warmFileSfx);
+    setShipThrusters = instrument('setShipThrusters', setShipThrusters);
+    updateFacilityDoors = instrument('updateFacilityDoors', updateFacilityDoors);
+    updateEnvironmentFx = instrument('updateEnvironmentFx', updateEnvironmentFx);
+    updateEncounterDirector = instrument('updateEncounterDirector', updateEncounterDirector);
+    updateHorde = instrument('updateHorde', updateHorde);
+    updateAmbient = instrument('updateAmbient', updateAmbient);
+    updateDrones = instrument('updateDrones', updateDrones);
+    updateLabSystems = instrument('updateLabSystems', updateLabSystems);
+    updateExtractionInfestation = instrument('updateExtractionInfestation', updateExtractionInfestation);
+    updateFinalCampaignEncounter = instrument('updateFinalCampaignEncounter', updateFinalCampaignEncounter);
+    updateSquadAbilityAutonomy = instrument('updateSquadAbilityAutonomy', updateSquadAbilityAutonomy);
+    updateShots = instrument('updateShots', updateShots);
+    updateShip = instrument('updateShip', updateShip);
+    updateObjectives = instrument('updateObjectives', updateObjectives);
+    updateRouteGuideVisibility = instrument('updateRouteGuideVisibility', updateRouteGuideVisibility);
+    applyCampaignWorldSnapshot = instrument('applyCampaignWorldSnapshot', applyCampaignWorldSnapshot);
+    applyEnvironmentWorldState = instrument('applyEnvironmentWorldState', applyEnvironmentWorldState);
+    setExtractionInfestationVisuals = instrument('setExtractionInfestationVisuals', setExtractionInfestationVisuals);
+    setFinalMissionWorldState = instrument('setFinalMissionWorldState', setFinalMissionWorldState);
+    beginCampaignChapterTransition = instrument('beginCampaignChapterTransition', beginCampaignChapterTransition);
+    spawnInitialFacilityDrones = instrument('spawnInitialFacilityDrones', spawnInitialFacilityDrones);
+    spawnGroup = instrument('spawnGroup', spawnGroup);
+    spawnTypedGroup = instrument('spawnTypedGroup', spawnTypedGroup);
+    checkpointCampaignState = instrument('checkpointCampaignState', checkpointCampaignState);
+    drawMinimap = instrument('drawMinimap', drawMinimap);
+    drawMarkers = instrument('drawMarkers', drawMarkers);
+    gameUpdate = instrument('gameUpdate', gameUpdate);
+    gameUpdatePost = instrument('gameUpdatePost', gameUpdatePost);
+    gameRenderPost = instrument('gameRenderPost', gameRenderPost);
+    const originalGameInit = gameInit;
+    gameInit = instrument('gameInit', () => { originalGameInit(); perfDiagnostics.installRenderer(); });
+}
 boot().catch((e) => { console.error(e); document.body.insertAdjacentHTML('beforeend', '<div style="position:fixed;z-index:99;color:#f99;background:#000;padding:10px">' + e.message + '</div>'); });
 
 /* debug/test hook (harmless — lets you inspect/drive the mission from the console) */
@@ -11445,6 +11057,7 @@ window.__cf = {
     get solidCount() { return SOLIDS.length; },
     get sceneObjects() { return scene.children.length; },
     get scene() { return scene; },   // debug: full scene graph
+    facilitySections() { return facilityWorld.sectionSummary(); },
     performanceInfo() {
         const counts = { objects: 0, meshes: 0, visibleMeshes: 0, lights: 0, visibleLights: 0, casters: 0 };
         const effectivelyVisible = (object) => { for (let current = object; current; current = current.parent) if (!current.visible) return false; return true; };
@@ -11461,7 +11074,7 @@ window.__cf = {
             counts,
             render: { calls: render.calls, triangles: render.triangles, points: render.points, lines: render.lines },
             entities: { enemies: enemies.length, squad: squadMembers.length, pickups: pickups.length, shots: shots.length, enemyShots: enemyShots.length, acid: acid.length, acidPools: acidPools.length, grenades: grenades.length, impacts: impacts.length },
-            budgetLights: { total: budgetLights.length, active: budgetLights.filter((light) => light.visible).length },
+            budgetLights: { total: budgetLights.length, active: Math.min(localLightInRange, localLightSlots.length), inRange: localLightInRange, slots: localLightSlots.length },
             solids: SOLIDS.length,
         };
     },

@@ -4,7 +4,7 @@
 
 > Recover the sample · Restore the relays · Survive the horde.
 
-Built as a **single self-contained HTML file** with [LittleJS](https://github.com/KilledByAPixel/LittleJS) + [Three.js](https://github.com/mrdoob/three.js). No build step, no dependencies to install — open it and play.
+Built with [LittleJS](https://github.com/KilledByAPixel/LittleJS) + [Three.js](https://github.com/mrdoob/three.js). No build step or game dependencies to install — keep `chargefront.html` and `src/world/facility.js` together and open the HTML file to play.
 
 ---
 
@@ -107,9 +107,9 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 |---|---|
 | **Engine** | [LittleJS](https://github.com/KilledByAPixel/LittleJS) (MIT) by Frank Force — 2D game loop, input, audio |
 | **Rendering** | [Three.js](https://github.com/mrdoob/three.js) (MIT) — full 3D world via the LittleJS Three.js plugin |
-| **Distribution** | One `chargefront.html` file — scripts, art and textures are inlined |
+| **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
-The game world, AI, squad behavior, crafting, cutscene and audio wiring are all hand-written in the single HTML file.
+The campaign, AI, squad behavior, crafting, cutscene and audio wiring remain in `chargefront.html`. Facility geometry and navigation are being separated into `src/world/facility.js`.
 
 ---
 
@@ -117,7 +117,9 @@ The game world, AI, squad behavior, crafting, cutscene and audio wiring are all 
 
 ```
 Chargefront/
-├── chargefront.html       ← the entire game (open this to play)
+├── chargefront.html       ← game entry point (open this to play)
+├── src/world/facility.js  ← persistent facility sections, shell, door state and navigation data
+├── tests/facility-regression.mjs ← browser regression/traversal checks (optional Playwright)
 ├── convert_wav_16bit.js   ← dev tool: converts 24-bit SFX to 16-bit in place
 ├── Images/                ← textures used by the game
 ├── Music/                 ← soundtrack (see Credits.txt for attribution)

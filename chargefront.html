@@ -342,12 +342,12 @@ const LAB_COMMAND = LJS.vec2(382, 646);
 const LAB_DECON = LJS.vec2(360, 680);
 const LAB_SECURITY = LJS.vec2(376, 718);
 const LAB_CONTAINMENT = LJS.vec2(360, 774);
-const LAB_EMERGENCY_EXIT = LJS.vec2(410, 752);
+const LAB_EMERGENCY_EXIT = LJS.vec2(450, 752);
 const EXTRACTION_BEACON = LJS.vec2(466, 96);
 const EXTRACTION_BOARD = LJS.vec2(450, 80);
 const PARKED_SHIP = LJS.vec2(LZ.x, LZ.y - 6);
-const MISSION3_ROUTE = [LAB_COMMAND, LJS.vec2(360, 662), LAB_DECON, LJS.vec2(360, 710), LAB_SECURITY, LJS.vec2(360, 742), LAB_CONTAINMENT];
-const MISSION4_ROUTE = [LAB_CONTAINMENT, LAB_EMERGENCY_EXIT, LJS.vec2(430, 720), LJS.vec2(424, 646), LJS.vec2(390, 530), LJS.vec2(420, 405), LJS.vec2(445, 235), LJS.vec2(450, 120), EXTRACTION_BEACON];
+const MISSION3_ROUTE = [LAB_COMMAND, LJS.vec2(360, 662), LAB_DECON, LJS.vec2(360, 710), LAB_SECURITY, LJS.vec2(361, 718), LJS.vec2(360, 742), LAB_CONTAINMENT];
+const MISSION4_ROUTE = [LAB_CONTAINMENT, LJS.vec2(395, 752), LJS.vec2(410, 752), LAB_EMERGENCY_EXIT, LJS.vec2(462, 742), LJS.vec2(442, 720), LJS.vec2(442, 690), LJS.vec2(420, 646), LJS.vec2(390, 530), LJS.vec2(420, 405), LJS.vec2(445, 235), LJS.vec2(450, 120), EXTRACTION_BEACON];
 const CANONICAL_FACILITY_MAP_SEGMENTS = ChargefrontFacility.MAP_SEGMENTS;
 const CANONICAL_LAB_MAP_SEGMENTS = ChargefrontFacility.LAB_MAP_SEGMENTS;
 const MISSION2_PATHS = [
@@ -371,13 +371,13 @@ const FACILITY_CAPTURE_VIEWS = Object.freeze({
     front_right: { position: [455, 570, 32], target: [365, 675, 5], fov: 72 },
     rear_left: { position: [275, 820, 48], target: [365, 710, 5], fov: 72 },
     rear_right: { position: [465, 820, 42], target: [375, 710, 5], fov: 72 },
-    overview: { position: [470, 575, 95], target: [370, 700, 2], fov: 68 },
+    overview: { position: [450, 625, 82], target: [376, 705, 2], fov: 68 },
     topdown: { position: [370, 700, 145], target: [370, 700, 0], up: [0, 1, 0], fov: 72 },
     interior_hall: { position: [346, 625, 1.8], target: [380, 651, 2.6], fov: 70 },
     interior_vault: { position: [350, 666, 1.8], target: [365, 695, 2.4], fov: 70 },
-    interior_lab: { position: [345, 699, 1.8], target: [382, 725, 2.6], fov: 70 },
+    interior_lab: { position: [359, 718, 2.6], target: [337, 720, 1.9], fov: 70 },
     interior_corridor: { position: [382, 707, 1.8], target: [360, 737, 2.4], fov: 70 },
-    interior_deeplab: { position: [349, 748, 1.8], target: [361, 782, 2.8], fov: 70 },
+    interior_deeplab: { position: [351, 762, 2.1], target: [361, 777, 2.8], fov: 70 },
 });
 
 function distToPath(x, y, path) {
@@ -488,6 +488,7 @@ function terrainHeight(x, y) {
     /* wide landing-zone apron — pull everything near spawn down to level ground */
     const lzw = gaussWeight(x, y, LZ.x, LZ.y, 110);
     if (lzw > 0.01) h *= (1 - lzw);
+    h = ChargefrontFacility.foundationHeight(x, y, h);
     return clamp(h, 0, 120);
 }
 
@@ -1727,7 +1728,7 @@ function makeFacilitySign(text, width, accent = '#66d8ff') {
 
 /* Doors and their collision strips belong to the persistent facility. */
 function addSlidingDoor(...args) { return facilityWorld.addDoor(...args); }
-function updateFacilityDoors(dt) { facilityWorld.updateDoors(dt, player, squadMembers, !!campaignRun.worldState.labAccess, mode === 'campaign'); }
+function updateFacilityDoors(dt) { facilityWorld.updateDoors(dt, player, squadMembers, enemies, !!campaignRun.worldState.labAccess, mode === 'campaign'); }
 
 const relays = [];
 function buildRelays() {
@@ -1997,6 +1998,7 @@ function setFinalMissionWorldState() {
         lab.accessDoor.enabled = true; lab.accessDoor.locked = !campaignRun.worldState.labAccess; lab.accessDoor.forceOpen = false;
         lab.securityDoor.enabled = true; lab.securityDoor.locked = !campaignRun.worldState.labOverride; lab.securityDoor.forceOpen = activeMissionId === 'break_contact';
         lab.emergencyDoor.enabled = true; lab.emergencyDoor.locked = !emergency; lab.emergencyDoor.forceOpen = emergency;
+        lab.serviceDoor.enabled = true; lab.serviceDoor.locked = !emergency; lab.serviceDoor.forceOpen = emergency;
         lab.field.visible = activeMissionId === 'sample_zero' && !campaignRun.worldState.dnaSecured;
         lab.chamberRing.material.color.setHex(emergency ? 0xff5544 : 0x7eeeff);
         lab.chamberRing.material.emissive.setHex(emergency ? 0xff2211 : 0x2abddd);
@@ -8948,7 +8950,7 @@ function updateObjectives(dt) {
             /* Interactions and the short containment encounter advance these phases. */
             break;
         case P.M4_BREAK_CONTACT:
-            if (player.pos.x > 416 && player.pos.y > 738) {
+            if (player.pos.x > 454 && player.pos.y > 738) {
                 campaignRun.mainIndex = 1; phase = P.M4_REACH_LZ;
                 campaignRun.encounter.spawnT = 5;
                 notify('MAINTENANCE BREACH CLEAR — reach the restoration LZ', '#ffcc66');

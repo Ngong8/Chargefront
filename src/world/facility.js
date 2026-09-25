@@ -4,11 +4,28 @@
 (function (global) {
     'use strict';
 
-    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 636], [390, 652, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684]]);
-    const LAB_MAP_SEGMENTS = Object.freeze([[330, 690, 352, 690], [368, 690, 390, 690], [330, 684, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [390, 684, 390, 735], [410, 746, 450, 746], [410, 758, 450, 758]]);
-    const NAV_BLOCK = Object.freeze({ x0: 325, y0: 612, x1: 415, y1: 799 });
+    // South-to-north: staging hall, relay vault, decontamination and research.
+    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 636], [390, 652, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
+    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 690, 330, 795], [390, 690, 390, 735], [367, 704, 367, 712], [367, 725, 367, 735], [330, 735, 352, 735], [368, 735, 390, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
+    const NAV_BLOCK = Object.freeze({ x0: 325, y0: 612, x1: 455, y1: 799 });
     const BYPASS_WEST = Object.freeze({ x: 285, y: 585 });
     const BYPASS_EAST = Object.freeze({ x: 450, y: 570 });
+    const FOUNDATION = Object.freeze([[330, 390, 618, 735], [330, 410, 735, 795], [410, 450, 736, 770]]);
+
+    function foundationHeight(x, y, naturalHeight) {
+        if (x <= 312 || x >= 468 || y <= 600 || y >= 813) return naturalHeight;
+        let distance = Infinity;
+        for (const [x0, x1, y0, y1] of FOUNDATION) {
+            const dx = Math.max(x0 - x, 0, x - x1);
+            const dy = Math.max(y0 - y, 0, y - y1);
+            distance = Math.min(distance, Math.hypot(dx, dy));
+        }
+        // Flatten only the building foundation; blend to the original ground
+        // over 18 m so the emergency exit and backyard have no abrupt ledge.
+        if (distance >= 18) return naturalHeight;
+        const t = distance / 18;
+        return naturalHeight * t * t * (3 - 2 * t);
+    }
 
     function navigationWaypoint(fromX, fromY, targetX, targetY, intersectsRect) {
         const block = NAV_BLOCK;
@@ -42,7 +59,7 @@
         function buildShell() {
             buildSection('shell', () => {
                 const scene = getScene();
-                const H = 9, fx = 360, trim = 0x77809a, wallC = 0x565a6e;
+                const H = 9, fx = 360, trim = 0x465064, wallC = 0x303747;
                 const seg = (x0, y0, x1, y1, h, col) => {
                     const horiz = Math.abs(y1 - y0) < 0.001;
                     const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
@@ -53,7 +70,9 @@
                 // Only the actual building and lab-access facade: no old compound enclosure.
                 seg(330, 690, 352, 690, H + 1);
                 seg(368, 690, 390, 690, H + 1);
-                const stripe = box(14, 1.6, 0.4, 0xd8b322, makeSeam(0xd8b322, 0.4));
+                const apron = box(16, 10, 0.12, 0x343b47, { metalness: 0.35, roughness: 0.7 });
+                apron.position.set(fx, 613, 0.12); scene.add(apron);
+                const stripe = box(18, 0.4, 0.18, 0xd8b322, makeSeam(0xd8b322, 0.7));
                 stripe.position.set(fx, 610, H + 0.6); scene.add(stripe);
                 for (const x of [351.2, 368.8]) {
                     const gatePost = box(0.7, 0.65, 7.2, 0x69748d, { metalness: 0.72, roughness: 0.32 });
@@ -61,11 +80,9 @@
                 }
                 const gateHeader = box(17.6, 0.68, 0.72, 0x69748d, { metalness: 0.72, roughness: 0.32 });
                 gateHeader.position.set(fx, 610, 7.15); scene.add(gateHeader);
-                for (const [x, tilt] of [[347.7, -0.20], [372.3, 0.20]]) {
-                    const panel = box(5.8, 0.22, 5.8, 0x394052, { metalness: 0.68, roughness: 0.38 });
-                    panel.position.set(x, 610.65, 2.9); panel.rotation.z = tilt; scene.add(panel);
-                    const panelLight = box(4.3, 0.08, 0.14, 0xff8b35, makeSeam(0xff5b1d, 1.4));
-                    panelLight.position.set(x, 610.48, 4.7); panelLight.rotation.z = tilt; scene.add(panelLight);
+                for (const x of [349.1, 370.9]) {
+                    const gateLamp = box(0.22, 0.22, 5.4, 0xffa84f, makeSeam(0xff8029, 1.2));
+                    gateLamp.position.set(x, 610.45, 4.0); scene.add(gateLamp);
                 }
                 const hx0 = 330, hx1 = 390, hy0 = 618, hy1 = 660;
                 seg(hx0, hy0, 352, hy0, H, trim);
@@ -75,10 +92,10 @@
                 seg(hx1, 652, hx1, hy1, H, trim);
                 seg(hx0, hy1, 352, hy1, H, trim);
                 seg(368, hy1, hx1, hy1, H, trim);
-                const hallRoof = box(hx1 - hx0, hy1 - hy0, 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
+                const hallRoof = box(hx1 - hx0, hy1 - hy0, 1.0, 0x262d3b, { metalness: 0.5, roughness: 0.5 });
                 hallRoof.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, H + 0.5); hallRoof.castShadow = true; scene.add(hallRoof);
                 hallRoof.name = 'FacilityHallRoof'; cutawayMeshes.push(hallRoof);
-                const hallFloor = box(hx1 - hx0, hy1 - hy0, 0.4, 0x3a3e4e, { metalness: 0.3, roughness: 0.6 });
+                const hallFloor = box(hx1 - hx0, hy1 - hy0, 0.4, 0x343a48, { metalness: 0.3, roughness: 0.6, emissive: 0x273342, emissiveIntensity: 0.32 });
                 hallFloor.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, 0.05); hallFloor.receiveShadow = true; scene.add(hallFloor);
                 const vx0 = 342, vx1 = 378, vy1 = 684;
                 seg(vx0, 660, vx0, vy1, H, trim);
@@ -88,7 +105,7 @@
                 const vaultRoof = box(vx1 - vx0, vy1 - 660, 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
                 vaultRoof.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, H + 0.5); vaultRoof.castShadow = true; scene.add(vaultRoof);
                 vaultRoof.name = 'FacilityVaultRoof'; cutawayMeshes.push(vaultRoof);
-                const vaultFloor = box(vx1 - vx0, vy1 - 660, 0.4, 0x3a3e4e, { metalness: 0.3, roughness: 0.6 });
+                const vaultFloor = box(vx1 - vx0, vy1 - 660, 0.4, 0x303442, { metalness: 0.3, roughness: 0.6, emissive: 0x3b2d2d, emissiveIntensity: 0.28 });
                 vaultFloor.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, 0.05); vaultFloor.receiveShadow = true; scene.add(vaultFloor);
             });
         }
@@ -153,8 +170,8 @@
                 const lp = hallLightPos[i];
                 const panel = box(1.4, 0.5, 0.12, 0xfff2cc, makeSeam(0xffdd88, 1.5));
                 panel.position.set(lp[0], lp[1], H - 0.4); scene.add(panel);
-                const lgt = new THREE.PointLight(0xffeebb, 24, 36, 1.8);
-                lgt.position.set(lp[0], lp[1], H - 0.8); scene.add(lgt);
+                const lgt = new THREE.PointLight(0xffd09a, 90, 42, 1.7);
+                lgt.position.set(lp[0], lp[1], H - 0.8); scene.add(addBudgetLight(lgt));
             }
             for (let i = 0; i < 5; i++) {
                 const y = 621 + i * 8;
@@ -165,11 +182,14 @@
                 const cable = new THREE.Mesh(new THREE.CylinderGeometry(0.045, 0.045, 4.0 + (i % 2) * 1.6, 6), mat(0x171922, { metalness: 0.45, roughness: 0.65 }));
                 cable.rotation.x = Math.PI / 2; cable.position.set(333.0, y + 0.5, 6.4); cable.rotation.z = i % 2 ? 0.22 : -0.16; scene.add(cable);
             }
-            for (const [x, y, rot] of [[350, 640, 0.48], [367, 636, -0.72], [377, 651, 0.18]]) {
-                const beam = box(9.0, 0.36, 0.36, 0x414858, { metalness: 0.72, roughness: 0.45 });
-                beam.position.set(x, y, 1.55); beam.rotation.z = rot; scene.add(beam);
-                const spar = box(2.0, 0.26, 0.24, 0x735c3c, { metalness: 0.45, roughness: 0.62 });
-                spar.position.set(x + 1.1, y - 0.45, 0.48); spar.rotation.z = rot + 0.6; scene.add(spar);
+            // A clear central lane carries players and formations. Low cargo
+            // stays by the walls, with collision matching the visible cover.
+            for (const [x, y] of [[339, 640], [381, 632], [381, 653]]) {
+                const cargo = new THREE.Mesh(envBoxGeometry(3.2, 2.4, 1.25), envMat(0x505569, { metalness: 0.4, roughness: 0.65 }));
+                cargo.rotation.x = Math.PI / 2; cargo.position.set(x, y, 0.7); scene.add(cargo);
+                addSolid(x - 1.6, y - 1.2, x + 1.6, y + 1.2, 1.3, 0);
+                const latch = new THREE.Mesh(envBoxGeometry(2.8, 0.14, 0.1), envMat(0xe0a84a, makeSeam(0xe0a84a, 0.65)));
+                latch.rotation.x = Math.PI / 2; latch.position.set(x, y, 1.33); scene.add(latch);
             }
             for (const [x, y] of [[332.0, 634], [388.0, 650]]) {
                 const warningPanel = box(0.12, 3.4, 1.1, 0xffa13e, makeSeam(0xff591b, 1.7));
@@ -184,7 +204,7 @@
             const signCtx = signCanvas.getContext('2d');
             signCtx.fillStyle = '#17131d'; signCtx.fillRect(0, 0, 512, 128);
             signCtx.strokeStyle = '#ff9e42'; signCtx.lineWidth = 10; signCtx.strokeRect(8, 8, 496, 112);
-            signCtx.fillStyle = '#ffe1a4'; signCtx.font = 'bold 42px sans-serif'; signCtx.textAlign = 'center'; signCtx.textBaseline = 'middle'; signCtx.fillText('BIOHAZARD // QUARANTINE', 256, 68);
+            signCtx.fillStyle = '#ffe1a4'; signCtx.font = 'bold 42px sans-serif'; signCtx.textAlign = 'center'; signCtx.textBaseline = 'middle'; signCtx.fillText('CHARGE FRONT // STAGING', 256, 68);
             const signTexture = new THREE.CanvasTexture(signCanvas);
             const bioSign = new THREE.Mesh(new THREE.PlaneGeometry(7.5, 1.9), new THREE.MeshBasicMaterial({ map: signTexture, transparent: true }));
             bioSign.rotation.x = Math.PI / 2; bioSign.position.set(360, 619.05, 4.8); scene.add(bioSign);
@@ -192,7 +212,7 @@
             serviceSign.rotation.x = Math.PI / 2; serviceSign.position.set(342, 619.0, 6.35); scene.add(serviceSign);
             const commandSign = makeFacilitySign('COMMAND // SECURITY', 8.0, '#66d8ff');
             commandSign.rotation.x = Math.PI / 2; commandSign.position.set(382, 659.82, 6.35); scene.add(commandSign);
-            const labSign = makeFacilitySign('BIO-LAB // 3-RELAY LOCK', 10.5, '#ff6655');
+            const labSign = makeFacilitySign('VAULT // 3-RELAY LOCK', 10.5, '#ffb24d');
             labSign.rotation.x = Math.PI / 2; labSign.position.set(360, 659.78, 7.35); scene.add(labSign);
             const sensorSign = makeFacilitySign('SENSORS // INTEL', 5.8, '#66d8ff');
             sensorSign.rotation.y = -Math.PI / 2; sensorSign.position.set(331.18, 630, 5.55); scene.add(sensorSign);
@@ -202,8 +222,20 @@
                 const indicator = box(1.5, 0.12, 0.24, 0xff5544, makeSeam(0xff2211, 1.25));
                 indicator.position.set(357.8 + i * 2.2, 659.64, 5.85); scene.add(indicator); fx.labIndicators.push(indicator.material);
             }
-            const vaultLight = new THREE.PointLight(0xccbbff, 18, 32, 1.8);
-            vaultLight.position.set(360, 672, 6.0); scene.add(vaultLight);
+            for (const x of [350, 360, 370]) {
+                const relay = new THREE.Mesh(envBoxGeometry(2.2, 0.5, 3.5), envMat(0x242b39, { metalness: 0.7, roughness: 0.35 }));
+                relay.rotation.x = Math.PI / 2; relay.position.set(x, 681.5, 2.2); scene.add(relay);
+                const indicator = box(1.2, 0.12, 0.22, 0xff5544, makeSeam(0xff2211, 1.25));
+                indicator.position.set(x, 681.18, 3.0); scene.add(indicator); fx.labIndicators.push(indicator.material);
+            }
+            for (const [x, y] of [[344, 661], [376, 661], [344, 683], [376, 683]]) {
+                const guard = new THREE.Mesh(envBoxGeometry(1.2, 1.2, 8.5), envMat(0x252c3c, { metalness: 0.72, roughness: 0.36 }));
+                guard.rotation.x = Math.PI / 2; guard.position.set(x, y, 4.25); scene.add(guard);
+                const edge = new THREE.Mesh(envBoxGeometry(0.18, 1.25, 6.4), envMat(0xe0a84a, makeSeam(0xe0a84a, 1.15)));
+                edge.rotation.x = Math.PI / 2; edge.position.set(x + (x < 360 ? 0.65 : -0.65), y, 3.8); scene.add(edge);
+            }
+            const vaultLight = new THREE.PointLight(0xffb76c, 105, 35, 1.7);
+            vaultLight.position.set(360, 672, 6.0); scene.add(addBudgetLight(vaultLight));
         }
 
         function buildHallServiceYard(scene, H, fxPos, fyPos) {
@@ -277,7 +309,7 @@
                 const patch = new THREE.Mesh(new THREE.SphereGeometry(rand(0.6, 1.2), 7, 6), mat(0xcc44ff, { emissive: 0xaa22ff, emissiveIntensity: 1.4, roughness: 0.4 }));
                 patch.position.set(sx, sy, 0.35); scene.add(patch);
                 const patchLight = new THREE.PointLight(0xaa44ff, 12, 30, 1.8);
-                patchLight.position.set(sx, sy, 1.2); scene.add(patchLight);
+                patchLight.position.set(sx, sy, 1.2); scene.add(addBudgetLight(patchLight));
             }
         }
 
@@ -306,8 +338,8 @@
                 const off = x < 360 ? 0.12 : -0.12;
                 const strip = box(0.14, 0.2, 0.95, 0x66d8ff, makeSeam(0x2ab0d0, 1.6));
                 strip.position.set(x + off, y, 2.6); scene.add(strip);
-                const lgt = new THREE.PointLight(0x2ab0d0, 11, 18, 1.8);
-                lgt.position.set(x + off * 2.6, y, 2.7); scene.add(lgt);
+                const lgt = new THREE.PointLight(0x2ab0d0, 48, 23, 1.7);
+                lgt.position.set(x + off * 2.6, y, 2.7); scene.add(addBudgetLight(lgt));
             };
             sconce(331, 628); sconce(331, 646);
             sconce(389, 634); sconce(389, 652);
@@ -524,7 +556,7 @@
                 mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
                 return mesh;
             };
-            const pillarSpots = [[331, 619], [389, 619], [331, 659], [389, 659], [343, 683], [377, 683], [351, 689], [369, 689]];
+            const pillarSpots = [[331, 619], [389, 619], [331, 659], [389, 659], [343, 683], [377, 683], [331, 704], [389, 704], [331, 734], [409, 735], [331, 793], [409, 793], [449, 737], [449, 769]];
             const pillarMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.85, H + 1.6, 0.85), mat(0x3e4658, { metalness: 0.55, roughness: 0.5 }), pillarSpots.length);
             const trimMesh = new THREE.InstancedMesh(new THREE.BoxGeometry(0.92, 0.16, 0.92), mat(colors.comms, makeSeam(colors.comms, 0.55)), pillarSpots.length);
             const rotX = new THREE.Matrix4().makeRotationX(Math.PI / 2), inst = new THREE.Matrix4();
@@ -550,9 +582,13 @@
             envPipe(root, 328.5, 620, 328.5, 658, 2.3, 0.09, 0x6f7f9e, 0.45);
             envPipe(root, 391.5, 620, 391.5, 635, 2.7, 0.09, 0x6f7f9e, 0.45);
             envPipe(root, 391.5, 653, 391.5, 658, 2.7, 0.09, 0x6f7f9e, 0.45);
-            envPipe(root, 331, 685.4, 351, 685.4, 3.1, 0.1, 0x6f7f9e, 0.5);
-            envPipe(root, 369, 685.4, 389, 685.4, 3.1, 0.1, 0x6f7f9e, 0.5);
-            for (const [x, y, c] of [[334, 616.5, colors.comms], [391.4, 657, colors.service], [382, 685.5, colors.bio]]) utilityBox(x, y, c);
+            envPipe(root, 331, 690.5, 351, 690.5, 3.1, 0.1, 0x6f7f9e, 0.5);
+            envPipe(root, 369, 690.5, 389, 690.5, 3.1, 0.1, 0x6f7f9e, 0.5);
+            envPipe(root, 329, 706, 329, 731, 5.8, 0.12, 0x6f7f9e, 0.5);
+            envPipe(root, 331, 796, 408, 796, 6.8, 0.12, 0x6f7f9e, 0.5);
+            envPipe(root, 419, 772, 447, 772, 6.5, 0.12, 0x6f7f9e, 0.5);
+            for (const [x, y, c] of [[334, 616.5, colors.comms], [391.4, 657, colors.service], [382, 690.5, colors.bio], [329, 714, colors.lab], [449, 763, colors.crisis]]) utilityBox(x, y, c);
+            vent(328.8, 712, false); vent(411.2, 780, false); vent(437, 771.2, true);
             const hallRoofHousing = placed(360, 639, 18, 12, 3.0, 0x2e3442, { metalness: 0.55, roughness: 0.5 });
             const hallRoofCap = placed(360, 639, 14, 8, 1.0, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
             hallRoofHousing.position.z = H + 2.0; hallRoofCap.position.z = H + 4.0;
@@ -565,6 +601,16 @@
             const vaultRoofCap = placed(360, 672, 10, 6, 0.9, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
             vaultRoofHousing.position.z = H + 1.6; vaultRoofCap.position.z = H + 3.1;
             cutawayMeshes.push(vaultRoofHousing, vaultRoofCap);
+            for (const [x, y, w, d, height] of [[358, 717, 18, 9, 2.1], [370, 769, 21, 12, 2.6], [431, 752, 14, 8, 1.9]]) {
+                const housing = placed(x, y, w, d, height, 0x303848, { metalness: 0.55, roughness: 0.5 });
+                const cap = placed(x, y, w - 2, d - 2, 0.5, 0x48566a, { metalness: 0.65, roughness: 0.43 });
+                housing.position.z = H + height * 0.5; cap.position.z = H + height + 0.45;
+                cutawayMeshes.push(housing, cap);
+            }
+            for (const [x, y, w, d, color] of [[330, 716, 0.2, 22, colors.lab], [330, 780, 0.2, 23, colors.bio], [450, 740, 0.2, 5, colors.crisis], [450, 766, 0.2, 5, colors.crisis], [429, 736, 28, 0.2, colors.service]]) {
+                const edge = placed(x, y, w, d, 0.16, color, makeSeam(color, 0.9));
+                edge.position.z = 8.3;
+            }
             placed(342, 608.5, 2.4, 0.2, 2.0, 0x394052, { metalness: 0.68, roughness: 0.4 }).rotation.z = 0.16;
             placed(342, 608.3, 2.0, 0.1, 0.18, colors.crisis, makeSeam(colors.crisis, 1.6)).rotation.z = 0.16;
             placed(432, 668, 9, 6, 0.7, 0x343b47, { metalness: 0.4, roughness: 0.65 });
@@ -610,7 +656,11 @@
             root.visible = false; emergency.visible = false; getScene().add(root, emergency);
             const solids = [], emergencyMats = [], normalMats = [], lights = [];
             const placed = (group, x, y, w, d, h, color, opts = {}, collision = false) => {
-                const mesh = box(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.48 }, opts));
+                const materialOpts = Object.assign({ metalness: 0.5, roughness: 0.48 }, opts);
+                // Shared structural geometry/materials; emissive controls keep
+                // independent materials for mission-state and FX animation.
+                const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), opts.emissive !== undefined ? mat(color, materialOpts) : envMat(color, materialOpts));
+                mesh.rotation.x = Math.PI / 2;
                 mesh.position.set(x, y, h / 2); mesh.castShadow = h > 0.5; mesh.receiveShadow = true; group.add(mesh);
                 if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, h, 0));
                 return mesh;
@@ -626,54 +676,99 @@
                 if (axis === 'y') mesh.rotation.x = Math.PI / 2; else mesh.rotation.y = Math.PI / 2;
                 mesh.position.set(x, y, z); root.add(mesh); return mesh;
             };
-            placed(root, 360, 710, 60, 52, 0.35, 0x242c39);
-            placed(root, 370, 765, 80, 60, 0.35, 0x2b2638);
-            placed(root, 410, 752, 40, 14, 0.35, 0x252d38);
+            placed(root, 360, 710, 60, 52, 0.35, 0x344354, { emissive: 0x28415a, emissiveIntensity: 0.33 });
+            placed(root, 360, 696, 60, 17, 0.08, 0x344b57, { emissive: 0x204c62, emissiveIntensity: 0.25 }).position.z = 0.26;
+            placed(root, 378.5, 719, 22, 30, 0.08, 0x303e50, { emissive: 0x244b65, emissiveIntensity: 0.32 }).position.z = 0.27;
+            placed(root, 370, 765, 80, 60, 0.35, 0x38334b, { emissive: 0x43314e, emissiveIntensity: 0.33 });
+            placed(root, 430, 753, 40, 34, 0.35, 0x354151, { emissive: 0x483a2b, emissiveIntensity: 0.3 });
             const researchCeiling = placed(root, 360, 710, 60, 52, 0.65, 0x1c222d);
             const containmentCeiling = placed(root, 370, 765, 80, 60, 0.65, 0x211b2a);
-            const emergencyCeiling = placed(root, 410, 752, 40, 14, 0.65, 0x1c222d);
+            const emergencyCeiling = placed(root, 430, 753, 40, 34, 0.65, 0x1c222d);
             researchCeiling.position.z = containmentCeiling.position.z = emergencyCeiling.position.z = 9.3;
             researchCeiling.name = 'ResearchCeiling';
             containmentCeiling.name = 'ContainmentCeiling';
             emergencyCeiling.name = 'EmergencyPassageCeiling';
             cutawayMeshes.push(researchCeiling, containmentCeiling, emergencyCeiling);
             wall(330, 710, 1.4, 52); wall(390, 710, 1.4, 52);
+            wall(341, 704, 22, 1.4); wall(379, 704, 22, 1.4);
+            wall(367, 708, 1.0, 8); wall(367, 730, 1.0, 10);
             wall(341, 735, 22, 1.4); wall(379, 735, 22, 1.4);
             wall(330, 765, 1.4, 60); wall(370, 795, 80, 1.4);
             wall(410, 740, 1.4, 10); wall(410, 764, 1.4, 10); wall(410, 782, 1.4, 26);
-            wall(430, 746, 40, 1.4); wall(430, 758, 40, 1.4);
+            wall(430, 736, 40, 1.4); wall(430, 770, 40, 1.4);
+            wall(450, 741, 1.4, 10); wall(450, 764, 1.4, 12);
             const accessDoor = addDoor(360, 690, 'x', 8, 9, 9, 'lab_access');
             const securityDoor = addDoor(360, 735, 'x', 8, 9, 9, 'lab_security');
             const emergencyDoor = addDoor(410, 752, 'y', 7, 8, 9, 'lab_emergency');
-            accessDoor.enabled = securityDoor.enabled = emergencyDoor.enabled = false;
+            const serviceDoor = addDoor(450, 752, 'y', 6, 7, 9, 'lab_emergency_exit');
+            accessDoor.enabled = securityDoor.enabled = emergencyDoor.enabled = serviceDoor.enabled = false;
             sign('ACCESS // DECONTAMINATION', 360, 690.82, 6.7, 10.5, '#66ddff');
+            sign('RESEARCH // ANALYSIS', 360, 704.82, 6.7, 9.5, '#66ddff');
+            for (const y of [690.8, 703.2]) {
+                for (const x of [351.6, 368.4]) {
+                    placed(root, x, y, 0.75, 0.75, 8.6, 0x252f3e);
+                    strip(root, x + (x < 360 ? 0.42 : -0.42), y, 0.16, 0.8, 0x66ddff, 1.45).position.z = 4.0;
+                }
+                strip(root, 360, y, 16.8, 0.32, 0x66ddff, 1.5).position.z = 8.4;
+            }
             for (const y of [695, 701]) {
                 for (const x of [340, 380]) placed(root, x, y, 0.5, 0.5, 7.8, 0x536174);
                 placed(root, 360, y, 40, 0.35, 0.35, 0x66ddff, makeSeam(0x2288cc, 1.4));
                 strip(root, 360, y + 1.2, 17, 0.18, 0x66ddff, 1.25);
+                for (const x of [334, 386]) {
+                    placed(root, x, y, 2.6, 3.0, 2.1, 0x354858, {}, true);
+                    const readout = placed(root, x + (x < 360 ? 1.36 : -1.36), y, 0.1, 1.6, 0.6, 0x66ddff, makeSeam(0x2288cc, 1.1));
+                    readout.position.z = 1.8;
+                }
             }
             for (const x of [348, 360, 372]) {
                 const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.24, 0.9, 7), mat(0x7891a5, { metalness: 0.72, roughness: 0.3 }));
                 nozzle.rotation.x = Math.PI / 2; nozzle.position.set(x, 698, 7.8); root.add(nozzle);
             }
-            for (const [x, y, color, intensity, distance] of [[360, 699, 0x75cfff, 16, 30], [356, 724, 0xaedfff, 14, 28], [360, 766, 0xff7aa5, 16, 30], [406, 752, 0xffa34d, 12, 24]]) {
+            for (const [x, y, color, intensity, distance] of [[360, 699, 0x75cfff, 125, 39], [356, 724, 0xaedfff, 130, 44], [378, 718, 0xffbb70, 105, 32], [360, 748, 0x84bfff, 105, 40], [360, 774, 0xff88bb, 150, 48], [406, 752, 0xffa34d, 115, 39], [436, 752, 0xffa34d, 110, 36]]) {
                 const light = new THREE.PointLight(color, intensity, distance, 1.7);
                 light.position.set(x, y, 6.4); root.add(addBudgetLight(light)); lights.push({ light, color, intensity });
             }
             sign('RESEARCH // SAMPLE ZERO', 331.0, 710, 6.4, 9.5, '#b9e7ff', 'x');
-            for (const y of [708, 720, 728]) {
-                placed(root, 334, y, 4.5, 2.1, 1.35, 0x485565, {}, y !== 720);
-                const screen = placed(root, 335.7, y, 0.12, 1.4, 0.62, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
-                fx.screens.push({ mat: screen.material, base: 1.2, seed: Math.random() * Math.PI * 2 });
+            sign('SECURITY // OPERATIONS', 389.0, 717, 6.4, 8.5, '#ffb24d', 'x');
+            for (const y of [711, 726]) {
+                const wallPanel = placed(root, 331.0, y, 0.12, 4.8, 2.8, 0x426981,
+                    { emissive: 0x255e85, emissiveIntensity: 0.8 });
+                wallPanel.position.z = 4.1;
             }
+            for (const y of [707, 731]) {
+                strip(root, 367, y, 0.18, 5.5, 0x66ddff, 1.1).position.z = 6.8;
+            }
+            for (const y of [712, 722]) {
+                const station = placed(root, 384, y, 4.0, 2.2, 1.4, 0x414c5d, {}, true);
+                station.name = 'SecurityWorkstation';
+                const display = placed(root, 383.7, y, 0.15, 1.4, 1.05, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
+                display.position.z = 2.2;
+                fx.screens.push({ mat: display.material, base: 1.2, seed: rand(Math.PI * 2) });
+            }
+            for (const y of [710, 716, 722, 728]) {
+                placed(root, 387.7, y, 1.8, 2.2, 3.5, 0x273244, {}, true);
+                const bank = placed(root, 386.72, y, 0.12, 1.6, 1.3, 0x5dbfe7, makeSeam(0x176194, 0.9));
+                bank.position.z = 2.5;
+            }
+            for (const y of [710, 728]) {
+                placed(root, 338, y, 5.0, 2.8, 1.4, 0x495667, {}, true);
+                placed(root, 338, y, 3.6, 1.8, 0.12, 0x8ba6b4).position.z = 1.48;
+                placed(root, 341, y, 1.2, 0.8, 1.0, 0x364458).position.z = 1.95;
+            }
+            for (const y of [714, 722]) {
+                const bench = placed(root, 347, y, 5.0, 2.4, 1.15, 0x425269, {}, true);
+                bench.name = 'AnalysisBench';
+                placed(root, 347, y, 3.8, 1.8, 0.14, 0x7795a5).position.z = 1.24;
+                placed(root, 348, y, 0.8, 0.8, 0.75, 0x467ea0, makeSeam(0x176194, 0.45)).position.z = 1.7;
+            }
+            placed(root, 334, 718, 4.5, 2.1, 1.35, 0x485565, {}, true);
+            const researchScreen = placed(root, 335.7, 718, 0.12, 1.4, 0.62, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
+            fx.screens.push({ mat: researchScreen.material, base: 1.2, seed: rand(Math.PI * 2) });
             for (const y of [706, 716, 726]) {
                 const glass = placed(root, 389.18, y, 0.08, 6.4, 4.1, 0x79bfe8, { transparent: true, opacity: 0.2, emissive: 0x173d66, emissiveIntensity: 0.35, depthWrite: false });
                 glass.renderOrder = 2;
                 for (const z of [2.0, 5.7]) placed(root, 389.0, y, 0.2, 6.5, 0.14, 0xb4d8ef, makeSeam(0x3b7199, 0.65));
-            }
-            for (const [x, y, r] of [[348, 714, 0.35], [374, 707, -0.6], [382, 727, 0.18]]) {
-                const wreck = placed(root, x, y, 4.4, 1.6, 0.9, 0x252d38); wreck.rotation.z = r;
-                const sparks = placed(root, x + 1, y, 0.55, 0.2, 0.16, 0xff9b45, makeSeam(0xff4a1f, 1.5)); sparks.rotation.z = r;
             }
             const securityConsole = placed(root, securityPos.x, securityPos.y, 1.6, 1.0, 1.45, 0x4b5565, {}, true);
             const securityScreen = placed(root, securityPos.x, securityPos.y - 0.56, 1.25, 0.08, 0.66, 0xffa34d, makeSeam(0xff5d22, 1.45)); securityScreen.position.z = 1.42;
@@ -686,18 +781,71 @@
             const turretHead = box(1.25, 0.8, 0.62, 0x5b6878, { metalness: 0.72, roughness: 0.3 }); turretHead.position.z = 1.25; turretGroup.add(turretHead);
             const turretBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.16, 2.2, 7), mat(0x7b8799, { metalness: 0.82, roughness: 0.25 })); turretBarrel.rotation.z = Math.PI / 2; turretBarrel.position.set(1.25, 0, 1.25); turretGroup.add(turretBarrel);
             const turretLamp = new THREE.Mesh(new THREE.SphereGeometry(0.15, 7, 6), mat(0xff6644, makeSeam(0xff2211, 1.5))); turretLamp.position.set(0.62, -0.42, 1.45); turretGroup.add(turretLamp);
-            sign('CONTAINMENT // DNA ARCHIVE', 370, 794.15, 6.6, 11.0, '#ff6688');
+            sign('CONTAINMENT // SPECIMEN ARCHIVE', 370, 794.15, 6.6, 12.5, '#ff6688');
+            for (const x of [346, 392]) {
+                const archivePanel = placed(root, x, 793.95, 6.0, 0.12, 2.8, 0x627c9a,
+                    { emissive: 0x28577d, emissiveIntensity: 0.7 });
+                archivePanel.position.z = 3.8;
+            }
             strip(root, 360, 716, 0.32, 43, 0xaedfff, 1.0);
             strip(root, 360, 761, 0.34, 50, 0xff5577, 1.25);
-            strip(root, 397, 752, 26, 0.3, 0xffa04a, 1.0);
+            strip(root, 428, 752, 37, 0.3, 0xffa04a, 1.0);
+            sign('SERVICE // POWER SYSTEMS', 428, 736.9, 6.5, 10.0, '#ffb24d');
+            for (const [x, y] of [[418, 742], [434, 742], [418, 764], [434, 764]]) {
+                const generator = placed(root, x, y, 5.0, 4.0, 3.6, 0x424b58, {}, true);
+                generator.name = 'ServiceGenerator';
+                for (const dx of [-1.4, 0, 1.4]) {
+                    const vent = placed(root, x + dx, y - 2.06, 0.8, 0.12, 1.2, 0x151d2a);
+                    vent.position.z = 2.1;
+                }
+                const warning = placed(root, x, y + 2.1, 3.5, 0.14, 0.22, 0xffae4f, makeSeam(0xff7425, 1.0));
+                warning.position.z = 2.8;
+            }
+            for (const y of [742, 764]) {
+                for (const x of [425, 441]) {
+                    const cabinet = placed(root, x, y, 2.0, 2.0, 3.0, 0x303b4c, {}, true);
+                    cabinet.name = 'ServiceCabinet';
+                    placed(root, x, y - 1.05, 1.2, 0.1, 0.25, 0x70c8ff, makeSeam(0x2288cc, 0.8)).position.z = 2.35;
+                }
+            }
+            for (const x of [419, 433, 447]) strip(root, x, 752, 0.22, 11, 0xe0a84a, 0.85);
+            sign('EMERGENCY EXIT', 449.0, 752, 7.2, 8, '#ff493d', 'x');
+            for (const y of [746.3, 757.7]) {
+                const beacon = placed(root, 449.65, y, 0.18, 0.3, 5.2, 0xff493d, makeSeam(0xff2211, 1.5));
+                beacon.position.z = 4.0;
+            }
             for (const [x, y] of [[338, 746], [402, 746], [338, 782], [402, 782]]) {
                 placed(root, x, y, 3.2, 2.2, 2.1, 0x3b3545, {}, true);
                 const warning = placed(root, x, y - 1.2, 2.2, 0.12, 0.26, 0xff5577, makeSeam(0xff2244, 1.25)); emergencyMats.push(warning.material);
             }
+            // Wall-side equipment forms a semicircle around the existing vial
+            // anchor; the ~12 m annulus around the tube remains unobstructed.
+            for (const [x, y] of [[335, 759], [335, 774], [404, 776]]) {
+                placed(root, x, y, 2.5, 4.0, 3.2, 0x323b4b, {}, true);
+                const status = placed(root, x + (x < 360 ? 1.3 : -1.3), y, 0.12, 2.0, 1.0, 0x78dcf2, makeSeam(0x2286ae, 1.15));
+                status.position.z = 2.35;
+            }
+            for (const x of [348, 385]) {
+                placed(root, x, 791, 5.2, 2.0, 2.3, 0x394051, {}, true);
+                const screen = placed(root, x, 789.9, 3.5, 0.1, 0.85, 0x8bddf5, makeSeam(0x1c7aac, 1.1));
+                screen.position.z = 1.9;
+                fx.screens.push({ mat: screen.material, base: 1.1, seed: rand(Math.PI * 2) });
+            }
+            for (const [x, y] of [[350, 755], [377, 777]]) {
+                const crate = placed(root, x, y, 2.5, 2.5, 1.25, 0x505166, {}, true);
+                crate.name = 'ContainmentCover';
+                placed(root, x, y, 2.2, 0.16, 0.1, 0xff6688, makeSeam(0xff335f, 0.65)).position.z = 1.34;
+            }
+            const dais = placed(root, containmentPos.x, containmentPos.y, 9.6, 9.6, 0.13, 0x35465b);
+            dais.position.z = 0.36; // low visual lip, traversable without a collision step
             const field = new THREE.Mesh(new THREE.CylinderGeometry(3.2, 3.2, 6.5, 24, 1, true), mat(0x66eaff, { transparent: true, opacity: 0.13, emissive: 0x33aadd, emissiveIntensity: 0.8, side: THREE.DoubleSide, depthWrite: false }));
             field.rotation.x = Math.PI / 2; field.position.set(containmentPos.x, containmentPos.y, 3.35); root.add(field);
             const chamberRing = new THREE.Mesh(new THREE.TorusGeometry(3.4, 0.14, 8, 28), mat(0x7eeeff, makeSeam(0x2abddd, 1.8)));
-            chamberRing.position.set(containmentPos.x, containmentPos.y, 0.4); root.add(chamberRing);
+            chamberRing.position.set(containmentPos.x, containmentPos.y, 0.48); root.add(chamberRing);
+            for (const radius of [5.0, 6.2]) {
+                const guide = new THREE.Mesh(new THREE.RingGeometry(radius, radius + 0.08, 40), envMat(radius < 6 ? 0x63bfe1 : 0xff6688, { emissive: radius < 6 ? 0x227ba9 : 0x77254e, emissiveIntensity: 0.7, side: THREE.DoubleSide }));
+                guide.position.set(containmentPos.x, containmentPos.y, 0.36); root.add(guide);
+            }
             for (const x of [344, 376]) for (const y of [754, 782]) {
                 const pod = new THREE.Mesh(new THREE.CylinderGeometry(1.1, 1.25, 4.5, 10), mat(0x5a465f, { metalness: 0.42, roughness: 0.4, emissive: 0x351847, emissiveIntensity: 0.4 }));
                 pod.rotation.x = Math.PI / 2; pod.position.set(x, y, 2.3); root.add(pod); solids.push(addSolid(x - 1.1, y - 1.1, x + 1.1, y + 1.1, 4.5, 0));
@@ -710,7 +858,7 @@
                 const growth = makeInfestedTree(0.42); growth.position.set(x, y, 0); emergency.add(growth);
             }
             return {
-                root, emergency, solids, emergencyMats, normalMats, lights, accessDoor, securityDoor, emergencyDoor,
+                root, emergency, solids, emergencyMats, normalMats, lights, accessDoor, securityDoor, emergencyDoor, serviceDoor,
                 securityConsole: { group: securityConsole, screen: securityScreen, pos: securityPos.copy() },
                 turretConsole: { group: turretConsole, screen: turretConsoleScreen, pos: turretConsolePos },
                 turret: { group: turretGroup, head: turretHead, lamp: turretLamp, pos: turretPos, active: false, fireT: 0 },
@@ -741,7 +889,7 @@
             return door;
         }
 
-        function updateDoors(dt, player, squadMembers, labAccess, campaign) {
+        function updateDoors(dt, player, squadMembers, hostiles, labAccess, campaign) {
             for (const door of doors) {
                 if (!door.enabled) {
                     door.solid.disabled = true;
@@ -753,6 +901,9 @@
                 if (!near) for (const m of squadMembers) {
                     if (!m.downed && Math.hypot(m.pos.x - door.base[0], m.pos.y - door.base[1]) < 4.2) { near = true; break; }
                 }
+                if (!near) for (const enemy of hostiles) {
+                    if (!enemy.dead && !enemy.dying && Math.hypot(enemy.pos.x - door.base[0], enemy.pos.y - door.base[1]) < 4.2) { near = true; break; }
+                }
                 const locked = !!door.locked || (campaign && door.id === 'bio_lab' && !labAccess);
                 if (door.id === 'bio_lab' || door.id.startsWith('lab_')) {
                     const color = locked ? 0xff5544 : 0x66ffcc;
@@ -762,7 +913,7 @@
                     }
                     if (near && locked && !door.denied) {
                         const text = door.id === 'lab_security' ? 'CONTAINMENT LOCKED — use the local security console'
-                            : door.id === 'lab_emergency' ? 'MAINTENANCE PASSAGE SEALED' : 'BIO-LAB SEALED — inspect command records for lock status';
+                            : door.id === 'lab_emergency' || door.id === 'lab_emergency_exit' ? 'MAINTENANCE PASSAGE SEALED' : 'BIO-LAB SEALED — inspect command records for lock status';
                         door.denied = true; denied(text); sound('accessDeny', 0.45);
                     } else if (!near) door.denied = false;
                 }
@@ -858,5 +1009,5 @@
         };
     }
 
-    global.ChargefrontFacility = Object.freeze({ create, navigationWaypoint, MAP_SEGMENTS, LAB_MAP_SEGMENTS, NAV_BLOCK, BYPASS_WEST, BYPASS_EAST });
+    global.ChargefrontFacility = Object.freeze({ create, navigationWaypoint, foundationHeight, MAP_SEGMENTS, LAB_MAP_SEGMENTS, NAV_BLOCK, BYPASS_WEST, BYPASS_EAST });
 })(globalThis);

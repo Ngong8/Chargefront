@@ -52,7 +52,7 @@ try {
         };
     });
     assert(geometry.hallWall && !geometry.frontOpening && !geometry.bypass && geometry.wallBlocksShot);
-    assert.equal(geometry.mapSegments, 20);
+    assert.equal(geometry.mapSegments, 29);
 
     const continuity = await check('M1→M4', () => {
         const cf = window.__cf;
@@ -82,6 +82,47 @@ try {
     assert(continuity.snapshots.every((s) => s.sameShell && s.sameSolids));
     assert(continuity.snapshots.every((s) => s.pointLights === continuity.initialLights));
     assert(continuity.doors);
+
+    const interior = await check('Facility rooms / floor / cover / exit', () => {
+        const cf = window.__cf;
+        const open = [[360, 610], [360, 625], [360, 645], [360, 673], [360, 696], [360, 704],
+            [360, 714], [367, 718], [373, 718], [360, 727], [360, 748],
+            [360, 766], [368, 774], [360, 783], [352, 774], [430, 752], [446, 752]];
+        const blocked = open.filter(([x, y]) => cf.insideSolid(x, y));
+        const grade = open.map(([x, y]) => +cf.terrainHeight(x, y).toFixed(2));
+        const labCover = cf.probeBlocked(333, 710, 0.9, 343, 710, 0.9);
+        const overCover = cf.probeBlocked(333, 710, 3.0, 343, 710, 3.0);
+        const researchWall = cf.probeBlocked(361, 708, 2, 378, 708, 2);
+        const partitionOpening = cf.probeBlocked(361, 718, 2, 373, 718, 2);
+        const exitWall = cf.probeBlocked(444, 741, 2, 455, 741, 2);
+        const info = cf.performanceInfo();
+        return { blocked, grade, labCover, overCover, researchWall, partitionOpening, exitWall,
+            researchBenches: cf.scene.getObjectsByProperty('name', 'AnalysisBench').length,
+            securityStations: cf.scene.getObjectsByProperty('name', 'SecurityWorkstation').length,
+            serviceGenerators: cf.scene.getObjectsByProperty('name', 'ServiceGenerator').length,
+            triangles: info.render.triangles, lights: info.budgetLights.slots };
+    });
+    assert.deepEqual(interior.blocked, []);
+    assert(interior.grade.slice(1).every((height) => height < 0.2));
+    assert(interior.labCover && !interior.overCover && interior.researchWall && !interior.partitionOpening && interior.exitWall);
+    assert(interior.researchBenches >= 2 && interior.securityStations >= 2 && interior.serviceGenerators === 4);
+
+    const specimen = await check('M3 override / vial / emergency', () => {
+        const cf = window.__cf;
+        cf.startMission('sample_zero', 'mission_select');
+        cf.setNoAggro(true); cf.setInvulnerable(true); cf.clearTestEnemies();
+        cf.setPhase(21); // at the Security console after reaching the lab
+        cf.move(373 - cf.player.pos.x, 718 - cf.player.pos.y);
+        const unlocked = cf.interact(2);
+        const securityDoor = cf.scene.getObjectByName('DeepLaboratory')?.visible;
+        cf.move(364 - cf.player.pos.x, 774 - cf.player.pos.y);
+        const secured = cf.interact(2);
+        const tube = cf.scene.getObjectByName('DeepLaboratory');
+        return { unlocked, securityDoor, secured, tubeVisible: tube?.visible, phase: cf.phaseName,
+            containmentSolid: cf.insideSolid(360, 774), playerSolid: cf.insideSolid(cf.player.pos.x, cf.player.pos.y) };
+    });
+    assert(specimen.securityDoor && specimen.unlocked === 'M3_REACH_SAMPLE');
+    assert(specimen.secured === 'M3_STABILIZE' && !specimen.playerSolid && !specimen.containmentSolid);
 
     const navigation = await check('Squad / Infested / relay guidance / shooting', () => {
         const cf = window.__cf;
@@ -186,6 +227,11 @@ try {
             counts.push(perf.summary().counters);
         }
         const summary = perf.summary(), info = cf.performanceInfo();
+        const geometries = new Set(), materials = new Set();
+        cf.scene.traverse((object) => {
+            if (object.geometry) geometries.add(object.geometry.uuid);
+            if (object.material) for (const material of Array.isArray(object.material) ? object.material : [object.material]) materials.add(material.uuid);
+        });
         const frames = perf.report().frames;
         const minimapFrames = frames.filter((frame) => frame.ops.drawMinimap).length;
         const linkFrames = frames.map((frame, index) => ({ frame, index }))
@@ -199,7 +245,8 @@ try {
             materialsCreated: summary.counters.materialsCreated || 0,
             worldBuilds: summary.counters.buildCampaignWorld || 0,
             navRebuilds: summary.counters.collisionNavRebuild || 0,
-            drawCalls: info.render.calls, meshes: info.counts.meshes, solids: info.solids,
+            drawCalls: info.render.calls, triangles: info.render.triangles,
+            geometries: geometries.size, materials: materials.size, meshes: info.counts.meshes, solids: info.solids,
             lightSlots: info.budgetLights.slots, programs: cf.renderer.info.programs.length, minimapFrames, linkFrames,
             staticFacility: cf.scene.getObjectByName('FacilityHallRoof') === shell
                 && JSON.stringify(cf.facilitySections()) === JSON.stringify(sections) && cf.solidCount === solidCount };
@@ -208,6 +255,9 @@ try {
     assert.equal(benchmark.worldBuilds, 0);
     assert.equal(benchmark.navRebuilds, 0);
     assert.equal(benchmark.lightSlots, 8);
+    assert.equal(benchmark.links, 0);
+    assert.equal(benchmark.geometryCreated, 0);
+    assert.equal(benchmark.materialsCreated, 0);
     assert(benchmark.staticFacility); // encounter spawns may allocate transient enemy meshes
     assert(benchmark.minimapFrames > 0);
     assert.equal(errors.length, 0, errors.join('\n'));

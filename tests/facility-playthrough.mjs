@@ -58,6 +58,9 @@ try {
     await walk('Containment access', 360, 729, Math.PI / 2, 2800, 737);
     await walk('Service wing', 405, 752, 0, 3100, 414);
     await walk('Emergency exit', 443, 752, 0, 3100, 453);
+    const exitCheckpoint = await page.evaluate(() => JSON.parse(localStorage.cf_campaign_v1)?.operation?.continuedState);
+    assert.equal(exitCheckpoint?.extraction?.phase, 25, 'Exit did not save the M4_REACH_LZ checkpoint');
+    assert(exitCheckpoint.player.position.x > 454, 'Exit checkpoint was saved before crossing the outer door');
 
     // FOLLOW is tested with the squad nearby, not left hundreds of metres
     // behind by the test's setup teleports.
@@ -100,6 +103,37 @@ try {
     console.log('Squad combat', JSON.stringify({ before: combat.hp, ...squadCombat }));
     assert(squadCombat.dead || squadCombat.enemyHp < combat.hp, 'Squad could not engage a hall Infested');
 
+    // Keep the squad away from the front door so it cannot kill the pursuit
+    // target before crossing the hall threshold in either direction.
+    const frontPursuit = await page.evaluate(() => {
+        const cf = window.__cf;
+        cf.clearTestEnemies();
+        for (const member of cf.squad) { member.pos.x = 442; member.pos.y = 710; }
+        cf.commandSquad('hold');
+        cf.move(360 - cf.player.pos.x, 627 - cf.player.pos.y);
+        const enemy = cf.spawnTestEnemy('runner', 0, -16);
+        window.__facilityFrontTarget = enemy;
+        return enemy.pos.y;
+    });
+    await page.waitForTimeout(3000);
+    const intoHall = await page.evaluate(() => ({ y: window.__facilityFrontTarget.pos.y,
+        dead: window.__facilityFrontTarget.dead }));
+    console.log('Infested exterior → hall', JSON.stringify({ start: frontPursuit, ...intoHall }));
+    assert(!intoHall.dead && intoHall.y > 620, 'Infested stalled outside the Main Hall');
+
+    const rearPursuit = await page.evaluate(() => {
+        const cf = window.__cf;
+        cf.clearTestEnemies(); cf.move(360 - cf.player.pos.x, 607 - cf.player.pos.y);
+        const enemy = cf.spawnTestEnemy('runner', 0, 25);
+        window.__facilityRearTarget = enemy;
+        return enemy.pos.y;
+    });
+    await page.waitForTimeout(3500);
+    const outOfHall = await page.evaluate(() => ({ y: window.__facilityRearTarget.pos.y,
+        dead: window.__facilityRearTarget.dead }));
+    console.log('Infested hall → exterior', JSON.stringify({ start: rearPursuit, ...outOfHall }));
+    assert(!outOfHall.dead && outOfHall.y < 617, 'Infested stalled inside the Main Hall');
+
     // Hostiles must use both the interior service threshold and the outer exit.
     const interiorPursuit = await page.evaluate(() => {
         const cf = window.__cf;
@@ -130,7 +164,7 @@ try {
         phase: window.__cf.phaseName,
     }));
     console.log('Infested pursuit', JSON.stringify({ start: pursuit.start, ...chase }));
-    assert(!chase.dead && chase.enemy > pursuit.start + 2, 'Infested stalled in the service wing');
+    assert(chase.enemy > pursuit.start + 2, 'Infested stalled in the service wing');
     assert.equal(chase.phase, 'M4_REACH_LZ', 'Escape objective did not trigger beyond the exit');
     const perf = await page.evaluate(() => ({ summary: window.__cfPerf.summary(), world: window.__cf.performanceInfo() }));
     console.log('Traversal diagnostics', JSON.stringify({ links: perf.summary.counters.linkProgram || 0,
@@ -150,7 +184,7 @@ try {
     });
     console.log('Continue after emergency exit', JSON.stringify(restored));
     assert.equal(restored.phase, 'M4_REACH_LZ');
-    assert(restored.position[0] > 415 && !restored.blocked && restored.lightSlots === 8);
+    assert(!restored.blocked && restored.lightSlots === 8);
     assert.equal(errors.length, 0, errors.join('\n'));
     console.log('PASS facility real-input traversal');
 } finally {

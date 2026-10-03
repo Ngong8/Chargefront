@@ -31,6 +31,15 @@ try {
         cf.setNoAggro(true); cf.setInvulnerable(true); cf.clearTestEnemies();
     });
     await page.waitForTimeout(350);
+    await page.evaluate(() => {
+        const cf = window.__cf;
+        cf.move(400 - cf.player.pos.x, 740 - cf.player.pos.y); cf.player.yaw = -Math.PI / 2;
+    });
+    await page.keyboard.down('w'); await page.waitForTimeout(1800); await page.keyboard.up('w');
+    const repairedPerimeter = await page.evaluate(() => ({ x: window.__cf.player.pos.x, y: window.__cf.player.pos.y,
+        solid: window.__cf.insideSolid(window.__cf.player.pos.x, window.__cf.player.pos.y) }));
+    console.log('Containment north perimeter blocks walking', JSON.stringify(repairedPerimeter));
+    assert(repairedPerimeter.y >= 736.19 && !repairedPerimeter.solid);
     await page.evaluate(() => window.__cfPerf.reset());
     const walk = async (label, x, y, yaw, ms, minimum) => {
         await page.evaluate(({ x, y, yaw }) => {
@@ -62,6 +71,29 @@ try {
     assert.equal(exitCheckpoint?.extraction?.phase, 25, 'Exit did not save the M4_REACH_LZ checkpoint');
     assert(exitCheckpoint.player.position.x > 454, 'Exit checkpoint was saved before crossing the outer door');
 
+    // Sprint uses the actual ShiftLeft movement input, including stamina and
+    // automatic doors, rather than a larger debug teleport step.
+    const sprint = async (label, x, y, yaw, minimum) => {
+        await page.evaluate(({ x, y, yaw }) => {
+            const cf = window.__cf;
+            cf.move(x - cf.player.pos.x, y - cf.player.pos.y); cf.player.yaw = yaw;
+        }, { x, y, yaw });
+        await page.keyboard.down('Shift');
+        await page.keyboard.down('w');
+        await page.waitForTimeout(1750);
+        const result = await page.evaluate(() => ({ x: window.__cf.player.pos.x, y: window.__cf.player.pos.y,
+            sprinting: window.__cf.player.sprinting,
+            solid: window.__cf.insideSolid(window.__cf.player.pos.x, window.__cf.player.pos.y) }));
+        await page.keyboard.up('w'); await page.keyboard.up('Shift');
+        console.log(label, JSON.stringify(result));
+        assert(result.sprinting && !result.solid, `${label}: sprint input or collision failed`);
+        assert(yaw === 0 ? result.x > minimum : result.y > minimum, `${label}: sprint blocked at doorway`);
+    };
+    await sprint('Sprint Hall → Vault', 360, 655, Math.PI / 2, 662);
+    await sprint('Sprint Decon → Research', 360, 700, Math.PI / 2, 708);
+    await page.waitForTimeout(2000); // natural stamina recovery between sprint legs
+    await sprint('Sprint Service → Exit', 443, 752, 0, 453);
+
     // FOLLOW is tested with the squad nearby, not left hundreds of metres
     // behind by the test's setup teleports.
     await page.evaluate(() => {
@@ -86,6 +118,23 @@ try {
     assert.equal(traversal.linkProgram || 0, 0);
     assert.equal(traversal.collisionNavRebuild || 0, 0);
     assert.equal(traversal.buildCampaignWorld || 0, 0);
+    // Real-time encounters/effects can allocate while the scene is running;
+    // the quiet A–E harness checks movement-only geometry/material churn.
+
+    const indoorShot = await page.evaluate(() => {
+        const cf = window.__cf;
+        cf.move(353 - cf.player.pos.x, 714 - cf.player.pos.y);
+        cf.player.yaw = Math.PI;
+        cf.fire();
+        return { shots: cf.shots.length, blockedAtEye: cf.probeBlocked(353, 714, 1.8, 343, 714, 1.8),
+            blockedLow: cf.probeBlocked(353, 714, 0.9, 343, 714, 0.9) };
+    });
+    console.log('Indoor shooting over research bench', JSON.stringify(indoorShot));
+    assert(indoorShot.shots > 0 && !indoorShot.blockedAtEye && indoorShot.blockedLow);
+    await page.evaluate(() => {
+        const cf = window.__cf;
+        cf.move(360 - cf.player.pos.x, 633 - cf.player.pos.y);
+    });
 
     const combat = await page.evaluate(() => {
         const cf = window.__cf;

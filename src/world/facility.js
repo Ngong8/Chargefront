@@ -5,8 +5,8 @@
     'use strict';
 
     // South-to-north: staging hall, relay vault, decontamination and research.
-    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 636], [390, 652, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
-    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 690, 330, 795], [390, 690, 390, 735], [367, 704, 367, 712], [367, 725, 367, 735], [330, 735, 352, 735], [368, 735, 390, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
+    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
+    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 690, 330, 795], [390, 690, 390, 735], [367, 704, 367, 712], [367, 725, 367, 735], [330, 735, 352, 735], [368, 735, 410, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
     const NAV_BLOCK = Object.freeze({ x0: 325, y0: 612, x1: 455, y1: 799 });
     const BYPASS_WEST = Object.freeze({ x: 285, y: 585 });
     const BYPASS_EAST = Object.freeze({ x: 450, y: 570 });
@@ -88,8 +88,7 @@
                 seg(hx0, hy0, 352, hy0, H, trim);
                 seg(368, hy0, hx1, hy0, H, trim);
                 seg(hx0, hy0, hx0, hy1, H, trim);
-                seg(hx1, hy0, hx1, 636, H, trim);
-                seg(hx1, 652, hx1, hy1, H, trim);
+                seg(hx1, hy0, hx1, hy1, H, trim).name = 'HallEastPerimeterWall';
                 seg(hx0, hy1, 352, hy1, H, trim);
                 seg(368, hy1, hx1, hy1, H, trim);
                 const hallRoof = box(hx1 - hx0, hy1 - hy0, 1.0, 0x262d3b, { metalness: 0.5, roughness: 0.5 });
@@ -223,10 +222,12 @@
                 indicator.position.set(357.8 + i * 2.2, 659.64, 5.85); scene.add(indicator); fx.labIndicators.push(indicator.material);
             }
             for (const x of [350, 360, 370]) {
-                const relay = new THREE.Mesh(envBoxGeometry(2.2, 0.5, 3.5), envMat(0x242b39, { metalness: 0.7, roughness: 0.35 }));
-                relay.rotation.x = Math.PI / 2; relay.position.set(x, 681.5, 2.2); scene.add(relay);
+                // Wall-side overhead housings are technical landmarks, not
+                // uncollidable tall cover in the central firing lane.
+                const relay = new THREE.Mesh(envBoxGeometry(2.2, 0.5, 1.8), envMat(0x242b39, { metalness: 0.7, roughness: 0.35 }));
+                relay.rotation.x = Math.PI / 2; relay.position.set(x, 682.5, 6.8); scene.add(relay);
                 const indicator = box(1.2, 0.12, 0.22, 0xff5544, makeSeam(0xff2211, 1.25));
-                indicator.position.set(x, 681.18, 3.0); scene.add(indicator); fx.labIndicators.push(indicator.material);
+                indicator.position.set(x, 682.18, 6.8); scene.add(indicator); fx.labIndicators.push(indicator.material);
             }
             for (const [x, y] of [[344, 661], [376, 661], [344, 683], [376, 683]]) {
                 const guard = new THREE.Mesh(envBoxGeometry(1.2, 1.2, 8.5), envMat(0x252c3c, { metalness: 0.72, roughness: 0.36 }));
@@ -316,7 +317,6 @@
         function buildHallInterior(scene, H, px, py) {
             addDoor(360, 618, 'x', 8, 9, H);
             addDoor(360, 660, 'x', 8, 9, H, 'bio_lab');
-            addDoor(390, 644, 'y', 8, 9, H);
             const pillar = (x, y) => {
                 const p = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.32, H, 6), mat(0x4a5268, { metalness: 0.55, roughness: 0.4 }));
                 p.rotation.x = Math.PI / 2; p.position.set(x, y, H / 2); p.castShadow = true; scene.add(p);
@@ -458,7 +458,6 @@
                 glow.position.z = 8.7;
             };
             doorFrame(360, 618, true, colors.service);
-            doorFrame(390, 644, false, colors.service);
             doorFrame(360, 660, true, colors.bio);
             doorFrame(360, 690, true, colors.lab);
             doorFrame(360, 735, true, colors.service);
@@ -475,7 +474,51 @@
                 placed(388.4, y, 0.12, 1.6, 0.16, colors.service, makeSeam(colors.service, 1.2)).position.z = 1.0;
                 placed(388.4, y, 0.12, 1.6, 0.16, colors.comms, makeSeam(colors.comms, 0.9)).position.z = 0.6;
             }
+            // Repeated wall-mounted rack faces gather the existing loose cargo
+            // into a logistics bay. They sit against solid walls, above low-cover
+            // firing height, and do not introduce invisible floor obstacles.
+            for (const [x, y] of [[331.25, 638], [331.25, 650], [388.75, 636], [388.75, 648]]) {
+                placed(x, y, 0.16, 3.2, 2.7, 0x667383,
+                    { emissive: 0x302b24, emissiveIntensity: 0.65, metalness: 0.4, roughness: 0.6 }).position.z = 4.2;
+                for (const z of [3.3, 4.9]) placed(x + (x < 360 ? 0.1 : -0.1), y, 0.12, 3.0, 0.12,
+                    colors.service, makeSeam(colors.service, 0.55)).position.z = z;
+            }
+            for (const x of [354, 366]) placed(x, 640, 0.12, 27, 0.06, colors.service,
+                makeSeam(colors.service, 0.5)).position.z = 0.32;
+            // Three matching cable feeds and warm lock panels read as one
+            // protected relay system; the relay pads and center aisle stay open.
+            for (const x of [350, 360, 370]) {
+                placed(x, 672, 0.14, 13, 0.06, colors.service, makeSeam(colors.service, 0.7)).position.z = 0.32;
+                placed(x, 682.12, 2.0, 0.1, 0.18, colors.bio, makeSeam(0x753452, 0.6)).position.z = 5.7;
+            }
+            for (const x of [343.15, 376.85]) for (const y of [668, 678]) {
+                placed(x, y, 0.16, 4.0, 3.0, 0x566175,
+                    { emissive: 0x282f3b, emissiveIntensity: 0.55, metalness: 0.55, roughness: 0.55 }).position.z = 4.2;
+                placed(x + (x < 360 ? 0.1 : -0.1), y, 0.12, 3.6, 0.16,
+                    colors.service, makeSeam(colors.service, 0.85)).position.z = 5.35;
+            }
             placed(360, 658.2, 15, 0.16, 0.18, colors.bio, makeSeam(colors.bio, 0.8)).position.z = 0.34;
+            // This group has no animated or gameplay-referenced meshes. Batch
+            // matching static pieces once at build time, never on traversal.
+            const batches = new Map();
+            for (const mesh of root.children) {
+                if (!mesh.isMesh || mesh.castShadow || mesh.receiveShadow) continue;
+                const key = mesh.geometry.uuid + '/' + mesh.material.uuid;
+                if (!batches.has(key)) batches.set(key, []);
+                batches.get(key).push(mesh);
+            }
+            for (const group of batches.values()) {
+                if (group.length < 2) continue;
+                const instances = new THREE.InstancedMesh(group[0].geometry, group[0].material, group.length);
+                instances.name = 'InteriorIdentityBatch';
+                for (let i = 0; i < group.length; i++) {
+                    group[i].updateMatrix();
+                    instances.setMatrixAt(i, group[i].matrix);
+                    root.remove(group[i]);
+                }
+                instances.computeBoundingSphere();
+                root.add(instances);
+            }
         }
 
         function buildExpansion(missionId) {
@@ -542,8 +585,9 @@
                 const light = placedBox(powerThrough, 454.35, y, 0.18, 0.7, 0.75, 0xff754f, makeSeam(0xff321c, 1.8));
                 shortcutLights.push(light.material);
             }
-            const shortcutLane = placedBox(powerThrough, 423.5, 634.5, 66, 0.3, 0.07, 0x66cfff, makeSeam(0x2288cc, 0.75));
-            shortcutLane.rotation.z = Math.atan2(644 - 625, 392 - 455);
+            // Yard guide follows the canonical front approach, never the
+            // now-solid east Hall wall.
+            const shortcutLane = placedBox(powerThrough, 423.5, 600, 56, 0.3, 0.07, 0x66cfff, makeSeam(0x2288cc, 0.75));
             zones = { shared, dead_signal: deadSignal, power_through: powerThrough, deadSignalSolids, sharedSolids, statusLights, statusMast, routeBoard, routeGlow, shortcut: { field: shortcutField, solid: shortcutSolid, lights: shortcutLights, lane: shortcutLane } };
         }
 
@@ -607,6 +651,48 @@
                 housing.position.z = H + height * 0.5; cap.position.z = H + height + 0.45;
                 cutawayMeshes.push(housing, cap);
             }
+            // Break the flat roof silhouette without changing any walls or
+            // walkable space. All static pieces share the environment caches;
+            // roof pieces follow the existing cutaway toggle.
+            const roofPiece = (x, y, w, d, h, z, color, opts) => {
+                const piece = placed(x, y, w, d, h, color, opts);
+                piece.position.z = z; cutawayMeshes.push(piece); return piece;
+            };
+            const roofSteel = { metalness: 0.6, roughness: 0.45 };
+            const roofDark = { metalness: 0.7, roughness: 0.4 };
+            const roofGlow = makeSeam(colors.comms, 0.65);
+            for (const [x, y, w, d] of [[341, 618, 20, 0.8], [379, 618, 20, 0.8],
+                [330, 639, 0.8, 41], [390, 627, 0.8, 17], [390, 656, 0.8, 8],
+                [342, 795, 24, 0.8], [397, 795, 24, 0.8], [430, 770, 38, 0.8]]) {
+                roofPiece(x, y, w, d, 0.85, 10.45, 0x3e4658, roofSteel);
+            }
+            // Repeated HVAC banks, short raised duct runs and a small antenna
+            // cluster give the hall, containment and power wing separate profiles.
+            for (const [x, y] of [[344, 645], [377, 645], [343, 772], [397, 772], [432, 758]]) {
+                roofPiece(x, y, 5.0, 3.2, 1.3, 10.75, 0x4a5361, roofSteel);
+                roofPiece(x, y, 4.2, 2.4, 0.16, 11.48, 0x101722, roofDark);
+                for (const dy of [-0.7, 0, 0.7]) roofPiece(x, y + dy, 3.6, 0.2, 0.2, 11.59, 0x5b6878, roofSteel);
+            }
+            for (const [x, y, w, d] of [[360, 645, 27, 0.65], [370, 780, 42, 0.65], [430, 744, 22, 0.65]]) {
+                roofPiece(x, y, w, d, 0.6, 10.65, 0x333b46, roofSteel);
+                roofPiece(x, y, w, 0.13, 0.12, 11.02, colors.comms, roofGlow);
+            }
+            for (const [x, y, h] of [[422, 750, 5], [438, 749, 3.5]]) {
+                roofPiece(x, y, 0.35, 0.35, h, 10.1 + h / 2, 0x5b6878, roofSteel);
+                roofPiece(x, y, 1.8, 0.14, 0.14, 10.1 + h - 0.5, colors.comms, roofGlow);
+            }
+            // Facade-mounted structure and wayfinding sit above head height:
+            // no new ground solids, lane obstructions or local PointLights.
+            placed(360, 616.8, 19, 2.2, 0.65, 0x3e4658, roofSteel).position.z = 9.25;
+            placed(360, 615.63, 17, 0.16, 0.23, colors.service, makeSeam(colors.service, 0.8)).position.z = 9.18;
+            for (const x of [348, 372]) {
+                placed(x, 617.3, 0.65, 0.7, 3.4, 0x4a5361, roofSteel).position.z = 7.0;
+                placed(x, 616.88, 0.14, 0.14, 2.2, colors.comms, roofGlow).position.z = 7.0;
+            }
+            for (const [x, y, z, w, d] of [[329.1, 718, 6.7, 0.3, 10], [410.9, 782, 6.7, 0.3, 10], [450.9, 762, 6.7, 0.3, 8]]) {
+                placed(x, y, w, d, 0.35, 0x5b6878, roofSteel).position.z = z;
+                placed(x, y, w, d, 0.12, colors.comms, roofGlow).position.z = z - 0.3;
+            }
             for (const [x, y, w, d, color] of [[330, 716, 0.2, 22, colors.lab], [330, 780, 0.2, 23, colors.bio], [450, 740, 0.2, 5, colors.crisis], [450, 766, 0.2, 5, colors.crisis], [429, 736, 28, 0.2, colors.service]]) {
                 const edge = placed(x, y, w, d, 0.16, color, makeSeam(color, 0.9));
                 edge.position.z = 8.3;
@@ -627,15 +713,22 @@
                 if (face === 'y') s.rotation.x = Math.PI / 2; else s.rotation.y = Math.PI / 2;
                 s.position.set(x, y, z); root.add(s); return s;
             };
-            sign('ABANDONED FACILITY // BIO-RESEARCH', 360, 607.6, 8.1, 12, '#66d8ff', 'y');
+            sign('CF-07 // BIO-RESEARCH', 360, 607.6, 8.1, 12, '#66d8ff', 'y');
             sign('LOADING // SERVICE YARD', 415.4, 668, 7.0, 9, '#ffb24d', 'x');
-            sign('STAGING // FORWARD DEPLOYMENT', 360, 576.8, 6.4, 12, '#ffbf55', 'y');
+            // Keep the staging board at the edge of the approach, not in front
+            // of the primary CF-07 entrance sign from the south-facing view.
+            sign('STAGING // FORWARD DEPLOYMENT', 316, 576.8, 6.4, 12, '#ffbf55', 'y');
+            sign('POWER // EMERGENCY EGRESS', 430, 770.85, 6.0, 10, '#ffb24d', 'y');
             const marking = (x, y, w, d) => {
                 const m = envBoxMesh(w, d, 0.06, colors.service, makeSeam(colors.service, 0.5));
                 m.position.set(x, y, terrainHeight(x, y) + 0.16); root.add(m); return m;
             };
             for (let i = 0; i < 4; i++) marking(360 + (i - 1.5) * 2.4, 592 - i * 3, 0.5, 2.2);
             marking(360, 585, 10, 0.5);
+            for (const x of [351, 369]) for (const y of [599, 605]) {
+                const guide = placed(x, y, 0.24, 3.0, 0.06, colors.service, makeSeam(colors.service, 0.5));
+                guide.position.z = terrainHeight(x, y) + 0.16;
+            }
             const bypassPoints = [{ x: 285, y: 690 }, BYPASS_WEST, BYPASS_EAST, gamma];
             for (let i = 0; i < bypassPoints.length - 1; i++) {
                 const a = bypassPoints[i], b = bypassPoints[i + 1];
@@ -665,6 +758,17 @@
                 if (collision) solids.push(addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, h, 0));
                 return mesh;
             };
+            // Static, non-colliding dressing uses the shared environment caches.
+            // Keep it flush with existing walls or atop already-solid benches;
+            // unlike the animated laboratory strips, these materials never vary.
+            const detailBatches = new Map();
+            const detail = (name, x, y, w, d, h, z, color, opts = {}) => {
+                const geometry = envBoxGeometry(w, d, h);
+                const material = envMat(color, Object.assign({ metalness: 0.35, roughness: 0.6 }, opts));
+                const key = name + '/' + geometry.uuid + '/' + material.uuid;
+                if (!detailBatches.has(key)) detailBatches.set(key, { name, geometry, material, positions: [] });
+                detailBatches.get(key).positions.push([x, y, z]);
+            };
             const wall = (x, y, w, d) => placed(root, x, y, w, d, 9, 0x384354, {}, true);
             const strip = (group, x, y, w, d, color, intensity = 1.2, emergencyStrip = false) => {
                 const mesh = placed(group, x, y, w, d, 0.07, color, { emissive: color, emissiveIntensity: intensity, metalness: 0.2, roughness: 0.5 });
@@ -693,6 +797,10 @@
             wall(341, 704, 22, 1.4); wall(379, 704, 22, 1.4);
             wall(367, 708, 1.0, 8); wall(367, 730, 1.0, 10);
             wall(341, 735, 22, 1.4); wall(379, 735, 22, 1.4);
+            // Research ends at x390; Containment extends to x410. Close that
+            // 20 m north-perimeter return with the same 1.4 m thick, 9 m high
+            // wall as its neighbors, including a height-aware collision solid.
+            wall(400, 735, 20, 1.4).name = 'ContainmentNorthReturnWall';
             wall(330, 765, 1.4, 60); wall(370, 795, 80, 1.4);
             wall(410, 740, 1.4, 10); wall(410, 764, 1.4, 10); wall(410, 782, 1.4, 26);
             wall(430, 736, 40, 1.4); wall(430, 770, 40, 1.4);
@@ -725,9 +833,19 @@
                 const nozzle = new THREE.Mesh(new THREE.CylinderGeometry(0.14, 0.24, 0.9, 7), mat(0x7891a5, { metalness: 0.72, roughness: 0.3 }));
                 nozzle.rotation.x = Math.PI / 2; nozzle.position.set(x, 698, 7.8); root.add(nozzle);
             }
-            for (const [x, y, color, intensity, distance] of [[360, 699, 0x75cfff, 125, 39], [356, 724, 0xaedfff, 130, 44], [378, 718, 0xffbb70, 105, 32], [360, 748, 0x84bfff, 105, 40], [360, 774, 0xff88bb, 150, 48], [406, 752, 0xffa34d, 115, 39], [436, 752, 0xffa34d, 110, 36]]) {
+            for (const x of [331.05, 388.95]) for (const y of [695, 701]) {
+                detail('DeconWallPanel', x, y, 0.12, 3.8, 2.4, 3.8, 0x8196a5,
+                    { emissive: 0x365e71, emissiveIntensity: 0.8, metalness: 0.2, roughness: 0.72 });
+                detail('DeconStatus', x + (x < 360 ? 0.08 : -0.08), y, 0.12, 2.8, 0.13, 5.15,
+                    0x83e2ee, makeSeam(0x348ca9, 0.9));
+            }
+            for (const y of [692, 702]) detail('DeconThreshold', 360, y, 17, 0.18, 0.05, 0.34,
+                0x88d9ed, makeSeam(0x276e91, 0.65));
+            // Emergency state preserves cool fill in decon/research and at the
+            // specimen. Security/exit sources retain the pulsing red warning.
+            for (const [x, y, color, intensity, distance, emergencyColor] of [[360, 699, 0x75cfff, 125, 39, 0x75cfff], [356, 724, 0xaedfff, 130, 44, 0xaedfff], [378, 718, 0xffbb70, 105, 32, 0xff493d], [360, 748, 0x84bfff, 105, 40, 0x84bfff], [360, 774, 0xff88bb, 150, 48, 0xbfeeff], [406, 752, 0xffa34d, 115, 39, 0xffa34d], [436, 752, 0xffa34d, 110, 36, 0xff493d]]) {
                 const light = new THREE.PointLight(color, intensity, distance, 1.7);
-                light.position.set(x, y, 6.4); root.add(addBudgetLight(light)); lights.push({ light, color, intensity });
+                light.position.set(x, y, 6.4); root.add(addBudgetLight(light)); lights.push({ light, color, intensity, emergencyColor });
             }
             sign('RESEARCH // SAMPLE ZERO', 331.0, 710, 6.4, 9.5, '#b9e7ff', 'x');
             sign('SECURITY // OPERATIONS', 389.0, 717, 6.4, 8.5, '#ffb24d', 'x');
@@ -761,7 +879,31 @@
                 bench.name = 'AnalysisBench';
                 placed(root, 347, y, 3.8, 1.8, 0.14, 0x7795a5).position.z = 1.24;
                 placed(root, 348, y, 0.8, 0.8, 0.75, 0x467ea0, makeSeam(0x176194, 0.45)).position.z = 1.7;
+                // Instruments share the bench's existing low-cover footprint;
+                // their tops remain below standing fire height (~1.7 m).
+                detail('ResearchInstrument', 345.6, y, 0.9, 0.55, 0.2, 1.38, 0x91afbc,
+                    { emissive: 0x31586c, emissiveIntensity: 0.65 });
+                detail('ResearchReadout', 345.6, y - 0.29, 0.65, 0.07, 0.24, 1.51, 0x9ae7f2,
+                    makeSeam(0x317d9d, 0.85));
             }
+            // A pair of coherent analysis bays and pale wall returns, rather
+            // than isolated floor props, define the research loop around cover.
+            for (const y of [711, 725]) {
+                detail('ResearchWallPanel', 331.05, y, 0.12, 7.6, 2.8, 3.4, 0x728a9b,
+                    { emissive: 0x344e60, emissiveIntensity: 0.8, metalness: 0.2, roughness: 0.7 });
+                detail('ResearchWallReadout', 331.18, y, 0.12, 5.4, 0.22, 4.3, 0xa4e5eb,
+                    makeSeam(0x357d9a, 0.65));
+            }
+            for (const x of [340, 380]) detail('ResearchFarWall', x, 734.05, 9.0, 0.12, 2.4, 3.4,
+                0x6c8092, { emissive: 0x30485c, emissiveIntensity: 0.75, metalness: 0.2, roughness: 0.7 });
+            for (const x of [340, 380]) {
+                detail('ResearchUpperReturn', x, 734.02, 9.0, 0.13, 2.2, 6.2, 0x72899c,
+                    { emissive: 0x294c62, emissiveIntensity: 0.72, metalness: 0.25, roughness: 0.68 });
+                detail('ResearchUpperReadout', x, 733.9, 6.0, 0.12, 0.16, 6.35,
+                    0x9cdeeb, makeSeam(0x34758c, 0.65));
+            }
+            detail('ResearchFloorGuide', 341.5, 718, 0.16, 19, 0.05, 0.34,
+                0x84cce0, makeSeam(0x256a86, 0.55));
             placed(root, 334, 718, 4.5, 2.1, 1.35, 0x485565, {}, true);
             const researchScreen = placed(root, 335.7, 718, 0.12, 1.4, 0.62, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
             fx.screens.push({ mat: researchScreen.material, base: 1.2, seed: rand(Math.PI * 2) });
@@ -770,6 +912,16 @@
                 glass.renderOrder = 2;
                 for (const z of [2.0, 5.7]) placed(root, 389.0, y, 0.2, 6.5, 0.14, 0xb4d8ef, makeSeam(0x3b7199, 0.65));
             }
+            for (const y of [710, 716, 722, 728]) {
+                detail('SecurityMonitor', 388.93, y, 0.13, 1.6, 0.72, 4.25, 0x93d5e2,
+                    { emissive: 0x367b9c, emissiveIntensity: 0.95, metalness: 0.2, roughness: 0.65 });
+                detail('SecurityStatus', 388.8, y, 0.12, 1.3, 0.12, 4.8, colors.service,
+                    makeSeam(0x995a22, 0.7));
+            }
+            for (const y of [711, 727]) detail('SecurityCommandRail', 367.65, y, 0.12, 3.2, 0.3, 4.1,
+                colors.service, makeSeam(0x995a22, 0.85));
+            detail('SecurityFloorGuide', 382, 718, 0.12, 19, 0.05, 0.35,
+                colors.service, makeSeam(0x995a22, 0.55));
             const securityConsole = placed(root, securityPos.x, securityPos.y, 1.6, 1.0, 1.45, 0x4b5565, {}, true);
             const securityScreen = placed(root, securityPos.x, securityPos.y - 0.56, 1.25, 0.08, 0.66, 0xffa34d, makeSeam(0xff5d22, 1.45)); securityScreen.position.z = 1.42;
             const turretConsolePos = vec2(342, 711);
@@ -788,7 +940,7 @@
                 archivePanel.position.z = 3.8;
             }
             strip(root, 360, 716, 0.32, 43, 0xaedfff, 1.0);
-            strip(root, 360, 761, 0.34, 50, 0xff5577, 1.25);
+            strip(root, 360, 761, 0.34, 50, 0xff5577, 0.85);
             strip(root, 428, 752, 37, 0.3, 0xffa04a, 1.0);
             sign('SERVICE // POWER SYSTEMS', 428, 736.9, 6.5, 10.0, '#ffb24d');
             for (const [x, y] of [[418, 742], [434, 742], [418, 764], [434, 764]]) {
@@ -800,6 +952,13 @@
                 }
                 const warning = placed(root, x, y + 2.1, 3.5, 0.14, 0.22, 0xffae4f, makeSeam(0xff7425, 1.0));
                 warning.position.z = 2.8;
+                // Matching aisle-facing access faces make the four existing
+                // tall-cover machines readable without enlarging their solids.
+                const aisleFace = y < 752 ? y + 2.05 : y - 2.05;
+                detail('ServiceGeneratorFace', x, aisleFace, 4.0, 0.12, 1.55, 1.85, 0x78828d,
+                    { emissive: 0x484b4d, emissiveIntensity: 0.75, metalness: 0.4, roughness: 0.65 });
+                detail('ServiceGeneratorStatus', x, aisleFace + (y < 752 ? 0.09 : -0.09), 3.2, 0.12, 0.16, 2.55,
+                    colors.service, makeSeam(0x995b20, 0.8));
             }
             for (const y of [742, 764]) {
                 for (const x of [425, 441]) {
@@ -808,6 +967,22 @@
                     placed(root, x, y - 1.05, 1.2, 0.1, 0.25, 0x70c8ff, makeSeam(0x2288cc, 0.8)).position.z = 2.35;
                 }
             }
+            for (const x of [419, 439]) {
+                detail('PowerBus', x, 769.05, 8.0, 0.12, 2.4, 4.4, 0x747168,
+                    { emissive: 0x51412b, emissiveIntensity: 0.8, metalness: 0.4, roughness: 0.65 });
+                detail('PowerBusStatus', x, 768.9, 5.5, 0.12, 0.2, 4.9,
+                    colors.service, makeSeam(0x99602c, 0.9));
+                detail('PowerWallPanel', x, 736.95, 8.0, 0.12, 2.4, 3.5, 0x817b70,
+                    { emissive: 0x58422e, emissiveIntensity: 0.8, metalness: 0.4, roughness: 0.65 });
+                detail('PowerWallHousing', x, 736.93, 7.5, 0.14, 1.6, 6.3, 0x696d70,
+                    { emissive: 0x383d48, emissiveIntensity: 0.55, metalness: 0.55, roughness: 0.55 });
+            }
+            for (const x of [416, 444]) detail('ServiceCableChannel', x, 752, 0.14, 21, 0.06, 0.35,
+                colors.service, makeSeam(0x99602c, 0.55));
+            for (const y of [746, 758]) detail('ServiceAisleGuide', 430, y, 24, 0.16, 0.05, 0.38,
+                colors.service, makeSeam(0x99602c, 0.55));
+            detail('EmergencyExitThreshold', 446.5, 752, 0.18, 10, 0.06, 0.35,
+                colors.crisis, makeSeam(0x99251d, 0.95));
             for (const x of [419, 433, 447]) strip(root, x, 752, 0.22, 11, 0xe0a84a, 0.85);
             sign('EMERGENCY EXIT', 449.0, 752, 7.2, 8, '#ff493d', 'x');
             for (const y of [746.3, 757.7]) {
@@ -825,6 +1000,34 @@
                 const status = placed(root, x + (x < 360 ? 1.3 : -1.3), y, 0.12, 2.0, 1.0, 0x78dcf2, makeSeam(0x2286ae, 1.15));
                 status.position.z = 2.35;
             }
+            for (const x of [331.05, 408.95]) for (const y of [757, 782]) {
+                detail('ContainmentWallPanel', x, y, 0.12, 8.0, 2.6, 3.3, 0x6c7d92,
+                    { emissive: 0x344f69, emissiveIntensity: 0.8, metalness: 0.2, roughness: 0.7 });
+                detail('ContainmentCoolGuide', x + (x < 360 ? 0.1 : -0.1), y, 0.13, 6.2, 0.18, 4.5,
+                    0x9cdded, makeSeam(0x347c9c, 0.8));
+            }
+            for (const x of [346, 393]) detail('ContainmentFarWall', x, 794.05, 10, 0.12, 2.4, 3.4,
+                0x6c7d92, { emissive: 0x344f69, emissiveIntensity: 0.8, metalness: 0.2, roughness: 0.7 });
+            // Wall-integrated archive bays break the otherwise black upper
+            // perimeter. The specimen annulus and combat floor remain empty.
+            for (const x of [344, 356, 382, 394]) {
+                detail('ArchiveMonitorBay', x, 794.03, 6.0, 0.14, 2.5, 6.45, 0x708398,
+                    { emissive: 0x304e64, emissiveIntensity: 0.85, metalness: 0.3, roughness: 0.65 });
+                detail('ArchiveMonitor', x, 793.9, 3.7, 0.14, 0.65, 6.45, 0x9ed9e6,
+                    makeSeam(0x347d9c, 0.75));
+                detail('ArchiveStatus', x + 2.3, 793.88, 0.35, 0.14, 0.3, 6.45,
+                    colors.bio, makeSeam(0x853653, 0.65));
+            }
+            for (const x of [331.04, 408.96]) {
+                for (const y of [750, 762, 778, 790]) detail('ContainmentWallRib', x, y, 0.16, 0.65, 4.0, 6.2,
+                    0x687d93, { emissive: 0x2b4157, emissiveIntensity: 0.6, metalness: 0.45, roughness: 0.6 });
+                detail('ContainmentWallConduit', x + (x < 360 ? 0.1 : -0.1), 770, 0.12, 35, 0.2, 7.7,
+                    0x8dcbdd, makeSeam(0x326789, 0.55));
+            }
+            detail('ArchiveCeilingFeed', 360, 785, 0.26, 18, 0.2, 8.8, 0x68849a,
+                { emissive: 0x2e556b, emissiveIntensity: 0.65 });
+            detail('ArchiveCeilingSupport', 360, 777, 0.4, 0.4, 1.0, 8.8, 0x68849a,
+                { emissive: 0x2e556b, emissiveIntensity: 0.65 });
             for (const x of [348, 385]) {
                 placed(root, x, 791, 5.2, 2.0, 2.3, 0x394051, {}, true);
                 const screen = placed(root, x, 789.9, 3.5, 0.1, 0.85, 0x8bddf5, makeSeam(0x1c7aac, 1.1));
@@ -857,6 +1060,19 @@
             for (const [x, y] of [[335, 738], [405, 770], [386, 790]]) {
                 const growth = makeInfestedTree(0.42); growth.position.set(x, y, 0); emergency.add(growth);
             }
+            const rotation = new THREE.Matrix4().makeRotationX(Math.PI / 2);
+            const transform = new THREE.Matrix4();
+            for (const batch of detailBatches.values()) {
+                const instance = new THREE.InstancedMesh(batch.geometry, batch.material, batch.positions.length);
+                instance.name = batch.name;
+                for (let i = 0; i < batch.positions.length; i++) {
+                    const [x, y, z] = batch.positions[i];
+                    transform.makeTranslation(x, y, z).multiply(rotation);
+                    instance.setMatrixAt(i, transform);
+                }
+                instance.computeBoundingSphere();
+                root.add(instance);
+            }
             return {
                 root, emergency, solids, emergencyMats, normalMats, lights, accessDoor, securityDoor, emergencyDoor, serviceDoor,
                 securityConsole: { group: securityConsole, screen: securityScreen, pos: securityPos.copy() },
@@ -874,7 +1090,9 @@
                 const g = new THREE.Group();
                 const panel = box(w, d, panelH, 0x3e4658, { metalness: 0.72, roughness: 0.34 });
                 panel.castShadow = true; panel.receiveShadow = true; g.add(panel);
-                const seam = box(axis === 'x' ? 0.14 : d + 0.06, axis === 'x' ? d + 0.06 : 0.14, panelH - 0.9, 0xff9e42, makeSeam(0xff6b24, 1.4));
+                // For Y-spanning panels the glowing edge runs along Y, not
+                // 9 m through the wall toward the exterior camera.
+                const seam = box(axis === 'x' ? 0.14 : w + 0.06, axis === 'x' ? d + 0.06 : 0.14, panelH - 0.9, 0xff9e42, makeSeam(0xff6b24, 1.4));
                 seam.position.set(axis === 'x' ? -s * (w * 0.5 - 0.1) : 0, axis === 'x' ? 0 : -s * (d * 0.5 - 0.1), 0);
                 g.add(seam); g.position.z = panelH / 2;
                 const offC = s * (gapHalf * 0.55), offO = s * (gapHalf + panelW * 0.5 + 0.4);

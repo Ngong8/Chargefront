@@ -32,15 +32,38 @@ const allCaptures = [
     ['topdown', 'facility_topdown.png'],
     ['interior_hall', 'facility_interior_hall.png'],
     ['interior_vault', 'facility_interior_vault.png'],
+    ['interior_decon', 'facility_interior_decon.png'],
+    ['interior_research', 'facility_interior_research.png'],
+    ['interior_security', 'facility_interior_security.png'],
     ['interior_lab', 'facility_interior_lab.png'],
     ['interior_corridor', 'facility_interior_corridor.png'],
     ['interior_deeplab', 'facility_interior_deeplab.png'],
+    ['containment_wall', 'facility_containment_wall.png'],
+    ['interior_service', 'facility_interior_service.png'],
+    ['containment_gap_interior', 'facility_containment_gap_interior.png'],
+    ['containment_gap_exterior', 'facility_containment_gap_exterior.png'],
+    ['containment_transition', 'facility_containment_transition.png'],
+    ['east_wall', 'facility_east_wall.png'],
+    ['m2_return', 'facility_m2_return.png'],
+    ['m2_front', 'facility_m2_front.png'],
+    ['m2_terminal', 'facility_m2_terminal.png'],
     ['overview', 'facility_cutaway_overview.png', true, true],
     ['topdown', 'facility_cutaway_topdown.png', true, true],
 ];
 const requestedView = process.argv[3];
+const gameplayLights = process.argv.includes('--gameplay-lights');
+const emergency = process.argv.includes('--emergency');
+const mission2 = process.argv.includes('--mission2');
+const objective = process.argv.includes('--objective');
 const captures = requestedView === 'cutaway'
     ? allCaptures.filter(([, , cutaway]) => cutaway)
+    : requestedView === 'correction'
+        ? allCaptures.filter(([view, , cutaway]) => ['containment_gap_interior', 'containment_gap_exterior',
+            'containment_wall', 'containment_transition', 'interior_deeplab', 'rear_right', 'east_wall', 'front',
+            'm2_return', 'm2_front', 'm2_terminal'].includes(view) || cutaway)
+    : requestedView === 'interior'
+        ? allCaptures.filter(([view]) => ['interior_hall', 'interior_vault', 'interior_decon',
+            'interior_research', 'interior_security', 'interior_deeplab', 'interior_service'].includes(view))
     : requestedView ? allCaptures.filter(([view]) => view === requestedView) : allCaptures;
 
 if (requestedView && captures.length === 0) {
@@ -59,6 +82,10 @@ for (const [view, filename, cutaway = false, referenceLight = false] of captures
     url.searchParams.set('facilityView', view);
     if (cutaway) url.searchParams.set('facilityCutaway', '1');
     if (referenceLight) url.searchParams.set('facilityReferenceLight', '1');
+    if (gameplayLights) url.searchParams.set('facilityGameplayLights', '1');
+    if (emergency) url.searchParams.set('facilityEmergency', '1');
+    if (mission2 || view.startsWith('m2_')) url.searchParams.set('facilityMission2', '1');
+    if (objective || view.startsWith('m2_')) url.searchParams.set('facilityObjective', '1');
     let result;
     try {
         result = spawnSync(browserPath, [
@@ -77,7 +104,7 @@ for (const [view, filename, cutaway = false, referenceLight = false] of captures
             '--virtual-time-budget=7000',
             `--screenshot=${screenshotPath}`,
             url.href,
-        ], { encoding: 'utf8', timeout: 45000 });
+        ], { encoding: 'utf8', timeout: 90000 });
     } catch (error) {
         result = { status: null, stdout: '', stderr: String(error) };
     } finally {

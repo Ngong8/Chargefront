@@ -170,6 +170,10 @@ const FACILITY_CAPTURE = QUERY.get('facilityCapture') === '1';
 const FACILITY_CAPTURE_VIEW = QUERY.get('facilityView') || 'front';
 const FACILITY_CUTAWAY = FACILITY_CAPTURE && QUERY.get('facilityCutaway') === '1';
 const FACILITY_REFERENCE_LIGHT = FACILITY_CAPTURE && QUERY.get('facilityReferenceLight') === '1';
+const FACILITY_CAPTURE_GAMEPLAY_LIGHTS = FACILITY_CAPTURE && QUERY.get('facilityGameplayLights') === '1';
+const FACILITY_CAPTURE_EMERGENCY = FACILITY_CAPTURE && QUERY.get('facilityEmergency') === '1';
+const FACILITY_CAPTURE_M2 = FACILITY_CAPTURE && QUERY.get('facilityMission2') === '1';
+const FACILITY_CAPTURE_OBJECTIVE = FACILITY_CAPTURE_M2 && QUERY.get('facilityObjective') === '1';
 let mode = 'campaign';                                  // 'campaign' | 'endless'
 const ROOT = document.getElementById('cf-root');
 
@@ -196,11 +200,11 @@ const CAMPAIGN_MISSIONS = [
         id: 'power_through', number: 2, name: 'POWER THROUGH', subtitle: 'Bring the relay network back online.',
         description: 'Restore Alpha, Beta, and Gamma while coordinated enemy responses converge on the network.',
         implemented: true, unlockedByDefault: false, checkpoint: 'facility_staging',
-        mainObjectives: ['Restore Alpha Relay', 'Restore Beta Relay', 'Restore Gamma Relay', 'Survive the relay responses', 'Confirm laboratory access', 'Complete the operation'],
+        mainObjectives: ['Restore Alpha Relay', 'Restore Beta Relay', 'Restore Gamma Relay', 'Survive the relay responses', 'Reactivate the facility terminal', 'Complete the operation'],
         optionalObjectives: [{ id: 'escort_drone', name: 'Escort Survey Drone' }],
         worldState: { localPower: true, maintenanceBatteryInstalled: true, betaSurvey: false, shortcutOpen: false, labAccess: false, dnaSecured: false },
         enemyAvailability: ['skitter', 'runner', 'brute', 'spitter', 'screecher', 'drone', 'shielded', 'carrier', 'tunneler', 'support', 'artillery'],
-        briefingHooks: ['Power Through. Dead Signal confirmed the DNA target and restored local systems.', 'The external Alpha, Beta, and Gamma containment relays remain offline.', 'Restore them in sequence. Every activation will draw enemy attention.', 'Expect coordinated resistance. Bring the network online and confirm at command.'],
+        briefingHooks: ['Power Through. Dead Signal confirmed the DNA target and restored local systems.', 'The external Alpha, Beta, and Gamma containment relays remain offline.', 'Restore them in sequence. Every activation will draw enemy attention.', 'Once Gamma is online, return through the front entrance and reactivate the facility terminal.'],
         nextMission: 'sample_zero',
         replayStart: { phase: 'DEPLOY', position: 'FACILITY_STAGING', checkpoint: 'facility_staging', criticalState: { dnaSecured: false } },
     },
@@ -337,7 +341,11 @@ const FACILITY_BYPASS_WEST = LJS.vec2(ChargefrontFacility.BYPASS_WEST.x, Chargef
 const FACILITY_BYPASS_EAST = LJS.vec2(ChargefrontFacility.BYPASS_EAST.x, ChargefrontFacility.BYPASS_EAST.y);
 const MISSION2_ROUTE_GAMMA = [RELAYS[1].pos, LJS.vec2(285, 690), FACILITY_BYPASS_WEST, FACILITY_BYPASS_EAST, RELAYS[2].pos];
 const MISSION2_ROUTE = [...MISSION2_ROUTE_ALPHA, ...MISSION2_ROUTE_BETA.slice(1), ...MISSION2_ROUTE_GAMMA.slice(1)];
-const MISSION2_RETURN_ROUTE = [RELAYS[2].pos, LJS.vec2(505, 605), LJS.vec2(455, 625), LJS.vec2(392, 644), FACILITY];
+const FACILITY_FRONT_APPROACH = LJS.vec2(360, 610);
+const FACILITY_FRONT_THRESHOLD = LJS.vec2(360, 622);
+const FACILITY_FRONT_EAST = LJS.vec2(400, 600);
+const FACILITY_FRONT_WEST = LJS.vec2(320, 600);
+const MISSION2_RETURN_ROUTE = [RELAYS[2].pos, LJS.vec2(505, 605), LJS.vec2(455, 600), LJS.vec2(400, 600), FACILITY_FRONT_APPROACH, LJS.vec2(360, 628), LJS.vec2(382, 648)];
 const LAB_COMMAND = LJS.vec2(382, 646);
 const LAB_DECON = LJS.vec2(360, 680);
 const LAB_SECURITY = LJS.vec2(376, 718);
@@ -374,10 +382,22 @@ const FACILITY_CAPTURE_VIEWS = Object.freeze({
     overview: { position: [450, 625, 82], target: [376, 705, 2], fov: 68 },
     topdown: { position: [370, 700, 145], target: [370, 700, 0], up: [0, 1, 0], fov: 72 },
     interior_hall: { position: [346, 625, 1.8], target: [380, 651, 2.6], fov: 70 },
-    interior_vault: { position: [350, 666, 1.8], target: [365, 695, 2.4], fov: 70 },
+    interior_vault: { position: [360, 667, 1.8], target: [360, 680, 2.2], fov: 70 },
+    interior_decon: { position: [360, 692, 1.8], target: [360, 703, 2.3], fov: 70 },
+    interior_research: { position: [352, 709, 1.8], target: [341, 724, 2.2], fov: 70 },
+    interior_security: { position: [374, 713, 1.8], target: [386, 724, 2.2], fov: 70 },
     interior_lab: { position: [359, 718, 2.6], target: [337, 720, 1.9], fov: 70 },
     interior_corridor: { position: [382, 707, 1.8], target: [360, 737, 2.4], fov: 70 },
     interior_deeplab: { position: [351, 762, 2.1], target: [361, 777, 2.8], fov: 70 },
+    containment_wall: { position: [355, 781, 1.8], target: [365, 794, 5.5], fov: 70 },
+    interior_service: { position: [418, 752, 1.8], target: [448, 752, 2.2], fov: 70 },
+    containment_gap_interior: { position: [401, 744, 1.8], target: [400, 735, 4], fov: 72 },
+    containment_gap_exterior: { position: [402, 724, 1.8], target: [400, 738, 4], fov: 72 },
+    containment_transition: { position: [401, 751, 1.8], target: [419, 752, 2.6], fov: 72 },
+    east_wall: { position: [420, 644, 1.8], target: [390, 644, 4], fov: 72 },
+    m2_return: { position: [558, 583, 1.8], target: [410, 600, 3], fov: 72 },
+    m2_front: { position: [360, 605, 1.8], target: [360, 629, 3], fov: 72 },
+    m2_terminal: { position: [380, 645, 1.8], target: [382, 648, 1.4], fov: 72 },
 });
 
 function distToPath(x, y, path) {
@@ -423,6 +443,16 @@ function nextRouteWaypoint(path, x, y, reach = 15) {
    prevent corner accumulation without introducing a general pathfinding system. */
 function facilityNavigationWaypoint(fromX, fromY, targetX, targetY) {
     if (mode !== 'campaign' || activeMissionId !== 'power_through') return null;
+    // The Hall has only a front entrance. Outside FOLLOW/pursuit agents whose
+    // target is inside must reach that gateway before direct indoor steering.
+    const targetInHall = targetX > 331 && targetX < 389 && targetY > 619 && targetY < 659;
+    const fromInHall = fromX > 331 && fromX < 389 && fromY > 619 && fromY < 659;
+    if (phase === P.M2_CONFIRM && targetInHall && !fromInHall) {
+        if (fromX >= 389 && fromY > 612) return FACILITY_FRONT_EAST;
+        if (fromX <= 331 && fromY > 612) return FACILITY_FRONT_WEST;
+        if (fromX >= 352 && fromX <= 368 && fromY >= 606 && fromY <= 620) return FACILITY_FRONT_THRESHOLD;
+        return FACILITY_FRONT_APPROACH;
+    }
     return ChargefrontFacility.navigationWaypoint(fromX, fromY, targetX, targetY, segIntersectsRect);
 }
 function pointOnPath(path, tt) {
@@ -2051,8 +2081,10 @@ function updateLabSystems(dt) {
     for (let i = 0; i < lab.emergencyMats.length; i++) lab.emergencyMats[i].emissiveIntensity = emergency ? 1.25 + Math.sin(LJS.time * 7 + i) * 0.65 : 0.15;
     for (let i = 0; i < lab.lights.length; i++) {
         const entry = lab.lights[i];
-        entry.light.color.setHex(emergency ? 0xff493d : entry.color);
-        entry.light.intensity = emergency ? entry.intensity * (0.65 + Math.sin(LJS.time * 7.5 + i) * 0.24) : entry.intensity;
+        entry.light.color.setHex(emergency ? entry.emergencyColor : entry.color);
+        entry.light.intensity = emergency
+            ? entry.intensity * (entry.emergencyColor === 0xff493d ? 0.65 + Math.sin(LJS.time * 7.5 + i) * 0.24 : 0.8)
+            : entry.intensity;
     }
     if (lab.field.visible) {
         lab.field.rotation.y += dt * 0.35;
@@ -2867,6 +2899,7 @@ const campaignContent = {
 /* playtest / debug switches (toggled from __cf): freeze the horde and hide the
    HUD so the facility can be inspected and re-dressed without distraction */
 let debugNoAggro = false;       // enemies stop chasing/attacking (stay visible + face the player)
+let debugNoSpawn = false;       // pause ambient/drone wandering spawns for clean traversal benchmarks
 let debugHideHud = false;       // skip the 2D HUD pass for clean screenshots
 const facilityWorld = ChargefrontFacility.create({
     THREE, getScene: () => scene, box, addWallPanel, addSolid, addRotatedSolid, SOLIDS,
@@ -4053,7 +4086,7 @@ function objectiveLine() {
         case P.DEFEND_R2: return 'HOLD RELAY BETA — prioritize shielded specialists';
         case P.MOVE_R3: return 'Advance to RELAY GAMMA and power it up';
         case P.DEFEND_R3: return 'HOLD RELAY GAMMA — break the coordinated assault';
-        case P.M2_CONFIRM: return 'Return via the east service gate and confirm access at command';
+        case P.M2_CONFIRM: return 'RELAY GAMMA ONLINE — return through the front entrance to the facility command terminal';
         case P.M3_ENTER_LAB: return 'Enter the unlocked bio-lab from command';
         case P.M3_REACH_SECURITY: return 'Advance through decontamination to laboratory security';
         case P.M3_OVERRIDE: return 'Bypass the local containment security lock';
@@ -5799,6 +5832,7 @@ function updateHorde(dt) {
 let ambientSpawnT = 6;
 const AMBIENT_CAP = 8;   // no-despawn balance: fewer wild wanderers (they persist now)
 function updateAmbient(dt) {
+    if (debugNoSpawn) return;   // test-only: keep the movement benchmark to facility/world churn
     if (isDefensePhase(phase) || phase === P.FINALE) return;
     if (phase !== P.DEPLOY && phase !== P.MOVE_R1 && phase !== P.MOVE_R2 && phase !== P.MOVE_R3 && phase !== P.MOVE_FAC && phase !== P.SEARCH && phase !== P.M1_MOVE_FAC && phase !== P.M1_INVESTIGATE && phase !== P.M1_RESTORE_POWER && phase !== P.M1_COMMAND && phase !== P.M2_CONFIRM) return;
     ambientSpawnT -= dt;
@@ -5831,6 +5865,7 @@ function updateAmbient(dt) {
 let droneSpawnT = 5;
 const DRONE_CAP = 4;
 function updateDrones(dt) {
+    if (debugNoSpawn) return;   // test-only: keep the movement benchmark to facility/world churn
     if (phase !== P.MOVE_FAC && phase !== P.SEARCH && phase !== P.M1_INVESTIGATE && phase !== P.M1_RESTORE_POWER && phase !== P.M1_COMMAND && phase !== P.M2_CONFIRM) return;   // FINALE waves are handled by updateFinaleDrones
     droneSpawnT -= dt;
     if (droneSpawnT > 0) return;
@@ -6970,7 +7005,7 @@ function addBudgetLight(light) {
     light.userData.budgetMode = mode;
     // Reference captures show the complete authored lighting, as before.
     // Gameplay renders only the stable-count slots driven by these sources.
-    if (!FACILITY_CAPTURE) light.visible = false;
+    if (!FACILITY_CAPTURE || FACILITY_CAPTURE_GAMEPLAY_LIGHTS) light.visible = false;
     budgetLights.push(light);
     return light;
 }
@@ -7198,12 +7233,15 @@ function onRelayComplete(r) {
         if (escort && (escort.state === SURVEY_DRONE_STATE.ARRIVED || escort.state === SURVEY_DRONE_STATE.SCANNING)) completeSurveyDrone();
         else if (escort && escort.state !== SURVEY_DRONE_STATE.COMPLETE) abandonSurveyDrone();
         phase = P.MOVE_R3; campaignRun.mainIndex = 2; music.play('safe', 0.7);
-        notify('RELAY BETA ONLINE — shielded response broken. Advance to Gamma.', '#66ffcc');
+        notify('RELAY BETA ONLINE — advance to Relay Gamma via the exterior bypass.', '#66ffcc');
+        checkpointCampaignState();
     } else if (r.R.id === 3 && phase === P.DEFEND_R3) {
-        campaignRun.worldState.labAccess = true; campaignRun.worldState.shortcutOpen = true; campaignRun.worldState.relaysOnline = true; campaignRun.mainIndex = 4; phase = P.M2_CONFIRM; music.play('safe', 0.7);
+        campaignRun.worldState.labAccess = true; campaignRun.worldState.shortcutOpen = true; campaignRun.worldState.relaysOnline = true; music.play('safe', 0.7);
         openFacilityShortcut();
         applyEnvironmentWorldState();   // relay network online -> brighter powered presentation
-        notify('RELAY NETWORK ONLINE — east service gate opened. Confirm access at command.', '#66ffcc');
+        campaignRun.mainIndex = 4; phase = P.M2_CONFIRM;
+        notify('RELAY GAMMA ONLINE — return through the front entrance and reactivate the facility terminal.', '#66ffcc');
+        checkpointCampaignState();
     }
     activeRelay = null;
 }
@@ -8366,14 +8404,23 @@ function setFacilityReferenceLightState(enabled) {
 }
 
 function startFacilityCaptureMode(initialView) {
-    activeMissionId = 'sample_zero';
+    activeMissionId = FACILITY_CAPTURE_M2 ? 'power_through' : FACILITY_CAPTURE_EMERGENCY ? 'break_contact' : 'sample_zero';
     campaignRunOrigin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
     resetCampaignRun();
     buildCampaignWorld();
     initializeCampaignMission();
+    if (FACILITY_CAPTURE_M2) {
+        Object.assign(campaignRun.worldState, { relaysOnline: true, labAccess: true, shortcutOpen: true });
+        applyCampaignWorldSnapshot();
+        phase = P.M2_CONFIRM; campaignRun.mainIndex = 4;
+        const capturePosition = FACILITY_CAPTURE_VIEWS[initialView].position;
+        player.pos.x = capturePosition[0]; player.pos.y = capturePosition[1];
+        player.zPos = terrainHeight(player.pos.x, player.pos.y);
+        updateRouteGuideVisibility();
+    }
     clearCampaignTransitionCombat();
     debugNoAggro = true;
-    debugHideHud = true;
+    debugHideHud = !FACILITY_CAPTURE_OBJECTIVE;
     gameplayFade = 0;
     viewModel.visible = false;
     for (const member of squadMembers) member.mesh.visible = false;
@@ -8393,6 +8440,10 @@ function startFacilityCaptureMode(initialView) {
     setFacilityCutawayState(FACILITY_CUTAWAY);
     setFacilityReferenceLightState(FACILITY_REFERENCE_LIGHT);
     setFacilityCaptureView(initialView);
+    // Capture mode does not run active gameplay updates; select the same eight
+    // source-driven slots once from the reference camera when requested.
+    if (FACILITY_CAPTURE_GAMEPLAY_LIGHTS) updateBudgetLights(1);
+    if (FACILITY_CAPTURE_OBJECTIVE) { started = true; updateInteract(0); }
     window.__facilityCaptureReady = true;
 }
 
@@ -8694,7 +8745,7 @@ function updateInteract(dt) {
     if (phase === P.M2_CONFIRM && campaignContent.commandConsole) {
         const consoleUnit = campaignContent.commandConsole;
         if (Math.hypot(player.pos.x - consoleUnit.pos.x, player.pos.y - consoleUnit.pos.y) < 4) {
-            interactPrompt = 'HOLD [E] — CONFIRM BIO-LAB ACCESS';
+            interactPrompt = 'HOLD [E] — REACTIVATE FACILITY TERMINAL';
             interactProgress = clamp(heldInteract / 1.5, 0, 1);
             if (heldInteract > 1.5) {
                 campaignRun.mainIndex = campaignMission().mainObjectives.length;
@@ -9534,6 +9585,23 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
+    // Retire the experimental phase 30 and its flags at the save boundary.
+    // No live service phase/state remains. Preserve completed relays and squad.
+    const retiredServicePhase = activeMissionId === 'power_through' && boundary.phase === 30;
+    const savedRelays = boundary.mission && boundary.mission.relays;
+    if (retiredServicePhase) {
+        const gammaComplete = !!(savedRelays && savedRelays[2] && savedRelays[2].powered) || !!campaignRun.worldState.relaysOnline;
+        boundary.phase = gammaComplete ? P.M2_CONFIRM : P.MOVE_R3;
+        boundary.mainIndex = gammaComplete ? 4 : 2;
+        campaignRun.worldState.relaysOnline = gammaComplete;
+        campaignRun.worldState.labAccess = gammaComplete;
+    }
+    delete campaignRun.worldState.relayServiceUnlocked;
+    delete campaignRun.worldState.relayFeedRerouted;
+    if (boundary.worldState) {
+        delete boundary.worldState.relayServiceUnlocked;
+        delete boundary.worldState.relayFeedRerouted;
+    }
     campaignRun.optional = Object.assign({}, campaignRun.optional, boundary.optional || {});
     campaignRun.enemyIntel = !!boundary.enemyIntel;
     const mission = boundary.mission || {};
@@ -9544,6 +9612,12 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     missionTime = Math.max(0, Number(boundary.missionTime) || 0); kills = Math.max(0, boundary.kills | 0);
     totalAmmoCrafted = Math.max(0, boundary.totalAmmoCrafted | 0); totalMedkitsCrafted = Math.max(0, boundary.totalMedkitsCrafted | 0);
     const savedPlayer = boundary.player || {};
+    // One-time recovery for saves authored before these two walls existed.
+    // Ordinary movement/collision resolution is untouched.
+    const clearRepairedWallOverlap = (pos, radius) => {
+        if (pos.x >= 389 && pos.x <= 391 && pos.y >= 618 && pos.y <= 660) pos.x = pos.x >= 390 ? 391 + radius + 0.05 : 389 - radius - 0.05;
+        if (pos.x >= 390 && pos.x <= 410 && pos.y >= 734.3 && pos.y <= 735.7) pos.y = pos.y >= 735 ? 735.7 + radius + 0.05 : 734.3 - radius - 0.05;
+    };
     player.hp = clamp(Number(savedPlayer.hp) || 1, 1, player.maxHp); player.shield = clamp(Number(savedPlayer.shield) || 0, 0, player.maxShield);
     player.grenades = clamp(savedPlayer.grenades || 0, 0, grenadeCap());
     player.weaponStates = JSON.parse(JSON.stringify(savedPlayer.weaponStates || {}));
@@ -9554,6 +9628,8 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     player.pendingWeapon = null; player.pendingWeaponIndex = -1; player.swapT = 0; setViewmodelWeapon(player.weapon);
     if (savedPlayer.position && Number.isFinite(savedPlayer.position.x) && Number.isFinite(savedPlayer.position.y)) {
         player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, WORLD - 2);
+        clearRepairedWallOverlap(player.pos, 0.5);
+        resolveCircle(player.pos, 0.5); // old saves may sit in a repaired wall
         player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true;
     }
     if (Number.isFinite(savedPlayer.yaw)) player.yaw = savedPlayer.yaw;
@@ -9566,6 +9642,8 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         member.mag = Math.max(0, saved.mag || 0); member.reserve = Math.max(0, saved.reserve || 0); member.downed = !!saved.downed; member.mesh.rotation.x = member.downed ? Math.PI / 2 : 0;
         if (saved.position && Number.isFinite(saved.position.x) && Number.isFinite(saved.position.y)) {
             member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, WORLD - 2); member.z = terrainHeight(member.pos.x, member.pos.y);
+            clearRepairedWallOverlap(member.pos, 0.45);
+            resolveCircle(member.pos, 0.45);
         }
     }
     if (activeMissionId === 'dead_signal') {
@@ -9604,6 +9682,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     }
     camera.position.set(player.pos.x, player.pos.y, player.zPos + player.eye);
     camera.lookAt(player.pos.x + Math.cos(player.yaw), player.pos.y + Math.sin(player.yaw), player.zPos + player.eye);
+    if (retiredServicePhase) checkpointCampaignState();
     return true;
 }
 function createContinuedMission4Snapshot() {
@@ -9874,7 +9953,14 @@ function drawMarkers(W, H) {
     if (phase === P.M1_MOVE_FAC) targets.push({ pos: FACILITY, label: 'FACILITY PERIMETER', short: 'FACILITY', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.M1_INVESTIGATE && campaignContent.maintenanceBattery) targets.push({ pos: campaignContent.maintenanceBattery.pos, label: 'EMERGENCY MAINTENANCE BATTERY', short: 'MAINT. BATTERY', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.M1_RESTORE_POWER && campaignContent.localConsole) targets.push({ pos: campaignContent.localConsole.pos, label: 'EMERGENCY GRID', short: 'POWER GRID', color: 0xffaa55, priority: 100, primary: true });
-    if ((phase === P.M1_COMMAND || phase === P.M2_CONFIRM) && campaignContent.commandConsole) targets.push({ pos: campaignContent.commandConsole.pos, label: 'COMMAND AREA', short: 'COMMAND', color: 0x66ccff, priority: 100, primary: true });
+    if (phase === P.M1_COMMAND && campaignContent.commandConsole) targets.push({ pos: campaignContent.commandConsole.pos, label: 'COMMAND AREA', short: 'COMMAND', color: 0x66ccff, priority: 100, primary: true });
+    if (phase === P.M2_CONFIRM && campaignContent.commandConsole) {
+        const inHall = player.pos.x > 331 && player.pos.x < 389 && player.pos.y > 619 && player.pos.y < 659;
+        const waypoint = nextRouteWaypoint(MISSION2_RETURN_ROUTE, player.pos.x, player.pos.y, 5);
+        targets.push({ pos: inHall ? campaignContent.commandConsole.pos : waypoint,
+            label: inHall ? 'REACTIVATE FACILITY TERMINAL' : 'RETURN VIA FRONT ENTRANCE',
+            short: inHall ? 'TERMINAL' : 'FRONT ENTRANCE', color: 0x66ccff, priority: 100, primary: true });
+    }
     if (activeMissionId === 'dead_signal' && !campaignRun.optional.scan_growth && campaignContent.scan) targets.push({ pos: campaignContent.scan.pos, label: 'OPTIONAL: INFESTED GROWTH BIO-SCAN', short: 'BIO-SCAN', color: 0x66ffcc, priority: 55, optional: true });
     if (activeMissionId === 'dead_signal' && !campaignRun.optional.portable_cell && campaignContent.cell) {
         if (!campaignContent.cellCarried) targets.push({ pos: campaignContent.cell.pos, label: 'OPTIONAL: AUXILIARY FIELD CELL', short: 'AUX FIELD CELL', color: 0xffcc44, priority: 52, optional: true });
@@ -10869,6 +10955,8 @@ window.__cf = {
     getCamFwd() { const v = new THREE.Vector3(); camera.getWorldDirection(v); return [+v.x.toFixed(3), +v.y.toFixed(3), +v.z.toFixed(3)]; },
     get phase() { return phase; },
     get phaseName() { return CF_NAMES[phase] || String(phase); },
+    get objectiveText() { return objectiveLine(); },
+    get interactionPrompt() { return interactPrompt; },
     get mode() { return mode; },
     get missionId() { return activeMissionId; },
     get runOrigin() { return campaignRunOrigin; },
@@ -10948,6 +11036,7 @@ window.__cf = {
         return player.debugImmortal;
     },
     setNoAggro(on = true) { debugNoAggro = !!on; return debugNoAggro; },
+    setNoSpawn(on = true) { debugNoSpawn = !!on; return debugNoSpawn; },
     setHud(on = true) { debugHideHud = !on; return !debugHideHud; },
     debugFacility(inside = true) {
         if (!gameActive) beginGameplay();

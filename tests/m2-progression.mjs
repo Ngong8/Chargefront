@@ -29,7 +29,13 @@ const resume = async (save) => {
     return state();
 };
 const holdE = async () => {
-    await page.keyboard.down('e'); await page.waitForTimeout(1850); await page.keyboard.up('e');
+    const before = (await state()).phase;
+    await page.keyboard.down('e');
+    try {
+        // A reload's first render can consume most of a fixed wall-clock hold
+        // on software Firefox. Keep real E held until the actual phase changes.
+        await page.waitForFunction(phase => window.__cf.phaseName !== phase, before, { timeout: 12000 });
+    } finally { await page.keyboard.up('e'); }
 };
 const walkTo = async (x, y) => {
     const deadline = Date.now() + 60000;

@@ -1,0 +1,156 @@
+{
+  "timing": {
+    "touchdown": 10.66076923076923,
+    "fadeStart": 11.46076923076923,
+    "fadeEnd": 12.71076923076923,
+    "fadeHold": 1.25,
+    "gearStart": 8.918615384615384,
+    "gearDuration": 1.3421538461538454,
+    "shots": [
+      0,
+      2.292153846153846,
+      4.584307692307692,
+      6.876461538461538,
+      9.168615384615384
+    ]
+  },
+  "states": [
+    {
+      "name": "shot4-start",
+      "time": 9.222,
+      "fade": 0,
+      "landed": false,
+      "gear": [
+        1.1743,
+        1.1743,
+        1.1743,
+        1.1743
+      ],
+      "camera": [
+        457,
+        57.8,
+        15.65
+      ]
+    },
+    {
+      "name": "gear-mid",
+      "time": 9.606,
+      "fade": 0,
+      "landed": false,
+      "gear": [
+        0.6499,
+        0.6499,
+        0.6499,
+        0.6499
+      ],
+      "camera": [
+        457,
+        57.8,
+        12.8
+      ]
+    },
+    {
+      "name": "gear-locked",
+      "time": 10.427,
+      "fade": 0,
+      "landed": false,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.48
+      ]
+    },
+    {
+      "name": "touchdown",
+      "time": 10.701,
+      "fade": 0,
+      "landed": true,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.3
+      ]
+    },
+    {
+      "name": "fade-25",
+      "time": 11.79,
+      "fade": 0.263,
+      "landed": true,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.3
+      ]
+    },
+    {
+      "name": "fade-100",
+      "time": 12.754,
+      "fade": 1,
+      "landed": true,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.3
+      ]
+    },
+    {
+      "name": "hold-mid",
+      "time": 13.336,
+      "fade": 1,
+      "landed": true,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.3
+      ]
+    },
+    {
+      "name": "hold-end",
+      "time": 13.927,
+      "fade": 1,
+      "landed": true,
+      "gear": [
+        0,
+        0,
+        0,
+        0
+      ],
+      "camera": [
+        457,
+        57.8,
+        9.3
+      ]
+    }
+  ],
+  "errors": []
+}

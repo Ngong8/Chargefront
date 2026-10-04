@@ -1,0 +1,511 @@
+[
+  {
+    "label": "M1 exterior",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 199,
+      "p95": 33.6,
+      "p99": 50.2,
+      "worst": 66.8,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      445,
+      181.46000000000234
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "M2 Alpha",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 291,
+      "p95": 33.4,
+      "p99": 33.5,
+      "worst": 50.1,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      196,
+      565.3
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "M2 Beta",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 361,
+      "p95": 16.8,
+      "p99": 16.9,
+      "worst": 33.3,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      245,
+      744.2866666666793
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "M2 Gamma",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 310,
+      "p95": 33.4,
+      "p99": 33.5,
+      "worst": 33.5,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      574.6027367190733,
+      578.7135516085757
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "M2 return/front",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 263,
+      "p95": 33.4,
+      "p99": 33.5,
+      "worst": 50.2,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      360,
+      636.373333333346
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 0,
+        "accessOk": 0,
+        "stepMetal": 1,
+        "slidingDoor": 1
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "Facility interior",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 264,
+      "p95": 33.4,
+      "p99": 49.9,
+      "worst": 50.1,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      360,
+      651.2866666666793
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 0,
+        "accessOk": 0,
+        "stepMetal": 1,
+        "slidingDoor": 0,
+        "droneAlert": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "M4 service/exit",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 329,
+      "p95": 33.3,
+      "p99": 33.4,
+      "worst": 50,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      453.3733333333254,
+      752
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0,
+        "stepMetal": 0,
+        "slidingDoor": 0,
+        "droneAlert": 0,
+        "accessDeny": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "Campaign combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 400,
+      "p95": 33.5,
+      "p99": 50,
+      "worst": 66.6,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 102,
+        "meshesCreated": 46,
+        "geometriesCreated": 9,
+        "materialsCreated": 46,
+        "sceneObjectsAdded": 186,
+        "sceneObjectsRemoved": 150
+      }
+    },
+    "gl": {},
+    "position": [
+      480,
+      242.43333333333723
+    ],
+    "entities": {
+      "enemies": 1,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 18,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0,
+        "stepMetal": 0,
+        "slidingDoor": 0,
+        "droneAlert": 0,
+        "accessDeny": 0,
+        "laserShot": 3,
+        "laserSparks": 0,
+        "reload": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "Endless early combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 884,
+      "p95": 16.8,
+      "p99": 33.4,
+      "worst": 66.7,
+      "over100": 0,
+      "counters": {
+        "meshesCreated": 274,
+        "geometriesCreated": 73,
+        "materialsCreated": 99,
+        "sceneObjectsAdded": 1210,
+        "shadowRefresh": 150,
+        "sceneObjectsRemoved": 1184,
+        "groupsObjectsCreated": 86,
+        "materialDisposes": 5
+      }
+    },
+    "gl": {},
+    "position": [
+      400,
+      395.9
+    ],
+    "entities": {
+      "enemies": 5,
+      "squad": 3,
+      "pickups": 0,
+      "shots": 1,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 4
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "bossRoar": 0,
+        "step": 1,
+        "laserShot": 3,
+        "laserSparks": 5,
+        "unburrow": 1,
+        "reload": 0,
+        "unitHit": 0,
+        "creature": 2,
+        "enemyDie": 2
+      }
+    },
+    "wave": 1,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  },
+  {
+    "label": "Endless later combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/154.0.0.0 Safari/537.36 Edg/154.0.0.0",
+    "summary": {
+      "frames": 900,
+      "p95": 16.8,
+      "p99": 16.8,
+      "worst": 16.9,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 150,
+        "sceneObjectsAdded": 1140,
+        "meshesCreated": 254,
+        "groupsObjectsCreated": 79,
+        "sceneObjectsRemoved": 1082,
+        "materialsCreated": 20,
+        "geometriesCreated": 5,
+        "materialDisposes": 1
+      }
+    },
+    "gl": {},
+    "position": [
+      400,
+      395.9
+    ],
+    "entities": {
+      "enemies": 13,
+      "squad": 3,
+      "pickups": 3,
+      "shots": 2,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 9
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "bossRoar": 0,
+        "step": 1,
+        "laserShot": 3,
+        "laserSparks": 5,
+        "unburrow": 0,
+        "reload": 0,
+        "unitHit": 0,
+        "creature": 3,
+        "enemyDie": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 2,
+    "renderer": {
+      "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+    }
+  }
+]

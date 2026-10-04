@@ -1,0 +1,504 @@
+[
+  {
+    "label": "M1 exterior",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 135,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 83.4,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      445,
+      181.11333333333565
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "M2 Alpha",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 165,
+      "p95": 50,
+      "p99": 83.3,
+      "worst": 83.4,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      196,
+      565.3
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "M2 Beta",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 216,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 66.7,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      245,
+      744.2866666666793
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "M2 Gamma",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 182,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 66.7,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      574.6027367190733,
+      578.8002182752424
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "M2 return/front",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 156,
+      "p95": 66.7,
+      "p99": 66.7,
+      "worst": 83.4,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      360,
+      636.1133333333458
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 0,
+        "accessOk": 0,
+        "stepMetal": 1,
+        "slidingDoor": 1
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "Facility interior",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 157,
+      "p95": 50,
+      "p99": 83.4,
+      "worst": 83.4,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 60
+      }
+    },
+    "gl": {},
+    "position": [
+      360,
+      651.1133333333458
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 0,
+        "accessOk": 0,
+        "stepMetal": 1,
+        "slidingDoor": 0,
+        "droneAlert": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "M4 service/exit",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 188,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 66.7,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 61
+      }
+    },
+    "gl": {},
+    "position": [
+      453.3733333333254,
+      752
+    ],
+    "entities": {
+      "enemies": 0,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0,
+        "stepMetal": 0,
+        "slidingDoor": 0,
+        "droneAlert": 0,
+        "accessDeny": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "Campaign combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 244,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 66.7,
+      "over100": 0,
+      "counters": {
+        "shadowRefresh": 102,
+        "meshesCreated": 36,
+        "geometriesCreated": 13,
+        "materialsCreated": 36,
+        "sceneObjectsAdded": 531,
+        "sceneObjectsRemoved": 495
+      }
+    },
+    "gl": {},
+    "position": [
+      507.1372048082823,
+      234.92183734681757
+    ],
+    "entities": {
+      "enemies": 1,
+      "squad": 3,
+      "pickups": 11,
+      "shots": 10,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 4
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "step": 1,
+        "accessOk": 0,
+        "stepMetal": 0,
+        "slidingDoor": 0,
+        "droneAlert": 0,
+        "accessDeny": 0,
+        "laserShot": 3,
+        "laserSparks": 5,
+        "reload": 0
+      }
+    },
+    "wave": 0,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "Endless early combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 559,
+      "p95": 50,
+      "p99": 66.7,
+      "worst": 150,
+      "over100": 2,
+      "counters": {
+        "meshesCreated": 258,
+        "geometriesCreated": 60,
+        "materialsCreated": 100,
+        "sceneObjectsAdded": 721,
+        "shadowRefresh": 149,
+        "sceneObjectsRemoved": 688,
+        "groupsObjectsCreated": 78,
+        "materialDisposes": 2
+      }
+    },
+    "gl": {},
+    "position": [
+      452.4209231771848,
+      458.62650190449983
+    ],
+    "entities": {
+      "enemies": 7,
+      "squad": 3,
+      "pickups": 0,
+      "shots": 13,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 0
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "bossRoar": 0,
+        "step": 1,
+        "laserShot": 1,
+        "laserSparks": 0,
+        "unburrow": 1,
+        "reload": 0,
+        "creature": 1,
+        "enemyDie": 0
+      }
+    },
+    "wave": 1,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  },
+  {
+    "label": "Endless later combat",
+    "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+    "summary": {
+      "frames": 720,
+      "p95": 33.3,
+      "p99": 33.4,
+      "worst": 50,
+      "over100": 0,
+      "counters": {
+        "sceneObjectsAdded": 658,
+        "shadowRefresh": 151,
+        "sceneObjectsRemoved": 643
+      }
+    },
+    "gl": {},
+    "position": [
+      400,
+      395.9
+    ],
+    "entities": {
+      "enemies": 1,
+      "squad": 3,
+      "pickups": 3,
+      "shots": 0,
+      "enemyShots": 0,
+      "acid": 0,
+      "acidPools": 0,
+      "grenades": 0,
+      "impacts": 3
+    },
+    "sfx": {
+      "mode": "web-audio",
+      "webAudioBuffers": 56,
+      "fallbackAudioEls": 168,
+      "ctxState": "running",
+      "active": {
+        "bossRoar": 0,
+        "step": 1,
+        "laserShot": 3,
+        "laserSparks": 5,
+        "unburrow": 0,
+        "reload": 0,
+        "creature": 0,
+        "enemyDie": 0,
+        "unitHit": 0
+      }
+    },
+    "wave": 1,
+    "renderer": {
+      "version": "WebGL 2.0",
+      "vendor": "Google Inc. (AMD)",
+      "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+    }
+  }
+]

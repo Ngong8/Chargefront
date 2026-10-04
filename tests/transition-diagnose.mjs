@@ -11,7 +11,8 @@ const options = process.argv[2] === 'firefox' ? { headless: !process.argv.includ
 };
 const browser = await engine.launch(options);
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
-page.on('pageerror', (error) => console.log('PAGE_ERROR', error.message));
+const errors = [];
+page.on('pageerror', (error) => { errors.push(error.message); console.log('PAGE_ERROR', error.message); });
 const url = pathToFileURL(resolve('chargefront.html'));
 url.searchParams.set('perfDiagnostics', '1');
 if (process.argv.includes('sync')) url.searchParams.set('perfGpuSync', '1');
@@ -87,6 +88,7 @@ try {
         return window.__cf.phaseName;
     }, 1800);
     assert.equal(result.summary.counters.linkProgram || 0, 0);
+    assert.deepEqual(errors, []);
     console.log('PASS visible intro cuts and campaign transitions');
 } finally {
     await browser.close();

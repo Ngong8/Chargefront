@@ -165,6 +165,7 @@ import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/l
 const QUERY = new URLSearchParams(location.search);
 const PERF_DIAGNOSTICS = QUERY.get('perfDiagnostics') === '1'; // ?perfDiagnostics=1; remove query to disable
 const PERF_GPU_SYNC = PERF_DIAGNOSTICS && QUERY.get('perfGpuSync') === '1'; // optional GPU/driver ablation, never normal play
+const MOVEMENT_DIAGNOSTICS = QUERY.get('movementDiagnostics') === '1';
 const PREVIEW = QUERY.has('preview');                  // ?preview=1 → cinematic flyover, no input
 const FACILITY_CAPTURE = QUERY.get('facilityCapture') === '1';
 const FACILITY_CAPTURE_VIEW = QUERY.get('facilityView') || 'front';
@@ -602,6 +603,7 @@ function refreshSoundModeButtons() {
 function setSoundMode(mode, announce = false) {
     if (!['music', 'highlights', 'full'].includes(mode)) return;
     opts.soundMode = mode;
+    if (mode === 'music') stopIntroSfx(0.12);
     LJS.setSoundVolume(mode === 'music' ? 0 : opts.sfxVol);
     if (mode !== 'music') activateSfxPlayback();
     saveOpts();
@@ -710,21 +712,37 @@ function buildSfxAudioPools() {           // pooled <audio> elements built EAGER
         });
     }
 }
-function warmFileSfx() {                  // force-decode every element once (silent) so later plays start instantly
+function warmFileSfx() {                  // fallback only; preferred buffers already decode once
     if (sfxWarmStarted) return;
     sfxWarmStarted = true;
+    const pending = [];
     for (const key in fileSfxAudio) {
+        if (fileSfx[key]?.length) continue;
         for (const pool of fileSfxAudio[key]) {
-            for (const el of pool) {
-                try {
-                    el.volume = 0;
-                    const p = el.play();
-                    if (p && p.catch) p.catch(() => {});
-                    setTimeout(() => { try { el.pause(); el.currentTime = 0; } catch (e) { } }, 160);
-                } catch (e) { }
-            }
+            for (const el of pool) pending.push({ key, el });
         }
     }
+    // Starting 168 silent decoders in one gesture caused a measured ~150 ms
+    // handoff burst. Drain a small batch, and skip keys whose XHR decode won.
+    function batch() {
+        for (let n = 0; n < 3 && pending.length; n++) {
+            const { key, el } = pending.shift();
+            if (fileSfx[key]?.length || !el.paused) continue;
+            try {
+                el.__cfWarming = true;
+                el.volume = 0;
+                const p = el.play();
+                if (p && p.catch) p.catch(() => {});
+                setTimeout(() => {
+                    if (!el.__cfWarming) return; // actual SFX acquired the element
+                    el.__cfWarming = false;
+                    try { el.pause(); el.currentTime = 0; } catch (e) { }
+                }, 160);
+            } catch (e) { el.__cfWarming = false; }
+        }
+        if (pending.length) setTimeout(batch, 16);
+    }
+    batch();
 }
 function loadSfxBuffer(key, src) {        // XHR decode -> Web Audio (preferred when it works)
     const xhr = new XMLHttpRequest();
@@ -752,6 +770,7 @@ function playFileSfxAudio(key, vol, pitch) {   // fallback: pooled <audio> eleme
     for (const c of pool) { if (c.paused || c.ended) { el = c; break; } }
     if (!el) el = pool[randInt(pool.length)];
     try {
+        el.__cfWarming = false;
         el.volume = clamp(vol, 0, 1);
         el.playbackRate = pitch;
         if (el.readyState >= 1) { try { el.currentTime = 0; } catch (e) { } }
@@ -1714,6 +1733,7 @@ function solidQueryBounds(x0, y0, x1, y1, visit) {
     return false;
 }
 function resolveCircle(p, r) {
+    const startX = p.x, startY = p.y;
     solidQueryBounds(p.x - r, p.y - r, p.x + r, p.y + r, (s) => {
         if (s.disabled) return false;   // sliding doors toggle their solid on/off
         const cx = clamp(p.x, s.x0, s.x1), cy = clamp(p.y, s.y0, s.y1);
@@ -1726,6 +1746,7 @@ function resolveCircle(p, r) {
         }
         return false;
     });
+    if (MOVEMENT_DIAGNOSTICS) movementDiagnostics.correction(p, p.x - startX, p.y - startY);
 }
 function isInsideSolid(x, y, r = 0.4) {
     return solidQueryBounds(x - r, y - r, x + r, y + r, (s) => {
@@ -3584,6 +3605,7 @@ function buildEndlessWorld() {
     threeJS.renderer.shadowMap.needsUpdate = true;
 }
 function startEndless() {
+    stopIntroSfx();
     mode = 'endless';
     resetEndlessRun();
     buildEndlessWorld();
@@ -3605,6 +3627,7 @@ function beginEndless(waitForLockGesture = true) {
     gameplayFade = 1;
     viewModel.visible = true;
     notify('ENDLESS RUN — ' + endlessRun.arena.name + '. Survive contracts, bank DNA.', '#d6a6ff');
+    prewarmCombatEffects();
     notify('Hold E at the relay to start wave 1', '#d6a6ff');
     if (waitForLockGesture) lockOnNextGesture();
 }
@@ -5451,6 +5474,7 @@ class Infested extends LJS.ThreeJSObject {
 
         if (wantsToMove) {
             const sp = this.scatter ? this.speed * 1.4 : this.speed;
+            const moveStartX = this.pos.x, moveStartY = this.pos.y;
             let nx = this.pos.x + Math.cos(moveFacing) * sp * dt;
             let ny = this.pos.y + Math.sin(moveFacing) * sp * dt;
             const curZ = terrainHeight(this.pos.x, this.pos.y);
@@ -5474,11 +5498,10 @@ class Infested extends LJS.ThreeJSObject {
             }
             this.pos.x += this.sep.x * dt * 6;
             this.pos.y += this.sep.y * dt * 6;
-            const preX = this.pos.x, preY = this.pos.y;
             resolveCircle(this.pos, 0.4);
             this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, WORLD - 4);
             /* wall-slide steering (bug #8): when forward motion is blocked, slide tangentially */
-            const moved = Math.hypot(this.pos.x - preX, this.pos.y - preY);
+            const moved = Math.hypot(this.pos.x - moveStartX, this.pos.y - moveStartY);
             if (moved < sp * dt * 0.35) {
                 this.stuckT += dt;
                 if (this.stuckT > 0.25) {
@@ -5490,7 +5513,7 @@ class Infested extends LJS.ThreeJSObject {
                         this.pos.x = sx2; this.pos.y = sy2;
                         resolveCircle(this.pos, 0.4);
                     }
-                    if (this.stuckT > 0.7) this.stuckSide = undefined;
+                    if (this.stuckT > 0.7) { this.stuckT = 0.25; this.stuckSide = undefined; }
                 }
             } else {
                 this.stuckT = 0; this.stuckSide = undefined;
@@ -5572,8 +5595,11 @@ class Infested extends LJS.ThreeJSObject {
     }
     destroy(immediate) {
         const i = enemies.indexOf(this);
+        if (this.destroyed) return;
         if (i >= 0) enemies.splice(i, 1);
         enemyTypeCounts[this.type]--;
+        // Only the per-instance clone is disposed, never shared template data.
+        this.mesh.userData.threatRing?.material.dispose();
         super.destroy(immediate);
     }
 }
@@ -6175,6 +6201,7 @@ class SquadMember extends LJS.ThreeJSObject {
         }
         this.updateTacticalMode(dt);
 
+        this.motionStartX = this.pos.x; this.motionStartY = this.pos.y;
         const spot = this.formationSpot();
         if (this.updateEvasion(dt)) {
             this.z = terrainHeight(this.pos.x, this.pos.y);
@@ -6202,7 +6229,6 @@ class SquadMember extends LJS.ThreeJSObject {
             this.idleT = 0; this.idleLookT = 0;
             const d = Math.hypot(this.target.pos.x - this.pos.x, this.target.pos.y - this.pos.y);
             const facing = Math.atan2(this.target.pos.y - this.pos.y, this.target.pos.x - this.pos.x);
-            this.turnTo(-facing);
             if (d < this.def.range) {
                 if (!this.reloading) {
                     this.fireT -= dt;
@@ -6212,7 +6238,8 @@ class SquadMember extends LJS.ThreeJSObject {
                     }
                 }
             }
-            if (d > this.def.range * 0.8 && squadCommand !== 'hold' && targetSupportDistance <= deEngageRange) this.moveToward(this.target.pos, dt);
+            if (d > this.def.range * 0.8 && squadCommand !== 'hold' && targetSupportDistance <= deEngageRange) this.moveToward(this.target.pos, dt, 1, 0, false);
+            this.turnTo(-facing); // aiming owns facing during combat, steering owns position
         } else {
             if (breaking) { this.engageT = 0; this.engageTarget = null; this.lastSeenTarget = null; this.breakT = 2.5; }
             if (squadCommand === 'hold') this.lastSeenTarget = null;   // HOLD: stand your ground, never give chase
@@ -6226,9 +6253,9 @@ class SquadMember extends LJS.ThreeJSObject {
             } else {
                 /* move to formation spot */
                 const d = Math.hypot(spot.x - this.pos.x, spot.y - this.pos.y);
-                if (d > 1.1) {
+                if (d > 0.75) {
                     this.idleT = 0; this.idleLookT = 0;
-                    this.moveToward(spot, dt);
+                    this.moveToward(spot, dt, 1, 0.75);
                 } else {
                     this.idleT += dt;
                     if (this.idleT > 5) {
@@ -6247,7 +6274,7 @@ class SquadMember extends LJS.ThreeJSObject {
             }
         }
         this.z = terrainHeight(this.pos.x, this.pos.y);
-        const walking = (this.target && Math.hypot(this.target.pos.x - this.pos.x, this.target.pos.y - this.pos.y) > this.def.range * 0.8) || (!this.target && Math.hypot(spot.x - this.pos.x, spot.y - this.pos.y) > 1.1);
+        const walking = Math.hypot(this.pos.x - this.motionStartX, this.pos.y - this.motionStartY) > 0.002;
         this.animT += dt * (walking ? 10 : 3);
         const stride = walking ? Math.sin(this.animT) * 0.34 : 0;
         const legs = this.mesh.userData.legs || [];
@@ -6266,15 +6293,20 @@ class SquadMember extends LJS.ThreeJSObject {
         if (diff > Math.PI) diff -= TAU;
         this.angle += diff * Math.min(1, (LJS.timeDelta || 0.016) * 6);
     }
-    moveToward(target, dt, speedMult = 1) {
+    moveToward(target, dt, speedMult = 1, stopDistance = 0, faceMovement = true) {
         const waypoint = facilityNavigationWaypoint(this.pos.x, this.pos.y, target.x, target.y);
         const moveTarget = waypoint || target;
+        const distance = Math.hypot(moveTarget.x - this.pos.x, moveTarget.y - this.pos.y);
         const facing = Math.atan2(moveTarget.y - this.pos.y, moveTarget.x - this.pos.x);
         this.lastMoveAngle = facing;               // remember where we walked (idle facing)
-        this.turnTo(-facing);
+        if (faceMovement) this.turnTo(-facing);
         const playerDistance = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
         const catchup = playerDistance > 52 ? 1.75 : playerDistance > 28 ? 1.3 : 1;
-        const sp = Math.max(4.8, (player.lastSpeed || 5.2) * 0.94) * speedMult * catchup * (mode === 'endless' ? 1.35 : 1) * (this.speedMult || 1);
+        const maxSpeed = Math.max(4.8, (player.lastSpeed || 5.2) * 0.94) * speedMult * catchup * (mode === 'endless' ? 1.35 : 1) * (this.speedMult || 1);
+        // Ease into formation rather than alternating full-speed/zero ticks.
+        // A navigation waypoint still receives the existing catch-up speed.
+        const remaining = Math.max(0, distance - (waypoint ? 0 : stopDistance));
+        const sp = Math.min(maxSpeed, remaining / dt, stopDistance && !waypoint ? remaining * 6 : maxSpeed);
         let separationX = 0, separationY = 0;
         for (const other of squadMembers) {
             if (other === this || other.downed) continue;
@@ -6507,7 +6539,7 @@ function createSparkEffect() {
     return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), vx: 0, vy: 0, vz: 0, life: 0 };
 }
 function prewarmCombatEffects() {
-    if (combatEffectsPrewarmed || mode !== 'campaign') return;
+    if (combatEffectsPrewarmed) return;
     combatEffectsPrewarmed = true;
     // Keep the exact effects as reusable pool entries. Three.js compiles their
     // material variants against the settled campaign light/fog state; no visible
@@ -6946,8 +6978,8 @@ function buildShipModel() {
         const rail = new THREE.Mesh(new THREE.BoxGeometry(4.9, 0.15, 0.18), HDM({ metalness: 0.82, roughness: 0.26 }));
         rail.position.set(-0.8, -1.42, s * 1.62); ship.add(rail);
     }
-    /* landing skids (fore + aft pairs) — retracted in flight, extend as landing pads on
-       touchdown.  Each strut+skid is its own gear group so updateIntro can lower it. */
+    /* landing skids (fore + aft pairs) — deploy during descent before touchdown.
+       Each strut+skid is its own gear group so updateIntro can lower it. */
     const landingGear = [];
     for (const s of [-1, 1]) for (const f of [-1, 1]) {
         const gear = new THREE.Group();
@@ -7387,7 +7419,7 @@ const INTRO_BRIEF = [
 /* Mission briefings target a compact 8–15 second playable handoff. */
 const INTRO_WPS = 5.2, INTRO_MIN_DUR = 1.55, INTRO_PAD = 0.12, INTRO_GAP = 0.1;
 const INTRO_DIALOGUE_DELAY = 0.9;
-function buildIntroTiming(brief) {
+function buildIntroTiming(brief, fadeDuration = 0.85, fadeHold = 0.2) {
     const times = [], durations = [];
     let acc = INTRO_DIALOGUE_DELAY;
     for (const line of brief) {
@@ -7395,8 +7427,8 @@ function buildIntroTiming(brief) {
         const duration = Math.max(INTRO_MIN_DUR, words / INTRO_WPS + INTRO_PAD);
         times.push(acc); durations.push(duration); acc += duration + INTRO_GAP;
     }
-    const fadeStart = acc + 0.45, fadeEnd = fadeStart + 0.85;
-    return { times, durations, fadeStart, fadeEnd, touchdownT: Math.max(5.5, fadeStart - 0.8), shotTimes: [0, fadeStart * 0.2, fadeStart * 0.4, fadeStart * 0.6, fadeStart * 0.8] };
+    const fadeStart = acc + 0.45, fadeEnd = fadeStart + fadeDuration;
+    return { times, durations, fadeStart, fadeEnd, fadeHold, touchdownT: Math.max(5.5, fadeStart - 0.8), shotTimes: [0, fadeStart * 0.2, fadeStart * 0.4, fadeStart * 0.6, fadeStart * 0.8] };
 }
 const INTRO_OBJECTIVE_HOLD = 1.3, INTRO_OBJECTIVE_FADE = 1.15;
 const SHOT_TIMES = [0, 4, 8, 12, 16, 19.5, 23];   // fallback timing for the legacy briefing
@@ -7406,11 +7438,14 @@ const STAGING_SHIP = LJS.vec2(FACILITY_STAGING.x, FACILITY_STAGING.y - 20);
 let intro = null;
 let introLoadingEl = null;
 let introSfxEl = null;
+const introSfxCache = new Map();
+const introSfxFades = new Map();
 let introSkipFn = null;   // active during the cutscene — any key/click skips to gameplay
 let pointerLockGestureFn = null;
 let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
+    stopIntroSfx();
     mode = 'campaign';
     const snapshot = campaignSnapshot();
     kills = 0; cacheFound = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
@@ -7532,15 +7567,40 @@ function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SE
 }
 function playIntroSfx(src, loop, vol) {
     if (opts.soundMode === 'music') return;
-    stopIntroSfx();
-    const el = new Audio(src);
+    stopIntroSfx(0.35); // engine spool-down overlaps the finite touchdown tail
+    let el = introSfxCache.get(src);
+    if (!el) {
+        el = new Audio(src); el.preload = 'auto'; introSfxCache.set(src, el);
+        el.addEventListener('ended', () => { if (introSfxEl === el) introSfxEl = null; });
+    }
+    const fade = introSfxFades.get(el);
+    if (fade) { clearInterval(fade); introSfxFades.delete(el); }
+    el.pause();
+    if (el.readyState >= 1) el.currentTime = 0;
     el.loop = !!loop;
-    el.volume = vol;
-    const p = el.play(); if (p && p.catch) p.catch(() => {});
+    el.volume = clamp(vol * opts.sfxVol, 0, 1);
     introSfxEl = el;
+    const p = el.play(); if (p && p.catch) p.catch(() => { if (introSfxEl === el) introSfxEl = null; });
 }
-function stopIntroSfx() {
-    if (introSfxEl) { try { introSfxEl.pause(); } catch (e) { } introSfxEl = null; }
+function stopIntroSfx(fadeSeconds = 0, preserveTail = false) {
+    // Real-time bounded fades also finish while gameplay is paused. Each timer
+    // owns one element; replacing/reusing it cancels that timer first.
+    const active = introSfxEl;
+    if (!preserveTail || active?.loop) introSfxEl = null;
+    for (const el of introSfxCache.values()) {
+        if (preserveTail && !el.loop) continue;
+        if (introSfxFades.has(el) && fadeSeconds > 0) continue;
+        const previous = introSfxFades.get(el);
+        if (previous) { clearInterval(previous); introSfxFades.delete(el); }
+        if (el.paused || el.ended || fadeSeconds <= 0) { el.pause(); continue; }
+        const start = performance.now(), volume = el.volume;
+        const timer = setInterval(() => {
+            const t = clamp((performance.now() - start) / (fadeSeconds * 1000), 0, 1);
+            el.volume = volume * (1 - t);
+            if (t >= 1 || el.ended) { el.pause(); clearInterval(timer); introSfxFades.delete(el); }
+        }, 16);
+        introSfxFades.set(el, timer);
+    }
 }
 function startIntro() {
     if (!campaignWorldBuilt) { resetCampaignRun(); buildCampaignWorld(); initializeCampaignMission(); }
@@ -7559,8 +7619,12 @@ function startIntro() {
     const cabin = profile === 'landing' ? buildIntroCabin() : null;
     /* Objective copy starts over a live ship descent, then fades away into it. */
     const brief = campaignMission().briefingHooks.length ? campaignMission().briefingHooks : INTRO_BRIEF;
-    const timing = buildIntroTiming(brief);
-    intro = { t: 0, ship: g, cabin, profile, land: introLand, landed: profile !== 'landing', fade: 0, showIdx: -1, stageT: 0, cardAlpha: 1, cutFade: 0, brief, times: timing.times, durations: timing.durations, fadeStart: timing.fadeStart, fadeEnd: timing.fadeEnd, touchdownT: timing.touchdownT, shotTimes: timing.shotTimes };
+    const timing = buildIntroTiming(brief, profile === 'landing' ? 1.25 : 0.85, profile === 'landing' ? 1.25 : 0.2);
+    /* Landing gear stays stowed through the wide descent, then visibly deploys
+       during the close final-approach shot, locking shortly before contact. */
+    const gearStart = timing.shotTimes[4] - 0.25;
+    const gearDuration = Math.max(0.6, (timing.touchdownT - 0.4) - gearStart);
+    intro = { t: 0, ship: g, cabin, profile, land: introLand, landed: profile !== 'landing', fade: 0, showIdx: -1, stageT: 0, cardAlpha: 1, cutFade: 0, brief, times: timing.times, durations: timing.durations, fadeStart: timing.fadeStart, fadeEnd: timing.fadeEnd, fadeHold: timing.fadeHold, touchdownT: timing.touchdownT, shotTimes: timing.shotTimes, gearStart, gearDuration };
     // Shader/geometry first use is rendered behind this cover before cinematic
     // time advances. LittleJS can run several updates for each rendered frame.
     intro.prewarmPending = !!cabin;
@@ -7602,7 +7666,7 @@ function startIntro() {
     LJS.setInputPreventDefault(true);
     /* any key/click skips the cutscene (listeners removed in endIntro) */
     if (!introSkipFn) {
-        introSkipFn = (e) => { if (intro && !intro.prewarmPending) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(true); } };
+        introSkipFn = (e) => { if (intro && !intro.prewarmPending) { if (e && e.type === 'keydown') e.preventDefault(); endIntro(true, true); } };
         window.addEventListener('keydown', introSkipFn);
         window.addEventListener('pointerdown', introSkipFn);
     }
@@ -7665,8 +7729,9 @@ function updateIntro(dt) {
     const landZ = terrainHeight(I.land.x, I.land.y) + SHIP_LAND_OFF;   // skids rest on the ground when parked
     if (I.ship) {
         I.ship.position.z = I.profile === 'landing' ? shipZAt(lt, landZ, I.touchdownT) : landZ;
-        /* landing gear: stowed while airborne, extends the landing pads when touching down */
-        const gearT = I.profile === 'staging' ? 1 : clamp((lt - I.touchdownT) / 0.8, 0, 1);
+        /* M1 gear is stowed through the wide descent, deploys gradually during the
+           close approach shot, and locks shortly before contact. Touchdown/audio timing stay fixed. */
+        const gearT = I.profile === 'landing' ? clamp((lt - I.gearStart) / I.gearDuration, 0, 1) : 1;
         const gearPos = (1 - smooth(gearT)) * 1.35;
         for (const gear of (I.ship.userData.landingGear || [])) gear.position.y = gearPos;
         for (const flame of (I.ship.userData.engineGlows || [])) {
@@ -7686,9 +7751,10 @@ function updateIntro(dt) {
         const st = I.times[i];
         if (lt >= st && lt < st + I.durations[i]) { I.showIdx = i; break; }
     }
-    /* fade to black → hand over to gameplay */
+    /* three-stage exit: smooth fade to black, a full-black cinematic hold, then
+       endIntro() hands off to the existing smooth gameplay fade-in. */
     if (lt > I.fadeStart) I.fade = clamp((lt - I.fadeStart) / (I.fadeEnd - I.fadeStart), 0, 1);
-    if (lt >= I.fadeEnd + 0.2) { endIntro(); return; }
+    if (lt >= I.fadeEnd + I.fadeHold) { endIntro(); return; }
     /* cinematic camera: pick the active shot for this moment of the landing */
     const c = introShotCam(lt, I.ship, I.profile, I.shotTimes);
     if (PERF_DIAGNOSTICS) {
@@ -7765,9 +7831,9 @@ function introShotCam(lt, ship, profile = 'landing', shotTimes = SHOT_TIMES) {
     switch (si) {
         case 0: p = [sx + 8, sy - 31, sz + 58]; t = [sx, sy, sz]; break;                                      // top-down approach
         case 1: p = cabin(-5.8, -3.25, 3.15); t = cabin(0.15, 0, 2.15); inside = true; break;                   // full squad meeting
-        case 2: p = [sx - 66, sy - 58, sz + 31]; t = [sx, sy, sz - 2]; break;                                    // high exterior sweep
+        case 2: p = [sx - 46.2, sy - 40.6, sz + 21.1]; t = [sx, sy, sz - 2]; break;                            // same high sweep angle, 30% closer
         case 3: p = cabin(4.9, -3.35, 2.65); t = cabin(-0.6, 0.15, 1.9); inside = true; break;                   // over the holo-table
-        case 4: p = [sx + 30, sy - 46, sz + 10]; t = [sx, sy, sz]; break;                                        // close ship profile
+        case 4: p = [sx + 21, sy - 32.2, sz + 7]; t = [sx, sy, sz]; break;                                      // same touchdown profile angle, 30% closer
         case 5: p = cabin(-0.8, 3.15, 2.9); t = cabin(0.1, -0.1, 1.95); inside = true; break;                    // reverse cabin angle
         default:
             p = [sx - 8, sy - 15, terrainHeight(sx - 8, sy - 15) + 1.35];
@@ -7776,11 +7842,11 @@ function introShotCam(lt, ship, profile = 'landing', shotTimes = SHOT_TIMES) {
     const sinceCut = lt - shotTimes[si];
     return { p, t, inside, cutFade: clamp(1 - sinceCut / 0.22, 0, 1) * 0.48 };
 }
-function endIntro(lockImmediately = false) {
+function endIntro(lockImmediately = false, skipped = false) {
     if (introLoadingEl) { introLoadingEl.remove(); introLoadingEl = null; }
     if (intro) intro.prewarmPending = false;
     scene.visible = true;
-    stopIntroSfx();
+    stopIntroSfx(skipped ? 0.12 : 0.35, !skipped);
     if (intro && intro.ship) {
         ship.group = intro.ship;
     }
@@ -8186,6 +8252,7 @@ function clearCampaignTransitionCombat() {
     resetEncounterDirector();
 }
 function beginCampaignChapterTransition(completion) {
+    stopIntroSfx(); // accelerated M1 completion must not carry its tail into M2
     if (!completion || !completion.nextMission) return;
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
@@ -9150,6 +9217,7 @@ const HFONT = () => (fontReady ? 'Glitch Slap' : 'Arial');
 let coverPose = null;   // debug: cover-art camera pose (set via __cf.setCoverPose) — [px,py,pz,tx,ty,tz]
 let facilityCaptureView = null;
 function gameRender() {
+    if (MOVEMENT_DIAGNOSTICS) movementDiagnostics.sample();
     if (facilityCaptureView) {
         const view = FACILITY_CAPTURE_VIEWS[facilityCaptureView];
         camera.up.fromArray(view.up || [0, 0, 1]);
@@ -10689,6 +10757,38 @@ async function boot() {
 /* Milestone 3.7 temporary traversal profiler. Only installed with ?perfDiagnostics=1.
    The RAF interval ending NOW contains the preceding game's update + render. The
    next interval may contain an asynchronously deferred browser/GPU/GC stall. */
+const movementDiagnostics = (() => {
+    if (!MOVEMENT_DIAGNOSTICS) return null;
+    const frames = [], corrections = [];
+    let lastFrame = 0, lastAt = 0;
+    const actor = a => ({ id: a.def?.name || a.type, raw: [a.pos.x, a.pos.y, a.z],
+        rendered: a.mesh.position.toArray(), angle: a.angle, renderedAngle: a.mesh.rotation.z,
+        target: a.target?.pos ? [a.target.pos.x, a.target.pos.y] : null,
+        playerWaypoint: facilityNavigationWaypoint(a.pos.x, a.pos.y, player.pos.x, player.pos.y), stuck: a.stuckT || 0 });
+    const api = {
+        correction(p, dx, dy) {
+            if (Math.hypot(dx, dy) < 0.0001 || corrections.length >= 100) return;
+            const a = squadMembers.find(a => a.pos === p) || enemies.find(a => a.pos === p);
+            corrections.push({ id: p === player.pos ? 'player' : a?.def?.name || a?.type || 'setup', dx, dy });
+        },
+        sample() {
+            if (!gameActive || intro) return;
+            const now = performance.now();
+            frames.push({ at: now, ms: lastAt ? now - lastAt : 0, ticks: LJS.frame - lastFrame,
+                player: [player.pos.x, player.pos.y, player.zPos], camera: camera.position.toArray(),
+                yaw: player.yaw, pitch: player.pitch, squad: squadMembers.map(actor),
+                enemies: enemies.filter(e => !e.dead).slice(0, 8).map(actor), corrections: corrections.splice(0) });
+            if (frames.length > 1800) frames.shift();
+            lastAt = now; lastFrame = LJS.frame;
+        },
+        reset() { frames.length = corrections.length = 0; lastAt = 0; lastFrame = LJS.frame; },
+        report() { return { browser: navigator.userAgent, fixedDelta: LJS.timeDelta, frames: frames.slice() }; },
+        download() { const a = document.createElement('a'), url = URL.createObjectURL(new Blob([JSON.stringify(api.report())], { type: 'application/json' }));
+            a.href = url; a.download = 'chargefront-movement-' + Date.now() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(url), 10000); },
+    };
+    window.__cfMovement = api;
+    return api;
+})();
 const perfDiagnostics = (() => {
     if (!PERF_DIAGNOSTICS) return null;
     const counters = Object.create(null), frames = [], hitches = [], loafs = [];
@@ -10849,7 +10949,7 @@ const perfDiagnostics = (() => {
             }
         };
         const gl = r.getContext();
-        for (const key of ['compileShader', 'linkProgram']) {
+        for (const key of ['compileShader', 'linkProgram', 'createTexture', 'texImage2D', 'texSubImage2D', 'compressedTexImage2D']) {
             const originalGl = gl[key];
             try { gl[key] = function (...args) { const start = performance.now(); try { return originalGl.apply(this, args); } finally { count(key); event(key, { ms: +(performance.now() - start).toFixed(1) }); } }; }
             catch (e) { event('webglHookUnavailable', { key }); }
@@ -10871,7 +10971,15 @@ const perfDiagnostics = (() => {
     requestAnimationFrame(tick);
     return { count, event, measure, installRenderer, summary,
         report() { return { ...summary(), frames: frames.slice() }; },
-        reset() { frames.length = 0; hitches.length = 0; loafs.length = 0; worst = 0; totalFrames = over33 = over50 = over100 = 0; for (const key of Object.keys(counters)) delete counters[key]; event('reset'); },
+        reset() {
+            frames.length = hitches.length = loafs.length = 0; worst = 0;
+            totalFrames = over33 = over50 = over100 = 0;
+            for (const key of Object.keys(counters)) delete counters[key];
+            // Discard the interval straddling reset. Initial load/mission setup
+            // must not masquerade as the first traversal/combat hitch.
+            interval = { ops: Object.create(null), events: [], delta: Object.create(null), renderMs: 0 };
+            lastRAF = 0; lastHeartbeat = performance.now(); event('reset');
+        },
         mark(label) { event('routeMark', { label: String(label) }); },
         download() { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([JSON.stringify(this.report())], { type: 'application/json' })); a.download = 'chargefront-perf-' + Date.now() + '.json'; a.click(); setTimeout(() => URL.revokeObjectURL(a.href), 10000); },
     };
@@ -10910,6 +11018,12 @@ if (PERF_DIAGNOSTICS) {
     beginGameplay = instrument('beginGameplay', beginGameplay);
     ensureSfxCtx = instrument('ensureSfxCtx', ensureSfxCtx);
     warmFileSfx = instrument('warmFileSfx', warmFileSfx);
+    playFileSfx = instrument('playFileSfx', playFileSfx);
+    decodeSfxBuffer = instrument('decodeSfxBuffer', decodeSfxBuffer);
+    updateEndlessWaves = instrument('updateEndlessWaves', updateEndlessWaves);
+    const enemyUpdate = Infested.prototype.update, squadUpdate = SquadMember.prototype.update;
+    Infested.prototype.update = function() { return perfDiagnostics.measure('Infested.update', () => enemyUpdate.call(this)); };
+    SquadMember.prototype.update = function() { return perfDiagnostics.measure('SquadMember.update', () => squadUpdate.call(this)); };
     setShipThrusters = instrument('setShipThrusters', setShipThrusters);
     updateFacilityDoors = instrument('updateFacilityDoors', updateFacilityDoors);
     updateEnvironmentFx = instrument('updateEnvironmentFx', updateEnvironmentFx);
@@ -10935,6 +11049,7 @@ if (PERF_DIAGNOSTICS) {
     spawnTypedGroup = instrument('spawnTypedGroup', spawnTypedGroup);
     checkpointCampaignState = instrument('checkpointCampaignState', checkpointCampaignState);
     drawMinimap = instrument('drawMinimap', drawMinimap);
+    drawHUD = instrument('drawHUD', drawHUD);
     drawMarkers = instrument('drawMarkers', drawMarkers);
     gameUpdate = instrument('gameUpdate', gameUpdate);
     gameUpdatePost = instrument('gameUpdatePost', gameUpdatePost);
@@ -11048,7 +11163,7 @@ window.__cf = {
     },
     startGame() { beginGameplay(); },
     startIntroNow() { startIntro(); },
-    skipIntro() { if (intro) endIntro(); return !intro; },
+    skipIntro() { if (intro) endIntro(false, true); return !intro; },
     get intro() { return intro; },
     spawnDrone() { const e = new Infested('drone', player.pos.copy().add(LJS.vec2(rand(-30, 30), rand(-30, 30))), player); e.ambient = true; return e.type; },
     startDefense(i) { const r = relays[i]; if (r) startDefense(r); },

@@ -1,0 +1,1826 @@
+{
+  "milestone": "4.1",
+  "baseline": "cd60d51",
+  "scope": "Endless loadouts, shared ammo, mutators, HUD",
+  "method": "Guided real-browser input; bounded contact/wave fixtures. Subjective human feel and multi-hour soak not certified.",
+  "authoritativeRegressions": [
+    {
+      "browser": "edge",
+      "suite": "intro-smoke",
+      "status": 0,
+      "signal": null,
+      "seconds": 25.178
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": 0,
+      "signal": null,
+      "seconds": 115.34
+    },
+    {
+      "browser": "edge",
+      "suite": "runtime-stability",
+      "status": 0,
+      "signal": null,
+      "seconds": 201.3
+    },
+    {
+      "browser": "edge",
+      "suite": "traversal-performance",
+      "status": 0,
+      "signal": null,
+      "seconds": 150.628
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 0,
+      "signal": null,
+      "seconds": 27.875
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "signal": null,
+      "seconds": 62.044
+    },
+    {
+      "browser": "edge",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "signal": null,
+      "seconds": 34.407
+    },
+    {
+      "browser": "firefox",
+      "suite": "intro-smoke",
+      "status": 0,
+      "signal": null,
+      "seconds": 36.4
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": 0,
+      "signal": null,
+      "seconds": 174.228
+    },
+    {
+      "browser": "firefox",
+      "suite": "runtime-stability",
+      "status": 0,
+      "signal": null,
+      "seconds": 210.959
+    },
+    {
+      "browser": "firefox",
+      "suite": "traversal-performance",
+      "status": 0,
+      "signal": null,
+      "seconds": 154.991
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 0,
+      "signal": null,
+      "seconds": 71.458
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "signal": null,
+      "seconds": 81.75
+    },
+    {
+      "browser": "firefox",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "signal": null,
+      "seconds": 40.425
+    }
+  ],
+  "browsers": {
+    "edge": {
+      "guidedBrowserMode": "headed",
+      "runs": [
+        {
+          "deployment": {
+            "player": {
+              "slot1": "rifle",
+              "slot2": "scatter",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              },
+              "vex": {
+                "weapon": "plasma",
+                "ability": "target_designator"
+              },
+              "kade": {
+                "weapon": "scatter",
+                "ability": "bulwark"
+              }
+            },
+            "posture": "escort"
+          },
+          "weaponDamage": [
+            {
+              "id": "rifle",
+              "shots": 11,
+              "damage": 242
+            },
+            {
+              "id": "scatter",
+              "shots": 2,
+              "damage": 195
+            }
+          ],
+          "reloadProgress": [
+            0.01,
+            0.225
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 7,
+            "armored": 5,
+            "blackout": 5,
+            "storm": 4,
+            "corrosive": 3
+          },
+          "restart": {
+            "activeId": "scatter",
+            "cartridges": 8,
+            "arena": "crater",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 17,
+            "worst": 17.3,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 8,
+              "shotPool": 184,
+              "impacts": 0,
+              "impactPool": 41,
+              "sparks": 0,
+              "sparkPool": 160
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "arc",
+              "slot2": "plasma",
+              "startingSlot": 1
+            },
+            "squad": {
+              "rook": {
+                "weapon": "rifle",
+                "ability": "target_designator"
+              },
+              "vex": {
+                "weapon": "scatter",
+                "ability": "bulwark"
+              },
+              "kade": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              }
+            },
+            "posture": "screen"
+          },
+          "weaponDamage": [
+            {
+              "id": "arc",
+              "shots": 3,
+              "damage": 126
+            },
+            {
+              "id": "plasma",
+              "shots": 2,
+              "damage": 123.819529886503
+            }
+          ],
+          "reloadProgress": [
+            0,
+            0.202
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 7,
+            "blackout": 5,
+            "corrosive": 6,
+            "armored": 3,
+            "storm": 3
+          },
+          "restart": {
+            "activeId": "arc",
+            "cartridges": 8,
+            "arena": "crater",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 16.9,
+            "worst": 17.4,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 0,
+              "shotPool": 192,
+              "impacts": 2,
+              "impactPool": 39,
+              "sparks": 31,
+              "sparkPool": 129
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "scatter",
+              "slot2": "arc",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "plasma",
+                "ability": "bulwark"
+              },
+              "vex": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              },
+              "kade": {
+                "weapon": "rifle",
+                "ability": "target_designator"
+              }
+            },
+            "posture": "balanced"
+          },
+          "weaponDamage": [
+            {
+              "id": "scatter",
+              "shots": 2,
+              "damage": 182
+            },
+            {
+              "id": "arc",
+              "shots": 3,
+              "damage": 126
+            }
+          ],
+          "reloadProgress": [
+            0.016,
+            0.203
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 12,
+            "storm": 4,
+            "blackout": 4,
+            "corrosive": 2,
+            "armored": 2
+          },
+          "restart": {
+            "activeId": "arc",
+            "cartridges": 8,
+            "arena": "ridges",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 17,
+            "worst": 17.3,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 0,
+              "shotPool": 192,
+              "impacts": 1,
+              "impactPool": 40,
+              "sparks": 4,
+              "sparkPool": 156
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "plasma",
+              "slot2": "rifle",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "scatter",
+                "ability": "target_designator"
+              },
+              "vex": {
+                "weapon": "rifle",
+                "ability": "medic_pulse"
+              },
+              "kade": {
+                "weapon": "plasma",
+                "ability": "bulwark"
+              }
+            },
+            "posture": "balanced"
+          },
+          "weaponDamage": [
+            {
+              "id": "plasma",
+              "shots": 2,
+              "damage": 124.75258659079554
+            },
+            {
+              "id": "rifle",
+              "shots": 11,
+              "damage": 242
+            }
+          ],
+          "reloadProgress": [
+            0,
+            0.174
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 12,
+            "storm": 3,
+            "armored": 3,
+            "corrosive": 3,
+            "blackout": 3
+          },
+          "restart": {
+            "activeId": "rifle",
+            "cartridges": 8,
+            "arena": "crater",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 16.9,
+            "worst": 17.4,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 18,
+              "shotPool": 174,
+              "impacts": 0,
+              "impactPool": 41,
+              "sparks": 0,
+              "sparkPool": 160
+            }
+          }
+        }
+      ],
+      "terrains": [
+        {
+          "arena": "crater",
+          "min": 0,
+          "max": 0,
+          "flatSamples": 64,
+          "samples": 64
+        },
+        {
+          "arena": "crater",
+          "min": 0,
+          "max": 0,
+          "flatSamples": 64,
+          "samples": 64
+        },
+        {
+          "arena": "ridges",
+          "min": 0,
+          "max": 6.318221193644933,
+          "flatSamples": 27,
+          "samples": 64
+        },
+        {
+          "arena": "crater",
+          "min": 0,
+          "max": 0,
+          "flatSamples": 64,
+          "samples": 64
+        }
+      ],
+      "crwModerate": {
+        "before": {
+          "hp": 100000,
+          "distance": 45,
+          "position": [
+            465,
+            450
+          ],
+          "mag": 18
+        },
+        "after": {
+          "hp": 99584,
+          "position": [
+            465,
+            450
+          ],
+          "mag": 13,
+          "pause": "cf-overlay hidden"
+        },
+        "damage": 416
+      },
+      "projectiles": {
+        "rows": [
+          {
+            "id": "rifle",
+            "full": 0.95,
+            "faded": 0.4749999999999993,
+            "travel": 147.89999999999998,
+            "finalTravel": 153,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "scatter",
+            "full": 0.95,
+            "faded": 0.4750000000000002,
+            "travel": 54.89999999999998,
+            "finalTravel": 60,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "arc",
+            "full": 0.95,
+            "faded": 0.4750000000000002,
+            "travel": 66.89999999999998,
+            "finalTravel": 72,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "plasma",
+            "full": 0.95,
+            "faded": 0.4749999999999993,
+            "travel": 104.89999999999998,
+            "finalTravel": 109.99999999999994,
+            "pooled": true,
+            "sameMaterial": true
+          }
+        ],
+        "chainDamage": [
+          42,
+          30.24000000000524,
+          25.19999999999709
+        ],
+        "chainStun": [
+          0.65,
+          0.65,
+          0.65
+        ],
+        "blastDamage": [
+          72.63384615383984,
+          48.043076923073386
+        ],
+        "edgeChainDamage": [
+          42,
+          0
+        ],
+        "edgeBlastDamage": [
+          69.55999999999767,
+          0
+        ],
+        "blockedDamage": 0,
+        "outOfRangeDamage": 0,
+        "isolationBoundary": {
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 9,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "abilities": [
+            "bulwark",
+            "medic_pulse",
+            "target_designator"
+          ]
+        },
+        "pool": {
+          "shots": 0,
+          "shotPool": 192,
+          "impacts": 3,
+          "impactPool": 38,
+          "sparks": 35,
+          "sparkPool": 125
+        }
+      },
+      "campaignOrigins": [
+        {
+          "origin": "new_campaign",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 9,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        },
+        {
+          "origin": "mission_select",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 8,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        },
+        {
+          "origin": "continue_campaign",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 8,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        }
+      ],
+      "checkpointCombinations": 8,
+      "campaignTransitions": [
+        "power_through",
+        "sample_zero",
+        "break_contact"
+      ],
+      "m4EmergencyFloor": {
+        "first": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 1,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 0
+            }
+          }
+        },
+        "restored": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 1,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 0
+            }
+          }
+        },
+        "mission": "break_contact"
+      },
+      "sharedSquadSupply": {
+        "before": 2,
+        "after": 1,
+        "squadReserve": 4
+      },
+      "cache": {
+        "cacheBefore": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 9,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 9
+            }
+          }
+        },
+        "cacheAfter": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 12,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 9
+            }
+          }
+        }
+      },
+      "continue": {
+        "version": 3,
+        "activeId": "scatter",
+        "cartridges": 12,
+        "weapons": {
+          "rifle": {
+            "mag": 0
+          },
+          "scatter": {
+            "mag": 9
+          }
+        }
+      },
+      "isolatedCampaignCombat": {
+        "counters": {
+          "sceneObjectsAdded": 1086,
+          "sceneObjectsRemoved": 1053,
+          "shadowRefresh": 44
+        },
+        "p95": 16.8,
+        "worst": 33.3,
+        "pools": {
+          "shots": 28,
+          "shotPool": 164,
+          "impacts": 6,
+          "impactPool": 35,
+          "sparks": 12,
+          "sparkPool": 148
+        },
+        "fired": 19
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "frames": 277,
+          "p95": 36,
+          "p99": 36.7,
+          "worst": 52.6,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "frames": 338,
+          "p95": 18.6,
+          "p99": 18.9,
+          "worst": 19,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "frames": 336,
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 19,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "frames": 337,
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 19,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "frames": 331,
+          "p95": 18.8,
+          "p99": 35.8,
+          "worst": 36.7,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "Facility interior",
+          "frames": 336,
+          "p95": 18.6,
+          "p99": 18.9,
+          "worst": 36.9,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "frames": 338,
+          "p95": 18.5,
+          "p99": 18.8,
+          "worst": 19,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "frames": 495,
+          "p95": 35.7,
+          "p99": 36.3,
+          "worst": 37.3,
+          "over100": 0,
+          "counters": {
+            "sceneObjectsAdded": 187,
+            "shadowRefresh": 101,
+            "sceneObjectsRemoved": 151
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "frames": 837,
+          "p95": 18.5,
+          "p99": 18.9,
+          "worst": 54.8,
+          "over100": 0,
+          "counters": {
+            "sceneObjectsAdded": 1195,
+            "shadowRefresh": 150,
+            "sceneObjectsRemoved": 1167,
+            "meshesCreated": 231,
+            "geometriesCreated": 45,
+            "materialsCreated": 24,
+            "groupsObjectsCreated": 100,
+            "materialDisposes": 5
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "frames": 841,
+          "p95": 18.6,
+          "p99": 18.9,
+          "worst": 19.1,
+          "over100": 0,
+          "counters": {
+            "sceneObjectsAdded": 1074,
+            "shadowRefresh": 150,
+            "meshesCreated": 242,
+            "groupsObjectsCreated": 90,
+            "sceneObjectsRemoved": 1005,
+            "materialDisposes": 2
+          }
+        }
+      ],
+      "pageErrors": 0,
+      "unexpectedConsoleErrors": 0
+    },
+    "firefox": {
+      "guidedBrowserMode": "headless",
+      "runs": [
+        {
+          "deployment": {
+            "player": {
+              "slot1": "rifle",
+              "slot2": "scatter",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              },
+              "vex": {
+                "weapon": "plasma",
+                "ability": "target_designator"
+              },
+              "kade": {
+                "weapon": "scatter",
+                "ability": "bulwark"
+              }
+            },
+            "posture": "escort"
+          },
+          "weaponDamage": [
+            {
+              "id": "rifle",
+              "shots": 10,
+              "damage": 220
+            },
+            {
+              "id": "scatter",
+              "shots": 2,
+              "damage": 156
+            }
+          ],
+          "reloadProgress": [
+            0.02,
+            0.235
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 9,
+            "corrosive": 3,
+            "blackout": 2,
+            "armored": 4,
+            "storm": 6
+          },
+          "restart": {
+            "activeId": "scatter",
+            "cartridges": 8,
+            "arena": "valley",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 16.7,
+            "worst": 50,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 8,
+              "shotPool": 184,
+              "impacts": 0,
+              "impactPool": 41,
+              "sparks": 0,
+              "sparkPool": 160
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "arc",
+              "slot2": "plasma",
+              "startingSlot": 1
+            },
+            "squad": {
+              "rook": {
+                "weapon": "rifle",
+                "ability": "target_designator"
+              },
+              "vex": {
+                "weapon": "scatter",
+                "ability": "bulwark"
+              },
+              "kade": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              }
+            },
+            "posture": "screen"
+          },
+          "weaponDamage": [
+            {
+              "id": "arc",
+              "shots": 2,
+              "damage": 84
+            },
+            {
+              "id": "plasma",
+              "shots": 2,
+              "damage": 122.82232265145285
+            }
+          ],
+          "reloadProgress": [
+            0.009,
+            0.211
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 10,
+            "blackout": 4,
+            "corrosive": 3,
+            "armored": 4,
+            "storm": 3
+          },
+          "restart": {
+            "activeId": "arc",
+            "cartridges": 8,
+            "arena": "crater",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 33.3,
+            "worst": 50,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 0,
+              "shotPool": 192,
+              "impacts": 2,
+              "impactPool": 39,
+              "sparks": 31,
+              "sparkPool": 129
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "scatter",
+              "slot2": "arc",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "plasma",
+                "ability": "bulwark"
+              },
+              "vex": {
+                "weapon": "arc",
+                "ability": "medic_pulse"
+              },
+              "kade": {
+                "weapon": "rifle",
+                "ability": "target_designator"
+              }
+            },
+            "posture": "balanced"
+          },
+          "weaponDamage": [
+            {
+              "id": "scatter",
+              "shots": 2,
+              "damage": 208
+            },
+            {
+              "id": "arc",
+              "shots": 3,
+              "damage": 126
+            }
+          ],
+          "reloadProgress": [
+            0.008,
+            0.195
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 12,
+            "storm": 5,
+            "armored": 2,
+            "corrosive": 1,
+            "blackout": 4
+          },
+          "restart": {
+            "activeId": "arc",
+            "cartridges": 8,
+            "arena": "valley",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 33.3,
+            "worst": 33.4,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 0,
+              "shotPool": 192,
+              "impacts": 1,
+              "impactPool": 40,
+              "sparks": 4,
+              "sparkPool": 156
+            }
+          }
+        },
+        {
+          "deployment": {
+            "player": {
+              "slot1": "plasma",
+              "slot2": "rifle",
+              "startingSlot": 2
+            },
+            "squad": {
+              "rook": {
+                "weapon": "scatter",
+                "ability": "target_designator"
+              },
+              "vex": {
+                "weapon": "rifle",
+                "ability": "medic_pulse"
+              },
+              "kade": {
+                "weapon": "plasma",
+                "ability": "bulwark"
+              }
+            },
+            "posture": "balanced"
+          },
+          "weaponDamage": [
+            {
+              "id": "plasma",
+              "shots": 2,
+              "damage": 125.0456475992396
+            },
+            {
+              "id": "rifle",
+              "shots": 11,
+              "damage": 242
+            }
+          ],
+          "reloadProgress": [
+            0,
+            0.174
+          ],
+          "abilityOwners": [
+            {
+              "operator": "ROOK",
+              "ability": "target_designator",
+              "cooldown": 18,
+              "actualUser": "ROOK"
+            },
+            {
+              "operator": "VEX",
+              "ability": "medic_pulse",
+              "cooldown": 24,
+              "actualUser": "VEX"
+            },
+            {
+              "operator": "KADE",
+              "ability": "bulwark",
+              "cooldown": 28,
+              "actualUser": "KADE"
+            }
+          ],
+          "mutatorCounts": {
+            "none": 12,
+            "armored": 4,
+            "blackout": 4,
+            "storm": 3,
+            "corrosive": 1
+          },
+          "restart": {
+            "activeId": "rifle",
+            "cartridges": 8,
+            "arena": "ridges",
+            "mutator": null
+          },
+          "performance": {
+            "p95": 33.3,
+            "worst": 50,
+            "counters": {
+              "materialsCreated": 0,
+              "geometriesCreated": 0,
+              "linkProgram": 0,
+              "buildEndlessWorld": 0,
+              "buildTerrain": 0,
+              "buildFacility": 0,
+              "collisionNavRebuild": 0
+            },
+            "pool": {
+              "shots": 18,
+              "shotPool": 174,
+              "impacts": 0,
+              "impactPool": 41,
+              "sparks": 0,
+              "sparkPool": 160
+            }
+          }
+        }
+      ],
+      "terrains": [
+        {
+          "arena": "valley",
+          "min": 0.03398934324242789,
+          "max": 1.506125899207959,
+          "flatSamples": 0,
+          "samples": 64
+        },
+        {
+          "arena": "crater",
+          "min": 0,
+          "max": 0,
+          "flatSamples": 64,
+          "samples": 64
+        },
+        {
+          "arena": "valley",
+          "min": 0.03398934324242789,
+          "max": 1.506125899207959,
+          "flatSamples": 0,
+          "samples": 64
+        },
+        {
+          "arena": "ridges",
+          "min": 0,
+          "max": 6.318221193644933,
+          "flatSamples": 27,
+          "samples": 64
+        }
+      ],
+      "crwModerate": {
+        "before": {
+          "hp": 100000,
+          "distance": 45,
+          "position": [
+            465,
+            450
+          ],
+          "mag": 18
+        },
+        "after": {
+          "hp": 99558,
+          "position": [
+            465,
+            450
+          ],
+          "mag": 13,
+          "pause": "cf-overlay hidden"
+        },
+        "damage": 442
+      },
+      "projectiles": {
+        "rows": [
+          {
+            "id": "rifle",
+            "full": 0.95,
+            "faded": 0.4749999999999993,
+            "travel": 147.89999999999998,
+            "finalTravel": 153,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "scatter",
+            "full": 0.95,
+            "faded": 0.4750000000000002,
+            "travel": 54.89999999999998,
+            "finalTravel": 60,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "arc",
+            "full": 0.95,
+            "faded": 0.4750000000000002,
+            "travel": 66.89999999999998,
+            "finalTravel": 72,
+            "pooled": true,
+            "sameMaterial": true
+          },
+          {
+            "id": "plasma",
+            "full": 0.95,
+            "faded": 0.4749999999999993,
+            "travel": 104.89999999999998,
+            "finalTravel": 109.99999999999994,
+            "pooled": true,
+            "sameMaterial": true
+          }
+        ],
+        "chainDamage": [
+          42,
+          30.24000000000524,
+          25.19999999999709
+        ],
+        "chainStun": [
+          0.65,
+          0.65,
+          0.65
+        ],
+        "blastDamage": [
+          72.63384615383984,
+          48.043076923073386
+        ],
+        "edgeChainDamage": [
+          42,
+          0
+        ],
+        "edgeBlastDamage": [
+          69.55999999999767,
+          0
+        ],
+        "blockedDamage": 0,
+        "outOfRangeDamage": 0,
+        "isolationBoundary": {
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 9,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "abilities": [
+            "bulwark",
+            "medic_pulse",
+            "target_designator"
+          ]
+        },
+        "pool": {
+          "shots": 0,
+          "shotPool": 192,
+          "impacts": 3,
+          "impactPool": 38,
+          "sparks": 35,
+          "sparkPool": 125
+        }
+      },
+      "campaignOrigins": [
+        {
+          "origin": "new_campaign",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 9,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        },
+        {
+          "origin": "mission_select",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 8,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        },
+        {
+          "origin": "continue_campaign",
+          "combat": {
+            "version": 3,
+            "activeId": "rifle",
+            "cartridges": 8,
+            "weapons": {
+              "rifle": {
+                "mag": 50
+              },
+              "scatter": {
+                "mag": 20
+              }
+            }
+          },
+          "squad": [
+            {
+              "role": "heavy",
+              "ability": "bulwark",
+              "preferred": 13
+            },
+            {
+              "role": "medic",
+              "ability": "medic_pulse",
+              "preferred": 22
+            },
+            {
+              "role": "rifle",
+              "ability": "target_designator",
+              "preferred": 34
+            }
+          ]
+        }
+      ],
+      "checkpointCombinations": 8,
+      "campaignTransitions": [
+        "power_through",
+        "sample_zero",
+        "break_contact"
+      ],
+      "m4EmergencyFloor": {
+        "first": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 1,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 0
+            }
+          }
+        },
+        "restored": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 1,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 0
+            }
+          }
+        },
+        "mission": "break_contact"
+      },
+      "sharedSquadSupply": {
+        "before": 2,
+        "after": 1,
+        "squadReserve": 4
+      },
+      "cache": {
+        "cacheBefore": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 9,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 9
+            }
+          }
+        },
+        "cacheAfter": {
+          "version": 3,
+          "activeId": "rifle",
+          "cartridges": 12,
+          "weapons": {
+            "rifle": {
+              "mag": 0
+            },
+            "scatter": {
+              "mag": 9
+            }
+          }
+        }
+      },
+      "continue": {
+        "version": 3,
+        "activeId": "scatter",
+        "cartridges": 12,
+        "weapons": {
+          "rifle": {
+            "mag": 0
+          },
+          "scatter": {
+            "mag": 9
+          }
+        }
+      },
+      "isolatedCampaignCombat": {
+        "counters": {
+          "sceneObjectsRemoved": 1024,
+          "sceneObjectsAdded": 1057,
+          "shadowRefresh": 44
+        },
+        "p95": 50,
+        "worst": 50,
+        "pools": {
+          "shots": 12,
+          "shotPool": 180,
+          "impacts": 12,
+          "impactPool": 29,
+          "sparks": 40,
+          "sparkPool": 120
+        },
+        "fired": 18
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "frames": 178,
+          "p95": 61.4,
+          "p99": 66.3,
+          "worst": 67.5,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "frames": 202,
+          "p95": 32.7,
+          "p99": 61.6,
+          "worst": 62.2,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "frames": 218,
+          "p95": 31.9,
+          "p99": 32,
+          "worst": 32.2,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "frames": 207,
+          "p95": 32,
+          "p99": 47.3,
+          "worst": 61.9,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "frames": 196,
+          "p95": 47.7,
+          "p99": 62.6,
+          "worst": 63.1,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Facility interior",
+          "frames": 191,
+          "p95": 48.2,
+          "p99": 62.5,
+          "worst": 63.3,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "frames": 204,
+          "p95": 32.2,
+          "p99": 61.1,
+          "worst": 61.5,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "frames": 315,
+          "p95": 61.7,
+          "p99": 62.8,
+          "worst": 64.1,
+          "over100": 0,
+          "counters": {
+            "sceneObjectsAdded": 505,
+            "sceneObjectsRemoved": 478,
+            "shadowRefresh": 99
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "frames": 532,
+          "p95": 31.6,
+          "p99": 32.2,
+          "worst": 61.6,
+          "over100": 0,
+          "counters": {
+            "shadowRefresh": 151,
+            "sceneObjectsAdded": 694,
+            "sceneObjectsRemoved": 629,
+            "meshesCreated": 203,
+            "geometriesCreated": 17,
+            "materialsCreated": 11,
+            "groupsObjectsCreated": 94,
+            "materialDisposes": 1
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "frames": 538,
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 32.4,
+          "over100": 0,
+          "counters": {
+            "sceneObjectsAdded": 959,
+            "shadowRefresh": 150,
+            "sceneObjectsRemoved": 948,
+            "meshesCreated": 18,
+            "geometriesCreated": 18,
+            "materialsCreated": 12,
+            "groupsObjectsCreated": 5,
+            "materialDisposes": 8
+          }
+        }
+      ],
+      "pageErrors": 0,
+      "unexpectedConsoleErrors": 0
+    }
+  },
+  "evidence": [
+    "evidence/01-deployment.png",
+    "evidence/02-player-arc-px-pair.png",
+    "evidence/03-squad-customization.png",
+    "evidence/04-horizontal-footer.png",
+    "evidence/05-consolidated-hud.png",
+    "evidence/06-reload-progress.png",
+    "evidence/07-px-gameplay.png",
+    "evidence/08-automatic-mutator.png",
+    "evidence/09-flat-terrain.png",
+    "evidence/10-elevated-terrain.png"
+  ]
+}

@@ -4,3 +4,10 @@ facility-captures-*.zip
 
 # Generated test-run output
 test-results/
+
+# Milestone 4.1 keeps selected evidence + compact validation manifest in Git.
+# Full diagnostic traces and compatibility-suite captures remain local/reproducible.
+_playtest/m41/compatibility/
+_playtest/m41/regressions/
+_playtest/m41/endless-hud-edge.json
+_playtest/m41/endless-hud-firefox.json

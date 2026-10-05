@@ -1,0 +1,24 @@
+Normal audio {"trace":[{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":9992,"time":0,"duration":null,"volume":1,"loop":false,"ended":false},{"event":"playing","src":"SFX/SpaceshipLandingLoop.wav","at":14185,"time":0,"duration":119.921875,"volume":0.385,"loop":true,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLanded.wav","at":28560,"time":0,"duration":null,"volume":1,"loop":false,"ended":false},{"event":"playing","src":"SFX/SpaceshipLanded.wav","at":28704,"time":0,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":28913,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pause","src":"SFX/SpaceshipLandingLoop.wav","at":28913,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":31861,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pause","src":"SFX/SpaceshipLanded.wav","at":33256,"time":4.318948,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":true},{"event":"ended","src":"SFX/SpaceshipLanded.wav","at":33256,"time":4.318948,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":true}],"live":0,"mission":"dead_signal","ship":"LANDED_LOCKED"}
+Skipped audio {"trace":[{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":35573,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLanded.wav","at":35573,"time":4.318948,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":true},{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":35581,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLanded.wav","at":35581,"time":4.318948,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":true},{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":35581,"time":14.648937,"duration":119.921875,"volume":0,"loop":true,"ended":false},{"event":"pauseCall","src":"SFX/SpaceshipLanded.wav","at":35862,"time":4.318948,"duration":4.318948,"volume":0.49500000000000005,"loop":false,"ended":true},{"event":"pauseCall","src":"SFX/SpaceshipLandingLoop.wav","at":36026,"time":0.290395,"duration":119.921875,"volume":0,"loop":true,"ended":false}],"live":0,"intro":false,"locked":true}
+Late skip {"live":0,"cachedElements":2,"stop":{"event":"pauseCall","src":"SFX/SpaceshipLanded.wav","at":47629,"time":0.199072,"duration":4.318948,"volume":0,"loop":false,"ended":false}}
+FOLLOW stop/go {"toggles":0,"stoppedTicks":0,"ticks":210}
+Slow-target FOLLOW {"ticks":202,"toggles":0}
+Open pursuit {"ticks":62,"lateralTicks":0,"falselyStuck":0}
+Player scenarios [{"label":"walk","pos":[360,640.940000000002],"camera":[360,640.940000000002,1.6525189383395733],"solid":false},{"label":"sprint","pos":[360,643.8399999999992],"camera":[360,643.8399999999992,1.5434925021033679],"solid":false},{"label":"strafe","pos":[364.8533333333321,636],"camera":[364.8533333333321,636,1.5777819099738257],"solid":false},{"label":"diagonal","pos":[363.49310749905993,639.7531074990633],"camera":[363.49310749905993,639.7531074990633,1.6067311799462116],"solid":false},{"label":"wall contact","pos":[331.5,648],"camera":[331.5,648,1.6198668462970978],"solid":false},{"label":"reverse","pos":[360,631.1466666666647],"camera":[360,631.1466666666647,1.627571848438473],"solid":false}]
+Campaign {"mission":"dead_signal","phase":"M1_RESTORE_POWER","prompt":null}
+Campaign {"mission":"dead_signal","phase":"M1_COMMAND","prompt":null}
+Campaign {"mission":"power_through","phase":"MOVE_R1","prompt":null}
+Campaign {"mission":"power_through","phase":"DEFEND_R1","prompt":null}
+Campaign {"mission":"power_through","phase":"MOVE_R2","prompt":null}
+Campaign {"mission":"power_through","phase":"DEFEND_R2","prompt":"HOLD [E] — ACTIVATE RELAY BETA"}
+Campaign {"mission":"power_through","phase":"MOVE_R3","prompt":null}
+Campaign {"mission":"power_through","phase":"DEFEND_R3","prompt":null}
+Campaign {"mission":"power_through","phase":"M2_CONFIRM","prompt":null}
+Campaign {"mission":"sample_zero","phase":"M3_ENTER_LAB","prompt":null}
+Campaign {"mission":"sample_zero","phase":"M3_REACH_SAMPLE","prompt":null}
+Campaign {"mission":"sample_zero","phase":"M3_STABILIZE","prompt":null}
+Campaign {"mission":"break_contact","phase":"M4_BREAK_CONTACT","prompt":null}
+Campaign {"mission":"break_contact","phase":"M4_HOLD_LZ","prompt":null}
+Campaign {"mission":"break_contact","phase":"M4_DEPART","prompt":null}
+Campaign {"mission":"break_contact","phase":"DONE","prompt":null}
+PASS runtime stability / accelerated campaign

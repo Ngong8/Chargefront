@@ -1,0 +1,51 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "intro-smoke",
+    "status": 0,
+    "signal": null,
+    "seconds": 37.776
+  },
+  {
+    "browser": "firefox",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "seconds": 184.325
+  },
+  {
+    "browser": "firefox",
+    "suite": "runtime-stability",
+    "status": 0,
+    "signal": null,
+    "seconds": 208.492
+  },
+  {
+    "browser": "firefox",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "seconds": 158.84
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "seconds": 63.518
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "seconds": 78.513
+  },
+  {
+    "browser": "firefox",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "seconds": 40.857
+  }
+]

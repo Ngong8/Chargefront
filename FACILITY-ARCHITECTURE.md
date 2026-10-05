@@ -46,3 +46,18 @@ At load time only, retired numeric phase **30** maps to `MOVE_R3` unless Gamma i
 ## Regression harness
 
 The browser harnesses run the real `file://` game through Playwright/Chrome/Edge (or append `firefox`). Set `PLAYWRIGHT_PACKAGE` to an installed `playwright/index.mjs`, optionally set `CHROME_PATH`. `tests/facility-regression.mjs` checks lifecycle, cover/projectiles, repaired perimeter in both directions at low/eye/upper heights, M3 sample, M4 purge/result, Mission Select/Continue and Endless. Its established 14 m/RAF A–E spatial stress sweep is unchanged for comparison; it uses debug movement, not a playable-route proof. `__cf.setNoSpawn(true)` isolates environmental churn and it asserts zero traversal links/builds/grid rebuilds/geometry and material creation/disposal. `tests/m2-progression.mjs` separately proves the playable canonical sequence: real E activations (defense timers completed through the test hook), full W-key Gamma-to-terminal return, all three FOLLOW squadmates, hostile front-door pursuit, no east entry, normal checkpoint reloads and retired-phase migration. The obsolete service-access test is deleted. `tests/facility-playthrough.mjs` checks the Containment repair blocks W-key movement and still traverses all sections/M4 doors, with squad combat and pursuit. `tests/transition-diagnose.mjs` verifies visible intro cuts and chapter/result shader links. These are software-WebGL tests, not desktop FPS measurements. Route-clearance samples include relay pads and proximity doors.
+
+## Milestone 4.0 combat integration
+
+`src/combat.js` is another classic script loaded before the main HTML module for
+file:// compatibility. It owns the two canonical player weapons and their ammo,
+active selection and action timers. The HTML retains AI, input, HUD, projectile
+collision and Campaign orchestration. Scene/FPS geometry is retained; equipping
+only changes cached model visibility. Combat lane guesses use the existing
+`facilityNavigationWaypoint` and `resolveCircle`; muzzle authorization and
+Infested attacks use existing height-aware solid/LOS checks. No facility module,
+routes, collision solids, snapshots, local-light slots or world-build coordinator
+were redesigned. Chapter transitions cancel transient player weapon actions,
+preserve both magazines, and keep the same world. See
+`MILESTONE-4.0-COMBAT-SQUAD.md` for the versioned combat checkpoint payload,
+legacy migration and mode isolation rules.

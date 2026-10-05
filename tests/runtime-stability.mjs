@@ -8,7 +8,8 @@ import { execFileSync } from 'node:child_process';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE
     ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), observe = process.argv.includes('--observe');
-mkdirSync(resolve('_playtest/m39'), { recursive: true });
+const artifactDir = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m39');
+mkdirSync(artifactDir, { recursive: true });
 const browser = await (ff ? firefox : chromium).launch(ff ? { headless: !process.argv.includes('--headed') }
     : { headless: !process.argv.includes('--headed'), executablePath: process.env.CHROME_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', args: ['--enable-unsafe-swiftshader', '--allow-file-access-from-files'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
@@ -199,13 +200,13 @@ try {
         }
         const route = await page.evaluate(() => __cf.routeInfo().route);
         for (const [x,y] of route.slice(1)) await walk(x,y);
-        await page.screenshot({ path: resolve(`_playtest/m39/terminal-${ff ? 'firefox' : 'edge'}.png`) });
+        await page.screenshot({ path: resolve(artifactDir, `terminal-${ff ? 'firefox' : 'edge'}.png`) });
         await hold('M3_ENTER_LAB');
         for (const [x,y] of [[360,648],[360,667],[360,697],[360,718],[373,718]]) await walk(x,y);
         await hold('M3_REACH_SAMPLE');
         for (const [x,y] of [[360,718],[360,747],[364,774]]) await walk(x,y);
         await hold('M3_STABILIZE');
-        await page.screenshot({ path: resolve(`_playtest/m39/containment-${ff ? 'firefox' : 'edge'}.png`) });
+        await page.screenshot({ path: resolve(artifactDir, `containment-${ff ? 'firefox' : 'edge'}.png`) });
         await page.evaluate(() => __cf.setNoAggro(false));
         await page.waitForTimeout(3000); // genuine squad combat / containment encounter
         await page.evaluate(() => { __cf.completeStabilization(); __cf.clearTestEnemies(); __cf.setNoAggro(true); });
@@ -219,13 +220,13 @@ try {
         assert.equal(await page.evaluate(() => __cf.phaseName), 'DONE');
         results.campaign = milestones;
         results.movementTrace = await page.evaluate(() => __cfMovement?.report());
-        await page.screenshot({ path: resolve(`_playtest/m39/campaign-result-${ff ? 'firefox' : 'edge'}.png`) });
+        await page.screenshot({ path: resolve(artifactDir, `campaign-result-${ff ? 'firefox' : 'edge'}.png`) });
     }
     assert.deepEqual(errors, []);
     console.log('PASS runtime stability' + (process.argv.includes('--campaign') ? ' / accelerated campaign' : ''));
 } finally {
     results.errors = errors;
-    mkdirSync(resolve('_playtest/m39'), { recursive: true });
-    writeFileSync(resolve(`_playtest/m39/runtime-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}.json`), JSON.stringify(results, null, 2));
+    mkdirSync(artifactDir, { recursive: true });
+    writeFileSync(resolve(artifactDir, `runtime-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}.json`), JSON.stringify(results, null, 2));
     await browser.close();
 }

@@ -1,0 +1,19 @@
+Relay approach {"phase":"MOVE_R1","pos":[211.2,575],"prompt":"HOLD [E] — ACTIVATE RELAY ALPHA"}
+Relay 1 {"phase":"MOVE_R2","relays":[true,false,false],"objective":"Advance to RELAY BETA and power it up"}
+Relay approach {"phase":"MOVE_R2","pos":[251.2,748],"prompt":"HOLD [E] — ACTIVATE RELAY BETA"}
+Relay 2 {"phase":"MOVE_R3","relays":[true,true,false],"objective":"Advance to RELAY GAMMA and power it up"}
+Former side entry blocked by wall [391.5,644]
+Relay approach {"phase":"MOVE_R3","pos":[581.2,585],"prompt":"HOLD [E] — ACTIVATE RELAY GAMMA"}
+Relay 3 {"phase":"M2_CONFIRM","relays":[true,true,true],"objective":"RELAY GAMMA ONLINE — return through the front entrance to the facility command terminal"}
+Return W {"distance":0.4567708230864123,"pos":[505.4448950790453,604.8965207582927],"blocked":false}
+Return W {"distance":0.5065351722365378,"pos":[455.50413876596525,600.0492136704964],"blocked":false}
+Return W {"distance":1.2512304647333137,"pos":[401.25123012574386,600.0009210362372],"blocked":false}
+Return W {"distance":1.0215880560946047,"pos":[360.99272072454994,609.7588616177292],"blocked":false}
+Return W {"distance":0.7122139662257672,"pos":[360.03222302909535,627.2885153479639],"blocked":false}
+Return W {"distance":1.0762296832780398,"pos":[381.21210021211266,647.2668668228652],"blocked":false}
+Front-return FOLLOW [{"x":380.1569015087401,"y":642.4362765322556,"mode":"FOLLOW","solid":false},{"x":376.45435238624134,"y":646.4408465228917,"mode":"FOLLOW","solid":false},{"x":375.6646394026595,"y":641.9864603109856,"mode":"FOLLOW","solid":false}]
+Canonical return counters {"shadowRefresh":598,"sceneObjectsRemoved":1}
+Temporary save migration {"allOnline":false,"phase":"MOVE_R3","savedPhase":6,"position":[391.55,644]}
+Temporary save migration {"allOnline":true,"phase":"M2_CONFIRM","savedPhase":18,"position":[391.55,644]}
+East hostile -> FRONT -> Hall {"crossedFront":true,"enemySamples":[[396,625],[397,621],[398,616],[398,612],[394,612],[389,611],[385,611],[380,611],[376,611],[371,611],[367,611],[365,615]],"end":{"x":361.0161966036635,"y":621.9961013189593}}
+PASS canonical M2 front-entry progression

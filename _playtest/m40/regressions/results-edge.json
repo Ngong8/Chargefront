@@ -1,0 +1,51 @@
+[
+  {
+    "browser": "edge",
+    "suite": "intro-smoke",
+    "status": 0,
+    "signal": null,
+    "seconds": 25.211
+  },
+  {
+    "browser": "edge",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "seconds": 108.36
+  },
+  {
+    "browser": "edge",
+    "suite": "runtime-stability",
+    "status": 0,
+    "signal": null,
+    "seconds": 200.801
+  },
+  {
+    "browser": "edge",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "seconds": 146.883
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "seconds": 26.648
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "seconds": 66.57
+  },
+  {
+    "browser": "edge",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "seconds": 37.577
+  }
+]

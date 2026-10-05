@@ -1,0 +1,100 @@
+[
+  {
+    "browser": "edge",
+    "suite": "intro-smoke",
+    "status": 0,
+    "signal": null,
+    "seconds": 24.607
+  },
+  {
+    "browser": "edge",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "seconds": 107.485
+  },
+  {
+    "browser": "edge",
+    "suite": "runtime-stability",
+    "status": 0,
+    "signal": null,
+    "seconds": 199.522
+  },
+  {
+    "browser": "edge",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "seconds": 146.938
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "seconds": 23.466
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "seconds": 62.657
+  },
+  {
+    "browser": "edge",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "seconds": 32.803
+  },
+  {
+    "browser": "firefox",
+    "suite": "intro-smoke",
+    "status": 0,
+    "signal": null,
+    "seconds": 35.313
+  },
+  {
+    "browser": "firefox",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "seconds": 172.695
+  },
+  {
+    "browser": "firefox",
+    "suite": "runtime-stability",
+    "status": 0,
+    "signal": null,
+    "seconds": 206.271
+  },
+  {
+    "browser": "firefox",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "seconds": 160.15
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "seconds": 63.788
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "seconds": 81.659
+  },
+  {
+    "browser": "firefox",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "seconds": 42.045
+  }
+]

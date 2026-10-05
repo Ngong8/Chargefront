@@ -8,8 +8,9 @@ import { pathToFileURL } from 'node:url';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE
     ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), observe = process.argv.includes('--observe');
+const artifactDir = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m39');
 if (process.argv.includes('--report')) {
-    const saved = JSON.parse(readFileSync(resolve(`_playtest/m39/traversal-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}.json`)));
+    const saved = JSON.parse(readFileSync(resolve(artifactDir, `traversal-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}.json`)));
     for (const r of saved.results) console.log(r.label, JSON.stringify({ ...r.summary, gl: r.gl,
         linkFrames: r.frames.filter(f => f.delta.linkProgram).map(f => ({ ms: f.ms, renderMs: f.renderMs, events: f.events })) }));
     process.exit(0);
@@ -106,8 +107,8 @@ try {
     assert.equal(restart.counters.buildEndlessWorld || 0, 0);
     assert.deepEqual(errors, []);
 } finally {
-    mkdirSync(resolve('_playtest/m39'), { recursive: true });
-    const path = resolve(`_playtest/m39/traversal-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}`);
+    mkdirSync(artifactDir, { recursive: true });
+    const path = resolve(artifactDir, `traversal-${ff ? 'firefox' : 'edge'}-${observe ? 'before' : 'after'}`);
     writeFileSync(path + '.json', JSON.stringify({ results, errors }));
     writeFileSync(path + '-summary.json', JSON.stringify(results.map(({ frames, hitches, ...r }) => r), null, 2));
     await browser.close();

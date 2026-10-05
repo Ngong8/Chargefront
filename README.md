@@ -4,7 +4,7 @@
 
 > Recover the sample · Restore the relays · Survive the horde.
 
-Built with [LittleJS](https://github.com/KilledByAPixel/LittleJS) + [Three.js](https://github.com/mrdoob/three.js). No build step or game dependencies to install — keep `chargefront.html` and `src/world/facility.js` together and open the HTML file to play.
+Built with [LittleJS](https://github.com/KilledByAPixel/LittleJS) + [Three.js](https://github.com/mrdoob/three.js). No build step or game dependencies to install — keep `chargefront.html` and the `src/` folder together and open the HTML file to play.
 
 ---
 
@@ -29,7 +29,7 @@ Four independently replayable operations share one hostile frontier while using 
 3. **Sample Zero** — breach the reopened laboratory, bypass corrupted containment security, retrieve the DNA sample, and protect its portable containment sync. An optional security-turret restoration provides automated support and local hostile intel.
 4. **Break Contact** — continue seamlessly from Sample Zero or deploy from Mission Select with the sample already secured, escape through the east maintenance breach, request extraction, hold the restoration LZ for two minutes, and board the transport.
 
-Use **Select Mission** to replay any unlocked mission directly. **Endless Horde** remains a separate mode with randomized arenas, mutator contracts, DNA progression, and six-wave extraction milestones.
+Use **Select Mission** to replay any unlocked mission directly. Campaign uses an authored BUL-117 + CRW-8 loadout with ROOK, VEX and KADE. **Endless Horde** has pre-deployment starting-weapon and squad-posture choices, randomized arenas, mutator contracts, existing DNA progression, and six-wave extraction milestones. Both weapons deploy; restart retains your setup with fresh ammunition.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
 
@@ -43,14 +43,15 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 |---|---|
 | `W A S D` | Move |
 | `MOUSE` | Look around |
-| `LMB` | Fire the **BUL-117** |
+| `LMB` | Fire the equipped weapon |
 | `RMB` | Aim down sights (zoom) |
 | `SHIFT` | Sprint (uses stamina) |
 | `SPACE` | Jump |
 | `R` | Reload (consumes 1 cartridge) |
 | `E` | Interact — hold to use consoles, power relays, revive squadmates, secure the sample, and board extraction |
 | `G` | Throw an **ESG-180** grenade |
-| `Q` | Cycle weapon — rifle / scattergun / ARC / plasma HE |
+| `1 / 2` | Equip **BUL-117** rifle / **CRW-8** scattergun |
+| `Q` | Cycle the two weapons |
 | `F` | Use SURGE PULSE |
 | `M` | Cycle sound mode — music / highlights / all sounds |
 
@@ -58,7 +59,7 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 
 | Key | Action |
 |---|---|
-| `1 / 2 / 3` | Squad command — ASSIST / SPREAD / HOLD |
+| `4 / 5 / 6` | Squad command — ASSIST / SPREAD / HOLD |
 | `Z / X / Y` | Use ROOK / VEX / KADE squad abilities |
 | `N` | Choose the next Endless mutator contract at the relay |
 | `K` | Extract from Endless after a six-wave milestone |
@@ -72,10 +73,10 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 |---|---|
 | `C` | Craft **MEDKIT** — 6 scrap (+60 HP, up to 3 stored) |
 | `H` | Use MEDKIT |
-| `V` | Craft **AMMO CARTRIDGE** — 4 scrap (+50 rounds) |
+| `V` | Craft **AMMO CARTRIDGE** — 4 scrap (one magazine for the active weapon) |
 | `B` | Craft **GRENADE** — 1 power cell (+2, up to 5) |
 
-> Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles.
+> Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each weapon keeps its own magazine and reserve cartridges. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. The rifle holds 50 rounds; CRW-8 holds 12 eight-pellet bursts with a 34 m projectile range.
 
 ---
 
@@ -93,9 +94,9 @@ You're the **fourth operator** — together with ROOK, VEX and KADE you make up 
 
 | Member | Role | Loadout |
 |---|---|---|
-| **ROOK** | Heavy | Shotgun-style laser — fires **8 pellets** per trigger pull with a wide spread; shorter effective range, high-impact close-up |
-| **VEX** | Medic | SMG-style laser — very fast fire, lighter damage, huge 70-round magazine |
-| **KADE** | Rifleman | Standard laser rifle — long range, precise, dependable |
+| **ROOK** | Heavy | Eight-pellet laser, closes toward 13 m; intercepts close threats, quick reaction, Bulwark survivability |
+| **VEX** | Medic | Fast 70-round SMG, prefers 22 m; protects vulnerable allies, evades more often, Medic Pulse |
+| **KADE** | Rifleman | Precise long-range rifle, prefers 34 m; prioritizes dangerous targets, longer commitment, Target Designator |
 
 Squadmates fight alongside you, obey your formation commands, and carry their own shield/HP/regen. Keep them alive — they're the difference between extraction and a shallow grave on this planet.
 
@@ -109,7 +110,7 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 | **Rendering** | [Three.js](https://github.com/mrdoob/three.js) (MIT) — full 3D world via the LittleJS Three.js plugin |
 | **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
-The campaign, AI, squad behavior, crafting, cutscene and audio wiring remain in `chargefront.html`. Facility geometry and navigation are being separated into `src/world/facility.js`.
+The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical player weapon definitions and action/ammo ownership live in `src/combat.js`. See `MILESTONE-4.0-COMBAT-SQUAD.md` for combat and checkpoint boundaries.
 
 ---
 
@@ -119,6 +120,7 @@ The campaign, AI, squad behavior, crafting, cutscene and audio wiring remain in 
 Chargefront/
 ├── chargefront.html       ← game entry point (open this to play)
 ├── src/world/facility.js  ← persistent facility sections, shell, door state and navigation data
+├── src/combat.js          ← canonical two-weapon state and safe checkpoint migration
 ├── tests/facility-regression.mjs ← browser regression/traversal checks (optional Playwright)
 ├── convert_wav_16bit.js   ← dev tool: converts 24-bit SFX to 16-bit in place
 ├── Images/                ← textures used by the game

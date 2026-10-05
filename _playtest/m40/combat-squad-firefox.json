@@ -1,0 +1,649 @@
+{
+  "results": {
+    "weapon1": {
+      "version": 2,
+      "activeId": "rifle",
+      "weapons": {
+        "rifle": {
+          "mag": 43,
+          "reserve": 5
+        },
+        "scatter": {
+          "mag": 12,
+          "reserve": 3
+        }
+      }
+    },
+    "weapon2": {
+      "version": 2,
+      "activeId": "scatter",
+      "weapons": {
+        "rifle": {
+          "mag": 43,
+          "reserve": 5
+        },
+        "scatter": {
+          "mag": 10,
+          "reserve": 3
+        }
+      }
+    },
+    "rapid": {
+      "beforeRapid": {
+        "ammo": 53,
+        "fired": 9,
+        "listeners": 13
+      },
+      "afterRapid": {
+        "ammo": 53,
+        "fired": 9,
+        "listeners": 13
+      }
+    },
+    "checkpoints": [
+      {
+        "mission": "dead_signal",
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 100,
+            "shield": 80,
+            "mag": 70
+          },
+          {
+            "hp": 110,
+            "shield": 88,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "dead_signal",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 100,
+            "shield": 80,
+            "mag": 70
+          },
+          {
+            "hp": 110,
+            "shield": 88,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "power_through",
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 94,
+            "shield": 72.99999999999999,
+            "mag": 70
+          },
+          {
+            "hp": 103,
+            "shield": 79.99999999999999,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "power_through",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 94,
+            "shield": 72.99999999999999,
+            "mag": 70
+          },
+          {
+            "hp": 103,
+            "shield": 79.99999999999999,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "sample_zero",
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 90,
+            "shield": 64.99999999999999,
+            "mag": 70
+          },
+          {
+            "hp": 99,
+            "shield": 70.99999999999999,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "sample_zero",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 90,
+            "shield": 64.99999999999999,
+            "mag": 70
+          },
+          {
+            "hp": 99,
+            "shield": 70.99999999999999,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "break_contact",
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 82,
+            "shield": 53.00000000000001,
+            "mag": 70
+          },
+          {
+            "hp": 90,
+            "shield": 58.00000000000001,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      },
+      {
+        "mission": "break_contact",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 2
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 1
+            }
+          }
+        },
+        "reload": false,
+        "command": "hold",
+        "squad": [
+          {
+            "hp": 65,
+            "shield": 31.999999999999996,
+            "mag": 17
+          },
+          {
+            "hp": 82,
+            "shield": 53.00000000000001,
+            "mag": 70
+          },
+          {
+            "hp": 90,
+            "shield": 58.00000000000001,
+            "mag": 50
+          }
+        ],
+        "shell": 6
+      }
+    ],
+    "transitions": [
+      {
+        "mission": "power_through",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 3
+            }
+          }
+        },
+        "sameShell": true,
+        "sameSolids": true
+      },
+      {
+        "mission": "sample_zero",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 3
+            }
+          }
+        },
+        "sameShell": true,
+        "sameSolids": true
+      },
+      {
+        "mission": "break_contact",
+        "combat": {
+          "version": 2,
+          "activeId": "scatter",
+          "weapons": {
+            "rifle": {
+              "mag": 17,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 6,
+              "reserve": 3
+            }
+          }
+        },
+        "sameShell": true,
+        "sameSolids": true
+      }
+    ],
+    "identities": [
+      {
+        "name": "ROOK",
+        "combat": {
+          "preferredRange": 13,
+          "lane": -2.5,
+          "reaction": 0.16,
+          "commit": 1.1,
+          "acquire": 0.28,
+          "reposition": 0.45,
+          "dangerWeight": 3,
+          "allyWeight": 16,
+          "closeWeight": 1.8,
+          "evadeChance": 0.35
+        },
+        "target": 0
+      },
+      {
+        "name": "VEX",
+        "combat": {
+          "preferredRange": 22,
+          "lane": 3,
+          "reaction": 0.22,
+          "commit": 1.4,
+          "acquire": 0.34,
+          "reposition": 0.6,
+          "dangerWeight": 5,
+          "allyWeight": 46,
+          "closeWeight": 0.9,
+          "evadeChance": 0.8
+        },
+        "target": 1
+      },
+      {
+        "name": "KADE",
+        "combat": {
+          "preferredRange": 34,
+          "lane": -4,
+          "reaction": 0.32,
+          "commit": 1.8,
+          "acquire": 0.42,
+          "reposition": 0.75,
+          "dangerWeight": 12,
+          "allyWeight": 22,
+          "closeWeight": 0.45,
+          "evadeChance": 0.6
+        },
+        "target": 2
+      }
+    ],
+    "squadCombat": [
+      {
+        "name": "ROOK",
+        "pos": [
+          356.7630775950935,
+          743.3466955867522
+        ],
+        "mode": "ENGAGE",
+        "mag": 23,
+        "targetValid": true,
+        "commit": 0
+      },
+      {
+        "name": "VEX",
+        "pos": [
+          355.8397381742789,
+          747.2550122770041
+        ],
+        "mode": "ENGAGE",
+        "mag": 45,
+        "targetValid": true,
+        "commit": 0
+      },
+      {
+        "name": "KADE",
+        "pos": [
+          364.44164870641396,
+          742.1006445095304
+        ],
+        "mode": "ENGAGE",
+        "mag": 30,
+        "targetValid": true,
+        "commit": 0
+      }
+    ],
+    "occlusion": {
+      "consumed": 0,
+      "shots": 0
+    },
+    "strike": {
+      "shields": [
+        104,
+        80,
+        88
+      ],
+      "after": [
+        104,
+        80,
+        88
+      ]
+    },
+    "deployment": {
+      "config": {
+        "startingWeapon": "scatter",
+        "squadPosture": "escort"
+      },
+      "combat": {
+        "version": 2,
+        "activeId": "scatter",
+        "weapons": {
+          "rifle": {
+            "mag": 50,
+            "reserve": 4
+          },
+          "scatter": {
+            "mag": 12,
+            "reserve": 4
+          }
+        }
+      },
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 398.2036868543638,
+            "y": 439.7237492587697
+          },
+          "formation": {
+            "x": 398.04,
+            "y": 440.46
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 398.7784262759486,
+            "y": 442.7083903313608
+          },
+          "formation": {
+            "x": 398.04,
+            "y": 443.54
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 396.84925671476066,
+            "y": 440.5490539161489
+          },
+          "formation": {
+            "x": 396.15,
+            "y": 442
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ]
+    },
+    "restart": {
+      "config": {
+        "startingWeapon": "scatter",
+        "squadPosture": "escort"
+      },
+      "combat": {
+        "version": 2,
+        "activeId": "scatter",
+        "weapons": {
+          "rifle": {
+            "mag": 50,
+            "reserve": 4
+          },
+          "scatter": {
+            "mag": 12,
+            "reserve": 4
+          }
+        }
+      },
+      "ammoSize": 50,
+      "save": "{\"version\":3,\"campaignStarted\":true,\"campaignComplete\":false,\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"LANDED_INFESTED\",\"continuedState\":{\"missionId\":\"break_contact\",\"missionTime\":0,\"kills\":0,\"totalAmmoCrafted\":0,\"totalMedkitsCrafted\":0,\"player\":{\"hp\":100,\"shield\":100,\"grenades\":3,\"position\":{\"x\":450,\"y\":80},\"yaw\":1.7488892650260943,\"combat\":{\"version\":2,\"activeId\":\"scatter\",\"weapons\":{\"rifle\":{\"mag\":17,\"reserve\":6},\"scatter\":{\"mag\":6,\"reserve\":3}}}},\"craft\":{\"scraps\":0,\"powerCells\":0,\"medkits\":3},\"squadCommand\":\"assist\",\"squad\":[{\"hp\":130,\"shield\":104,\"mag\":30,\"reserve\":4,\"downed\":false,\"position\":{\"x\":448,\"y\":78}},{\"hp\":100,\"shield\":80,\"mag\":70,\"reserve\":4,\"downed\":false,\"position\":{\"x\":452,\"y\":78}},{\"hp\":110,\"shield\":88,\"mag\":50,\"reserve\":4,\"downed\":false,\"position\":{\"x\":450,\"y\":76.75}}],\"securityTurret\":false,\"enemyIntel\":false,\"extraction\":{\"phase\":24,\"mainIndex\":0,\"started\":false,\"cleared\":false,\"clearedNodeIds\":[],\"cacheUsed\":false}}},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":0},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":0},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":0},\"break_contact\":{\"unlocked\":true,\"completed\":false,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}"
+    },
+    "campaignIsolation": {
+      "mode": "campaign",
+      "combat": {
+        "version": 2,
+        "activeId": "rifle",
+        "weapons": {
+          "rifle": {
+            "mag": 50,
+            "reserve": 5
+          },
+          "scatter": {
+            "mag": 12,
+            "reserve": 3
+          }
+        }
+      },
+      "damage": 1,
+      "magSize": 50,
+      "speed": 5.2,
+      "squad": [
+        {
+          "x": 363.3079567655243,
+          "y": 582.9081647197884
+        },
+        {
+          "x": 363.4885080119857,
+          "y": 577.3110760794862
+        },
+        {
+          "x": 366.9963608003779,
+          "y": 580.2256890580767
+        }
+      ],
+      "posture": "assist"
+    }
+  },
+  "errors": [],
+  "consoleErrors": []
+}

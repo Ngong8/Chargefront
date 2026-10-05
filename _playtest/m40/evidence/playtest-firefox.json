@@ -1,0 +1,638 @@
+{
+  "results": {
+    "frontDoorCombat": {
+      "pos": [
+        360,
+        631.9066666666779
+      ],
+      "solid": false,
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "ENGAGE",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 364.4062003997593,
+            "y": 612.4904841805259
+          },
+          "formation": {
+            "x": 364.8,
+            "y": 628.4066666666779
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 91.55000000000048,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 350.78732687050416,
+            "y": 605.5883240443151
+          },
+          "formation": {
+            "x": 357.2,
+            "y": 628.5066666666779
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 91.55000000000048,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 372.00185334383247,
+            "y": 594.602648722819
+          },
+          "formation": {
+            "x": 360,
+            "y": 624.9066666666779
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 91.55000000000048,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "combat": {
+        "version": 2,
+        "activeId": "scatter",
+        "weapons": {
+          "rifle": {
+            "mag": 42,
+            "reserve": 6
+          },
+          "scatter": {
+            "mag": 10,
+            "reserve": 3
+          }
+        }
+      }
+    },
+    "chapters": [
+      {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "pos": [
+          360,
+          650.7133333333417
+        ],
+        "solid": false,
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 23,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 7,
+              "reserve": 3
+            }
+          }
+        },
+        "squad": [
+          {
+            "name": "ROOK",
+            "role": "heavy",
+            "mode": "ENGAGE",
+            "hp": 130,
+            "shield": 104,
+            "downed": false,
+            "position": {
+              "x": 364.73413460608776,
+              "y": 632.7836969541092
+            },
+            "formation": {
+              "x": 364.8,
+              "y": 647.2133333333417
+            },
+            "target": "runner",
+            "targetPosition": {
+              "x": 360.43645107503573,
+              "y": 649.1982812235924
+            },
+            "ability": "bulwark",
+            "abilityCooldown": 95.08333333333361,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "VEX",
+            "role": "medic",
+            "mode": "ENGAGE",
+            "hp": 100,
+            "shield": 80,
+            "downed": false,
+            "position": {
+              "x": 351.616073398258,
+              "y": 626.2398732650645
+            },
+            "formation": {
+              "x": 355.2,
+              "y": 647.2133333333417
+            },
+            "target": "skitter",
+            "targetPosition": {
+              "x": 359.3496140454407,
+              "y": 648.9461916836616
+            },
+            "ability": "medic_pulse",
+            "abilityCooldown": 95.08333333333361,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "KADE",
+            "role": "rifle",
+            "mode": "ENGAGE",
+            "hp": 110,
+            "shield": 88,
+            "downed": false,
+            "position": {
+              "x": 366.6591172075363,
+              "y": 622.0011400455451
+            },
+            "formation": {
+              "x": 360,
+              "y": 644.2133333333417
+            },
+            "target": "runner",
+            "targetPosition": {
+              "x": 359.8027999422712,
+              "y": 649.2517949264311
+            },
+            "ability": "target_designator",
+            "abilityCooldown": 95.08333333333361,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          }
+        ]
+      },
+      {
+        "mission": "sample_zero",
+        "phase": "M3_OVERRIDE",
+        "pos": [
+          360,
+          734
+        ],
+        "solid": false,
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 4,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 4,
+              "reserve": 3
+            }
+          }
+        },
+        "squad": [
+          {
+            "name": "ROOK",
+            "role": "heavy",
+            "mode": "FOLLOW",
+            "hp": 130,
+            "shield": 104,
+            "downed": false,
+            "position": {
+              "x": 362.424672566942,
+              "y": 729.9506700993834
+            },
+            "formation": {
+              "x": 362.8,
+              "y": 730.6
+            },
+            "target": null,
+            "targetPosition": null,
+            "ability": "bulwark",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "VEX",
+            "role": "medic",
+            "mode": "FOLLOW",
+            "hp": 100,
+            "shield": 80,
+            "downed": false,
+            "position": {
+              "x": 357.35171049189324,
+              "y": 729.8655043043827
+            },
+            "formation": {
+              "x": 357.2,
+              "y": 730.6
+            },
+            "target": null,
+            "targetPosition": null,
+            "ability": "medic_pulse",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "KADE",
+            "role": "rifle",
+            "mode": "FOLLOW",
+            "hp": 110,
+            "shield": 88,
+            "downed": false,
+            "position": {
+              "x": 360.1084440183039,
+              "y": 726.2578814818177
+            },
+            "formation": {
+              "x": 360,
+              "y": 727
+            },
+            "target": null,
+            "targetPosition": null,
+            "ability": "target_designator",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          }
+        ]
+      },
+      {
+        "mission": "break_contact",
+        "phase": "M4_BREAK_CONTACT",
+        "pos": [
+          425.7999999999947,
+          752
+        ],
+        "solid": false,
+        "combat": {
+          "version": 2,
+          "activeId": "rifle",
+          "weapons": {
+            "rifle": {
+              "mag": 0,
+              "reserve": 6
+            },
+            "scatter": {
+              "mag": 1,
+              "reserve": 3
+            }
+          }
+        },
+        "squad": [
+          {
+            "name": "ROOK",
+            "role": "heavy",
+            "mode": "ENGAGE",
+            "hp": 130,
+            "shield": 104,
+            "downed": false,
+            "position": {
+              "x": 409.9927411152026,
+              "y": 745.6753284330183
+            },
+            "formation": {
+              "x": 422.2999999999947,
+              "y": 747.2
+            },
+            "target": "runner",
+            "targetPosition": {
+              "x": 424.3116702098679,
+              "y": 752
+            },
+            "ability": "bulwark",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "VEX",
+            "role": "medic",
+            "mode": "ENGAGE",
+            "hp": 100,
+            "shield": 80,
+            "downed": false,
+            "position": {
+              "x": 399.11969751321254,
+              "y": 754.0683472217521
+            },
+            "formation": {
+              "x": 422.2999999999947,
+              "y": 756.8
+            },
+            "target": "skitter",
+            "targetPosition": {
+              "x": 423.9122594742558,
+              "y": 752
+            },
+            "ability": "medic_pulse",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          },
+          {
+            "name": "KADE",
+            "role": "rifle",
+            "mode": "ENGAGE",
+            "hp": 110,
+            "shield": 88,
+            "downed": false,
+            "position": {
+              "x": 403.19021174061527,
+              "y": 747.5
+            },
+            "formation": {
+              "x": 419.2999999999947,
+              "y": 752
+            },
+            "target": "runner",
+            "targetPosition": {
+              "x": 424.5395524678252,
+              "y": 752
+            },
+            "ability": "target_designator",
+            "abilityCooldown": 95.41666666666693,
+            "lastAbilitySource": null,
+            "lastAbilityTime": null
+          }
+        ]
+      }
+    ],
+    "emergencyCache": {
+      "cacheBefore": {
+        "version": 2,
+        "activeId": "rifle",
+        "weapons": {
+          "rifle": {
+            "mag": 0,
+            "reserve": 6
+          },
+          "scatter": {
+            "mag": 1,
+            "reserve": 3
+          }
+        }
+      },
+      "cacheAfter": {
+        "version": 2,
+        "activeId": "rifle",
+        "weapons": {
+          "rifle": {
+            "mag": 0,
+            "reserve": 6
+          },
+          "scatter": {
+            "mag": 1,
+            "reserve": 5
+          }
+        }
+      }
+    },
+    "continue": {
+      "version": 2,
+      "activeId": "scatter",
+      "weapons": {
+        "rifle": {
+          "mag": 0,
+          "reserve": 6
+        },
+        "scatter": {
+          "mag": 1,
+          "reserve": 5
+        }
+      }
+    },
+    "isolatedCombat": {
+      "counters": {
+        "sceneObjectsRemoved": 998,
+        "sceneObjectsAdded": 987,
+        "shadowRefresh": 44
+      },
+      "p95": 66.7,
+      "worst": 83.3,
+      "pools": {
+        "shots": 4,
+        "shotPool": 188,
+        "impacts": 11,
+        "impactPool": 30,
+        "sparks": 20,
+        "sparkPool": 140
+      },
+      "fired": 18
+    },
+    "squadEvidence": [
+      {
+        "name": "ROOK",
+        "role": "heavy",
+        "mode": "ENGAGE",
+        "hp": 130,
+        "shield": 104,
+        "downed": false,
+        "position": {
+          "x": 357.45422745320394,
+          "y": 741.7250539480106
+        },
+        "formation": {
+          "x": 364.8,
+          "y": 726.5
+        },
+        "target": "runner",
+        "targetPosition": {
+          "x": 354,
+          "y": 756
+        },
+        "ability": "bulwark",
+        "abilityCooldown": 97.58333333333347,
+        "lastAbilitySource": null,
+        "lastAbilityTime": null
+      },
+      {
+        "name": "VEX",
+        "role": "medic",
+        "mode": "ENGAGE",
+        "hp": 100,
+        "shield": 80,
+        "downed": false,
+        "position": {
+          "x": 358.15990253716717,
+          "y": 745.629789316231
+        },
+        "formation": {
+          "x": 355.2,
+          "y": 726.5
+        },
+        "target": "brute",
+        "targetPosition": {
+          "x": 368,
+          "y": 767
+        },
+        "ability": "medic_pulse",
+        "abilityCooldown": 97.58333333333347,
+        "lastAbilitySource": null,
+        "lastAbilityTime": null
+      },
+      {
+        "name": "KADE",
+        "role": "rifle",
+        "mode": "ENGAGE",
+        "hp": 110,
+        "shield": 88,
+        "downed": false,
+        "position": {
+          "x": 361.7768460785583,
+          "y": 730.781636822488
+        },
+        "formation": {
+          "x": 360,
+          "y": 723.5
+        },
+        "target": "brute",
+        "targetPosition": {
+          "x": 368,
+          "y": 767
+        },
+        "ability": "target_designator",
+        "abilityCooldown": 97.58333333333347,
+        "lastAbilitySource": null,
+        "lastAbilityTime": null
+      }
+    ],
+    "endless": {
+      "config": {
+        "startingWeapon": "scatter",
+        "squadPosture": "screen"
+      },
+      "combat": {
+        "version": 2,
+        "activeId": "scatter",
+        "weapons": {
+          "rifle": {
+            "mag": 29,
+            "reserve": 4
+          },
+          "scatter": {
+            "mag": 6,
+            "reserve": 4
+          }
+        }
+      },
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 130,
+          "shield": 18,
+          "downed": false,
+          "position": {
+            "x": 373.2873333333565,
+            "y": 445.919999672308
+          },
+          "formation": {
+            "x": 372.5373333333366,
+            "y": 445.92
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 25.916666666666785,
+          "lastAbilitySource": "autonomous",
+          "lastAbilityTime": 10.25
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 100,
+          "shield": 18,
+          "downed": false,
+          "position": {
+            "x": 372.2589152856524,
+            "y": 437.4852999000623
+          },
+          "formation": {
+            "x": 372.5373333333366,
+            "y": 438.08
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 20.30000000000021,
+          "lastAbilitySource": "autonomous",
+          "lastAbilityTime": 8.633333333333333
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 110,
+          "shield": 18,
+          "downed": false,
+          "position": {
+            "x": 377.56879545526465,
+            "y": 441.24892269112934
+          },
+          "formation": {
+            "x": 377.57733333333664,
+            "y": 442
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "enemies": 17
+    },
+    "restart": {
+      "config": {
+        "startingWeapon": "scatter",
+        "squadPosture": "screen"
+      },
+      "combat": {
+        "version": 2,
+        "activeId": "scatter",
+        "weapons": {
+          "rifle": {
+            "mag": 50,
+            "reserve": 4
+          },
+          "scatter": {
+            "mag": 12,
+            "reserve": 4
+          }
+        }
+      },
+      "wave": 0,
+      "squad": 3
+    }
+  },
+  "errors": [],
+  "consoles": []
+}

@@ -1,0 +1,119 @@
+{
+  "baseline": false,
+  "events": [
+    {
+      "seconds": 3.444,
+      "event": "committed"
+    },
+    {
+      "seconds": 3.789,
+      "event": "response",
+      "details": {
+        "status": 200,
+        "url": "https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/littlejs.esm.min.js"
+      }
+    },
+    {
+      "seconds": 3.81,
+      "event": "response",
+      "details": {
+        "status": 200,
+        "url": "https://unpkg.com/three@0.160.0/build/three.module.js"
+      }
+    },
+    {
+      "seconds": 5.945,
+      "event": "renderer"
+    },
+    {
+      "seconds": 9.969,
+      "event": "before-click",
+      "details": {
+        "ready": "complete",
+        "ua": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+        "time": {
+          "counts": {
+            "objects": 262,
+            "meshes": 195,
+            "visibleMeshes": 144,
+            "lights": 19,
+            "visibleLights": 17,
+            "casters": 0
+          },
+          "render": {
+            "calls": 145,
+            "triangles": 4920,
+            "points": 900,
+            "lines": 0
+          },
+          "entities": {
+            "enemies": 0,
+            "squad": 3,
+            "pickups": 0,
+            "shots": 0,
+            "enemyShots": 0,
+            "acid": 0,
+            "acidPools": 0,
+            "grenades": 0,
+            "impacts": 0
+          },
+          "budgetLights": {
+            "total": 0,
+            "active": 0,
+            "inRange": 0,
+            "slots": 0
+          },
+          "solids": 0
+        },
+        "perf": {
+          "frames": 243,
+          "p95": 16.7,
+          "worst": 1650.4,
+          "counters": {
+            "groupsObjectsCreated": 66,
+            "sceneObjectsAdded": 26,
+            "meshesCreated": 195,
+            "geometriesCreated": 180,
+            "materialsCreated": 173,
+            "collisionNavRebuild": 1,
+            "createTexture": 1,
+            "texImage2D": 1,
+            "compileShader": 10,
+            "linkProgram": 5
+          }
+        }
+      }
+    },
+    {
+      "seconds": 24.977,
+      "event": "click-failed",
+      "details": "TimeoutError: locator.click: Timeout 15000ms exceeded.\nCall log:\n\u001b[2m  - waiting for locator('#btn-start')\u001b[22m\n\u001b[2m    - locator resolved to <button id=\"btn-start\" class=\"cf-menu-btn\">NEW CAMPAIGN</button>\u001b[22m\n\u001b[2m  - attempting click action\u001b[22m\n\u001b[2m    - waiting for element to be visible, enabled and stable\u001b[22m\n\u001b[2m    - element is visible, enabled and stable\u001b[22m\n\u001b[2m    - scrolling into view if needed\u001b[22m\n\u001b[2m    - done scrolling\u001b[22m\n\u001b[2m    - performing click action\u001b[22m\n"
+    },
+    {
+      "seconds": 24.989,
+      "event": "after-click",
+      "details": {
+        "soundPanel": false,
+        "intro": false,
+        "mode": "campaign",
+        "perf": {
+          "frames": 1141,
+          "p95": 16.7,
+          "worst": 1650.4,
+          "counters": {
+            "groupsObjectsCreated": 66,
+            "sceneObjectsAdded": 26,
+            "meshesCreated": 195,
+            "geometriesCreated": 180,
+            "materialsCreated": 173,
+            "collisionNavRebuild": 1,
+            "createTexture": 1,
+            "texImage2D": 1,
+            "compileShader": 10,
+            "linkProgram": 5
+          }
+        }
+      }
+    }
+  ]
+}

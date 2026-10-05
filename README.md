@@ -50,7 +50,7 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 | `R` | Reload (consumes 1 cartridge) |
 | `E` | Interact — hold to use consoles, power relays, revive squadmates, secure the sample, and board extraction |
 | `G` | Throw an **ESG-180** grenade |
-| `1 / 2` | Equip **BUL-117** rifle / **CRW-8** scattergun |
+| `1 / 2` | Equip Slot 1 / Slot 2 (Campaign: **BUL-117** / **CRW-8**) |
 | `Q` | Cycle the two weapons |
 | `F` | Use SURGE PULSE |
 | `M` | Cycle sound mode — music / highlights / all sounds |
@@ -61,7 +61,6 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 |---|---|
 | `4 / 5 / 6` | Squad command — ASSIST / SPREAD / HOLD |
 | `Z / X / Y` | Use ROOK / VEX / KADE squad abilities |
-| `N` | Choose the next Endless mutator contract at the relay |
 | `K` | Extract from Endless after a six-wave milestone |
 | `T` | Give a spare cartridge to the neediest squadmate |
 | `T` (aiming) | Give a cartridge to the squadmate under your crosshair (within 5 m) |
@@ -73,10 +72,16 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 |---|---|
 | `C` | Craft **MEDKIT** — 6 scrap (+60 HP, up to 3 stored) |
 | `H` | Use MEDKIT |
-| `V` | Craft **AMMO CARTRIDGE** — 4 scrap (one magazine for the active weapon) |
+| `V` | Craft **UNIVERSAL CARTRIDGE** — 4 scrap (one magazine replacement for either gun) |
 | `B` | Craft **GRENADE** — 1 power cell (+2, up to 5) |
 
-> Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each weapon keeps its own magazine and reserve cartridges. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. The rifle holds 50 rounds; CRW-8 holds 12 eight-pellet bursts with a 34 m projectile range.
+> Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each equipped weapon keeps its own magazine; both share one universal cartridge pool. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. BUL-117 holds 50 rounds / 153 m reach; CRW-8 holds 20 eight-pellet bursts / 60 m reach.
+
+Endless deployment chooses **two of four**: BUL-117, CRW-8, **ARC-9** (32 rounds,
+72 m, chain disruption) and **PX-4** (10 rounds, 110 m, explosive plasma). Choose
+starting slot, each operator's weapon/ability and squad posture. Restart preserves
+deployment and arena, resets resources/upgrades/waves. Waves 1–5 are unmodified;
+wave 6 onward automatically chooses a modifier or NONE. No Contract menu.
 
 ---
 
@@ -90,7 +95,7 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 
 ## 🤖 Your Squadmates
 
-You're the **fourth operator** — together with ROOK, VEX and KADE you make up a four-person fireteam. These are your AI squadmates:
+You're the **fourth operator** — together with ROOK, VEX and KADE you make up a four-person fireteam. These are the authored Campaign identities; Endless lets each operator choose any supported gun and Bulwark, Medic Pulse or Target Designator:
 
 | Member | Role | Loadout |
 |---|---|---|
@@ -110,7 +115,7 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 | **Rendering** | [Three.js](https://github.com/mrdoob/three.js) (MIT) — full 3D world via the LittleJS Three.js plugin |
 | **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
-The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical player weapon definitions and action/ammo ownership live in `src/combat.js`. See `MILESTONE-4.0-COMBAT-SQUAD.md` for combat and checkpoint boundaries.
+The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. See `MILESTONE-4.1-ENDLESS-HUD.md` for architecture, checkpoint migration, evidence and validation.
 
 ---
 

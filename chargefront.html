@@ -97,6 +97,17 @@
         #start-screen .cf-title, #start-screen #menu-buttons { margin-left:20px; }
     }
     .cf-panel-box select { background:#1a0e2e; color:#e6d0ff; border:1px solid rgba(160,100,255,.45); border-radius:6px; padding:6px 10px; font-size:14px; width:220px; }
+    #endless-setup-panel { max-width:850px; width:calc(100% - 48px); box-sizing:border-box; padding:20px 24px; }
+    #endless-setup-panel p { font-size:12px; line-height:1.45; margin:8px 0 12px; }
+    .cf-loadout-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+    .cf-loadout-group { border:1px solid rgba(150,90,255,.25); border-radius:8px; padding:10px 14px; min-width:0; }
+    .cf-loadout-group h3 { margin:0 0 8px; font:14px 'Glitch Slap','Segoe UI',sans-serif; color:#9adcff; letter-spacing:.14em; }
+    #endless-setup-panel .row { margin:7px 0; font-size:12px; gap:8px; }
+    #endless-setup-panel select { width:210px; max-width:65%; font-size:12px; }
+    .cf-deployment-footer { display:flex; gap:14px; margin-top:12px; }
+    .cf-deployment-footer .cf-menu-btn { flex:1; min-width:0; width:auto; margin:0; padding:0 8px; font-size:16px; }
+    select:focus-visible, .cf-menu-btn:focus-visible { outline:2px solid #9adcff; outline-offset:3px; }
+    @media (max-width:650px) { .cf-loadout-grid { grid-template-columns:1fr; } .cf-deployment-footer .cf-menu-btn { font-size:12px; letter-spacing:.05em; } }
     .cf-sound-panel { max-width:700px; text-align:center; }
     .cf-sound-panel p { margin:0 0 18px; line-height:1.55; color:#c9b8d8; }
     .cf-sound-choices { display:flex; gap:10px; justify-content:center; }
@@ -180,7 +191,8 @@ let mode = 'campaign';                                  // 'campaign' | 'endless
 const ROOT = document.getElementById('cf-root');
 
 /* ─── options (persisted) ──────────────────────────────────────────────── */
-const opts = Object.assign({ musicVol: 0.7, sfxVol: 0.55, soundMode: 'full', sens: 1, invertY: false, fov: 75, crossColor: 0, crossSize: 1, markers: true }, (() => { try { return JSON.parse(localStorage['cf_opts'] || '{}'); } catch (e) { return {}; } })());
+const opts = Object.assign({ musicVol: 0.7, sfxVol: 0.55, soundMode: 'full', sens: 1, invertY: false, fov: 75, crossColor: 0, crossSize: 1 }, (() => { try { return JSON.parse(localStorage['cf_opts'] || '{}'); } catch (e) { return {}; } })());
+delete opts.markers; // obsolete presentation preference; mission intel remains internal
 function saveOpts() { try { localStorage['cf_opts'] = JSON.stringify(opts); } catch (e) { } }
 
 /* ─── campaign definitions + persisted progression ──────────────────── */
@@ -2871,25 +2883,25 @@ const CANONICAL_WORLD_SNAPSHOTS = Object.freeze({
         start: LZ, target: FACILITY_STAGING, firstPhase: P.M1_MOVE_FAC, firstMainIndex: 1,
         spacecraftState: SPACECRAFT_STATE.INSERTION_APPROACH, stagingActive: false,
         worldState: Object.assign({}, BASE_WORLD_STATE),
-        combat: { hp: 100, shield: 100, grenades: 3, medkits: 3, reserve: 6, squadHp: 1, squadShield: 1, squadReserve: 1 },
+        combat: { hp: 100, shield: 100, grenades: 3, medkits: 3, cartridges: 9, squadHp: 1, squadShield: 1, squadReserve: 1 },
     },
     power_through: {
         start: FACILITY_STAGING, target: RELAYS[0].pos, firstPhase: P.MOVE_R1, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_LOCKED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true }),
-        combat: { hp: 100, shield: 90, grenades: 3, medkits: 3, reserve: 5, squadHp: 0.94, squadShield: 0.9, squadReserve: 0.85 },
+        combat: { hp: 100, shield: 90, grenades: 3, medkits: 3, cartridges: 8, squadHp: 0.94, squadShield: 0.9, squadReserve: 0.85 },
     },
     sample_zero: {
         start: LAB_COMMAND, target: LAB_DECON, firstPhase: P.M3_ENTER_LAB, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_LOCKED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true }),
-        combat: { hp: 94, shield: 84, grenades: 2, medkits: 2, reserve: 4, squadHp: 0.9, squadShield: 0.8, squadReserve: 0.75 },
+        combat: { hp: 94, shield: 84, grenades: 2, medkits: 2, cartridges: 6, squadHp: 0.9, squadShield: 0.8, squadReserve: 0.75 },
     },
     break_contact: {
         start: LAB_CONTAINMENT, target: LAB_EMERGENCY_EXIT, firstPhase: P.M4_BREAK_CONTACT, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_INFESTED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: false }),
-        combat: { hp: 84, shield: 68, grenades: 2, medkits: 2, reserve: 3, squadHp: 0.82, squadShield: 0.65, squadReserve: 0.65 },
+        combat: { hp: 84, shield: 68, grenades: 2, medkits: 2, cartridges: 5, squadHp: 0.82, squadShield: 0.65, squadReserve: 0.65 },
     },
 });
 function campaignSnapshot(id = activeMissionId) { return CANONICAL_WORLD_SNAPSHOTS[id] || CANONICAL_WORLD_SNAPSHOTS.dead_signal; }
@@ -2962,7 +2974,7 @@ const endlessRun = {
     supplyDrop: 0, dnaSyncMult: 1,
     bastionOwned: false, bastionUsed: false, turretOwned: false,
     fullRegen: 0, killHeal: 0, upgradeStacks: {},   // NANO REGEN / VAMPIRIC CIRCUIT / stackable relay upgrades
-    mutator: null, selectedMutator: null, contractIndex: 0, arena: null, extractionReady: false,
+    mutator: null, previousMutatorId: null, arena: null, extractionReady: false,
 };
 let endlessRelay = null;                 // { model, pos, ringAngle }
 let endlessVial = null;                  // { tube, pos, bobT }
@@ -3211,9 +3223,9 @@ const ENDLESS_RELAY_UPGRADES = [
     { id: 'r_rate',   name: 'RAPID CYCLERS',       desc: 'Fire rate +10%', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 9 }, apply() { for (const w of Object.values(playerCombat.weapons)) w.rateMult += 0.10; for (const m of squadMembers) m.rateMult = (m.rateMult || 1) + 0.10; } },
     { id: 'r_vit',    name: 'HARDENED PLATING',    desc: 'HP +20 (all squad)', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 8 }, apply() { player.maxHp += 20; player.hp += 20; for (const m of squadMembers) { m.maxHp += 20; m.hp += 20; } } },
     { id: 'r_shield', name: 'CAPACITOR BANK',      desc: 'Shield +20 (all squad)', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 8 }, apply() { player.maxShield += 20; player.shield += 20; for (const m of squadMembers) { m.maxShield += 15; m.shield += 15; } } },
-    { id: 'r_mag',    name: 'DEEP MAGAZINES',      desc: 'BUL-117 magazine +10', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 10 }, apply() { playerCombat.weapons.rifle.magSize += 10; playerCombat.weapons.rifle.mag += 10; } },
+    { id: 'r_mag',    name: 'DEEP MAGAZINES',      desc: 'BUL-117 magazine +10', requiresWeapon: 'rifle', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 10 }, apply() { const w = playerCombat.weapons.rifle; if (w) { w.magSize += 10; w.mag += 10; } } },
     { id: 'r_field',  name: 'FIELD KITS',          desc: '+1 medkit cap, start each wave with +1', tier: 1, rarity: 'common', stackable: true, maxStacks: 2, cost: { s: 6 }, apply() { endlessRun.medkitCap += 1; endlessRun.startMedkits += 1; } },
-    { id: 'r_player', name: 'PERSONAL RAIL',       desc: 'Player rifle +15% dmg (player only)', tier: 1, rarity: 'rare', stackable: true, maxStacks: 3, cost: { s: 12 }, apply() { playerCombat.weapons.rifle.dmgMult += 0.15; } },
+    { id: 'r_player', name: 'PERSONAL RAIL',       desc: 'Player rifle +15% dmg (player only)', requiresWeapon: 'rifle', tier: 1, rarity: 'rare', stackable: true, maxStacks: 3, cost: { s: 12 }, apply() { if (playerCombat.weapons.rifle) playerCombat.weapons.rifle.dmgMult += 0.15; } },
     { id: 'r_crit',   name: 'TARGETING COMP',      desc: 'Crit chance +8% (player + squad)', tier: 1, rarity: 'common', stackable: true, maxStacks: 2, cost: { s: 11 }, apply() { player.critChance = Math.min(1, (player.critChance || 0) + 0.08); for (const m of squadMembers) m.critChance = Math.min(1, (m.critChance || 0) + 0.08); } },
     { id: 'r_stam',   name: 'STAMINA CYCLE',       desc: 'Sprint drain −25%, regen +25%', tier: 1, rarity: 'common', stackable: true, maxStacks: 2, cost: { s: 9 }, apply() { player.staminaDrainMult *= 0.75; player.staminaRegenMult *= 1.25; } },
     { id: 'r_mob',    name: 'MOBILITY SERVOS',     desc: 'Move speed +0.3', tier: 1, rarity: 'common', stackable: true, maxStacks: 3, cost: { s: 9 }, apply() { player.speed += 0.3; } },
@@ -3250,20 +3262,13 @@ const ENDLESS_MUTATORS = [
     { id: 'armored', name: 'ARMOURED INFESTATION', desc: 'Hostiles gain 30% HP; critical chance doubles', reward: { s: 7 } },
     { id: 'blackout', name: 'BLACKOUT', desc: 'Navigation markers are offline; all weapon damage +20%', reward: { g: 1 } },
 ];
-function cycleEndlessContract() {
-    if (endlessRun.waveActive) { notify('Finish the active contract first', '#ffaa44'); return; }
-    endlessRun.contractIndex = (endlessRun.contractIndex + 1) % ENDLESS_MUTATORS.length;
-    endlessRun.selectedMutator = ENDLESS_MUTATORS[endlessRun.contractIndex];
-    notify('NEXT CONTRACT — ' + endlessRun.selectedMutator.name + ': ' + endlessRun.selectedMutator.desc, '#ffcc66');
-    playFileSfx('accessOk', 0.45, 1.1);
-}
 function endlessRarityColor(rarity) {
     return rarity === 'epic' ? LJS.rgb(0.85, 0.6, 1) : rarity === 'rare' ? LJS.rgb(0.5, 0.9, 1) : LJS.rgb(0.72, 0.8, 0.95);
 }
 /* stack tracking — one-shot upgrades cap at 1; stackables repeat up to their maxStacks */
 function upgradeCount(u) { return endlessRun.upgradeStacks[u.id] || 0; }
 function upgradeMax(u) { return u.stackable ? (u.maxStacks || 1) : 1; }
-function upgradeBuyable(u) { return upgradeCount(u) < upgradeMax(u) && u.tier <= relayTierUnlocked(); }
+function upgradeBuyable(u) { return (!u.requiresWeapon || !!playerCombat.weapons[u.requiresWeapon]) && upgradeCount(u) < upgradeMax(u) && u.tier <= relayTierUnlocked(); }
 /* the highest relay tier available at the current wave (T2 = wave 5+, T3 = wave 10+) */
 function relayTierUnlocked() { return endlessRun.wave >= 10 ? 3 : endlessRun.wave >= 5 ? 2 : 1; }
 /* effective (upgrade-adjusted) crafting costs & caps — relay upgrades lower costs / raise caps */
@@ -3335,8 +3340,9 @@ function startEndlessWave() {
     endlessRun.budgetLeft = 6 + endlessRun.wave * 5;
     endlessRun.spawnT = 0.8;
     endlessRun.bossSpawned = false;
-    endlessRun.mutator = endlessRun.selectedMutator || ENDLESS_MUTATORS[0];
-    if (endlessRun.mutator.id === 'storm') {
+    endlessRun.mutator = ChargefrontCombat.chooseMutator(endlessRun.wave, endlessRun.previousMutatorId, ENDLESS_MUTATORS);
+    endlessRun.previousMutatorId = endlessRun.mutator?.id || null;
+    if (endlessRun.mutator?.id === 'storm') {
         player.shield = 0;
         for (const m of squadMembers) m.shield = 0;
     }
@@ -3346,7 +3352,7 @@ function startEndlessWave() {
     if (endlessRun.shieldArrayOwned) endlessRun.shieldArrayT = 10;
     endlessRun.bastionUsed = false;
     music.play(endlessRun.wave % 5 === 0 || endlessRun.wave % 8 === 0 ? 'combat' : 'relayCombat', 0.85);   // corrupt_data_stream for drone swarm / Harvester waves
-    notify((endlessRun.wave % 5 === 0 ? 'DRONE SWARM' : 'WAVE ' + endlessRun.wave) + ' — ' + endlessRun.mutator.name + ': ' + endlessRun.mutator.desc, '#ffcc66');
+    if (!endlessRun.mutator) notify('WAVE ' + endlessRun.wave + (endlessRun.wave % 5 === 0 ? ' — DRONE SWARM' : ''), '#ffcc66');
     playFileSfx('bossRoar', 0.5, 1, ENDLESS_RELAY_POS.x, ENDLESS_RELAY_POS.y);
 }
 function endlessDiff() {
@@ -3431,8 +3437,9 @@ function updateEndlessWaves(dt) {
             if (reward.s) craft.scraps += reward.s;
             if (reward.p) craft.powerCells += reward.p;
             if (reward.g) player.grenades = Math.min(grenadeCap(), player.grenades + reward.g);
-            notify('CONTRACT COMPLETE — ' + (reward.s ? '+' + reward.s + ' SCRAP' : reward.p ? '+1 POWER CELL' : '+1 GRENADE'), '#ffcc66');
+            notify('MUTATOR SURVIVED — ' + (reward.s ? '+' + reward.s + ' SCRAP' : reward.p ? '+1 POWER CELL' : '+1 GRENADE'), '#ffcc66');
         }
+        endlessRun.mutator = null; // wave-scoped buffs/blackout/shield lock expire together
         if (endlessRun.wave % 6 === 0) {
             endlessRun.extractionReady = true;
             notify('EXTRACTION MILESTONE READY — [K] at the relay to end the run', '#88ddff');
@@ -3452,8 +3459,7 @@ function updateEndlessInteract(dt) {
         if (endlessRun.waveActive) {
             interactPrompt = 'WAVE ' + endlessRun.wave + ' ACTIVE — ' + endlessRun.alive + ' HOSTILES LEFT';
         } else {
-            const contract = endlessRun.selectedMutator || ENDLESS_MUTATORS[0];
-            interactPrompt = 'HOLD [E] — ' + contract.name + '    [N] CONTRACT  [U] UPGRADES' + (endlessRun.extractionReady ? '  [K] EXTRACT' : '');
+            interactPrompt = 'HOLD [E] — START NEXT WAVE    [U] UPGRADES' + (endlessRun.extractionReady ? '  [K] EXTRACT' : '');
             if (heldInteract > 1.0 && !endlessHeldDone) { endlessHeldDone = true; startEndlessWave(); }
             interactProgress = clamp(heldInteract / 1.0, 0, 1);
         }
@@ -3550,7 +3556,7 @@ function resetEndlessRun() {
     endlessRun.bastionOwned = false; endlessRun.bastionUsed = false; endlessRun.turretOwned = false;
     endlessRun.fullRegen = 0; endlessRun.killHeal = 0; endlessRun.upgradeStacks = {};
     endlessRun.cellChance = 0; endlessRun.waveClearHeal = 0; endlessRun.vacuum = false; endlessRun.duplicateChance = 0; endlessRun.mutator = null;
-    endlessRun.contractIndex = 0; endlessRun.selectedMutator = ENDLESS_MUTATORS[0]; endlessRun.arena = ENDLESS_ARENAS[randInt(ENDLESS_ARENAS.length)]; endlessRun.extractionReady = false;
+    endlessRun.previousMutatorId = null; endlessRun.arena = ENDLESS_ARENAS[randInt(ENDLESS_ARENAS.length)]; endlessRun.extractionReady = false;
     if (endlessTurret) { scene.remove(endlessTurret.group); endlessTurret = null; }
     upgradeMenu = false; endlessUpgradeOffers = []; endlessHeldDone = false;
     craft.scraps = 0; craft.powerCells = 0; craft.medkits = 3;
@@ -3561,17 +3567,19 @@ function resetEndlessRun() {
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
-    playerCombat.reset({ activeId: endlessConfiguration.startingWeapon }); setViewmodelWeapon(player.weapon);
+    playerCombat.reset({ loadout: endlessConfiguration.player, cartridges: 8 }); setViewmodelWeapon(player.weapon);
     player.holsterT = 0; player.grenadeCd = 0; player.sprintBlend = 0; player.adsBlend = 0;
     player.swayX = 0; player.swayY = 0; player.swayRoll = 0; player.swayPosX = 0; player.swayPosY = 0;
     player.moveAmount = 0; player.moveBlend = 0; player.moveBobX = 0; player.moveBobY = 0; player.moveBobVX = 0; player.moveBobVY = 0;
     player.viewmodelState = 'IDLE'; player.reloadPhase = 'COMPLETE';
     player.grenades = 3;
     for (const m of squadMembers) {
+        m.def = ChargefrontCombat.squadLoadout(SQUAD_DEFS[m.slot], endlessConfiguration.squad[SQUAD_DEFS[m.slot].name.toLowerCase()]);
         m.hp = m.maxHp = m.def.hp;
         m.maxShield = Math.round(m.def.hp * 0.8); m.shield = m.maxShield;
         m.dmgMult = 1; m.rateMult = 1; m.dmgTakenMult = 1; m.critChance = 0; m.dnaDelayT = 0; m.acidDelayT = 0;
         m.reloadMult = 1; m.speedMult = 1; m.critMult = 2; m.abilityCd = 0; m.bulwarkT = 0;
+        m.shieldDelayT = 0; m.hpDelayT = 0; m.fireT = 0; m.evadeCd = 0.5;
         m.mag = m.def.magSize; m.magSize = m.def.magSize; m.reserve = m.def.reserve;
         m.downed = false; m.reloading = false; m.reloadT = 0;
         m.target = null; m.lastSeenTarget = null; m.engageTarget = null; m.engageT = 0; m.breakT = 0;
@@ -3629,7 +3637,7 @@ function beginEndless(waitForLockGesture = true) {
     music.play('safe', 0.7);
     gameplayFade = 1;
     viewModel.visible = true;
-    notify('ENDLESS RUN — ' + endlessRun.arena.name + '. Survive contracts, bank DNA.', '#d6a6ff');
+    notify('ENDLESS RUN — ' + endlessRun.arena.name + '. Survive waves, bank DNA.', '#d6a6ff');
     prewarmCombatEffects();
     notify('Hold E at the relay to start wave 1', '#d6a6ff');
     if (waitForLockGesture) lockOnNextGesture();
@@ -3840,7 +3848,7 @@ function equipWeapon(index, silent = false) {
     return true;
 }
 function cycleWeapon() {
-    equipWeapon((player.weaponIndex + 1) % PLAYER_WEAPONS.length);
+    equipWeapon((player.weaponIndex + 1) % playerCombat.slots.length);
 }
 function playerPulse() {
     if (player.abilityCd > 0) { notify('SURGE PULSE RECHARGING', '#ffaa44'); return; }
@@ -3954,7 +3962,9 @@ function updateEncounterDirector(dt) {
     const livingSquad = Math.max(1, squadMembers.length - downed);
     const squadCondition = squadHealth / livingSquad;
     let ammoCapacity = 0, availableAmmo = 0;
-    for (const w of Object.values(playerCombat.weapons)) { ammoCapacity += w.magSize * (1 + reserveCap()); availableAmmo += w.mag + w.reserve * w.magSize; }
+    for (const w of Object.values(playerCombat.weapons)) { ammoCapacity += w.magSize; availableAmmo += w.mag; }
+    const averageMag = ammoCapacity / playerCombat.slots.length;
+    availableAmmo += playerCombat.cartridges * averageMag; ammoCapacity += reserveCap() * averageMag;
     const ammoPressure = 1 - clamp(availableAmmo / Math.max(1, ammoCapacity), 0, 1);
     encounterDirector.ammoPressure = ammoPressure; encounterDirector.squadCondition = squadCondition;
     const critical = player.hp / player.maxHp < 0.35 || downed >= 2 || squadCondition < 0.38 || (ammoPressure > 0.9 && active > 3);
@@ -3993,7 +4003,7 @@ function resetSquadIntelligence() {
         member.lastAbilitySource = null; member.lastAbilityTime = -Infinity;
     }
 }
-function bestKadeAbilityTarget(member) {
+function bestDesignatorTarget(member) {
     let best = null, bestScore = -Infinity;
     for (const enemy of enemies) {
         if (enemy.dead || enemy.dying || enemy.unburrowing || enemy.markedT > 1) continue;
@@ -4009,7 +4019,9 @@ function bestKadeAbilityTarget(member) {
     return { target: best, score: bestScore };
 }
 function activateSquadAbility(slot, source = 'manual', preferredTarget = null) {
-    const member = squadMembers[slot];
+    return executeSquadAbility(squadMembers[slot], source, preferredTarget);
+}
+function executeSquadAbility(member, source, preferredTarget) {
     if (!member || member.downed) return false;
     const autonomous = source === 'autonomous';
     if (member.abilityCd > 0) {
@@ -4021,7 +4033,7 @@ function activateSquadAbility(slot, source = 'manual', preferredTarget = null) {
     if (ability.id === 'bulwark') {
         member.abilityCd = ability.cooldown; member.bulwarkT = 9;
         spawnImpact(member.pos.x, member.pos.y, member.z + 0.8, 0x88ff77, 2.5);
-        notify('ROOK — BULWARK ARMOUR ACTIVE' + (autonomous ? ' // covering squad' : ''), '#aaff88');
+        notify(member.def.name + ' — BULWARK ARMOUR ACTIVE' + (autonomous ? ' // covering squad' : ''), '#aaff88');
     } else if (ability.id === 'medic_pulse') {
         let benefited = 0;
         for (const ally of [player, ...squadMembers]) if (!ally.downed && Math.hypot(ally.pos.x - member.pos.x, ally.pos.y - member.pos.y) < 20) {
@@ -4030,22 +4042,23 @@ function activateSquadAbility(slot, source = 'manual', preferredTarget = null) {
             if (ally.hp + ally.shield > before) benefited++;
         }
         if (!benefited) {
-            if (!autonomous) notify('VEX — SQUAD VITALS NOMINAL', '#ffaa44');
+            if (!autonomous) notify(member.def.name + ' — SQUAD VITALS NOMINAL', '#ffaa44');
             return false;
         }
         member.abilityCd = ability.cooldown;
         spawnImpact(member.pos.x, member.pos.y, member.z + 0.8, 0xff77bb, 3.2);
-        notify('VEX — MEDIC PULSE DEPLOYED' + (autonomous ? ' // casualties stabilized' : ''), '#ff88bb');
+        notify(member.def.name + ' — MEDIC PULSE DEPLOYED' + (autonomous ? ' // casualties stabilized' : ''), '#ff88bb');
     } else {
-        const selection = preferredTarget && !preferredTarget.dead && !preferredTarget.dying ? { target: preferredTarget } : bestKadeAbilityTarget(member);
+        const selection = preferredTarget && !preferredTarget.dead && !preferredTarget.dying ? { target: preferredTarget } : bestDesignatorTarget(member);
         const target = selection.target;
         if (!target) {
-            if (!autonomous) notify('KADE — NO VALID TARGET TO MARK', '#ffaa44');
+            if (!autonomous) notify(member.def.name + ' — NO VALID TARGET TO MARK', '#ffaa44');
             return false;
         }
         member.abilityCd = ability.cooldown; target.markedT = 10;
         spawnImpact(target.pos.x, target.pos.y, target.z + 0.9, 0x77bbff, 2.1);
-        notify('KADE — TARGET DESIGNATED' + (autonomous ? ' // ' + target.type.toUpperCase() : ''), '#88bbff');
+        spawnImpact(member.pos.x, member.pos.y, member.z + 1.25, 0x77bbff, 1);
+        notify(member.def.name + ' — TARGET DESIGNATED' + (autonomous ? ' // ' + target.type.toUpperCase() : ''), '#88bbff');
     }
     member.lastAbilitySource = source; member.lastAbilityTime = LJS.time;
     squadAbilityCoordination.suppressionT = autonomous ? 1.6 : 1.1;
@@ -4060,8 +4073,7 @@ function updateSquadAbilityAutonomy(dt) {
     squadAbilityCoordination.decisionT = 0.45 + rand(0.2);
     const livingEnemies = enemies.filter((enemy) => !enemy.dead && !enemy.dying && !enemy.unburrowing && Math.hypot(enemy.pos.x - player.pos.x, enemy.pos.y - player.pos.y) < 70);
     if (!livingEnemies.length) return;
-    const vex = squadMembers.find((member) => member.def.ability.id === 'medic_pulse' && !member.downed && member.abilityCd <= 0);
-    if (vex) {
+    for (const vex of squadMembers) if (vex.def.ability.id === 'medic_pulse' && !vex.downed && vex.abilityCd <= 0) {
         let urgent = false, injured = 0, benefit = 0;
         for (const ally of [player, ...squadMembers]) {
             if (ally.downed || Math.hypot(ally.pos.x - vex.pos.x, ally.pos.y - vex.pos.y) >= 20) continue;
@@ -4072,16 +4084,14 @@ function updateSquadAbilityAutonomy(dt) {
         }
         if ((urgent || injured >= 2) && benefit >= 35 && activateSquadAbility(vex.slot, 'autonomous')) return;
     }
-    const rook = squadMembers.find((member) => member.def.ability.id === 'bulwark' && !member.downed && member.abilityCd <= 0);
-    if (rook) {
+    for (const rook of squadMembers) if (rook.def.ability.id === 'bulwark' && !rook.downed && rook.abilityCd <= 0) {
         const nearbyThreats = livingEnemies.filter((enemy) => Math.hypot(enemy.pos.x - rook.pos.x, enemy.pos.y - rook.pos.y) < 14 || Math.hypot(enemy.pos.x - player.pos.x, enemy.pos.y - player.pos.y) < 11).length;
         const pressured = rook.hp / rook.maxHp < 0.78 || rook.shield / rook.maxShield < 0.45 || encounterDirector.pressure === 'HIGH' || encounterDirector.phase.startsWith('SCRIPTED');
         if (nearbyThreats >= 3 && pressured && activateSquadAbility(rook.slot, 'autonomous')) return;
     }
-    const kade = squadMembers.find((member) => member.def.ability.id === 'target_designator' && !member.downed && member.abilityCd <= 0);
-    if (kade && (livingEnemies.length >= 3 || encounterDirector.pressure === 'HIGH' || encounterDirector.phase.startsWith('SCRIPTED'))) {
-        const selection = bestKadeAbilityTarget(kade);
-        if (selection.target && selection.score >= 42) activateSquadAbility(kade.slot, 'autonomous', selection.target);
+    for (const kade of squadMembers) if (kade.def.ability.id === 'target_designator' && !kade.downed && kade.abilityCd <= 0 && (livingEnemies.length >= 3 || encounterDirector.pressure === 'HIGH' || encounterDirector.phase.startsWith('SCRIPTED'))) {
+        const selection = bestDesignatorTarget(kade);
+        if (selection.target && selection.score >= 42 && activateSquadAbility(kade.slot, 'autonomous', selection.target)) return;
     }
 }
 
@@ -4470,9 +4480,7 @@ function buildViewmodel() {
     scatter.userData.muzzleY = -0.10;
     scatter.userData.muzzleZ = -0.85;
     scatter.visible = false; weaponMount.add(scatter);
-    // Quarantined pre-4.0 presentation assets: never constructed or selectable.
-    // Kept locally to preserve authored assets for future evaluation.
-    function buildRetiredWeaponModels() {
+    // Audited presentation assets, built once; attacks use current pooled collision.
     const arc = new THREE.Group();
     const arcWhite = 0xf0f3f2, arcDark = 0x171b21, arcDark2 = 0x272d34, arcCyan = 0x18d7ec;
     const arcShellOpts = { metalness: 0.3, roughness: 0.5 };
@@ -4558,7 +4566,6 @@ function buildViewmodel() {
     plasma.visible = false; weaponMount.add(plasma);
     arc.userData.reloadLights = [arcCellWindow, arcChannelWindow];
     plasma.userData.reloadLights = [plasmaCellWindow, plasmaCellCore];
-    }
     rifle.userData.reloadIndicators = [rifleCellWindow];
     scatter.userData.reloadIndicators = scatterReloadIndicators;
     const rememberReloadPart = (model, part) => {
@@ -4568,9 +4575,13 @@ function buildViewmodel() {
     };
     rememberReloadPart(rifle, rifleCartridge);
     rememberReloadPart(scatter, scatterCartridge);
+    rememberReloadPart(arc, arcCartridge);
+    rememberReloadPart(plasma, plasmaCartridge);
     configureWeaponPresentation(rifle, 'rifle', rifleCartridge);
     configureWeaponPresentation(scatter, 'scatter', scatterCartridge);
-    viewModel.userData.weaponModels = { rifle, scatter };
+    configureWeaponPresentation(arc, 'arc', arcCartridge);
+    configureWeaponPresentation(plasma, 'plasma', plasmaCartridge);
+    viewModel.userData.weaponModels = { rifle, scatter, arc, plasma };
     muzzleFlash = new THREE.Mesh(new THREE.OctahedronGeometry(0.15, 0), mat(0xffcc66, { emissive: 0xffaa33, emissiveIntensity: 2.5, transparent: true, opacity: 0 }));
     muzzleFlash.position.set(rifle.userData.muzzleX, rifle.userData.muzzleY, rifle.userData.muzzleZ);
     weaponMount.add(muzzleFlash);
@@ -4907,11 +4918,13 @@ function fireWeapon() {
     const w = player.weapon;
     if (w.reloading || player.swapT > 0) return;
     if (w.mag <= 0) {
-        if (w.reserve > 0) { startReload(); }
+        if (playerCombat.cartridges > 0) { startReload(); }
         else playFileSfx('empty', 0.5);
         return;
     }
     if (!playerCombat.consumeShot()) return;
+    // The accepted shot uses the current aim; recoil moves the next sight picture.
+    const aimYaw = player.yaw, aimPitch = player.pitch;
     const presentation = FPS_WEAPON_PRESENTATION[w.id] || FPS_WEAPON_PRESENTATION.rifle;
     const recoil = presentation.recoil, muzzle = presentation.muzzle;
     player.muzzleT = muzzle.time;
@@ -4926,8 +4939,8 @@ function fireWeapon() {
     playFileSfx(w.kind === 'scatter' ? 'scatterShot' : 'laserShot', 0.5, rand(0.96, 1.04));
 
     const spread = w.spread * (player.grounded ? 1 : 1.9) * (LJS.mouseIsDown(2) ? 0.4 : 1);   // ADS tightens spread
-    const sy = player.yaw + rand(-spread, spread);
-    const sp = player.pitch + rand(-spread, spread) * 0.55;
+    const sy = aimYaw + rand(-spread, spread);
+    const sp = aimPitch + rand(-spread, spread) * 0.55;
     const ox = camera.position.x, oy = camera.position.y, oz = camera.position.z - 0.1;
     const dx = Math.cos(sy) * Math.cos(sp), dy = Math.sin(sy) * Math.cos(sp), dz = Math.sin(sp);
     let boltDmg = w.dmg * w.dmgMult;
@@ -4937,54 +4950,17 @@ function fireWeapon() {
     if (Math.random() < critChance) boltDmg *= (player.critMult || 2);
     if (w.kind === 'scatter') {
         for (let i = 0; i < w.pellets; i++) {
-            const a = player.yaw + rand(-spread, spread), p = player.pitch + rand(-spread, spread) * 0.45;
+            const a = aimYaw + rand(-spread, spread), p = aimPitch + rand(-spread, spread) * 0.45;
             spawnShot(ox, oy, oz, Math.cos(a) * Math.cos(p), Math.sin(a) * Math.cos(p), Math.sin(p), boltDmg, w.color, 'player', { range: w.range });
         }
     } else {
-        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', { range: w.range });
+        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w);
     }
     /* TWIN BARRELS (relay epic) — a chance to squeeze off a second bolt */
     if (mode === 'endless' && w.kind === 'bolt' && Math.random() < (endlessRun.duplicateChance || 0)) {
-        const s2y = player.yaw + rand(-spread, spread), s2p = player.pitch + rand(-spread, spread) * 0.55;
+        const s2y = aimYaw + rand(-spread, spread), s2p = aimPitch + rand(-spread, spread) * 0.55;
         const d2x = Math.cos(s2y) * Math.cos(s2p), d2y = Math.sin(s2y) * Math.cos(s2p), d2z = Math.sin(s2p);
-        spawnShot(ox, oy, oz, d2x, d2y, d2z, boltDmg, 0x66e0ff, 'player');
-    }
-}
-
-// Retired experimental attack: no definition, input, equip or firing dispatch
-// references this legacy helper. Squad/grenade electric effects remain active.
-function legacyFireArcWeapon(ox, oy, oz, damage, w) {
-    const candidates = enemies.filter((e) => !e.dead && !e.dying && !e.unburrowing && Math.hypot(e.pos.x - ox, e.pos.y - oy) < 38);
-    let target = null, best = -2;
-    const fx = Math.cos(player.yaw), fy = Math.sin(player.yaw);
-    for (const e of candidates) {
-        const dx = e.pos.x - ox, dy = e.pos.y - oy, d = Math.hypot(dx, dy) || 1;
-        const score = (dx * fx + dy * fy) / d - d * 0.012;
-        if (score > best) { best = score; target = e; }
-    }
-    const maxRange = 38;
-    const endX = target && best >= 0.55 ? target.pos.x : ox + fx * maxRange;
-    const endY = target && best >= 0.55 ? target.pos.y : oy + fy * maxRange;
-    const endZ = target && best >= 0.55 ? target.z + 0.8 : oz + Math.sin(player.pitch) * maxRange;
-    emitLightningArc(ox, oy, oz, endX, endY, endZ, w.color);
-    if (!target || best < 0.55) return;
-    const hit = (e, dmg, from) => {
-        if (from) emitLightningArc(from.pos.x, from.pos.y, from.z + 0.8, e.pos.x, e.pos.y, e.z + 0.8, w.color);
-        e.takeDamage(dmg); e.stunT = Math.max(e.stunT || 0, 0.65);
-        spawnImpact(e.pos.x, e.pos.y, e.z + 0.8, w.color, 2.3);
-        emitSparks(e.pos.x, e.pos.y, e.z + 0.8, 0xeaffff, 11);
-        emitElectricArcs(e.pos.x, e.pos.y, e.z + 0.8, 3, 2.6, w.color);
-    };
-    hit(target, damage * (mode === 'endless' && endlessRun.mutator && endlessRun.mutator.id === 'storm' ? 1.5 : 1));
-    let from = target;
-    const hitEnemies = new Set([target]);
-    for (let chain = 0; chain < w.chains; chain++) {
-        let next = null, near = 12;
-        for (const e of candidates) if (!hitEnemies.has(e) && !e.dead && !e.dying) { const d = Math.hypot(e.pos.x - from.pos.x, e.pos.y - from.pos.y); if (d < near) { near = d; next = e; } }
-        if (!next) break;
-        hit(next, damage * (0.72 - chain * 0.12), from);
-        hitEnemies.add(next);
-        from = next;
+        spawnShot(ox, oy, oz, d2x, d2y, d2z, boltDmg, w.color, 'player', w);
     }
 }
 
@@ -6118,7 +6094,7 @@ class SquadMember extends LJS.ThreeJSObject {
             const backs = engage ? [-4.8, 4.8, 0] : recover ? [-2.2, 2.2, 0] : [-2.8, 2.8, 0];
             const dists = engage ? [3.5, 3.5, 6.5] : recover ? [2.8, 2.8, 5.5] : [3.4, 3.4, 7];
             const fy = (player.lastMoveYaw !== undefined && player.lastMoveYaw !== null) ? player.lastMoveYaw : player.yaw;
-            const postureScale = mode !== 'endless' ? 1 : endlessConfiguration.squadPosture === 'escort' ? 0.7 : endlessConfiguration.squadPosture === 'screen' ? 1.4 : 1;
+            const postureScale = mode !== 'endless' ? 1 : endlessConfiguration.posture === 'escort' ? 0.7 : endlessConfiguration.posture === 'screen' ? 1.4 : 1;
             const bx = (-Math.cos(fy) * dists[this.slot] + Math.cos(fy + Math.PI / 2) * backs[this.slot]) * postureScale;
             const by = (-Math.sin(fy) * dists[this.slot] + Math.sin(fy + Math.PI / 2) * backs[this.slot]) * postureScale;
             slot = LJS.vec2(cx + bx, cy + by);
@@ -6193,7 +6169,7 @@ class SquadMember extends LJS.ThreeJSObject {
         const objective = squadObjectiveAnchor();
         const supportAnchor = this.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE && objective ? objective : player.pos;
         const targetSupportDistance = this.target ? Math.hypot(this.target.pos.x - supportAnchor.x, this.target.pos.y - supportAnchor.y) : 0;
-        const postureLeash = mode === 'endless' ? endlessConfiguration.squadPosture === 'escort' ? 28 : endlessConfiguration.squadPosture === 'screen' ? 48 : 38 : 38;
+        const postureLeash = mode === 'endless' ? endlessConfiguration.posture === 'escort' ? 28 : endlessConfiguration.posture === 'screen' ? 48 : 38 : 38;
         const deEngageRange = squadCommand === 'spread' ? 52 : this.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 30 : this.aiMode === SQUAD_AI_MODE.RECOVER ? 22 : postureLeash;
         const breaking = squadCommand !== 'hold' && this.target && (this.engageT > 7 || playerDist > 58 || targetSupportDistance > deEngageRange);
         if (this.target && !this.target.dead && !breaking) {
@@ -6382,20 +6358,20 @@ class SquadMember extends LJS.ThreeJSObject {
         this.mag--;
         const baseFacing = Math.atan2(e.pos.y - this.pos.y, e.pos.x - this.pos.x);
         const basePitch = Math.atan2(targetZ - oz, horizontal);
-        const spread = this.def.acc * (pellets > 1 ? 2.6 : 1);   // shotgun pellets scatter widely
+        const spread = this.def.acc * (pellets > 1 && mode !== 'endless' ? 2.6 : 1);
         for (let i = 0; i < pellets; i++) {
             const facing = baseFacing + rand(-spread, spread);
             const pitch = basePitch + rand(-spread, spread) * 0.45;
             const dx = Math.cos(facing) * Math.cos(pitch), dy = Math.sin(facing) * Math.cos(pitch), dz = Math.sin(pitch);
             let dmg = this.def.dmg * (this.dmgMult || 1) * rand(0.9, 1.1);
             if (Math.random() < (this.critChance || 0)) dmg *= (this.critMult || 2);   // CRIT CALIBRATION (+ CRIT POWER / LUCKY SHOT)
-            spawnShot(ox, oy, oz, dx, dy, dz, dmg, this.def.color, 'squad');
+            spawnShot(ox, oy, oz, dx, dy, dz, dmg, this.def.weaponDefinition?.color || this.def.color, 'squad', this.def.weaponDefinition || { range: this.def.range });
         }
         /* TWIN BARRELS (relay epic) — a chance to fire a second bolt (single-shot rifles only) */
         if (mode === 'endless' && pellets === 1 && Math.random() < (endlessRun.duplicateChance || 0)) {
             const f2 = baseFacing + rand(-spread, spread), p2 = basePitch + rand(-spread, spread) * 0.45;
             const d2x = Math.cos(f2) * Math.cos(p2), d2y = Math.sin(f2) * Math.cos(p2), d2z = Math.sin(p2);
-            spawnShot(ox, oy, oz, d2x, d2y, d2z, this.def.dmg * (this.dmgMult || 1), this.def.color, 'squad');
+            spawnShot(ox, oy, oz, d2x, d2y, d2z, this.def.dmg * (this.dmgMult || 1), this.def.weaponDefinition?.color || this.def.color, 'squad', this.def.weaponDefinition || { range: this.def.range });
         }
         playFileSfx(pellets > 1 ? 'scatterShot' : 'laserShot', 0.4, rand(0.95, 1.05), this.pos.x, this.pos.y);
     }
@@ -6539,15 +6515,20 @@ function prewarmCombatEffects() {
     while (impactPool.length < 41) impactPool.push(createImpactEffect());
     while (sparkPool.length < 160) sparkPool.push(createSparkEffect());
     while (shotPool.length < 192) shotPool.push(createShotEffect());
+    while (electricArcPool.length < 40) electricArcPool.push(createElectricArcEffect());
     // The profiler observes resources on first attachment, not at constructors.
     // Register the prepared pool now so first reuse is not labelled allocation.
     if (PERF_DIAGNOSTICS) {
         for (const f of impactPool) perfDiagnostics.observePrepared(f.mesh);
         for (const s of sparkPool) perfDiagnostics.observePrepared(s.line);
         for (const s of shotPool) { perfDiagnostics.observePrepared(s.bolt); perfDiagnostics.observePrepared(s.glow); }
+        for (const a of electricArcPool) perfDiagnostics.observePrepared(a.line);
     }
     const group = new THREE.Group();
     group.add(impactPool[0].mesh, sparkPool[0].line, shotPool[0].bolt, shotPool[0].glow);
+    group.add(electricArcPool[0].line);
+    // Compile every existing gun model at preparation, never on its first equip.
+    for (const model of Object.values(viewModel.userData.weaponModels)) group.add(model.clone());
     const start = performance.now();
     void threeJS.renderer.compileAsync(group, camera, scene).then(() => {
         if (PERF_DIAGNOSTICS) perfDiagnostics.event('combatShadersReady', { ms: +(performance.now() - start).toFixed(1) });
@@ -6604,34 +6585,16 @@ function updateSparks(dt) {
     }
 }
 
-/* Plasma HE alone vents a spent energy cell from its right-side port after each shot. */
-const plasmaEjections = [];
-const plasmaEjectionGeometry = new THREE.CylinderGeometry(0.035, 0.035, 0.12, 6);
-function ejectPlasmaCell(x, y, z) {
-    const cell = new THREE.Mesh(plasmaEjectionGeometry, mat(0xff8a24, { emissive: 0xff4a08, emissiveIntensity: 2.2, transparent: true, opacity: 0.95 }));
-    const sideX = Math.sin(player.yaw), sideY = -Math.cos(player.yaw);
-    cell.position.set(x + sideX * 0.24, y + sideY * 0.24, z - 0.12);
-    cell.rotation.set(rand(TAU), rand(TAU), rand(TAU));
-    scene.add(cell);
-    plasmaEjections.push({ cell, vx: sideX * 3.4, vy: sideY * 3.4, vz: 1.3, life: 0.55 });
-}
-function updatePlasmaEjections(dt) {
-    for (let i = plasmaEjections.length - 1; i >= 0; i--) {
-        const e = plasmaEjections[i];
-        e.life -= dt;
-        if (e.life <= 0) { scene.remove(e.cell); e.cell.material.dispose(); plasmaEjections.splice(i, 1); continue; }
-        e.vz -= 7 * dt;
-        e.cell.position.x += e.vx * dt; e.cell.position.y += e.vy * dt; e.cell.position.z += e.vz * dt;
-        e.cell.rotation.x += 14 * dt; e.cell.rotation.z += 10 * dt;
-        e.cell.material.opacity = clamp(e.life / 0.25, 0, 0.95);
-    }
-}
-
 /* throwable grenades — homing electricshock projectiles with a 16 m sky-blue AoE burst */
 const grenades = [];
 /* jagged sky-blue lightning arcs radiating from an electric blast */
 const electricArcs = [];
 const electricArcPool = [];
+function createElectricArcEffect() {
+    const geo = new THREE.BufferGeometry();
+    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(18), 3));
+    return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), life: 0, maxLife: 0.14 };
+}
 function emitLightningArc(x0, y0, z0, x1, y1, z1, colorHex) {
     if (electricArcs.length >= 40) return;
     const segs = 5;
@@ -6804,25 +6767,30 @@ const shotGlowGeometry = new THREE.SphereGeometry(0.14, 6, 5);
 const shotDirection = new THREE.Vector3(), shotUp = new THREE.Vector3(0, 0, 1), shotAxis = new THREE.Vector3(1, 0, 0);
 function createShotEffect() {
     return { bolt: new THREE.Mesh(shotBoltGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.95 })),
-        glow: new THREE.Mesh(shotGlowGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.35 })) };
+        glow: new THREE.Mesh(shotGlowGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.35 })), chainHits: [] };
 }
 function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options) {
     if (shots.length >= 192) return;
     const dir = shotDirection.set(dx, dy, dz).normalize();
     const recycled = shotPool.pop() || createShotEffect(); // only pre-preparation/debug first use
     const bolt = recycled.bolt;
-    bolt.scale.set(1, 1, 8);
+    const style = options?.kind || 'bolt';
+    bolt.scale.set(style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 3.5 : style === 'arc' ? 5 : 8);
     if (Math.abs(shotUp.dot(dir)) > 0.9999) bolt.quaternion.setFromAxisAngle(shotAxis, dir.z < 0 ? Math.PI : 0);
     else bolt.quaternion.setFromUnitVectors(shotUp, dir);
     bolt.material.color.setHex(color);
     bolt.material.opacity = 0.95;
     scene.add(bolt);
     const glow = recycled.glow;
+    glow.scale.setScalar(style === 'plasma' ? 2.8 : style === 'arc' ? 1.4 : 1);
     glow.material.color.setHex(color);
     glow.material.opacity = 0.35;
     scene.add(glow);
     Object.assign(recycled, { x: ox, y: oy, z: oz, px: ox, py: oy, pz: oz, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85,
-        life: options && options.range ? options.range / 85 : 1.8, dmg, color, owner, splash: options && options.splash });
+        ox, oy, oz, range: options?.range || 153, life: (options?.range || 153) / 85, dmg, color, owner,
+        style, splash: options?.splash || 0, chains: options?.chains || 0 });
+    recycled.chainHits.length = 0;
+    bolt.position.set(ox, oy, oz); glow.position.set(ox, oy, oz);
     shots.push(recycled);
 }
 function explodeEnemyShot(shot, directTarget) {
@@ -6853,50 +6821,80 @@ function explodePlasmaShot(s) {
     spawnImpact(s.x, s.y, s.z, s.color, 4);
     emitSparks(s.x, s.y, s.z, 0xffbb77, 20);
     playFileSfx('explode', 0.7, 1, s.x, s.y);
-    for (const e of enemies) if (!e.dead && !e.dying) {
-        const d = Math.hypot(e.pos.x - s.x, e.pos.y - s.y);
-        if (d < radius) e.takeDamage(s.dmg * (1 - d / radius * 0.6));
+    for (const e of enemies) if (!e.dead && !e.dying && !e.unburrowing) {
+        const z = e.z + 0.8, d = Math.hypot(e.pos.x - s.x, e.pos.y - s.y, z - s.z);
+        if (d < radius && Math.hypot(e.pos.x - s.ox, e.pos.y - s.oy, z - s.oz) <= s.range &&
+            !solidBlocksSegment(s.px, s.py, s.pz, e.pos.x, e.pos.y, z, 0.05, null) && hasLOS(s.x, s.y, e.pos.x, e.pos.y, 0.6)) {
+            e.takeDamage(s.dmg * (1 - d / radius * 0.6));
+            if (s.owner === 'player') { hitMarkerT = 0.22; hitMarkerKill = e.dead || e.dying; }
+        }
+    }
+}
+function chainArcShot(s, first) {
+    let from = first;
+    from.stunT = Math.max(from.stunT || 0, 0.65);
+    s.chainHits.push(first);
+    for (let n = 0; n < s.chains; n++) {
+        let next = null, near = 12;
+        for (const e of enemies) {
+            if (e.dead || e.dying || e.unburrowing || s.chainHits.includes(e)) continue;
+            const z = e.z + 0.8, d = Math.hypot(e.pos.x - from.pos.x, e.pos.y - from.pos.y, z - from.z - 0.8);
+            if (d >= near || Math.hypot(e.pos.x - s.ox, e.pos.y - s.oy, z - s.oz) > s.range ||
+                solidBlocksSegment(from.pos.x, from.pos.y, from.z + 0.8, e.pos.x, e.pos.y, z, 0.05, null) || !hasLOS(from.pos.x, from.pos.y, e.pos.x, e.pos.y, 0.6)) continue;
+            next = e; near = d;
+        }
+        if (!next) break;
+        emitLightningArc(from.pos.x, from.pos.y, from.z + 0.8, next.pos.x, next.pos.y, next.z + 0.8, s.color);
+        next.takeDamage(s.dmg * (0.72 - n * 0.12)); next.stunT = Math.max(next.stunT || 0, 0.65);
+        s.chainHits.push(next); from = next;
     }
 }
 function updateShots(dt) {
     for (let i = shots.length - 1; i >= 0; i--) {
         const s = shots[i];
-        const step = s.speed * dt;
+        const travelDt = Math.min(dt, Math.max(0, s.life));
+        const step = s.speed * travelDt;
         s.px = s.x; s.py = s.y; s.pz = s.z;
         s.x += s.dx * step; s.y += s.dy * step; s.z += s.dz * step;
         s.life -= dt;
         s.bolt.position.set(s.x, s.y, s.z);
         s.glow.position.set(s.x, s.y, s.z);
-        let dead = s.life <= 0;
-        if (s.z < terrainHeight(s.x, s.y) + 0.12) {
+        const opacity = ChargefrontCombat.terminalOpacity(s.life);
+        s.bolt.material.opacity = 0.95 * opacity; s.glow.material.opacity = 0.35 * opacity;
+        const shrink = 0.8 + opacity * 0.2;
+        s.glow.scale.setScalar((s.style === 'plasma' ? 2.8 : s.style === 'arc' ? 1.4 : 1) * shrink);
+        let dead = false, impact = false;
+        if (travelDt > 0 && s.z < terrainHeight(s.x, s.y) + 0.12) {
             spawnImpact(s.x, s.y, terrainHeight(s.x, s.y) + 0.15, s.color, 1);
             boltImpactSfx(s.x, s.y);
-            dead = true;
+            dead = impact = true;
         }
         /* height-aware obstacle hit — low cover only blocks when the bolt is inside
            its vertical bounds, so shots pass cleanly over waist-high props */
-        if (!dead && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
+        if (!dead && travelDt > 0 && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
             spawnImpact(s.x, s.y, s.z, s.color, 1);
             boltImpactSfx(s.x, s.y);
-            dead = true;
+            dead = impact = true;
         }
-        if (!dead) {
+        if (!dead && travelDt > 0) {
             let hit = null, bestD = 1e9;
             for (const e of enemies) {
-                if (e.dead || e.dying) continue;
-                const d = Math.hypot(e.pos.x - s.x, e.pos.y - s.y) + Math.abs(e.z + 0.8 - s.z) * 0.6;
+                if (e.dead || e.dying || e.unburrowing || Math.hypot(e.pos.x - s.ox, e.pos.y - s.oy, e.z + 0.8 - s.oz) > s.range) continue;
+                const t = clamp(((e.pos.x - s.px) * s.dx + (e.pos.y - s.py) * s.dy + (e.z + 0.8 - s.pz) * s.dz) / Math.max(step, 0.0001), 0, 1);
+                const d = Math.hypot(e.pos.x - (s.px + s.dx * step * t), e.pos.y - (s.py + s.dy * step * t)) + Math.abs(e.z + 0.8 - (s.pz + s.dz * step * t)) * 0.6;
                 if (d < e.hitRadius + 0.4 && d < bestD) { bestD = d; hit = e; }
             }
             if (hit) {
-                hit.takeDamage(s.dmg);
+                if (!s.splash) hit.takeDamage(s.dmg);
+                if (s.chains) chainArcShot(s, hit);
                 if (s.owner === 'player') { hitMarkerT = 0.22; hitMarkerKill = hit.dead || hit.dying; }
                 spawnImpact(s.x, s.y, s.z, 0xbb44ff, 1);
                 boltImpactSfx(s.x, s.y);
-                dead = true;
+                dead = impact = true;
             }
         }
-        if (dead) {
-            if (s.splash) explodePlasmaShot(s);
+        if (dead || s.life <= 0) {
+            if (s.splash && impact) explodePlasmaShot(s);
             scene.remove(s.bolt); scene.remove(s.glow);
             shots.splice(i, 1);
             shotPool.push(s);
@@ -7329,7 +7327,7 @@ function applyPickup(kind) {
 
 /* ─── crafting (materials → medkits & ammo cartridges) ─────────────────── */
 const CRAFT_COSTS = { medkit: { s: 6, p: 0 }, ammo: { s: 4, p: 0 }, grenade: { s: 0, p: 1 } };
-const MAX_PLAYER_RESERVE = 6;   // max cartridges the player can carry (crafting cap)
+const MAX_PLAYER_RESERVE = 12;   // one universal pool, formerly two six-cartridge caps
 const MAX_MEDKITS = 3;          // medkits the player can carry in storage
 const MAX_GRENADES = 5;
 function craftMedkit() {
@@ -7364,11 +7362,11 @@ function useMedkitOn(m) {
 function craftAmmo() {
     const c = { s: ammoCost(), p: 0 };
     if (craft.scraps < c.s) { notify('Need ' + c.s + ' scrap for a cartridge', '#ffaa44'); playFileSfx('accessDeny', 0.4); return; }
-    if (player.weapon.reserve >= reserveCap()) { notify('Reserve full (' + reserveCap() + ' cartridges)', '#7ad87a'); playFileSfx('accessDeny', 0.4); return; }
+    if (playerCombat.cartridges >= reserveCap()) { notify('Reserve full (' + reserveCap() + ' cartridges)', '#7ad87a'); playFileSfx('accessDeny', 0.4); return; }
     craft.scraps -= c.s;
-    player.weapon.reserve += 1;
+    playerCombat.cartridges += 1;
     totalAmmoCrafted++;
-    notify('CRAFTED ' + player.weapon.name + ' CARTRIDGE (+' + player.weapon.magSize + ' rounds on reload)', '#7ad87a');
+    notify('CRAFTED UNIVERSAL CARTRIDGE — +1 magazine replacement', '#7ad87a');
     playFileSfx('accessOk', 0.6);
 }
 function craftGrenade() {
@@ -7384,9 +7382,9 @@ function craftGrenade() {
 /* give 1 spare cartridge to a specific squadmate (aim at them + [T]) */
 function giveSquadAmmo(m) {
     if (m.downed) { notify(m.def.name + ' is DOWN', '#ffaa44'); playFileSfx('accessDeny', 0.4); return; }
-    if (player.weapon.reserve <= 0) { notify('No reserve cartridges to give', '#ffaa44'); playFileSfx('accessDeny', 0.4); return; }
+    if (playerCombat.cartridges <= 0) { notify('No reserve cartridges to give', '#ffaa44'); playFileSfx('accessDeny', 0.4); return; }
     if (m.reserve >= m.def.reserve) { notify(m.def.name + ' reserve is full', '#7ad87a'); playFileSfx('accessDeny', 0.4); return; }   // only cares about reserve capacity, not the current mag
-    player.weapon.reserve--;
+    playerCombat.cartridges--;
     m.reserve++;
     notify('Gave 1 cartridge to ' + m.def.name, '#7ad87a');
     playSnd(sfx.command, 0.7);
@@ -7468,16 +7466,18 @@ function resetCampaignRun() {
     player.speed = 5.2; player.shieldDelayT = 0; player.hpDelayT = 0;
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
-    playerCombat.reset({ rifleReserve: snapshot.combat.reserve, scatterReserve: ['dead_signal', 'power_through'].includes(activeMissionId) ? 3 : 2 }); setViewmodelWeapon(player.weapon);
+    playerCombat.reset({ cartridges: snapshot.combat.cartridges }); setViewmodelWeapon(player.weapon);
     player.holsterT = 0; player.grenades = snapshot.combat.grenades;
     const offsets = [[-2, -2], [2, -2], [0, -4]];
     for (let i = 0; i < squadMembers.length; i++) {
         const member = squadMembers[i], offset = offsets[i] || [0, 0];
+        member.def = SQUAD_DEFS[i];
         member.pos.x = player.pos.x + offset[0]; member.pos.y = player.pos.y + offset[1]; member.z = terrainHeight(member.pos.x, member.pos.y);
         member.maxHp = member.def.hp; member.hp = Math.max(1, Math.round(member.maxHp * snapshot.combat.squadHp)); member.maxShield = Math.round(member.def.hp * 0.8); member.shield = Math.round(member.maxShield * snapshot.combat.squadShield);
         member.dmgMult = 1; member.rateMult = 1; member.dmgTakenMult = 1; member.critChance = 0; member.reloadMult = 1; member.speedMult = 1; member.critMult = 2;
         member.mag = member.def.magSize; member.magSize = member.def.magSize; member.reserve = Math.max(1, Math.round(member.def.reserve * snapshot.combat.squadReserve));
         member.downed = false; member.reloading = false; member.reloadT = 0; member.abilityCd = 0; member.bulwarkT = 0;
+        member.fireT = 0; member.evadeCd = 0.5;
         member.shieldDelayT = 0; member.hpDelayT = 0; member.dnaDelayT = 0; member.acidDelayT = 0;
         member.target = null; member.lastSeenTarget = null; member.engageTarget = null; member.holdPos.x = member.pos.x; member.holdPos.y = member.pos.y; member.mesh.rotation.x = 0;
     }
@@ -8253,8 +8253,6 @@ function clearCampaignTransitionCombat() {
     impacts.length = 0;
     for (const spark of sparks) { scene.remove(spark.line); sparkPool.push(spark); }
     sparks.length = 0;
-    for (const ejection of plasmaEjections) { scene.remove(ejection.cell); ejection.cell.material.dispose(); }
-    plasmaEjections.length = 0;
     for (const arc of electricArcs) { scene.remove(arc.line); electricArcPool.push(arc); }
     electricArcs.length = 0;
     for (const member of squadMembers) { member.target = null; member.engageTarget = null; member.lastSeenTarget = null; }
@@ -8306,7 +8304,7 @@ function beginMission4Transition() {
 
 function sanitizeContinuedMission4State() {
     player.dead = false; player.hp = Math.max(18, player.hp); player.shield = Math.max(0, player.shield);
-    for (const w of Object.values(playerCombat.weapons)) if (w.mag <= 0 && w.reserve <= 0) w.reserve = 1;
+    if (playerCombat.cartridges <= 0 && Object.values(playerCombat.weapons).every(w => w.mag <= 0)) playerCombat.cartridges = 1;
     craft.medkits = Math.max(1, craft.medkits); player.grenades = Math.max(1, player.grenades);
     for (const member of squadMembers) {
         if (member.downed || member.hp <= 0) { member.downed = false; member.hp = Math.round(member.maxHp * 0.35); member.shield = 0; member.mesh.rotation.x = 0; }
@@ -8558,7 +8556,6 @@ function gameUpdate() {
     music.update();
     updateImpacts(dt);
     updateSparks(dt);
-    updatePlasmaEjections(dt);
     updateElectricArcs(dt);
     updateGrenades(dt);
     updateShots(dt);
@@ -8647,7 +8644,6 @@ function gameUpdate() {
 
     /* endless: relay upgrade terminal (U to open/close, 1/2/3 to buy — intermission only) */
     if (mode === 'endless') {
-        if (LJS.keyWasPressed('KeyN') && !upgradeMenu && Math.hypot(player.pos.x - ENDLESS_RELAY_POS.x, player.pos.y - ENDLESS_RELAY_POS.y) < 8) cycleEndlessContract();
         if (LJS.keyWasPressed('KeyK')) extractEndless();
         if (LJS.keyWasPressed('KeyU')) {
             if (upgradeMenu) upgradeMenu = false;
@@ -8749,7 +8745,7 @@ function updateInteract(dt) {
             interactProgress = clamp(heldInteract / 0.8, 0, 1);
             if (heldInteract > 0.8) {
                 extraction.cache.used = true; extraction.cache.group.visible = false; extraction.cache.lamp.visible = false; extraction.cache.solid.disabled = true; heldInteract = 0;
-                for (const w of Object.values(playerCombat.weapons)) w.reserve = Math.min(reserveCap(), w.reserve + 2);
+                playerCombat.cartridges = Math.min(reserveCap(), playerCombat.cartridges + 4);
                 player.grenades = Math.min(grenadeCap(), player.grenades + 1);
                 notify('EMERGENCY CACHE SECURED — ammunition and grenade restored', '#ffcc66'); playSnd(sfx.pickup, 0.7);
                 checkpointMission4State();
@@ -9373,7 +9369,7 @@ function drawSquadAimPrompt(W, H) {
     /* the ammo give prompt (kept so ammo info stays visible under the heal prompt) */
     const needsAmmo = m.mag < m.magSize * 0.5 || m.reserve === 0;
     let ammoLabel, ammoCol;
-    if (player.weapon.reserve <= 0) { ammoLabel = 'NO RESERVE'; ammoCol = LJS.rgb(1, 0.7, 0.6, 0.95); }
+    if (playerCombat.cartridges <= 0) { ammoLabel = 'NO CARTRIDGES'; ammoCol = LJS.rgb(1, 0.7, 0.6, 0.95); }
     else if (needsAmmo) { ammoLabel = '[T] GIVE CARTRIDGE'; ammoCol = LJS.rgb(0.6, 1, 0.6, 1); }
     else { ammoLabel = 'FULLY LOADED'; ammoCol = LJS.rgb(0.62, 0.64, 0.82, 0.95); }
     if (m.downed) {
@@ -9465,8 +9461,9 @@ function drawHUD(W, H) {
         hudText('DISTANCE ' + Math.round(dLZ) + ' m', LJS.vec2(W / 2, 72), 13, LJS.rgb(0.6, 0.9, 1), 'center');
         hudText('DROPSHIP READY — BOARD FOR EXTRACTION', LJS.vec2(W / 2, 92), 14, LJS.rgb(0.88, 0.95, 1), 'center');
     }
-    if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator) {
-        hudText('MUTATOR: ' + endlessRun.mutator.name + ' — ' + endlessRun.mutator.desc, LJS.vec2(W / 2, 52), 12, LJS.rgb(1, 0.82, 0.45), 'center');
+    if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator && endlessRun.waveT < 5) {
+        hudText('WAVE ' + endlessRun.wave + ' MUTATOR — ' + endlessRun.mutator.name, LJS.vec2(W / 2, 52), 14, LJS.rgb(1, 0.82, 0.45), 'center');
+        hudText(endlessRun.mutator.desc, LJS.vec2(W / 2, 70), 12, LJS.rgb(1, 0.88, 0.65), 'center');
     }
 
     /* ── TOP-CENTER: heading compass strip ─────────────────────────── */
@@ -9487,73 +9484,61 @@ function drawHUD(W, H) {
         hudText(toastText, LJS.vec2(W / 2, 108), 13, LJS.rgb(c.r, c.g, c.b, a), 'center');
     }
 
-    /* ── BOTTOM-LEFT: squad panel (framed sci-fi) ──────────────────── */
-    const sx0 = 12, sy0 = H - 132;
-    hudPanel(sx0 + 104, sy0 + 58, 208, 116, ACCENT);
-    hudText('SQUAD', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText(encounterDirector.pressure + '  ' + encounterDirector.activeHostiles + '/' + encounterDirector.activeCap, LJS.vec2(sx0 + 194, sy0 + 14), 9, LJS.rgb(0.55, 0.76, 0.92), 'right');
-    LJS.drawRect(LJS.vec2(sx0 + 35, sy0 + 26), LJS.vec2(42, 2), LJS.rgb(0.42, 0.78, 1, 0.7), 0, false, true);
+    /* ── BOTTOM-LEFT: combined TEAM / VITALS ──────────────────────── */
+    const sx0 = 16, sy0 = H - 198;
+    hudPanel(sx0 + 132, sy0 + 91, 264, 182, ACCENT);
+    hudText('TEAM / VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('PLAYER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
+    hudText('HP ' + Math.ceil(player.hp) + ' / SHIELD ' + Math.ceil(player.shield), LJS.vec2(sx0 + 246, sy0 + 35), 11, LJS.rgb(0.78, 0.95, 1), 'right');
+    hudBar(sx0 + 132, sy0 + 50, 230, 9, player.hp / player.maxHp, LJS.rgb(0.3, 0.9, 0.5), LJS.rgb(0.4, 1, 0.6));
+    hudBar(sx0 + 132, sy0 + 61, 230, 5, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), LJS.rgb(0.5, 0.9, 1));
+    if (player.stamina < 100) hudBar(sx0 + 132, sy0 + 69, 230, 3, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), LJS.rgb(1, 0.92, 0.55));
     for (let i = 0; i < squadMembers.length; i++) {
         const m = squadMembers[i];
-        const ry = sy0 + 40 + i * 26;
+        const ry = sy0 + 84 + i * 31;
         const d = Math.hypot(player.pos.x - m.pos.x, player.pos.y - m.pos.y);
         const outAmmo = m.mag <= 0 && m.reserve <= 0;
-        const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : 'OK';
+        const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : m.reloading ? 'RELOAD' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : m.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 'DEFEND' : m.aiMode;
         hudText(m.def.name, LJS.vec2(sx0 + 16, ry), 13, m.downed ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.72, 0.86, 1), 'left');
-        hudBar(sx0 + 102, ry, 80, 9, m.downed ? 0 : m.hp / m.maxHp, m.downed ? LJS.rgb(1, 0.3, 0.3) : LJS.rgb(0.3, 0.9, 0.5), m.downed ? LJS.rgb(1, 0.5, 0.5) : LJS.rgb(0.4, 1, 0.6));
+        hudBar(sx0 + 125, ry, 90, 8, m.downed ? 0 : m.hp / m.maxHp, m.downed ? LJS.rgb(1, 0.3, 0.3) : LJS.rgb(0.3, 0.9, 0.5), m.downed ? LJS.rgb(1, 0.5, 0.5) : LJS.rgb(0.4, 1, 0.6));
         /* shield bar (thin, under HP) — recharges to 100% after 10 s without taking a hit */
         const sp = clamp(m.shield / m.maxShield, 0, 1);
-        LJS.drawRect(LJS.vec2(sx0 + 102, ry + 9), LJS.vec2(80, 4), LJS.rgb(0.04, 0.02, 0.08, 0.8), 0, false, true);
-        if (sp > 0.01) LJS.drawRect(LJS.vec2(sx0 + 62 + 38 * sp, ry + 9), LJS.vec2(76 * sp, 2), LJS.rgb(0.35, 0.7, 1), 0, false, true);
-        hudText('RES ' + m.reserve, LJS.vec2(sx0 + 152, ry + 9), 10, LJS.rgb(0.95, 0.85, 0.5), 'left');
-        hudText(st, LJS.vec2(sx0 + 196, ry), 12, m.downed ? LJS.rgb(1, 0.55, 0.55) : outAmmo ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.82, 0.86, 0.97), 'right');
+        hudBar(sx0 + 125, ry + 9, 90, 3, sp, LJS.rgb(0.2, 0.65, 0.9), LJS.rgb(0.5, 0.9, 1));
+        hudText(st, LJS.vec2(sx0 + 246, ry), 10, m.downed ? LJS.rgb(1, 0.55, 0.55) : outAmmo ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.82, 0.86, 0.97), 'right');
+        const ability = ChargefrontCombat.abilities.find(a => a.id === m.def.ability.id);
+        hudText('[' + ['Z', 'X', 'Y'][i] + '] ' + ability.name + (m.abilityCd > 0 ? ' ' + Math.ceil(m.abilityCd) + 's' : ' READY'), LJS.vec2(sx0 + 16, ry + 18), 9, LJS.rgb(0.6, 0.75, 0.95), 'left');
     }
 
-    /* ── TOP-LEFT: vitals + materials panel (framed sci-fi) ────────── */
-    const bx0 = 16, by0 = 10;
-    hudPanel(bx0 + 132, by0 + 65, 264, 130, ACCENT);
-    hudText('VITALS', LJS.vec2(bx0 + 14, by0 + 12), 11, LJS.rgb(0.78, 0.92, 1), 'left');
-    LJS.drawRect(LJS.vec2(bx0 + 36, by0 + 26), LJS.vec2(44, 2), LJS.rgb(0.42, 0.78, 1, 0.7), 0, false, true);
-    const hpRow = by0 + 40, armRow = by0 + 58, staRow = by0 + 71;
-    const barCX = bx0 + 120, barW = 128;
-    hudText('HP', LJS.vec2(bx0 + 16, hpRow), 15, LJS.rgb(1, 0.85, 0.88), 'left');
-    hudBar(barCX, hpRow, barW, 16, player.hp / player.maxHp, LJS.rgb(0.85, 0.2, 0.3), LJS.rgb(1, 0.5, 0.55));
-    hudText(String(Math.ceil(player.hp)), LJS.vec2(bx0 + 240, hpRow), 15, LJS.rgb(1, 0.9, 0.92), 'right');
-    hudText('SHLD', LJS.vec2(bx0 + 16, armRow), 13, LJS.rgb(0.72, 0.96, 1), 'left');
-    hudBar(barCX, armRow, barW, 12, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), LJS.rgb(0.5, 0.9, 1));
-    hudText(String(Math.ceil(player.shield)), LJS.vec2(bx0 + 240, armRow), 13, LJS.rgb(0.78, 0.95, 1), 'right');
-    if (player.stamina < 100) hudBar(barCX, staRow, barW, 7, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), LJS.rgb(1, 0.92, 0.55));
-    /* materials + craft hotkeys (subheaded) */
-    hudText('SCRAP ' + craft.scraps + '  •  CELL ' + craft.powerCells, LJS.vec2(bx0 + 16, by0 + 90), 11, LJS.rgb(0.95, 0.85, 0.6), 'left');
-    hudText('CRAFTING', LJS.vec2(bx0 + 16, by0 + 104), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
-    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(bx0 + 16, by0 + 118), 11, LJS.rgb(0.6, 0.62, 0.8), 'left');
-
-    /* ── TOP-LEFT: weapon panel — BUL-117 + cartridge count on one row,
-         grenade count on the second row, medkit count on the last row. The
-         panel matches the VITALS panel width (264) so the two left stacks
-         share the same label/value columns (32 / 256). ── */
+    /* ── UPPER-LEFT: consolidated COMBAT & SUPPLIES ───────────────── */
     const w = player.weapon;
-    const weaponPanelTop = 150;                 // sits just below the VITALS panel
+    const weaponPanelTop = 12;
     const weaponLabelX = 32, weaponValueX = 256;
-    hudPanel(16 + 132, weaponPanelTop + 55, 264, 110, ACCENT);
-    /* Each row keeps its label left-aligned and its capacity value right-aligned. */
-    hudText('[' + (player.weaponIndex + 1) + '] ' + w.name, LJS.vec2(weaponLabelX, weaponPanelTop + 18), 13, LJS.rgb(0.72, 0.78, 0.96), 'left');
-    const ammoStatus = w.reloading ? 'RLD ' + Math.round((1 - w.reloadT / w.reloadDuration) * 100) + '%' : player.swapT > 0 ? 'READYING' : w.mag <= 0 ? 'EMPTY' : w.mag + ' / ' + w.magSize;
-    hudText(ammoStatus, LJS.vec2(weaponValueX, weaponPanelTop + 18), 16, w.reloading || w.mag <= Math.ceil(w.magSize * 0.2) ? LJS.rgb(1, 0.65, 0.3) : LJS.rgb(0.55, 0.9, 1), 'right');
-    hudText('CARTRIDGES', LJS.vec2(weaponLabelX, weaponPanelTop + 43), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(w.reserve + ' / ' + reserveCap(), LJS.vec2(weaponValueX, weaponPanelTop + 43), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('ESG-180', LJS.vec2(weaponLabelX, weaponPanelTop + 64), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(player.grenades + ' / ' + grenadeCap(), LJS.vec2(weaponValueX, weaponPanelTop + 64), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('MEDKITS', LJS.vec2(weaponLabelX, weaponPanelTop + 85), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(craft.medkits + ' / ' + medkitCap(), LJS.vec2(weaponValueX, weaponPanelTop + 85), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('[1/2] EQUIP  [R] RELOAD  [F] SURGE', LJS.vec2(16 + 132, weaponPanelTop + 101), 10, LJS.rgb(0.58, 0.8, 1), 'center');
+    hudPanel(148, weaponPanelTop + 123, 264, 246, ACCENT);
+    hudText('COMBAT', LJS.vec2(weaponLabelX, weaponPanelTop + 15), 12, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('[' + (player.weaponIndex + 1) + '] ' + w.name, LJS.vec2(weaponLabelX, weaponPanelTop + 39), 14, LJS.rgb(0.72, 0.78, 0.96), 'left');
+    hudText(w.mag + ' / ' + w.magSize, LJS.vec2(weaponValueX, weaponPanelTop + 39), 18, w.reloading ? LJS.rgb(0.55, 0.6, 0.7) : w.mag <= Math.ceil(w.magSize * 0.2) ? LJS.rgb(1, 0.65, 0.3) : LJS.rgb(0.55, 0.9, 1), 'right');
+    if (w.reloading || player.swapT > 0) {
+        const progress = w.reloading ? 1 - w.reloadT / w.reloadDuration : 1 - player.swapT / player.swapDuration;
+        hudText(w.reloading ? 'RELOADING' : 'READYING', LJS.vec2(weaponLabelX, weaponPanelTop + 61), 10, LJS.rgb(1, 0.75, 0.4), 'left');
+        hudBar(205, weaponPanelTop + 61, 100, 5, progress, LJS.rgb(1, 0.7, 0.25), LJS.rgb(1, 0.9, 0.5));
+    } else if (!w.mag) hudText('EMPTY', LJS.vec2(weaponLabelX, weaponPanelTop + 61), 10, LJS.rgb(1, 0.65, 0.3), 'left');
+    hudText('CARTRIDGES', LJS.vec2(weaponLabelX, weaponPanelTop + 85), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(String(playerCombat.cartridges), LJS.vec2(weaponValueX, weaponPanelTop + 85), 14, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('GRENADES', LJS.vec2(weaponLabelX, weaponPanelTop + 107), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(player.grenades + ' / ' + grenadeCap(), LJS.vec2(weaponValueX, weaponPanelTop + 107), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('MEDKITS', LJS.vec2(weaponLabelX, weaponPanelTop + 129), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(craft.medkits + ' / ' + medkitCap(), LJS.vec2(weaponValueX, weaponPanelTop + 129), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('SUPPLIES', LJS.vec2(weaponLabelX, weaponPanelTop + 160), 11, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('SCRAP ' + craft.scraps + '  /  CELLS ' + craft.powerCells, LJS.vec2(weaponLabelX, weaponPanelTop + 183), 12, LJS.rgb(0.95, 0.85, 0.6), 'left');
+    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(weaponLabelX, weaponPanelTop + 205), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
+    hudText('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD', LJS.vec2(weaponLabelX, weaponPanelTop + 228), 10, LJS.rgb(0.58, 0.8, 1), 'left');
     /* craft-ammo reminder — shows whenever the magazine and reserve are both empty */
-    if (w.mag <= 0 && w.reserve <= 0) {
+    if (w.mag <= 0 && playerCombat.cartridges <= 0) {
         const pulse = 0.62 + Math.sin(LJS.time * 4) * 0.38;
         const hint = craft.scraps >= ammoCost()
             ? 'OUT OF AMMO — PRESS [V] TO CRAFT'
             : 'OUT OF AMMO — NEED ' + ammoCost() + ' SCRAP';
-        hudText(hint, LJS.vec2(16 + 132, weaponPanelTop + 100), 11, LJS.rgb(1, 0.85, 0.45, pulse), 'center');
+        hudText(hint, LJS.vec2(148, weaponPanelTop + 264), 11, LJS.rgb(1, 0.85, 0.45, pulse), 'center');
     }
 
     /* ── BOTTOM-CENTER: command pills + interact ───────────────────── */
@@ -9581,8 +9566,6 @@ function drawHUD(W, H) {
     /* ── objective markers (projected 3D) ───────────────────────────── */
     drawMarkers(W, H);
 
-    /* ── horde markers (screen-space, during defenses) ─────────────── */
-    drawEnemyMarkers(W, H);
 
     /* ── directional damage indicator — points at whoever just hit you ─ */
     if (lastAttackerT > 0) {
@@ -9891,8 +9874,6 @@ function clearEndlessCombatEntities() {
     impacts.length = 0;
     for (const spark of sparks) { scene.remove(spark.line); sparkPool.push(spark); }
     sparks.length = 0;
-    for (const ejection of plasmaEjections) { scene.remove(ejection.cell); ejection.cell.material.dispose(); }
-    plasmaEjections.length = 0;
     for (const arc of electricArcs) { scene.remove(arc.line); electricArcPool.push(arc); }
     electricArcs.length = 0;
 }
@@ -10124,58 +10105,6 @@ function drawMarkers(W, H) {
     }
 }
 
-/* screen-space markers so the horde is clearly visible during defenses */
-function drawEnemyMarkers(W, H) {
-    if (opts.markers === false) return;
-    const inDefense = isDefensePhase(phase) || phase === P.FINALE || phase === P.M3_STABILIZE || phase === P.M4_HOLD_LZ || phase === P.M4_BOARD;
-    const endlessActive = mode === 'endless' && endlessRun.waveActive;
-    const inTravel = !inDefense && !endlessActive && (phase === P.DEPLOY || phase === P.MOVE_R1 || phase === P.MOVE_R2 || phase === P.MOVE_R3 || phase === P.MOVE_FAC || phase === P.SEARCH || phase === P.M1_MOVE_FAC || phase === P.M1_INVESTIGATE || phase === P.M1_RESTORE_POWER || phase === P.M1_COMMAND || phase === P.M2_CONFIRM || phase === P.M3_ENTER_LAB || phase === P.M3_REACH_SECURITY || phase === P.M3_OVERRIDE || phase === P.M3_REACH_SAMPLE || phase === P.M4_BREAK_CONTACT || phase === P.M4_REACH_LZ || phase === P.M4_CALL_EXTRACTION);
-    if (!inDefense && !inTravel && !endlessActive) return;
-    const range = (inDefense || endlessActive) ? 100 : 80;
-    const visibleEnemies = [];
-    for (const e of enemies) {
-        if (e.dead || e.dying) continue;
-        const d = Math.hypot(e.pos.x - player.pos.x, e.pos.y - player.pos.y);
-        if (inTravel) {
-            if (!campaignRun.enemyIntel && !e.ambient) continue;                          // scan/sensors reveal organized contacts too
-            if (!campaignRun.enemyIntel && !(e.aggroT > 0 || d < 55)) continue;           // spooked OR close enough to spot
-        }
-        if (d > range) continue;
-        const surveyed = activeMissionId === 'power_through' && campaignRun.worldState.betaSurvey && relays[1] && Math.hypot(e.pos.x - relays[1].pos.x, e.pos.y - relays[1].pos.y) < 105;
-        const priority = (e.markedT > 0 ? 100 : 0) + (e.type === 'boss' ? 80 : ['artillery', 'support', 'carrier', 'shielded'].includes(e.type) ? 35 : 0) + (e.aggroT > 0 ? 20 : 0) + (surveyed ? 15 : 0);
-        visibleEnemies.push({ e, d, priority, surveyed });
-    }
-    visibleEnemies.sort((a, b) => b.priority - a.priority || a.d - b.d);
-    const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
-    let shown = 0, edgeShown = 0;
-    for (const entry of visibleEnemies) {
-        if (shown >= 12) break;
-        const e = entry.e, d = entry.d;
-        const world = new THREE.Vector3(e.pos.x, e.pos.y, e.z + 2.4);
-        if (world.clone().sub(camera.position).dot(forward) <= 0) continue;
-        const los = hasLOS(player.pos.x, player.pos.y, e.pos.x, e.pos.y, 1.1);
-        if (!los && d > 18 && entry.priority < 80) continue;
-        const v = world.project(camera);
-        if (v.z < -1 || v.z > 1) continue;
-        const sx = (v.x * 0.5 + 0.5) * W, sy = (-v.y * 0.5 + 0.5) * H;
-        shown++;
-        const fade = (los ? 0.5 : 0.25) + 0.5 * clamp(1 - d / range, 0, 1);
-        const marked = e.markedT > 0 || entry.surveyed;
-        const mc = marked ? LJS.rgb(0.5, 0.9, 1, fade) : LJS.rgb(1, 0.3, 0.5, fade);
-        if (sx < 12 || sx > W - 12 || sy < 14 || sy > H - 12) {
-            if (edgeShown++ >= 4) continue;
-            /* off-screen: edge arrow pointing at the enemy */
-            const dx = clamp(sx, 18, W - 18), dy = clamp(sy, 20, H - 20);
-            hudText('▲', LJS.vec2(dx, dy), 15, mc, 'center');
-        } else {
-            if (!marked && Math.abs(sx - W / 2) < 34 && Math.abs(sy - H / 2) < 34) continue;
-            /* on-screen: diamond over the enemy */
-            LJS.drawRect(LJS.vec2(sx, sy), LJS.vec2(marked ? 12 : 8, marked ? 12 : 8), mc, Math.PI / 4, false, true);
-            LJS.drawRect(LJS.vec2(sx, sy), LJS.vec2(3, 3), LJS.rgb(1, 1, 1, 0.95 * fade), Math.PI / 4, false, true);
-        }
-    }
-}
-
 /* precomputed terrain grid for the minimap (fast lookups instead of sampling noise each frame) */
 const MAP_RES = 200;                 // grid cells per WORLD axis (~4 m per cell)
 const mapH = new Float32Array(MAP_RES * MAP_RES);
@@ -10292,22 +10221,7 @@ function drawMinimap(W, H) {
             LJS.drawLine(LJS.vec2(survey.x + r, survey.y + r), LJS.vec2(survey.x + r, survey.y + r / 2), 2, c, LJS.vec2(), 0, false, true);
         }
     }
-    const defenseRadar = mode === 'endless' || isDefensePhase(phase) || phase === P.FINALE || phase === P.M3_STABILIZE || phase === P.M4_HOLD_LZ || phase === P.M4_BOARD;
-    const radarEnemies = [];
-    for (const e of enemies) {
-        if (e.dead || e.dying) continue;
-        const distance = Math.hypot(e.pos.x - player.pos.x, e.pos.y - player.pos.y);
-        const surveyed = activeMissionId === 'power_through' && campaignRun.worldState.betaSurvey && relays[1] && Math.hypot(e.pos.x - relays[1].pos.x, e.pos.y - relays[1].pos.y) < 105;
-        if (!defenseRadar && !campaignRun.enemyIntel && !surveyed && !e.ambient && !(e.aggroT > 0) && distance > 38) continue;
-        radarEnemies.push({ e, distance, surveyed });
-    }
-    radarEnemies.sort((a, b) => (b.surveyed - a.surveyed) || a.distance - b.distance);
-    for (const entry of radarEnemies.slice(0, 18)) {
-        const e = entry.e;
-        if (entry.surveyed) dot(e.pos.x, e.pos.y, LJS.rgb(0.45, 0.9, 1), 6);
-        else if (e.ambient) dot(e.pos.x, e.pos.y, LJS.rgb(1, 1, 0.3), 5);
-        else dot(e.pos.x, e.pos.y, LJS.rgb(1, 0.25, 0.4), 4);
-    }
+    // Enemy intel/designation remains gameplay/debug data; no omniscient radar dots.
     for (const m of squadMembers) dot(m.pos.x, m.pos.y, LJS.rgb(0.4, 1, 0.5), 5);
     /* endless: POI dots (relay + DNA vial) and dropped pickup dots + compact legend */
     if (mode === 'endless') {
@@ -10412,6 +10326,11 @@ function reloadToMainMenu(openMissionSelect = false) {
 }
 /* start / pause overlays are appended after the canvas so they paint on top */
 function buildOverlays() {
+    const weaponOptions = selected => ChargefrontCombat.definitions.map(w => `<option value="${w.id}" ${w.id === selected ? 'selected' : ''}>${w.name} — ${w.kind === 'scatter' ? 'close / mid pressure' : w.kind === 'arc' ? 'chain disruption' : w.kind === 'plasma' ? 'explosive plasma' : 'sustained precision'}</option>`).join('');
+    const abilityOptions = selected => ChargefrontCombat.abilities.map(a => `<option value="${a.id}" ${a.id === selected ? 'selected' : ''}>${a.name}</option>`).join('');
+    const squadSetup = Object.entries(endlessConfiguration.squad).map(([id, s]) => `<section class="cf-loadout-group"><h3>${id.toUpperCase()}</h3>
+        <div class="row"><label for="endless-${id}-weapon">Weapon</label><select id="endless-${id}-weapon">${weaponOptions(s.weapon)}</select></div>
+        <div class="row"><label for="endless-${id}-ability">Ability</label><select id="endless-${id}-ability">${abilityOptions(s.ability)}</select></div></section>`).join('');
     const start = document.createElement('div');
     start.id = 'start-screen';
     start.className = 'cf-overlay';
@@ -10452,13 +10371,22 @@ function buildOverlays() {
 
         <div class="cf-panel-box hidden" id="endless-setup-panel">
             <h2>ENDLESS DEPLOYMENT</h2>
-            <p>Both weapons deploy with full magazines and 4 reserve cartridges each.<br>ROOK / VEX / KADE deploy together. Restart retains these choices with fresh supplies.</p>
-            <div class="row"><label for="endless-starting-weapon">Starting weapon</label><select id="endless-starting-weapon"><option value="rifle">BUL-117 — precise sustained fire</option><option value="scatter">CRW-8 — close-range burst</option></select></div>
+            <p>Choose two different weapons. Full magazines + 8 universal cartridges.<br>Customize all three operators. Restart retains this deployment with fresh supplies.</p>
+            <div class="cf-loadout-grid">
+                <section class="cf-loadout-group"><h3>PLAYER LOADOUT</h3>
+                    <div class="row"><label for="endless-slot1">Weapon Slot 1</label><select id="endless-slot1">${weaponOptions('rifle')}</select></div>
+                    <div class="row"><label for="endless-slot2">Weapon Slot 2</label><select id="endless-slot2">${weaponOptions('scatter')}</select></div>
+                    <div class="row"><label for="endless-starting-slot">Starting Slot</label><select id="endless-starting-slot"><option value="1">Slot 1</option><option value="2">Slot 2</option></select></div>
+                </section>
+                ${squadSetup}
+            </div>
+            <h3 style="font-size:13px;color:#9adcff;margin:12px 0 4px">SQUAD</h3>
             <div class="row"><label for="endless-squad-posture">Squad posture</label><select id="endless-squad-posture"><option value="balanced">BALANCED</option><option value="escort">CLOSE ESCORT</option><option value="screen">WIDE SCREEN</option></select></div>
-            <p>Balanced: role-based engagement.<br>Close escort: tight formation, shorter combat leash.<br>Wide screen: spaced formation, longer combat leash.</p>
-            <p>1 / 2 equip weapons · 4 / 5 / 6 command squad.<br>Tab, arrows and Enter work in this setup.</p>
-            <button class="cf-menu-btn" id="btn-endless-ready">CONFIRM SETUP</button>
-            <button class="cf-menu-btn back" id="btn-endless-back">BACK TO MAIN MENU</button>
+            <p>Balanced: standard formation · Close escort: tight leash · Wide screen: spaced support.<br>1 / 2 equip slots · Q cycles · Z / X / Y operator abilities · Tab / arrows / Enter navigate.</p>
+            <div class="cf-deployment-footer">
+                <button class="cf-menu-btn" id="btn-endless-ready">CONFIRM SETUP</button>
+                <button class="cf-menu-btn back" id="btn-endless-back">BACK TO MAIN MENU</button>
+            </div>
         </div>
 
         <div class="cf-panel-box hidden" id="options-panel">
@@ -10470,7 +10398,6 @@ function buildOverlays() {
             <div class="row"><span>Field of view</span><input type="range" id="opt-fov" min="65" max="100" step="1"></div>
             <div class="row"><span>Crosshair color</span><select id="opt-crosscolor"><option value="0">White</option><option value="1">Cyan</option><option value="2">Red</option></select></div>
             <div class="row"><span>Crosshair size</span><input type="range" id="opt-crosssize" min="60" max="200" step="5"></div>
-            <div class="row"><span>Enemy markers</span><input type="checkbox" id="opt-markers"></div>
             <button class="cf-menu-btn back" id="btn-options-back">BACK</button>
         </div>
 
@@ -10506,15 +10433,13 @@ function buildOverlays() {
                     <div><span class="key">R</span> Reload (consumes 1 cartridge)</div>
                     <div><span class="key">E</span> Interact — hold to power relays, revive squadmates, take the vial</div>
                     <div><span class="key">G</span> Throw an ESG-180 grenade</div>
-                    <div><span class="key">1 / 2</span> Equip BUL-117 / CRW-8; Q cycles both</div>
+                    <div><span class="key">1 / 2</span> Equip Slot 1 / Slot 2; Q cycles both</div>
                     <div><span class="key">F</span> SURGE PULSE — restore nearby shields and disrupt hostiles</div>
                     <div><span class="key">M</span> Cycle sound mode — music / highlights / all sounds</div>
                     <h3>SQUAD</h3>
                     <div><span class="key">4 / 5 / 6</span> Squad command — ASSIST / SPREAD / HOLD</div>
-                    <div><span class="key">Z</span> ROOK: BULWARK FIELD — major damage reduction</div>
-                    <div><span class="key">X</span> VEX: MEDIC PULSE — heal and restore shields nearby</div>
-                    <div><span class="key">Y</span> KADE: TARGET DESIGNATOR — mark a hostile for bonus damage</div>
-                    <div><span class="key">N</span> Endless relay: choose the next mutator contract</div>
+                    <div><span class="key">Z / X / Y</span> ROOK / VEX / KADE selected ability</div>
+                    <div class="sub">Campaign: Bulwark / Medic Pulse / Target Designator. Endless: deployment choices.</div>
                     <div><span class="key">K</span> Endless relay: extract after a six-wave milestone</div>
                     <div><span class="key">T</span> Give a spare cartridge to the neediest squadmate</div>
                     <div><span class="key">T (aim)</span> Give a cartridge to the squadmate under your crosshair (within 5 m)</div>
@@ -10524,15 +10449,16 @@ function buildOverlays() {
                     <h3>CRAFTING</h3>
                     <div><span class="key">C</span> Craft MEDKIT — <span class="cost">6 scrap</span></div>
                     <div><span class="key">H</span> Use MEDKIT <span class="sub">(+60 HP, up to 3 stored)</span></div>
-                    <div><span class="key">V</span> Craft AMMO CARTRIDGE — <span class="cost">4 scrap</span> <span class="sub">(one magazine for the active weapon)</span></div>
+                    <div><span class="key">V</span> Craft UNIVERSAL CARTRIDGE — <span class="cost">4 scrap</span> <span class="sub">(one magazine replacement for any equipped gun)</span></div>
                     <div><span class="key">B</span> Craft GRENADE — <span class="cost">1 power cell</span> <span class="sub">(+2, up to 5)</span></div>
                     <p class="sub" style="margin-top:8px">Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles.</p>
                     <h3>WEAPONRY</h3>
                     <div><b>BUL-117</b> — Fast, accurate laser rifle. <b>CRW-8</b> — close-range 8-pellet scattergun.</div>
-                    <div>Both keep independent magazines and reserve cartridges. Switching cancels reload without spending a cartridge.</div>
+                    <div><b>ARC-9</b> — collision-authorized chain disruption. <b>PX-4</b> — explosive plasma. Choose two of four in Endless.</div>
+                    <div>Independent magazines, one shared cartridge pool. Switching cancels reload without spending a cartridge.</div>
                     <div><b>ESG-180</b> — Electricshock grenades, homing; they seek the nearest hostiles and detonate with a wide electric arc. Mind your own blast radius.</div>
                     <h3>ENDLESS MUTATORS</h3>
-                    <div>Choose POWER STORM, CORROSIVE RAIN, ARMOURED INFESTATION, or BLACKOUT at the relay. Each contract pays a completion reward.</div>
+                    <div>Waves 1–5 have no mutators. Wave 6 onward randomly receives POWER STORM, CORROSIVE RAIN, ARMOURED INFESTATION, BLACKOUT, or NONE. Modifiers expire at wave clear and pay their existing survival reward.</div>
                     <h3>SURVIVAL SYSTEMS</h3>
                     <div><b>Shield</b> — Absorbs any incoming damage while it holds; any damage that reaches the body is reduced by 40%. Regenerates to 100% after <b>10 s</b> without taking a hit.</div>
                     <div><b>HP regen</b> — Health below <b>25</b> slowly recovers back up to 25 after <b>15 s</b> of no damage.</div>
@@ -10671,11 +10597,24 @@ async function boot() {
             else startCampaignMission(pendingLaunch.missionId, pendingLaunch.origin, pendingLaunch.newCampaign);
         }, 2000);
     });
-    const openEndlessSetup = () => { pendingLaunch = { mode: 'endless' }; showPanel('endless-setup-panel'); el('endless-starting-weapon').focus(); };
+    const synchronizeSlots = changed => {
+        const one = el('endless-slot1'), two = el('endless-slot2');
+        if (one.value === two.value) {
+            const other = changed === one ? two : one;
+            other.value = ChargefrontCombat.definitions.find(w => w.id !== changed.value).id;
+        }
+        for (const option of one.options) option.disabled = option.value === two.value;
+        for (const option of two.options) option.disabled = option.value === one.value;
+    };
+    for (const id of ['endless-slot1', 'endless-slot2']) el(id).addEventListener('change', event => synchronizeSlots(event.target));
+    synchronizeSlots(el('endless-slot1'));
+    const openEndlessSetup = () => { pendingLaunch = { mode: 'endless' }; showPanel('endless-setup-panel'); el('endless-slot1').focus(); };
     el('btn-endless').addEventListener('click', openEndlessSetup);
     el('btn-endless-back').addEventListener('click', () => showPanel('menu-buttons'));
     el('btn-endless-ready').addEventListener('click', () => {
-        pendingLaunch = { mode: 'endless', configuration: ChargefrontCombat.endlessConfig({ startingWeapon: el('endless-starting-weapon').value, squadPosture: el('endless-squad-posture').value }) };
+        const squad = {};
+        for (const id of ['rook', 'vex', 'kade']) squad[id] = { weapon: el('endless-' + id + '-weapon').value, ability: el('endless-' + id + '-ability').value };
+        pendingLaunch = { mode: 'endless', configuration: ChargefrontCombat.endlessConfig({ player: { slot1: el('endless-slot1').value, slot2: el('endless-slot2').value, startingSlot: +el('endless-starting-slot').value }, squad, posture: el('endless-squad-posture').value }) };
         refreshSoundModeButtons(); showPanel('sound-panel');
     });
     el('btn-options').addEventListener('click', () => showPanel('options-panel'));
@@ -10709,7 +10648,7 @@ async function boot() {
 
     /* options wiring (persisted) */
     const optMusic = el('opt-music'), optSfx = el('opt-sfx'), optSens = el('opt-sens'), optInvert = el('opt-invert');
-    const optFov = el('opt-fov'), optCrossColor = el('opt-crosscolor'), optCrossSize = el('opt-crosssize'), optMarkers = el('opt-markers');
+    const optFov = el('opt-fov'), optCrossColor = el('opt-crosscolor'), optCrossSize = el('opt-crosssize');
     optMusic.value = Math.round(opts.musicVol * 100);
     optSfx.value = Math.round(opts.sfxVol * 100);
     optSens.value = Math.round(opts.sens * 100);
@@ -10717,7 +10656,6 @@ async function boot() {
     optFov.value = Math.round(opts.fov);
     optCrossColor.value = String(opts.crossColor || 0);
     optCrossSize.value = Math.round((opts.crossSize || 1) * 100);
-    optMarkers.checked = opts.markers !== false;
     optMusic.oninput = () => { opts.musicVol = optMusic.value / 100; saveOpts(); };
     optSfx.oninput = () => { opts.sfxVol = optSfx.value / 100; LJS.setSoundVolume(opts.soundMode === 'music' ? 0 : opts.sfxVol); saveOpts(); };
     optSens.oninput = () => { opts.sens = optSens.value / 100; saveOpts(); };
@@ -10725,7 +10663,6 @@ async function boot() {
     optFov.oninput = () => { opts.fov = +optFov.value; saveOpts(); };
     optCrossColor.onchange = () => { opts.crossColor = +optCrossColor.value; saveOpts(); };
     optCrossSize.oninput = () => { opts.crossSize = (+optCrossSize.value) / 100; saveOpts(); };
-    optMarkers.onchange = () => { opts.markers = optMarkers.checked; saveOpts(); };
     /* pause menu controls */
     const pauseEl = document.getElementById('pause-screen');
     const resumeGame = () => {
@@ -11123,6 +11060,16 @@ window.__cf = {
     get combat() { return playerCombat; },
     checkpoint() { return checkpointCampaignState(); },
     combatPoolInfo() { return { shots: shots.length, shotPool: shotPool.length, impacts: impacts.length, impactPool: impactPool.length, sparks: sparks.length, sparkPool: sparkPool.length }; },
+    inspectHUD() {
+        const text = [], bars = [], originalText = hudText, originalBar = hudBar;
+        hudText = (value, pos) => text.push({ value: String(value), x: pos.x, y: pos.y });
+        hudBar = (x, y, width, height, progress) => bars.push({ x, y, width, height, progress });
+        try { drawHUD(LJS.mainCanvasSize.x, LJS.mainCanvasSize.y); }
+        finally { hudText = originalText; hudBar = originalBar; }
+        return { text, bars };
+    },
+    effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
+    restartEndless() { if (mode === 'endless') restartEndlessRun(); },
     get weaponDefinitions() { return PLAYER_WEAPONS; },
     get endlessConfiguration() { return endlessConfiguration; },
     selectWeapon(index) { return equipWeapon(index, true); },
@@ -11247,6 +11194,11 @@ window.__cf = {
     debugTeleport() { debugTeleportToObjective(); },
     interact(seconds = 2) { heldInteract = seconds; updateInteract(0); heldInteract = 0; return CF_NAMES[phase] || String(phase); },
     get shots() { return shots; },
+    advanceShots(seconds) { updateShots(Math.max(0, seconds)); return shots.length; },
+    spawnTestShot(x, y, z, dx, dy, dz, id = 'rifle') {
+        const w = PLAYER_WEAPONS.find(w => w.id === id); if (!w) return;
+        spawnShot(x, y, z, dx, dy, dz, w.dmg, w.color, 'player', w);
+    },
     get hits() { return debugHits; },
     craftMedkit() { craftMedkit(); },
     useMedkit() { useMedkit(); },

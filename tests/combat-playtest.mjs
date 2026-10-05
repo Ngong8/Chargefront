@@ -8,7 +8,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), name = ff ? 'firefox' : 'edge';
-const out = resolve('_playtest/m40/evidence'); mkdirSync(out, { recursive: true });
+const out = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m41/compatibility'); mkdirSync(out, { recursive: true });
 const browser = await (ff ? firefox : chromium).launch(ff ? { headless: true } : { headless: process.argv.includes('--headless'),
     executablePath: process.env.CHROME_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe', args: ['--enable-unsafe-swiftshader', '--allow-file-access-from-files'] });
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } }), errors = [], consoles = [], results = {};
@@ -20,7 +20,11 @@ const capture = async label => {
     await page.screenshot({ path: resolve(out, `${label}-${name}.png`) });
 };
 const quiet = () => page.evaluate(() => { __cf.setNoSpawn(true); __cf.setInvulnerable(true); __cf.clearTestEnemies(); __cf.setNoAggro(true); });
-const select = async i => { await page.keyboard.press(String(i + 1)); await page.waitForFunction(i => __cf.player.weaponIndex === i && !__cf.player.swapT, i); };
+const select = async i => {
+    await page.bringToFront();
+    if(await page.locator('#pause-screen').isVisible()) await page.locator('#btn-resume').click();
+    await page.keyboard.press(String(i + 1)); await page.waitForFunction(i => __cf.player.weaponIndex === i && !__cf.player.swapT, i);
+};
 const setup = async (x, y, yaw, contacts = 3) => {
     await quiet();
     await page.evaluate(({x,y,yaw,contacts}) => {
@@ -73,7 +77,7 @@ try {
     const cacheBefore = await page.evaluate(() => __cf.combat.snapshot());
     await page.keyboard.down('e'); await page.waitForFunction(() => __cf.campaignContent.extraction.cache.used); await page.keyboard.up('e');
     const cacheAfter = await page.evaluate(() => __cf.combat.snapshot());
-    for (const id of ['rifle','scatter']) assert.equal(cacheAfter.weapons[id].reserve, Math.min(6,cacheBefore.weapons[id].reserve+2));
+    assert.equal(cacheAfter.cartridges, Math.min(12, cacheBefore.cartridges + 4));
     await page.waitForTimeout(1500); assert.deepEqual(await page.evaluate(() => __cf.combat.snapshot()),cacheAfter); results.emergencyCache = { cacheBefore,cacheAfter };
     // Real Continue menu after checkpoint/reload, including active weapon 2.
     await select(1); await page.evaluate(() => __cf.checkpoint()); const saved = await page.evaluate(() => __cf.combat.snapshot());
@@ -104,18 +108,19 @@ try {
     await setup(360,730,Math.PI/2,0);
     await page.evaluate(() => {
         const c=__cf;
-        for(let i=0;i<3;i++) { const m=c.squad[i]; m.pos.x=356+i*4; m.pos.y=740; m.hp=m.maxHp; m.evadeCd=100; }
+        for(let i=0;i<3;i++) { const m=c.squad[i]; m.pos.x=356+i*4; m.pos.y=740; m.hp=m.maxHp; m.evadeCd=100; m.breakT=0; m.engageT=0; m.engageTarget=null; m.target=null; m.lastSeenTarget=null; m.commitT=0; }
         for(const [type,dx,dy] of [['runner',-6,26],['runner',7,32],['brute',8,37]]) { const e=c.spawnTestEnemy(type,dx,dy); e.hp=e.maxHp=10000; }
         c.player.yaw=Math.PI/2; c.player.pitch=0;
     });
-    await page.waitForTimeout(2200); await page.evaluate(() => { __cf.player.yaw=Math.PI/2; __cf.player.pitch=0; });
+    await page.waitForFunction(()=>__cf.squad.filter(m=>m.target && m.mag<m.magSize).length===3,undefined,{timeout:10000});
+    await page.evaluate(() => { __cf.player.yaw=Math.PI/2; __cf.player.pitch=0; });
     await capture('04-squad-doorway-combat');
     results.squadEvidence=await page.evaluate(() => __cf.squadInfo());
     assert.equal(await page.evaluate(() => __cf.squad.filter(m=>m.target && m.mag<m.magSize).length),3,'Squad evidence must show three live shooters');
 
     // Endless real UI, wide screen configuration, pressure and restart.
     await page.goto(url.href); await ready(); await page.locator('#btn-endless').click();
-    await page.locator('#endless-starting-weapon').selectOption('scatter'); await page.locator('#endless-squad-posture').selectOption('screen'); await capture('05-endless-setup');
+    await page.locator('#endless-starting-slot').selectOption('2'); await page.locator('#endless-squad-posture').selectOption('screen'); await capture('05-endless-setup');
     await page.locator('#btn-endless-ready').click(); await page.locator('#btn-sound-start').click(); await page.waitForFunction(() => __cf.mode==='endless',undefined,{timeout:120000});
     await page.mouse.click(640,360); await quiet(); await page.waitForTimeout(500);
     await page.evaluate(() => { __cf.player.yaw=Math.PI; __cf.player.pitch=-.04; }); await page.waitForTimeout(100); await capture('06-endless-selected-deployment');
@@ -135,8 +140,9 @@ try {
         for(const m of c.squad) { m.pos.x=m.holdPos.x=600; m.pos.y=m.holdPos.y=600; } const e=c.spawnTestEnemy('runner',1,0); e.hp=100000; e.attackT=0; });
     await page.waitForFunction(() => __cf.phaseName==='DEAD'); await page.waitForTimeout(2200); await page.keyboard.press('Space'); await page.waitForFunction(() => __cf.phaseName==='ENDLESS');
     results.restart = await page.evaluate(() => ({ config:__cf.endlessConfiguration, combat:__cf.combat.snapshot(), wave:__cf.endless.wave, squad:__cf.squad.length }));
-    assert.equal(results.restart.combat.activeId,'scatter'); assert.equal(results.restart.config.squadPosture,'screen'); assert.equal(results.restart.wave,0); assert.equal(results.restart.squad,3);
+    assert.equal(results.restart.combat.activeId,'scatter'); assert.equal(results.restart.config.posture,'screen'); assert.equal(results.restart.wave,0); assert.equal(results.restart.squad,3);
     assert.deepEqual(errors,[]); assert.deepEqual(consoles.filter(s=>!/XMLHttpRequest|CORS|Access-Control|net::ERR_FAILED|Cross-Origin Request Blocked/.test(s)),[]);
+    results.passed = true;
     console.log('PASS guided browser gameplay/evidence',name,JSON.stringify({ isolatedCombat:results.isolatedCombat, checkpoints:true, chapters:results.chapters.map(r=>r.mission), restart:results.restart }));
 } finally {
     await page.mouse.up().catch(()=>{}); await page.keyboard.up('w').catch(()=>{}); await page.keyboard.up('e').catch(()=>{});

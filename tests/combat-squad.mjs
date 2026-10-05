@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), name = ff ? 'firefox' : 'edge';
-const out = resolve('_playtest/m40'); mkdirSync(out, { recursive: true });
+const out = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m41/compatibility'); mkdirSync(out, { recursive: true });
 const browser = await (ff ? firefox : chromium).launch(ff ? { headless: !process.argv.includes('--headed') } : {
     headless: !process.argv.includes('--headed'), executablePath: process.env.CHROME_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
     args: ['--enable-unsafe-swiftshader', '--allow-file-access-from-files'] });
@@ -34,7 +34,8 @@ try {
     await page.waitForFunction(() => !!__cf.intro, undefined, { timeout: 120000 });
     await page.waitForFunction(() => !__cf.intro.prewarmPending, undefined, { timeout: 120000 });
     await page.keyboard.press('Space'); await quiet();
-    assert.deepEqual(await page.evaluate(() => __cf.weaponDefinitions.map(w => w.id)), ['rifle', 'scatter']);
+    assert.deepEqual(await page.evaluate(() => __cf.combat.slots), ['rifle', 'scatter']);
+    assert.deepEqual(await page.evaluate(() => __cf.weaponDefinitions.map(w => w.id)), ['rifle', 'scatter', 'arc', 'plasma']);
     // Unlock authored missions via existing completion hooks, retaining continuity.
     for (let i = 0; i < 3; i++) { await page.evaluate(() => __cf.completeMission()); await quiet(); }
     await page.evaluate(() => { __cf.startMission('power_through', 'mission_select'); __cf.setNoSpawn(true); __cf.clearTestEnemies();
@@ -44,7 +45,7 @@ try {
     await page.mouse.down(); await page.waitForTimeout(600); await page.mouse.up();
     results.weapon1 = await snap(); assert(results.weapon1.weapons.rifle.mag < 50); await capture('01-rifle');
     await select(1); await page.mouse.down(); await page.waitForTimeout(800); await page.mouse.up();
-    results.weapon2 = await snap(); assert(results.weapon2.weapons.scatter.mag < 12); await capture('02-scatter');
+    results.weapon2 = await snap(); assert(results.weapon2.weapons.scatter.mag < 20); await capture('02-scatter');
     const beforeRapid = await page.evaluate(() => ({ ammo: __cf.combat.weapons.rifle.mag + __cf.combat.weapons.scatter.mag, fired: __cf.combat.shotsFired, listeners: __inputAdds }));
     await page.mouse.down();
     for (let i = 0; i < 30; i++) { await page.keyboard.press(String(i % 2 + 1)); await page.waitForTimeout(40); }
@@ -56,12 +57,12 @@ try {
     await select(0);
     await page.evaluate(() => { __cf.combat.weapons.rifle.mag = 17; __cf.combat.weapons.scatter.mag = 6; });
     await page.keyboard.press('r'); await page.waitForFunction(() => __cf.player.weapon.reloading);
-    const reserve = (await snap()).weapons.rifle.reserve;
-    await select(1); assert.equal((await snap()).weapons.rifle.mag, 17); assert.equal((await snap()).weapons.rifle.reserve, reserve);
+    const reserve = (await snap()).cartridges;
+    await select(1); assert.equal((await snap()).weapons.rifle.mag, 17); assert.equal((await snap()).cartridges, reserve);
     assert.equal(await page.evaluate(() => __cf.combat.weapons.rifle.reloading), false);
     await page.keyboard.press('r'); await page.waitForFunction(() => __cf.player.weapon.reloading); await capture('03-reload-hud');
-    await page.waitForFunction(() => !__cf.player.weapon.reloading); assert.equal((await snap()).weapons.scatter.mag, 12);
-    await page.evaluate(() => { __cf.player.weapon.mag = 0; __cf.player.weapon.reserve = 0; });
+    await page.waitForFunction(() => !__cf.player.weapon.reloading); assert.equal((await snap()).weapons.scatter.mag, 20); assert.equal((await snap()).cartridges, reserve - 1);
+    await page.evaluate(() => { __cf.player.weapon.mag = 0; __cf.combat.cartridges = 0; });
     await page.mouse.down(); await page.waitForTimeout(350); await page.mouse.up(); await select(0);
     assert.equal((await snap()).weapons.scatter.mag, 0); assert.equal((await snap()).weapons.rifle.mag, 17);
 
@@ -71,8 +72,8 @@ try {
     for (const id of ['dead_signal', 'power_through', 'sample_zero', 'break_contact']) for (const index of [0, 1]) {
         await page.evaluate(({ id, index }) => {
             const c = __cf; c.startMission(id, 'new_campaign'); c.skipIntro(); c.setNoSpawn(true); c.clearTestEnemies(); c.setNoAggro(true);
-            c.selectWeapon(index); c.combat.tick(1); c.combat.weapons.rifle.mag = 17; c.combat.weapons.rifle.reserve = 2;
-            c.combat.weapons.scatter.mag = 6; c.combat.weapons.scatter.reserve = 1;
+            c.selectWeapon(index); c.combat.tick(1); c.combat.weapons.rifle.mag = 17; c.combat.cartridges = 3;
+            c.combat.weapons.scatter.mag = 6;
             c.commandSquad('hold'); c.squad[0].hp = 65; c.squad[0].shield = 31; c.squad[0].mag = 17;
             c.reload(); c.checkpoint();
         }, { id, index });
@@ -81,7 +82,7 @@ try {
         const state = await page.evaluate(() => ({ mission: __cf.missionId, combat: __cf.combat.snapshot(), reload: __cf.player.weapon.reloading,
             command: __cf.command, squad: __cf.squad.map(m => ({ hp: m.hp, shield: m.shield, mag: m.mag })), shell: __cf.facilitySections().length }));
         assert.equal(state.mission, id); assert.equal(state.combat.activeId, index ? 'scatter' : 'rifle');
-        assert.deepEqual(state.combat.weapons, { rifle: { mag: 17, reserve: 2 }, scatter: { mag: 6, reserve: 1 } });
+        assert.deepEqual(state.combat.weapons, { rifle: { mag: 17 }, scatter: { mag: 6 } }); assert.equal(state.combat.cartridges, 3);
         assert(!state.reload); assert.equal(state.command, 'hold'); assert.equal(state.squad[0].hp, 65); assert.equal(state.squad[0].mag, 17); assert.equal(state.shell, 6);
         results.checkpoints.push(state);
     }
@@ -94,6 +95,17 @@ try {
         return rows;
     });
     for (const row of results.transitions) { assert(row.sameShell && row.sameSolids); assert.equal(row.combat.activeId, 'scatter'); assert.equal(row.combat.weapons.rifle.mag, 17); assert.equal(row.combat.weapons.scatter.mag, 6); }
+    // Authored M4 emergency floor: one shared cartridge only when both guns and
+    // the pool are exhausted. Restoring the checkpoint cannot mint another.
+    results.emergencyFloor = await page.evaluate(() => {
+        const c=__cf; c.startMission('sample_zero','new_campaign'); c.setNoSpawn(true); c.clearTestEnemies();
+        c.combat.cartridges=0; for(const w of Object.values(c.combat.weapons)) w.mag=0;
+        c.completeMission(); const first=c.combat.snapshot(), saved=c.createMission4Snapshot();
+        c.applyMission4Snapshot(saved); return {first,restored:c.combat.snapshot(),mission:c.missionId};
+    });
+    assert.equal(results.emergencyFloor.mission,'break_contact'); assert.equal(results.emergencyFloor.first.cartridges,1);
+    assert.deepEqual(results.emergencyFloor.first.weapons,{rifle:{mag:0},scatter:{mag:0}});
+    assert.deepEqual(results.emergencyFloor.restored,results.emergencyFloor.first);
 
     // Distinct target priorities and commitment windows, then real movement/fire.
     await page.evaluate(() => {
@@ -140,24 +152,29 @@ try {
 
     // UI setup retains edited controls on Back; native selects support keyboard.
     await page.goto(url.href); await ready();
-    await page.locator('#btn-endless').click(); await page.locator('#endless-starting-weapon').selectOption('scatter');
+    await page.locator('#btn-endless').click(); await page.locator('#endless-starting-slot').selectOption('2');
     await page.locator('#endless-squad-posture').focus(); await page.keyboard.press('Home'); await page.keyboard.press('ArrowDown');
     await page.locator('#btn-endless-back').click(); await page.locator('#btn-endless').click();
-    assert.equal(await page.locator('#endless-starting-weapon').inputValue(), 'scatter');
+    assert.equal(await page.locator('#endless-starting-slot').inputValue(), '2');
     assert.equal(await page.locator('#endless-squad-posture').inputValue(), 'escort'); await capture('05-endless-setup');
     await page.locator('#btn-endless-ready').click(); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => __cf.mode === 'endless', undefined, { timeout: 120000 });
     await page.mouse.click(640,360); await quiet(); await page.waitForTimeout(500);
     results.deployment = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), squad: __cf.squadInfo() }));
-    assert.deepEqual(results.deployment.config, { startingWeapon: 'scatter', squadPosture: 'escort' });
+    assert.deepEqual(results.deployment.config.player, { slot1: 'rifle', slot2: 'scatter', startingSlot: 2 }); assert.equal(results.deployment.config.posture, 'escort');
     assert.equal(results.deployment.combat.activeId, 'scatter'); assert.equal(results.deployment.squad.length, 3); await capture('06-endless-deployed');
     await page.evaluate(() => { __cf.setNoSpawn(false); __cf.setNoAggro(false); __cf.startWave(); });
     await page.mouse.down(); await page.keyboard.down('w'); await page.waitForTimeout(3000); await page.keyboard.up('w');
     await select(0); await page.waitForTimeout(1800); await page.mouse.up(); await capture('07-endless-combat');
-    // Active-only paid craft, never an implicit proximity refill.
-    await page.evaluate(() => { __cf.setNoSpawn(true); __cf.clearTestEnemies(); __cf.setNoAggro(true); __cf.combat.weapons.rifle.reserve = 1; __cf.combat.weapons.scatter.reserve = 1; __cf.giveScrap(4); });
-    await page.keyboard.press('v'); await page.waitForFunction(() => __cf.combat.weapons.rifle.reserve === 2);
-    assert.equal((await snap()).weapons.rifle.reserve, 2); assert.equal((await snap()).weapons.scatter.reserve, 1);
+    // Shared paid craft, never an implicit proximity refill.
+    await page.evaluate(() => { __cf.setNoSpawn(true); __cf.clearTestEnemies(); __cf.setNoAggro(true); __cf.combat.cartridges = 1; __cf.giveScrap(4); });
+    await page.keyboard.press('v'); await page.waitForFunction(() => __cf.combat.cartridges === 2);
+    assert.equal((await snap()).cartridges, 2); await select(1); assert.equal((await snap()).cartridges, 2);
+    results.sharedSupply = await page.evaluate(() => {
+        const m=__cf.squad[0]; m.reserve=3; const before=__cf.combat.cartridges;
+        __cf.giveSquadAmmo(0); return {before,after:__cf.combat.cartridges,squadReserve:m.reserve};
+    });
+    assert.deepEqual(results.sharedSupply,{before:2,after:1,squadReserve:4});
     const saveBefore = await page.evaluate(() => localStorage.cf_campaign_v1);
     await page.evaluate(() => { __cf.grantUpgrade('r_mag'); __cf.grantUpgrade('r_ammo'); __cf.grantUpgrade('r_player'); });
     await page.evaluate(() => {
@@ -170,7 +187,7 @@ try {
     await page.waitForFunction(() => __cf.endless.wave === 0 && __cf.player.weapon.id === 'scatter' && __cf.player.hp === 100);
     results.restart = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), ammoSize: __cf.combat.weapons.rifle.magSize, save: localStorage.cf_campaign_v1 }));
     assert.equal(results.restart.save, saveBefore); assert.deepEqual(results.restart.config, results.deployment.config);
-    assert.deepEqual(results.restart.combat.weapons, { rifle: { mag: 50, reserve: 4 }, scatter: { mag: 12, reserve: 4 } });
+    assert.deepEqual(results.restart.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.restart.combat.cartridges, 8);
     assert.equal(results.restart.ammoSize, 50);
     results.campaignIsolation = await page.evaluate(() => {
         __cf.grantUpgrade('r_mag'); __cf.grantUpgrade('r_ammo'); __cf.grantUpgrade('r_player'); __cf.grantUpgrade('r_mob');
@@ -179,13 +196,14 @@ try {
             squad: __cf.squadInfo().map(m => m.formation), posture: __cf.command };
     });
     assert.equal(results.campaignIsolation.mode, 'campaign'); assert.equal(results.campaignIsolation.combat.activeId, 'rifle');
-    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50, reserve: 5 }, scatter: { mag: 12, reserve: 3 } });
+    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.campaignIsolation.combat.cartridges, 8);
     assert.equal(results.campaignIsolation.damage, 1); assert.equal(results.campaignIsolation.magSize, 50); assert.equal(results.campaignIsolation.posture, 'assist');
     assert.equal(results.campaignIsolation.speed, 5.2);
     assert.deepEqual(errors, []);
     // Failed file:// XHR audio buffers intentionally use accepted HTML fallback.
     const unexpectedConsole = consoleErrors.filter(s => !/XMLHttpRequest|CORS|Access-Control|net::ERR_FAILED|Cross-Origin Request Blocked/.test(s));
     assert.deepEqual(unexpectedConsole, []);
+    results.passed = true;
     console.log('PASS combat / squad / checkpoint / mode browser integration', name);
 } finally {
     await page.mouse.up().catch(() => {}); await page.keyboard.up('w').catch(() => {});

@@ -3,7 +3,7 @@
 import { spawnSync } from 'node:child_process';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
-const dir = resolve('_playtest/m40/regressions'); mkdirSync(dir, { recursive: true });
+const dir = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m40/regressions'); mkdirSync(dir, { recursive: true });
 const browsers = process.argv.includes('edge') ? ['edge'] : process.argv.includes('firefox') ? ['firefox'] : ['edge', 'firefox'];
 const suites = ['intro-smoke', 'm2-progression', 'runtime-stability', 'traversal-performance', 'facility-regression', 'facility-playthrough', 'transition-diagnose'];
 const results = [];

@@ -1,0 +1,52 @@
+{
+  "results": {
+    "magazine": {
+      "bolt": 1,
+      "window": 0.72
+    },
+    "channelReady": {
+      "min": 0.4,
+      "max": 0.916
+    },
+    "firing": {
+      "shot": {
+        "style": "arc",
+        "boltVisible": false,
+        "glowVisible": false
+      },
+      "arcs": 2
+    },
+    "chain": {
+      "emitted": 3,
+      "damage": [
+        true,
+        true
+      ]
+    },
+    "reloadMid": {
+      "visible": true,
+      "reloadEnergy": 0.12,
+      "magazineBoltOpacity": 1,
+      "magazineWindowOpacity": 0.72,
+      "channelOpacity": [
+        0.108
+      ]
+    },
+    "reloadDone": {
+      "maxChannel": 0.954,
+      "energy": 1
+    },
+    "cancel": {
+      "maxChannel": 0.96,
+      "energy": 1
+    },
+    "counters": {
+      "sceneObjectsAdded": 4,
+      "shadowRefresh": 7,
+      "sceneObjectsRemoved": 4
+    },
+    "passed": true
+  },
+  "errors": [],
+  "consoles": []
+}

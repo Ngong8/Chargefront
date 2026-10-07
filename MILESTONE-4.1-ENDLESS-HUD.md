@@ -558,3 +558,42 @@ and objective-state suites pass. Evidence: `_playtest/m41/navigation/`
 (`01-compass-status-stack`, `02-objectives-right-aligned`,
 `03-commander-ability`, `04-optional-far-hidden`, `05-optional-near-visible`,
 `navigation-{edge,firefox}.json`).
+
+## Follow-up — ARC-9 lightning firing presentation
+
+- ARC-9 now reads as chain lightning. `spawnShot` hides the logical projectile
+  (`bolt.visible`/`glow.visible = false` for `style === 'arc'`) and emits a brief
+  jittered lightning arc from the actual weapon muzzle (`weaponMount.localToWorld`
+  of the ARC muzzle offset) to the authorized endpoint, using the existing pooled
+  `emitLightningArc` (doubled jitter for a thicker primary). Squad ARC shots use
+  the same path from their own muzzle origin. Visible lifetime 0.14 s.
+- `predictArcEndpoint()` is presentation-only: it walks the same aim direction and
+  applies the same terrain/solid/enemy hit tests as the logical projectile to pick
+  where the arc terminates (enemy, wall, ground, or max range). It never deals
+  damage. Damage/collision/range/chain authorization is byte-for-byte the accepted
+  Milestone 4.1 logic, so the logical projectile still resolves the real hit and
+  `chainArcShot()` still draws the secondary target arcs on a genuine hit.
+- ARC-9 model split: `magazineBolt`/`magazineWindow` (red-box magazine/body) are
+  now **static** — removed from the per-frame pulse loop and from reload dimming,
+  so they hold their styled look while equipped and firing. Only
+  `channelBolts = [arcChannelBolt]` (the yellow reload-energy channel) pulses, and
+  `reloadLights = [arcChannelWindow]` is the only reload-driven energy light.
+- Reload energy is driven by the real reload state via `animateReloadPart` →
+  `reloadEnergy`: charged at rest, powers down through mid-reload, then powers back
+  up near completion and on completion. Cancelling by weapon switch restores the
+  charged look immediately (no stuck-dark state, no false completion), because the
+  value is reset from `weapon.reloading`, not a separate timer.
+- Bounded/pooled: 40 pre-warmed electrical lines, no per-shot material/geometry,
+  no new lights or shaders.
+
+Validation: new `tests/arc-presentation.mjs` passes in headed Edge and headless
+Firefox — hidden arc projectile, ≥2 muzzle arcs per shot, ≥3 arcs plus authorized
+chain damage on a real two-target hit, magazine opacity constant (bolt 1.0,
+window 0.72), channel power-down (energy 0.12 / opacity 0.11) then power-up
+(energy 1.0 / opacity ~0.94), switch-cancel restore, and zero new
+materials/geometry/shader links over repeated firing. `endless-hud` (ARC/PX
+integration), `combat-state`, `combat-squad`, `hud-refinement`,
+`objective-hud-flow`, `hud-navigation`, `runtime-stability --campaign` and
+`traversal-performance` all pass in Edge and Firefox. Evidence:
+`_playtest/m41/arc/` (`06-arc-muzzle-lightning`, `07-arc-reload-energy-off`,
+`08-arc-reload-energy-on`, `arc-{edge,firefox}.json`).

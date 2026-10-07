@@ -4540,7 +4540,9 @@ function buildViewmodel() {
     arcMuzzle.rotation.x = Math.PI / 2; arcMuzzle.position.set(0, -0.004, -0.60); arc.add(arcMuzzle);
     const arcEmitter = new THREE.Mesh(new THREE.CircleGeometry(0.046, 8), new THREE.MeshBasicMaterial({ color: arcCyan, side: THREE.DoubleSide, toneMapped: false }));
     arcEmitter.position.set(0, -0.004, -0.672); arc.add(arcEmitter);
-    arc.userData.energyBolts = [arcCellBolt, arcChannelBolt];
+    arc.userData.channelBolts = [arcChannelBolt];   // yellow reload-energy channel only
+    arc.userData.magazineBolt = arcCellBolt;         // static magazine glow (no pulse)
+    arc.userData.magazineWindow = arcCellWindow;
     arc.userData.muzzleX = -0.087;
     arc.userData.muzzleY = -0.099;
     arc.userData.muzzleZ = -0.96;
@@ -4583,7 +4585,7 @@ function buildViewmodel() {
     plasma.userData.muzzleY = -0.128;
     plasma.userData.muzzleZ = -0.90;
     plasma.visible = false; weaponMount.add(plasma);
-    arc.userData.reloadLights = [arcCellWindow, arcChannelWindow];
+    arc.userData.reloadLights = [arcChannelWindow];   // magazine window stays stable
     plasma.userData.reloadLights = [plasmaCellWindow, plasmaCellCore];
     rifle.userData.reloadIndicators = [rifleCellWindow];
     scatter.userData.reloadIndicators = scatterReloadIndicators;
@@ -4897,9 +4899,9 @@ function movePlayer(dt) {
     }
     animateReloadPart(w, reloadProgress);
     const arcModel = viewModel.userData.weaponModels && viewModel.userData.weaponModels.arc;
-    if (arcModel && arcModel.visible && arcModel.userData.energyBolts) {
-        for (let i = 0; i < arcModel.userData.energyBolts.length; i++) {
-            const bolt = arcModel.userData.energyBolts[i];
+    if (arcModel && arcModel.visible && arcModel.userData.channelBolts) {
+        for (let i = 0; i < arcModel.userData.channelBolts.length; i++) {
+            const bolt = arcModel.userData.channelBolts[i];
             const energy = arcModel.userData.reloadEnergy == null ? 1 : arcModel.userData.reloadEnergy;
             bolt.material.opacity = Math.min(1, Math.max(0.03, (0.68 + Math.sin(LJS.time * 17 + i * 2.1) * 0.28) * energy));
             bolt.position.y = Math.sin(LJS.time * 23 + i * 1.7) * 0.004;
@@ -4978,7 +4980,7 @@ function fireWeapon() {
             spawnShot(ox, oy, oz, Math.cos(a) * Math.cos(p), Math.sin(a) * Math.cos(p), Math.sin(p), boltDmg, w.color, 'player', { range: w.range });
         }
     } else {
-        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w);
+        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w, w.kind === 'arc' ? arcWeaponMuzzleWorld() : undefined);
     }
     /* TWIN BARRELS (relay epic) — a chance to squeeze off a second bolt */
     if (mode === 'endless' && w.kind === 'bolt' && Math.random() < (endlessRun.duplicateChance || 0)) {
@@ -6793,23 +6795,61 @@ function createShotEffect() {
     return { bolt: new THREE.Mesh(shotBoltGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.95 })),
         glow: new THREE.Mesh(shotGlowGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.35 })), chainHits: [] };
 }
-function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options) {
+const _arcMuzzleWorld = new THREE.Vector3();
+function arcWeaponMuzzleWorld() {
+    const model = viewModel.userData.weaponModels && viewModel.userData.weaponModels.arc;
+    const mx = model ? model.userData.muzzleX : -0.087, my = model ? model.userData.muzzleY : -0.099, mz = model ? model.userData.muzzleZ : -0.96;
+    return weaponMount.localToWorld(_arcMuzzleWorld.set(mx, my, mz));
+}
+/* Presentation-only forward ray using the same terrain/solid/enemy authorization
+   as the logical projectile. Never inflicts damage; only picks the arc endpoint. */
+function predictArcEndpoint(ox, oy, oz, dx, dy, dz, range) {
+    const step = 1.5;
+    let px = ox, py = oy, pz = oz;
+    for (let d = step; d <= range; d += step) {
+        const x = ox + dx * d, y = oy + dy * d, z = oz + dz * d;
+        for (const e of enemies) {
+            if (e.dead || e.dying || e.unburrowing) continue;
+            const ez = e.z + 0.8;
+            const t = clamp(((e.pos.x - px) * dx + (e.pos.y - py) * dy + (ez - pz) * dz) / Math.max(step, 0.0001), 0, 1);
+            const hx = px + dx * step * t, hy = py + dy * step * t, hz = pz + dz * step * t;
+            if (Math.hypot(e.pos.x - hx, e.pos.y - hy) + Math.abs(ez - hz) * 0.6 < e.hitRadius + 0.4) return { x: hx, y: hy, z: hz };
+        }
+        if (z < terrainHeight(x, y) + 0.12) return { x, y, z: terrainHeight(x, y) + 0.15 };
+        if (solidBlocksSegment(px, py, pz, x, y, z, 0.1, null)) return { x, y, z };
+        px = x; py = y; pz = z;
+    }
+    return { x: ox + dx * range, y: oy + dy * range, z: oz + dz * range };
+}
+/* ARC-9 reads as chain lightning: a brief jittered arc from the muzzle to the
+   authorized endpoint. The logical projectile is hidden but keeps resolving damage. */
+function emitArcShotPresentation(ox, oy, oz, dx, dy, dz, range, color, muzzle) {
+    const sx = muzzle ? muzzle.x : ox, sy = muzzle ? muzzle.y : oy, sz = muzzle ? muzzle.z : oz;
+    const end = predictArcEndpoint(ox, oy, oz, dx, dy, dz, range);
+    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color);
+    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color);   // doubled jitter for a thicker primary
+}
+function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options, muzzle) {
     if (shots.length >= 192) return;
     const dir = shotDirection.set(dx, dy, dz).normalize();
     const recycled = shotPool.pop() || createShotEffect(); // only pre-preparation/debug first use
     const bolt = recycled.bolt;
     const style = options?.kind || 'bolt';
-    bolt.scale.set(style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 3.5 : style === 'arc' ? 5 : 8);
+    const arcStyle = style === 'arc';
+    bolt.scale.set(style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 3.5 : arcStyle ? 5 : 8);
     if (Math.abs(shotUp.dot(dir)) > 0.9999) bolt.quaternion.setFromAxisAngle(shotAxis, dir.z < 0 ? Math.PI : 0);
     else bolt.quaternion.setFromUnitVectors(shotUp, dir);
     bolt.material.color.setHex(color);
     bolt.material.opacity = 0.95;
+    bolt.visible = !arcStyle;   // logical projectile stays hidden; lightning arc is the visual
     scene.add(bolt);
     const glow = recycled.glow;
-    glow.scale.setScalar(style === 'plasma' ? 2.8 : style === 'arc' ? 1.4 : 1);
+    glow.scale.setScalar(style === 'plasma' ? 2.8 : arcStyle ? 1.4 : 1);
     glow.material.color.setHex(color);
     glow.material.opacity = 0.35;
+    glow.visible = !arcStyle;
     scene.add(glow);
+    if (arcStyle) emitArcShotPresentation(ox, oy, oz, dir.x, dir.y, dir.z, options?.range || 153, color, muzzle);
     Object.assign(recycled, { x: ox, y: oy, z: oz, px: ox, py: oy, pz: oz, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85,
         ox, oy, oz, range: options?.range || 153, life: (options?.range || 153) / 85, dmg, color, owner,
         style, splash: options?.splash || 0, chains: options?.chains || 0 });
@@ -11170,6 +11210,14 @@ window.__cf = {
     objectiveHUDInfo() { return objectiveHUD.snapshot(); },
     advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
     optionalMarkerInfo() { return { near: OPTIONAL_MARKER_NEAR, far: OPTIONAL_MARKER_FAR, state: Object.fromEntries(optionalMarkerState) }; },
+    arcInfo() {
+        const model = viewModel.userData.weaponModels && viewModel.userData.weaponModels.arc;
+        if (!model) return null;
+        return { visible: model.visible, reloadEnergy: model.userData.reloadEnergy,
+            magazineBoltOpacity: model.userData.magazineBolt ? +model.userData.magazineBolt.material.opacity.toFixed(3) : null,
+            magazineWindowOpacity: model.userData.magazineWindow ? +model.userData.magazineWindow.material.opacity.toFixed(3) : null,
+            channelOpacity: (model.userData.channelBolts || []).map(b => +b.material.opacity.toFixed(3)) };
+    },
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
     restartEndless() { if (mode === 'endless') restartEndlessRun(); },
     get weaponDefinitions() { return PLAYER_WEAPONS; },

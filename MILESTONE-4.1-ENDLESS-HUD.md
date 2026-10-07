@@ -416,3 +416,50 @@ final documentation/selected evidence/compact validation receipt. No failing
 intermediate commits, push or merge. Final review uses `git diff --check`,
 `git diff --stat` and `git status`; prior untracked 3.8/3.9/4.0 user artifacts
 remain as originally found.
+
+## Follow-up — Combat & Vitals HUD refinement
+
+Presentation-only follow-up on `milestone-4.1`, separately committed as
+`refactor: refine combat and vitals hud`.
+
+- COMBAT reads both owned slots directly: active gun/magazine is first, bright
+  14/18 px text; partner is directly underneath, dimmer 11/12 px text. Emphasis
+  follows 1/2/Q without new weapon state. Controls now sit after medkits and before
+  supplies/crafting. Combat frame grows only 16 px (264×262).
+- Bottom-left becomes VITALS / COMMANDER, with health/shield/stamina icon + bar
+  rows and no numerical health/shield panel labels. Squad entries retain names,
+  command/status and ability readiness, with health/shield icons + compact bars.
+  Downed entries show dark tracks and red DOWN. Vitals remains 264 px wide and
+  uses a 246 px frame, taking existing empty left-side space.
+- The old 3 px stamina bar was smaller than the framed helper's 4 px inset;
+  its full-width colored edges masked actual depletion. Vitals now use unframed
+  dark 6 px tracks with proportional fills, always including full/empty stamina.
+  Existing framed reload/progress rendering is preserved, just repositioned.
+- `Images/health-normal.svg`, `Images/shield.svg`, `Images/walking-boot.svg` are
+  the supplied, unchanged assets. Three cached native Image objects load once;
+  the HUD draws the SVGs directly with Canvas2D `drawImage`, preserving aspect
+  ratio. White icons pair with green/cyan/yellow fills. No raster asset conversion,
+  shape replacement, per-frame loading/tinting, new geometry/materials or DOM UI.
+- Objective/minimap/command positions and every accepted gameplay/save/terrain
+  system remain unchanged. Changes to the existing test are presentation labels,
+  reload-bar coordinates, both-weapon checks and optional artifact output routing.
+
+Validation: `tests/hud-refinement.mjs --headed` (Edge) and `firefox` pass at
+1280×720, 1366×768 and 1920×1080. Actual Canvas fill calls confirm 40% stamina
+paints 80 px of a 200 px track; exhausted stamina paints only the dark track.
+Real Shift+W consumes stamina to ~46–48%, idle recovery reaches 100%. Both-slot
+1/2/Q emphasis/ammo, reload cancel/complete, damaged/downed squad bars, FOLLOW /
+AFAR / DOWN, cooldown/readiness, icon loads/alignment and text/frame bounds pass.
+Pure combat-state tests and full four-configuration Endless suites also pass in
+both browsers. HUD rendering and isolated firing record no new materials,
+geometry, shader links or world/facility rebuilds. No unexpected page/console
+errors. Rendered Edge captures were visually inspected; Firefox uses headless
+real input, as in the accepted milestone.
+
+Concise before/after gallery and two compact validation receipts:
+`_playtest/m41/hud-refinement/` (`01-before.png`, `02-slot1-full-vitals.png`,
+`03-slot2-damaged-vitals.png`, `04-exhausted-vitals.png`,
+`validation-{edge,firefox}.json`). Supplemental four-configuration receipts are
+local under ignored `_playtest/m41/regressions/hud-refinement/`. Icon source
+attributions from the supplied credits edit are included; its unrelated pending
+terrain-credit line remains uncommitted. Milestone 4.2 remains deferred.

@@ -10,6 +10,14 @@ Built with:
   - Three.js (MIT) — 3D library
     https://github.com/mrdoob/three.js
 
+Images/Textures:
+- Shield icon
+https://game-icons.net/1x1/sbed/shield.html
+- Health icon
+https://game-icons.net/1x1/sbed/health-normal.html
+- Walking boot icon
+https://game-icons.net/1x1/lorc/walking-boot.html
+
 Music (from OpenGameArt, composed by Tsorthan Grove):
   - "Corrupt Data Stream"  — horde defenses / combat
     https://opengameart.org/content/corrupt-data-stream

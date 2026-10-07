@@ -6,7 +6,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), name = ff ? 'firefox' : 'edge';
-const out = resolve('_playtest/m41'), evidence = resolve(out, 'evidence'); mkdirSync(evidence, { recursive: true });
+const out = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m41'), evidence = resolve(out, 'evidence'); mkdirSync(evidence, { recursive: true });
 const browser = await (ff ? firefox : chromium).launch(ff ? { headless: true } : {
     headless: process.argv.includes('--headless'), executablePath: process.env.CHROME_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',
     args: ['--enable-unsafe-swiftshader', '--allow-file-access-from-files'] });
@@ -150,12 +150,14 @@ try {
         await page.keyboard.down('w'); await page.waitForTimeout(500); await page.keyboard.up('w');
         if (index === 0) await capture('05-consolidated-hud');
         const h = await hud();
-        for (const label of ['TEAM / VITALS', 'PLAYER', 'ROOK', 'VEX', 'KADE', 'COMBAT', 'SUPPLIES', 'CARTRIDGES']) assert(h.text.some(t => t.value === label));
-        assert(h.text.filter(t => ['PLAYER','ROOK','VEX','KADE'].includes(t.value)).every(t => t.y > 500));
+        for (const label of ['VITALS', 'COMMANDER', 'ROOK', 'VEX', 'KADE', 'COMBAT', 'SUPPLIES', 'CARTRIDGES']) assert(h.text.some(t => t.value === label));
+        const pair = await page.evaluate(() => __cf.combat.slots.map((id,index) => ({slot:index+1,name:__cf.combat.weapons[id].name,mag:__cf.combat.weapons[id].mag,size:__cf.combat.weapons[id].magSize})));
+        for(const weapon of pair) {assert(h.text.some(t=>t.value==='['+weapon.slot+'] '+weapon.name));assert(h.text.some(t=>t.value===weapon.mag+' / '+weapon.size));}
+        assert(h.text.filter(t => ['COMMANDER','ROOK','VEX','KADE'].includes(t.value)).every(t => t.y > 480));
         assert(h.text.find(t => t.value.startsWith('SCRAP ')).y < 300);
         await page.keyboard.press('r'); await page.waitForFunction(() => __cf.player.weapon.reloading);
         const reload1 = await hud(); await page.waitForTimeout(350); const reload2 = await hud();
-        const bar = h => h.bars.find(b => b.width === 100 && b.y === 73);
+        const bar = h => h.bars.find(b => b.width === 100 && b.y === 91);
         assert(reload1.text.some(t => t.value === 'RELOADING')); assert(bar(reload2).progress > bar(reload1).progress);
         assert(!reload2.text.some(t => /RLD.*%|RELOADING.*%/.test(t.value)));
         if (index === 0) await capture('06-reload-progress');
@@ -163,7 +165,7 @@ try {
         await select(1); assert.equal(await page.evaluate(() => __cf.combat.cartridges), reserve); assert(!(await hud()).text.some(t => t.value === 'RELOADING'));
         await page.keyboard.press('r'); await page.waitForFunction(() => __cf.player.weapon.reloading);
         await page.waitForFunction(() => !__cf.player.weapon.reloading); assert.equal(await page.evaluate(() => __cf.combat.cartridges), reserve - 1);
-        assert(!(await hud()).bars.some(b => b.width === 100 && b.y === 73));
+        assert(!(await hud()).bars.some(b => b.width === 100 && b.y === 91));
         const craftBefore = await page.evaluate(() => { __cf.giveScrap(4); return { reserve: __cf.combat.cartridges, scrap: __cf.scrap }; });
         await page.keyboard.press('v'); await page.waitForFunction(r => __cf.combat.cartridges === r + 1, craftBefore.reserve);
         assert.equal(await page.evaluate(() => __cf.scrap), craftBefore.scrap - 4);

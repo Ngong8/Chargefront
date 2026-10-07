@@ -9289,9 +9289,26 @@ function drawCompass(W, H) {
     LJS.drawRect(LJS.vec2(W / 2, y), LJS.vec2(2, 14), LJS.rgb(1, 1, 1, 0.95), 0, false, true);
 }
 
-function hudBar(cx, y, w, h, pct, color, accent) {
-    const ac = accent || LJS.rgb(0.55, 0.85, 1, 0.85);
+/* SVGs are loaded once, drawn directly onto the HUD canvas, never rebuilt/tinted per frame. */
+const HUD_STATUS_ICONS = Object.freeze(Object.fromEntries([
+    ['health', 'Images/health-normal.svg'], ['shield', 'Images/shield.svg'], ['stamina', 'Images/walking-boot.svg'],
+].map(([id, src]) => { const image = new Image(); image.src = src; return [id, image]; })));
+function hudStatusIcon(id, cx, y, size = 14) {
+    const image = HUD_STATUS_ICONS[id];
+    if (!image.complete || !image.naturalWidth) return;
+    const scale = size / Math.max(image.naturalWidth, image.naturalHeight);
+    const width = image.naturalWidth * scale, height = image.naturalHeight * scale;
+    LJS.mainContext.drawImage(image, cx - width / 2, y - height / 2, width, height);
+}
+function hudBar(cx, y, w, h, pct, color, accent, framed = true) {
     LJS.drawRect(LJS.vec2(cx, y), LJS.vec2(w, h), LJS.rgb(0.04, 0.02, 0.08, 0.82), 0, false, true);
+    if (!framed) {
+        // Thin vitals tracks have no full-width colored frame obscuring the actual fill.
+        const fw = w * clamp(pct, 0, 1);
+        if (fw > 0) LJS.drawRect(LJS.vec2(cx - w / 2 + fw / 2, y), LJS.vec2(fw, h), color, 0, false, true);
+        return;
+    }
+    const ac = accent || LJS.rgb(0.55, 0.85, 1, 0.85);
     if (pct > 0.01) {
         const fw = Math.max(2, (w - 4) * clamp(pct, 0, 1));
         const fx = cx - w / 2 + 2 + fw / 2;
@@ -9484,61 +9501,67 @@ function drawHUD(W, H) {
         hudText(toastText, LJS.vec2(W / 2, 108), 13, LJS.rgb(c.r, c.g, c.b, a), 'center');
     }
 
-    /* ── BOTTOM-LEFT: combined TEAM / VITALS ──────────────────────── */
-    const sx0 = 16, sy0 = H - 198;
-    hudPanel(sx0 + 132, sy0 + 91, 264, 182, ACCENT);
-    hudText('TEAM / VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText('PLAYER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
-    hudText('HP ' + Math.ceil(player.hp) + ' / SHIELD ' + Math.ceil(player.shield), LJS.vec2(sx0 + 246, sy0 + 35), 11, LJS.rgb(0.78, 0.95, 1), 'right');
-    hudBar(sx0 + 132, sy0 + 50, 230, 9, player.hp / player.maxHp, LJS.rgb(0.3, 0.9, 0.5), LJS.rgb(0.4, 1, 0.6));
-    hudBar(sx0 + 132, sy0 + 61, 230, 5, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), LJS.rgb(0.5, 0.9, 1));
-    if (player.stamina < 100) hudBar(sx0 + 132, sy0 + 69, 230, 3, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), LJS.rgb(1, 0.92, 0.55));
+    /* ── BOTTOM-LEFT: icon-led Commander / squad VITALS ───────────── */
+    const sx0 = 16, sy0 = H - 262;
+    hudPanel(sx0 + 132, sy0 + 123, 264, 246, ACCENT);
+    hudText('VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('COMMANDER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
+    hudStatusIcon('health', sx0 + 20, sy0 + 50);
+    hudBar(sx0 + 148, sy0 + 50, 200, 6, player.hp / player.maxHp, LJS.rgb(0.3, 0.9, 0.5), null, false);
+    hudStatusIcon('shield', sx0 + 20, sy0 + 64);
+    hudBar(sx0 + 148, sy0 + 64, 200, 6, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), null, false);
+    hudStatusIcon('stamina', sx0 + 20, sy0 + 78);
+    hudBar(sx0 + 148, sy0 + 78, 200, 6, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), null, false);
     for (let i = 0; i < squadMembers.length; i++) {
         const m = squadMembers[i];
-        const ry = sy0 + 84 + i * 31;
+        const ry = sy0 + 100 + i * 48;
         const d = Math.hypot(player.pos.x - m.pos.x, player.pos.y - m.pos.y);
         const outAmmo = m.mag <= 0 && m.reserve <= 0;
         const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : m.reloading ? 'RELOAD' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : m.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 'DEFEND' : m.aiMode;
         hudText(m.def.name, LJS.vec2(sx0 + 16, ry), 13, m.downed ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.72, 0.86, 1), 'left');
-        hudBar(sx0 + 125, ry, 90, 8, m.downed ? 0 : m.hp / m.maxHp, m.downed ? LJS.rgb(1, 0.3, 0.3) : LJS.rgb(0.3, 0.9, 0.5), m.downed ? LJS.rgb(1, 0.5, 0.5) : LJS.rgb(0.4, 1, 0.6));
-        /* shield bar (thin, under HP) — recharges to 100% after 10 s without taking a hit */
-        const sp = clamp(m.shield / m.maxShield, 0, 1);
-        hudBar(sx0 + 125, ry + 9, 90, 3, sp, LJS.rgb(0.2, 0.65, 0.9), LJS.rgb(0.5, 0.9, 1));
+        hudStatusIcon('health', sx0 + 20, ry + 12, 12);
+        hudBar(sx0 + 148, ry + 12, 200, 6, m.downed ? 0 : m.hp / m.maxHp, m.downed ? LJS.rgb(1, 0.3, 0.3) : LJS.rgb(0.3, 0.9, 0.5), null, false);
+        hudStatusIcon('shield', sx0 + 20, ry + 24, 12);
+        hudBar(sx0 + 148, ry + 24, 200, 6, m.downed ? 0 : m.shield / m.maxShield, LJS.rgb(0.2, 0.65, 0.9), null, false);
         hudText(st, LJS.vec2(sx0 + 246, ry), 10, m.downed ? LJS.rgb(1, 0.55, 0.55) : outAmmo ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.82, 0.86, 0.97), 'right');
         const ability = ChargefrontCombat.abilities.find(a => a.id === m.def.ability.id);
-        hudText('[' + ['Z', 'X', 'Y'][i] + '] ' + ability.name + (m.abilityCd > 0 ? ' ' + Math.ceil(m.abilityCd) + 's' : ' READY'), LJS.vec2(sx0 + 16, ry + 18), 9, LJS.rgb(0.6, 0.75, 0.95), 'left');
+        hudText('[' + ['Z', 'X', 'Y'][i] + '] ' + ability.name + (m.abilityCd > 0 ? ' ' + Math.ceil(m.abilityCd) + 's' : ' READY'), LJS.vec2(sx0 + 16, ry + 36), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     }
 
     /* ── UPPER-LEFT: consolidated COMBAT & SUPPLIES ───────────────── */
     const w = player.weapon;
+    const inactiveIndex = (playerCombat.index + 1) % playerCombat.slots.length;
+    const inactive = playerCombat.weapons[playerCombat.slots[inactiveIndex]];
     const weaponPanelTop = 12;
     const weaponLabelX = 32, weaponValueX = 256;
-    hudPanel(148, weaponPanelTop + 123, 264, 246, ACCENT);
+    hudPanel(148, weaponPanelTop + 131, 264, 262, ACCENT);
     hudText('COMBAT', LJS.vec2(weaponLabelX, weaponPanelTop + 15), 12, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText('[' + (player.weaponIndex + 1) + '] ' + w.name, LJS.vec2(weaponLabelX, weaponPanelTop + 39), 14, LJS.rgb(0.72, 0.78, 0.96), 'left');
+    hudText('[' + (player.weaponIndex + 1) + '] ' + w.name, LJS.vec2(weaponLabelX, weaponPanelTop + 39), 14, LJS.rgb(0.85, 0.93, 1), 'left');
     hudText(w.mag + ' / ' + w.magSize, LJS.vec2(weaponValueX, weaponPanelTop + 39), 18, w.reloading ? LJS.rgb(0.55, 0.6, 0.7) : w.mag <= Math.ceil(w.magSize * 0.2) ? LJS.rgb(1, 0.65, 0.3) : LJS.rgb(0.55, 0.9, 1), 'right');
+    hudText('[' + (inactiveIndex + 1) + '] ' + inactive.name, LJS.vec2(weaponLabelX, weaponPanelTop + 57), 11, LJS.rgb(0.45, 0.5, 0.62), 'left');
+    hudText(inactive.mag + ' / ' + inactive.magSize, LJS.vec2(weaponValueX, weaponPanelTop + 57), 12, LJS.rgb(0.45, 0.5, 0.62), 'right');
     if (w.reloading || player.swapT > 0) {
         const progress = w.reloading ? 1 - w.reloadT / w.reloadDuration : 1 - player.swapT / player.swapDuration;
-        hudText(w.reloading ? 'RELOADING' : 'READYING', LJS.vec2(weaponLabelX, weaponPanelTop + 61), 10, LJS.rgb(1, 0.75, 0.4), 'left');
-        hudBar(205, weaponPanelTop + 61, 100, 5, progress, LJS.rgb(1, 0.7, 0.25), LJS.rgb(1, 0.9, 0.5));
-    } else if (!w.mag) hudText('EMPTY', LJS.vec2(weaponLabelX, weaponPanelTop + 61), 10, LJS.rgb(1, 0.65, 0.3), 'left');
-    hudText('CARTRIDGES', LJS.vec2(weaponLabelX, weaponPanelTop + 85), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(String(playerCombat.cartridges), LJS.vec2(weaponValueX, weaponPanelTop + 85), 14, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('GRENADES', LJS.vec2(weaponLabelX, weaponPanelTop + 107), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(player.grenades + ' / ' + grenadeCap(), LJS.vec2(weaponValueX, weaponPanelTop + 107), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('MEDKITS', LJS.vec2(weaponLabelX, weaponPanelTop + 129), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
-    hudText(craft.medkits + ' / ' + medkitCap(), LJS.vec2(weaponValueX, weaponPanelTop + 129), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
-    hudText('SUPPLIES', LJS.vec2(weaponLabelX, weaponPanelTop + 160), 11, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText('SCRAP ' + craft.scraps + '  /  CELLS ' + craft.powerCells, LJS.vec2(weaponLabelX, weaponPanelTop + 183), 12, LJS.rgb(0.95, 0.85, 0.6), 'left');
-    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(weaponLabelX, weaponPanelTop + 205), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
-    hudText('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD', LJS.vec2(weaponLabelX, weaponPanelTop + 228), 10, LJS.rgb(0.58, 0.8, 1), 'left');
+        hudText(w.reloading ? 'RELOADING' : 'READYING', LJS.vec2(weaponLabelX, weaponPanelTop + 79), 10, LJS.rgb(1, 0.75, 0.4), 'left');
+        hudBar(205, weaponPanelTop + 79, 100, 5, progress, LJS.rgb(1, 0.7, 0.25), LJS.rgb(1, 0.9, 0.5));
+    } else if (!w.mag) hudText('EMPTY', LJS.vec2(weaponLabelX, weaponPanelTop + 79), 10, LJS.rgb(1, 0.65, 0.3), 'left');
+    hudText('CARTRIDGES', LJS.vec2(weaponLabelX, weaponPanelTop + 103), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(String(playerCombat.cartridges), LJS.vec2(weaponValueX, weaponPanelTop + 103), 14, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('GRENADES', LJS.vec2(weaponLabelX, weaponPanelTop + 125), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(player.grenades + ' / ' + grenadeCap(), LJS.vec2(weaponValueX, weaponPanelTop + 125), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('MEDKITS', LJS.vec2(weaponLabelX, weaponPanelTop + 147), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
+    hudText(craft.medkits + ' / ' + medkitCap(), LJS.vec2(weaponValueX, weaponPanelTop + 147), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
+    hudText('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD', LJS.vec2(weaponLabelX, weaponPanelTop + 171), 10, LJS.rgb(0.58, 0.8, 1), 'left');
+    hudText('SUPPLIES', LJS.vec2(weaponLabelX, weaponPanelTop + 196), 11, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('SCRAP ' + craft.scraps + '  /  CELLS ' + craft.powerCells, LJS.vec2(weaponLabelX, weaponPanelTop + 219), 12, LJS.rgb(0.95, 0.85, 0.6), 'left');
+    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(weaponLabelX, weaponPanelTop + 242), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     /* craft-ammo reminder — shows whenever the magazine and reserve are both empty */
     if (w.mag <= 0 && playerCombat.cartridges <= 0) {
         const pulse = 0.62 + Math.sin(LJS.time * 4) * 0.38;
         const hint = craft.scraps >= ammoCost()
             ? 'OUT OF AMMO — PRESS [V] TO CRAFT'
             : 'OUT OF AMMO — NEED ' + ammoCost() + ' SCRAP';
-        hudText(hint, LJS.vec2(148, weaponPanelTop + 264), 11, LJS.rgb(1, 0.85, 0.45, pulse), 'center');
+        hudText(hint, LJS.vec2(148, weaponPanelTop + 280), 11, LJS.rgb(1, 0.85, 0.45, pulse), 'center');
     }
 
     /* ── BOTTOM-CENTER: command pills + interact ───────────────────── */
@@ -11061,12 +11084,14 @@ window.__cf = {
     checkpoint() { return checkpointCampaignState(); },
     combatPoolInfo() { return { shots: shots.length, shotPool: shotPool.length, impacts: impacts.length, impactPool: impactPool.length, sparks: sparks.length, sparkPool: sparkPool.length }; },
     inspectHUD() {
-        const text = [], bars = [], originalText = hudText, originalBar = hudBar;
-        hudText = (value, pos) => text.push({ value: String(value), x: pos.x, y: pos.y });
-        hudBar = (x, y, width, height, progress) => bars.push({ x, y, width, height, progress });
+        const text = [], bars = [], icons = [], panels = [], originalText = hudText, originalBar = hudBar, originalIcon = hudStatusIcon, originalPanel = hudPanel;
+        hudText = (value, pos, size, color, align) => text.push({ value: String(value), x: pos.x, y: pos.y, size, align, color: [color.r, color.g, color.b] });
+        hudBar = (x, y, width, height, progress, color, accent, framed = true) => bars.push({ x, y, width, height, progress, framed });
+        hudStatusIcon = (id, x, y, size = 14) => icons.push({ id, x, y, width: size, height: size, loaded: HUD_STATUS_ICONS[id].complete && HUD_STATUS_ICONS[id].naturalWidth > 0 });
+        hudPanel = (x, y, width, height) => panels.push({ x, y, width, height });
         try { drawHUD(LJS.mainCanvasSize.x, LJS.mainCanvasSize.y); }
-        finally { hudText = originalText; hudBar = originalBar; }
-        return { text, bars };
+        finally { hudText = originalText; hudBar = originalBar; hudStatusIcon = originalIcon; hudPanel = originalPanel; }
+        return { text, bars, icons, panels };
     },
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
     restartEndless() { if (mode === 'endless') restartEndlessRun(); },

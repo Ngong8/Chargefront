@@ -21,18 +21,18 @@
     "spacing": [
       {
         "name": "ROOK",
-        "y": 538,
-        "abilityY": 576
+        "y": 530,
+        "abilityY": 568
       },
       {
         "name": "VEX",
-        "y": 594,
-        "abilityY": 632
+        "y": 586,
+        "abilityY": 624
       },
       {
         "name": "KADE",
-        "y": 650,
-        "abilityY": 688
+        "y": 642,
+        "abilityY": 680
       }
     ],
     "initial": [
@@ -119,7 +119,7 @@
         "key": "dead_signal:15",
         "text": "Search the service yard for an Emergency Maintenance Battery",
         "completed": true,
-        "age": 0.03333333333333333,
+        "age": 0.06666666666666667,
         "alpha": 1
       },
       {
@@ -137,7 +137,7 @@
         "key": "dead_signal:growth",
         "text": "Scan Infested Growth",
         "completed": true,
-        "age": 0.06666666666666667,
+        "age": 0.11666666666666665,
         "alpha": 1
       },
       {

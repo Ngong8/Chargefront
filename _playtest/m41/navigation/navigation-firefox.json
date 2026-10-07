@@ -1,0 +1,32 @@
+{
+  "results": {
+    "statusY": 24,
+    "objectiveRight": [
+      {
+        "value": "Reach the abandoned facility perimeter",
+        "x": 1264,
+        "align": "right"
+      },
+      {
+        "value": "Scan Infested Growth",
+        "x": 1264,
+        "align": "right"
+      }
+    ],
+    "surge": {
+      "ready": "[F] SURGE READY",
+      "cooldown": "[F] SURGE 21.8s"
+    },
+    "hysteresis": {
+      "near": 100,
+      "far": 110,
+      "state": {
+        "BIO-SCAN": true,
+        "AUX FIELD CELL": false
+      }
+    },
+    "passed": true
+  },
+  "errors": [],
+  "consoles": []
+}

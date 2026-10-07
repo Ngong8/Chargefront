@@ -3546,7 +3546,7 @@ function updateEndless(dt) {
 }
 /* ── run setup ── */
 function resetEndlessRun() {
-    objectiveHUD.clear();
+    objectiveHUD.clear(); clearOptionalMarkerState();
     endlessRun.wave = 0; endlessRun.waveActive = false; endlessRun.waveT = 0;
     endlessRun.budgetLeft = 0; endlessRun.spawnT = 0; endlessRun.alive = 0; endlessRun.bossSpawned = false;
     endlessRun.dna = 0; endlessRun.dnaBanked = 0; endlessRun.milestone = 0; endlessRun.upgrades = [];
@@ -7474,7 +7474,7 @@ let pointerLockGestureFn = null;
 let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
-    objectiveHUD.clear();
+    objectiveHUD.clear(); clearOptionalMarkerState();
     stopIntroSfx();
     mode = 'campaign';
     const snapshot = campaignSnapshot();
@@ -8287,6 +8287,7 @@ function clearCampaignTransitionCombat() {
 function beginCampaignChapterTransition(completion) {
     stopIntroSfx(); // accelerated M1 completion must not carry its tail into M2
     if (!completion || !completion.nextMission) return;
+    clearOptionalMarkerState();
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
     campaignRun.encounter.active = false;
@@ -9461,7 +9462,7 @@ const objectiveMeasureContext = document.createElement('canvas').getContext('2d'
 function hudObjectiveStrike(x, y, width, alpha) {
     LJS.drawLine(LJS.vec2(x, y), LJS.vec2(x + width, y), 1.3, LJS.rgb(0.6, 0.95, 0.75, alpha), LJS.vec2(), 0, false, true);
 }
-function drawObjectiveProgress(x, y, width) {
+function drawObjectiveProgress(right, y, width) {
     let text = '', progress = -1, color = LJS.rgb(0.3, 1, 0.8);
     const relay = relayByPhase();
     if (relay?.powering) { text = relay.R.name + '  ' + Math.round(relay.progress * 100) + '%'; progress = relay.progress; }
@@ -9474,16 +9475,16 @@ function drawObjectiveProgress(x, y, width) {
         text = 'INFESTATION PURGE  ' + cleared + ' / ' + nodes.length; progress = nodes.length ? cleared / nodes.length : 0; color = LJS.rgb(1, 0.32, 0.28);
     } else if (phase === P.FINALE) text = 'DROPSHIP READY — BOARD FOR EXTRACTION';
     if (!text) return 0;
-    hudText(text, LJS.vec2(x, y + 6), 10, LJS.rgb(0.85, 1, 0.96), 'left');
-    if (progress >= 0) hudBar(x + width / 2, y + 22, width, 8, progress, color);
+    hudText(text, LJS.vec2(right, y + 6), 10, LJS.rgb(0.85, 1, 0.96), 'right');
+    if (progress >= 0) hudBar(right - width / 2, y + 22, width, 8, progress, color);
     return progress >= 0 ? 32 : 18;
 }
 function drawObjectiveStack(W) {
-    const width = Math.min(300, W * 0.26), x = W - 16 - width;
+    const width = Math.min(300, W * 0.26), right = W - 16, left = right - width;
     let y = 202; // below the unchanged 150 px minimap and its optional legend
     for (const kind of ['main', 'optional']) {
         if (!objectiveHUD.rows.some(row => row.kind === kind)) continue;
-        hudText(kind === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(x, y), 10, kind === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'left');
+        hudText(kind === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(right, y), 10, kind === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'right');
         y += 18;
         for (const row of objectiveHUD.rows) {
             if (row.kind !== kind) continue;
@@ -9503,18 +9504,37 @@ function drawObjectiveStack(W) {
             const bodyHeight = row.lines.length * 15 + (row.extraHeight || 0);
             const context = LJS.mainContext;
             context.save();
-            if (row.completed) { context.beginPath(); context.rect(x - 3, y - 2, width + 6, bodyHeight * collapse + 4); context.clip(); }
+            if (row.completed) { context.beginPath(); context.rect(left - 3, y - 2, width + 6, bodyHeight * collapse + 4); context.clip(); }
             for (let i = 0; i < row.lines.length; i++) {
-                const baseline = y + 6 + i * 15;
-                hudText(row.lines[i], LJS.vec2(x, baseline), 12, row.completed ? LJS.rgb(0.6, 0.88, 0.74, alpha) : LJS.rgb(0.95, 0.86, 1), 'left', row.completed);
-                if (row.completed) hudObjectiveStrike(x, baseline, objectiveMeasureContext.measureText(row.lines[i]).width, alpha);
+                const baseline = y + 6 + i * 15, lineWidth = objectiveMeasureContext.measureText(row.lines[i]).width;
+                hudText(row.lines[i], LJS.vec2(right, baseline), 12, row.completed ? LJS.rgb(0.6, 0.88, 0.74, alpha) : LJS.rgb(0.95, 0.86, 1), 'right', row.completed);
+                if (row.completed) hudObjectiveStrike(right - lineWidth, baseline, lineWidth, alpha);
             }
-            if (!row.completed) row.extraHeight = kind === 'main' ? drawObjectiveProgress(x, y + row.lines.length * 15, width) : 0;
+            if (!row.completed) row.extraHeight = kind === 'main' ? drawObjectiveProgress(right, y + row.lines.length * 15, width) : 0;
             context.restore();
             // Collapse the retiring row smoothly; clip prevents overlap with its successor.
             y += (row.lines.length * 15 + (row.extraHeight || 0) + 12) * (row.completed ? collapse : 1);
         }
         y += 10;
+    }
+}
+/* compact navigation/status stack immediately below the top-center compass */
+const STATUS_TRAVEL_PHASES = [P.MOVE_R1, P.MOVE_R2, P.MOVE_R3, P.MOVE_FAC, P.M1_MOVE_FAC, P.M1_INVESTIGATE, P.M1_RESTORE_POWER, P.M1_COMMAND, P.M2_CONFIRM, P.M3_ENTER_LAB, P.M3_REACH_SECURITY, P.M3_OVERRIDE, P.M3_REACH_SAMPLE, P.M4_BREAK_CONTACT, P.M4_REACH_LZ, P.M4_CALL_EXTRACTION, P.M4_BOARD];
+function drawStatusStack(W) {
+    let y = 24;   // clear of the 14 px-high compass strip centered at y=8
+    const line = (text, size, color) => { hudText(text, LJS.vec2(W / 2, y), size, color, 'center'); y += size + 7; };
+    if (phase === P.FINALE) line('DISTANCE ' + Math.round(Math.hypot(player.pos.x - LZ.x, player.pos.y - LZ.y)) + ' m', 13, LJS.rgb(0.6, 0.9, 1));
+    else if (STATUS_TRAVEL_PHASES.includes(phase)) {
+        const tgt = targetOfPhase();
+        if (tgt) line('◈ ' + Math.round(Math.hypot(tgt.pos.x - player.pos.x, tgt.pos.y - player.pos.y)) + ' m', 12, LJS.rgb(0.95, 0.9, 0.7));
+    }
+    if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator && endlessRun.waveT < 5) {
+        line('WAVE ' + endlessRun.wave + ' MUTATOR — ' + endlessRun.mutator.name, 14, LJS.rgb(1, 0.82, 0.45));
+        line(endlessRun.mutator.desc, 12, LJS.rgb(1, 0.88, 0.65));
+    }
+    if (toastT > 0) {
+        const a = clamp(toastT, 0, 1), c = colorStr(toastColor);
+        line(toastText, 13, LJS.rgb(c.r, c.g, c.b, a));
     }
 }
 function drawHUD(W, H) {
@@ -9532,37 +9552,14 @@ function drawHUD(W, H) {
 
     /* ── TOP-RIGHT: objective text/progress below the minimap ──────── */
     drawObjectiveStack(W);
-    const optionalLine = optionalObjectiveLine();
-    if (phase === P.FINALE) {
-        const dLZ = Math.hypot(player.pos.x - LZ.x, player.pos.y - LZ.y);
-        hudText('DISTANCE ' + Math.round(dLZ) + ' m', LJS.vec2(W / 2, 72), 13, LJS.rgb(0.6, 0.9, 1), 'center');
-    }
-    if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator && endlessRun.waveT < 5) {
-        hudText('WAVE ' + endlessRun.wave + ' MUTATOR — ' + endlessRun.mutator.name, LJS.vec2(W / 2, 52), 14, LJS.rgb(1, 0.82, 0.45), 'center');
-        hudText(endlessRun.mutator.desc, LJS.vec2(W / 2, 70), 12, LJS.rgb(1, 0.88, 0.65), 'center');
-    }
 
-    /* ── TOP-CENTER: heading compass strip ─────────────────────────── */
+    /* ── TOP-CENTER: compass strip + compact status stack beneath it ── */
     drawCompass(W, H);
-    /* objective distance during travel phases */
-    if (phase === P.MOVE_R1 || phase === P.MOVE_R2 || phase === P.MOVE_R3 || phase === P.MOVE_FAC || phase === P.M1_MOVE_FAC || phase === P.M1_INVESTIGATE || phase === P.M1_RESTORE_POWER || phase === P.M1_COMMAND || phase === P.M2_CONFIRM || phase === P.M3_ENTER_LAB || phase === P.M3_REACH_SECURITY || phase === P.M3_OVERRIDE || phase === P.M3_REACH_SAMPLE || phase === P.M4_BREAK_CONTACT || phase === P.M4_REACH_LZ || phase === P.M4_CALL_EXTRACTION || phase === P.M4_BOARD) {
-        const tgt = targetOfPhase();
-        if (tgt) {
-            const dist = Math.hypot(tgt.pos.x - player.pos.x, tgt.pos.y - player.pos.y);
-            hudText('◈ ' + Math.round(dist) + ' m', LJS.vec2(W / 2, optionalLine ? 84 : 48), 12, LJS.rgb(0.95, 0.9, 0.7), 'center');
-        }
-    }
-
-    /* transient notification toast — one short line, fades out (replaces the combat log) */
-    if (toastT > 0) {
-        const a = clamp(toastT, 0, 1);
-        const c = colorStr(toastColor);
-        hudText(toastText, LJS.vec2(W / 2, 108), 13, LJS.rgb(c.r, c.g, c.b, a), 'center');
-    }
+    drawStatusStack(W);
 
     /* ── BOTTOM-LEFT: icon-led Commander / squad VITALS ───────────── */
-    const sx0 = 16, sy0 = H - 286;
-    hudPanel(sx0 + 132, sy0 + 135, 264, 270, ACCENT);
+    const sx0 = 16, sy0 = H - 312;
+    hudPanel(sx0 + 132, sy0 + 148, 264, 296, ACCENT);
     hudText('VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
     hudText('COMMANDER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
     hudStatusIcon('health', sx0 + 20, sy0 + 50);
@@ -9571,9 +9568,10 @@ function drawHUD(W, H) {
     hudBar(sx0 + 148, sy0 + 64, 200, 6, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), null, false);
     hudStatusIcon('stamina', sx0 + 20, sy0 + 78);
     hudBar(sx0 + 148, sy0 + 78, 200, 6, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), null, false);
+    hudText('[F] SURGE ' + (player.abilityCd > 0 ? player.abilityCd.toFixed(1) + 's' : 'READY'), LJS.vec2(sx0 + 16, sy0 + 96), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     for (let i = 0; i < squadMembers.length; i++) {
         const m = squadMembers[i];
-        const ry = sy0 + 104 + i * 56;
+        const ry = sy0 + 122 + i * 56;
         const d = Math.hypot(player.pos.x - m.pos.x, player.pos.y - m.pos.y);
         const outAmmo = m.mag <= 0 && m.reserve <= 0;
         const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : m.reloading ? 'RELOAD' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : m.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 'DEFEND' : m.aiMode;
@@ -9730,7 +9728,7 @@ function createCampaignCheckpointSnapshot() {
 }
 function applyCampaignCheckpointSnapshot(snapshot) {
     if (!snapshot || snapshot.missionId !== activeMissionId || !CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return false;
-    objectiveHUD.clear();
+    objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
@@ -9883,7 +9881,7 @@ function checkpointMission4State() {
 }
 function applyContinuedMission4Snapshot(snapshot) {
     if (!snapshot || activeMissionId !== 'break_contact') return;
-    objectiveHUD.clear();
+    objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'continued'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState.securityTurret = !!boundary.securityTurret; campaignRun.enemyIntel = !!boundary.enemyIntel;
@@ -10083,6 +10081,18 @@ function drawResultScreen(W, H) {
 
 function colorStr(c) { const m = /^#([0-9a-f]{6})$/i.exec(c); if (!m) return LJS.rgb(1, 1, 1); return LJS.rgb(parseInt(m[1].slice(0, 2), 16) / 255, parseInt(m[1].slice(2, 4), 16) / 255, parseInt(m[1].slice(4, 6), 16) / 255); }
 
+/* Optional-objective markers appear only when the player is close, with a small
+   hysteresis band to prevent flicker at the threshold. Main-objective markers are
+   unaffected. Appear at 100 m, hide again only past 110 m. */
+const OPTIONAL_MARKER_NEAR = 100, OPTIONAL_MARKER_FAR = 110;
+const optionalMarkerState = new Map();
+function optionalMarkerVisible(target) {
+    const was = !!optionalMarkerState.get(target.short);
+    const visible = was ? target.distance <= OPTIONAL_MARKER_FAR : target.distance <= OPTIONAL_MARKER_NEAR;
+    optionalMarkerState.set(target.short, visible);
+    return visible;
+}
+function clearOptionalMarkerState() { optionalMarkerState.clear(); }
 function drawMarkers(W, H) {
     if (mode === 'endless') { drawEndlessMarkers(W, H); return; }
     const targets = [];
@@ -10143,8 +10153,9 @@ function drawMarkers(W, H) {
     if (phase === P.SEARCH && vial.group) targets.push({ pos: LJS.vec2(vial.group.position.x, vial.group.position.y), label: 'CLONE DNA VIAL', short: 'DNA VIAL', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.FINALE) targets.push({ pos: LZ, label: 'LANDING ZONE', short: 'LZ', color: 0x66ffcc, priority: 100, primary: true });
     for (const target of targets) target.distance = Math.hypot(target.pos.x - player.pos.x, target.pos.y - player.pos.y);
-    targets.sort((a, b) => b.priority - a.priority || a.distance - b.distance);
-    const selected = targets.filter((target) => target.primary).concat(targets.filter((target) => target.optional).slice(0, 2));
+    const visibleTargets = targets.filter((target) => !target.optional || optionalMarkerVisible(target));
+    visibleTargets.sort((a, b) => b.priority - a.priority || a.distance - b.distance);
+    const selected = visibleTargets.filter((target) => target.primary).concat(visibleTargets.filter((target) => target.optional).slice(0, 2));
     const placed = [];
     const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
     const cameraRight = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
@@ -11158,6 +11169,7 @@ window.__cf = {
     },
     objectiveHUDInfo() { return objectiveHUD.snapshot(); },
     advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
+    optionalMarkerInfo() { return { near: OPTIONAL_MARKER_NEAR, far: OPTIONAL_MARKER_FAR, state: Object.fromEntries(optionalMarkerState) }; },
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
     restartEndless() { if (mode === 'endless') restartEndlessRun(); },
     get weaponDefinitions() { return PLAYER_WEAPONS; },

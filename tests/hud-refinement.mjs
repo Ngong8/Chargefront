@@ -106,7 +106,7 @@ try {
         const emptyPaint=await page.evaluate(y=>__statusPaint.filter(p=>Math.abs(p.y-y)<1),stamina.y-3);
         assert(emptyPaint.length>0 && emptyPaint.every(p=>p.width===200)); assert.equal(new Set(emptyPaint.map(p=>p.style)).size,1,'Empty stamina must paint only the dark track');
         results.staminaFill={trackWidth:200,partialFillWidth:80,emptyFillWidth:0};
-        await capture('04-exhausted-vitals',{x:12,y:426,width:272,height:282});
+        await capture('04-exhausted-vitals',{x:12,y:402,width:272,height:312});
         // Real sprint input and idle recovery prove the same gameplay stamina feeds the HUD.
         await page.evaluate(()=>{const c=__cf;c.player.hp=c.player.maxHp;c.player.shield=c.player.maxShield;c.player.stamina=100;c.squad[2].downed=false;c.pause(false);});
         await page.keyboard.down('w');await page.keyboard.down('ShiftLeft');await page.waitForTimeout(2400);
@@ -135,7 +135,8 @@ try {
                 });
             },h.text);
             assert(textBounds.every(t=>t.left>=24 && t.right<=272),'Left panel text must remain inside its frame');
-            const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');assert(main.x>=viewport.width-316 && main.y>190);
+            const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');assert.equal(main.x,viewport.width-16);assert.equal(main.align,'right');assert(main.y>190);
+            assert(h.text.some(t=>t.value==='[F] SURGE READY'||/^\[F\] SURGE [\d.]+s$/.test(t.value)));
             results.layouts.push({viewport,panels:left,icons:h.icons.length});
         }
         await page.evaluate(()=>__cfPerf.reset());await page.waitForTimeout(1000);

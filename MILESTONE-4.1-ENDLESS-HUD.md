@@ -523,3 +523,38 @@ Selected evidence: `_playtest/m41/hud-flow/` contains four PNGs —
 Supplemental existing-suite output stays local under ignored
 `_playtest/m41/regressions/hud-flow/`. The two follow-ups use separate sprint and
 HUD commits. No Milestone 4.2, push or merge.
+
+## Follow-up — navigation status, objective alignment, Commander ability
+
+- Top-center state text (waypoint distance, FINALE distance, wave-mutator
+  announcement, transient notifications/EQUIPPED toasts) now renders as a compact
+  centered stack beginning at **y=24**, directly beneath the unchanged 14 px
+  compass strip (centered y=8). No travel/status text remains at the old mid-screen
+  positions, and the crosshair/central view stays clear. `drawStatusStack()` keeps
+  lines 12–14 px with 7 px gaps; interaction prompts stay at the bottom action bar.
+- The main/optional objective stack below the minimap is now **right-aligned** to
+  `W − 16`, sharing the minimap's right edge. Label, body and wrapped lines all
+  right-align, the optional progress bar is right-centered, and the strike-through
+  tracks each wrapped line's right-aligned span. Width stays capped at 300 px so
+  long objectives never spread toward screen center. Hold/fade/collapse unchanged.
+- Optional-objective world/HUD markers now appear only within a proximity band:
+  **appear at 100 m, hide again past 110 m** (hysteresis prevents threshold
+  flicker). Main-objective, route and waypoint markers are unchanged. Completed
+  optional objectives never reappear, and per-target marker state is cleared on
+  fresh runs, checkpoint/Continue restoration and chapter transitions.
+- VITALS adds a Commander ability line in the squad's visual language:
+  `[F] SURGE READY` or `[F] SURGE 21.3s`, driven by the existing `player.abilityCd`
+  (canonical Surge Pulse on F). It sits after the three Commander stat rows with a
+  small separation before ROOK. The panel grows 24 px to **264×296** (top edge
+  `H − 312`); all three squad entries keep an 18 px gap between ability text and
+  the next operator name. No ability system changed.
+
+Validation: new `tests/hud-navigation.mjs` passes in headed Edge and headless
+Firefox (status y=24, right alignment, optional 100/110 hysteresis with no
+in-band flicker, transition clearing, SURGE READY→cooldown). Updated
+`hud-refinement`, `objective-hud-flow` and `endless-hud` pass in both browsers,
+including 1280×720/1366×768/1920×1080 layout/text-bound checks. Pure combat-state
+and objective-state suites pass. Evidence: `_playtest/m41/navigation/`
+(`01-compass-status-stack`, `02-objectives-right-aligned`,
+`03-commander-ability`, `04-optional-far-hidden`, `05-optional-near-visible`,
+`navigation-{edge,firefox}.json`).

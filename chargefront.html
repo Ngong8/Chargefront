@@ -155,6 +155,7 @@
 <!-- Classic script keeps local file:// play working; facility geometry is built on campaign startup. -->
 <script src="src/world/facility.js"></script>
 <script src="src/combat.js"></script>
+<script src="src/hud-objectives.js"></script>
 <script type="module">
 import * as THREE from 'three';
 import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/littlejs.esm.min.js';
@@ -3545,6 +3546,7 @@ function updateEndless(dt) {
 }
 /* ── run setup ── */
 function resetEndlessRun() {
+    objectiveHUD.clear();
     endlessRun.wave = 0; endlessRun.waveActive = false; endlessRun.waveT = 0;
     endlessRun.budgetLeft = 0; endlessRun.spawnT = 0; endlessRun.alive = 0; endlessRun.bossSpawned = false;
     endlessRun.dna = 0; endlessRun.dnaBanked = 0; endlessRun.milestone = 0; endlessRun.upgrades = [];
@@ -4156,6 +4158,22 @@ function optionalObjectiveLine() {
         return 'Restore Laboratory Security Turret';
     }
     return '';
+}
+const objectiveHUD = ChargefrontObjectiveHUD.create();
+function updateObjectiveHUD(dt) {
+    objectiveHUD.tick(dt);
+    const mainKey = mode === 'endless' ? 'endless:' + endlessRun.wave + ':' + endlessRun.waveActive : activeMissionId + ':' + phase;
+    objectiveHUD.set('main', mainKey, objectiveLine());
+    let key = null;
+    if (mode === 'campaign' && activeMissionId === 'dead_signal') {
+        if (!campaignRun.optional.scan_growth) key = 'growth';
+        else if (!campaignRun.optional.portable_cell) key = campaignContent.cellCarried ? 'cell-choice' : 'cell-recovery';
+    } else if (mode === 'campaign' && activeMissionId === 'power_through') {
+        const state = campaignContent.escort?.state;
+        if (state !== SURVEY_DRONE_STATE.COMPLETE && state !== SURVEY_DRONE_STATE.ABANDONED)
+            key = state === SURVEY_DRONE_STATE.ESCORTING || state === SURVEY_DRONE_STATE.DISABLED ? 'survey-escort' : state === SURVEY_DRONE_STATE.ARRIVED || state === SURVEY_DRONE_STATE.SCANNING ? 'survey-scan' : 'survey-find';
+    } else if (mode === 'campaign' && activeMissionId === 'sample_zero' && !campaignRun.optional.security_turret) key = 'turret';
+    objectiveHUD.set('optional', key ? activeMissionId + ':' + key : null, key ? optionalObjectiveLine() : '');
 }
 function targetOfPhase() {
     switch (phase) {
@@ -7456,6 +7474,7 @@ let pointerLockGestureFn = null;
 let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
+    objectiveHUD.clear();
     stopIntroSfx();
     mode = 'campaign';
     const snapshot = campaignSnapshot();
@@ -9329,8 +9348,8 @@ function hudBar(cx, y, w, h, pct, color, accent, framed = true) {
     LJS.drawRect(LJS.vec2(cx + w / 2 - 1, y), LJS.vec2(2, h), ac, 0, false, true);
 }
 /* outlined HUD text (dark stroke for sci-fi readability) */
-function hudText(text, pos, size, color, align) {
-    LJS.drawTextScreen(text, pos, size, color, Math.max(2, Math.round(size / 5)), LJS.rgb(0.02, 0.01, 0.05, 0.95), align, HFONT());
+function hudText(text, pos, size, color, align, fadeOutline = false) {
+    LJS.drawTextScreen(text, pos, size, color, Math.max(2, Math.round(size / 5)), LJS.rgb(0.02, 0.01, 0.05, 0.95 * (fadeOutline ? color.a : 1)), align, HFONT());
 }
 /* corner bracket for sci-fi frames */
 function hudCorner(x, y, dx, dy, col) {
@@ -9438,6 +9457,66 @@ function drawCrosshair(W, H) {
     }
 }
 
+const objectiveMeasureContext = document.createElement('canvas').getContext('2d');
+function hudObjectiveStrike(x, y, width, alpha) {
+    LJS.drawLine(LJS.vec2(x, y), LJS.vec2(x + width, y), 1.3, LJS.rgb(0.6, 0.95, 0.75, alpha), LJS.vec2(), 0, false, true);
+}
+function drawObjectiveProgress(x, y, width) {
+    let text = '', progress = -1, color = LJS.rgb(0.3, 1, 0.8);
+    const relay = relayByPhase();
+    if (relay?.powering) { text = relay.R.name + '  ' + Math.round(relay.progress * 100) + '%'; progress = relay.progress; }
+    else if (phase === P.M3_STABILIZE) {
+        const e = campaignRun.encounter; text = 'CONTAINMENT SYNC  ' + Math.max(0, Math.ceil(e.duration - e.t)) + 's';
+        progress = clamp(e.t / e.duration, 0, 1); color = LJS.rgb(1, 0.32, 0.45);
+    } else if (phase === P.M4_HOLD_LZ) {
+        const nodes = campaignContent.extraction?.infestation?.nodes || []; let cleared = 0;
+        for (const node of nodes) if (node.cleared) cleared++;
+        text = 'INFESTATION PURGE  ' + cleared + ' / ' + nodes.length; progress = nodes.length ? cleared / nodes.length : 0; color = LJS.rgb(1, 0.32, 0.28);
+    } else if (phase === P.FINALE) text = 'DROPSHIP READY — BOARD FOR EXTRACTION';
+    if (!text) return 0;
+    hudText(text, LJS.vec2(x, y + 6), 10, LJS.rgb(0.85, 1, 0.96), 'left');
+    if (progress >= 0) hudBar(x + width / 2, y + 22, width, 8, progress, color);
+    return progress >= 0 ? 32 : 18;
+}
+function drawObjectiveStack(W) {
+    const width = Math.min(300, W * 0.26), x = W - 16 - width;
+    let y = 202; // below the unchanged 150 px minimap and its optional legend
+    for (const kind of ['main', 'optional']) {
+        if (!objectiveHUD.rows.some(row => row.kind === kind)) continue;
+        hudText(kind === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(x, y), 10, kind === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'left');
+        y += 18;
+        for (const row of objectiveHUD.rows) {
+            if (row.kind !== kind) continue;
+            const font = HFONT();
+            if (!row.lines || row.layoutWidth !== width || row.layoutFont !== font) {
+                objectiveMeasureContext.font = '12px "' + font + '"';
+                row.lines = []; let line = '';
+                for (const word of row.text.split(/\s+/)) {
+                    const candidate = line ? line + ' ' + word : word;
+                    if (line && objectiveMeasureContext.measureText(candidate).width > width) { row.lines.push(line); line = word; }
+                    else line = candidate;
+                }
+                if (line) row.lines.push(line);
+                row.layoutWidth = width; row.layoutFont = font;
+            }
+            const alpha = objectiveHUD.alpha(row), collapse = alpha * alpha * (3 - 2 * alpha);
+            const bodyHeight = row.lines.length * 15 + (row.extraHeight || 0);
+            const context = LJS.mainContext;
+            context.save();
+            if (row.completed) { context.beginPath(); context.rect(x - 3, y - 2, width + 6, bodyHeight * collapse + 4); context.clip(); }
+            for (let i = 0; i < row.lines.length; i++) {
+                const baseline = y + 6 + i * 15;
+                hudText(row.lines[i], LJS.vec2(x, baseline), 12, row.completed ? LJS.rgb(0.6, 0.88, 0.74, alpha) : LJS.rgb(0.95, 0.86, 1), 'left', row.completed);
+                if (row.completed) hudObjectiveStrike(x, baseline, objectiveMeasureContext.measureText(row.lines[i]).width, alpha);
+            }
+            if (!row.completed) row.extraHeight = kind === 'main' ? drawObjectiveProgress(x, y + row.lines.length * 15, width) : 0;
+            context.restore();
+            // Collapse the retiring row smoothly; clip prevents overlap with its successor.
+            y += (row.lines.length * 15 + (row.extraHeight || 0) + 12) * (row.completed ? collapse : 1);
+        }
+        y += 10;
+    }
+}
 function drawHUD(W, H) {
     if (!started) return;
     if (phase === P.DEAD || phase === P.DONE) { drawResultScreen(W, H); return; }
@@ -9451,39 +9530,12 @@ function drawHUD(W, H) {
 
     const ACCENT = LJS.rgb(0.42, 0.78, 1, 0.9);      // shared sci-fi frame accent
 
-    /* ── TOP-CENTER: objective + progress (outlined) ───────────────── */
-    hudText('MAIN OBJECTIVE', LJS.vec2(W / 2, 14), 10, LJS.rgb(0.42, 0.78, 1), 'center');
-    hudText(objectiveLine(), LJS.vec2(W / 2, 30), 18, LJS.rgb(0.95, 0.86, 1), 'center');
+    /* ── TOP-RIGHT: objective text/progress below the minimap ──────── */
+    drawObjectiveStack(W);
     const optionalLine = optionalObjectiveLine();
-    if (optionalLine) {
-        hudText('OPTIONAL OBJECTIVE', LJS.vec2(W / 2, 52), 10, LJS.rgb(0.58, 0.92, 0.78), 'center');
-        hudText(optionalLine, LJS.vec2(W / 2, 67), 12, LJS.rgb(0.72, 0.9, 0.82), 'center');
-    }
-    const rel = relayByPhase();
-    if (rel && rel.powering) {
-        const bw = Math.min(320, W * 0.34), by = 88;
-        hudBar(W / 2, by, bw, 14, rel.progress, LJS.rgb(0.3, 1, 0.8), LJS.rgb(0.4, 1, 0.85));
-        hudText(rel.R.name + '  ' + Math.round(rel.progress * 100) + '%', LJS.vec2(W / 2, by), 15, LJS.rgb(0.85, 1, 0.96), 'center');
-    }
-    if (phase === P.M3_STABILIZE) {
-        const encounter = campaignRun.encounter;
-        const progress = clamp(encounter.t / encounter.duration, 0, 1);
-        const remaining = Math.max(0, Math.ceil(encounter.duration - encounter.t));
-        hudBar(W / 2, 88, Math.min(320, W * 0.34), 14, progress, LJS.rgb(1, 0.32, 0.45), LJS.rgb(1, 0.55, 0.68));
-        hudText('CONTAINMENT SYNC  ' + remaining + 's', LJS.vec2(W / 2, 88), 14, LJS.rgb(1, 0.9, 0.94), 'center');
-    }
-    if (phase === P.M4_HOLD_LZ) {
-        const nodes = campaignContent.extraction && campaignContent.extraction.infestation ? campaignContent.extraction.infestation.nodes : [];
-        const cleared = nodes.filter((node) => node.cleared).length;
-        const progress = nodes.length ? cleared / nodes.length : 0;
-        hudBar(W / 2, 88, Math.min(340, W * 0.36), 14, progress, LJS.rgb(1, 0.32, 0.28), LJS.rgb(1, 0.78, 0.35));
-        hudText('INFESTATION PURGE  ' + cleared + ' / ' + nodes.length, LJS.vec2(W / 2, 88), 14, LJS.rgb(1, 0.94, 0.78), 'center');
-    }
     if (phase === P.FINALE) {
         const dLZ = Math.hypot(player.pos.x - LZ.x, player.pos.y - LZ.y);
-        hudText('EVACUATE TO THE LANDING ZONE', LJS.vec2(W / 2, 52), 16, LJS.rgb(0.85, 0.93, 1), 'center');
         hudText('DISTANCE ' + Math.round(dLZ) + ' m', LJS.vec2(W / 2, 72), 13, LJS.rgb(0.6, 0.9, 1), 'center');
-        hudText('DROPSHIP READY — BOARD FOR EXTRACTION', LJS.vec2(W / 2, 92), 14, LJS.rgb(0.88, 0.95, 1), 'center');
     }
     if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator && endlessRun.waveT < 5) {
         hudText('WAVE ' + endlessRun.wave + ' MUTATOR — ' + endlessRun.mutator.name, LJS.vec2(W / 2, 52), 14, LJS.rgb(1, 0.82, 0.45), 'center');
@@ -9509,8 +9561,8 @@ function drawHUD(W, H) {
     }
 
     /* ── BOTTOM-LEFT: icon-led Commander / squad VITALS ───────────── */
-    const sx0 = 16, sy0 = H - 262;
-    hudPanel(sx0 + 132, sy0 + 123, 264, 246, ACCENT);
+    const sx0 = 16, sy0 = H - 286;
+    hudPanel(sx0 + 132, sy0 + 135, 264, 270, ACCENT);
     hudText('VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
     hudText('COMMANDER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
     hudStatusIcon('health', sx0 + 20, sy0 + 50);
@@ -9521,7 +9573,7 @@ function drawHUD(W, H) {
     hudBar(sx0 + 148, sy0 + 78, 200, 6, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), null, false);
     for (let i = 0; i < squadMembers.length; i++) {
         const m = squadMembers[i];
-        const ry = sy0 + 100 + i * 48;
+        const ry = sy0 + 104 + i * 56;
         const d = Math.hypot(player.pos.x - m.pos.x, player.pos.y - m.pos.y);
         const outAmmo = m.mag <= 0 && m.reserve <= 0;
         const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : m.reloading ? 'RELOAD' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : m.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 'DEFEND' : m.aiMode;
@@ -9532,21 +9584,21 @@ function drawHUD(W, H) {
         hudBar(sx0 + 148, ry + 24, 200, 6, m.downed ? 0 : m.shield / m.maxShield, LJS.rgb(0.2, 0.65, 0.9), null, false);
         hudText(st, LJS.vec2(sx0 + 246, ry), 10, m.downed ? LJS.rgb(1, 0.55, 0.55) : outAmmo ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.82, 0.86, 0.97), 'right');
         const ability = ChargefrontCombat.abilities.find(a => a.id === m.def.ability.id);
-        hudText('[' + ['Z', 'X', 'Y'][i] + '] ' + ability.name + (m.abilityCd > 0 ? ' ' + Math.ceil(m.abilityCd) + 's' : ' READY'), LJS.vec2(sx0 + 16, ry + 36), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
+        hudText('[' + ['Z', 'X', 'Y'][i] + '] ' + ability.name + (m.abilityCd > 0 ? ' ' + Math.ceil(m.abilityCd) + 's' : ' READY'), LJS.vec2(sx0 + 16, ry + 38), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     }
 
     /* ── UPPER-LEFT: consolidated COMBAT & SUPPLIES ───────────────── */
     const w = player.weapon;
-    const inactiveIndex = (playerCombat.index + 1) % playerCombat.slots.length;
-    const inactive = playerCombat.weapons[playerCombat.slots[inactiveIndex]];
     const weaponPanelTop = 12;
     const weaponLabelX = 32, weaponValueX = 256;
     hudPanel(148, weaponPanelTop + 131, 264, 262, ACCENT);
     hudText('COMBAT', LJS.vec2(weaponLabelX, weaponPanelTop + 15), 12, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText('[' + (player.weaponIndex + 1) + '] ' + w.name, LJS.vec2(weaponLabelX, weaponPanelTop + 39), 14, LJS.rgb(0.85, 0.93, 1), 'left');
-    hudText(w.mag + ' / ' + w.magSize, LJS.vec2(weaponValueX, weaponPanelTop + 39), 18, w.reloading ? LJS.rgb(0.55, 0.6, 0.7) : w.mag <= Math.ceil(w.magSize * 0.2) ? LJS.rgb(1, 0.65, 0.3) : LJS.rgb(0.55, 0.9, 1), 'right');
-    hudText('[' + (inactiveIndex + 1) + '] ' + inactive.name, LJS.vec2(weaponLabelX, weaponPanelTop + 57), 11, LJS.rgb(0.45, 0.5, 0.62), 'left');
-    hudText(inactive.mag + ' / ' + inactive.magSize, LJS.vec2(weaponValueX, weaponPanelTop + 57), 12, LJS.rgb(0.45, 0.5, 0.62), 'right');
+    for (let index = 0; index < playerCombat.slots.length; index++) {
+        const gun = playerCombat.weapons[playerCombat.slots[index]], active = index === playerCombat.index;
+        const y = weaponPanelTop + 39 + index * 22;
+        hudText('[' + (index + 1) + '] ' + gun.name, LJS.vec2(weaponLabelX, y), active ? 14 : 11, active ? LJS.rgb(0.85, 0.93, 1) : LJS.rgb(0.45, 0.5, 0.62), 'left');
+        hudText(gun.mag + ' / ' + gun.magSize, LJS.vec2(weaponValueX, y), active ? 18 : 12, !active ? LJS.rgb(0.45, 0.5, 0.62) : gun.reloading ? LJS.rgb(0.55, 0.6, 0.7) : gun.mag <= Math.ceil(gun.magSize * 0.2) ? LJS.rgb(1, 0.65, 0.3) : LJS.rgb(0.55, 0.9, 1), 'right');
+    }
     if (w.reloading || player.swapT > 0) {
         const progress = w.reloading ? 1 - w.reloadT / w.reloadDuration : 1 - player.swapT / player.swapDuration;
         hudText(w.reloading ? 'RELOADING' : 'READYING', LJS.vec2(weaponLabelX, weaponPanelTop + 79), 10, LJS.rgb(1, 0.75, 0.4), 'left');
@@ -9678,6 +9730,7 @@ function createCampaignCheckpointSnapshot() {
 }
 function applyCampaignCheckpointSnapshot(snapshot) {
     if (!snapshot || snapshot.missionId !== activeMissionId || !CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return false;
+    objectiveHUD.clear();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
@@ -9830,6 +9883,7 @@ function checkpointMission4State() {
 }
 function applyContinuedMission4Snapshot(snapshot) {
     if (!snapshot || activeMissionId !== 'break_contact') return;
+    objectiveHUD.clear();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.entryMode = 'continued'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState.securityTurret = !!boundary.securityTurret; campaignRun.enemyIntel = !!boundary.enemyIntel;
@@ -10297,6 +10351,7 @@ function drawMinimap(W, H) {
 }
 
 function gameUpdatePost() {
+    if (started && !intro && phase !== P.DEAD && phase !== P.DONE) updateObjectiveHUD(LJS.getPaused() ? 0 : LJS.timeDelta);
     if (!campaignWorldBuilt || mode !== 'campaign') return;
     const viewX = camera ? camera.position.x : player.pos.x, viewY = camera ? camera.position.y : player.pos.y;
     const state = facilityWorld.updateFx(LJS.timeDelta, LJS.time, viewX, viewY, !!campaignRun.worldState.localPower, !!campaignRun.worldState.emergency);
@@ -11091,15 +11146,18 @@ window.__cf = {
     checkpoint() { return checkpointCampaignState(); },
     combatPoolInfo() { return { shots: shots.length, shotPool: shotPool.length, impacts: impacts.length, impactPool: impactPool.length, sparks: sparks.length, sparkPool: sparkPool.length }; },
     inspectHUD() {
-        const text = [], bars = [], icons = [], panels = [], originalText = hudText, originalBar = hudBar, originalIcon = hudStatusIcon, originalPanel = hudPanel;
-        hudText = (value, pos, size, color, align) => text.push({ value: String(value), x: pos.x, y: pos.y, size, align, color: [color.r, color.g, color.b] });
+        const text = [], bars = [], icons = [], panels = [], strikes = [], originalText = hudText, originalBar = hudBar, originalIcon = hudStatusIcon, originalPanel = hudPanel, originalStrike = hudObjectiveStrike;
+        hudText = (value, pos, size, color, align, fadeOutline = false) => text.push({ value: String(value), x: pos.x, y: pos.y, size, align, color: [color.r, color.g, color.b], alpha:color.a, outlineAlpha:0.95 * (fadeOutline ? color.a : 1) });
         hudBar = (x, y, width, height, progress, color, accent, framed = true) => bars.push({ x, y, width, height, progress, framed });
         hudStatusIcon = (id, x, y, size = 14) => icons.push({ id, x, y, width: size, height: size, loaded: HUD_STATUS_ICONS[id].complete && HUD_STATUS_ICONS[id].naturalWidth > 0 });
         hudPanel = (x, y, width, height) => panels.push({ x, y, width, height });
+        hudObjectiveStrike = (x, y, width, alpha) => strikes.push({x, y, width, alpha});
         try { drawHUD(LJS.mainCanvasSize.x, LJS.mainCanvasSize.y); }
-        finally { hudText = originalText; hudBar = originalBar; hudStatusIcon = originalIcon; hudPanel = originalPanel; }
-        return { text, bars, icons, panels };
+        finally { hudText = originalText; hudBar = originalBar; hudStatusIcon = originalIcon; hudPanel = originalPanel; hudObjectiveStrike = originalStrike; }
+        return { text, bars, icons, panels, strikes };
     },
+    objectiveHUDInfo() { return objectiveHUD.snapshot(); },
+    advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
     restartEndless() { if (mode === 'endless') restartEndlessRun(); },
     get weaponDefinitions() { return PLAYER_WEAPONS; },

@@ -153,7 +153,8 @@ try {
         for (const label of ['VITALS', 'COMMANDER', 'ROOK', 'VEX', 'KADE', 'COMBAT', 'SUPPLIES', 'CARTRIDGES']) assert(h.text.some(t => t.value === label));
         const pair = await page.evaluate(() => __cf.combat.slots.map((id,index) => ({slot:index+1,name:__cf.combat.weapons[id].name,mag:__cf.combat.weapons[id].mag,size:__cf.combat.weapons[id].magSize})));
         for(const weapon of pair) {assert(h.text.some(t=>t.value==='['+weapon.slot+'] '+weapon.name));assert(h.text.some(t=>t.value===weapon.mag+' / '+weapon.size));}
-        assert(h.text.filter(t => ['COMMANDER','ROOK','VEX','KADE'].includes(t.value)).every(t => t.y > 480));
+        const vitals=h.panels.find(p=>p.x===148&&p.height===270);
+        assert(h.text.filter(t => ['COMMANDER','ROOK','VEX','KADE'].includes(t.value)).every(t => t.y > vitals.y-vitals.height/2));
         assert(h.text.find(t => t.value.startsWith('SCRAP ')).y < 300);
         await page.keyboard.press('r'); await page.waitForFunction(() => __cf.player.weapon.reloading);
         const reload1 = await hud(); await page.waitForTimeout(350); const reload2 = await hud();

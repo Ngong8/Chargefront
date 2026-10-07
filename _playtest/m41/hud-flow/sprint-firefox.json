@@ -1,0 +1,56 @@
+{
+  "results": {
+    "recovery": {
+      "stamina": 6.7666666666666675,
+      "sprinting": false,
+      "exhausted": true,
+      "speed": 5.2,
+      "blend": 0.006737946999085451,
+      "pose": "WALK"
+    },
+    "events": [
+      {
+        "next": true,
+        "stamina": 99.63333333333334,
+        "at": 18109
+      },
+      {
+        "next": false,
+        "stamina": 0,
+        "at": 22697
+      },
+      {
+        "next": true,
+        "stamina": 24.833333333333343,
+        "at": 24567
+      },
+      {
+        "next": false,
+        "stamina": 0,
+        "at": 25669
+      },
+      {
+        "next": true,
+        "stamina": 24.833333333333343,
+        "at": 27489
+      },
+      {
+        "next": false,
+        "stamina": 0,
+        "at": 28617
+      },
+      {
+        "next": true,
+        "stamina": 24.833333333333343,
+        "at": 30438
+      }
+    ],
+    "frames": {
+      "recovering": 162,
+      "chatter": 0,
+      "wrongSpeed": 0
+    },
+    "passed": true
+  },
+  "errors": []
+}

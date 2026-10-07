@@ -476,3 +476,50 @@ sprint/sway poses. No animation-only timer or save-schema change.
 `tests/sprint-recovery.mjs` passes in headed Edge and headless Firefox through
 three continuous-held exhaustion/recovery cycles: zero chatter/wrong-speed
 frames, recovered WALK pose, and re-entry only after the 25% threshold.
+
+## Corrective follow-up — fixed slots and objective flow
+
+- COMBAT now keeps Slot 1 at y=51 and Slot 2 at y=73. 1/2/Q changes size/color
+  emphasis only, with magazines read from their own existing slot records.
+- Squad group cadence grows from 48 to 56 px, with ability baseline 38 px after
+  its operator name: 14 px from the shield row, **18 px before the next name**.
+  Vitals grows only 24 px to 264×270; Commander rows/icons/styles are preserved.
+- Textual main/optional objectives and relay/containment/purge progress move into
+  a lightweight right-side stack, beginning at y=202 below the unchanged minimap
+  and legend. Width is capped at 300 px, shares its right edge with the minimap,
+  and wraps long mission strings using a cached Canvas2D measurement context.
+  World-space markers, top-center waypoint distances/compass, command strip and
+  mutator announcements are preserved.
+- `src/hud-objectives.js` owns presentation only: at most one current and one
+  retiring row per main/optional category. Stable mission/phase/wave/side-step IDs
+  prevent hostile counts, escort HP, repair timers and objective percentages from
+  triggering false completion. Completed optional status messages do not stay in
+  the current list permanently. Existing progression and optional state remain
+  authoritative and unchanged.
+- Replaced/completed rows strike through, hold **.45 s**, then fade over **.65 s**
+  and disappear (1.10 s total). Smooth collapse plus a canvas clip keeps successors
+  moving into freed space without text overlap. Text outlines fade with the glyphs
+  so no dark text ghost remains. Cached wrapping updates only on
+  text/font/width changes. There are no per-frame DOM nodes or save fields.
+  Fresh runs and checkpoint restoration clear transient presentation; seamless
+  chapter transitions retain the completion animation and bounded queue.
+
+Final validation: pure combat-state and objective-state suites pass; existing
+HUD refinement, combat/squad/checkpoint and four-deployment Endless browser suites
+pass in Edge and Firefox. New sprint and objective-flow tests pass in both
+browsers (headed Edge, headless Firefox). Actual E interactions collect the main
+maintenance battery and finish the optional scan; checks cover optional retirement/
+appearance, all M1→M4 objective boundaries, Continue without duplicated rows,
+escort health/repair changes, relay percentages, strike/hold/fade/removal and
+smooth successor placement. Layout/text bounds pass at 1280×720, 1366×768 and
+1920×1080. No unexpected page/console errors. HUD and isolated firing retain zero
+new material/geometry/shader links/world/facility rebuilds; final Endless firing
+p95 samples were 17.0 ms Edge / 16.7 ms Firefox. Short traces are not a soak test.
+
+Selected evidence: `_playtest/m41/hud-flow/` contains four PNGs —
+`01-sprint-recovering.png`, `02-fixed-slots-vitals-objectives.png`,
+`03-objective-strike.png`, `04-objective-fade.png` — plus compact
+`sprint-{edge,firefox}.json` and `objectives-{edge,firefox}.json` receipts.
+Supplemental existing-suite output stays local under ignored
+`_playtest/m41/regressions/hud-flow/`. The two follow-ups use separate sprint and
+HUD commits. No Milestone 4.2, push or merge.

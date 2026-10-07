@@ -5,7 +5,7 @@ import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
 const { chromium, firefox } = await import(process.env.PLAYWRIGHT_PACKAGE ? pathToFileURL(resolve(process.env.PLAYWRIGHT_PACKAGE)).href : 'playwright');
 const ff = process.argv.includes('firefox'), before = process.argv.includes('--before'), name = ff ? 'firefox' : 'edge';
-const out = resolve('_playtest/m41/hud-refinement'); mkdirSync(out, {recursive:true});
+const out = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m41/hud-refinement'); mkdirSync(out, {recursive:true});
 const browser = await (ff ? firefox : chromium).launch(ff ? {headless:true} : {headless:!process.argv.includes('--headed'),
     executablePath:process.env.CHROME_PATH || 'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',args:['--enable-unsafe-swiftshader','--allow-file-access-from-files']});
 const page = await browser.newPage({viewport:{width:1280,height:720}}), errors=[], consoles=[], results={};
@@ -45,8 +45,8 @@ try {
         const weaponRows=h=>h.text.filter(t=>/^\[[12]\] (BUL-117|CRW-8)$/.test(t.value));
         const checkWeapons=(h,active)=>{
             const rows=weaponRows(h); assert.equal(rows.length,2);
-            assert(rows[0].value.startsWith('['+(active+1)+']')); assert(rows[1].y>rows[0].y && rows[1].y-rows[0].y<25);
-            assert(rows[0].size>rows[1].size); assert(rows[0].color[0]>rows[1].color[0]);
+            assert(rows[0].value.startsWith('[1]')); assert(rows[1].value.startsWith('[2]')); assert(rows[1].y>rows[0].y && rows[1].y-rows[0].y<25);
+            assert(rows[active].size>rows[1-active].size); assert(rows[active].color[0]>rows[1-active].color[0]);
             assert(h.text.some(t=>t.value==='26 / 50')); assert(h.text.some(t=>t.value==='8 / 20'));
             const y=value=>h.text.find(t=>t.value===value).y;
             assert(y('MEDKITS')<y('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD')); assert(y('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD')<y('SUPPLIES'));
@@ -106,7 +106,7 @@ try {
         const emptyPaint=await page.evaluate(y=>__statusPaint.filter(p=>Math.abs(p.y-y)<1),stamina.y-3);
         assert(emptyPaint.length>0 && emptyPaint.every(p=>p.width===200)); assert.equal(new Set(emptyPaint.map(p=>p.style)).size,1,'Empty stamina must paint only the dark track');
         results.staminaFill={trackWidth:200,partialFillWidth:80,emptyFillWidth:0};
-        await capture('04-exhausted-vitals',{x:12,y:450,width:272,height:258});
+        await capture('04-exhausted-vitals',{x:12,y:426,width:272,height:282});
         // Real sprint input and idle recovery prove the same gameplay stamina feeds the HUD.
         await page.evaluate(()=>{const c=__cf;c.player.hp=c.player.maxHp;c.player.shield=c.player.maxShield;c.player.stamina=100;c.squad[2].downed=false;c.pause(false);});
         await page.keyboard.down('w');await page.keyboard.down('ShiftLeft');await page.waitForTimeout(2400);
@@ -135,7 +135,7 @@ try {
                 });
             },h.text);
             assert(textBounds.every(t=>t.left>=24 && t.right<=272),'Left panel text must remain inside its frame');
-            assert(h.text.find(t=>t.value==='MAIN OBJECTIVE').x===viewport.width/2);
+            const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');assert(main.x>=viewport.width-316 && main.y>190);
             results.layouts.push({viewport,panels:left,icons:h.icons.length});
         }
         await page.evaluate(()=>__cfPerf.reset());await page.waitForTimeout(1000);

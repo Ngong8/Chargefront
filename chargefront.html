@@ -3563,6 +3563,7 @@ function resetEndlessRun() {
     kills = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     player.dead = false;
     player.maxHp = 100; player.hp = 100; player.maxShield = 100; player.shield = 100; player.stamina = 100;
+    player.sprintExhausted = false; player.sprinting = false;
     player.shieldDelayT = 0; player.hpDelayT = 0;
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
@@ -3834,7 +3835,7 @@ const player = {
     get swapT() { return playerCombat.switchT; },
     get swapDuration() { return playerCombat.switchDuration; },
     holsterT: 0, walkCycle: 0, muzzleT: 0, muzzlePower: 3, weaponKick: 0, weaponPitch: 0, weaponRoll: 0, kick: 0, headBobT: 0,
-    sprinting: false, moveAmount: 0, moveBlend: 0, moveBobX: 0, moveBobY: 0, moveBobVX: 0, moveBobVY: 0,
+    sprinting: false, sprintExhausted: false, moveAmount: 0, moveBlend: 0, moveBobX: 0, moveBobY: 0, moveBobVX: 0, moveBobVY: 0,
     sprintBlend: 0, adsBlend: 0, swayX: 0, swayY: 0, swayRoll: 0, swayPosX: 0, swayPosY: 0,
     viewmodelState: 'IDLE', reloadPhase: 'COMPLETE', armRecoilLag: 0,
     dead: false, reviveT: 0, stepT: 0, grenades: 3, grenadeCd: 0, abilityCd: 0, ads: false, debugImmortal: false,
@@ -4735,11 +4736,18 @@ function reloadPhaseAt(progress, weapon) {
     return 'RETURN';
 }
 
+const SPRINT_RECOVERY_STAMINA = 25; // runtime-only hysteresis; maximum stamina remains 100
 function movePlayer(dt) {
     let ix = (LJS.keyIsDown('KeyD') ? 1 : 0) - (LJS.keyIsDown('KeyA') ? 1 : 0);
     let iy = (LJS.keyIsDown('KeyW') ? 1 : 0) - (LJS.keyIsDown('KeyS') ? 1 : 0);
     const fwdX = Math.cos(player.yaw), fwdY = Math.sin(player.yaw);
-    const sprinting = iy > 0 && LJS.keyIsDown('ShiftLeft') && player.stamina > 0;
+    if (player.stamina <= 0) player.sprintExhausted = true;
+    else if (player.sprintExhausted && player.stamina >= SPRINT_RECOVERY_STAMINA) player.sprintExhausted = false;
+    let sprinting = iy > 0 && LJS.keyIsDown('ShiftLeft') && !player.sprintExhausted;
+    if (sprinting) {
+        player.stamina = Math.max(0, player.stamina - 22 * dt * (mode === 'endless' ? 0.5 : 1) * (player.staminaDrainMult || 1));
+        if (player.stamina <= 0) { player.sprintExhausted = true; sprinting = false; }
+    } else player.stamina = Math.min(100, player.stamina + 14 * dt * (mode === 'endless' ? 1.6 : 1) * (player.staminaRegenMult || 1));
     player.sprinting = sprinting;
     const endlessBoost = mode === 'endless' ? 1.3 : 1;   // endless: snappier movement (~6.8 walk / ~11 sprint)
     const speed = (sprinting ? 8.4 : player.speed) * endlessBoost;
@@ -4751,8 +4759,6 @@ function movePlayer(dt) {
     let my = fwdY * iy - (fwdX) * ix;
     const ml = Math.hypot(mx, my);
     if (ml > 0.01) { mx /= ml; my /= ml; }
-    if (sprinting) player.stamina = Math.max(0, player.stamina - 22 * dt * (mode === 'endless' ? 0.5 : 1) * (player.staminaDrainMult || 1));
-    else player.stamina = Math.min(100, player.stamina + 14 * dt * (mode === 'endless' ? 1.6 : 1) * (player.staminaRegenMult || 1));
 
     const moveStartX = player.pos.x, moveStartY = player.pos.y;
     if (ml > 0.01) {
@@ -7463,6 +7469,7 @@ function resetCampaignRun() {
     player.pos = startPos.copy(); player.yaw = Math.atan2(startTarget.y - startPos.y, startTarget.x - startPos.x); player.pitch = -0.04; player.lastMoveYaw = player.yaw;
     player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true; player.fallStart = player.zPos;
     player.dead = false; player.maxHp = 100; player.hp = snapshot.combat.hp; player.maxShield = 100; player.shield = snapshot.combat.shield; player.stamina = 100;
+    player.sprintExhausted = false; player.sprinting = false;
     player.speed = 5.2; player.shieldDelayT = 0; player.hpDelayT = 0;
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;

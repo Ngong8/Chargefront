@@ -463,3 +463,16 @@ Concise before/after gallery and two compact validation receipts:
 local under ignored `_playtest/m41/regressions/hud-refinement/`. Icon source
 attributions from the supplied credits edit are included; its unrelated pending
 terrain-credit line remains uncommitted. Milestone 4.2 remains deferred.
+
+## Corrective follow-up — sprint recovery
+
+`movePlayer()` previously re-enabled sprint whenever stamina became positive,
+causing near-zero drain/regeneration chatter. Runtime-only `sprintExhausted`
+latches at zero and clears at **25 / 100** stamina. Held sprint can resume at that
+threshold; releasing the key does not bypass the recovery latch. Fresh Campaign
+and Endless resets clear it. Existing speeds, drain/regen rates and upgrades are
+unchanged. The resolved state drives movement, footsteps, FOV and all weapon
+sprint/sway poses. No animation-only timer or save-schema change.
+`tests/sprint-recovery.mjs` passes in headed Edge and headless Firefox through
+three continuous-held exhaustion/recovery cycles: zero chatter/wrong-speed
+frames, recovered WALK pose, and re-entry only after the 25% threshold.

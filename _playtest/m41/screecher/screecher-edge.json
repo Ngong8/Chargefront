@@ -1,0 +1,29 @@
+{
+  "results": {
+    "audit": {
+      "type": "screecher",
+      "wings": [
+        {
+          "x": -0.05,
+          "y": 0.3,
+          "z": 0.72,
+          "rotX": 0.582,
+          "childY": 0.58
+        },
+        {
+          "x": -0.05,
+          "y": -0.3,
+          "z": 0.72,
+          "rotX": -0.582,
+          "childY": -0.58
+        }
+      ],
+      "visible": true,
+      "scale": 1
+    },
+    "opposite": true,
+    "passed": true
+  },
+  "errors": [],
+  "consoles": []
+}

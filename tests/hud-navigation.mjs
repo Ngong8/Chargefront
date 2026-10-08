@@ -20,7 +20,7 @@ try{
  await page.waitForFunction(()=>__cf.phaseName==='M1_MOVE_FAC');await page.waitForTimeout(4300);
  // 1) Compass-adjacent status strip.
  let h=await hud();
- const distance=h.text.find(t=>t.x===W/2&&/^◈ \d+ m$/.test(t.value));
+ const distance=h.text.find(t=>/^[◈◀▶] \d+ m$/.test(t.value)&&t.y===24);
  assert(distance&&distance.y>=18&&distance.y<=60,`Waypoint distance must sit just under the compass (got ${JSON.stringify(distance)})`);
  assert(!h.text.some(t=>t.x===W/2&&t.y>120&&t.y<200),'No stray mid-screen top-center status text');
  await page.mouse.down();await page.waitForTimeout(120);await page.mouse.up();await page.waitForTimeout(60);

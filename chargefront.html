@@ -16,8 +16,8 @@
         position:fixed; inset:0; z-index:20;
         display:flex; flex-direction:column; align-items:center; justify-content:center;
         background: radial-gradient(ellipse at 50% 30%, rgba(70,20,90,.55), rgba(8,3,14,.96) 70%);
-        text-align:center; font-family:'Segoe UI', Arial, sans-serif; user-select:none;
-        overflow-y:auto; padding:20px 0;
+        text-align:center; font-family:'Glitch Slap'; user-select:none;
+        box-sizing:border-box; overflow-y:auto; padding:20px 0;
     }
     .cf-overlay.hidden { display:none; }
 
@@ -97,6 +97,24 @@
         #start-screen .cf-title, #start-screen #menu-buttons { margin-left:20px; }
     }
     .cf-panel-box select { background:#1a0e2e; color:#e6d0ff; border:1px solid rgba(160,100,255,.45); border-radius:6px; padding:6px 10px; font-size:14px; width:220px; }
+    .cf-overlay button, .cf-overlay input, .cf-overlay select, .cf-guide .key { font-family:'Glitch Slap'; }
+    #start-screen.panel-open { padding:32px 16px; overflow:hidden; }
+    #start-screen.panel-open .cf-credit { display:none; }
+    #guide-panel, #options-panel { box-sizing:border-box; max-height:calc(100dvh - 64px); min-height:0; flex-shrink:1; }
+    #guide-panel { display:flex; flex-direction:column; width:min(780px, 100%); overflow:hidden; }
+    #guide-panel h2, #guide-panel .back { flex-shrink:0; }
+    #guide-panel .cf-guide { min-height:0; grid-template-columns:minmax(0,1fr) minmax(0,1fr); overflow-y:auto; overscroll-behavior:contain; scrollbar-gutter:stable; padding:2px 12px 2px 2px; }
+    #guide-panel .cf-guide > div { min-width:0; }
+    #guide-panel .cf-guide:focus-visible { outline:1px solid #9adcff; outline-offset:-1px; }
+    #options-panel { overflow-y:auto; width:min(620px, 100%); }
+    #opt-fullscreen { min-width:0; width:220px; height:36px; font-size:13px; letter-spacing:.08em; padding:0 8px; }
+    #fullscreen-status { font-size:12px; line-height:1.5; color:#9adcff; min-height:18px; }
+    @media (max-height:600px) {
+        #start-screen.panel-open { padding:16px; }
+        #guide-panel, #options-panel { max-height:calc(100dvh - 32px); padding:16px 22px; }
+        #guide-panel .back { margin-top:12px; }
+    }
+    @media (max-width:650px) { #guide-panel .cf-guide { grid-template-columns:1fr; } .cf-panel-box .row { flex-wrap:wrap; } }
     #endless-setup-panel { max-width:850px; width:calc(100% - 48px); box-sizing:border-box; padding:20px 24px; }
     #endless-setup-panel p { font-size:12px; line-height:1.45; margin:8px 0 12px; }
     .cf-loadout-grid { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
@@ -600,7 +618,7 @@ const sfx = {
     grenade:    new LJS.Sound([0.3, 0.05, 300, 0.01, 0.05, 0.1, 2, 1, 0, 6, 0, 0, 0, 0.2]),
     screech:    new LJS.Sound([0.45, 0.05, 900, 0.02, 0.3, 0.4, 0, 2, 0, 10, 0, 0, 0, 0.3, 1, 0, 0, 0.7]),
     wind:       new LJS.Sound([0.2, 0.4, 70, 0.3, 0.9, 1.0, 3, 1, 0, 0, 0, 0, 0.6, 0.95, 0, 0, 0.25, 0.55]),
-    runnerArm:  new LJS.Sound([0.5, 0, 860, 0.005, 0.05, 0.12, 2, 2, 0, 0, 640, 0.16]),   // urgent kamikaze warning beep
+    runnerArm:  new LJS.Sound([0.5, 0, 860, 0.005, 0.025, 0.055, 2, 2, 0, 0, 640, 0.06]),   // distinct short arming beep (shorter than the final interval)
 };
 const HIGHLIGHT_SYNTH_SFX = new Set([sfx.relayDone, sfx.pickup, sfx.revive, sfx.command, sfx.vial, sfx.runnerArm]);
 const HIGHLIGHT_FILE_SFX = new Set(['reload', 'empty', 'bossRoar', 'unburrow', 'accessOk', 'accessDeny', 'droneAlert', 'resultCount']);
@@ -3570,7 +3588,7 @@ function resetEndlessRun() {
     kills = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     player.dead = false;
     player.maxHp = 100; player.hp = 100; player.maxShield = 100; player.shield = 100; player.stamina = 100;
-    player.sprintExhausted = false; player.sprinting = false;
+    player.sprintExhausted = false; player.sprinting = false; player.sprintFireBlocked = false; player.firePending = false;
     player.shieldDelayT = 0; player.hpDelayT = 0;
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
@@ -3842,7 +3860,7 @@ const player = {
     get swapT() { return playerCombat.switchT; },
     get swapDuration() { return playerCombat.switchDuration; },
     holsterT: 0, walkCycle: 0, muzzleT: 0, muzzlePower: 3, weaponKick: 0, weaponPitch: 0, weaponRoll: 0, kick: 0, headBobT: 0,
-    sprinting: false, sprintExhausted: false, moveAmount: 0, moveBlend: 0, moveBobX: 0, moveBobY: 0, moveBobVX: 0, moveBobVY: 0,
+    sprinting: false, sprintExhausted: false, sprintFireBlocked: false, firePending: false, moveAmount: 0, moveBlend: 0, moveBobX: 0, moveBobY: 0, moveBobVX: 0, moveBobVY: 0,
     sprintBlend: 0, adsBlend: 0, swayX: 0, swayY: 0, swayRoll: 0, swayPosX: 0, swayPosY: 0,
     viewmodelState: 'IDLE', reloadPhase: 'COMPLETE', armRecoilLag: 0,
     dead: false, reviveT: 0, stepT: 0, grenades: 3, grenadeCd: 0, abilityCd: 0, ads: false, debugImmortal: false,
@@ -4797,7 +4815,17 @@ function movePlayer(dt) {
     const fwdX = Math.cos(player.yaw), fwdY = Math.sin(player.yaw);
     if (player.stamina <= 0) player.sprintExhausted = true;
     else if (player.sprintExhausted && player.stamina >= SPRINT_RECOVERY_STAMINA) player.sprintExhausted = false;
-    let sprinting = iy > 0 && LJS.keyIsDown('ShiftLeft') && !player.sprintExhausted;
+    // One fixed-tick action owner: a new sprint press wins ties/held fire;
+    // a subsequent fire press cancels sprint and latches Shift until released.
+    const shift = LJS.keyIsDown('ShiftLeft');
+    if (!shift) player.sprintFireBlocked = false;
+    const sprintPress = iy > 0 && LJS.keyWasPressed('ShiftLeft') && !player.sprintExhausted;
+    if (sprintPress) { player.sprintFireBlocked = false; player.firePending = false; }
+    else if (LJS.mouseWasPressed(0) && player.sprinting) {
+        player.sprintFireBlocked = true; player.firePending = true;
+    }
+    let sprinting = iy > 0 && shift && !player.sprintExhausted && !player.sprintFireBlocked;
+    if (sprinting) player.firePending = false;
     if (sprinting) {
         player.stamina = Math.max(0, player.stamina - 22 * dt * (mode === 'endless' ? 0.5 : 1) * (player.staminaDrainMult || 1));
         if (player.stamina <= 0) { player.sprintExhausted = true; sprinting = false; }
@@ -4806,7 +4834,7 @@ function movePlayer(dt) {
     const endlessBoost = mode === 'endless' ? 1.3 : 1;   // endless: snappier movement (~6.8 walk / ~11 sprint)
     const speed = (sprinting ? 8.4 : player.speed) * endlessBoost;
     player.lastSpeed = speed;   // squadmates use this to keep pace (incl. sprint)
-    const ads = LJS.mouseIsDown(2);   // right mouse = aim down sights
+    const ads = LJS.mouseIsDown(2) && !sprinting;   // sprint owns the lowered weapon pose
     player.ads = ads;
     // forward * W/S  +  camera-right * A/D  (camera-right = forward × up = (fwdY, -fwdX))
     let mx = fwdX * iy + (fwdY) * ix;
@@ -4907,7 +4935,7 @@ function movePlayer(dt) {
     const idleAmount = config.idleScale * (1 - player.adsBlend * 0.65);
     const idleX = Math.sin(idleTime * 0.53) * 0.0022 * idleAmount;
     const idleY = Math.sin(idleTime) * 0.0035 * idleAmount;
-    const walkAmount = player.moveBlend * (sprinting ? 1.22 : 1);
+    const walkAmount = player.moveBlend * (1 + 0.22 * player.sprintBlend);
     const actionMotionScale = w.reloading ? 0.35 : player.swapT > 0 ? 0.2 : 1;
     const targetBobY = Math.sin(player.walkCycle) * 0.014 * walkAmount * actionMotionScale;
     const targetBobX = Math.cos(player.walkCycle * 0.5) * 0.009 * walkAmount * actionMotionScale;
@@ -4976,13 +5004,14 @@ function mod2pi(a) { a = a % TAU; if (a < 0) a += TAU; return a; }
 
 function fireWeapon() {
     const w = player.weapon;
-    if (w.reloading || player.swapT > 0) return;
+    if (player.sprinting || w.reloading || player.swapT > 0) return;
     if (w.mag <= 0) {
         if (playerCombat.cartridges > 0) { startReload(); }
         else playFileSfx('empty', 0.5);
         return;
     }
     if (!playerCombat.consumeShot()) return;
+    player.firePending = false;
     // The accepted shot uses the current aim; recoil moves the next sight picture.
     const aimYaw = player.yaw, aimPitch = player.pitch;
     const presentation = FPS_WEAPON_PRESENTATION[w.id] || FPS_WEAPON_PRESENTATION.rifle;
@@ -5041,9 +5070,9 @@ function updateWeapon(dt) {
     player.holsterT = Math.max(0, (player.holsterT || 0) - dt * 5);
     if (w.reloading) return;
     if (LJS.keyWasPressed('KeyR')) startReload();
-    if (LJS.mouseIsDown(0) && playerCombat.fireT <= 0) {
+    if (!player.sprinting && (LJS.mouseIsDown(0) || player.firePending) && playerCombat.fireT <= 0) {
         fireWeapon();
-        if (w.mag <= 0 && !w.reloading) playerCombat.fireT = Math.max(playerCombat.fireT, 0.35);
+        if (w.mag <= 0 && !w.reloading) { player.firePending = false; playerCombat.fireT = Math.max(playerCombat.fireT, 0.35); }
     }
 }
 
@@ -5184,6 +5213,11 @@ const RUNNER_ARM_RADIUS = 3.6;    // begin the fuse within contact range of the 
 const RUNNER_FUSE = 2.0;          // seconds from arming to detonation
 const RUNNER_BLAST_RADIUS = 4.8;  // radial damage radius at detonation
 const RUNNER_BLAST_DAMAGE = 26;   // single bounded hit to player/squad in range
+const RUNNER_BEEP_TIMES = Object.freeze([0, 0.48, 0.88, 1.22, 1.50, 1.72, 1.88]);
+const RUNNER_ATTACKS = Object.freeze({
+    runner: Object.freeze({ radius: RUNNER_BLAST_RADIUS, damage: RUNNER_BLAST_DAMAGE }),
+    tunneler: Object.freeze({ radius: RUNNER_BLAST_RADIUS * 1.2, damage: RUNNER_BLAST_DAMAGE * 1.25 }),
+});
 function squadHasClearedFacility() {
     if (player.pos.y > 608) return false;
     return squadMembers.every(m => m.downed || m.pos.y < 614);
@@ -5236,7 +5270,8 @@ class Infested extends LJS.ThreeJSObject {
         this.unburrowDur = rand(0.7, 1.0);
         this.unburrowT = 0;
         this.waitingForExit = false;
-        this.armed = false; this.armT = 0; this.armedTick = false; this.detonated = false;   // kamikaze runner fuse state
+        this.armed = false; this.armT = 0; this.armBeep = 0; this.armPosition = null; this.detonated = false;
+        this.moveBlend = 0; this.attackPose = 0; this.attackBlend = 0;
         this.skySpawnT = 0; this.skySpawnDur = 0;
         this.finalScale = this.mesh.scale.x;
         this.focus = player;              // primary target (the horde may retarget a squadmate)
@@ -5323,8 +5358,22 @@ class Infested extends LJS.ThreeJSObject {
         emitSparks(this.pos.x, this.pos.y, this.z + 0.9, 0xffb066, 22);
         emitSparks(this.pos.x, this.pos.y, this.z + 0.5, 0xff5522, 14);
         playFileSfx('explode', 0.8, rand(0.92, 1.05), this.pos.x, this.pos.y);
-        radiateFriendlyBlast(this.pos.x, this.pos.y, this.z, RUNNER_BLAST_RADIUS, RUNNER_BLAST_DAMAGE, 'runner');
+        const blast = RUNNER_ATTACKS[this.type];
+        radiateFriendlyBlast(this.pos.x, this.pos.y, this.z, blast.radius, blast.damage, this.type);
         this.die();
+    }
+    updateArming(dt) {
+        // No wall-clock callbacks or shared fuse state: death/cleanup cancels all
+        // future beeps. Fixed simulation time also freezes the fuse while paused.
+        this.pos.x = this.armPosition.x; this.pos.y = this.armPosition.y; this.z = this.armPosition.z;
+        this.armT = Math.max(0, this.armT - dt);
+        const elapsed = RUNNER_FUSE - this.armT;
+        while (this.armBeep < RUNNER_BEEP_TIMES.length && elapsed + 1e-8 >= RUNNER_BEEP_TIMES[this.armBeep]) {
+            playSnd(sfx.runnerArm, 0.7, 1 + this.armBeep * 0.035);
+            this.armBeep++;
+        }
+        animateInfestedVisuals(this, false, dt);
+        if (this.armT <= 0) this.detonate();
     }
     update() {
         this.mesh.visible = true;
@@ -5333,7 +5382,7 @@ class Infested extends LJS.ThreeJSObject {
         const threatRing = this.mesh.userData.threatRing;
         if (threatRing && threatRing.material) {
             threatRing.visible = true;
-            if (this.type === 'runner' && this.armed) {
+            if (RUNNER_ATTACKS[this.type] && this.armed) {
                 /* accelerating emissive pulse telegraphs the imminent detonation */
                 const frac = 1 - clamp(this.armT / RUNNER_FUSE, 0, 1);
                 threatRing.material.color.setHex(0xff3b1a);
@@ -5355,10 +5404,15 @@ class Infested extends LJS.ThreeJSObject {
             super.update();
             return;
         }
+        if (this.armed) {
+            this.updateArming(dt);
+            super.update();
+            return;
+        }
         if (this.stunT > 0) {
             this.stunT -= dt;
             this.z = terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : this.type === 'screecher' ? 6 : 0);
-            this.mesh.rotation.x = 0.18;
+            animateInfestedVisuals(this, false, dt);
             super.update();
             return;
         }
@@ -5419,7 +5473,7 @@ class Infested extends LJS.ThreeJSObject {
         if (debugNoAggro) {               // playtest: visible + facing the player, but no chase/attack
             this.z = terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : this.type === 'screecher' ? 6 : 0);
             this.angle = -Math.atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
-            this.mesh.rotation.x += (0 - this.mesh.rotation.x) * 0.08;
+            animateInfestedVisuals(this, false, dt);
             super.update();
             return;
         }
@@ -5490,20 +5544,18 @@ class Infested extends LJS.ThreeJSObject {
             else if (dTarget < this.rangedRange - 3) { wantsToMove = true; moveFacing = facing + Math.PI; }
             else wantsToMove = false;
         }
-        /* ── Kamikaze runner: arm a short fuse in contact range, then detonate ──
-           The fuse is started once and never restarted by small distance changes. */
-        if (this.type === 'runner' && !this.scatter) {
+        /* Both Runner silhouettes commit at a valid victim position, before
+           movement/separation. All subsequent updates bypass navigation/specials. */
+        if (RUNNER_ATTACKS[this.type] && !this.scatter && chasing) {
             const armDist = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
             if (!this.armed && armDist <= RUNNER_ARM_RADIUS && hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
-                this.armed = true; this.armT = RUNNER_FUSE; this.armedTick = false;
-                playSnd(sfx.runnerArm, 0.7, rand(0.96, 1.04));
+                this.armed = true; this.armT = RUNNER_FUSE; this.armBeep = 0;
+                this.armPosition = { x: this.pos.x, y: this.pos.y, z: this.z };
+                this.scatter = null; this.sep.set(0, 0); this.stuckT = 0; this.stuckSide = undefined;
                 spawnImpact(this.pos.x, this.pos.y, this.z + 0.4, 0xff8844, 1.4);
-            }
-            if (this.armed) {
-                this.armT -= dt;
-                wantsToMove = armDist > 1.4;                 // committed, limited pursuit while fused
-                if (!this.armedTick && this.armT <= 0.8) { this.armedTick = true; playSnd(sfx.runnerArm, 0.7, 1.12); }
-                if (this.armT <= 0) { this.detonate(); return; }
+                this.updateArming(0);
+                super.update();
+                return;
             }
         }
 
@@ -5521,6 +5573,7 @@ class Infested extends LJS.ThreeJSObject {
             }
         }
 
+        const animationStartX = this.pos.x, animationStartY = this.pos.y;
         if (wantsToMove) {
             const sp = this.scatter ? this.speed * 1.4 : this.speed;
             const moveStartX = this.pos.x, moveStartY = this.pos.y;
@@ -5576,33 +5629,30 @@ class Infested extends LJS.ThreeJSObject {
                 const dP = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
                 const swooping = false;
                 this.z = swooping ? gh + 0.9 : gh + 6 + Math.sin(LJS.time * 2 + this.animT) * 1.5;
-                this.mesh.rotation.x = swooping ? -0.8 : 0.1;
             } else if (this.type === 'drone') {
                 /* drone flight: hover low near the facility, lunge in when the squad gets close */
                 const gh = terrainHeight(this.pos.x, this.pos.y);
                 const dP = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
                 const lunging = false;
                 this.z = gh + (lunging ? 1.0 : 3.2) + Math.sin(LJS.time * 3 + this.animT) * (lunging ? 0.3 : 0.6);
-                this.mesh.rotation.x = lunging ? -0.5 : Math.sin(this.animT * 2) * 0.06;
             } else {
                 this.z = terrainHeight(this.pos.x, this.pos.y);
             }
             /* footstep / breath anim */
             this.animT += dt * (this.type === 'drone' ? 16 : this.type === 'skitter' ? 14 : this.type === 'screecher' ? 20 : 7);
-            this.mesh.rotation.x = Math.sin(this.animT) * 0.12;
         } else {
             const egh = terrainHeight(this.pos.x, this.pos.y);
             this.z = this.type === 'drone' ? egh + 3.2 + Math.sin(LJS.time * 3 + this.animT) * 0.6 : this.type === 'screecher' ? egh + 6 + Math.sin(LJS.time * 2 + this.animT) * 1.5 : egh;
             /* attack target */
             this.attackT -= dt;
             const attackDistance = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
-            if (this.attackT <= 0 && !(this.type === 'runner' && this.armed) &&
+            if (this.attackT <= 0 && !RUNNER_ATTACKS[this.type] &&
                 attackDistance < (this.rangedRange ? this.rangedRange + 3 : stopDist + 0.4) &&
                 hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
                 this.attackT = this.attackCd + rand(0.3);
                 if (this.ambient && this.aggroT <= 0) {
                     /* calm wild creature: postures, but won't attack until spooked */
-                    this.mesh.rotation.x = -0.35;
+                    this.attackPose = 0.35;
                 } else if (this.type === 'artillery') {
                     const stg = attackTg && !attackTg.R ? attackTg : player;
                     spawnEnemyShot(this.pos.x, this.pos.y, this.z + 1.35, stg, { kind: 'mortar', color: 0xff8844, dmg: this.dmg, speed: 17, size: 0.34, ring: false, homing: false, splash: 5.5 });
@@ -5625,11 +5675,10 @@ class Infested extends LJS.ThreeJSObject {
                     attackTg.takeDamage(this.dmg);
                     if (attackTg.R) playFileSfx('armorHit', 0.4, 1, attackTg.pos.x, attackTg.pos.y);
                 }
-                this.mesh.rotation.x = -0.35;   // lunge
+                this.attackPose = 0.35;   // visual envelope; damage/hit timing is unchanged
             }
         }
-        this.mesh.rotation.x += (0 - this.mesh.rotation.x) * 0.08;
-        animateInfestedVisuals(this, dTarget > stopDist);
+        animateInfestedVisuals(this, Math.hypot(this.pos.x - animationStartX, this.pos.y - animationStartY) > 0.002, dt);
         super.update();
     }
     destroy(immediate) {
@@ -5644,10 +5693,15 @@ class Infested extends LJS.ThreeJSObject {
     }
 }
 
-function animateInfestedVisuals(enemy, walking) {
+function animateInfestedVisuals(enemy, walking, dt = LJS.timeDelta) {
+    enemy.moveBlend = lerp(enemy.moveBlend, walking ? 1 : 0, 1 - Math.exp(-10 * dt));
+    enemy.attackBlend = lerp(enemy.attackBlend, enemy.attackPose, 1 - Math.exp(-24 * dt));
+    enemy.attackPose *= Math.exp(-8 * dt);
+    const tilt = enemy.armed ? -0.22 : enemy.stunT > 0 ? 0.18 : Math.sin(enemy.animT) * 0.12 * enemy.moveBlend - enemy.attackBlend;
+    enemy.mesh.rotation.x = lerp(enemy.mesh.rotation.x, tilt, 1 - Math.exp(-18 * dt));
     const legs = enemy.mesh.userData.legs || [];
     const gait = Math.sin(LJS.time * (enemy.type === 'runner' ? 16 : enemy.type === 'boss' ? 7 : 10));
-    for (const leg of legs) leg.rotation.y = walking ? gait * 0.34 * Math.cos(leg.userData.phase || 0) : 0;
+    for (const leg of legs) leg.rotation.y = gait * 0.34 * Math.cos(leg.userData.phase || 0) * enemy.moveBlend;
     const wings = enemy.mesh.userData.wings || [];
     for (const wing of wings) wing.rotation.x = Math.sin(LJS.time * 18 + wing.userData.phase) * 0.62;
     if (enemy.type === 'drone') {
@@ -6216,7 +6270,7 @@ class SquadMember extends LJS.ThreeJSObject {
     update() {
         const dt = LJS.timeDelta;
         if (this.downed) {
-            this.mesh.rotation.x = lerp(this.mesh.rotation.x, 1.35, 0.1);
+            this.mesh.rotation.x = lerp(this.mesh.rotation.x, 1.35, 1 - Math.exp(-6 * dt));
             this.z = terrainHeight(this.pos.x, this.pos.y) + 0.2;
             this.angle = 0;
             super.update();
@@ -6258,11 +6312,7 @@ class SquadMember extends LJS.ThreeJSObject {
         if (this.updateEvasion(dt)) {
             this.z = terrainHeight(this.pos.x, this.pos.y);
             this.animT += dt * 13;
-            const stride = Math.sin(this.animT) * 0.38;
-            const legs = this.mesh.userData.legs || [];
-            for (let i = 0; i < legs.length; i++) legs[i].rotation.y = i ? -stride : stride;
-            const rifle = this.mesh.getObjectByName('squadRifle');
-            if (rifle) { rifle.rotation.y = lerp(rifle.rotation.y, Math.PI / 2, 0.22); rifle.position.z = lerp(rifle.position.z, 1.0, 0.22); }
+            this.updatePose(dt, false, 0.38);
             super.update();
             return;
         }
@@ -6334,22 +6384,27 @@ class SquadMember extends LJS.ThreeJSObject {
                 }
                 /* idle sway */
                 this.animT += dt * 2;
-                this.mesh.rotation.x = Math.sin(this.animT) * 0.02;
             }
         }
         this.z = terrainHeight(this.pos.x, this.pos.y);
         const walking = Math.hypot(this.pos.x - this.motionStartX, this.pos.y - this.motionStartY) > 0.002;
         this.animT += dt * (walking ? 10 : 3);
-        const stride = walking ? Math.sin(this.animT) * 0.34 : 0;
+        this.updatePose(dt, !!this.target && !this.reloading);
+        super.update();
+    }
+    updatePose(dt, aiming, amplitude = 0.34) {
+        const speed = Math.hypot(this.pos.x - this.motionStartX, this.pos.y - this.motionStartY) / Math.max(dt, 0.0001);
+        this.moveBlend = lerp(this.moveBlend || 0, clamp(speed / 4.8, 0, 1), 1 - Math.exp(-10 * dt));
+        const stride = Math.sin(this.animT) * amplitude * this.moveBlend;
         const legs = this.mesh.userData.legs || [];
         for (let i = 0; i < legs.length; i++) legs[i].rotation.y = i ? -stride : stride;
+        this.mesh.rotation.x = lerp(this.mesh.rotation.x, Math.sin(this.animT) * 0.02 * (1 - this.moveBlend), 1 - Math.exp(-12 * dt));
         const rifle = this.mesh.getObjectByName('squadRifle');
-        const aiming = !!this.target && !this.reloading;
         if (rifle) {
-            rifle.rotation.y = lerp(rifle.rotation.y, aiming ? 0 : Math.PI / 2, 0.18);
-            rifle.position.z = lerp(rifle.position.z, aiming ? 1.20 : 1.0, 0.18);
+            const blend = 1 - Math.exp(-12 * dt);
+            rifle.rotation.y = lerp(rifle.rotation.y, aiming ? 0 : Math.PI / 2, blend);
+            rifle.position.z = lerp(rifle.position.z, aiming ? 1.20 : 1.0, blend);
         }
-        super.update();
     }
     turnTo(ang) {                    // smoothly rotate toward a target facing (shortest arc)
         let diff = ang - this.angle;
@@ -7618,7 +7673,7 @@ function resetCampaignRun() {
     player.pos = startPos.copy(); player.yaw = Math.atan2(startTarget.y - startPos.y, startTarget.x - startPos.x); player.pitch = -0.04; player.lastMoveYaw = player.yaw;
     player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true; player.fallStart = player.zPos;
     player.dead = false; player.maxHp = 100; player.hp = snapshot.combat.hp; player.maxShield = 100; player.shield = snapshot.combat.shield; player.stamina = 100;
-    player.sprintExhausted = false; player.sprinting = false;
+    player.sprintExhausted = false; player.sprinting = false; player.sprintFireBlocked = false; player.firePending = false;
     player.speed = 5.2; player.shieldDelayT = 0; player.hpDelayT = 0;
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
@@ -8083,7 +8138,7 @@ function lockOnNextGesture() {
 let introMeasureCtx = null;
 function wrapBriefing(text, maxPx, size) {
     if (!introMeasureCtx) introMeasureCtx = document.createElement('canvas').getContext('2d');
-    introMeasureCtx.font = `${Math.round(size)}px ${HFONT()}`;
+    introMeasureCtx.font = `${Math.round(size)}px "${HFONT()}"`;
     const words = text.split(' ');
     const lines = [];
     let cur = '';
@@ -8772,6 +8827,7 @@ function gameUpdate() {
 
     if (!menuOpen) {
         movePlayer(dt);
+        updateObjectiveBearing(dt);
         if (LJS.keyWasPressed('Digit1')) equipWeapon(0);
         if (LJS.keyWasPressed('Digit2')) equipWeapon(1);
         if (LJS.keyWasPressed('KeyQ')) cycleWeapon();
@@ -9374,11 +9430,11 @@ function updatePreviewCamera(dt) {
    ═══════════════════════════════════════════════════════════════════════════ */
 let fontReady = false;
 const APPLY_FONT = () => { if (!fontReady) return; try { LJS.setFontDefault('Glitch Slap'); } catch (e) { } };
-if (document.fonts && document.fonts.load) {
-    document.fonts.load('24px "Glitch Slap"').then(() => { fontReady = true; APPLY_FONT(); }).catch(() => { fontReady = true; APPLY_FONT(); });
-    document.fonts.ready.then(() => { fontReady = true; APPLY_FONT(); }).catch(() => { fontReady = true; APPLY_FONT(); });
-}
-const HFONT = () => (fontReady ? 'Glitch Slap' : 'Arial');
+const hudFontLoaded = document.fonts.load('24px "Glitch Slap"').then(fonts => {
+    if (!fonts.length) throw new Error('Glitch Slap font could not be loaded');
+    fontReady = true; APPLY_FONT();
+});
+const HFONT = () => 'Glitch Slap';
 
 let coverPose = null;   // debug: cover-art camera pose (set via __cf.setCoverPose) — [px,py,pz,tx,ty,tz]
 let facilityCaptureView = null;
@@ -9440,7 +9496,7 @@ function drawCompass(W, H) {
         let off = dirs[k][1] - player.yaw;
         off = ((off % TAU) + TAU) % TAU;
         if (off > Math.PI) off -= TAU;
-        const sx = W / 2 + (off / (Math.PI / 3)) * (bw / 2);
+        const sx = W / 2 - (off / (Math.PI / 3)) * (bw / 2);
         if (sx > x0 + 8 && sx < x1 - 8) hudText(dirs[k][0], LJS.vec2(sx, y), 10, LJS.rgb(0.8, 0.9, 1, 0.9), 'center');
     }
     LJS.drawRect(LJS.vec2(W / 2, y), LJS.vec2(2, 14), LJS.rgb(1, 1, 1, 0.95), 0, false, true);
@@ -9649,14 +9705,33 @@ function drawObjectiveStack(W) {
     }
 }
 /* compact navigation/status stack immediately below the top-center compass */
-const STATUS_TRAVEL_PHASES = [P.MOVE_R1, P.MOVE_R2, P.MOVE_R3, P.MOVE_FAC, P.M1_MOVE_FAC, P.M1_INVESTIGATE, P.M1_RESTORE_POWER, P.M1_COMMAND, P.M2_CONFIRM, P.M3_ENTER_LAB, P.M3_REACH_SECURITY, P.M3_OVERRIDE, P.M3_REACH_SAMPLE, P.M4_BREAK_CONTACT, P.M4_REACH_LZ, P.M4_CALL_EXTRACTION, P.M4_BOARD];
+const objectiveCompass = { key: '', offset: 0, bearing: 0, distance: 0, active: false };
+function updateObjectiveBearing(dt) {
+    const target = targetOfPhase();
+    objectiveCompass.active = !!target && mode === 'campaign';
+    if (!objectiveCompass.active) { objectiveCompass.key = ''; return; }
+    const dx = target.pos.x - player.pos.x, dy = target.pos.y - player.pos.y;
+    const angle = Math.atan2(dy, dx) - player.yaw;
+    const bearing = Math.atan2(Math.sin(angle), Math.cos(angle));
+    // Z-up camera-right is (sin(yaw), -cos(yaw)): positive bearing is LEFT.
+    const desired = clamp(-bearing / (Math.PI / 3), -1, 1);
+    const key = activeMissionId + ':' + phase + ':' + target.pos.x + ':' + target.pos.y;
+    // Crossing the rear seam must switch edges, never sweep through "ahead".
+    objectiveCompass.offset = key !== objectiveCompass.key || Math.abs(desired - objectiveCompass.offset) > 1.8
+        ? desired : lerp(objectiveCompass.offset, desired, 1 - Math.exp(-16 * dt));
+    objectiveCompass.key = key; objectiveCompass.bearing = bearing; objectiveCompass.distance = Math.hypot(dx, dy);
+}
 function drawStatusStack(W) {
     let y = 24;   // clear of the 14 px-high compass strip centered at y=8
     const line = (text, size, color) => { hudText(text, LJS.vec2(W / 2, y), size, color, 'center'); y += size + 7; };
-    if (phase === P.FINALE) line('DISTANCE ' + Math.round(Math.hypot(player.pos.x - LZ.x, player.pos.y - LZ.y)) + ' m', 13, LJS.rgb(0.6, 0.9, 1));
-    else if (STATUS_TRAVEL_PHASES.includes(phase)) {
-        const tgt = targetOfPhase();
-        if (tgt) line('◈ ' + Math.round(Math.hypot(tgt.pos.x - player.pos.x, tgt.pos.y - player.pos.y)) + ' m', 12, LJS.rgb(0.95, 0.9, 0.7));
+    if (objectiveCompass.active) {
+        const behind = Math.abs(objectiveCompass.bearing) > Math.PI / 2;
+        const text = (behind ? (objectiveCompass.bearing > 0 ? '◀ ' : '▶ ') : '◈ ') + Math.round(objectiveCompass.distance) + ' m';
+        objectiveMeasureContext.font = '12px "Glitch Slap"';
+        const halfWidth = objectiveMeasureContext.measureText(text).width / 2 + 6;
+        const edge = Math.max(0, Math.min(300, W * 0.4) / 2 - halfWidth);
+        hudText(text, LJS.vec2(W / 2 + objectiveCompass.offset * edge, y), 12, LJS.rgb(0.95, 0.9, 0.7), 'center');
+        y += 19;
     }
     if (phase === P.ENDLESS && endlessRun.waveActive && endlessRun.mutator && endlessRun.waveT < 5) {
         line('WAVE ' + endlessRun.wave + ' MUTATOR — ' + endlessRun.mutator.name, 14, LJS.rgb(1, 0.82, 0.45));
@@ -9688,7 +9763,8 @@ function drawHUD(W, H) {
     drawStatusStack(W);
 
     /* ── BOTTOM-LEFT: icon-led Commander / squad VITALS ───────────── */
-    const sx0 = 16, sy0 = H - 312;
+    // Short landscape windows keep full-size readable rows in two adjacent panels.
+    const sx0 = H < 610 ? 296 : 16, sy0 = H < 610 ? 12 : H - 312;
     hudPanel(sx0 + 132, sy0 + 148, 264, 296, ACCENT);
     hudText('VITALS', LJS.vec2(sx0 + 14, sy0 + 14), 12, LJS.rgb(0.78, 0.92, 1), 'left');
     hudText('COMMANDER', LJS.vec2(sx0 + 16, sy0 + 35), 13, LJS.rgb(0.88, 0.95, 1), 'left');
@@ -9706,6 +9782,7 @@ function drawHUD(W, H) {
         const outAmmo = m.mag <= 0 && m.reserve <= 0;
         const st = m.downed ? 'DOWN' : outAmmo ? 'OUT' : m.reloading ? 'RELOAD' : d > 70 ? 'AWAY' : d > 25 ? 'AFAR' : m.aiMode === SQUAD_AI_MODE.DEFEND_OBJECTIVE ? 'DEFEND' : m.aiMode;
         hudText(m.def.name, LJS.vec2(sx0 + 16, ry), 13, m.downed ? LJS.rgb(1, 0.45, 0.45) : LJS.rgb(0.72, 0.86, 1), 'left');
+        hudText('RES ' + m.reserve, LJS.vec2(sx0 + 114, ry), 10, LJS.rgb(0.95, 0.85, 0.5), 'left');
         hudStatusIcon('health', sx0 + 20, ry + 12, 12);
         hudBar(sx0 + 148, ry + 12, 200, 6, m.downed ? 0 : m.hp / m.maxHp, m.downed ? LJS.rgb(1, 0.3, 0.3) : LJS.rgb(0.3, 0.9, 0.5), null, false);
         hudStatusIcon('shield', sx0 + 20, ry + 24, 12);
@@ -9739,9 +9816,10 @@ function drawHUD(W, H) {
     hudText('MEDKITS', LJS.vec2(weaponLabelX, weaponPanelTop + 147), 12, LJS.rgb(0.72, 0.72, 0.88), 'left');
     hudText(craft.medkits + ' / ' + medkitCap(), LJS.vec2(weaponValueX, weaponPanelTop + 147), 12, LJS.rgb(0.95, 0.85, 0.6), 'right');
     hudText('[1/2] EQUIP  [Q] CYCLE  [R] RELOAD', LJS.vec2(weaponLabelX, weaponPanelTop + 171), 10, LJS.rgb(0.58, 0.8, 1), 'left');
-    hudText('SUPPLIES', LJS.vec2(weaponLabelX, weaponPanelTop + 196), 11, LJS.rgb(0.78, 0.92, 1), 'left');
-    hudText('SCRAP ' + craft.scraps + '  /  CELLS ' + craft.powerCells, LJS.vec2(weaponLabelX, weaponPanelTop + 219), 12, LJS.rgb(0.95, 0.85, 0.6), 'left');
-    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(weaponLabelX, weaponPanelTop + 242), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
+    hudText('SUPPLIES', LJS.vec2(weaponLabelX, weaponPanelTop + 190), 11, LJS.rgb(0.78, 0.92, 1), 'left');
+    hudText('SCRAP ' + craft.scraps + '  /  CELLS ' + craft.powerCells, LJS.vec2(weaponLabelX, weaponPanelTop + 211), 12, LJS.rgb(0.95, 0.85, 0.6), 'left');
+    hudText('CRAFTING', LJS.vec2(weaponLabelX, weaponPanelTop + 230), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
+    hudText('[C] MEDKIT  [V] AMMO  [B] GRENADE', LJS.vec2(weaponLabelX, weaponPanelTop + 247), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     /* craft-ammo reminder — shows whenever the magazine and reserve are both empty */
     if (w.mag <= 0 && playerCombat.cartridges <= 0) {
         const pulse = 0.62 + Math.sin(LJS.time * 4) * 0.38;
@@ -10613,6 +10691,8 @@ function buildOverlays() {
             <div class="row"><span>Field of view</span><input type="range" id="opt-fov" min="65" max="100" step="1"></div>
             <div class="row"><span>Crosshair color</span><select id="opt-crosscolor"><option value="0">White</option><option value="1">Cyan</option><option value="2">Red</option></select></div>
             <div class="row"><span>Crosshair size</span><input type="range" id="opt-crosssize" min="60" max="200" step="5"></div>
+            <div class="row"><span>Fullscreen</span><button class="cf-menu-btn" id="opt-fullscreen" type="button" aria-pressed="false">ENTER FULLSCREEN</button></div>
+            <div id="fullscreen-status" role="status" aria-live="polite"></div>
             <button class="cf-menu-btn back" id="btn-options-back">BACK</button>
         </div>
 
@@ -10635,8 +10715,8 @@ function buildOverlays() {
         </div>
 
         <div class="cf-panel-box hidden" id="guide-panel">
-            <h2>CONTROLS &amp; GUIDE</h2>
-            <div class="cf-guide">
+            <h2 id="guide-heading">CONTROLS &amp; GUIDE</h2>
+            <div class="cf-guide" tabindex="0" role="region" aria-labelledby="guide-heading">
                 <div>
                     <h3>MOVEMENT &amp; COMBAT</h3>
                     <div><span class="key">W A S D</span> Move</div>
@@ -10746,6 +10826,7 @@ function campaignContinueMissionId() {
 }
 
 async function boot() {
+    await hudFontLoaded; // canonical face is ready before canvas measurements/preparation
     const start = buildOverlays();
     try {
         await LJS.engineInit(gameInit, gameUpdate, gameUpdatePost, gameRender, gameRenderPost, [], ROOT);
@@ -10763,10 +10844,10 @@ async function boot() {
         if (!music.current) music.play('safe', 0.7);
         if (!windStarted) { windStarted = true; sfx.wind.play(undefined, 0.35, 1); }   // looping ambient wind (audio #20)
         window.removeEventListener('pointerdown', firstGesture);
-        window.removeEventListener('keydown', firstGesture);
+        window.removeEventListener('keydown', firstGesture, true);
     };
     window.addEventListener('pointerdown', firstGesture);
-    window.addEventListener('keydown', firstGesture);
+    window.addEventListener('keydown', firstGesture, true); // audio gesture still reaches us before menu input isolation
 
     /* main menu navigation */
     const el = (id) => document.getElementById(id);
@@ -10774,7 +10855,15 @@ async function boot() {
         ['menu-buttons', 'mission-panel', 'sound-panel', 'endless-setup-panel', 'options-panel', 'credits-panel', 'guide-panel', 'quit-note'].forEach((pid) => el(pid).classList.add('hidden'));
         start.querySelector('.cf-title').classList.toggle('hidden', id !== 'menu-buttons');   // title only on the main menu
         if (id) el(id).classList.remove('hidden');
+        start.classList.toggle('panel-open', id === 'guide-panel' || id === 'options-panel');
+        if (id === 'guide-panel') { el(id).querySelector('.cf-guide').scrollTop = 0; el(id).querySelector('.cf-guide').focus(); }
     };
+    // Native controls/scroll defaults still work, but menu input never reaches
+    // LittleJS's document-level gameplay listeners (including held-key state).
+    for (const overlay of document.querySelectorAll('.cf-overlay')) {
+        for (const type of ['keydown', 'keyup', 'mousedown', 'mouseup', 'mousemove', 'wheel'])
+            overlay.addEventListener(type, event => event.stopPropagation());
+    }
     let pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true };
     const continueMissionId = campaignContinueMissionId();
     const continueButton = el('btn-continue-campaign');
@@ -10878,11 +10967,36 @@ async function boot() {
     optFov.oninput = () => { opts.fov = +optFov.value; saveOpts(); };
     optCrossColor.onchange = () => { opts.crossColor = +optCrossColor.value; saveOpts(); };
     optCrossSize.oninput = () => { opts.crossSize = (+optCrossSize.value) / 100; saveOpts(); };
+    const fullscreen = el('opt-fullscreen'), fullscreenStatus = el('fullscreen-status');
+    const syncFullscreen = () => {
+        const on = !!document.fullscreenElement, supported = !!document.fullscreenEnabled && !!document.documentElement.requestFullscreen;
+        fullscreen.disabled = !on && !supported;
+        fullscreen.setAttribute('aria-pressed', String(on));
+        fullscreen.textContent = on ? 'EXIT FULLSCREEN' : supported ? 'ENTER FULLSCREEN' : 'UNAVAILABLE';
+        fullscreenStatus.textContent = !supported && !on ? 'Fullscreen is unavailable in this browser or host.' : on ? 'Fullscreen' : 'Windowed';
+        // The engine/Three plugin owns canvas/aspect sizing on its next frame.
+        window.dispatchEvent(new Event('resize'));
+    };
+    fullscreen.addEventListener('click', async () => {
+        fullscreen.disabled = true;
+        try {
+            if (document.fullscreenElement) await document.exitFullscreen();
+            else await document.documentElement.requestFullscreen();
+            syncFullscreen();
+        } catch (error) {
+            syncFullscreen();
+            fullscreenStatus.textContent = 'Fullscreen request declined. Check browser or host permissions.';
+        }
+    });
+    document.addEventListener('fullscreenchange', syncFullscreen);
+    syncFullscreen();
     /* pause menu controls */
     const pauseEl = document.getElementById('pause-screen');
     const resumeGame = () => {
         pauseEl.classList.add('hidden');
         el('start-screen').classList.add('hidden');
+        LJS.inputClear(); player.firePending = false; player.sprinting = false; player.sprintFireBlocked = false;
+        LJS.mouseDeltaScreen.set(0, 0);
         LJS.setPaused(false);
         LJS.setSoundVolume(opts.soundMode === 'music' ? 0 : opts.sfxVol);
         LJS.setInputPreventDefault(true);
@@ -10890,6 +11004,9 @@ async function boot() {
     };
     const showPause = () => {
         if (phase === P.DEAD || phase === P.DONE) return;   // game-over overlay owns the screen — no pause buttons
+        // Losing lock while a shared settings/guide panel is open keeps that panel.
+        if (!start.classList.contains('hidden') && start.classList.contains('panel-open')) return;
+        LJS.inputClear(); player.firePending = false; player.sprinting = false;
         pauseEl.classList.remove('hidden');
         LJS.setPaused(true);
         LJS.setSoundVolume(0.18);
@@ -11289,7 +11406,8 @@ window.__cf = {
     objectiveHUDInfo() { return objectiveHUD.snapshot(); },
     advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
     optionalMarkerInfo() { return { near: OPTIONAL_MARKER_NEAR, far: OPTIONAL_MARKER_FAR, state: Object.fromEntries(optionalMarkerState) }; },
-    runnerInfo() { return enemies.filter((e) => e.type === 'runner').map((e) => ({ armed: !!e.armed, armT: +e.armT.toFixed(2), dead: !!e.dead, detonated: !!e.detonated, hp: e.hp })); },
+    runnerInfo() { return enemies.filter((e) => RUNNER_ATTACKS[e.type]).map((e) => ({ type: e.type, armed: !!e.armed, armT: +e.armT.toFixed(2), beeps: e.armBeep, position: [e.pos.x, e.pos.y, e.z], dead: !!e.dead, detonated: !!e.detonated, hp: e.hp, blast: RUNNER_ATTACKS[e.type] })); },
+    objectiveCompassInfo() { return { ...objectiveCompass }; },
     discoveredInfo() { return Object.assign({}, campaignRun.discovered || {}); },
     campaignOptionalsInfo() { return campaignOptionals().map((o) => ({ id: o.id, completed: o.completed, prereq: o.prereq })); },
     setOptionalDiscovered(id, on = true) { if (!campaignRun.discovered) campaignRun.discovered = {}; if (on) campaignRun.discovered[id] = true; else delete campaignRun.discovered[id]; return Object.assign({}, campaignRun.discovered); },

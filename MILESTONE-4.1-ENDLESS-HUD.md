@@ -683,3 +683,12 @@ with no new materials/geometry/shader links or world/facility rebuilds; traversa
 p95 stayed within the accepted bands. Evidence:
 `_playtest/m41/arc/`, `_playtest/m41/navigation/`, `_playtest/m41/screecher/`,
 `_playtest/m41/runner/`, `_playtest/m41/hud-flow/`. Milestone 4.2 remains deferred.
+
+## Corrective refinement — combat states, arming, animation and menus
+
+The subsequent targeted corrections and their final browser validation are
+documented in [MILESTONE-4.1-CORRECTIVE-REFINEMENT.md](MILESTONE-4.1-CORRECTIVE-REFINEMENT.md).
+That follow-up replaces the earlier two-beep, pursuing Runner fuse with seven
+accelerating beeps at a locked position, extends it to the existing gold
+`tunneler`, restores reserve/crafting labels, and corrects sprint/fire arbitration,
+procedural pose boundaries, objective bearing and shared Options/Guide behavior.

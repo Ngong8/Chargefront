@@ -228,8 +228,14 @@ try {
         await page.evaluate(() => document.exitPointerLock()); await page.waitForFunction(() => !document.getElementById('pause-screen').classList.contains('hidden'));
         await page.locator('#btn-restart').click(); await page.waitForFunction(() => __cf.endless.wave === 0);
         const restarted = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), arena: __cf.endless.arena.id,
-            mutator: __cf.endless.mutator, previous: __cf.endless.previousMutatorId, cooldowns: __cf.squad.map(m => m.abilityCd), save: localStorage.cf_campaign_v1 || null }));
-        assert.deepEqual(restarted.config, config); assert.deepEqual(restarted.combat, deployed.combat); assert.equal(restarted.arena, terrain.arena);
+            mutator: __cf.endless.mutator, previous: __cf.endless.previousMutatorId, cooldowns: __cf.squad.map(m => m.abilityCd), save: localStorage.cf_campaign_v1 || null,
+            shotsFired:__cf.combat.shotsFired, fullMagazines:Object.fromEntries(__cf.combat.slots.map(id=>[id,{mag:__cf.weaponDefinitions.find(w=>w.id===id).magSize}])) }));
+        // Deployment's later gameplay lock-acquisition click can fire a round.
+        // Restart promises fresh canonical magazines, not that post-click sample;
+        // the restart menu click must never leak into gameplay as a shot.
+        assert.deepEqual(restarted.config, config);
+        assert.deepEqual(restarted.combat, {...deployed.combat,weapons:restarted.fullMagazines});
+        assert.equal(restarted.shotsFired,0);assert.equal(restarted.arena, terrain.arena);
         assert.equal(restarted.mutator, null); assert.equal(restarted.previous, null); assert(restarted.cooldowns.every(c => c === 0)); assert.equal(restarted.save, saved);
         results.runs.push({ deployed, weapons, reload: [bar(reload1),bar(reload2)], abilities, squadAfter, mutators, restarted, performance });
     }

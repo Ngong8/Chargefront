@@ -77,6 +77,11 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 
 > Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each equipped weapon keeps its own magazine; both share one universal cartridge pool. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. BUL-117 holds 50 rounds / 153 m reach; CRW-8 holds 20 eight-pellet bursts / 60 m reach.
 
+Sprint interrupts held fire. Clicking fire while sprinting returns to weapon-ready
+movement and retains that shot until the weapon is eligible; release Shift before
+sprinting again. **Options** in the main/pause menus includes Fullscreen. Controls
+& Guide scrolls inside its panel with its heading and Back button kept accessible.
+
 Endless deployment chooses **two of four**: BUL-117, CRW-8, **ARC-9** (32 rounds,
 72 m, chain disruption) and **PX-4** (10 rounds, 110 m, explosive plasma). Choose
 starting slot, each operator's weapon/ability and squad posture. Restart preserves
@@ -115,7 +120,7 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 | **Rendering** | [Three.js](https://github.com/mrdoob/three.js) (MIT) — full 3D world via the LittleJS Three.js plugin |
 | **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
-The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. See `MILESTONE-4.1-ENDLESS-HUD.md` for architecture, checkpoint migration, evidence and validation.
+The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. See `MILESTONE-4.1-ENDLESS-HUD.md` for architecture, checkpoint migration, evidence and validation, and `MILESTONE-4.1-CORRECTIVE-REFINEMENT.md` for the sprint/Runner/animation/HUD/menu corrections.
 
 ---
 
@@ -145,5 +150,5 @@ Full attribution lives in [`Credits.txt`](Credits.txt)
 
 - **Engine:** LittleJS (MIT), Three.js (MIT)
 - **Music:** "Corrupt Data Stream", "Streets After Midnight", "Safe Space", "Dreams of a Silver Tower" by **Tsorthan Grove** ([OpenGameArt](https://opengameart.org))
-- **Font:** *Glitch Slap* (from [dafont.com](https://www.dafont.com/glitch-slap.font)) — used for the title and HUD headings
+- **Font:** *Glitch Slap* (from [dafont.com](https://www.dafont.com/glitch-slap.font)) — used throughout the affected menus and HUD
 - **SFX:** extracted from [Soundly](https://soundly.com); original 24-bit files kept in `SFX/original/`. Remaining game sounds are synthesized in-browser via LittleJS's bundled **ZzFX** generator.

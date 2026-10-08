@@ -118,7 +118,7 @@ try {
         results.sprint={consumed,recovered,full:100};
         // Layout/data inspection uses the same render functions at each real viewport.
         results.layouts=[];
-        for(const viewport of [{width:1280,height:720},{width:1366,height:768},{width:1920,height:1080}]) {
+        for(const viewport of [{width:1280,height:720},{width:1780,height:832},{width:1366,height:768},{width:1920,height:1080}]) {
             await page.setViewportSize(viewport);await page.waitForTimeout(150);const h=await inspect();
             const left=h.panels.filter(p=>p.x===148);assert.equal(left.length,2);
             assert(left[0].y-left[0].height/2>=0 && left[0].y+left[0].height/2<=viewport.height);

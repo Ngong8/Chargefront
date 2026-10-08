@@ -1,0 +1,21 @@
+{
+  "results": {
+    "armed": {
+      "armed": true,
+      "armT": 1.9,
+      "dead": false,
+      "detonated": false,
+      "hp": 34
+    },
+    "firstDrop": 26,
+    "fuse": 2.004,
+    "multi": {
+      "spawned": 4,
+      "hp": 97.6,
+      "runners": 0
+    },
+    "passed": true
+  },
+  "errors": [],
+  "consoles": []
+}

@@ -160,7 +160,7 @@ try {
         for (const member of cf.squad) { member.pos.x = 442; member.pos.y = 710; }
         cf.commandSquad('hold');
         cf.move(360 - cf.player.pos.x, 627 - cf.player.pos.y);
-        const enemy = cf.spawnTestEnemy('runner', 0, -16);
+        const enemy = cf.spawnTestEnemy('skitter', 0, -16);
         window.__facilityFrontTarget = enemy;
         return enemy.pos.y;
     });
@@ -173,7 +173,7 @@ try {
     const rearPursuit = await page.evaluate(() => {
         const cf = window.__cf;
         cf.clearTestEnemies(); cf.move(360 - cf.player.pos.x, 607 - cf.player.pos.y);
-        const enemy = cf.spawnTestEnemy('runner', 0, 25);
+        const enemy = cf.spawnTestEnemy('skitter', 0, 25);
         window.__facilityRearTarget = enemy;
         return enemy.pos.y;
     });
@@ -188,7 +188,7 @@ try {
         const cf = window.__cf;
         cf.setNoAggro(false); cf.commandSquad('hold'); cf.clearTestEnemies();
         cf.move(425 - cf.player.pos.x, 752 - cf.player.pos.y);
-        const enemy = cf.spawnTestEnemy('runner', -21, 0);
+        const enemy = cf.spawnTestEnemy('skitter', -21, 0);
         window.__facilityInteriorTarget = enemy;
         return enemy.pos.x;
     });
@@ -201,7 +201,7 @@ try {
         const cf = window.__cf;
         cf.setNoAggro(false); cf.commandSquad('hold'); cf.clearTestEnemies();
         cf.move(457 - cf.player.pos.x, 752 - cf.player.pos.y);
-        const enemy = cf.spawnTestEnemy('runner', -12, 0);
+        const enemy = cf.spawnTestEnemy('skitter', -12, 0);
         window.__facilityOuterTarget = enemy;
         return { start: enemy.pos.x };
     });

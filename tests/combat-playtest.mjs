@@ -137,7 +137,7 @@ try {
     await page.waitForFunction(()=>!__cf.player.swapT); await aimAtContact(); await page.waitForTimeout(100); await capture('08-endless-squad-combat');
     results.endless = await page.evaluate(() => ({ config:__cf.endlessConfiguration, combat:__cf.combat.snapshot(), squad:__cf.squadInfo(), enemies:__cf.enemies.length }));
     await page.evaluate(() => { const c=__cf; c.clearTestEnemies(); c.setNoSpawn(true); c.setInvulnerable(false); c.setPlayerHealth(1,0); c.commandSquad('hold');
-        for(const m of c.squad) { m.pos.x=m.holdPos.x=600; m.pos.y=m.holdPos.y=600; } const e=c.spawnTestEnemy('runner',1,0); e.hp=100000; e.attackT=0; });
+        for(const m of c.squad) { m.pos.x=m.holdPos.x=600; m.pos.y=m.holdPos.y=600; } const e=c.spawnTestEnemy('runner',1,0); e.hp=100000; e.attackT=0; c.damagePlayer(200); });
     await page.waitForFunction(() => __cf.phaseName==='DEAD'); await page.waitForTimeout(2200); await page.keyboard.press('Space'); await page.waitForFunction(() => __cf.phaseName==='ENDLESS');
     results.restart = await page.evaluate(() => ({ config:__cf.endlessConfiguration, combat:__cf.combat.snapshot(), wave:__cf.endless.wave, squad:__cf.squad.length }));
     assert.equal(results.restart.combat.activeId,'scatter'); assert.equal(results.restart.config.posture,'screen'); assert.equal(results.restart.wave,0); assert.equal(results.restart.squad,3);

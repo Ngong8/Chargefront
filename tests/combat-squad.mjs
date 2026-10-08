@@ -181,6 +181,7 @@ try {
         const c = __cf; c.setNoAggro(false); c.setInvulnerable(false); c.setPlayerHealth(1, 0); c.commandSquad('hold');
         for (const m of c.squad) { m.pos.x = m.holdPos.x = 600; m.pos.y = m.holdPos.y = 600; }
         const e = c.spawnTestEnemy('runner', 1, 0); e.hp = 100000; e.attackT = 0;
+        c.damagePlayer(200);   // deterministic end-of-run death (runner is a kamikaze now, not a melee attacker)
     });
     await page.waitForFunction(() => __cf.phaseName === 'DEAD'); await page.waitForTimeout(2200);
     await page.keyboard.press('Space');

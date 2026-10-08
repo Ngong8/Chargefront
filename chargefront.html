@@ -600,8 +600,9 @@ const sfx = {
     grenade:    new LJS.Sound([0.3, 0.05, 300, 0.01, 0.05, 0.1, 2, 1, 0, 6, 0, 0, 0, 0.2]),
     screech:    new LJS.Sound([0.45, 0.05, 900, 0.02, 0.3, 0.4, 0, 2, 0, 10, 0, 0, 0, 0.3, 1, 0, 0, 0.7]),
     wind:       new LJS.Sound([0.2, 0.4, 70, 0.3, 0.9, 1.0, 3, 1, 0, 0, 0, 0, 0.6, 0.95, 0, 0, 0.25, 0.55]),
+    runnerArm:  new LJS.Sound([0.5, 0, 860, 0.005, 0.05, 0.12, 2, 2, 0, 0, 640, 0.16]),   // urgent kamikaze warning beep
 };
-const HIGHLIGHT_SYNTH_SFX = new Set([sfx.relayDone, sfx.pickup, sfx.revive, sfx.command, sfx.vial]);
+const HIGHLIGHT_SYNTH_SFX = new Set([sfx.relayDone, sfx.pickup, sfx.revive, sfx.command, sfx.vial, sfx.runnerArm]);
 const HIGHLIGHT_FILE_SFX = new Set(['reload', 'empty', 'bossRoar', 'unburrow', 'accessOk', 'accessDeny', 'droneAlert', 'resultCount']);
 function soundModeAllows(kind, sound) {
     if (opts.soundMode === 'full') return true;
@@ -5149,6 +5150,11 @@ const ENEMY_STATS = {
     artillery: { hp: 190,  speed: 4.5,  dmg: 24, meleeRange: 0,   meleeCd: 2.25, rangedRange: 40 },
     boss:      { hp: 4200, speed: 3.7,  dmg: 40, meleeRange: 4.8, meleeCd: 1.85 },   // The Harvester keeps its speed
 };
+/* Kamikaze runner tuning (world scale is metres; player ~5 m/s, runner ~16 m/s). */
+const RUNNER_ARM_RADIUS = 3.6;    // begin the fuse within contact range of the target
+const RUNNER_FUSE = 2.0;          // seconds from arming to detonation
+const RUNNER_BLAST_RADIUS = 4.8;  // radial damage radius at detonation
+const RUNNER_BLAST_DAMAGE = 26;   // single bounded hit to player/squad in range
 function squadHasClearedFacility() {
     if (player.pos.y > 608) return false;
     return squadMembers.every(m => m.downed || m.pos.y < 614);
@@ -5201,6 +5207,7 @@ class Infested extends LJS.ThreeJSObject {
         this.unburrowDur = rand(0.7, 1.0);
         this.unburrowT = 0;
         this.waitingForExit = false;
+        this.armed = false; this.armT = 0; this.armedTick = false; this.detonated = false;   // kamikaze runner fuse state
         this.skySpawnT = 0; this.skySpawnDur = 0;
         this.finalScale = this.mesh.scale.x;
         this.focus = player;              // primary target (the horde may retarget a squadmate)
@@ -5246,6 +5253,7 @@ class Infested extends LJS.ThreeJSObject {
     die() {
         if (this.dead) return;
         this.dead = true; this.dying = true; this.dieT = 0.9;
+        this.armed = false; this.armT = 0;   // a killed/destroyed kamikaze never keeps or restarts a fuse
         kills++;                            // total squad kills (player + teammates)
         if (mode === 'endless' && endlessRun.killHeal > 0 && player && !player.dead) player.hp = Math.min(player.maxHp, player.hp + endlessRun.killHeal);   // VAMPIRIC CIRCUIT
         if (this.type === 'drone') {        // explosion instead of shrinking — burst + pop out fast
@@ -5279,6 +5287,16 @@ class Infested extends LJS.ThreeJSObject {
             spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'dna');
         }
     }
+    detonate() {
+        if (this.detonated || this.dead || this.dying) return;
+        this.detonated = true; this.armed = false; this.armT = 0;
+        spawnImpact(this.pos.x, this.pos.y, this.z + 0.6, 0xff7a2a, 4.2);
+        emitSparks(this.pos.x, this.pos.y, this.z + 0.9, 0xffb066, 22);
+        emitSparks(this.pos.x, this.pos.y, this.z + 0.5, 0xff5522, 14);
+        playFileSfx('explode', 0.8, rand(0.92, 1.05), this.pos.x, this.pos.y);
+        radiateFriendlyBlast(this.pos.x, this.pos.y, this.z, RUNNER_BLAST_RADIUS, RUNNER_BLAST_DAMAGE, 'runner');
+        this.die();
+    }
     update() {
         this.mesh.visible = true;
         this.mesh.userData.detail.visible = true;
@@ -5286,7 +5304,15 @@ class Infested extends LJS.ThreeJSObject {
         const threatRing = this.mesh.userData.threatRing;
         if (threatRing && threatRing.material) {
             threatRing.visible = true;
-            threatRing.material.opacity = 0.18 + 0.12 * (0.5 + 0.5 * Math.sin(LJS.time * 5 + this.animT));
+            if (this.type === 'runner' && this.armed) {
+                /* accelerating emissive pulse telegraphs the imminent detonation */
+                const frac = 1 - clamp(this.armT / RUNNER_FUSE, 0, 1);
+                threatRing.material.color.setHex(0xff3b1a);
+                threatRing.material.opacity = 0.35 + 0.55 * (0.5 + 0.5 * Math.sin(LJS.time * (10 + frac * 26)));
+                threatRing.scale.setScalar(1 + frac * 1.2);
+            } else {
+                threatRing.material.opacity = 0.18 + 0.12 * (0.5 + 0.5 * Math.sin(LJS.time * 5 + this.animT));
+            }
         }
         const dt = LJS.timeDelta;
         this.markedT = Math.max(0, this.markedT - dt);
@@ -5435,6 +5461,22 @@ class Infested extends LJS.ThreeJSObject {
             else if (dTarget < this.rangedRange - 3) { wantsToMove = true; moveFacing = facing + Math.PI; }
             else wantsToMove = false;
         }
+        /* ── Kamikaze runner: arm a short fuse in contact range, then detonate ──
+           The fuse is started once and never restarted by small distance changes. */
+        if (this.type === 'runner' && !this.scatter) {
+            const armDist = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
+            if (!this.armed && armDist <= RUNNER_ARM_RADIUS && hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
+                this.armed = true; this.armT = RUNNER_FUSE; this.armedTick = false;
+                playSnd(sfx.runnerArm, 0.7, rand(0.96, 1.04));
+                spawnImpact(this.pos.x, this.pos.y, this.z + 0.4, 0xff8844, 1.4);
+            }
+            if (this.armed) {
+                this.armT -= dt;
+                wantsToMove = armDist > 1.4;                 // committed, limited pursuit while fused
+                if (!this.armedTick && this.armT <= 0.8) { this.armedTick = true; playSnd(sfx.runnerArm, 0.7, 1.12); }
+                if (this.armT <= 0) { this.detonate(); return; }
+            }
+        }
 
         /* The Harvester cannot be safely focus-fired while it closes: it spits a heavy
            tracking glob from mid-range, then transitions to its faster melee attacks. */
@@ -5525,7 +5567,8 @@ class Infested extends LJS.ThreeJSObject {
             /* attack target */
             this.attackT -= dt;
             const attackDistance = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
-            if (this.attackT <= 0 && attackDistance < (this.rangedRange ? this.rangedRange + 3 : stopDist + 0.4) &&
+            if (this.attackT <= 0 && !(this.type === 'runner' && this.armed) &&
+                attackDistance < (this.rangedRange ? this.rangedRange + 3 : stopDist + 0.4) &&
                 hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
                 this.attackT = this.attackCd + rand(0.3);
                 if (this.ambient && this.aggroT <= 0) {
@@ -5563,6 +5606,7 @@ class Infested extends LJS.ThreeJSObject {
     destroy(immediate) {
         const i = enemies.indexOf(this);
         if (this.destroyed) return;
+        this.armed = false; this.armT = 0;
         if (i >= 0) enemies.splice(i, 1);
         enemyTypeCounts[this.type]--;
         // Only the per-instance clone is disposed, never shared template data.
@@ -6896,6 +6940,19 @@ function explodePlasmaShot(s) {
             e.takeDamage(s.dmg * (1 - d / radius * 0.6));
             if (s.owner === 'player') { hitMarkerT = 0.22; hitMarkerKill = e.dead || e.dying; }
         }
+    }
+}
+/* Safe radial blast against player + squad only: real distance plus LOS/solid
+   authorization, and each unit is hit at most once. Mirrors the validated PX-4
+   explosion rules instead of the unsafe raw-distance path. */
+function radiateFriendlyBlast(x, y, z, radius, damage, sourceType) {
+    if (!player.dead && Math.hypot(player.pos.x - x, player.pos.y - y) < radius &&
+        hasLOS(x, y, player.pos.x, player.pos.y, 0.6)) {
+        playerTakeDamage(damage, true); noteAttacker(x, y, sourceType);
+    }
+    for (const m of squadMembers) {
+        if (m.downed) continue;
+        if (Math.hypot(m.pos.x - x, m.pos.y - y) < radius && hasLOS(x, y, m.pos.x, m.pos.y, 0.6)) m.takeDamage(damage);
     }
 }
 function chainArcShot(s, first) {
@@ -11201,6 +11258,8 @@ window.__cf = {
     objectiveHUDInfo() { return objectiveHUD.snapshot(); },
     advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
     optionalMarkerInfo() { return { near: OPTIONAL_MARKER_NEAR, far: OPTIONAL_MARKER_FAR, state: Object.fromEntries(optionalMarkerState) }; },
+    runnerInfo() { return enemies.filter((e) => e.type === 'runner').map((e) => ({ armed: !!e.armed, armT: +e.armT.toFixed(2), dead: !!e.dead, detonated: !!e.detonated, hp: e.hp })); },
+    damagePlayer(n = 10) { playerTakeDamage(Math.max(0, n), true); return { hp: player.hp, shield: player.shield, dead: player.dead }; },
     wingAudit(type = 'screecher') {
         const out = [];
         for (const e of enemies) {

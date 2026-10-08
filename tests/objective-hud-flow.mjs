@@ -30,7 +30,7 @@ try{
  const initial=await hud(),operators=initial.text.filter(t=>['ROOK','VEX','KADE'].includes(t.value)),abilities=initial.text.filter(t=>/^\[[ZXY]\]/.test(t.value));
  for(let i=0;i<2;i++)assert(operators[i+1].y-abilities[i].y>=16);
  assert.equal(initial.icons.length,9);assert(initial.text.some(t=>t.value==='DOWN'));results.spacing=operators.map((t,i)=>({name:t.value,y:t.y,abilityY:abilities[i].y}));
- const main=initial.text.find(t=>t.value==='MAIN OBJECTIVE'),optional=initial.text.find(t=>t.value==='OPTIONAL');assert(main.x===1264&&main.align==='right'&&main.y>190);assert(optional.x===1264&&optional.align==='right'&&optional.y>main.y);
+ const main=initial.text.find(t=>t.value==='MAIN OBJECTIVE'),optional=initial.text.find(t=>t.value==='OPTIONAL');assert(main.x===1264&&main.align==='right'&&main.y>=170);assert(optional.x===1264&&optional.align==='right'&&optional.y>main.y);
  results.initial=await snapshot();await capture('02-fixed-slots-vitals-objectives');
  // Replace a displayed phase, hold and then fade its old row under a controlled HUD clock.
  await page.evaluate(()=>{__cf.setPhase(15);__cf.advanceObjectiveHUD(0);__cf.advanceObjectiveHUD(.4);});
@@ -78,7 +78,7 @@ try{
  for(const viewport of [{width:1280,height:720},{width:1366,height:768},{width:1920,height:1080}]){
   await page.setViewportSize(viewport);await page.waitForTimeout(100);const h=await hud(),x=viewport.width-16;
   assert(h.text.find(t=>t.value==='MAIN OBJECTIVE').x===x);const right=h.text.filter(t=>t.x===x);assert(right.length>=4);
-  assert(right.every(t=>t.y>=202&&t.y<viewport.height-80));assert(right.every(t=>t.align==='right'));
+  assert(right.every(t=>t.y>=170&&t.y<viewport.height-80));assert(right.every(t=>t.align==='right'));
   const bounds=await page.evaluate(rows=>{const c=document.createElement('canvas').getContext('2d');return rows.map(t=>{c.font=t.size+'px "Glitch Slap"';const w=c.measureText(t.value).width;return {right:t.x,left:t.x-w};});},right);
   assert(bounds.every(b=>b.right<=viewport.width-14&&b.left>=viewport.width-316));results.layouts.push({viewport,lines:right.length});
  }

@@ -5,8 +5,8 @@
       "window": 0.72
     },
     "channelReady": {
-      "min": 0.414,
-      "max": 0.925
+      "min": 0.464,
+      "max": 0.957
     },
     "firing": {
       "shot": {
@@ -29,11 +29,11 @@
       "magazineBoltOpacity": 1,
       "magazineWindowOpacity": 0.72,
       "channelOpacity": [
-        0.07
+        0.092
       ]
     },
     "reloadDone": {
-      "maxChannel": 0.93,
+      "maxChannel": 0.947,
       "energy": 1
     },
     "cancel": {

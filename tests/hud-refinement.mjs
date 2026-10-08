@@ -135,7 +135,7 @@ try {
                 });
             },h.text);
             assert(textBounds.every(t=>t.left>=24 && t.right<=272),'Left panel text must remain inside its frame');
-            const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');assert.equal(main.x,viewport.width-16);assert.equal(main.align,'right');assert(main.y>190);
+            const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');assert.equal(main.x,viewport.width-16);assert.equal(main.align,'right');assert(main.y>=170);
             assert(h.text.some(t=>t.value==='[F] SURGE READY'||/^\[F\] SURGE [\d.]+s$/.test(t.value)));
             results.layouts.push({viewport,panels:left,icons:h.icons.length});
         }

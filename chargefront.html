@@ -4692,11 +4692,11 @@ function animateReloadPart(weapon, progress) {
             part.rotation.z = base.rotation.z + seat(-0.18, 0.04, insert, lock);
         }
         part.visible = progress < 0.43 || progress > 0.49;
-        const lockPulse = Math.sin(stage(0.74, 1) * Math.PI);
-        part.scale.setScalar(1 + lockPulse * 0.14);
+        // Magazine display stays a constant flat glow — no scale/brightness pulse here.
+        // Only the front energy channel (reloadEnergy -> reloadLights/channelBolts) reacts.
         model.userData.reloadEnergy = progress < 0.46
             ? 1 - stage(0.10, 0.38) * 0.88
-            : 0.12 + stage(0.62, 0.92) * 0.88 + lockPulse * 0.22;
+            : 0.12 + stage(0.62, 0.92) * 0.88;
         for (let i = 0; i < model.userData.reloadLights.length; i++) {
             model.userData.reloadLights[i].material.opacity = Math.min(1, model.userData.reloadLightOpacity[i] * model.userData.reloadEnergy);
         }
@@ -9521,7 +9521,7 @@ function drawObjectiveProgress(right, y, width) {
 }
 function drawObjectiveStack(W) {
     const width = Math.min(300, W * 0.26), right = W - 16, left = right - width;
-    let y = 202; // below the unchanged 150 px minimap and its optional legend
+    let y = 178; // just below the unchanged 150 px minimap (legend row removed)
     for (const kind of ['main', 'optional']) {
         if (!objectiveHUD.rows.some(row => row.kind === kind)) continue;
         hudText(kind === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(right, y), 10, kind === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'right');
@@ -10373,19 +10373,6 @@ function drawMinimap(W, H) {
             const pc = pickupCols[p.kind] || pickupCols.scrap;
             dot(p.pos.x, p.pos.y, pc, 4);
         }
-        /* legend strip under the minimap */
-        const ly = my + size + 10;
-        const lx0 = mx;
-        const lg = (x, col, label) => {
-            LJS.drawRect(LJS.vec2(x, ly), LJS.vec2(7, 7), col, 0, false, true);
-            hudText(label, LJS.vec2(x + 11, ly), 9, LJS.rgb(0.78, 0.86, 1), 'left');
-        };
-        lg(lx0 + 4, LJS.rgb(1, 0.75, 0.3), 'R');
-        lg(lx0 + 26, LJS.rgb(0.45, 1, 0.7), 'V');
-        lg(lx0 + 48, LJS.rgb(0.9, 0.78, 0.4), 'S');
-        lg(lx0 + 70, LJS.rgb(0.45, 0.78, 1), 'C');
-        lg(lx0 + 92, LJS.rgb(1, 0.6, 0.3), 'G');
-        lg(lx0 + 114, LJS.rgb(0.4, 1, 0.55), 'D');
     }
     /* sci-fi frame */
     const mAccent = LJS.rgb(0.42, 0.78, 1, 0.9);

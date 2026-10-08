@@ -21,8 +21,7 @@
       "near": 100,
       "far": 110,
       "state": {
-        "BIO-SCAN": true,
-        "AUX FIELD CELL": false
+        "BIO-SCAN": true
       }
     },
     "passed": true

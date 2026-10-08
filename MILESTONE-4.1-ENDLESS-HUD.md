@@ -597,3 +597,89 @@ integration), `combat-state`, `combat-squad`, `hud-refinement`,
 `traversal-performance` all pass in Edge and Firefox. Evidence:
 `_playtest/m41/arc/` (`06-arc-muzzle-lightning`, `07-arc-reload-energy-off`,
 `08-arc-reload-energy-on`, `arc-{edge,firefox}.json`).
+
+## Follow-up — ARC magazine, minimap legend, Screecher, kamikaze Runner, optional discovery
+
+Four separate commits on `milestone-4.1`. No Milestone 4.2 work.
+
+### ARC-9 magazine display (static) + minimap legend removal
+
+- The magazine/body display (`arcCellWindow` + the magazine `genergyBolt`) is now
+  fully static: it was never opacity-animated, and the last remaining magazine
+  animation — the reload **scale** lock-pulse on `arcCartridge` — is removed. The
+  magazine keeps a constant flat cyan glow while equipped, firing and reloading.
+  Only the front energy channel (`reloadEnergy` → `reloadLights`/`channelBolts`)
+  still pulses and powers down/up on reload.
+- The always-visible minimap legend row (R/V/S/C/G/D swatches) is removed; the
+  minimap and its real markers are unchanged. The objective stack moves up from
+  y=202 to y=178 so it closes the freed gap instead of leaving a blank band.
+
+### Screecher wings (audit + fix)
+
+- Audit found the wing roots at `y = ±0.75` while the body's side surface is only
+  ~±0.28, so the wings floated off the body and orbited around it. Fixed:
+  roots now sit on the body side at `(−0.05, ±0.30, 0.72)`; each wing cone is
+  mirrored to its side (`rotation.z = side>0 ? 0.34 : π−0.34`), swept slightly
+  back, offset outward (`±0.58`), and flattened (`scale.z = 0.45`). Flap still
+  rotates the root about the forward (x) axis with opposite phases (`0`/`π`) and
+  a stable root (no translation), so wings no longer detach or orbit.
+  `tests/screecher-wings.mjs` verifies symmetry, attachment, flap range and root
+  stability while turning, plus front/side/three-quarter captures.
+
+### Runner → kamikaze threat
+
+- Runner (`ENEMY_STATS.runner`, the small yellow enemy) is now a kamikaze. Within
+  `RUNNER_ARM_RADIUS = 3.6 m` of its target with LOS it arms **once** (never
+  restarted by small distance changes), plays a distinctive synthesized warning
+  beep (`sfx.runnerArm`, no external asset), telegraphs with an accelerating red
+  threat-ring pulse, keeps limited pursuit for `RUNNER_FUSE = 2.0 s`, then
+  detonates for one bounded `RUNNER_BLAST_DAMAGE = 26` hit inside
+  `RUNNER_BLAST_RADIUS = 4.8 m`. It no longer performs normal melee attacks while
+  armed.
+- Detonation uses `radiateFriendlyBlast()`: real distance plus `hasLOS`/solid
+  authorization, and each of player/squad is hit at most once — the validated
+  PX-4 explosion rules, not the old raw-distance path. `die()`/`destroy()` clear
+  the fuse, `detonate()` is idempotent, so a Runner killed mid-fuse never
+  explodes and there is no stale armed state or repeat explosion. Restart and
+  world cleanup drop armed Runners with the enemy. Tests that relied on Runner
+  melee now use `damagePlayer()` for deterministic death and `skitter` for
+  generic facility navigation.
+- `tests/runner-kamikaze.mjs` covers one-shot arming, ~2 s fuse, single bounded
+  damage, no repeat, kill-mid-fuse, target-leaving (detonates out of range with
+  no damage) and four simultaneous Runners resolving with bounded total damage.
+
+### Campaign optional-objective discovery
+
+- Optional objectives are no longer globally revealed at mission start. Each has
+  an independent HIDDEN → DISCOVERED → COMPLETED lifecycle. Discovery happens
+  when the player or a living squadmate gets within
+  `OPTIONAL_DISCOVERY_RANGE = 70 m` of the objective's world anchor **and** that
+  objective's own prerequisite is met. There is no "complete A to unlock B"
+  chain.
+- Per-objective prerequisites/anchors: M1 `scan_growth` (Infested Growth scan,
+  mission active), M1 `portable_cell` (Aux Field Cell, mission active), M2
+  `survey` (Survey Drone, only once its state is AVAILABLE/later), M3 `turret`
+  (lab security turret console, lab present). Hidden optionals show no text,
+  no world/HUD waypoint and no minimap dot; once discovered they use the normal
+  100/110 m marker hysteresis. Hidden names are never shown in placeholders.
+- The presentation queue now keys rows by `(group, id)`, supporting multiple
+  simultaneous optionals; progress changes update in place, completion uses the
+  existing strike → hold (0.45 s) → fade (0.65 s) → removal transition. Discovery
+  state lives in `campaignRun.discovered`, is serialized in the checkpoint, and
+  is merged on Continue; Mission Select/New and chapter transitions start fresh.
+  `tests/objective-hud-state.mjs` and `tests/objective-hud-flow.mjs` cover the
+  independent lifecycle, progress-vs-completion, checkpoint/Continue persistence,
+  the skip-one-discover-another route, and mission-transition clearing.
+
+### Validation
+
+All suites pass in Edge and Firefox: `combat-state`, `objective-hud-state`,
+`arc-presentation`, `screecher-wings`, `runner-kamikaze`, `hud-navigation`,
+`hud-refinement`, `objective-hud-flow`, `endless-hud`, `combat-squad`,
+`combat-playtest`, `intro-smoke`, `m2-progression`, `facility-regression`,
+`facility-playthrough`, `transition-diagnose`, `runtime-stability --campaign`,
+`traversal-performance`. Isolated firing keeps the prewarmed effect pools bounded
+with no new materials/geometry/shader links or world/facility rebuilds; traversal
+p95 stayed within the accepted bands. Evidence:
+`_playtest/m41/arc/`, `_playtest/m41/navigation/`, `_playtest/m41/screecher/`,
+`_playtest/m41/runner/`, `_playtest/m41/hud-flow/`. Milestone 4.2 remains deferred.

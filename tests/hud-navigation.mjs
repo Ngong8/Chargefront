@@ -27,8 +27,11 @@ try{
  h=await hud();const toast=h.text.find(t=>t.x===W/2&&t.value==='EQUIPPED BUL-117');assert(!toast||toast.y<=60,'Equipped notification must stay under the compass');
  results.statusY=distance.y;await capture('01-compass-status-stack');
  // 2) Right-aligned objectives.
- const main=h.text.find(t=>t.value==='MAIN OBJECTIVE'),optional=h.text.find(t=>t.value==='OPTIONAL');
- assert.equal(main.x,W-16);assert.equal(main.align,'right');assert.equal(optional.x,W-16);assert.equal(optional.align,'right');
+ const main=h.text.find(t=>t.value==='MAIN OBJECTIVE');
+ assert.equal(main.x,W-16);assert.equal(main.align,'right');
+ // Optionals are discovery-gated; reveal the scan optional to check its right alignment.
+ await page.evaluate(()=>{__cf.setOptionalDiscovered('scan_growth',true);__cf.advanceObjectiveHUD(0);});h=await hud();
+ const optional=h.text.find(t=>t.value==='OPTIONAL');assert(optional&&optional.x===W-16&&optional.align==='right');
  const rightRows=h.text.filter(t=>/Reach the abandoned|Scan Infested/.test(t.value));assert(rightRows.length>=1);assert(rightRows.every(t=>t.x===W-16&&t.align==='right'));
  results.objectiveRight=rightRows.map(t=>({value:t.value,x:t.x,align:t.align}));await capture('02-objectives-right-aligned');
  // 3) Commander ability line, READY then cooldown, behind the same visual language.

@@ -37,15 +37,8 @@
     ],
     "initial": [
       {
-        "kind": "optional",
-        "key": "dead_signal:growth",
-        "text": "Scan Infested Growth",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "dead_signal:14",
         "text": "Reach the abandoned facility perimeter",
         "completed": false,
@@ -55,15 +48,8 @@
     ],
     "held": [
       {
-        "kind": "optional",
-        "key": "dead_signal:growth",
-        "text": "Scan Infested Growth",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "dead_signal:14",
         "text": "Reach the abandoned facility perimeter",
         "completed": true,
@@ -71,7 +57,8 @@
         "alpha": 1
       },
       {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "dead_signal:15",
         "text": "Search the service yard for an Emergency Maintenance Battery",
         "completed": false,
@@ -81,15 +68,8 @@
     ],
     "fading": [
       {
-        "kind": "optional",
-        "key": "dead_signal:growth",
-        "text": "Scan Infested Growth",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "dead_signal:14",
         "text": "Reach the abandoned facility perimeter",
         "completed": true,
@@ -97,7 +77,8 @@
         "alpha": 0.5384615384615385
       },
       {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "dead_signal:15",
         "text": "Search the service yard for an Emergency Maintenance Battery",
         "completed": false,
@@ -105,105 +86,25 @@
         "alpha": 1
       }
     ],
-    "mainInteraction": [
-      {
-        "kind": "optional",
-        "key": "dead_signal:growth",
-        "text": "Scan Infested Growth",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
-        "key": "dead_signal:15",
-        "text": "Search the service yard for an Emergency Maintenance Battery",
-        "completed": true,
-        "age": 0.03333333333333333,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
-        "key": "dead_signal:16",
-        "text": "Install the Emergency Maintenance Battery at the grid",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      }
-    ],
-    "optionalInteraction": [
-      {
-        "kind": "optional",
-        "key": "dead_signal:growth",
-        "text": "Scan Infested Growth",
-        "completed": true,
-        "age": 0.06666666666666667,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
-        "key": "dead_signal:16",
-        "text": "Install the Emergency Maintenance Battery at the grid",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "optional",
-        "key": "dead_signal:cell-recovery",
-        "text": "Recover the Auxiliary Field Cell",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      }
-    ],
-    "transition": [
-      {
-        "kind": "main",
-        "key": "dead_signal:16",
-        "text": "Install the Emergency Maintenance Battery at the grid",
-        "completed": true,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "main",
-        "key": "power_through:2",
-        "text": "Advance to RELAY ALPHA and power it up",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "optional",
-        "key": "power_through:survey-find",
-        "text": "Survey Drone available after Relay Alpha",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      }
-    ],
-    "progress": [
-      {
-        "kind": "main",
-        "key": "power_through:2",
-        "text": "Advance to RELAY ALPHA and power it up",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      },
-      {
-        "kind": "optional",
-        "key": "power_through:survey-escort",
-        "text": "Optional: Survey Drone paused — auto-repair 3s",
-        "completed": false,
-        "age": 0,
-        "alpha": 1
-      }
-    ],
+    "skipDiscover": {
+      "portable_cell": true
+    },
+    "checkpointDiscovery": {
+      "scan_growth": true
+    },
+    "restoredDiscovery": {
+      "scan_growth": true
+    },
+    "progress": {
+      "hpOff": "Optional: Escort Survey Drone to Relay Beta — 100%",
+      "hpOn": "Optional: Escort Survey Drone to Relay Beta — 50%",
+      "completedAfterHp": 0,
+      "repair": "Optional: Survey Drone paused — auto-repair 3s"
+    },
     "mission4": [
       {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "sample_zero:19",
         "text": "Enter the unlocked bio-lab from command",
         "completed": true,
@@ -211,7 +112,8 @@
         "alpha": 1
       },
       {
-        "kind": "main",
+        "group": "main",
+        "id": "main",
         "key": "break_contact:24",
         "text": "Escape through the east maintenance breach",
         "completed": false,
@@ -251,5 +153,6 @@
     },
     "passed": true
   },
-  "errors": []
+  "errors": [],
+  "consoles": []
 }

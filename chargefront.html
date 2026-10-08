@@ -307,7 +307,7 @@ let activeMissionId = 'dead_signal';
 let campaignRunOrigin = CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN;
 function isPersistentCampaignRun() { return campaignRunOrigin !== CAMPAIGN_RUN_ORIGIN.MISSION_SELECT; }
 let campaignWorldBuilt = false;
-let campaignRun = { mainIndex: 0, optional: {}, worldState: {}, enemyIntel: false, completion: null };
+let campaignRun = { mainIndex: 0, optional: {}, discovered: {}, worldState: {}, enemyIntel: false, completion: null };
 
 /* ─── engine settings (must run before engineInit) ─────────────────────── */
 LJS.setGLEnable(false);            // let three.js own the only WebGL context
@@ -4140,45 +4140,74 @@ function objectiveLine() {
         default: return '';
     }
 }
-function optionalObjectiveLine() {
-    if (mode !== 'campaign') return '';
+/* Optional objectives stay HIDDEN until the player/squad gets near the relevant
+   world object AND that objective's prerequisite is satisfied. Discovery is per
+   objective and independent — skipping one never blocks another. */
+const OPTIONAL_DISCOVERY_RANGE = 70;   // metres; squad notices a nearby optional, not one across the map
+function surveyOptionText(state) {
+    if (state === SURVEY_DRONE_STATE.AVAILABLE) return 'Optional: Locate Survey Drone ahead of Alpha';
+    if (state === SURVEY_DRONE_STATE.ESCORTING) return 'Optional: Escort Survey Drone to Relay Beta — ' + Math.round(campaignContent.escort.hp / campaignContent.escort.maxHp * 100) + '%';
+    if (state === SURVEY_DRONE_STATE.DISABLED) return 'Optional: Survey Drone paused — auto-repair ' + Math.ceil(campaignContent.escort.emergencyRepairT) + 's';
+    if (state === SURVEY_DRONE_STATE.ARRIVED) return 'Survey Drone reached Relay Beta';
+    if (state === SURVEY_DRONE_STATE.SCANNING) return 'Optional: Survey Drone scanning Beta approaches';
+    if (state === SURVEY_DRONE_STATE.COMPLETE) return phase === P.DEFEND_R2 || phase === P.MOVE_R2 ? 'Survey data acquired — Beta approaches marked' : 'Survey data acquired';
+    return 'Survey Drone optional';
+}
+function campaignOptionals() {
+    const list = [];
+    if (mode !== 'campaign') return list;
     if (activeMissionId === 'dead_signal') {
-        if (!campaignRun.optional.scan_growth) return 'Scan Infested Growth';
-        if (!campaignRun.optional.portable_cell) return campaignContent.cellCarried ? 'Choose one: SENSORS (intel) or SUPPLY LOCKER (gear)' : 'Recover the Auxiliary Field Cell';
-        return 'All optional objectives complete';
+        if (campaignContent.scan) list.push({ id: 'scan_growth', key: 'scan', completed: !!campaignRun.optional.scan_growth, prereq: !campaignRun.optional.scan_growth,
+            positions: [campaignContent.scan.pos], text: 'Scan Infested Growth' });
+        if (campaignContent.cell) list.push({ id: 'portable_cell', key: campaignContent.cellCarried ? 'cell-choice' : 'cell-recovery', completed: !!campaignRun.optional.portable_cell, prereq: !campaignRun.optional.portable_cell,
+            positions: campaignContent.cellCarried ? [campaignContent.localConsole, campaignContent.supplyConsole].filter(Boolean).map((c) => c.pos) : [campaignContent.cell.pos],
+            text: campaignContent.cellCarried ? 'Choose one: SENSORS (intel) or SUPPLY LOCKER (gear)' : 'Recover the Auxiliary Field Cell' });
+    } else if (activeMissionId === 'power_through' && campaignContent.escort) {
+        const state = campaignContent.escort.state;
+        const active = [SURVEY_DRONE_STATE.AVAILABLE, SURVEY_DRONE_STATE.ESCORTING, SURVEY_DRONE_STATE.DISABLED, SURVEY_DRONE_STATE.ARRIVED, SURVEY_DRONE_STATE.SCANNING, SURVEY_DRONE_STATE.COMPLETE].includes(state);
+        if (active) list.push({ id: 'survey', key: state, completed: state === SURVEY_DRONE_STATE.COMPLETE, prereq: state !== SURVEY_DRONE_STATE.COMPLETE,
+            positions: [campaignContent.escort.pos], text: surveyOptionText(state) });
+    } else if (activeMissionId === 'sample_zero' && campaignContent.lab) {
+        list.push({ id: 'turret', key: 'turret', completed: !!campaignRun.optional.security_turret, prereq: !campaignRun.optional.security_turret,
+            positions: [campaignContent.lab.turretConsole.pos], text: 'Restore Laboratory Security Turret' });
     }
-    if (activeMissionId === 'power_through') {
-        const state = campaignContent.escort ? campaignContent.escort.state : SURVEY_DRONE_STATE.DORMANT;
-        if (state === SURVEY_DRONE_STATE.AVAILABLE) return 'Optional: Locate Survey Drone ahead of Alpha';
-        if (state === SURVEY_DRONE_STATE.ESCORTING) return 'Optional: Escort Survey Drone to Relay Beta — ' + Math.round(campaignContent.escort.hp / campaignContent.escort.maxHp * 100) + '%';
-        if (state === SURVEY_DRONE_STATE.DISABLED) return 'Optional: Survey Drone paused — auto-repair ' + Math.ceil(campaignContent.escort.emergencyRepairT) + 's';
-        if (state === SURVEY_DRONE_STATE.ARRIVED) return 'Survey Drone reached Relay Beta';
-        if (state === SURVEY_DRONE_STATE.SCANNING) return 'Optional: Survey Drone scanning Beta approaches';
-        if (state === SURVEY_DRONE_STATE.COMPLETE) return phase === P.DEFEND_R2 || phase === P.MOVE_R2 ? 'Survey data acquired — Beta approaches marked' : 'Survey data acquired';
-        if (state === SURVEY_DRONE_STATE.ABANDONED) return 'Survey Drone optional abandoned';
-        return 'Survey Drone available after Relay Alpha';
+    return list;
+}
+function nearestOptionalDistance(positions) {
+    let best = Infinity;
+    for (const p of positions) if (p) best = Math.min(best, Math.hypot(p.x - player.pos.x, p.y - player.pos.y));
+    for (const m of squadMembers) {
+        if (m.downed) continue;
+        for (const p of positions) if (p) best = Math.min(best, Math.hypot(p.x - m.pos.x, p.y - m.pos.y));
     }
-    if (activeMissionId === 'sample_zero') {
-        if (campaignRun.optional.security_turret) return 'Laboratory security turret online';
-        return 'Restore Laboratory Security Turret';
+    return best;
+}
+function updateOptionalDiscovery() {
+    if (mode !== 'campaign') return;
+    if (!campaignRun.discovered) campaignRun.discovered = {};
+    for (const opt of campaignOptionals()) {
+        if (!opt.prereq || campaignRun.discovered[opt.id]) continue;
+        if (nearestOptionalDistance(opt.positions) <= OPTIONAL_DISCOVERY_RANGE) campaignRun.discovered[opt.id] = true;
     }
-    return '';
 }
 const objectiveHUD = ChargefrontObjectiveHUD.create();
 function updateObjectiveHUD(dt) {
     objectiveHUD.tick(dt);
+    updateOptionalDiscovery();
     const mainKey = mode === 'endless' ? 'endless:' + endlessRun.wave + ':' + endlessRun.waveActive : activeMissionId + ':' + phase;
-    objectiveHUD.set('main', mainKey, objectiveLine());
-    let key = null;
-    if (mode === 'campaign' && activeMissionId === 'dead_signal') {
-        if (!campaignRun.optional.scan_growth) key = 'growth';
-        else if (!campaignRun.optional.portable_cell) key = campaignContent.cellCarried ? 'cell-choice' : 'cell-recovery';
-    } else if (mode === 'campaign' && activeMissionId === 'power_through') {
-        const state = campaignContent.escort?.state;
-        if (state !== SURVEY_DRONE_STATE.COMPLETE && state !== SURVEY_DRONE_STATE.ABANDONED)
-            key = state === SURVEY_DRONE_STATE.ESCORTING || state === SURVEY_DRONE_STATE.DISABLED ? 'survey-escort' : state === SURVEY_DRONE_STATE.ARRIVED || state === SURVEY_DRONE_STATE.SCANNING ? 'survey-scan' : 'survey-find';
-    } else if (mode === 'campaign' && activeMissionId === 'sample_zero' && !campaignRun.optional.security_turret) key = 'turret';
-    objectiveHUD.set('optional', key ? activeMissionId + ':' + key : null, key ? optionalObjectiveLine() : '');
+    objectiveHUD.set('main', 'main', mainKey, objectiveLine());
+    const shown = new Set();
+    if (mode === 'campaign') {
+        for (const opt of campaignOptionals()) {
+            if (!campaignRun.discovered[opt.id]) continue;
+            if (opt.completed) { if (objectiveHUD.rows.some((r) => r.group === 'optional' && r.id === opt.id && !r.completed)) objectiveHUD.complete('optional', opt.id); continue; }
+            shown.add(opt.id);
+            objectiveHUD.set('optional', opt.id, opt.key, opt.text);
+        }
+    }
+    for (const row of objectiveHUD.rows.slice()) {
+        if (row.group === 'optional' && !row.completed && !shown.has(row.id)) objectiveHUD.set('optional', row.id, null, null);
+    }
 }
 function targetOfPhase() {
     switch (phase) {
@@ -7614,7 +7643,7 @@ function makeCampaignRun(entryMode = 'standalone', carriedState = {}) {
     const mission = campaignMission();
     const snapshot = campaignSnapshot();
     const run = {
-        mainIndex: 0, optional: {},
+        mainIndex: 0, optional: {}, discovered: {},
         worldState: Object.assign({}, snapshot.worldState, { spacecraftState: snapshot.spacecraftState }, carriedState.worldState || {}),
         enemyIntel: !!carriedState.enemyIntel, completion: null, entryMode,
         encounter: { active: false, t: 0, duration: 0, stage: -1, spawnT: 0, pausedWarned: false },
@@ -9583,12 +9612,12 @@ function drawObjectiveProgress(right, y, width) {
 function drawObjectiveStack(W) {
     const width = Math.min(300, W * 0.26), right = W - 16, left = right - width;
     let y = 178; // just below the unchanged 150 px minimap (legend row removed)
-    for (const kind of ['main', 'optional']) {
-        if (!objectiveHUD.rows.some(row => row.kind === kind)) continue;
-        hudText(kind === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(right, y), 10, kind === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'right');
+    for (const group of ['main', 'optional']) {
+        if (!objectiveHUD.rows.some(row => row.group === group)) continue;
+        hudText(group === 'main' ? 'MAIN OBJECTIVE' : 'OPTIONAL', LJS.vec2(right, y), 10, group === 'main' ? LJS.rgb(0.42, 0.78, 1) : LJS.rgb(0.58, 0.92, 0.78), 'right');
         y += 18;
         for (const row of objectiveHUD.rows) {
-            if (row.kind !== kind) continue;
+            if (row.group !== group) continue;
             const font = HFONT();
             if (!row.lines || row.layoutWidth !== width || row.layoutFont !== font) {
                 objectiveMeasureContext.font = '12px "' + font + '"';
@@ -9611,7 +9640,7 @@ function drawObjectiveStack(W) {
                 hudText(row.lines[i], LJS.vec2(right, baseline), 12, row.completed ? LJS.rgb(0.6, 0.88, 0.74, alpha) : LJS.rgb(0.95, 0.86, 1), 'right', row.completed);
                 if (row.completed) hudObjectiveStrike(right - lineWidth, baseline, lineWidth, alpha);
             }
-            if (!row.completed) row.extraHeight = kind === 'main' ? drawObjectiveProgress(right, y + row.lines.length * 15, width) : 0;
+            if (!row.completed) row.extraHeight = group === 'main' ? drawObjectiveProgress(right, y + row.lines.length * 15, width) : 0;
             context.restore();
             // Collapse the retiring row smoothly; clip prevents overlap with its successor.
             y += (row.lines.length * 15 + (row.extraHeight || 0) + 12) * (row.completed ? collapse : 1);
@@ -9806,6 +9835,7 @@ function createCampaignCheckpointSnapshot() {
         missionTime, kills, totalAmmoCrafted, totalMedkitsCrafted,
         worldState: JSON.parse(JSON.stringify(campaignRun.worldState || {})),
         optional: Object.assign({}, campaignRun.optional),
+        discovered: Object.assign({}, campaignRun.discovered || {}),
         enemyIntel: !!campaignRun.enemyIntel,
         player: {
             hp: player.hp, shield: player.shield, grenades: player.grenades,
@@ -9851,6 +9881,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         delete boundary.worldState.relayFeedRerouted;
     }
     campaignRun.optional = Object.assign({}, campaignRun.optional, boundary.optional || {});
+    campaignRun.discovered = Object.assign({}, campaignRun.discovered || {}, boundary.discovered || {});
     campaignRun.enemyIntel = !!boundary.enemyIntel;
     const mission = boundary.mission || {};
     if (activeMissionId === 'power_through' && Array.isArray(mission.relays) && mission.relays.length && mission.relays.every((relay) => relay.powered)) campaignRun.worldState.relaysOnline = true;
@@ -10214,22 +10245,22 @@ function drawMarkers(W, H) {
             label: inHall ? 'REACTIVATE FACILITY TERMINAL' : 'RETURN VIA FRONT ENTRANCE',
             short: inHall ? 'TERMINAL' : 'FRONT ENTRANCE', color: 0x66ccff, priority: 100, primary: true });
     }
-    if (activeMissionId === 'dead_signal' && !campaignRun.optional.scan_growth && campaignContent.scan) targets.push({ pos: campaignContent.scan.pos, label: 'OPTIONAL: INFESTED GROWTH BIO-SCAN', short: 'BIO-SCAN', color: 0x66ffcc, priority: 55, optional: true });
-    if (activeMissionId === 'dead_signal' && !campaignRun.optional.portable_cell && campaignContent.cell) {
+    if (activeMissionId === 'dead_signal' && campaignRun.discovered.scan_growth && !campaignRun.optional.scan_growth && campaignContent.scan) targets.push({ pos: campaignContent.scan.pos, label: 'OPTIONAL: INFESTED GROWTH BIO-SCAN', short: 'BIO-SCAN', color: 0x66ffcc, priority: 55, optional: true });
+    if (activeMissionId === 'dead_signal' && campaignRun.discovered.portable_cell && !campaignRun.optional.portable_cell && campaignContent.cell) {
         if (!campaignContent.cellCarried) targets.push({ pos: campaignContent.cell.pos, label: 'OPTIONAL: AUXILIARY FIELD CELL', short: 'AUX FIELD CELL', color: 0xffcc44, priority: 52, optional: true });
         else {
             if (campaignContent.localConsole) targets.push({ pos: campaignContent.localConsole.pos, label: 'FIELD CELL: SENSORS (TACTICAL INTEL)', short: 'SENSORS', color: 0xffcc44, priority: 58, optional: true });
             if (campaignContent.supplyConsole) targets.push({ pos: campaignContent.supplyConsole.pos, label: 'FIELD CELL: SUPPLY LOCKER (FIELD GEAR)', short: 'SUPPLIES', color: 0xffcc44, priority: 58, optional: true });
         }
     }
-    if (activeMissionId === 'power_through' && campaignContent.escort) {
+    if (activeMissionId === 'power_through' && campaignRun.discovered.survey && campaignContent.escort) {
         const escort = campaignContent.escort;
         if ([SURVEY_DRONE_STATE.AVAILABLE, SURVEY_DRONE_STATE.ESCORTING, SURVEY_DRONE_STATE.DISABLED, SURVEY_DRONE_STATE.ARRIVED, SURVEY_DRONE_STATE.SCANNING].includes(escort.state)) {
             const label = escort.state === SURVEY_DRONE_STATE.DISABLED ? 'OPTIONAL: SURVEY DRONE DISABLED' : escort.state === SURVEY_DRONE_STATE.AVAILABLE ? 'OPTIONAL: SURVEY DRONE SERVICE NODE' : 'OPTIONAL: SURVEY DRONE';
             targets.push({ pos: escort.pos, label, short: escort.state === SURVEY_DRONE_STATE.DISABLED ? 'DRONE DISABLED' : 'SURVEY DRONE', color: escort.state === SURVEY_DRONE_STATE.DISABLED ? 0xff8844 : 0x66ccff, priority: escort.state === SURVEY_DRONE_STATE.DISABLED ? 78 : 60, optional: true });
         }
     }
-    if (activeMissionId === 'sample_zero' && campaignContent.lab && !campaignRun.optional.security_turret) {
+    if (activeMissionId === 'sample_zero' && campaignRun.discovered.turret && campaignContent.lab && !campaignRun.optional.security_turret) {
         targets.push({ pos: campaignContent.lab.turretConsole.pos, label: 'OPTIONAL: RESTORE SECURITY TURRET', short: 'SECURITY TURRET', color: 0x66ccff, priority: 58, optional: true });
     }
     if (phase === P.M4_HOLD_LZ && campaignContent.extraction && campaignContent.extraction.infestation) {
@@ -10405,7 +10436,7 @@ function drawMinimap(W, H) {
     }
     if (mode !== 'endless') dot(FACILITY.x, FACILITY.y, LJS.rgb(0.6, 0.8, 1), 8);
     if (activeMissionId === 'sample_zero' && !campaignRun.worldState.dnaSecured) dot(LAB_CONTAINMENT.x, LAB_CONTAINMENT.y, LJS.rgb(0.4, 1, 0.75), 7);
-    if (activeMissionId === 'sample_zero' && campaignContent.lab && !campaignRun.optional.security_turret) dot(campaignContent.lab.turretConsole.pos.x, campaignContent.lab.turretConsole.pos.y, LJS.rgb(0.45, 0.85, 1), 5);
+    if (activeMissionId === 'sample_zero' && campaignRun.discovered.turret && campaignContent.lab && !campaignRun.optional.security_turret) dot(campaignContent.lab.turretConsole.pos.x, campaignContent.lab.turretConsole.pos.y, LJS.rgb(0.45, 0.85, 1), 5);
     if (activeMissionId === 'break_contact') dot(EXTRACTION_BEACON.x, EXTRACTION_BEACON.y, LJS.rgb(0.4, 1, 0.75), 8);
     if (activeMissionId === 'power_through' && campaignRun.worldState.betaSurvey && relays[1]) {
         const survey = toMini(relays[1].pos.x, relays[1].pos.y), r = 18;
@@ -11259,6 +11290,10 @@ window.__cf = {
     advanceObjectiveHUD(seconds = 0) { updateObjectiveHUD(Math.max(0, seconds)); return objectiveHUD.snapshot(); },
     optionalMarkerInfo() { return { near: OPTIONAL_MARKER_NEAR, far: OPTIONAL_MARKER_FAR, state: Object.fromEntries(optionalMarkerState) }; },
     runnerInfo() { return enemies.filter((e) => e.type === 'runner').map((e) => ({ armed: !!e.armed, armT: +e.armT.toFixed(2), dead: !!e.dead, detonated: !!e.detonated, hp: e.hp })); },
+    discoveredInfo() { return Object.assign({}, campaignRun.discovered || {}); },
+    campaignOptionalsInfo() { return campaignOptionals().map((o) => ({ id: o.id, completed: o.completed, prereq: o.prereq })); },
+    setOptionalDiscovered(id, on = true) { if (!campaignRun.discovered) campaignRun.discovered = {}; if (on) campaignRun.discovered[id] = true; else delete campaignRun.discovered[id]; return Object.assign({}, campaignRun.discovered); },
+    get optionalDiscoveryRange() { return OPTIONAL_DISCOVERY_RANGE; },
     damagePlayer(n = 10) { playerTakeDamage(Math.max(0, n), true); return { hp: player.hp, shield: player.shield, dead: player.dead }; },
     wingAudit(type = 'screecher') {
         const out = [];

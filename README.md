@@ -37,11 +37,13 @@ completed rewards are not replayed. Browser reload preserves valid progress wher
 storage is available. Game Over clears only the Endless resume record.
 
 Ordinary objective waypoints show **direction and distance**, not a guaranteed
-walkable straight line. Mission 1 **Sensors** unlocks a cyan authored route out of
+walkable straight line. Mission 1 **Sensors** unlocks a cyan adaptive route out of
 the Hall to Relay Alpha in Mission 2. Choosing the **Supply Locker** instead releases
 3 reserve cartridges and 2 electric grenades as ground items: hold E to collect,
 with full/partial inventory handled safely. Completing Mission 2's Survey Drone
-retains tactical contact indicators and unlocks a cyan bypass route to Relay Gamma.
+retains tactical contact indicators and unlocks a cyan adaptive bypass route to Relay Gamma.
+Rewarded guidance replans from the Commander about once a second while moving,
+uses the authored safe corridors as preferences, and retires at relay interaction range.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
 
@@ -139,6 +141,11 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 | **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
 The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. `src/progression.js` provides pure save validation/backup, durable-state helpers, seeded scenery and centralized reserve/scrap balance. See `MILESTONE-4.1-ENDLESS-HUD.md` for the original architecture, `MILESTONE-4.1-CORRECTIVE-REFINEMENT.md` for combat/animation/HUD corrections, and `MILESTONE-4.1-ADDITIONAL-REFINEMENT.md` for current menus, persistence, mission rewards, navigation and validation.
+
+`src/relay-routing.js` provides player-only adaptive A* guidance; `src/fps-reload.js`
+owns continuous cartridge/hand presentation driven by the existing combat clock.
+See [MILESTONE-4.1-ROUTE-RELOAD-REFINEMENT.md](MILESTONE-4.1-ROUTE-RELOAD-REFINEMENT.md)
+for the route/reload follow-up, validation and visual evidence.
 
 ---
 

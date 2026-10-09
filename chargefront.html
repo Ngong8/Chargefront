@@ -193,6 +193,8 @@
 <script src="src/world/facility.js"></script>
 <script src="src/combat.js"></script>
 <script src="src/progression.js"></script>
+<script src="src/relay-routing.js"></script>
+<script src="src/fps-reload.js"></script>
 <script src="src/hud-objectives.js"></script>
 <script type="module">
 import * as THREE from 'three';
@@ -2458,6 +2460,8 @@ function buildDecor() {
     campaignContent.routeGuides.power_through.visible = activeMissionId === 'power_through';
     updateRouteGuideVisibility();
 
+    prepareRelayGuideGeometry();
+
     /* ── strange alien light plants — glowing bulbs on thin stems, scattered around ── */
     const lightPlantCount = 170;
     const stemGeo = new THREE.CylinderGeometry(0.05, 0.12, 1.5, 5);
@@ -2513,7 +2517,7 @@ function updateRouteGuideVisibility() {
     const guides = campaignContent.routeGuides;
     if (!guides) return;
     let changed = false;
-    const deadVisible = false, powerVisible = !!activeIntelRoute();
+    const deadVisible = false, powerVisible = false;
     if (guides.dead_signal.visible !== deadVisible || guides.power_through.visible !== powerVisible) changed = true;
     guides.dead_signal.visible = deadVisible;
     guides.power_through.visible = powerVisible;
@@ -3011,15 +3015,126 @@ function activeIntelRoute() {
     if(phase===P.MOVE_R3&&campaignRun.worldState.betaSurvey)return INTEL_ROUTES.gamma;
     return null;
 }
-function intelRouteIndex(route) {
-    const index=campaignRun.rewards?.[route.id+'RouteIndex'];
-    return Number.isFinite(index)?Math.floor(clamp(index,0,route.path.length-1)):0;
+const relayGuide = { id:null, path:[], timer:0, renderT:0, lastX:NaN, lastY:NaN, observedX:NaN, observedY:NaN, obstacleState:new Uint8Array(0), doorMap:new WeakMap(), line:null, renderedX:NaN,renderedY:NaN,doorVisibility:0,dirty:true };
+function guideDoorLocked(door) {return door.locked||(door.id==='bio_lab'&&!campaignRun.worldState.labAccess);}
+function relayGuideObstacleChanged() {
+    let changed=false;
+    if(relayGuide.obstacleState.length!==SOLIDS.length){
+        relayGuide.obstacleState=new Uint8Array(SOLIDS.length).fill(255);relayGuide.doorMap=new WeakMap();
+        for(const door of facilityDoors)relayGuide.doorMap.set(door.solid,door);
+    }
+    for(let i=0;i<SOLIDS.length;i++){
+        const s=SOLIDS[i],door=relayGuide.doorMap.get(s),state=Number(door?door.enabled&&guideDoorLocked(door):!s.disabled);
+        if(relayGuide.obstacleState[i]!==state){relayGuide.obstacleState[i]=state;changed=true;}
+    }
+    return changed;
 }
-function updateIntelRouteProgress() {
-    const route=activeIntelRoute();if(!route)return;
-    let index=intelRouteIndex(route);
-    while(index<route.path.length-1&&Math.hypot(player.pos.x-route.path[index].x,player.pos.y-route.path[index].y)<4.5)index++;
-    campaignRun.rewards[route.id+'RouteIndex']=index;
+function relayInteractionArea(relay) {
+    return !!relay && Math.hypot(player.pos.x-relay.pos.x,player.pos.y-relay.pos.y)<7;
+}
+function relayGuideSegmentClear(a,b, allowDoors=true) {
+    if(solidQueryBounds(Math.min(a.x,b.x)-.65,Math.min(a.y,b.y)-.65,Math.max(a.x,b.x)+.65,Math.max(a.y,b.y)+.65,s=>{
+        const door=relayGuide.doorMap.get(s);
+        if(allowDoors&&door)return door.enabled&&guideDoorLocked(door)&&segIntersectsRect(a.x,a.y,b.x,b.y,s.x0-.65,s.y0-.65,s.x1+.65,s.y1+.65);
+        return !s.disabled&&segIntersectsRect(a.x,a.y,b.x,b.y,s.x0-.65,s.y0-.65,s.x1+.65,s.y1+.65);
+    }))return false;
+    const length=Math.hypot(b.x-a.x,b.y-a.y),n=Math.max(1,Math.ceil(length/.75));
+    let h=terrainHeight(a.x,a.y);
+    for(let i=1;i<=n;i++) {const t=i/n,next=terrainHeight(lerp(a.x,b.x,t),lerp(a.y,b.y,t));
+        if(Math.abs(next-h)>Math.min(MAX_STEP,.8*length/n+.05))return false;h=next;}
+    return true;
+}
+const relayRouteSolver=ChargefrontRelayRouting.create({world:WORLD,clear:relayGuideSegmentClear});
+function resetRelayGuide() {
+    relayGuide.id=null;relayGuide.path=[];relayGuide.timer=0;relayGuide.lastX=relayGuide.lastY=relayGuide.observedX=relayGuide.observedY=NaN;
+    relayGuide.obstacleState.fill(255);relayGuide.dirty=true;relayRouteSolver.invalidate();
+    if(relayGuide.line){relayGuide.line.visible=false;relayGuide.line.geometry.setDrawRange(0,0);}
+}
+function enhancedRelayPath() {
+    const route=activeIntelRoute();
+    return route&&relayGuide.id===route.id&&!campaignRun.rewards?.[route.id+'RouteArrived']?relayGuide.path:[];
+}
+function relayGuideDestination(route,relay) {
+    const approach=route.path.at(-1),dx=approach.x-relay.pos.x,dy=approach.y-relay.pos.y,length=Math.hypot(dx,dy);
+    return {x:relay.pos.x+dx/length*6,y:relay.pos.y+dy/length*6};
+}
+function stableRelayPath(path,previous,origin,corridor) {
+    if(path.length<2||previous.length<2)return path;
+    const score=points=>{let total=0;for(let i=1;i<points.length;i++){
+        const a=points[i-1],b=points[i],length=Math.hypot(a.x-b.x,a.y-b.y),n=Math.max(1,Math.ceil(length/4));
+        for(let j=0;j<n;j++){const t=(j+.5)/n;total+=length/n*(1+Math.min(.9,ChargefrontRelayRouting.corridorDistance({x:lerp(a.x,b.x,t),y:lerp(a.y,b.y,t)},corridor)/18));}
+    }return total;};
+    let best=path,bestScore=score(path)*1.04;
+    for(let i=1;i<previous.length;i++)if(relayGuideSegmentClear(origin,previous[i])){
+        const candidate=[origin,...previous.slice(i)];
+        if(!candidate.slice(1).every((p,j)=>relayGuideSegmentClear(candidate[j],p)))continue;
+        const value=score(candidate);if(value<bestScore){best=candidate;bestScore=value;}
+    }
+    return best;
+}
+function updateIntelRouteProgress(dt=LJS.timeDelta) {
+    const route=activeIntelRoute(),rel=relayByPhase();
+    if(!route||rel?.powered||rel?.powering){if(relayGuide.id)resetRelayGuide();return;}
+    if(relayInteractionArea(rel))campaignRun.rewards[route.id+'RouteArrived']=true;
+    if(campaignRun.rewards[route.id+'RouteArrived']){if(relayGuide.id)resetRelayGuide();return;}
+    // Open/close animation of an unlocked automatic door is not a topology change.
+    const changed=relayGuideObstacleChanged();
+    if(changed)relayRouteSolver.invalidate();
+    const teleported=Math.hypot(player.pos.x-relayGuide.observedX,player.pos.y-relayGuide.observedY)>2;
+    relayGuide.observedX=player.pos.x;relayGuide.observedY=player.pos.y;
+    relayGuide.timer=Math.max(0,relayGuide.timer-dt);
+    const moved=Math.hypot(player.pos.x-relayGuide.lastX,player.pos.y-relayGuide.lastY)>.35;
+    if(relayGuide.id!==route.id||changed||teleported||(moved&&relayGuide.timer===0)) {
+        const origin={x:player.pos.x,y:player.pos.y};
+        const path=relayRouteSolver.solve(origin,relayGuideDestination(route,rel),route.path);
+        relayGuide.path=!changed&&!teleported&&relayGuide.id===route.id?stableRelayPath(path,relayGuide.path,origin,route.path):path;
+        relayGuide.id=route.id;relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=1;relayGuide.renderT=0;relayGuide.dirty=true;
+        if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
+    }
+    // Trim only a physically authorized prefix; no irreversible point counter.
+    relayGuide.renderT-=dt;if(relayGuide.renderT>0)return;relayGuide.renderT=.1;
+    const doorVisibility=facilityDoors.reduce((mask,d,i)=>mask|(Number(!d.solid.disabled)<<i),0);
+    if(!relayGuide.dirty&&player.pos.x===relayGuide.renderedX&&player.pos.y===relayGuide.renderedY&&doorVisibility===relayGuide.doorVisibility)return;
+    relayGuide.dirty=false;relayGuide.renderedX=player.pos.x;relayGuide.renderedY=player.pos.y;relayGuide.doorVisibility=doorVisibility;
+    const path=relayGuide.path;
+    if(path.length>1){const origin={x:player.pos.x,y:player.pos.y};
+        let nearest=1,best=Infinity;
+        for(let i=1;i<path.length;i++){const d=Math.hypot(origin.x-path[i].x,origin.y-path[i].y);
+            if(d<best&&relayGuideSegmentClear(origin,path[i])){best=d;nearest=i;}}
+        if(best<Infinity){if(nearest>1)path.splice(1,nearest-1);path[0].x=origin.x;path[0].y=origin.y;}
+        else {
+            // The Commander can no longer attach to the old path (e.g. an
+            // alternate passage around a corner). Invalid navigation bypasses
+            // the ordinary one-second movement gate, with one bounded solve.
+            relayGuide.path=relayRouteSolver.solve(origin,relayGuideDestination(route,rel),route.path);
+            relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=1;
+            if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
+        }
+    }
+    updateRelayGuideGeometry();
+}
+function prepareRelayGuideGeometry() {
+    if(!relayGuide.line){
+        const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(12288),3).setUsage(THREE.DynamicDrawUsage));
+        relayGuide.line=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0x66e0ff,transparent:true,opacity:.85,depthWrite:false}));
+        relayGuide.line.name='AdaptiveRelayGuide';relayGuide.line.frustumCulled=false;scene.add(relayGuide.line);
+        relayGuide.line.visible=false;
+    }
+}
+function updateRelayGuideGeometry() {
+    const path=enhancedRelayPath();prepareRelayGuideGeometry();
+    const attribute=relayGuide.line.geometry.attributes.position;let vertices=0;
+    for(let i=1;i<path.length;i++){
+        const a=path[i-1],b=path[i],n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/2));
+        for(let j=0;j<n&&vertices+2<=attribute.count;j++){
+            const p={x:lerp(a.x,b.x,j/n),y:lerp(a.y,b.y,j/n)},q={x:lerp(a.x,b.x,(j+1)/n),y:lerp(a.y,b.y,(j+1)/n)};
+            // Never paint through a currently closed door, even though it is operable.
+            if(!relayGuideSegmentClear(p,q,false))continue;
+            attribute.setXYZ(vertices++,p.x,p.y,terrainHeight(p.x,p.y)+.12);
+            attribute.setXYZ(vertices++,q.x,q.y,terrainHeight(q.x,q.y)+.12);
+        }
+    }
+    attribute.needsUpdate=true;relayGuide.line.geometry.setDrawRange(0,vertices);relayGuide.line.visible=vertices>0;
 }
 let started = false, gameActive = false;
 let kills = 0, cacheFound = 0, startTime = 0, missionTime = 0;
@@ -3660,6 +3775,7 @@ function updateEndless(dt) {
 }
 /* ── run setup ── */
 function resetEndlessRun() {
+    resetRelayGuide();
     objectiveHUD.clear(); clearOptionalMarkerState();
     endlessRun.wave = 0; endlessRun.waveActive = false; endlessRun.waveT = 0;
     endlessRun.budgetLeft = 0; endlessRun.spawnT = 0; endlessRun.alive = 0; endlessRun.bossSpawned = false;
@@ -3946,7 +4062,7 @@ const FPS_WEAPON_PRESENTATION = {
         rightGrip: { position: [-0.035, -0.18, 0.14], rotation: [0.28, 0, -0.04] },
         leftGrip: { position: [-0.055, -0.13, -0.40], rotation: [1.22, 0.04, 0.08] },
         reloadGrip: { position: [-0.026, -0.018, 0.015], rotation: [0.30, 0, 0.18] },
-        reloadHand: { reach: [0.10, 0.25], return: [0.93, 1], lock: [0.84, 0.97], slap: 0.018 },
+        reloadMotion: { withdraw: -0.22 },
         reloadPose: { position: [0, 0.05, 0], rotation: [0.22, 0, -0.10] },
         sprint: { position: [0.08, -0.16, 0.04], rotation: [-0.24, 0.08, -0.18] },
         ads: { position: [-0.10, 0.045, -0.035], rotation: [0, -0.035, 0.015] },
@@ -3958,7 +4074,7 @@ const FPS_WEAPON_PRESENTATION = {
         rightGrip: { position: [-0.043, -0.19, 0.17], rotation: [0.24, 0, -0.05] },
         leftGrip: { position: [-0.13, -0.18, -0.38], rotation: [1.34, 0.05, -0.06] },
         reloadGrip: { position: [-0.032, -0.02, 0.018], rotation: [0.24, 0, 0.28] },
-        reloadHand: { reach: [0.08, 0.24], return: [0.94, 1], lock: [0.82, 0.96], slap: 0.045 },
+        reloadMotion: { withdraw: -0.25 },
         reloadPose: { position: [0.12, 0.04, 0], rotation: [0.18, 0, -0.38] },
         sprint: { position: [0.10, -0.18, 0.05], rotation: [-0.28, 0.10, -0.22] },
         ads: { position: [-0.09, 0.035, -0.025], rotation: [0, -0.04, 0.012] },
@@ -3970,7 +4086,7 @@ const FPS_WEAPON_PRESENTATION = {
         rightGrip: { position: [-0.038, -0.185, 0.18], rotation: [0.25, 0, -0.04] },
         leftGrip: { position: [-0.09, -0.16, -0.35], rotation: [1.28, 0.02, 0.08] },
         reloadGrip: { position: [-0.03, -0.01, 0.01], rotation: [0.18, 0, -0.12] },
-        reloadHand: { reach: [0.07, 0.20], return: [0.90, 1], lock: [0.74, 0.92], slap: 0.025 },
+        reloadMotion: { withdraw: -0.22 },
         reloadPose: { position: [0, 0.10, 0], rotation: [0.12, 0, 0.58] },
         sprint: { position: [0.09, -0.17, 0.05], rotation: [-0.26, 0.09, -0.20] },
         ads: { position: [-0.095, 0.04, -0.03], rotation: [0, -0.04, 0.012] },
@@ -3982,7 +4098,7 @@ const FPS_WEAPON_PRESENTATION = {
         rightGrip: { position: [-0.04, -0.195, 0.18], rotation: [0.24, 0, -0.05] },
         leftGrip: { position: [-0.18, -0.31, 0.10], rotation: [0.70, 0, 0.22] },
         reloadGrip: { position: [-0.042, -0.025, 0.025], rotation: [0.30, 0, 0.24] },
-        reloadHand: { reach: [0.07, 0.22], return: [0.94, 1], lock: [0.83, 0.96], slap: 0.032 },
+        reloadMotion: { withdraw: -0.30 },
         reloadPose: { position: [-0.08, 0.08, 0], rotation: [0.42, 0, 0.18] },
         sprint: { position: [0.13, -0.18, 0.05], rotation: [-0.31, 0.12, -0.24] },
         ads: { position: [-0.08, 0.035, -0.025], rotation: [0, -0.035, 0.01] },
@@ -4507,6 +4623,8 @@ function configureWeaponPresentation(model, id, reloadPart) {
     model.userData.rightHandGrip = addGripTarget(model, id + 'RightHandGrip', config.rightGrip);
     model.userData.leftHandGrip = addGripTarget(model, id + 'LeftHandGrip', config.leftGrip);
     model.userData.reloadHandTarget = addGripTarget(reloadPart, id + 'ReloadHandTarget', config.reloadGrip);
+    model.name=id+'ViewWeapon';
+    model.userData.reloadController=ChargefrontFpsReload.create({THREE,viewModel,camera,model,part:reloadPart,grip:model.userData.reloadHandTarget,config:config.reloadMotion});
 }
 function buildFpsArm(side, materials, geometries) {
     const arm = new THREE.Group();
@@ -4598,20 +4716,27 @@ function updateFpsArms(weapon, reloadProgress) {
     const config = model.userData.presentation;
     let reloadBlend = 0;
     if (weapon.reloading) {
-        const hand = config.reloadHand;
-        reloadBlend = reloadProgress < hand.reach[1]
-            ? smooth((reloadProgress - hand.reach[0]) / (hand.reach[1] - hand.reach[0]))
-            : 1 - smooth((reloadProgress - hand.return[0]) / (hand.return[1] - hand.return[0]));
+        const timing=ChargefrontFpsReload.phases;
+        reloadBlend=reloadProgress<timing.grip?smooth(reloadProgress/timing.grip):1-smooth((reloadProgress-timing.release)/(1-timing.release));
         reloadBlend = clamp(reloadBlend, 0, 1);
         readViewmodelTarget(model.userData.reloadHandTarget, _vmReloadPos, _vmReloadQuat);
         _vmLeftPos.lerp(_vmReloadPos, reloadBlend);
         _vmLeftQuat.slerp(_vmReloadQuat, reloadBlend);
-        const lockPulse = Math.sin(smooth((reloadProgress - hand.lock[0]) / (hand.lock[1] - hand.lock[0])) * Math.PI);
-        _vmOffset.set(0, hand.slap * lockPulse, 0).applyQuaternion(_vmLeftQuat);
-        _vmLeftPos.add(_vmOffset);
     }
     rightArm.visible = true;
-    leftArm.visible = !config.oneHanded || (weapon.reloading && reloadProgress > 0.015 && reloadProgress < 0.99);
+    leftArm.visible = true;
+    // PX-4's idle support hand rests beyond the camera boundary; it enters
+    // continuously on reach and leaves continuously on return, without toggles.
+    if(config.oneHanded){
+        const depth=.75,tangent=Math.tan(camera.fov*Math.PI/360);
+        _vmOffset.set(.10,-tangent*(depth+.18)-.28,-depth);
+        camera.localToWorld(_vmOffset);viewModel.worldToLocal(_vmOffset);
+        if(!weapon.reloading)_vmLeftPos.copy(_vmOffset);
+        else if(reloadBlend<1){
+            readViewmodelTarget(model.userData.reloadHandTarget,_vmReloadPos,_vmReloadQuat);
+            _vmLeftPos.copy(_vmOffset).lerp(_vmReloadPos,reloadBlend);
+        }
+    }
     poseFpsArm(rightArm, _vmRightPos, _vmRightQuat, player.armRecoilLag * 0.6);
     if (leftArm.visible) poseFpsArm(leftArm, _vmLeftPos, _vmLeftQuat, player.armRecoilLag);
     armsRig.userData.reloadBlend = reloadBlend;
@@ -4797,7 +4922,6 @@ function buildViewmodel() {
     scatter.userData.reloadIndicators = scatterReloadIndicators;
     const rememberReloadPart = (model, part) => {
         model.userData.reloadPart = part;
-        model.userData.reloadBase = { position: part.position.clone(), rotation: part.rotation.clone() };
         model.userData.reloadLightOpacity = (model.userData.reloadLights || []).map((light) => light.material.opacity);
     };
     rememberReloadPart(rifle, rifleCartridge);
@@ -4833,13 +4957,15 @@ function buildViewmodel() {
 function setViewmodelWeapon(weapon) {
     const models = viewModel.userData.weaponModels;
     if (!models) return;
-    for (const id in models) models[id].visible = id === weapon.id;
+    for (const id in models) {models[id].userData.reloadController?.reset();models[id].visible = id === weapon.id;}
+    player.muzzleT=0;if(muzzleFlash)muzzleFlash.material.opacity=0;if(muzzleLight)muzzleLight.intensity=0;
     const color = weapon.color || 0x66e0ff;
     if (muzzleFlash) { muzzleFlash.material.color.setHex(color); muzzleFlash.material.emissive.setHex(color); }
     if (muzzleLight) muzzleLight.color.setHex(color);
     const activeModel = models[weapon.id];
     player.weaponKick = 0; player.weaponPitch = 0; player.weaponRoll = 0; player.armRecoilLag = 0;
     animateReloadPart(weapon, 0);
+    updateFpsArms(weapon,0); // cancellation cannot leave the shared hand at the old cartridge
     const muzzleZ = activeModel && activeModel.userData.muzzleZ;
     if (muzzleZ != null) {
         const muzzleX = activeModel.userData.muzzleX || 0, muzzleY = activeModel.userData.muzzleY || 0;
@@ -4851,53 +4977,15 @@ function setViewmodelWeapon(weapon) {
 function animateReloadPart(weapon, progress) {
     const model = viewModel.userData.weaponModels && viewModel.userData.weaponModels[weapon.id];
     if (!model || !model.userData.reloadPart) return;
-    const part = model.userData.reloadPart, base = model.userData.reloadBase;
+    model.userData.reloadController.update(progress,weapon.reloading,(opts.fov||75)+7);
     const stage = (a, b) => smooth((progress - a) / (b - a));
-    const seat = (entry, overshoot, insert, lock) => insert < 1 ? lerp(entry, overshoot, insert) : lerp(overshoot, 0, lock);
-    part.position.copy(base.position);
-    part.rotation.copy(base.rotation);
-    part.scale.setScalar(1);
-    part.visible = true;
     model.userData.reloadEnergy = 1;
     for (const indicator of (model.userData.reloadIndicators || [])) indicator.scale.setScalar(1);
     for (let i = 0; i < (model.userData.reloadLights || []).length; i++) {
         model.userData.reloadLights[i].material.opacity = model.userData.reloadLightOpacity[i];
     }
     if (!weapon.reloading) return;
-    if (weapon.kind === 'plasma') {
-        const unlock = stage(0.10, 0.22), remove = stage(0.22, 0.49);
-        const insert = stage(0.55, 0.83), lock = stage(0.83, 1);
-        if (progress < 0.5) {
-            part.position.x -= 0.04 * unlock + 0.38 * remove;
-            part.position.y -= 0.02 * unlock + 0.12 * remove;
-            part.position.z += 0.07 * remove;
-            part.rotation.z = base.rotation.z - 0.16 * unlock - 0.42 * remove;
-        } else {
-            part.position.x += seat(-0.44, 0.018, insert, lock);
-            part.position.y += seat(-0.20, 0, insert, lock);
-            part.position.z += seat(0.09, 0, insert, lock);
-            part.rotation.z = base.rotation.z + seat(0.52, -0.06, insert, lock);
-        }
-        part.visible = progress < 0.49 || progress > 0.55;
-        const charge = progress < 0.5 ? 1 - stage(0.18, 0.48) * 0.78 : 0.22 + stage(0.62, 0.95) * 0.78;
-        const lockPulse = Math.sin(stage(0.83, 1) * Math.PI);
-        part.scale.setScalar(1 + lockPulse * 0.07);
-        for (let i = 0; i < model.userData.reloadLights.length; i++) {
-            model.userData.reloadLights[i].material.opacity = model.userData.reloadLightOpacity[i] * charge;
-        }
-    } else if (weapon.kind === 'arc') {
-        const unlock = stage(0.08, 0.18), remove = stage(0.18, 0.43);
-        const insert = stage(0.49, 0.74), lock = stage(0.74, 1);
-        if (progress < 0.46) {
-            part.position.x -= 0.018 * unlock + 0.05 * remove;
-            part.position.y -= 0.025 * unlock + 0.28 * remove;
-            part.rotation.z = base.rotation.z + 0.10 * unlock + 0.12 * remove;
-        } else {
-            part.position.x += seat(-0.08, 0, insert, lock);
-            part.position.y += seat(-0.32, 0.014, insert, lock);
-            part.rotation.z = base.rotation.z + seat(-0.18, 0.04, insert, lock);
-        }
-        part.visible = progress < 0.43 || progress > 0.49;
+    if (weapon.kind === 'arc') {
         // Magazine display stays a constant flat glow — no scale/brightness pulse here.
         // Only the front energy channel (reloadEnergy -> reloadLights/channelBolts) reacts.
         model.userData.reloadEnergy = progress < 0.46
@@ -4907,59 +4995,34 @@ function animateReloadPart(weapon, progress) {
             model.userData.reloadLights[i].material.opacity = Math.min(1, model.userData.reloadLightOpacity[i] * model.userData.reloadEnergy);
         }
     } else if (weapon.kind === 'scatter') {
-        const unlock = stage(0.11, 0.23), remove = stage(0.23, 0.50);
-        const insert = stage(0.56, 0.82), lock = stage(0.82, 1);
-        if (progress < 0.52) {
-            part.position.x -= 0.035 * unlock + 0.30 * remove;
-            part.position.y -= 0.025 * unlock + 0.14 * remove;
-            part.position.z += 0.06 * remove;
-            part.rotation.z = base.rotation.z + 0.13 * unlock + 0.38 * remove;
-        } else {
-            part.position.x += seat(-0.34, 0.02, insert, lock);
-            part.position.y += seat(-0.23, 0, insert, lock);
-            part.position.z += seat(0.07, 0, insert, lock);
-            part.rotation.z = base.rotation.z + seat(-0.32, 0.07, insert, lock);
-        }
-        part.visible = progress < 0.50 || progress > 0.56;
         for (let i = 0; i < model.userData.reloadIndicators.length; i++) {
             const bankDelay = i < 4 ? 0 : 0.035;
             const pulse = Math.sin(stage(0.82 + bankDelay, 0.96 + bankDelay) * Math.PI);
             model.userData.reloadIndicators[i].scale.setScalar(1 + pulse * 0.28);
         }
     } else if (weapon.id === 'rifle') {
-        const unlock = stage(0.10, 0.22), remove = stage(0.22, 0.48);
-        const insert = stage(0.53, 0.84), lock = stage(0.84, 1);
-        if (progress < 0.5) {
-            part.position.x -= 0.025 * unlock + 0.27 * remove;
-            part.position.y -= 0.025 * unlock + 0.11 * remove;
-            part.position.z += 0.05 * remove;
-            part.rotation.z = base.rotation.z + 0.12 * unlock + 0.30 * remove;
-        } else {
-            part.position.x += seat(-0.30, 0.012, insert, lock);
-            part.position.y += seat(-0.19, 0, insert, lock);
-            part.position.z += seat(0.06, 0, insert, lock);
-            part.rotation.z = base.rotation.z + seat(-0.24, 0.05, insert, lock);
-        }
-        part.visible = progress < 0.48 || progress > 0.53;
         const lockPulse = Math.sin(stage(0.84, 1) * Math.PI);
         model.userData.reloadIndicators[0].scale.setScalar(1 + lockPulse * 0.14);
-    } else {
-        const travel = Math.sin(progress * Math.PI);
-        part.position.y -= travel * 0.30;
-        part.position.z += travel * 0.08;
-        part.rotation.x = base.rotation.x + travel * 0.24;
     }
 }
 
 function reloadPhaseAt(progress, weapon) {
-    if (!weapon.reloading) return 'COMPLETE';
-    const hand = (FPS_WEAPON_PRESENTATION[weapon.id] || FPS_WEAPON_PRESENTATION.rifle).reloadHand;
-    if (progress < hand.reach[0]) return 'START';
-    if (progress < hand.reach[1]) return 'REACH';
-    if (progress < 0.52) return 'REMOVE';
-    if (progress < hand.lock[0]) return 'INSERT';
-    if (progress < hand.return[0]) return 'LOCK';
-    return 'RETURN';
+    return ChargefrontFpsReload.phase(progress,weapon.reloading);
+}
+function modelReloadInfo() {
+    const model=viewModel.userData.weaponModels[player.weapon.id],part=model.userData.reloadPart;
+    viewModel.updateWorldMatrix(true,true);
+    const hand=armsRig.userData.leftArm.userData.hand,grip=model.userData.reloadHandTarget;
+    const v=new THREE.Vector3(),partPosition=viewModel.worldToLocal(part.getWorldPosition(v)).toArray();
+    const gripPosition=viewModel.worldToLocal(grip.getWorldPosition(v)).toArray();
+    const handPosition=hand.position.toArray();
+    const socketPosition=viewModel.worldToLocal(model.userData.reloadController.socket.getWorldPosition(v)).toArray();
+    const box=new THREE.Box3().setFromObject(part),projected=[],depths=[];
+    for(const x of [box.min.x,box.max.x])for(const y of [box.min.y,box.max.y])for(const z of [box.min.z,box.max.z]){
+        v.set(x,y,z);depths.push(-camera.worldToLocal(v.clone()).z);projected.push(v.project(camera).toArray());
+    }
+    return {...model.userData.reloadController.info(),partPosition,gripPosition,handPosition,socketPosition,
+        partVisible:part.visible,parent:part.parent.name,handQuaternion:hand.quaternion.toArray(),partQuaternion:part.quaternion.toArray(),projected,minDepth:Math.min(...depths)};
 }
 
 const SPRINT_RECOVERY_STAMINA = 25; // runtime-only hysteresis; maximum stamina remains 100
@@ -5113,7 +5176,6 @@ function movePlayer(dt) {
         reloadRotY = config.reloadPose.rotation[1] * action;
         reloadRotZ = config.reloadPose.rotation[2] * action;
     }
-    animateReloadPart(w, reloadProgress);
     const arcModel = viewModel.userData.weaponModels && viewModel.userData.weaponModels.arc;
     if (arcModel && arcModel.visible && arcModel.userData.channelBolts) {
         for (let i = 0; i < arcModel.userData.channelBolts.length; i++) {
@@ -5135,6 +5197,7 @@ function movePlayer(dt) {
         sprintPose.rotation[1] * player.sprintBlend + adsPose.rotation[1] * player.adsBlend + reloadRotY + player.swayX * swayWeight,
         Math.sin(idleTime * 0.47) * 0.0025 * idleAmount + sprintPose.rotation[2] * player.sprintBlend + adsPose.rotation[2] * player.adsBlend + reloadRotZ + player.weaponRoll + player.swayRoll * swayWeight
     );
+    animateReloadPart(w,reloadProgress);
     updateFpsArms(w, reloadProgress);
     player.reloadPhase = reloadPhaseAt(reloadProgress, w);
     if (player.swapT > 0) {
@@ -6858,7 +6921,7 @@ function prewarmCampaignTraversalMaterials() {
     // facility corner: Beta's two-sided dish and the local dust PointsMaterial.
     // Compile against the *settled* gameplay light configuration once, at the
     // initial mission handoff; nothing is constructed during ordinary movement.
-    const targets = [relays[1]?.arenaDish, facilityFx.dust, facilityFx.vaultFloorRing].filter(Boolean);
+    const targets = [relays[1]?.arenaDish, facilityFx.dust, facilityFx.vaultFloorRing,relayGuide.line].filter(Boolean);
     const start = performance.now();
     void Promise.all(targets.map(object => threeJS.renderer.compileAsync(object, camera, scene))).then(() => {
         if (PERF_DIAGNOSTICS) perfDiagnostics.event('traversalShadersReady', { ms: +(performance.now() - start).toFixed(1) });
@@ -7817,6 +7880,7 @@ let pointerLockGestureFn = null;
 let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
+    resetRelayGuide();
     objectiveHUD.clear(); clearOptionalMarkerState();
     stopIntroSfx();
     clearCampaignTransitionCombat();
@@ -8962,6 +9026,7 @@ function gameUpdate() {
         if (campaignCheckpointT <= 0) checkpointCampaignState();
     }
 
+    if(relayGuide.id&&!activeIntelRoute())resetRelayGuide();
     if (phase === P.DEAD) {
         doneT += dt;
         return;
@@ -8991,7 +9056,6 @@ function gameUpdate() {
     if (!menuOpen) {
         movePlayer(dt);
         updateObjectiveBearing(dt);
-        updateIntelRouteProgress();
         if (LJS.keyWasPressed('Digit1')) equipWeapon(0);
         if (LJS.keyWasPressed('Digit2')) equipWeapon(1);
         if (LJS.keyWasPressed('KeyQ')) cycleWeapon();
@@ -9055,6 +9119,7 @@ function gameUpdate() {
         updateRelays(dt);
         updateFacilityDoors(dt);
         updateObjectives(dt);
+        updateIntelRouteProgress(dt);
         updateRouteGuideVisibility();
         updateLabSystems(dt);
         updateFinalCampaignEncounter(dt);
@@ -9214,8 +9279,7 @@ function updateInteract(dt) {
     const rel = relayByPhase();
     if (rel && (phase === P.MOVE_R1 || phase === P.MOVE_R2 || phase === P.MOVE_R3)) {
         if (!rel.powered && !rel.powering) {
-            const d = Math.hypot(player.pos.x - rel.pos.x, player.pos.y - rel.pos.y);
-            if (d < 7) {
+            if (relayInteractionArea(rel)) {
                 interactPrompt = 'HOLD [E] — ACTIVATE ' + rel.R.name;
                 if (heldInteract > 1.0) startDefense(rel);
                 interactProgress = clamp(heldInteract / 1.0, 0, 1);
@@ -10171,6 +10235,7 @@ function createCampaignCheckpointSnapshot() {
 }
 function applyCampaignCheckpointSnapshot(snapshot) {
     if (!snapshot || snapshot.missionId !== activeMissionId || !CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return false;
+    resetRelayGuide();
     objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.rewards = { ...(boundary.rewards || {}) };
@@ -10464,6 +10529,7 @@ function restartCurrentRun() {
     location.reload();
 }
 function enterResultScreen() {
+    resetRelayGuide();
     if(mode==='endless'&&(phase===P.DEAD||phase===P.DONE))invalidateEndlessResume();
     clearResultInputHandler();
     resultScreen = { startMs: performance.now(), chimed: {} };
@@ -10621,7 +10687,12 @@ function drawMarkers(W, H) {
     if (phase === P.SEARCH && vial.group) targets.push({ pos: LJS.vec2(vial.group.position.x, vial.group.position.y), label: 'CLONE DNA VIAL', short: 'DNA VIAL', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.FINALE) targets.push({ pos: LZ, label: 'LANDING ZONE', short: 'LZ', color: 0x66ffcc, priority: 100, primary: true });
     const intel=activeIntelRoute();
-    if(intel){const i=intelRouteIndex(intel);targets.push({pos:intel.path[i],label:intel.name+' '+(i+1)+' / '+intel.path.length,short:intel.name+' '+(i+1),color:0x66e0ff,priority:65,route:true});}
+    const guidePath=enhancedRelayPath();
+    const relayTarget=relayByPhase();
+    // The final cyan approach shares the ordinary relay marker's bearing; keep
+    // that authoritative label readable rather than superimposing two labels.
+    if(intel&&guidePath.length>1&&relayTarget&&Math.hypot(guidePath[1].x-relayTarget.pos.x,guidePath[1].y-relayTarget.pos.y)>12)
+        targets.push({pos:guidePath[1],label:intel.name,short:intel.name,color:0x66e0ff,priority:65,route:true});
     for (const target of targets) target.distance = Math.hypot(target.pos.x - player.pos.x, target.pos.y - player.pos.y);
     const visibleTargets = targets.filter((target) => !target.optional || optionalMarkerVisible(target));
     visibleTargets.sort((a, b) => b.priority - a.priority || a.distance - b.distance);
@@ -10752,7 +10823,7 @@ function drawMinimap(W, H) {
     /* exact route path (clipped to the radar bounds) — campaign only, endless has no route */
     if (mode !== 'endless') {
         const pathCol = LJS.rgb(.3,.9,1,.9);
-        const route = activeIntelRoute()?.path || [];
+        const route = enhancedRelayPath();
         for (let i = 0; i < route.length - 1; i++) {
             const a = toMini(route[i].x, route[i].y), b = toMini(route[i + 1].x, route[i + 1].y);
             const s = clipSeg(a.x, a.y, b.x, b.y, mx, my, mx + size, my + size);
@@ -10857,6 +10928,7 @@ function requestLock() {
     } catch (e) { /* pointer lock unsupported */ }
 }
 function clearTransientSessionState() {
+    resetRelayGuide();
     gameActive = false;
     started = false;
     clearTimeout(menuLaunchTimer); menuLaunchTimer = 0;
@@ -11710,7 +11782,11 @@ window.__cf = {
     restoreCheckpointForTest(saved) {return applyCampaignCheckpointSnapshot(saved);},
     endlessSaveInfo() {return loadEndlessBoundary();},
     continueEndless() {const saved=loadEndlessBoundary();if(saved)startEndless(saved.configuration,saved);return !!saved;},
-    additionalInfo() {return {reserves:ChargefrontProgression.reserves,scrap:ChargefrontProgression.scrap,intel:activeIntelRoute()?.id||null,routeIndex:activeIntelRoute()?intelRouteIndex(activeIntelRoute()):0,
+    relayRouteInfo() {return {id:relayGuide.id,path:enhancedRelayPath().map(p=>[p.x,p.y]),timer:relayGuide.timer,arrived:{alpha:!!campaignRun.rewards?.alphaRouteArrived,gamma:!!campaignRun.rewards?.gammaRouteArrived},stats:relayRouteSolver.stats(),vertices:relayGuide.line?.geometry.drawRange.count||0,visible:!!relayGuide.line?.visible};},
+    advanceRelayGuide(dt=0) {updateIntelRouteProgress(dt);},
+    relaySegmentClear(a,b) {return relayGuideSegmentClear({x:a[0],y:a[1]},{x:b[0],y:b[1]});},
+    addTestSolid(x0,y0,x1,y1) {return addSolid(x0,y0,x1,y1);},
+    additionalInfo() {return {reserves:ChargefrontProgression.reserves,scrap:ChargefrontProgression.scrap,intel:activeIntelRoute()?.id||null,
         routes:Object.fromEntries(Object.entries(INTEL_ROUTES).map(([id,r])=>[id,r.path.map(p=>[p.x,p.y])])),contacts:surveyContactsShown,
         locker:lockerPickups.map(p=>({kind:p.kind,visible:p.group.visible,pos:[p.pos.x,p.pos.y,p.group.position.z],remaining:campaignRun.rewards?.lockerRemaining?.[p.kind]||0})),pickups:persistentPickupsSnapshot()};},
     endlessDecorInfo() {return scene.children.filter(g=>g.name.startsWith('EndlessTree')).map(g=>({position:g.position.toArray(),scale:g.scale.toArray(),angle:g.rotation.z}));},
@@ -11855,6 +11931,12 @@ window.__cf = {
     reload() { startReload(); },
     equipWeapon(i) { equipWeapon(i, true); },
     advanceWeapon(seconds) { updateWeapon(Math.max(0, seconds || 0)); return player.weapon.id; },
+    sampleReloadPose(progress,fov=75) {
+        opts.fov=fov;camera.fov=fov;camera.updateProjectionMatrix();
+        const w=player.weapon;w.reloading=progress<1;w.reloadT=w.reloadDuration*(1-progress);
+        movePlayer(1/60);return modelReloadInfo();
+    },
+    reloadPresentationInfo() {return modelReloadInfo();},
     get viewmodelState() { return player.viewmodelState; },
     viewmodelInfo() {
         const model = viewModel.userData.weaponModels && viewModel.userData.weaponModels[player.weapon.id];
@@ -11895,7 +11977,7 @@ window.__cf = {
     get medkits() { return craft.medkits; },
     weapon() { return player.weapon; },
     jump() { player.zVel = 7.2 * (player.jumpMult || 1); player.grounded = false; },
-    move(x, y) { player.pos.x = clamp(player.pos.x + x, 2, WORLD - 2); player.pos.y = clamp(player.pos.y + y, 2, WORLD - 2); player.zPos = terrainHeight(player.pos.x, player.pos.y); },
+    move(x, y) { player.pos.x = clamp(player.pos.x + x, 2, WORLD - 2); player.pos.y = clamp(player.pos.y + y, 2, WORLD - 2); player.zPos = terrainHeight(player.pos.x, player.pos.y);relayGuide.timer=relayGuide.renderT=0; },
     insideSolid(x, y) { return isInsideSolid(x, y, 0.4); },
     /* Milestone 3.5.1 collision probes */
     probeBlocked(ax, ay, az, bx, by, bz, pad = 0) { return solidBlocksSegment(ax, ay, az, bx, by, bz, pad, null); },

@@ -37,21 +37,22 @@ try{
  assert.deepEqual(resumed.player.combat,transitioned.player.combat);assert.deepEqual(resumed.craft,transitioned.craft);
  assert.deepEqual(resumed.squad.map(m=>[m.hp,m.maxHp,m.shield,m.maxShield,m.mag,m.reserve,m.downed]),transitioned.squad.map(m=>[m.hp,m.maxHp,m.shield,m.maxShield,m.mag,m.reserve,m.downed]));
  assert(resumed.player.abilityCd>12);assert.equal(await page.evaluate(()=>__cf.additionalInfo().intel),'alpha');
- // Follow the fixed Alpha sequence with real W input, including the Hall exit.
+ // Walk the accepted safe corridor with real W input; adaptive guidance has no index.
  const alpha=await page.evaluate(()=>__cf.additionalInfo().routes.alpha);
  await page.evaluate(start=>{__cf.move(start[0]-__cf.player.pos.x,start[1]-__cf.player.pos.y);__cf.pause(false);},alpha[0]);
  if(await page.locator('#pause-screen').isVisible())await page.locator('#btn-resume').click();
  const alphaWalk=[];
- for(const point of alpha.slice(1)) {
+ const alphaApproaches=alpha.slice(1);alphaApproaches[alphaApproaches.length-1]=[211,575];
+ for(const point of alphaApproaches) {
   await page.evaluate(([x,y])=>{__cf.player.yaw=Math.atan2(y-__cf.player.pos.y,x-__cf.player.pos.x);__cf.player.pitch=0;},point);
   await page.keyboard.down('w');
-  try{await page.waitForFunction(([x,y])=>Math.hypot(__cf.player.pos.x-x,__cf.player.pos.y-y)<1.2,point,{timeout:40000});}
+  try{await page.waitForFunction(([x,y])=>Math.hypot(__cf.player.pos.x-x,__cf.player.pos.y-y)<(x===211?.5:1.2),point,{timeout:40000});}
   finally{await page.keyboard.up('w');}
-  alphaWalk.push(await page.evaluate(()=>({position:[__cf.player.pos.x,__cf.player.pos.y],index:__cf.additionalInfo().routeIndex})));
+  alphaWalk.push(await page.evaluate(()=>({position:[__cf.player.pos.x,__cf.player.pos.y],route:__cf.relayRouteInfo()})));
   if(point[0]===360&&point[1]===580){await page.evaluate(()=>{__cf.player.yaw=Math.atan2(575-__cf.player.pos.y,300-__cf.player.pos.x);});await page.waitForTimeout(120);await capture('02-alpha-intel');}
  }
  await page.evaluate(()=>{__cf.pause(true);__cf.checkpoint();});results.alphaWalk=alphaWalk;
- assert.equal(alphaWalk.at(-1).index,alpha.length-1);assert.equal(await page.evaluate(()=>JSON.parse(localStorage.cf_campaign_v1).operation.continuedState.rewards.alphaRouteIndex),alpha.length-1);
+ assert(alphaWalk.at(-1).route.arrived.alpha);assert.equal(alphaWalk.at(-1).route.path.length,0);assert(await page.evaluate(()=>JSON.parse(localStorage.cf_campaign_v1).operation.continuedState.rewards.alphaRouteArrived));
  // Every Select Mission uses authored maxima and reduced reserves; no old actor state.
  results.fresh=[];
  for(const id of ['power_through','sample_zero','break_contact','dead_signal']){

@@ -5,9 +5,10 @@
         Object.freeze({ id: 'rifle', name: 'BUL-117', kind: 'bolt', dmg: 22, cd: 0.095, magSize: 50, spread: 0.012, range: 153, reloadTime: 1.7, color: 0x66e0ff, preferredRange: 34 }),
         Object.freeze({ id: 'scatter', name: 'CRW-8', kind: 'scatter', dmg: 13, cd: 0.68, magSize: 20, spread: 0.105, range: 60, reloadTime: 2.05, pellets: 8, color: 0xffbb66, preferredRange: 18 }),
         Object.freeze({ id: 'arc', name: 'ARC-9', kind: 'arc', dmg: 42, cd: 0.42, magSize: 32, spread: 0.01, range: 72, reloadTime: 1.9, chains: 3, color: 0x88eeff, preferredRange: 26 }),
-        Object.freeze({ id: 'plasma', name: 'PX-4', kind: 'plasma', dmg: 74, cd: 0.8, magSize: 10, spread: 0.018, range: 110, reloadTime: 2.2, splash: 6.5, color: 0xff7818, preferredRange: 32 }),
+        Object.freeze({ id: 'plasma', name: 'PX-4', kind: 'plasma', dmg: 74, cd: 0.8, magSize: 15, spread: 0.018, range: 110, reloadTime: 2.2, splash: 6.5, color: 0xff7818, preferredRange: 32 }),
     ]);
     const abilities = Object.freeze([
+        Object.freeze({ id: 'surge', name: 'Surge Pulse', category: 'disruption', cooldown: 22 }),
         Object.freeze({ id: 'bulwark', name: 'Bulwark', category: 'defense', cooldown: 28 }),
         Object.freeze({ id: 'medic_pulse', name: 'Medic Pulse', category: 'support', cooldown: 24 }),
         Object.freeze({ id: 'target_designator', name: 'Target Designator', category: 'offense', cooldown: 18 }),
@@ -27,7 +28,8 @@
             squad[id] = Object.freeze({ weapon: definition(s.weapon) ? s.weapon : defaults[id].weapon,
                 ability: abilities.some(a => a.id === s.ability) ? s.ability : defaults[id].ability });
         }
-        return Object.freeze({ player: Object.freeze({ slot1, slot2, ability: 'surge' }),
+        const playerAbility=abilities.some(a=>a.id===p.ability)?p.ability:'surge';
+        return Object.freeze({ player: Object.freeze({ slot1, slot2, ability: playerAbility }),
             squad: Object.freeze(squad), posture: ['balanced', 'escort', 'screen'].includes(input.posture) ? input.posture : 'balanced' });
     }
     function squadLoadout(base, selection) {

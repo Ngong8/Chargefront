@@ -7,10 +7,11 @@ const dir = resolve(process.env.CF_ARTIFACT_DIR || '_playtest/m40/regressions');
 const browsers = process.argv.includes('edge') ? ['edge'] : process.argv.includes('firefox') ? ['firefox'] : ['edge', 'firefox'];
 const suites = ['intro-smoke', 'm2-progression', 'runtime-stability', 'traversal-performance', 'facility-regression', 'facility-playthrough', 'transition-diagnose'];
 // Opt-in M4.1 corrective coverage reuses this sequential GPU-safe runner.
-if (process.argv.includes('--corrective')||process.argv.includes('--additional')) suites.push('corrective-refinement', 'hud-refinement', 'hud-navigation',
+if (process.argv.includes('--corrective')||process.argv.includes('--additional')||process.argv.includes('--final-refinement')) suites.push('corrective-refinement', 'hud-refinement', 'hud-navigation',
     'objective-hud-flow', 'arc-presentation', 'screecher-wings', 'runner-kamikaze', 'sprint-recovery',
     'combat-squad', 'combat-playtest', 'endless-hud');
-if(process.argv.includes('--additional'))suites.push('additional-refinement');
+if(process.argv.includes('--additional')||process.argv.includes('--final-refinement'))suites.push('additional-refinement');
+if(process.argv.includes('--final-refinement'))suites.push('route-reload-refinement','combat-vfx-refinement','universal-abilities');
 // Bounded batches let long browser runs finish within terminal-operation budgets.
 const selection = process.argv.find(arg=>arg.startsWith('--suites='))?.slice(9).split(',');
 if (selection) {

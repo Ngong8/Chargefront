@@ -29,7 +29,7 @@ Four independently replayable operations share one hostile frontier while using 
 3. **Sample Zero** — breach the reopened laboratory, bypass corrupted containment security, retrieve the DNA sample, and protect its portable containment sync. An optional security-turret restoration provides automated support and local hostile intel.
 4. **Break Contact** — continue seamlessly from Sample Zero or deploy from Mission Select with the sample already secured, escape through the east maintenance breach, request extraction, hold the restoration LZ for two minutes, and board the transport.
 
-Open **CAMPAIGN** for **Start New Game**, **Select Mission**, or **Continue Last Checkpoint**. Mission Select starts a fresh, fully healthy/shielded squad with the selected mission's supplies. Campaign uses an authored BUL-117 + CRW-8 loadout with ROOK, VEX and KADE. **Endless Horde** offers Continue/New when a saved run exists, otherwise opens deployment directly. Choose two weapons, operator abilities and squad posture; Commander uses Surge Pulse. Both guns deploy, initially in Slot 1. Restart retains your setup and arena with fresh resources.
+Open **CAMPAIGN** for **Start New Game**, **Select Mission**, or **Continue Last Checkpoint**. Mission Select starts a fresh, fully healthy/shielded squad with the selected mission's supplies. Campaign uses an authored BUL-117 + CRW-8 loadout with ROOK, VEX and KADE. **Endless Horde** offers Continue/New when a saved run exists, otherwise opens deployment directly. Choose two weapons, each operator's ability and squad posture. Commander, ROOK, VEX and KADE can each choose Surge Pulse, Bulwark, Medic Pulse or Target Designator. Both guns deploy, initially in Slot 1. Restart retains your setup and arena with fresh resources.
 
 Endless saves at wave starts and completed-wave intermissions. Leaving during a
 wave resumes that wave's saved start, including its resources and chosen mutator;
@@ -42,7 +42,7 @@ the Hall to Relay Alpha in Mission 2. Choosing the **Supply Locker** instead rel
 3 reserve cartridges and 2 electric grenades as ground items: hold E to collect,
 with full/partial inventory handled safely. Completing Mission 2's Survey Drone
 retains tactical contact indicators and unlocks a cyan adaptive bypass route to Relay Gamma.
-Rewarded guidance replans from the Commander about once a second while moving,
+Rewarded guidance replans from the Commander about once every three seconds while moving,
 uses the authored safe corridors as preferences, and retires at relay interaction range.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
@@ -66,7 +66,7 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 | `G` | Throw an **ESG-180** grenade |
 | `1 / 2` | Equip Slot 1 / Slot 2 (Campaign: **BUL-117** / **CRW-8**) |
 | `Q` | Cycle the two weapons |
-| `F` | Use SURGE PULSE |
+| `F` | Use the Commander ability (SURGE PULSE in Campaign; selected ability in Endless) |
 | `M` | Cycle sound mode — music / highlights / all sounds |
 
 ### Squad
@@ -103,7 +103,7 @@ sprinting again. **Options** in the main/pause menus includes Fullscreen. Contro
 & Guide scrolls inside its panel with its heading and Back button kept accessible.
 
 Endless deployment chooses **two of four**: BUL-117, CRW-8, **ARC-9** (32 rounds,
-72 m, chain disruption) and **PX-4** (10 rounds, 110 m, explosive plasma). Choose
+72 m, chain disruption) and **PX-4** (15 rounds, 110 m, explosive plasma). Choose
 starting slot, each operator's weapon/ability and squad posture. Restart preserves
 deployment and arena, resets resources/upgrades/waves. Waves 1–5 are unmodified;
 wave 6 onward automatically chooses a modifier or NONE. No Contract menu.
@@ -120,7 +120,7 @@ wave 6 onward automatically chooses a modifier or NONE. No Contract menu.
 
 ## 🤖 Your Squadmates
 
-You're the **fourth operator** — together with ROOK, VEX and KADE you make up a four-person fireteam. These are the authored Campaign identities; Endless lets each operator choose any supported gun and Bulwark, Medic Pulse or Target Designator:
+You're the **fourth operator** — together with ROOK, VEX and KADE you make up a four-person fireteam. These are the authored Campaign identities; Endless lets every operator choose any supported gun and any of the four abilities:
 
 | Member | Role | Loadout |
 |---|---|---|
@@ -146,6 +146,11 @@ The campaign, AI, squad behavior, crafting, cutscene and audio integration remai
 owns continuous cartridge/hand presentation driven by the existing combat clock.
 See [MILESTONE-4.1-ROUTE-RELOAD-REFINEMENT.md](MILESTONE-4.1-ROUTE-RELOAD-REFINEMENT.md)
 for the route/reload follow-up, validation and visual evidence.
+
+The final 4.1 combat/presentation follow-up is documented in
+[MILESTONE-4.1-COMBAT-VFX-ABILITY-REFINEMENT.md](MILESTONE-4.1-COMBAT-VFX-ABILITY-REFINEMENT.md):
+three-second/thicker relay guidance, flat ARC magazine display, robust electrical
+ribbons/contact timing, 15-shot PX-4 and universal Endless abilities.
 
 ---
 

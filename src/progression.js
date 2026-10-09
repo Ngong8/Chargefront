@@ -24,10 +24,10 @@
         typeof s.run.waveActive==='boolean'&&Number.isFinite(s.run.budgetLeft)&&s.run.budgetLeft>=0&&
         s.player?.combat?.weapons&&Number.isFinite(s.player.hp)&&s.player.hp>0&&s.squad?.length===3&&finiteTree(s)&&
         [s.configuration.player.slot1,s.configuration.player.slot2].every(id=>['rifle','scatter','arc','plasma'].includes(id))&&
-        s.configuration.player.slot1!==s.configuration.player.slot2&&(!s.configuration.player.ability||s.configuration.player.ability==='surge')&&
+        s.configuration.player.slot1!==s.configuration.player.slot2&&(!s.configuration.player.ability||['surge','bulwark','medic_pulse','target_designator'].includes(s.configuration.player.ability))&&
         ['balanced','escort','screen'].includes(s.configuration.posture)&&['rook','vex','kade'].every(id=>
             ['rifle','scatter','arc','plasma'].includes(s.configuration.squad?.[id]?.weapon)&&
-            ['bulwark','medic_pulse','target_designator'].includes(s.configuration.squad?.[id]?.ability))&&
+            (!s.configuration.squad?.[id]?.ability||['surge','bulwark','medic_pulse','target_designator'].includes(s.configuration.squad[id].ability)))&&
         Number.isFinite(s.player.combat.cartridges)&&s.player.combat.cartridges>=0&&s.squad.every(a=>Number.isFinite(a.hp)&&a.hp>=0)&&
         [s.configuration.player.slot1,s.configuration.player.slot2].every(id=>Number.isInteger(s.player.combat.weapons[id]?.mag)&&s.player.combat.weapons[id].mag>=0)&&
         [s.configuration.player.slot1,s.configuration.player.slot2].includes(s.player.combat.activeId);

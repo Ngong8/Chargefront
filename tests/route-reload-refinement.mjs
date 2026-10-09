@@ -28,7 +28,11 @@ async function walkToArrival(id,timeout=90000){
  const started=Date.now(),samples=[];await page.evaluate(()=>__cf.pause(false));await page.keyboard.down('w');
  try{while(Date.now()-started<timeout){
   const row=await page.evaluate(()=>{const c=__cf,r=c.relayRouteInfo();if(r.path.length>1){const p=r.path[1];c.player.yaw=Math.atan2(p[1]-c.player.pos.y,p[0]-c.player.pos.x);c.player.pitch=0;}return {...r,position:[c.player.pos.x,c.player.pos.y],solid:c.insideSolid(c.player.pos.x,c.player.pos.y)};});
-  if(samples.length===0||Date.now()-started>samples.length*1000){samples.push(row);if(samples.length===2)await capture(id+'-adaptive-guide');}
+  if(samples.length===0||Date.now()-started>samples.length*1000){samples.push(row);if(samples.length===2){
+   if(id==='alpha')results.ribbonWidths=await page.evaluate(()=>{const c=__cf,g=c.scene.getObjectByName('AdaptiveRelayGuide'),p=g.geometry.attributes.position,T=c.camera.position.constructor,rows=[];c.render();
+    for(let i=0;i+5<g.geometry.drawRange.count;i+=6){const a=new T().fromBufferAttribute(p,i),b=new T().fromBufferAttribute(p,i+1),u=new T().fromBufferAttribute(p,i+2),v=new T().fromBufferAttribute(p,i+3);if(u.distanceTo(v)>.00001)continue;const center=a.clone().add(b).multiplyScalar(.5),d=Math.hypot(center.x-c.player.pos.x,center.y-c.player.pos.y);if(d<8||d>15)continue;a.project(c.camera);b.project(c.camera);if(a.z>1||a.z<0)continue;rows.push(Math.hypot((a.x-b.x)*innerWidth/2,(a.y-b.y)*innerHeight/2));}return rows;});
+   await capture(id+'-adaptive-guide');
+  }}
   if(row.arrived[id]){samples.push(row);return samples;}await page.waitForTimeout(100);
  }throw Error('Native route walk did not reach '+id);
  }finally{await page.keyboard.up('w');await page.evaluate(()=>__cf.pause(true));}
@@ -48,17 +52,20 @@ try{
  const invalidOrigin=await page.evaluate(()=>{const c=__cf,p=c.player.pos,barrier=c.addTestSolid(p.x+1,p.y-1,p.x+1.3,p.y+1);c.advanceRelayGuide(0);const before=c.relayRouteInfo().stats.solves;p.x+=1.15;c.advanceRelayGuide(.11);const invalid=c.relayRouteInfo();barrier.disabled=true;p.x-=1.15;c.advanceRelayGuide(0);return {before,invalid};});
  assert.equal(invalidOrigin.invalid.stats.solves,invalidOrigin.before+1);assert.equal(invalidOrigin.invalid.path.length,0,'Invalid origin must discard the old path immediately');results.invalidOrigin=invalidOrigin;
  const stationary=await page.evaluate(()=>{const before=__cf.relayRouteInfo().stats.solves;for(let i=0;i<180;i++)__cf.advanceRelayGuide(1/60);return [before,__cf.relayRouteInfo().stats.solves];});assert.equal(...stationary);
+ results.destinationInvalidation=await page.evaluate(()=>{const c=__cf,r=c.relays[0],x=r.pos.x,before=c.relayRouteInfo().stats.solves;r.pos.x+=2;c.advanceRelayGuide(0);const changed=c.relayRouteInfo();r.pos.x=x;c.advanceRelayGuide(0);return {before,changed};});assert.equal(results.destinationInvalidation.changed.stats.solves,results.destinationInvalidation.before+1);
+ results.layoutInvalidation=await page.evaluate(()=>{const c=__cf,s=c.addTestSolid(430,600,432,602);c.advanceRelayGuide(0);const before=c.relayRouteInfo().stats.solves;s.x0+=32;s.x1+=32;c.advanceRelayGuide(0);const changed=c.relayRouteInfo();s.disabled=true;c.advanceRelayGuide(0);return {before,changed};});assert.equal(results.layoutInvalidation.changed.stats.solves,results.layoutInvalidation.before+1);
  results.skips=[];
  for(const p of [[360,610],[300,575],[280,595],[270,575],[290,575]])results.skips.push(await validate(await place(...p)));
  assert(results.skips[1].path.every(p=>p[0]<=301),'Skipping Hall and staging points never guides backward');
- // Same authoritative origin moves slowly: precisely one solve per second, no per-member solves.
- results.cadence=await page.evaluate(()=>{const before=__cf.relayRouteInfo().stats.solves,changes=[];for(let i=0;i<240;i++){__cf.player.pos.x-=.02;const old=__cf.relayRouteInfo().stats.solves;__cf.advanceRelayGuide(1/60);if(__cf.relayRouteInfo().stats.solves!==old)changes.push(i);}return {count:__cf.relayRouteInfo().stats.solves-before,changes};});
- assert(results.cadence.count>=3&&results.cadence.count<=4);assert(results.cadence.changes.slice(1).every((v,i)=>v-results.cadence.changes[i]>=59));
+ // Same authoritative origin moves slowly: one solve per three seconds, no per-member solves.
+ results.cadence=await page.evaluate(()=>{const before=__cf.relayRouteInfo().stats.solves,changes=[];for(let i=0;i<720;i++){__cf.player.pos.x-=.02;const old=__cf.relayRouteInfo().stats.solves;__cf.advanceRelayGuide(1/60);if(__cf.relayRouteInfo().stats.solves!==old)changes.push(i);}return {count:__cf.relayRouteInfo().stats.solves-before,changes};});
+ assert.equal(results.cadence.count,4);assert(results.cadence.changes.slice(1).every((v,i)=>v-results.cadence.changes[i]>=179&&v-results.cadence.changes[i]<=181));
  const checkpoint=await page.evaluate(()=>__cf.createCheckpointForTest());
  await place(350,575);await page.evaluate(saved=>{__cf.restoreCheckpointForTest(saved);__cf.advanceRelayGuide(0);},checkpoint);
  const restored=await validate(await page.evaluate(()=>__cf.relayRouteInfo()));assert(dist(restored.path[0],[checkpoint.player.position.x,checkpoint.player.position.y])<.01);results.restore=restored;
  // Walk from the Hall with real W, automatic door and adaptive steering; earlier skipped indices have no authority.
  await place(382,646);await page.evaluate(()=>__cfPerf.reset());results.alphaWalk=await walkToArrival('alpha');
+ assert(results.ribbonWidths.length>0);assert(results.ribbonWidths.every(w=>w>=1.5&&w<=2.3),'Actual camera-projected ground ribbon width must be approximately 1.5–2× a native one-pixel line');
  results.routePerformance=await page.evaluate(()=>__cfPerf.summary());
  for(const key of ['materialsCreated','geometriesCreated','linkProgram'])assert.equal(results.routePerformance.counters[key]||0,0,'Route traversal '+key);
  assert(results.alphaWalk.at(-1).arrived.alpha);assert.equal((await place(300,575)).path.length,0,'Arrival is latched when moving away');

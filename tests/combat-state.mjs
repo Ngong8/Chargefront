@@ -63,6 +63,15 @@ for (const w of api.definitions) {
     const cfg = api.endlessConfig({ player: { slot1: w.id, slot2: w.id } }); assert.notEqual(cfg.player.slot1, cfg.player.slot2);
 }
 assert(Object.isFrozen(config.player) && Object.isFrozen(config.squad.rook));
+assert.deepEqual(api.abilities.map(a=>a.id),['surge','bulwark','medic_pulse','target_designator']);
+for(const a of api.abilities){
+    const cfg=api.endlessConfig({player:{ability:a.id},squad:Object.fromEntries(['rook','vex','kade'].map(id=>[id,{ability:a.id}]))});
+    assert.equal(cfg.player.ability,a.id);assert(Object.values(cfg.squad).every(s=>s.ability===a.id));
+}
+const fallback=api.endlessConfig({player:{ability:'invalid'},squad:{rook:{ability:'invalid'}}});assert.equal(fallback.player.ability,'surge');assert.equal(fallback.squad.rook.ability,'bulwark');
+const px=api.create();px.reset({loadout:{slot1:'plasma',slot2:'arc'},cartridges:2});assert.equal(px.active.magSize,15);
+for(let i=0;i<15;i++){assert(px.consumeShot());px.tick(.8);}assert(!px.consumeShot());assert(px.reload());px.tick(2.2);assert.equal(px.active.mag,15);assert.equal(px.cartridges,1);
+assert.deepEqual(['dmg','cd','range','spread','reloadTime','splash'].map(k=>api.definitions[3][k]),[74,.8,110,.018,2.2,6.5]);
 // Duplicate legacy active/cache entries count once; missing inactive adds no reserve.
 c.restore({ weapon: { id: 'rifle', mag: 3, reserve: 2 }, weaponStates: { rifle: { reserve: 2 }, scatter: { reserve: 1 } } }); assert.equal(c.cartridges, 3);
 c.restore({ weapon: { id: 'rifle', reserve: 2 } }); assert.equal(c.cartridges, 2);
@@ -79,4 +88,4 @@ assert.equal(api.chooseMutator(6, null, mods, () => 0), null);
 for (let i = 1; i <= 4; i++) assert.equal(api.chooseMutator(6, null, mods, () => i / 5).id, mods[i - 1].id);
 for (let i = 0; i < 100; i++) assert.notEqual(api.chooseMutator(7, 'storm', mods, () => i / 100)?.id, 'storm');
 assert.equal(api.terminalOpacity(.2), 1); assert.equal(api.terminalOpacity(.06), .5); assert.equal(api.terminalOpacity(0), 0);
-console.log('PASS combat state: 12 ordered pairs with both obsolete-starting-slot migrations, Surge ability, shared ammo, squad catalog, mutators, fade, cadence');
+console.log('PASS combat state: ordered pairs, four universal abilities/defaults, 15-shot PX accounting, unchanged PX tuning, shared ammo, migration, mutators and cadence');

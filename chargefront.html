@@ -195,6 +195,7 @@
 <script src="src/progression.js"></script>
 <script src="src/relay-routing.js"></script>
 <script src="src/fps-reload.js"></script>
+<script src="src/presentation-ribbons.js"></script>
 <script src="src/hud-objectives.js"></script>
 <script type="module">
 import * as THREE from 'three';
@@ -3015,17 +3016,24 @@ function activeIntelRoute() {
     if(phase===P.MOVE_R3&&campaignRun.worldState.betaSurvey)return INTEL_ROUTES.gamma;
     return null;
 }
-const relayGuide = { id:null, path:[], timer:0, renderT:0, lastX:NaN, lastY:NaN, observedX:NaN, observedY:NaN, obstacleState:new Uint8Array(0), doorMap:new WeakMap(), line:null, renderedX:NaN,renderedY:NaN,doorVisibility:0,dirty:true };
+const RELAY_REPLAN_SECONDS=3;
+const relayGuide = { id:null, path:[], timer:0, renderT:0, lastX:NaN, lastY:NaN, observedX:NaN, observedY:NaN, destinationX:NaN,destinationY:NaN, obstacleState:new Uint8Array(0), obstacleBounds:new Float64Array(0),doorMap:new WeakMap(), line:null, renderedX:NaN,renderedY:NaN,renderedFov:NaN,renderedHeight:0,doorVisibility:0,dirty:true };
 function guideDoorLocked(door) {return door.locked||(door.id==='bio_lab'&&!campaignRun.worldState.labAccess);}
 function relayGuideObstacleChanged() {
     let changed=false;
     if(relayGuide.obstacleState.length!==SOLIDS.length){
         relayGuide.obstacleState=new Uint8Array(SOLIDS.length).fill(255);relayGuide.doorMap=new WeakMap();
+        relayGuide.obstacleBounds=new Float64Array(SOLIDS.length*4).fill(NaN);
         for(const door of facilityDoors)relayGuide.doorMap.set(door.solid,door);
     }
     for(let i=0;i<SOLIDS.length;i++){
         const s=SOLIDS[i],door=relayGuide.doorMap.get(s),state=Number(door?door.enabled&&guideDoorLocked(door):!s.disabled);
         if(relayGuide.obstacleState[i]!==state){relayGuide.obstacleState[i]=state;changed=true;}
+        const bounds=relayGuide.obstacleBounds,index=i*4;
+        if(bounds[index]!==s.x0||bounds[index+1]!==s.y0||bounds[index+2]!==s.x1||bounds[index+3]!==s.y1){
+            if(Number.isFinite(bounds[index]))solidGridCount=-1;
+            bounds[index]=s.x0;bounds[index+1]=s.y0;bounds[index+2]=s.x1;bounds[index+3]=s.y1;changed=true;
+        }
     }
     return changed;
 }
@@ -3047,6 +3055,7 @@ function relayGuideSegmentClear(a,b, allowDoors=true) {
 const relayRouteSolver=ChargefrontRelayRouting.create({world:WORLD,clear:relayGuideSegmentClear});
 function resetRelayGuide() {
     relayGuide.id=null;relayGuide.path=[];relayGuide.timer=0;relayGuide.lastX=relayGuide.lastY=relayGuide.observedX=relayGuide.observedY=NaN;
+    relayGuide.destinationX=relayGuide.destinationY=NaN;
     relayGuide.obstacleState.fill(255);relayGuide.dirty=true;relayRouteSolver.invalidate();
     if(relayGuide.line){relayGuide.line.visible=false;relayGuide.line.geometry.setDrawRange(0,0);}
 }
@@ -3083,31 +3092,38 @@ function updateIntelRouteProgress(dt=LJS.timeDelta) {
     const teleported=Math.hypot(player.pos.x-relayGuide.observedX,player.pos.y-relayGuide.observedY)>2;
     relayGuide.observedX=player.pos.x;relayGuide.observedY=player.pos.y;
     relayGuide.timer=Math.max(0,relayGuide.timer-dt);
+    if(relayGuide.timer<1e-6)relayGuide.timer=0;
     const moved=Math.hypot(player.pos.x-relayGuide.lastX,player.pos.y-relayGuide.lastY)>.35;
-    if(relayGuide.id!==route.id||changed||teleported||(moved&&relayGuide.timer===0)) {
+    const destination=relayGuideDestination(route,rel),destinationChanged=destination.x!==relayGuide.destinationX||destination.y!==relayGuide.destinationY;
+    if(relayGuide.id!==route.id||changed||destinationChanged||teleported||(moved&&relayGuide.timer===0)) {
         const origin={x:player.pos.x,y:player.pos.y};
-        const path=relayRouteSolver.solve(origin,relayGuideDestination(route,rel),route.path);
-        relayGuide.path=!changed&&!teleported&&relayGuide.id===route.id?stableRelayPath(path,relayGuide.path,origin,route.path):path;
-        relayGuide.id=route.id;relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=1;relayGuide.renderT=0;relayGuide.dirty=true;
+        const path=relayRouteSolver.solve(origin,destination,route.path);
+        relayGuide.path=!changed&&!destinationChanged&&!teleported&&relayGuide.id===route.id?stableRelayPath(path,relayGuide.path,origin,route.path):path;
+        relayGuide.destinationX=destination.x;relayGuide.destinationY=destination.y;
+        relayGuide.id=route.id;relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;relayGuide.renderT=0;relayGuide.dirty=true;
         if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
     }
     // Trim only a physically authorized prefix; no irreversible point counter.
     relayGuide.renderT-=dt;if(relayGuide.renderT>0)return;relayGuide.renderT=.1;
     const doorVisibility=facilityDoors.reduce((mask,d,i)=>mask|(Number(!d.solid.disabled)<<i),0);
-    if(!relayGuide.dirty&&player.pos.x===relayGuide.renderedX&&player.pos.y===relayGuide.renderedY&&doorVisibility===relayGuide.doorVisibility)return;
+    if(!relayGuide.dirty&&player.pos.x===relayGuide.renderedX&&player.pos.y===relayGuide.renderedY&&doorVisibility===relayGuide.doorVisibility&&camera.fov===relayGuide.renderedFov&&LJS.mainCanvasSize.y===relayGuide.renderedHeight)return;
     relayGuide.dirty=false;relayGuide.renderedX=player.pos.x;relayGuide.renderedY=player.pos.y;relayGuide.doorVisibility=doorVisibility;
+    relayGuide.renderedFov=camera.fov;relayGuide.renderedHeight=LJS.mainCanvasSize.y;
     const path=relayGuide.path;
     if(path.length>1){const origin={x:player.pos.x,y:player.pos.y};
         let nearest=1,best=Infinity;
         for(let i=1;i<path.length;i++){const d=Math.hypot(origin.x-path[i].x,origin.y-path[i].y);
             if(d<best&&relayGuideSegmentClear(origin,path[i])){best=d;nearest=i;}}
-        if(best<Infinity){if(nearest>1)path.splice(1,nearest-1);path[0].x=origin.x;path[0].y=origin.y;}
+        if(best<Infinity){
+            if(best<1.25&&nearest<path.length-1&&relayGuideSegmentClear(origin,path[nearest+1]))nearest++;
+            if(nearest>1)path.splice(1,nearest-1);path[0].x=origin.x;path[0].y=origin.y;
+        }
         else {
             // The Commander can no longer attach to the old path (e.g. an
             // alternate passage around a corner). Invalid navigation bypasses
-            // the ordinary one-second movement gate, with one bounded solve.
+            // the ordinary three-second movement gate, with one bounded solve.
             relayGuide.path=relayRouteSolver.solve(origin,relayGuideDestination(route,rel),route.path);
-            relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=1;
+            relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;
             if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
         }
     }
@@ -3115,8 +3131,8 @@ function updateIntelRouteProgress(dt=LJS.timeDelta) {
 }
 function prepareRelayGuideGeometry() {
     if(!relayGuide.line){
-        const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(12288),3).setUsage(THREE.DynamicDrawUsage));
-        relayGuide.line=new THREE.LineSegments(geometry,new THREE.LineBasicMaterial({color:0x66e0ff,transparent:true,opacity:.85,depthWrite:false}));
+        const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(49152),3).setUsage(THREE.DynamicDrawUsage));
+        relayGuide.line=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x66e0ff,transparent:true,opacity:.85,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true}));
         relayGuide.line.name='AdaptiveRelayGuide';relayGuide.line.frustumCulled=false;scene.add(relayGuide.line);
         relayGuide.line.visible=false;
     }
@@ -3124,14 +3140,26 @@ function prepareRelayGuideGeometry() {
 function updateRelayGuideGeometry() {
     const path=enhancedRelayPath();prepareRelayGuideGeometry();
     const attribute=relayGuide.line.geometry.attributes.position;let vertices=0;
+    const focal=Math.max(1,LJS.mainCanvasSize.y)/(2*Math.tan(camera.fov*Math.PI/360));
+    const vertex=(x,y)=>attribute.setXYZ(vertices++,x,y,terrainHeight(x,y)+.12);
+    let previousEndX=NaN,previousEndY=NaN;
     for(let i=1;i<path.length;i++){
         const a=path[i-1],b=path[i],n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/2));
-        for(let j=0;j<n&&vertices+2<=attribute.count;j++){
+        for(let j=0;j<n&&vertices+12<=attribute.count;j++){
             const p={x:lerp(a.x,b.x,j/n),y:lerp(a.y,b.y,j/n)},q={x:lerp(a.x,b.x,(j+1)/n),y:lerp(a.y,b.y,(j+1)/n)};
             // Never paint through a currently closed door, even though it is operable.
-            if(!relayGuideSegmentClear(p,q,false))continue;
-            attribute.setXYZ(vertices++,p.x,p.y,terrainHeight(p.x,p.y)+.12);
-            attribute.setXYZ(vertices++,q.x,q.y,terrainHeight(q.x,q.y)+.12);
+            if(!relayGuideSegmentClear(p,q,false)){previousEndX=NaN;continue;}
+            const length=Math.hypot(q.x-p.x,q.y-p.y)||1,nx=-(q.y-p.y)/length,ny=(q.x-p.x)/length;
+            const wp=clamp(Math.hypot(p.x-camera.position.x,p.y-camera.position.y)/focal*.9,.004,.16);
+            const wq=clamp(Math.hypot(q.x-camera.position.x,q.y-camera.position.y)/focal*.9,.004,.16);
+            vertex(p.x+nx*wp,p.y+ny*wp);vertex(p.x-nx*wp,p.y-ny*wp);vertex(q.x+nx*wq,q.y+ny*wq);
+            vertex(q.x+nx*wq,q.y+ny*wq);vertex(p.x-nx*wp,p.y-ny*wp);vertex(q.x-nx*wq,q.y-ny*wq);
+            if(Math.hypot(previousEndX-p.x,previousEndY-p.y)<.001){
+                // Small bevel/diamond fills preserve joins without long miter spikes.
+                vertex(p.x-wp,p.y);vertex(p.x,p.y+wp);vertex(p.x+wp,p.y);
+                vertex(p.x-wp,p.y);vertex(p.x+wp,p.y);vertex(p.x,p.y-wp);
+            }
+            previousEndX=q.x;previousEndY=q.y;
         }
     }
     attribute.needsUpdate=true;relayGuide.line.geometry.setDrawRange(0,vertices);relayGuide.line.visible=vertices>0;
@@ -3800,7 +3828,7 @@ function resetEndlessRun() {
     player.shieldDelayT = 0; player.hpDelayT = 0;
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
-    player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
+    player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;player.bulwarkT=0;
     playerCombat.reset({ loadout: endlessConfiguration.player, cartridges: 8 }); setViewmodelWeapon(player.weapon);
     player.holsterT = 0; player.grenadeCd = 0; player.sprintBlend = 0; player.adsBlend = 0;
     player.swayX = 0; player.swayY = 0; player.swayRoll = 0; player.swayPosX = 0; player.swayPosY = 0;
@@ -4133,7 +4161,7 @@ const player = {
     sprinting: false, sprintExhausted: false, sprintFireBlocked: false, firePending: false, moveAmount: 0, moveBlend: 0, moveBobX: 0, moveBobY: 0, moveBobVX: 0, moveBobVY: 0,
     sprintBlend: 0, adsBlend: 0, swayX: 0, swayY: 0, swayRoll: 0, swayPosX: 0, swayPosY: 0,
     viewmodelState: 'IDLE', reloadPhase: 'COMPLETE', armRecoilLag: 0,
-    dead: false, reviveT: 0, stepT: 0, grenades: 3, grenadeCd: 0, abilityCd: 0, ads: false, debugImmortal: false,
+    dead: false, reviveT: 0, stepT: 0, grenades: 3, grenadeCd: 0, abilityCd: 0, bulwarkT:0, ads: false, debugImmortal: false,
 };
 const squadMembers = [];
 
@@ -4146,16 +4174,8 @@ function equipWeapon(index, silent = false) {
 function cycleWeapon() {
     equipWeapon((player.weaponIndex + 1) % playerCombat.slots.length);
 }
-function playerPulse() {
-    if (player.abilityCd > 0) { notify('SURGE PULSE RECHARGING', '#ffaa44'); return; }
-    player.abilityCd = 22;
-    player.shield = Math.min(player.maxShield, player.shield + 35);
-    for (const m of squadMembers) if (!m.downed && Math.hypot(m.pos.x - player.pos.x, m.pos.y - player.pos.y) < 16) m.shield = Math.min(m.maxShield, m.shield + 35);
-    for (const e of enemies) if (!e.dead && !e.dying && Math.hypot(e.pos.x - player.pos.x, e.pos.y - player.pos.y) < 11) { e.takeDamage(32); e.stunT = Math.max(e.stunT || 0, 1.6); }
-    spawnImpact(player.pos.x, player.pos.y, player.zPos + 1, 0x77ddff, 4);
-    notify('SURGE PULSE — shields restored, hostiles disrupted', '#88eeff');
-    playSnd(sfx.revive, 0.8);
-}
+function commanderAbility() {return ChargefrontCombat.abilities.find(a=>a.id===(mode==='endless'?endlessConfiguration.player.ability:'surge'));}
+function playerPulse() {return executeOperatorAbility(player,'manual',null);}
 const ENCOUNTER_ENEMY_COST = Object.freeze({ skitter: 1, runner: 1, spitter: 2, screecher: 2, drone: 2, shielded: 3, tunneler: 3, support: 3, brute: 4, artillery: 4, carrier: 5, boss: 12 });
 const encounterDirector = {
     phase: 'TRAVERSAL', pressure: 'LOW', activeHostiles: 0, engagedHostiles: 0, budgetUsed: 0, budgetAvailable: 16, activeCap: 12,
@@ -4289,6 +4309,7 @@ function updateEncounterDirector(dt) {
 }
 const squadAbilityCoordination = { decisionT: 0.35, suppressionT: 0, lastUser: null, lastAbility: null, uses: 0 };
 function resetSquadIntelligence() {
+    player.lastAbilitySource=null;player.lastAbilityTime=-Infinity;
     squadAbilityCoordination.decisionT = 0.35; squadAbilityCoordination.suppressionT = 0;
     squadAbilityCoordination.lastUser = null; squadAbilityCoordination.lastAbility = null; squadAbilityCoordination.uses = 0;
     squadCommand = 'assist';
@@ -4315,51 +4336,67 @@ function bestDesignatorTarget(member) {
     return { target: best, score: bestScore };
 }
 function activateSquadAbility(slot, source = 'manual', preferredTarget = null) {
-    return executeSquadAbility(squadMembers[slot], source, preferredTarget);
+    return executeOperatorAbility(squadMembers[slot], source, preferredTarget);
 }
-function executeSquadAbility(member, source, preferredTarget) {
-    if (!member || member.downed) return false;
+function commanderDesignatorTarget() {
+    const dx=Math.cos(player.yaw)*Math.cos(player.pitch),dy=Math.sin(player.yaw)*Math.cos(player.pitch),dz=Math.sin(player.pitch),z=player.zPos+player.eye;
+    const surface=arcSurfaceContact(player.pos.x,player.pos.y,z,player.pos.x+dx*65,player.pos.y+dy*65,z+dz*65);
+    const hit=arcEnemyContact(player.pos.x,player.pos.y,z,player.pos.x+dx*65,player.pos.y+dy*65,z+dz*65,player.pos.x,player.pos.y,z,65);
+    return hit&&(!surface||hit.t<surface.t)&&hit.enemy.markedT<=1?hit.enemy:null;
+}
+function executeOperatorAbility(member, source, preferredTarget) {
+    if (!member || member.downed || member.dead || member.hp<=0 || phase===P.DEAD || phase===P.DONE || phase===P.M4_DEPART) return false;
+    const commander=member===player,name=commander?'COMMANDER':member.def.name,z=commander?player.zPos:member.z;
     const autonomous = source === 'autonomous';
     if (member.abilityCd > 0) {
-        if (!autonomous) notify(member.def.name + ' ABILITY RECHARGING', '#ffaa44');
+        if (!autonomous) notify(name + ' ABILITY RECHARGING', '#ffaa44');
         return false;
     }
     if (autonomous && squadAbilityCoordination.suppressionT > 0) return false;
-    const ability = member.def.ability;
-    if (ability.id === 'bulwark') {
+    const ability = commander?commanderAbility():member.def.ability;
+    if (ability.id === 'surge') {
+        member.abilityCd=ability.cooldown;
+        for(const ally of [player,...squadMembers])if(!ally.dead&&!ally.downed&&ally.hp>0&&Math.hypot(ally.pos.x-member.pos.x,ally.pos.y-member.pos.y)<16)ally.shield=Math.min(ally.maxShield,ally.shield+35);
+        for(const e of enemies)if(!e.dead&&!e.dying&&!e.unburrowing&&Math.hypot(e.pos.x-member.pos.x,e.pos.y-member.pos.y)<11){e.takeDamage(32);e.stunT=Math.max(e.stunT||0,1.6);}
+        spawnImpact(member.pos.x,member.pos.y,z+1,0x77ddff,4);
+        notify(name+' — SURGE PULSE // shields restored, hostiles disrupted','#88eeff');
+    } else if (ability.id === 'bulwark') {
         member.abilityCd = ability.cooldown; member.bulwarkT = 9;
-        spawnImpact(member.pos.x, member.pos.y, member.z + 0.8, 0x88ff77, 2.5);
-        notify(member.def.name + ' — BULWARK ARMOUR ACTIVE' + (autonomous ? ' // covering squad' : ''), '#aaff88');
+        spawnImpact(member.pos.x, member.pos.y, z + 0.8, 0x88ff77, 2.5);
+        notify(name + ' — BULWARK ARMOUR ACTIVE' + (autonomous ? ' // covering squad' : ''), '#aaff88');
     } else if (ability.id === 'medic_pulse') {
         let benefited = 0;
-        for (const ally of [player, ...squadMembers]) if (!ally.downed && Math.hypot(ally.pos.x - member.pos.x, ally.pos.y - member.pos.y) < 20) {
+        for (const ally of [player, ...squadMembers]) if (!ally.downed&&!ally.dead&&ally.hp>0 && Math.hypot(ally.pos.x - member.pos.x, ally.pos.y - member.pos.y) < 20) {
             const before = ally.hp + ally.shield;
             ally.hp = Math.min(ally.maxHp, ally.hp + 32); ally.shield = Math.min(ally.maxShield, ally.shield + 18);
             if (ally.hp + ally.shield > before) benefited++;
         }
         if (!benefited) {
-            if (!autonomous) notify(member.def.name + ' — SQUAD VITALS NOMINAL', '#ffaa44');
+            if (!autonomous) notify(name + ' — SQUAD VITALS NOMINAL', '#ffaa44');
             return false;
         }
         member.abilityCd = ability.cooldown;
-        spawnImpact(member.pos.x, member.pos.y, member.z + 0.8, 0xff77bb, 3.2);
-        notify(member.def.name + ' — MEDIC PULSE DEPLOYED' + (autonomous ? ' // casualties stabilized' : ''), '#ff88bb');
-    } else {
-        const selection = preferredTarget && !preferredTarget.dead && !preferredTarget.dying ? { target: preferredTarget } : bestDesignatorTarget(member);
+        spawnImpact(member.pos.x, member.pos.y, z + 0.8, 0xff77bb, 3.2);
+        notify(name + ' — MEDIC PULSE DEPLOYED' + (autonomous ? ' // casualties stabilized' : ''), '#ff88bb');
+    } else if(ability.id==='target_designator') {
+        const preferredValid=preferredTarget&&!preferredTarget.dead&&!preferredTarget.dying&&!preferredTarget.unburrowing&&preferredTarget.markedT<=1&&Math.hypot(preferredTarget.pos.x-member.pos.x,preferredTarget.pos.y-member.pos.y)<=65&&hasLOS(member.pos.x,member.pos.y,preferredTarget.pos.x,preferredTarget.pos.y,.6);
+        const selection = commander?{target:commanderDesignatorTarget()}:preferredValid?{target:preferredTarget}:bestDesignatorTarget(member);
         const target = selection.target;
         if (!target) {
-            if (!autonomous) notify(member.def.name + ' — NO VALID TARGET TO MARK', '#ffaa44');
+            if (!autonomous) notify(name + ' — NO VALID TARGET TO MARK', '#ffaa44');
             return false;
         }
         member.abilityCd = ability.cooldown; target.markedT = 10;
         spawnImpact(target.pos.x, target.pos.y, target.z + 0.9, 0x77bbff, 2.1);
-        spawnImpact(member.pos.x, member.pos.y, member.z + 1.25, 0x77bbff, 1);
-        notify(member.def.name + ' — TARGET DESIGNATED' + (autonomous ? ' // ' + target.type.toUpperCase() : ''), '#88bbff');
-    }
+        spawnImpact(member.pos.x, member.pos.y, z + 1.25, 0x77bbff, 1);
+        notify(name + ' — TARGET DESIGNATED' + (autonomous ? ' // ' + target.type.toUpperCase() : ''), '#88bbff');
+    }else return false;
     member.lastAbilitySource = source; member.lastAbilityTime = LJS.time;
-    squadAbilityCoordination.suppressionT = autonomous ? 1.6 : 1.1;
-    squadAbilityCoordination.lastUser = member.def.name; squadAbilityCoordination.lastAbility = ability.id; squadAbilityCoordination.uses++;
-    playSnd(sfx.command, 0.8);
+    if(!commander||mode==='endless'){
+        squadAbilityCoordination.suppressionT = autonomous ? 1.6 : 1.1;
+        squadAbilityCoordination.lastUser = name; squadAbilityCoordination.lastAbility = ability.id; squadAbilityCoordination.uses++;
+    }
+    playSnd(ability.id==='surge'?sfx.revive:sfx.command, 0.8);
     return true;
 }
 function updateSquadAbilityAutonomy(dt) {
@@ -4379,6 +4416,11 @@ function updateSquadAbilityAutonomy(dt) {
             benefit += Math.min(32, ally.maxHp - ally.hp) + Math.min(18, ally.maxShield - ally.shield) * 0.5;
         }
         if ((urgent || injured >= 2) && benefit >= 35 && activateSquadAbility(vex.slot, 'autonomous')) return;
+    }
+    for(const member of squadMembers)if(member.def.ability.id==='surge'&&!member.downed&&member.abilityCd<=0){
+        const threats=livingEnemies.filter(e=>Math.hypot(e.pos.x-member.pos.x,e.pos.y-member.pos.y)<11).length;
+        const shieldNeed=[player,...squadMembers].filter(a=>!a.downed&&!a.dead&&Math.hypot(a.pos.x-member.pos.x,a.pos.y-member.pos.y)<16).reduce((n,a)=>n+Math.min(35,a.maxShield-a.shield),0);
+        if((threats>=2||shieldNeed>=35)&&activateSquadAbility(member.slot,'autonomous'))return;
     }
     for (const rook of squadMembers) if (rook.def.ability.id === 'bulwark' && !rook.downed && rook.abilityCd <= 0) {
         const nearbyThreats = livingEnemies.filter((enemy) => Math.hypot(enemy.pos.x - rook.pos.x, enemy.pos.y - rook.pos.y) < 14 || Math.hypot(enemy.pos.x - player.pos.x, enemy.pos.y - player.pos.y) < 11).length;
@@ -4853,9 +4895,12 @@ function buildViewmodel() {
     gpart(arc, 0.026, 0.145, 0.29, -0.09, 0.05, 0.10, arcDark, arcFrameOpts); // raised near-side cartridge cradle
     const arcCartridge = new THREE.Group();
     gpart(arcCartridge, 0.038, 0.125, 0.26, 0, 0, 0, arcDark2, arcFrameOpts);
-    const arcCellWindow = new THREE.Mesh(new THREE.BoxGeometry(0.013, 0.094, 0.22), new THREE.MeshBasicMaterial({ color: arcCyan, transparent: true, opacity: 0.72, depthWrite: false, toneMapped: false }));
+    const arcCellWindow = new THREE.Mesh(new THREE.BoxGeometry(0.013, 0.094, 0.22), new THREE.MeshBasicMaterial({ color: arcCyan, toneMapped: false,fog:false }));
     arcCellWindow.position.set(-0.026, 0, 0); arcCartridge.add(arcCellWindow);
     const arcCellBolt = genergyBolt(arcCartridge, -0.034, [[-0.022, 0.09], [0.026, 0.05], [-0.024, 0.01], [0.028, -0.032], [-0.02, -0.09]], 0.012, 0x72f3ff);
+    // Opaque unlit display surfaces cannot blend a pulsing lit backing through
+    // the window. The authored zigzag geometry remains, in the same flat cyan.
+    arcCellBolt.material.color.setHex(arcCyan);arcCellBolt.material.transparent=false;arcCellBolt.material.opacity=1;arcCellBolt.material.fog=false;
     arcCartridge.position.set(-0.108, 0.05, 0.10);
     arc.add(arcCartridge);
 
@@ -4871,6 +4916,7 @@ function buildViewmodel() {
     arcMuzzle.rotation.x = Math.PI / 2; arcMuzzle.position.set(0, -0.004, -0.60); arc.add(arcMuzzle);
     const arcEmitter = new THREE.Mesh(new THREE.CircleGeometry(0.046, 8), new THREE.MeshBasicMaterial({ color: arcCyan, side: THREE.DoubleSide, toneMapped: false }));
     arcEmitter.position.set(0, -0.004, -0.672); arc.add(arcEmitter);
+    arc.userData.muzzleSocket=arcEmitter;
     arc.userData.channelBolts = [arcChannelBolt];   // yellow reload-energy channel only
     arc.userData.magazineBolt = arcCellBolt;         // static magazine glow (no pulse)
     arc.userData.magazineWindow = arcCellWindow;
@@ -5228,6 +5274,7 @@ function fireWeapon() {
         return;
     }
     if (!playerCombat.consumeShot()) return;
+    const arcFireAt=PERF_DIAGNOSTICS&&w.kind==='arc'?performance.now():null;
     player.firePending = false;
     // The accepted shot uses the current aim; recoil moves the next sight picture.
     const aimYaw = player.yaw, aimPitch = player.pitch;
@@ -5260,7 +5307,7 @@ function fireWeapon() {
             spawnShot(ox, oy, oz, Math.cos(a) * Math.cos(p), Math.sin(a) * Math.cos(p), Math.sin(p), boltDmg, w.color, 'player', { range: w.range });
         }
     } else {
-        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w, w.kind === 'arc' ? arcWeaponMuzzleWorld() : undefined);
+        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w, w.kind === 'arc' ? arcWeaponMuzzleWorld() : undefined,arcFireAt);
     }
     /* TWIN BARRELS (relay epic) — a chance to squeeze off a second bolt */
     if (mode === 'endless' && w.kind === 'bolt' && Math.random() < (endlessRun.duplicateChance || 0)) {
@@ -5372,6 +5419,7 @@ function playerTakeDamage(dmg, fromEnemy) {
     if (player.dead || phase === P.M4_DEPART) return;
     if (player.debugImmortal) { player.hp = player.maxHp; player.shield = player.maxShield; return; }
     dmg *= (player.dmgTakenMult || 1);                                     // THICK SKIN (DNA ladder)
+    if(player.bulwarkT>0)dmg*=.45;
     if (mode === 'endless' && endlessRun.shieldArrayT > 0) dmg *= 0.5;     // SHIELD ARRAY (relay)
     player.dnaDelayT = 6;                                                  // REGENERATIVE CELLS wait timer
     /* the energy shield absorbs 100% of incoming damage while it lasts; only the
@@ -6844,12 +6892,14 @@ const impactPool = [];
 const impactGeometry = new THREE.SphereGeometry(0.22, 6, 5);
 function createImpactEffect() {
     const material = new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.9 });
-    return { mesh: new THREE.Mesh(impactGeometry, material), mat: material, life: 0, base: 0 };
+    const mesh=new THREE.Mesh(impactGeometry,material);mesh.onBeforeRender=recordArcImpactRender;
+    return { mesh, mat: material, life: 0, base: 0 };
 }
 function spawnImpact(x, y, z, colorHex, size = 1) {
     if (impacts.length > 40) return;
     const f = impactPool.pop() || createImpactEffect();
     f.mesh.position.set(x, y, z);
+    f.mesh.userData.arcTraceId=0;f.mesh.userData.arcRendered=false;
     f.mesh.scale.setScalar(size);
     f.mat.color.setHex(colorHex);
     f.mat.opacity = 0.9;
@@ -6858,6 +6908,7 @@ function spawnImpact(x, y, z, colorHex, size = 1) {
     scene.add(f.mesh);
     impacts.push(f);
     emitSparks(x, y, z, colorHex, size > 1 ? 7 : 4);   // bright sparks instead of a big hit-flash
+    return f;
 }
 function updateImpacts(dt) {
     for (let i = impacts.length - 1; i >= 0; i--) {
@@ -6879,6 +6930,7 @@ function updateImpacts(dt) {
 const sparks = [];
 const sparkPool = [];
 let combatEffectsPrewarmed = false;
+let combatEffectsPreparation=null;
 let campaignTraversalPrewarmed = false;
 function createSparkEffect() {
     const geo = new THREE.BufferGeometry();
@@ -6886,7 +6938,7 @@ function createSparkEffect() {
     return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), vx: 0, vy: 0, vz: 0, life: 0 };
 }
 function prewarmCombatEffects() {
-    if (combatEffectsPrewarmed) return;
+    if (combatEffectsPrewarmed) return combatEffectsPreparation;
     combatEffectsPrewarmed = true;
     // Keep the exact effects as reusable pool entries. Three.js compiles their
     // material variants against the settled campaign light/fog state; no visible
@@ -6909,10 +6961,11 @@ function prewarmCombatEffects() {
     // Compile every existing gun model at preparation, never on its first equip.
     for (const model of Object.values(viewModel.userData.weaponModels)) group.add(model.clone());
     const start = performance.now();
-    void threeJS.renderer.compileAsync(group, camera, scene).then(() => {
+    combatEffectsPreparation=threeJS.renderer.compileAsync(group, camera, scene).then(() => {
         if (PERF_DIAGNOSTICS) perfDiagnostics.event('combatShadersReady', { ms: +(performance.now() - start).toFixed(1) });
     }).catch(error => console.warn('Combat effect shader prewarm failed:', error));
     if (PERF_DIAGNOSTICS) perfDiagnostics.event('combatPrewarm', { ms: +(performance.now() - start).toFixed(1) });
+    return combatEffectsPreparation;
 }
 function prewarmCampaignTraversalMaterials() {
     if (campaignTraversalPrewarmed || mode !== 'campaign') return;
@@ -6970,61 +7023,55 @@ const grenades = [];
 const electricArcs = [];
 const electricArcPool = [];
 function createElectricArcEffect() {
-    const geo = new THREE.BufferGeometry();
-    geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array(18), 3));
-    return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), life: 0, maxLife: 0.14 };
+    const ribbon=ChargefrontRibbons.createElectric(THREE);
+    return {line:ribbon.mesh,ribbon,life:0,maxLife:.14,kind:'chain'};
 }
-function emitLightningArc(x0, y0, z0, x1, y1, z1, colorHex) {
+function emitLightningArc(x0, y0, z0, x1, y1, z1, colorHex,kind='chain') {
     if (electricArcs.length >= 40) return;
-    const segs = 5;
-    const a = electricArcPool.pop() || (() => {
-        const geo = new THREE.BufferGeometry();
-        geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((segs + 1) * 3), 3));
-        return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), life: 0, maxLife: 0.14 };
-    })();
-    const pos = a.line.geometry.attributes.position;
-    pos.setXYZ(0, x0, y0, z0);
-    for (let s = 1; s < segs; s++) {
-        const t = s / segs;
-        pos.setXYZ(s, lerp(x0, x1, t) + rand(-0.45, 0.45), lerp(y0, y1, t) + rand(-0.45, 0.45), lerp(z0, z1, t) + rand(-0.28, 0.28));
+    const a=electricArcPool.pop()||createElectricArcEffect(),points=a.ribbon.points;
+    const dx=x1-x0,dy=y1-y0,dz=z1-z0,length=Math.hypot(dx,dy,dz)||1,horizontal=Math.hypot(dx,dy);
+    const ux=horizontal>1e-7?dy/horizontal:1,uy=horizontal>1e-7?-dx/horizontal:0;
+    const vx=-dz/length*uy,vy=dz/length*ux,vz=dx/length*uy-dy/length*ux;
+    const jitter=clamp(length*.012,.018,.32);
+    for(let s=0;s<=5;s++){
+        const t=s/5,j=s===0||s===5?0:rand(-jitter,jitter),k=s===0||s===5?0:rand(-jitter,jitter);
+        let x=lerp(x0,x1,t)+ux*j+vx*k,y=lerp(y0,y1,t)+uy*j+vy*k,z=lerp(z0,z1,t)+vz*k;
+        if(kind==='primary'&&(z<terrainHeight(x,y)+.02||solidBlocksSegment(lerp(x0,x1,t),lerp(y0,y1,t),lerp(z0,z1,t),x,y,z,.025,null))){x=lerp(x0,x1,t);y=lerp(y0,y1,t);z=lerp(z0,z1,t);}
+        points[s*3]=x;points[s*3+1]=y;points[s*3+2]=z;
     }
-    pos.setXYZ(segs, x1, y1, z1);
-    pos.needsUpdate = true;
     a.line.position.set(0, 0, 0);
+    a.line.rotation.set(0,0,0);a.line.scale.setScalar(1);a.line.visible=true;a.kind=kind;
     a.line.material.color.setHex(colorHex);
     a.line.material.opacity = 1;
     a.life = a.maxLife = 0.14;
     scene.add(a.line);
     electricArcs.push(a);
+    a.ribbon.rebuild(camera,LJS.mainCanvasSize.y);
 }
-function emitElectricArcs(x, y, z, n, radius, colorHex) {
+function emitElectricArcs(x, y, z, n, radius, colorHex,kind='blast') {
     for (let i = 0; i < n && electricArcs.length < 40; i++) {
         const ang = rand(TAU), tilt = rand(-0.6, 0.6);
         const c = Math.cos(tilt);
         const dir = new THREE.Vector3(Math.cos(ang) * c, Math.sin(ang) * c, Math.sin(tilt));
         const segs = 5, step = radius / segs;
-        const a = electricArcPool.pop() || (() => {
-            const geo = new THREE.BufferGeometry();
-            geo.setAttribute('position', new THREE.BufferAttribute(new Float32Array((segs + 1) * 3), 3));
-            return { line: new THREE.Line(geo, new THREE.LineBasicMaterial({ transparent: true, opacity: 1 })), life: 0, maxLife: 0.32 };
-        })();
-        const pos = a.line.geometry.attributes.position;
-        pos.setXYZ(0, 0, 0, 0);
+        const a=electricArcPool.pop()||createElectricArcEffect(),points=a.ribbon.points;
+        points[0]=x;points[1]=y;points[2]=z;
         for (let s = 1; s <= segs; s++) {
-            pos.setXYZ(s,
-                dir.x * step * s + rand(-0.4, 0.4),
-                dir.y * step * s + rand(-0.4, 0.4),
-                dir.z * step * s + rand(-0.25, 0.25));
+            points[s*3]=x+dir.x*step*s+rand(-radius*.025,radius*.025);
+            points[s*3+1]=y+dir.y*step*s+rand(-radius*.025,radius*.025);
+            points[s*3+2]=z+dir.z*step*s+rand(-radius*.015,radius*.015);
+            if(kind==='contact')points[s*3+2]=Math.max(points[s*3+2],terrainHeight(points[s*3],points[s*3+1])+.15);
         }
-        pos.needsUpdate = true;
-        a.line.position.set(x, y, z);
+        a.line.position.set(0,0,0);a.line.rotation.set(0,0,0);a.line.scale.setScalar(1);a.line.visible=true;a.kind=kind;
         a.line.material.color.setHex(colorHex);
         a.line.material.opacity = 1;
-        a.life = a.maxLife = 0.32;
+        a.life = a.maxLife = kind==='contact'?.14:.32;
         scene.add(a.line);
         electricArcs.push(a);
+        a.ribbon.rebuild(camera,LJS.mainCanvasSize.y);
     }
 }
+function updateArcRibbons(){for(const a of electricArcs)a.ribbon.rebuild(camera,LJS.mainCanvasSize.y);}
 function updateElectricArcs(dt) {
     for (let i = electricArcs.length - 1; i >= 0; i--) {
         const a = electricArcs[i];
@@ -7149,8 +7196,73 @@ function createShotEffect() {
         glow: new THREE.Mesh(shotGlowGeometry, new THREE.MeshBasicMaterial({ transparent: true, opacity: 0.35 })), chainHits: [] };
 }
 const _arcMuzzleWorld = new THREE.Vector3();
+let arcTraceSequence=0;
+const arcTimingEvents=[];
+function recordArcTiming(id,stage,details={}) {
+    if(!PERF_DIAGNOSTICS||!id)return;
+    arcTimingEvents.push({id,stage,time:LJS.time,now:performance.now(),frame:threeJS.renderer.info.render.frame,...details});
+    if(arcTimingEvents.length>256)arcTimingEvents.splice(0,arcTimingEvents.length-256);
+}
+function recordArcImpactRender() {
+    if(this.userData.arcTraceId&&!this.userData.arcRendered){this.userData.arcRendered=true;recordArcTiming(this.userData.arcTraceId,'first-render');}
+}
+function arcBoxEntry(ax,ay,az,bx,by,bz,s,pad) {
+    let enter=0,exit=1;
+    for(let axis=0;axis<3;axis++){
+        const origin=axis===0?ax:axis===1?ay:az,delta=axis===0?bx-ax:axis===1?by-ay:bz-az;
+        const min=axis===0?s.x0-pad:axis===1?s.y0-pad:s.bottomY-pad,max=axis===0?s.x1+pad:axis===1?s.y1+pad:s.topY+pad;
+        if(Math.abs(delta)<1e-9){if(origin<min||origin>max)return -1;continue;}
+        const a=(min-origin)/delta,b=(max-origin)/delta;enter=Math.max(enter,Math.min(a,b));exit=Math.min(exit,Math.max(a,b));
+        if(enter>exit)return -1;
+    }
+    return enter;
+}
+function arcSurfaceContact(ax,ay,az,bx,by,bz) {
+    let best=Infinity,kind=null;
+    solidQueryBounds(Math.min(ax,bx)-.1,Math.min(ay,by)-.1,Math.max(ax,bx)+.1,Math.max(ay,by)+.1,s=>{
+        if(s.disabled)return false;const t=arcBoxEntry(ax,ay,az,bx,by,bz,s,.1);
+        if(t>=0&&t<best){best=t;kind='solid';}return false;
+    });
+    const length=Math.hypot(bx-ax,by-ay,bz-az),limit=Math.min(1,best),n=Math.max(1,Math.ceil(length*limit/.5));let previous=0;
+    for(let i=0;i<=n;i++){
+        const t=i/n*limit;
+        if(lerp(az,bz,t)<=terrainHeight(lerp(ax,bx,t),lerp(ay,by,t))+.12){
+            let lo=previous,hi=t;
+            for(let j=0;j<10;j++){const mid=(lo+hi)/2;if(lerp(az,bz,mid)<=terrainHeight(lerp(ax,bx,mid),lerp(ay,by,mid))+.12)hi=mid;else lo=mid;}
+            if(hi<best){best=hi;kind='terrain';}break;
+        }previous=t;
+    }
+    if(!kind)return null;
+    const x=lerp(ax,bx,best),y=lerp(ay,by,best);
+    return {t:best,x,y,z:kind==='terrain'?terrainHeight(x,y)+.15:lerp(az,bz,best),kind};
+}
+function arcEnemyContact(ax,ay,az,bx,by,bz,ox,oy,oz,range) {
+    const dx=bx-ax,dy=by-ay,dz=bz-az,length2=dx*dx+dy*dy+dz*dz;let found=null,best=Infinity;
+    if(length2<1e-10)return null;
+    for(const e of enemies){
+        if(e.dead||e.dying||e.unburrowing||Math.hypot(e.pos.x-ox,e.pos.y-oy,e.z+.8-oz)>range)continue;
+        let t=clamp(((e.pos.x-ax)*dx+(e.pos.y-ay)*dy+(e.z+.8-az)*dz)/length2,0,1);
+        const radius=e.hitRadius+.4;
+        if(Math.hypot(e.pos.x-lerp(ax,bx,t),e.pos.y-lerp(ay,by,t))+Math.abs(e.z+.8-lerp(az,bz,t))*.6<radius){
+            let lo=0,hi=t;
+            for(let j=0;j<10;j++){const mid=(lo+hi)/2;if(Math.hypot(e.pos.x-lerp(ax,bx,mid),e.pos.y-lerp(ay,by,mid))+Math.abs(e.z+.8-lerp(az,bz,mid))*.6<radius)hi=mid;else lo=mid;}
+            t=hi;if(t<best){best=t;found={t,x:lerp(ax,bx,t),y:lerp(ay,by,t),z:lerp(az,bz,t),kind:'enemy',enemy:e};}
+        }
+    }
+    return found;
+}
+function activateArcContact(s,contact) {
+    recordArcTiming(s.arcTraceId,'collision',{flightSeconds:s.arcAge,kind:contact.kind,position:[s.x,s.y,s.z]});
+    const effect=spawnImpact(s.x,s.y,s.z,s.color,1);
+    if(effect&&PERF_DIAGNOSTICS)effect.mesh.userData.arcTraceId=s.arcTraceId;
+    emitElectricArcs(s.x,s.y,s.z,3,.65,s.color,'contact');
+    recordArcTiming(s.arcTraceId,'impact-active',{position:[s.x,s.y,s.z]});
+    boltImpactSfx(s.x,s.y);
+}
 function arcWeaponMuzzleWorld() {
     const model = viewModel.userData.weaponModels && viewModel.userData.weaponModels.arc;
+    viewModel.updateWorldMatrix(true,true);
+    if(model?.userData.muzzleSocket)return model.userData.muzzleSocket.getWorldPosition(_arcMuzzleWorld);
     const mx = model ? model.userData.muzzleX : -0.087, my = model ? model.userData.muzzleY : -0.099, mz = model ? model.userData.muzzleZ : -0.96;
     return weaponMount.localToWorld(_arcMuzzleWorld.set(mx, my, mz));
 }
@@ -7159,18 +7271,14 @@ function arcWeaponMuzzleWorld() {
 function predictArcEndpoint(ox, oy, oz, dx, dy, dz, range) {
     const step = 1.5;
     let px = ox, py = oy, pz = oz;
-    for (let d = step; d <= range; d += step) {
+    for (let d = step; d <= range+step; d += step) {
+        d=Math.min(d,range);
         const x = ox + dx * d, y = oy + dy * d, z = oz + dz * d;
-        for (const e of enemies) {
-            if (e.dead || e.dying || e.unburrowing) continue;
-            const ez = e.z + 0.8;
-            const t = clamp(((e.pos.x - px) * dx + (e.pos.y - py) * dy + (ez - pz) * dz) / Math.max(step, 0.0001), 0, 1);
-            const hx = px + dx * step * t, hy = py + dy * step * t, hz = pz + dz * step * t;
-            if (Math.hypot(e.pos.x - hx, e.pos.y - hy) + Math.abs(ez - hz) * 0.6 < e.hitRadius + 0.4) return { x: hx, y: hy, z: hz };
-        }
-        if (z < terrainHeight(x, y) + 0.12) return { x, y, z: terrainHeight(x, y) + 0.15 };
-        if (solidBlocksSegment(px, py, pz, x, y, z, 0.1, null)) return { x, y, z };
+        const surface=arcSurfaceContact(px,py,pz,x,y,z),enemy=arcEnemyContact(px,py,pz,x,y,z,ox,oy,oz,range);
+        if(enemy&&(!surface||enemy.t<surface.t))return enemy;
+        if(surface)return surface;
         px = x; py = y; pz = z;
+        if(d===range)break;
     }
     return { x: ox + dx * range, y: oy + dy * range, z: oz + dz * range };
 }
@@ -7179,10 +7287,10 @@ function predictArcEndpoint(ox, oy, oz, dx, dy, dz, range) {
 function emitArcShotPresentation(ox, oy, oz, dx, dy, dz, range, color, muzzle) {
     const sx = muzzle ? muzzle.x : ox, sy = muzzle ? muzzle.y : oy, sz = muzzle ? muzzle.z : oz;
     const end = predictArcEndpoint(ox, oy, oz, dx, dy, dz, range);
-    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color);
-    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color);   // doubled jitter for a thicker primary
+    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color,'primary');
+    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color,'primary');
 }
-function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options, muzzle) {
+function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options, muzzle,fireAt=null) {
     if (shots.length >= 192) return;
     const dir = shotDirection.set(dx, dy, dz).normalize();
     const recycled = shotPool.pop() || createShotEffect(); // only pre-preparation/debug first use
@@ -7206,6 +7314,8 @@ function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options, muzzle) {
     Object.assign(recycled, { x: ox, y: oy, z: oz, px: ox, py: oy, pz: oz, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85,
         ox, oy, oz, range: options?.range || 153, life: (options?.range || 153) / 85, dmg, color, owner,
         style, splash: options?.splash || 0, chains: options?.chains || 0 });
+    recycled.arcAge=0;recycled.arcTraceId=arcStyle&&PERF_DIAGNOSTICS?++arcTraceSequence:0;
+    if(recycled.arcTraceId){recordArcTiming(recycled.arcTraceId,'fire',{now:fireAt??performance.now(),owner});recordArcTiming(recycled.arcTraceId,'created',{origin:[ox,oy,oz]});}
     recycled.chainHits.length = 0;
     bolt.position.set(ox, oy, oz); glow.position.set(ox, oy, oz);
     shots.push(recycled);
@@ -7294,19 +7404,29 @@ function updateShots(dt) {
         const shrink = 0.8 + opacity * 0.2;
         s.glow.scale.setScalar((s.style === 'plasma' ? 2.8 : s.style === 'arc' ? 1.4 : 1) * shrink);
         let dead = false, impact = false;
-        if (travelDt > 0 && s.z < terrainHeight(s.x, s.y) + 0.12) {
+        if(s.style==='arc'&&travelDt>0){
+            s.arcAge+=travelDt;
+            const surface=arcSurfaceContact(s.px,s.py,s.pz,s.x,s.y,s.z),enemy=arcEnemyContact(s.px,s.py,s.pz,s.x,s.y,s.z,s.ox,s.oy,s.oz,s.range);
+            const contact=enemy&&(!surface||enemy.t<surface.t)?enemy:surface;
+            if(contact){
+                s.x=contact.x;s.y=contact.y;s.z=contact.z;
+                if(contact.enemy){contact.enemy.takeDamage(s.dmg);if(s.chains)chainArcShot(s,contact.enemy);if(s.owner==='player'){hitMarkerT=.22;hitMarkerKill=contact.enemy.dead||contact.enemy.dying;}}
+                activateArcContact(s,contact);dead=impact=true;
+            }
+        }
+        if (s.style!=='arc'&&travelDt > 0 && s.z < terrainHeight(s.x, s.y) + 0.12) {
             spawnImpact(s.x, s.y, terrainHeight(s.x, s.y) + 0.15, s.color, 1);
             boltImpactSfx(s.x, s.y);
             dead = impact = true;
         }
         /* height-aware obstacle hit — low cover only blocks when the bolt is inside
            its vertical bounds, so shots pass cleanly over waist-high props */
-        if (!dead && travelDt > 0 && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
+        if (s.style!=='arc'&&!dead && travelDt > 0 && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
             spawnImpact(s.x, s.y, s.z, s.color, 1);
             boltImpactSfx(s.x, s.y);
             dead = impact = true;
         }
-        if (!dead && travelDt > 0) {
+        if (s.style!=='arc'&&!dead && travelDt > 0) {
             let hit = null, bestD = 1e9;
             for (const e of enemies) {
                 if (e.dead || e.dying || e.unburrowing || Math.hypot(e.pos.x - s.ox, e.pos.y - s.oy, e.z + 0.8 - s.oz) > s.range) continue;
@@ -7902,7 +8022,7 @@ function resetCampaignRun() {
     player.sprintExhausted = false; player.sprinting = false; player.sprintFireBlocked = false; player.firePending = false;
     player.speed = 5.2; player.shieldDelayT = 0; player.hpDelayT = 0;
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
-    player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;
+    player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;player.bulwarkT=0;
     playerCombat.reset({ cartridges: snapshot.combat.cartridges }); setViewmodelWeapon(player.weapon);
     player.holsterT = 0; player.grenades = snapshot.combat.grenades;
     const offsets = [[-2, -2], [2, -2], [0, -4]];
@@ -9129,6 +9249,7 @@ function gameUpdate() {
     updateRevives(dt);
     updateRegen(dt);
     player.abilityCd = Math.max(0, (player.abilityCd || 0) - dt);
+    player.bulwarkT=Math.max(0,player.bulwarkT-dt);
     for (const m of squadMembers) {
         m.abilityCd = Math.max(0, (m.abilityCd || 0) - dt);
         m.bulwarkT = Math.max(0, (m.bulwarkT || 0) - dt);
@@ -9676,6 +9797,7 @@ function gameRender() {
         camera.position.fromArray(view.position);
         camera.lookAt(view.target[0], view.target[1], view.target[2]);
         if (camera.fov !== view.fov) { camera.fov = view.fov; camera.updateProjectionMatrix(); }
+        updateArcRibbons();
         return;
     }
     /* debug: freeze a cinematic camera pose for cover-art / playtest shots */
@@ -9684,6 +9806,7 @@ function gameRender() {
         camera.position.set(coverPose[0], coverPose[1], coverPose[2]);
         camera.lookAt(coverPose[3], coverPose[4], coverPose[5]);
     }
+    updateArcRibbons();
 }
 
 function gameRenderPost() {
@@ -10004,7 +10127,8 @@ function drawHUD(W, H) {
     hudBar(sx0 + 148, sy0 + 64, 200, 6, player.shield / player.maxShield, LJS.rgb(0.2, 0.65, 0.9), null, false);
     hudStatusIcon('stamina', sx0 + 20, sy0 + 78);
     hudBar(sx0 + 148, sy0 + 78, 200, 6, player.stamina / 100, LJS.rgb(0.9, 0.85, 0.4), null, false);
-    hudText('[F] SURGE ' + (player.abilityCd > 0 ? player.abilityCd.toFixed(1) + 's' : 'READY'), LJS.vec2(sx0 + 16, sy0 + 96), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
+    const equippedAbility=commanderAbility(),abilityLabel=equippedAbility.id==='surge'?'SURGE':equippedAbility.name.toUpperCase();
+    hudText('[F] '+abilityLabel+' ' + (player.abilityCd > 0 ? player.abilityCd.toFixed(1) + 's' : 'READY'), LJS.vec2(sx0 + 16, sy0 + 96), 10, LJS.rgb(0.6, 0.75, 0.95), 'left');
     for (let i = 0; i < squadMembers.length; i++) {
         const m = squadMembers[i];
         const ry = sy0 + 122 + i * 56;
@@ -10132,7 +10256,7 @@ function persistentPlayerSnapshot() {
         weaponStats[id] = {};
         for (const key of ChargefrontProgression.weaponNumbers) weaponStats[id][key] = playerCombat.weapons[id][key];
     }
-    return { ...ChargefrontProgression.actorSnapshot(player), ability:'surge', weaponStats,
+    return { ...ChargefrontProgression.actorSnapshot(player), ability:commanderAbility().id, weaponStats,
         position:{x:player.pos.x,y:player.pos.y},yaw:player.yaw,combat:playerCombat.snapshot() };
 }
 function persistentSquadSnapshot() {
@@ -10144,7 +10268,7 @@ function restorePersistentActors(snapshot) {
     for (const id of playerCombat.slots) {
         const stats = snapshot.player?.weaponStats?.[id], weapon = playerCombat.weapons[id];
         if (stats) for (const key of ChargefrontProgression.weaponNumbers)
-            if (Number.isFinite(stats[key])) weapon[key] = ChargefrontProgression.bounded(stats[key],weapon[key],key==='magSize'?1000:1e4);
+            if (Number.isFinite(stats[key])&&!(id==='plasma'&&key==='magSize')) weapon[key] = ChargefrontProgression.bounded(stats[key],weapon[key],key==='magSize'?1000:1e4);
         weapon.magSize = Math.max(1,weapon.magSize);
         const mag = snapshot.player?.combat?.weapons?.[id]?.mag;
         if (Number.isFinite(mag)) weapon.mag = Math.floor(clamp(mag,0,weapon.magSize));
@@ -10153,8 +10277,9 @@ function restorePersistentActors(snapshot) {
         const m = squadMembers[i], saved = snapshot.squad?.[i];
         if (!saved) continue;
         ChargefrontProgression.restoreActor(m,saved);
+        if(mode==='endless'&&m.def.weapon==='plasma'){m.magSize=ChargefrontCombat.definitions.find(w=>w.id==='plasma').magSize;m.mag=Math.floor(clamp(saved.mag??m.mag,0,m.magSize));}
         const ability = ChargefrontCombat.abilities.find(a=>a.id===saved.ability);
-        if (ability) m.def = Object.freeze({...m.def,ability});
+        if (mode==='campaign'&&ability&&ability.id!=='surge') m.def = Object.freeze({...m.def,ability});
         m.mesh.rotation.x = m.downed ? 1.35 : 0;
     }
 }
@@ -10827,7 +10952,7 @@ function drawMinimap(W, H) {
         for (let i = 0; i < route.length - 1; i++) {
             const a = toMini(route[i].x, route[i].y), b = toMini(route[i + 1].x, route[i + 1].y);
             const s = clipSeg(a.x, a.y, b.x, b.y, mx, my, mx + size, my + size);
-            if (s) LJS.drawLine(LJS.vec2(s[0], s[1]), LJS.vec2(s[2], s[3]), 3, pathCol, LJS.vec2(), 0, false, true);
+            if (s) LJS.drawLine(LJS.vec2(s[0], s[1]), LJS.vec2(s[2], s[3]), 5, pathCol, LJS.vec2(), 0, false, true);
         }
         const facilityCol = LJS.rgb(0.42, 0.72, 0.9, 0.46);
         for (const segment of CANONICAL_FACILITY_MAP_SEGMENTS) {
@@ -10970,7 +11095,7 @@ function reloadToMainMenu(openMissionSelect = false) {
 /* start / pause overlays are appended after the canvas so they paint on top */
 function buildOverlays() {
     const weaponOptions = selected => ChargefrontCombat.definitions.map(w => `<option value="${w.id}" ${w.id === selected ? 'selected' : ''}>${w.name} — ${w.kind === 'scatter' ? 'close / mid pressure' : w.kind === 'arc' ? 'chain disruption' : w.kind === 'plasma' ? 'explosive plasma' : 'sustained precision'}</option>`).join('');
-    const abilityOptions = selected => ChargefrontCombat.abilities.map(a => `<option value="${a.id}" ${a.id === selected ? 'selected' : ''}>${a.name}</option>`).join('');
+    const abilityOptions = selected => ChargefrontCombat.abilities.map(a => `<option value="${a.id}" ${a.id === selected ? 'selected' : ''}>${a.name.toUpperCase()}</option>`).join('');
     const squadSetup = Object.entries(endlessConfiguration.squad).map(([id, s]) => `<section class="cf-loadout-group"><h3>${id.toUpperCase()}</h3>
         <div class="row"><label for="endless-${id}-weapon">Weapon</label><select id="endless-${id}-weapon">${weaponOptions(s.weapon)}</select></div>
         <div class="row"><label for="endless-${id}-ability">Ability</label><select id="endless-${id}-ability">${abilityOptions(s.ability)}</select></div></section>`).join('');
@@ -11037,13 +11162,13 @@ function buildOverlays() {
                 <section class="cf-loadout-group"><h3>PLAYER LOADOUT</h3>
                     <div class="row"><label for="endless-slot1">Weapon Slot 1</label><select id="endless-slot1">${weaponOptions('rifle')}</select></div>
                     <div class="row"><label for="endless-slot2">Weapon Slot 2</label><select id="endless-slot2">${weaponOptions('scatter')}</select></div>
-                    <div class="row"><label for="endless-player-ability">Ability</label><select id="endless-player-ability"><option value="surge">SURGE PULSE</option></select></div>
+                    <div class="row"><label for="endless-player-ability">Ability</label><select id="endless-player-ability">${abilityOptions(endlessConfiguration.player.ability)}</select></div>
                 </section>
                 ${squadSetup}
             </div>
             <h3 style="font-size:13px;color:#9adcff;margin:12px 0 4px">SQUAD</h3>
             <div class="row"><label for="endless-squad-posture">Squad posture</label><select id="endless-squad-posture"><option value="balanced">BALANCED</option><option value="escort">CLOSE ESCORT</option><option value="screen">WIDE SCREEN</option></select></div>
-            <p>Balanced: standard formation · Close escort: tight leash · Wide screen: spaced support.<br>1 / 2 equip slots · Q cycles · F Commander Surge · Z / X / Y operator abilities.</p>
+            <p>Balanced: standard formation · Close escort: tight leash · Wide screen: spaced support.<br>1 / 2 equip slots · Q cycles · F Commander ability · Z / X / Y operator abilities.</p>
             <div class="cf-deployment-footer">
                 <button class="cf-menu-btn" id="btn-endless-ready">CONFIRM SETUP</button>
                 <button class="cf-menu-btn back" id="btn-endless-back">BACK TO MAIN MENU</button>
@@ -11099,7 +11224,7 @@ function buildOverlays() {
                     <div><span class="key">1 / 2</span> Directly equip weapon slots 1 or 2</div>
                     <div><span class="key">Q</span> Cycle between equipped weapons</div>
                     <div><span class="key">H</span> Use MEDKIT <span class="sub">(+60 HP, up to 3 stored)</span></div>
-                    <div><span class="key">F</span> SURGE PULSE — restore nearby shields and disrupt hostiles</div>
+                    <div><span class="key">F</span> Commander ability — SURGE PULSE in Campaign; selected ability in Endless</div>
                     <div><span class="key">M</span> Cycle sound mode — music / highlights / all sounds</div>
                     <h3>SQUAD</h3>
                     <div><span class="key">4 / 5 / 6</span> Squad command — ASSIST / SPREAD / HOLD</div>
@@ -11828,9 +11953,17 @@ window.__cf = {
         return { visible: model.visible, reloadEnergy: model.userData.reloadEnergy,
             magazineBoltOpacity: model.userData.magazineBolt ? +model.userData.magazineBolt.material.opacity.toFixed(3) : null,
             magazineWindowOpacity: model.userData.magazineWindow ? +model.userData.magazineWindow.material.opacity.toFixed(3) : null,
+            magazineTransparent:model.userData.magazineWindow.material.transparent,magazineColor:model.userData.magazineWindow.material.color.getHex(),magazineScale:model.userData.reloadPart.scale.toArray(),
             channelOpacity: (model.userData.channelBolts || []).map(b => +b.material.opacity.toFixed(3)) };
     },
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
+    arcVfxInfo() {return electricArcs.map(a=>({kind:a.kind,points:Array.from(a.ribbon.points),vertices:a.line.geometry.drawRange.count,vertexVersion:a.line.geometry.attributes.position.version,frustumCulled:a.line.frustumCulled,depthTest:a.line.material.depthTest,life:a.life,geometry:a.line.geometry.uuid,material:a.line.material.uuid}));},
+    arcTimingInfo(reset=false) {const events=arcTimingEvents.map(e=>({...e}));if(reset)arcTimingEvents.length=0;return events;},
+    advanceElectricalFx(seconds) {updateElectricArcs(seconds);updateImpacts(seconds);updateSparks(seconds);},
+    waitCombatPreparation() {return combatEffectsPreparation;},
+    emitArcForTest(from,to) {emitLightningArc(...from,...to,0x88eeff,'primary');},
+    arcEndpointForTest(origin,direction,range=72) {const hit=predictArcEndpoint(...origin,...direction,range);return {x:hit.x,y:hit.y,z:hit.z,kind:hit.kind||'range'};},
+    arcMuzzleForTest() {return arcWeaponMuzzleWorld().toArray();},
     restartEndless() { if (mode === 'endless') restartEndlessRun(); },
     get weaponDefinitions() { return PLAYER_WEAPONS; },
     get endlessConfiguration() { return endlessConfiguration; },
@@ -11867,6 +12000,9 @@ window.__cf = {
     evaluateSquadTactics(seconds = 1) { for (const member of squadMembers) { member.targetT = 0; member.acquireTarget(); member.tacticalT = 0; member.updateTacticalMode(Math.max(0, seconds)); } return this.squadInfo(); },
     commandSquad(command) { if (!['assist', 'spread', 'hold'].includes(command)) return false; squadCommand = command; if (command === 'hold') for (const member of squadMembers) { member.holdPos.x = member.pos.x; member.holdPos.y = member.pos.y; } return true; },
     useSquadAbility(slot) { return activateSquadAbility(slot, 'manual'); },
+    useCommanderAbility() {return playerPulse();},
+    operatorAbilityInfo() {return [player,...squadMembers].map((a,i)=>({name:i?a.def.name:'COMMANDER',ability:i?a.def.ability.id:commanderAbility().id,cooldown:a.abilityCd,bulwark:a.bulwarkT,lastSource:a.lastAbilitySource,lastTime:a.lastAbilityTime}));},
+    suppressAbilityAutonomy(seconds=30) {squadAbilityCoordination.suppressionT=Math.max(0,seconds);},
     spawnTestEnemy(type = 'skitter', xOffset = 8, yOffset = 0) { const enemy = new Infested(ENEMY_STATS[type] ? type : 'skitter', player.pos.copy().add(LJS.vec2(xOffset, yOffset)), player); recordEncounterSpawn(enemy, 'debug'); enemy.aggroT = 10; enemy.setSpawnScale(1); enemy.unburrowing = false; enemy.mesh.scale.setScalar(enemy.finalScale); return enemy; },
     clearTestEnemies() { for (let i = enemies.length - 1; i >= 0; i--) { enemies[i].dead = true; enemies[i].destroy(); } for (const member of squadMembers) member.target = null; encounterDirector.tacticalT = 0; updateEncounterDirector(0); return enemies.length; },
     get craft() { return craft; },
@@ -12049,7 +12185,7 @@ window.__cf = {
     },
     /* cover-art / screenshot staging hooks */
     get renderer() { return threeJS && threeJS.renderer; },
-    render() { if (threeJS && threeJS.renderer) threeJS.renderer.render(scene, camera); },
+    render() { if (threeJS && threeJS.renderer) {updateArcRibbons();threeJS.renderer.render(scene, camera);} },
     pause(on) { LJS.setPaused(!!on); },
     setCoverPose(p) { coverPose = p ? [p[0], p[1], p[2], p[3], p[4], p[5]] : null; },
     hideViewmodel(on) { viewModel.visible = !on; },

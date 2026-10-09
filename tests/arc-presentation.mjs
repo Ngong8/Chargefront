@@ -24,7 +24,7 @@ try{
  const mag=[],chanReady=[];
  for(let i=0;i<5;i++){const a=await info();mag.push(a.magazineBoltOpacity);chanReady.push(a.channelOpacity[0]);await page.waitForTimeout(90);}
  assert(new Set(mag).size===1&&mag[0]===1,'Magazine glow must stay static');assert(Math.max(...chanReady)-Math.min(...chanReady)>0.15,'Ready channel must pulse');
- assert.equal((await info()).magazineWindowOpacity,0.72);results.magazine={bolt:mag[0],window:0.72};results.channelReady={min:Math.min(...chanReady),max:Math.max(...chanReady)};
+ assert.equal((await info()).magazineWindowOpacity,1);assert.equal((await info()).magazineTransparent,false);results.magazine={bolt:mag[0],window:1};results.channelReady={min:Math.min(...chanReady),max:Math.max(...chanReady)};
  // 2) Firing produces a muzzle lightning arc and hides the logical projectile.
  const fired=await page.evaluate(()=>{
   __cf.combat.weapons.arc.mag=20;const before=__cf.effectInfo().arcs;__cf.fire();

@@ -1,5 +1,6 @@
 // Hold real sprint input through repeated exhaustion/recovery; observe resolved state.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import { mkdirSync,writeFileSync } from 'node:fs';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -10,7 +11,7 @@ const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[];p
 const results={};
 try{
  await page.goto(pathToFileURL(resolve('chargefront.html')).href);await page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
- await page.locator('#btn-start').click();await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
+ await campaignClick(page);await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
  await page.evaluate(()=>{
   __cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.clearTestEnemies();__cf.setInvulnerable(true);
   window.__sprintEvents=[];window.__sprintFrames=[];const p=__cf.player;let value=p.sprinting;

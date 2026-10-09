@@ -1,6 +1,7 @@
 // M4.1 corrective acceptance: real inputs/Fullscreen API, shared menus and
 // deterministic simulation probes for fuse cancellation, hit timing and poses.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -112,7 +113,7 @@ try {
     assert(await page.evaluate(()=>document.fonts.check('12px "Glitch Slap"')));
     await guideChecks('#btn-guide','main-guide');
     await fullscreenChecks('#btn-options','main-options');
-    await page.locator('#btn-start').click(); await page.locator('#btn-sound-start').click();
+    await campaignClick(page); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000}); await page.keyboard.press('Space');
     await page.waitForFunction(()=>__cf.phaseName==='M1_MOVE_FAC');
     await page.evaluate(()=>{const c=__cf;c.setNoSpawn(true);c.setNoAggro(true);c.clearTestEnemies();c.setInvulnerable(true);});

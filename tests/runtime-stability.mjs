@@ -1,6 +1,7 @@
 // Real media lifecycle + fixed-tick movement probes. --observe records the
 // unmodified baseline without enforcing the new 3.9 invariants.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -42,7 +43,7 @@ const quiet = () => page.evaluate(() => { const c = __cf; c.setNoSpawn(true); c.
 try {
     await load();
     // Use a genuine gesture to enable media playback before starting the intro.
-    await page.locator('#btn-start').click();
+    await campaignClick(page);
     await page.locator('[data-sound-mode="full"]').click();
     await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => __cf.intro && !__cf.intro.prewarmPending, undefined, { timeout: 120000 });

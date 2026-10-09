@@ -1,6 +1,7 @@
 // Real browser integration: UI deployment, fixed-tick input, checkpoints,
 // differentiated live squad behavior, occlusion, bounded effects, restart.
 import assert from 'node:assert/strict';
+import {campaignClick,endlessDeployment} from './menu-helpers.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -30,7 +31,7 @@ const capture = label => page.screenshot({ path: resolve(out, `${label}-${name}.
 const select = async index => { await page.keyboard.press(String(index + 1)); await page.waitForFunction(i => __cf.player.weaponIndex === i && __cf.player.swapT === 0, index); };
 try {
     await page.goto(url.href); await ready();
-    await page.locator('#btn-start').click(); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();
+    await campaignClick(page); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => !!__cf.intro, undefined, { timeout: 120000 });
     await page.waitForFunction(() => !__cf.intro.prewarmPending, undefined, { timeout: 120000 });
     await page.keyboard.press('Space'); await quiet();
@@ -152,17 +153,17 @@ try {
 
     // UI setup retains edited controls on Back; native selects support keyboard.
     await page.goto(url.href); await ready();
-    await page.locator('#btn-endless').click(); await page.locator('#endless-starting-slot').selectOption('2');
+    await endlessDeployment(page); await page.locator('#endless-player-ability').selectOption('surge');
     await page.locator('#endless-squad-posture').focus(); await page.keyboard.press('Home'); await page.keyboard.press('ArrowDown');
-    await page.locator('#btn-endless-back').click(); await page.locator('#btn-endless').click();
-    assert.equal(await page.locator('#endless-starting-slot').inputValue(), '2');
+    await page.locator('#btn-endless-back').click(); await endlessDeployment(page);
+    assert.equal(await page.locator('#endless-player-ability').inputValue(), 'surge');
     assert.equal(await page.locator('#endless-squad-posture').inputValue(), 'escort'); await capture('05-endless-setup');
     await page.locator('#btn-endless-ready').click(); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => __cf.mode === 'endless', undefined, { timeout: 120000 });
     await page.mouse.click(640,360); await quiet(); await page.waitForTimeout(500);
     results.deployment = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), squad: __cf.squadInfo() }));
-    assert.deepEqual(results.deployment.config.player, { slot1: 'rifle', slot2: 'scatter', startingSlot: 2 }); assert.equal(results.deployment.config.posture, 'escort');
-    assert.equal(results.deployment.combat.activeId, 'scatter'); assert.equal(results.deployment.squad.length, 3); await capture('06-endless-deployed');
+    assert.deepEqual(results.deployment.config.player, { slot1: 'rifle', slot2: 'scatter', ability:'surge' }); assert.equal(results.deployment.config.posture, 'escort');
+    assert.equal(results.deployment.combat.activeId, 'rifle'); assert.equal(results.deployment.squad.length, 3); await capture('06-endless-deployed');
     await page.evaluate(() => { __cf.setNoSpawn(false); __cf.setNoAggro(false); __cf.startWave(); });
     await page.mouse.down(); await page.keyboard.down('w'); await page.waitForTimeout(3000); await page.keyboard.up('w');
     await select(0); await page.waitForTimeout(1800); await page.mouse.up(); await capture('07-endless-combat');
@@ -185,7 +186,7 @@ try {
     });
     await page.waitForFunction(() => __cf.phaseName === 'DEAD'); await page.waitForTimeout(2200);
     await page.keyboard.press('Space');
-    await page.waitForFunction(() => __cf.endless.wave === 0 && __cf.player.weapon.id === 'scatter' && __cf.player.hp === 100);
+    await page.waitForFunction(() => __cf.endless.wave === 0 && __cf.player.weapon.id === 'rifle' && __cf.player.hp === 100);
     results.restart = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), ammoSize: __cf.combat.weapons.rifle.magSize, save: localStorage.cf_campaign_v1 }));
     assert.equal(results.restart.save, saveBefore); assert.deepEqual(results.restart.config, results.deployment.config);
     assert.deepEqual(results.restart.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.restart.combat.cartridges, 8);
@@ -197,7 +198,7 @@ try {
             squad: __cf.squadInfo().map(m => m.formation), posture: __cf.command };
     });
     assert.equal(results.campaignIsolation.mode, 'campaign'); assert.equal(results.campaignIsolation.combat.activeId, 'rifle');
-    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.campaignIsolation.combat.cartridges, 8);
+    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.campaignIsolation.combat.cartridges, 5);
     assert.equal(results.campaignIsolation.damage, 1); assert.equal(results.campaignIsolation.magSize, 50); assert.equal(results.campaignIsolation.posture, 'assist');
     assert.equal(results.campaignIsolation.speed, 5.2);
     assert.deepEqual(errors, []);

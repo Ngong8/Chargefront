@@ -3,6 +3,7 @@
 // firing, switching, reload, movement, resupply, setup and restart use real input.
 // This is reproducible browser playtest evidence, not a human feel certification.
 import assert from 'node:assert/strict';
+import {campaignClick,endlessDeployment} from './menu-helpers.mjs';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -35,7 +36,7 @@ const setup = async (x, y, yaw, contacts = 3) => {
 };
 try {
     await page.goto(url.href); await ready();
-    await page.locator('#btn-start').click(); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();
+    await campaignClick(page); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => __cf.intro && !__cf.intro.prewarmPending, undefined, { timeout: 120000 }); await page.keyboard.press('Space');
     await setup(360,604,Math.PI/2);
     await page.mouse.down(); await page.waitForTimeout(700); await page.mouse.up(); await capture('01-weapon1-campaign');
@@ -81,7 +82,7 @@ try {
     await page.waitForTimeout(1500); assert.deepEqual(await page.evaluate(() => __cf.combat.snapshot()),cacheAfter); results.emergencyCache = { cacheBefore,cacheAfter };
     // Real Continue menu after checkpoint/reload, including active weapon 2.
     await select(1); await page.evaluate(() => __cf.checkpoint()); const saved = await page.evaluate(() => __cf.combat.snapshot());
-    await page.reload(); await ready(); await page.locator('#btn-continue-campaign').click(); await page.locator('#btn-sound-start').click();
+    await page.reload(); await ready(); await campaignClick(page,'btn-continue-campaign'); await page.locator('#btn-sound-start').click();
     await page.waitForFunction(() => __cf.mode==='campaign' && __cf.missionId==='break_contact' && document.getElementById('start-screen').classList.contains('hidden'), undefined, { timeout: 120000 });
     await page.waitForFunction(() => __cf.player.weapon.id==='scatter'); await quiet();
     assert.deepEqual(await page.evaluate(() => __cf.combat.snapshot()), saved); results.continue = saved;
@@ -119,8 +120,8 @@ try {
     assert.equal(await page.evaluate(() => __cf.squad.filter(m=>m.target && m.mag<m.magSize).length),3,'Squad evidence must show three live shooters');
 
     // Endless real UI, wide screen configuration, pressure and restart.
-    await page.goto(url.href); await ready(); await page.locator('#btn-endless').click();
-    await page.locator('#endless-starting-slot').selectOption('2'); await page.locator('#endless-squad-posture').selectOption('screen'); await capture('05-endless-setup');
+    await page.goto(url.href); await ready(); await endlessDeployment(page);
+    await page.locator('#endless-player-ability').selectOption('surge'); await page.locator('#endless-squad-posture').selectOption('screen'); await capture('05-endless-setup');
     await page.locator('#btn-endless-ready').click(); await page.locator('#btn-sound-start').click(); await page.waitForFunction(() => __cf.mode==='endless',undefined,{timeout:120000});
     await page.mouse.click(640,360); await quiet(); await page.waitForTimeout(500);
     await page.evaluate(() => { __cf.player.yaw=Math.PI; __cf.player.pitch=-.04; }); await page.waitForTimeout(100); await capture('06-endless-selected-deployment');
@@ -140,7 +141,7 @@ try {
         for(const m of c.squad) { m.pos.x=m.holdPos.x=600; m.pos.y=m.holdPos.y=600; } const e=c.spawnTestEnemy('runner',1,0); e.hp=100000; e.attackT=0; c.damagePlayer(200); });
     await page.waitForFunction(() => __cf.phaseName==='DEAD'); await page.waitForTimeout(2200); await page.keyboard.press('Space'); await page.waitForFunction(() => __cf.phaseName==='ENDLESS');
     results.restart = await page.evaluate(() => ({ config:__cf.endlessConfiguration, combat:__cf.combat.snapshot(), wave:__cf.endless.wave, squad:__cf.squad.length }));
-    assert.equal(results.restart.combat.activeId,'scatter'); assert.equal(results.restart.config.posture,'screen'); assert.equal(results.restart.wave,0); assert.equal(results.restart.squad,3);
+    assert.equal(results.restart.combat.activeId,'rifle'); assert.equal(results.restart.config.posture,'screen'); assert.equal(results.restart.wave,0); assert.equal(results.restart.squad,3);
     assert.deepEqual(errors,[]); assert.deepEqual(consoles.filter(s=>!/XMLHttpRequest|CORS|Access-Control|net::ERR_FAILED|Cross-Origin Request Blocked/.test(s)),[]);
     results.passed = true;
     console.log('PASS guided browser gameplay/evidence',name,JSON.stringify({ isolatedCombat:results.isolatedCombat, checkpoints:true, chapters:results.chapters.map(r=>r.mission), restart:results.restart }));

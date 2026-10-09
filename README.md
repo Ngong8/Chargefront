@@ -29,7 +29,19 @@ Four independently replayable operations share one hostile frontier while using 
 3. **Sample Zero** — breach the reopened laboratory, bypass corrupted containment security, retrieve the DNA sample, and protect its portable containment sync. An optional security-turret restoration provides automated support and local hostile intel.
 4. **Break Contact** — continue seamlessly from Sample Zero or deploy from Mission Select with the sample already secured, escape through the east maintenance breach, request extraction, hold the restoration LZ for two minutes, and board the transport.
 
-Use **Select Mission** to replay any unlocked mission directly. Campaign uses an authored BUL-117 + CRW-8 loadout with ROOK, VEX and KADE. **Endless Horde** has pre-deployment starting-weapon and squad-posture choices, randomized arenas, mutator contracts, existing DNA progression, and six-wave extraction milestones. Both weapons deploy; restart retains your setup with fresh ammunition.
+Open **CAMPAIGN** for **Start New Game**, **Select Mission**, or **Continue Last Checkpoint**. Mission Select starts a fresh, fully healthy/shielded squad with the selected mission's supplies. Campaign uses an authored BUL-117 + CRW-8 loadout with ROOK, VEX and KADE. **Endless Horde** offers Continue/New when a saved run exists, otherwise opens deployment directly. Choose two weapons, operator abilities and squad posture; Commander uses Surge Pulse. Both guns deploy, initially in Slot 1. Restart retains your setup and arena with fresh resources.
+
+Endless saves at wave starts and completed-wave intermissions. Leaving during a
+wave resumes that wave's saved start, including its resources and chosen mutator;
+completed rewards are not replayed. Browser reload preserves valid progress where
+storage is available. Game Over clears only the Endless resume record.
+
+Ordinary objective waypoints show **direction and distance**, not a guaranteed
+walkable straight line. Mission 1 **Sensors** unlocks a cyan authored route out of
+the Hall to Relay Alpha in Mission 2. Choosing the **Supply Locker** instead releases
+3 reserve cartridges and 2 electric grenades as ground items: hold E to collect,
+with full/partial inventory handled safely. Completing Mission 2's Survey Drone
+retains tactical contact indicators and unlocks a cyan bypass route to Relay Gamma.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
 
@@ -77,6 +89,12 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 
 > Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each equipped weapon keeps its own magazine; both share one universal cartridge pool. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. BUL-117 holds 50 rounds / 153 m reach; CRW-8 holds 20 eight-pellet bursts / 60 m reach.
 
+Fresh Campaign player reserves are **6 / 5 / 4 / 3** cartridges in Missions 1–4;
+each operator starts with **3 / 2 / 2 / 2**. Magazines remain full. Continue keeps
+earned ammunition. Stronger hostiles offer better scrap bundles; ordinary enemy
+deaths do not spawn reserve-cartridge objects. Endless still starts with 8 player
+cartridges and 4 per squadmate.
+
 Sprint interrupts held fire. Clicking fire while sprinting returns to weapon-ready
 movement and retains that shot until the weapon is eligible; release Shift before
 sprinting again. **Options** in the main/pause menus includes Fullscreen. Controls
@@ -120,7 +138,7 @@ Squadmates fight alongside you, obey your formation commands, and carry their ow
 | **Rendering** | [Three.js](https://github.com/mrdoob/three.js) (MIT) — full 3D world via the LittleJS Three.js plugin |
 | **Distribution** | `chargefront.html` and its local facility script; terrain artwork is inlined |
 
-The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. See `MILESTONE-4.1-ENDLESS-HUD.md` for architecture, checkpoint migration, evidence and validation, and `MILESTONE-4.1-CORRECTIVE-REFINEMENT.md` for the sprint/Runner/animation/HUD/menu corrections.
+The campaign, AI, squad behavior, crafting, cutscene and audio integration remain in `chargefront.html`. Facility geometry/navigation live in `src/world/facility.js`; canonical weapon definitions, two-slot action/shared-ammo ownership and sanitized Endless configuration live in `src/combat.js`. `src/progression.js` provides pure save validation/backup, durable-state helpers, seeded scenery and centralized reserve/scrap balance. See `MILESTONE-4.1-ENDLESS-HUD.md` for the original architecture, `MILESTONE-4.1-CORRECTIVE-REFINEMENT.md` for combat/animation/HUD corrections, and `MILESTONE-4.1-ADDITIONAL-REFINEMENT.md` for current menus, persistence, mission rewards, navigation and validation.
 
 ---
 
@@ -131,6 +149,7 @@ Chargefront/
 ├── chargefront.html       ← game entry point (open this to play)
 ├── src/world/facility.js  ← persistent facility sections, shell, door state and navigation data
 ├── src/combat.js          ← canonical two-weapon state and safe checkpoint migration
+├── src/progression.js     ← safe persistence helpers and centralized reserve/drop balance
 ├── tests/facility-regression.mjs ← browser regression/traversal checks (optional Playwright)
 ├── convert_wav_16bit.js   ← dev tool: converts 24-bit SFX to 16-bit in place
 ├── Images/                ← textures used by the game

@@ -1,5 +1,6 @@
 // Screecher wing attachment/pivot/flap audit with close gameplay captures.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -13,7 +14,7 @@ const capture=async(label,cam)=>{if(ff)return;await page.locator('#cf-perf-diagn
  if(cam)await page.evaluate(c=>__cf.setCoverPose(c),cam);await page.screenshot({path:resolve(out,label+'.png')});await page.evaluate(()=>__cf.setCoverPose(null));};
 try{
  await page.goto(url.href);await page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
- await page.locator('#btn-start').click();await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
+ await campaignClick(page);await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
  await page.evaluate(()=>{
   const c=__cf;c.setNoSpawn(true);c.setNoAggro(false);c.clearTestEnemies();c.setInvulnerable(true);
   c.player.yaw=0;c.player.pitch=0;

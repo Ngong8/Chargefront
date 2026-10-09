@@ -27,7 +27,7 @@
             squad[id] = Object.freeze({ weapon: definition(s.weapon) ? s.weapon : defaults[id].weapon,
                 ability: abilities.some(a => a.id === s.ability) ? s.ability : defaults[id].ability });
         }
-        return Object.freeze({ player: Object.freeze({ slot1, slot2, startingSlot: p.startingSlot === 2 ? 2 : 1 }),
+        return Object.freeze({ player: Object.freeze({ slot1, slot2, ability: 'surge' }),
             squad: Object.freeze(squad), posture: ['balanced', 'escort', 'screen'].includes(input.posture) ? input.posture : 'balanced' });
     }
     function squadLoadout(base, selection) {
@@ -56,7 +56,7 @@
                 this.weapons = {};
                 for (const id of this.slots) { const def = definition(id); this.weapons[id] = Object.assign({}, def, { mag: def.magSize, reloading: false, reloadT: 0, reloadDuration: def.reloadTime, dmgMult: 1, rateMult: 1 }); }
                 this.cartridges = finiteInt(cartridges, 8, 12);
-                this.activeId = this.slots[p ? p.startingSlot - 1 : 0];
+                this.activeId = this.slots[0];
                 this.switchT = this.fireT = this.shotsFired = 0;
             },
             cancelActions() {

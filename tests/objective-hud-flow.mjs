@@ -1,5 +1,6 @@
 // Guided UI/browser flow: fixed slots, objective retirement, optional discovery, real E interactions.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -16,7 +17,7 @@ const discovered=()=>page.evaluate(()=>__cf.discoveredInfo());
 const near=async(pos)=>page.evaluate(({x,y})=>{const c=__cf;c.player.pos.x=x;c.player.pos.y=y;c.player.zPos=c.terrainHeight(x,y);for(const m of c.squad){m.pos.x=x+1;m.pos.y=y;m.z=c.terrainHeight(x+1,y);}c.advanceObjectiveHUD(0);},pos);
 try{
  await page.goto(url.href);await page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
- await page.locator('#btn-start').click();await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
+ await campaignClick(page);await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
  await page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.clearTestEnemies();__cf.setInvulnerable(true);document.getElementById('cf-perf-diagnostics').style.display='none';});
  await page.waitForFunction(()=>__cf.phaseName==='M1_MOVE_FAC');await page.waitForTimeout(4200);
  await page.evaluate(()=>{__cf.combat.weapons.rifle.mag=42;__cf.combat.weapons.scatter.mag=20;});

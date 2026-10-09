@@ -1,6 +1,7 @@
 // Commit-1 UI checks: compass-adjacent status, right-aligned objectives,
 // optional-marker proximity hysteresis, Commander ability line.
 import assert from 'node:assert/strict';
+import {campaignClick} from './menu-helpers.mjs';
 import {mkdirSync,writeFileSync} from 'node:fs';
 import {resolve} from 'node:path';
 import {pathToFileURL} from 'node:url';
@@ -15,7 +16,7 @@ const capture=async label=>{if(!ff){await page.locator('#cf-perf-diagnostics').e
 const W=1280;
 try{
  await page.goto(url.href);await page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
- await page.locator('#btn-start').click();await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
+ await campaignClick(page);await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');
  await page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.clearTestEnemies();__cf.setInvulnerable(true);});
  await page.waitForFunction(()=>__cf.phaseName==='M1_MOVE_FAC');await page.waitForTimeout(4300);
  // 1) Compass-adjacent status strip.

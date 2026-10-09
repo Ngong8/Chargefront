@@ -97,6 +97,11 @@
         #start-screen .cf-title, #start-screen #menu-buttons { margin-left:20px; }
     }
     .cf-panel-box select { background:#1a0e2e; color:#e6d0ff; border:1px solid rgba(160,100,255,.45); border-radius:6px; padding:6px 10px; font-size:14px; width:220px; }
+    .cf-submenu { text-align:center;box-sizing:border-box; }
+    .cf-submenu .cf-menu { margin:0 auto; }
+    .cf-menu-btn:disabled { opacity:.45;cursor:not-allowed;transform:none;box-shadow:none; }
+    #save-status { color:#9adcff;font-size:12px;line-height:1.5;max-width:460px;margin:12px auto; }
+    #endless-save-status:empty { display:none; }
     .cf-overlay button, .cf-overlay input, .cf-overlay select, .cf-guide .key { font-family:'Glitch Slap'; }
     #start-screen.panel-open { padding:32px 16px; overflow:hidden; }
     #start-screen.panel-open .cf-credit { display:none; }
@@ -109,6 +114,10 @@
     #options-panel { overflow-y:auto; width:min(620px, 100%); }
     #opt-fullscreen { min-width:0; width:220px; height:36px; font-size:13px; letter-spacing:.08em; padding:0 8px; }
     #fullscreen-status { font-size:12px; line-height:1.5; color:#9adcff; min-height:18px; }
+    #cf-intro-loading { position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:#0d0514;font:22px 'Glitch Slap';letter-spacing:.2em; }
+    #cf-intro-loading span { color:#aa82ca;animation:cf-preparing-glow 2.8s ease-in-out infinite; }
+    @keyframes cf-preparing-glow { 0%,100% { color:#aa82ca;text-shadow:0 0 2px #8c52b533; } 50% { color:#d6a6ff;text-shadow:0 0 5px #a675d966; } }
+    @media (prefers-reduced-motion:reduce) { #cf-intro-loading span { animation:none;color:#c294e8; } }
     @media (max-height:600px) {
         #start-screen.panel-open { padding:16px; }
         #guide-panel, #options-panel { max-height:calc(100dvh - 32px); padding:16px 22px; }
@@ -124,6 +133,16 @@
     #endless-setup-panel select { width:210px; max-width:65%; font-size:12px; }
     .cf-deployment-footer { display:flex; gap:14px; margin-top:12px; }
     .cf-deployment-footer .cf-menu-btn { flex:1; min-width:0; width:auto; margin:0; padding:0 8px; font-size:16px; }
+    @media (max-height:650px) {
+        #endless-setup-panel { padding:12px 18px; }
+        #endless-setup-panel h2 { margin-bottom:8px; }
+        #endless-setup-panel p { margin:6px 0 8px; }
+        #endless-setup-panel .row { margin:4px 0; }
+        #endless-setup-panel .cf-loadout-group { padding:7px 12px; }
+        #endless-setup-panel .cf-loadout-group h3 { margin-bottom:4px; }
+        #endless-setup-panel .cf-loadout-grid { gap:8px; }
+        #endless-setup-panel .cf-deployment-footer { margin-top:8px; }
+    }
     select:focus-visible, .cf-menu-btn:focus-visible { outline:2px solid #9adcff; outline-offset:3px; }
     @media (max-width:650px) { .cf-loadout-grid { grid-template-columns:1fr; } .cf-deployment-footer .cf-menu-btn { font-size:12px; letter-spacing:.05em; } }
     .cf-sound-panel { max-width:700px; text-align:center; }
@@ -173,6 +192,7 @@
 <!-- Classic script keeps local file:// play working; facility geometry is built on campaign startup. -->
 <script src="src/world/facility.js"></script>
 <script src="src/combat.js"></script>
+<script src="src/progression.js"></script>
 <script src="src/hud-objectives.js"></script>
 <script type="module">
 import * as THREE from 'three';
@@ -208,6 +228,7 @@ const FACILITY_CAPTURE_M2 = FACILITY_CAPTURE && QUERY.get('facilityMission2') ==
 const FACILITY_CAPTURE_OBJECTIVE = FACILITY_CAPTURE_M2 && QUERY.get('facilityObjective') === '1';
 let mode = 'campaign';                                  // 'campaign' | 'endless'
 const ROOT = document.getElementById('cf-root');
+const browserStorage = {getItem:key=>localStorage.getItem(key),setItem:(key,value)=>localStorage.setItem(key,value),removeItem:key=>localStorage.removeItem(key)};
 
 /* ─── options (persisted) ──────────────────────────────────────────────── */
 const opts = Object.assign({ musicVol: 0.7, sfxVol: 0.55, soundMode: 'full', sens: 1, invertY: false, fov: 75, crossColor: 0, crossSize: 1 }, (() => { try { return JSON.parse(localStorage['cf_opts'] || '{}'); } catch (e) { return {}; } })());
@@ -275,12 +296,15 @@ const CAMPAIGN_RUN_ORIGIN = Object.freeze({
 function defaultCampaignProfile() {
     const missions = {};
     for (const mission of CAMPAIGN_MISSIONS) missions[mission.id] = { unlocked: !!mission.unlockedByDefault, completed: false, checkpoint: mission.checkpoint, bestOptional: 0 };
-    return { version: 3, campaignStarted: false, campaignComplete: false, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
+    return { version: 4, campaignStarted: false, campaignComplete: false, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
 }
 function loadCampaignProfile() {
     const profile = defaultCampaignProfile();
     try {
-        const saved = JSON.parse(localStorage[CAMPAIGN_SAVE_KEY] || '{}');
+        const result = ChargefrontProgression.read(browserStorage,CAMPAIGN_SAVE_KEY,ChargefrontProgression.campaignValid);
+        saveFeedback = result.message;
+        const saved = result.data || {};
+        legacyCampaignEntry=!!result.data&&(!saved.version||saved.version<4)&&!saved.operation?.continuedState;
         profile.campaignStarted = !!saved.campaignStarted || !!saved.campaignComplete || CAMPAIGN_MISSIONS.some((mission) => !!(saved.missions && saved.missions[mission.id] && saved.missions[mission.id].completed));
         profile.campaignComplete = !!saved.campaignComplete;
         profile.lastMission = CAMPAIGN_MISSION_BY_ID[saved.lastMission] ? saved.lastMission : profile.lastMission;
@@ -317,9 +341,16 @@ function loadCampaignProfile() {
     } catch (e) { }
     return profile;
 }
+let saveFeedback = '';
+let legacyCampaignEntry = false;
 let campaignProfile = loadCampaignProfile();
-function saveCampaignProfile() { try { localStorage[CAMPAIGN_SAVE_KEY] = JSON.stringify(campaignProfile); } catch (e) { } }
-function resetCampaignProfile() { campaignProfile = defaultCampaignProfile(); saveCampaignProfile(); }
+function saveCampaignProfile() {
+    campaignProfile.version = 4;
+    const ok = ChargefrontProgression.write(browserStorage,CAMPAIGN_SAVE_KEY,campaignProfile,ChargefrontProgression.campaignValid);
+    if (!ok) {saveFeedback = 'Progress could not be saved. Check browser storage permissions.';if(gameActive)notify(saveFeedback,'#ffaa44');}
+    return ok;
+}
+function resetCampaignProfile() { ChargefrontProgression.remove(browserStorage,CAMPAIGN_SAVE_KEY); campaignProfile = defaultCampaignProfile(); saveCampaignProfile(); }
 function campaignMission(id = activeMissionId) { return CAMPAIGN_MISSION_BY_ID[id] || CAMPAIGN_MISSIONS[0]; }
 let activeMissionId = 'dead_signal';
 let campaignRunOrigin = CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN;
@@ -2168,13 +2199,49 @@ function updateLabSystems(dt) {
 }
 
 const pickups = [];
-function spawnPickup(pos, kind) {
+function spawnPickup(pos, kind, quantity = 0) {
+    if (pickups.length >= 160) return;
     const g = kind === 'power' ? makePowerCell() : kind === 'grenade' ? makeGrenadePickup() : kind === 'dna' ? makeDnaPickup() : makeScrap();
     const h = terrainHeight(pos.x, pos.y);
     g.position.set(pos.x, pos.y, h + 0.45);
     g.rotation.z = rand(TAU);
     scene.add(g);
-    pickups.push({ group: g, kind, pos: pos.copy(), taken: false, t: rand(TAU), light: null });
+    pickups.push({ group: g, kind, quantity, pos: pos.copy(), taken: false, t: rand(TAU), light: null });
+}
+const lockerPickups = [];
+function prepareLockerPickups() {
+    for(const [kind,x,y] of [['cartridges',373,624],['grenade',379,624]]) {
+        const g = kind==='grenade'?makeGrenadePickup():new THREE.Group();
+        if(kind==='cartridges') {
+            const shell=box(.8,.55,.25,0x36455b,{metalness:.6,roughness:.4});shell.position.z=.125;g.add(shell);
+            const cap=box(.58,.32,.08,0x66e0ff,EMISSIVE(0x2299cc,1.2));cap.position.z=.29;g.add(cap);
+            for(const side of [-1,1]){const rail=box(.08,.55,.25,0xffbb66);rail.position.set(side*.4,0,.125);g.add(rail);}
+        }
+        g.updateMatrixWorld(true);const bounds=new THREE.Box3().setFromObject(g);
+        g.position.set(x,y,terrainHeight(x,y)-bounds.min.z+.03);g.visible=false;
+        g.name='AuxLocker'+kind;scene.add(g);lockerPickups.push({kind,pos:LJS.vec2(x,y),group:g});
+    }
+}
+function syncLockerPickups() {
+    const remaining=campaignRun.rewards?.lockerRemaining || {};
+    for(const p of lockerPickups)p.group.visible=mode==='campaign'&&activeMissionId==='dead_signal'&&remaining[p.kind]>0;
+}
+function updateLockerInteract() {
+    for(const p of lockerPickups) {
+        if(!p.group.visible||Math.hypot(player.pos.x-p.pos.x,player.pos.y-p.pos.y)>2.4||!hasLOS(player.pos.x,player.pos.y,p.pos.x,p.pos.y,.3))continue;
+        const remaining=campaignRun.rewards.lockerRemaining, amount=remaining[p.kind];
+        interactPrompt='HOLD [E] — '+(p.kind==='cartridges'?'RESERVE CARTRIDGES':'ELECTRIC GRENADES')+' x'+amount;
+        interactProgress=clamp(heldInteract/.6,0,1);
+        if(heldInteract>.6) {
+            const room=p.kind==='cartridges'?reserveCap()-playerCombat.cartridges:grenadeCap()-player.grenades;
+            const granted=Math.min(amount,Math.max(0,room));heldInteract=0;
+            if(!granted){notify('INVENTORY FULL — supplies remain in the locker','#ffaa44');playFileSfx('accessDeny',.4);}
+            else {if(p.kind==='cartridges')playerCombat.cartridges+=granted;else player.grenades+=granted;
+                remaining[p.kind]-=granted;syncLockerPickups();checkpointCampaignState();playSnd(sfx.pickup,.8);notify('COLLECTED '+granted+' '+p.kind.toUpperCase(),'#66ffcc');}
+        }
+        return true;
+    }
+    return false;
 }
 function spawnPickups() {
     const defs = [
@@ -2377,9 +2444,9 @@ function buildDecor() {
     };
     const powerThroughGuides = new THREE.Group(); powerThroughGuides.name = 'PowerThroughRouteGuides'; scene.add(powerThroughGuides);
     const m2Segments = [
-        { path: MISSION2_ROUTE_ALPHA, group: buildGuides(MISSION2_ROUTE_ALPHA, 0xffc45b, powerThroughGuides) },
+        { path: MISSION2_ROUTE_ALPHA, group: buildGuides(MISSION2_ROUTE_ALPHA, 0x66e0ff, powerThroughGuides) },
         { path: MISSION2_ROUTE_BETA, group: buildGuides(MISSION2_ROUTE_BETA, 0xffc45b, powerThroughGuides) },
-        { path: MISSION2_ROUTE_GAMMA, group: buildGuides(MISSION2_ROUTE_GAMMA, 0xffc45b, powerThroughGuides) },
+        { path: MISSION2_ROUTE_GAMMA, group: buildGuides(MISSION2_ROUTE_GAMMA, 0x66e0ff, powerThroughGuides) },
         { path: MISSION2_RETURN_ROUTE, group: buildGuides(MISSION2_RETURN_ROUTE, 0x66ffcc, powerThroughGuides) },
     ];
     campaignContent.routeGuides = {
@@ -2446,12 +2513,12 @@ function updateRouteGuideVisibility() {
     const guides = campaignContent.routeGuides;
     if (!guides) return;
     let changed = false;
-    const deadVisible = activeMissionId === 'dead_signal', powerVisible = activeMissionId === 'power_through';
+    const deadVisible = false, powerVisible = !!activeIntelRoute();
     if (guides.dead_signal.visible !== deadVisible || guides.power_through.visible !== powerVisible) changed = true;
     guides.dead_signal.visible = deadVisible;
     guides.power_through.visible = powerVisible;
     if (!guides.m2Segments) return;
-    const activePath = missionRoute();
+    const activePath = activeIntelRoute()?.guidePath;
     for (const segment of guides.m2Segments) {
         const visible = powerVisible && segment.path === activePath;
         if (segment.group.visible !== visible) changed = true;
@@ -2907,25 +2974,25 @@ const CANONICAL_WORLD_SNAPSHOTS = Object.freeze({
         start: LZ, target: FACILITY_STAGING, firstPhase: P.M1_MOVE_FAC, firstMainIndex: 1,
         spacecraftState: SPACECRAFT_STATE.INSERTION_APPROACH, stagingActive: false,
         worldState: Object.assign({}, BASE_WORLD_STATE),
-        combat: { hp: 100, shield: 100, grenades: 3, medkits: 3, cartridges: 9, squadHp: 1, squadShield: 1, squadReserve: 1 },
+        combat: { hp: 100, shield: 100, grenades: 3, medkits: 3, cartridges: ChargefrontProgression.reserves.dead_signal.player, squadHp: 1, squadShield: 1 },
     },
     power_through: {
         start: FACILITY_STAGING, target: RELAYS[0].pos, firstPhase: P.MOVE_R1, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_LOCKED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true }),
-        combat: { hp: 100, shield: 90, grenades: 3, medkits: 3, cartridges: 8, squadHp: 0.94, squadShield: 0.9, squadReserve: 0.85 },
+        combat: { hp: 100, shield: 100, grenades: 3, medkits: 3, cartridges: ChargefrontProgression.reserves.power_through.player, squadHp: 1, squadShield: 1 },
     },
     sample_zero: {
         start: LAB_COMMAND, target: LAB_DECON, firstPhase: P.M3_ENTER_LAB, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_LOCKED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true }),
-        combat: { hp: 94, shield: 84, grenades: 2, medkits: 2, cartridges: 6, squadHp: 0.9, squadShield: 0.8, squadReserve: 0.75 },
+        combat: { hp: 100, shield: 100, grenades: 2, medkits: 2, cartridges: ChargefrontProgression.reserves.sample_zero.player, squadHp: 1, squadShield: 1 },
     },
     break_contact: {
         start: LAB_CONTAINMENT, target: LAB_EMERGENCY_EXIT, firstPhase: P.M4_BREAK_CONTACT, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_INFESTED, stagingActive: true,
         worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: false }),
-        combat: { hp: 84, shield: 68, grenades: 2, medkits: 2, cartridges: 5, squadHp: 0.82, squadShield: 0.65, squadReserve: 0.65 },
+        combat: { hp: 100, shield: 100, grenades: 2, medkits: 2, cartridges: ChargefrontProgression.reserves.break_contact.player, squadHp: 1, squadShield: 1 },
     },
 });
 function campaignSnapshot(id = activeMissionId) { return CANONICAL_WORLD_SNAPSHOTS[id] || CANONICAL_WORLD_SNAPSHOTS.dead_signal; }
@@ -2933,6 +3000,27 @@ let phase = P.DEPLOY;
 /* DEFEND phases are interleaved with MOVE phases (MOVE_R2=4 sits between DEFEND_R1=3 and DEFEND_R2=5),
    so a range check [DEFEND_R1..DEFEND_R3] would wrongly include travel phases. Use an explicit test. */
 function isDefensePhase(p) { return p === P.DEFEND_R1 || p === P.DEFEND_R2 || p === P.DEFEND_R3; }
+const INTEL_ROUTES = Object.freeze({
+    alpha:Object.freeze({id:'alpha',name:'ALPHA INTEL',guidePath:MISSION2_ROUTE_ALPHA,path:[LAB_COMMAND,LJS.vec2(360,628),FACILITY_FRONT_THRESHOLD,FACILITY_FRONT_APPROACH,FACILITY_STAGING,LJS.vec2(300,575),LJS.vec2(212,575)]}),
+    gamma:Object.freeze({id:'gamma',name:'GAMMA SURVEY',guidePath:MISSION2_ROUTE_GAMMA,path:[LJS.vec2(250,741),LJS.vec2(285,690),FACILITY_BYPASS_WEST,FACILITY_BYPASS_EAST,LJS.vec2(568,585)]}),
+});
+const COMMANDER_VITALS = Object.freeze({maxHp:100,maxShield:100});
+function activeIntelRoute() {
+    if(mode!=='campaign'||activeMissionId!=='power_through')return null;
+    if(phase===P.MOVE_R1&&campaignRun.rewards?.alphaIntel)return INTEL_ROUTES.alpha;
+    if(phase===P.MOVE_R3&&campaignRun.worldState.betaSurvey)return INTEL_ROUTES.gamma;
+    return null;
+}
+function intelRouteIndex(route) {
+    const index=campaignRun.rewards?.[route.id+'RouteIndex'];
+    return Number.isFinite(index)?Math.floor(clamp(index,0,route.path.length-1)):0;
+}
+function updateIntelRouteProgress() {
+    const route=activeIntelRoute();if(!route)return;
+    let index=intelRouteIndex(route);
+    while(index<route.path.length-1&&Math.hypot(player.pos.x-route.path[index].x,player.pos.y-route.path[index].y)<4.5)index++;
+    campaignRun.rewards[route.id+'RouteIndex']=index;
+}
 let started = false, gameActive = false;
 let kills = 0, cacheFound = 0, startTime = 0, missionTime = 0;
 let totalAmmoCrafted = 0, totalMedkitsCrafted = 0;   // crafted totals shown on the result screen
@@ -3099,6 +3187,7 @@ function buildEndlessDecor() {
         if (isInsideSolid(wx, wy, 1)) continue;
         const sc = rand(0.8, 1.4);
         const tree = makeInfestedTree(sc);
+        tree.name='EndlessTree'+n;
         tree.position.set(wx, wy, h); tree.rotation.z = rand(TAU); tree.castShadow = true;
         scene.add(tree);
         addSolid(wx - 0.55 * sc, wy - 0.55 * sc, wx + 0.55 * sc, wy + 0.55 * sc, h + 4.8 * sc, h);
@@ -3375,6 +3464,7 @@ function startEndlessWave() {
     if (endlessRun.grenadeCap > 0) player.grenades = Math.min(grenadeCap(), player.grenades + endlessRun.startGrenades);
     if (endlessRun.shieldArrayOwned) endlessRun.shieldArrayT = 10;
     endlessRun.bastionUsed = false;
+    saveEndlessBoundary(); // post-refresh, pre-spawn: replaying this boundary never grants refresh/rewards twice
     music.play(endlessRun.wave % 5 === 0 || endlessRun.wave % 8 === 0 ? 'combat' : 'relayCombat', 0.85);   // corrupt_data_stream for drone swarm / Harvester waves
     if (!endlessRun.mutator) notify('WAVE ' + endlessRun.wave + (endlessRun.wave % 5 === 0 ? ' — DRONE SWARM' : ''), '#ffcc66');
     playFileSfx('bossRoar', 0.5, 1, ENDLESS_RELAY_POS.x, ENDLESS_RELAY_POS.y);
@@ -3470,6 +3560,7 @@ function updateEndlessWaves(dt) {
         }
         notify('WAVE ' + endlessRun.wave + ' CLEARED — rest, upgrade, go again', '#66ffcc');
         playFileSfx('accessOk', 0.6);
+        saveEndlessBoundary(); // completed wave + paid rewards, safe intermission boundary
     }
 }
 /* ── interact (E): start a wave at the relay, bank DNA at the vial ── */
@@ -3582,12 +3673,13 @@ function resetEndlessRun() {
     endlessRun.fullRegen = 0; endlessRun.killHeal = 0; endlessRun.upgradeStacks = {};
     endlessRun.cellChance = 0; endlessRun.waveClearHeal = 0; endlessRun.vacuum = false; endlessRun.duplicateChance = 0; endlessRun.mutator = null;
     endlessRun.previousMutatorId = null; endlessRun.arena = ENDLESS_ARENAS[randInt(ENDLESS_ARENAS.length)]; endlessRun.extractionReady = false;
+    endlessRun.worldSeed = randInt(4294967295);
     if (endlessTurret) { scene.remove(endlessTurret.group); endlessTurret = null; }
     upgradeMenu = false; endlessUpgradeOffers = []; endlessHeldDone = false;
     craft.scraps = 0; craft.powerCells = 0; craft.medkits = 3;
     kills = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     player.dead = false;
-    player.maxHp = 100; player.hp = 100; player.maxShield = 100; player.shield = 100; player.stamina = 100;
+    player.maxHp = COMMANDER_VITALS.maxHp; player.hp = player.maxHp; player.maxShield = COMMANDER_VITALS.maxShield; player.shield = player.maxShield; player.stamina = 100;
     player.sprintExhausted = false; player.sprinting = false; player.sprintFireBlocked = false; player.firePending = false;
     player.shieldDelayT = 0; player.hpDelayT = 0;
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
@@ -3632,6 +3724,9 @@ function placeEndlessSquad() {
     }
 }
 function buildEndlessWorld() {
+    const random=Math.random;
+    Math.random=ChargefrontProgression.seedRandom(endlessRun.worldSeed);
+    try {
     ensureLocalLightSlots();
     buildMapGrid();
     buildTerrain();
@@ -3639,16 +3734,74 @@ function buildEndlessWorld() {
     buildEndlessVial();
     buildEndlessDecor();
     threeJS.renderer.shadowMap.needsUpdate = true;
+    } finally {Math.random=random;}
 }
-function startEndless(configuration = {}) {
+const ENDLESS_SAVE_KEY = 'cf_endless_v1';
+let endlessBoundary = null;
+function loadEndlessBoundary() {
+    const result = ChargefrontProgression.read(browserStorage,ENDLESS_SAVE_KEY,ChargefrontProgression.endlessValid);
+    if (result.message) saveFeedback = result.message;
+    return result.data;
+}
+function invalidateEndlessResume() {
+    endlessBoundary = null;
+    if (!ChargefrontProgression.remove(browserStorage,ENDLESS_SAVE_KEY)) saveFeedback = 'Endless resume data could not be cleared; check storage permissions.';
+}
+function saveEndlessBoundary() {
+    if (mode !== 'endless' || player.dead || phase === P.DEAD || phase === P.DONE) return false;
+    if (endlessRun.waveActive && endlessRun.waveT > 0) return false; // never publish an ambiguous mid-wave state
+    endlessBoundary = {version:1,mode:'endless',arena:endlessRun.arena.id,configuration:endlessConfiguration,
+        run:JSON.parse(JSON.stringify(endlessRun)),player:persistentPlayerSnapshot(),squad:persistentSquadSnapshot(),
+        craft:{...craft},squadCommand,kills,missionTime,totalAmmoCrafted,totalMedkitsCrafted,
+        pickups:persistentPickupsSnapshot(),offers:endlessUpgradeOffers.map(u=>u.id)};
+    const ok = ChargefrontProgression.write(browserStorage,ENDLESS_SAVE_KEY,endlessBoundary,ChargefrontProgression.endlessValid);
+    if (!ok) { saveFeedback = 'Endless checkpoint could not be saved; browser storage may be unavailable.'; notify(saveFeedback,'#ffaa44'); }
+    return ok;
+}
+function applyEndlessBoundary(saved) {
+    // Read only existing plain-data fields; never replay gene/upgrade apply() side effects.
+    for (const key of Object.keys(endlessRun)) {
+        if (key==='arena'||key==='mutator'||key==='upgrades'||key==='upgradeStacks') continue;
+        const value = saved.run[key];
+        if (typeof endlessRun[key]==='number'&&Number.isFinite(value)) endlessRun[key]=ChargefrontProgression.bounded(value,0,key==='worldSeed'?4294967295:1e6);
+        else if (typeof endlessRun[key]==='boolean'&&typeof value==='boolean') endlessRun[key]=value;
+    }
+    endlessRun.mutator = ENDLESS_MUTATORS.find(m=>m.id===saved.run.mutator?.id)||null;
+    endlessRun.previousMutatorId = saved.run.previousMutatorId || null;
+    endlessRun.upgrades = (saved.run.upgrades||[]).filter(id=>ENDLESS_RELAY_UPGRADES.some(u=>u.id===id));
+    endlessRun.upgradeStacks = {};
+    for (const u of ENDLESS_RELAY_UPGRADES) if (Number.isFinite(saved.run.upgradeStacks?.[u.id]))
+        endlessRun.upgradeStacks[u.id]=Math.floor(clamp(saved.run.upgradeStacks[u.id],0,upgradeMax(u)));
+    playerCombat.cartridges = Math.floor(ChargefrontProgression.bounded(saved.player.combat.cartridges,8,reserveCap()));
+    if (playerCombat.slots.includes(saved.player.combat.activeId)) playerCombat.activeId=saved.player.combat.activeId;
+    restorePersistentActors(saved);setViewmodelWeapon(player.weapon);
+    const place=(actor,pos)=>{if(pos&&Number.isFinite(pos.x)&&Number.isFinite(pos.y)){actor.pos.set(clamp(pos.x,2,WORLD-2),clamp(pos.y,2,WORLD-2));resolveCircle(actor.pos,.5);}};
+    place(player,saved.player.position);player.zPos=terrainHeight(player.pos.x,player.pos.y);player.yaw=Number.isFinite(saved.player.yaw)?saved.player.yaw:0;
+    for(let i=0;i<3;i++){const m=squadMembers[i];place(m,saved.squad[i].position);m.z=terrainHeight(m.pos.x,m.pos.y);m.holdPos.set(m.pos.x,m.pos.y);}
+    craft.scraps=ChargefrontProgression.bounded(saved.craft?.scraps);craft.powerCells=ChargefrontProgression.bounded(saved.craft?.powerCells);craft.medkits=ChargefrontProgression.bounded(saved.craft?.medkits,3,medkitCap());
+    squadCommand=['assist','spread','hold'].includes(saved.squadCommand)?saved.squadCommand:'assist';
+    kills=ChargefrontProgression.bounded(saved.kills);missionTime=ChargefrontProgression.bounded(saved.missionTime);
+    totalAmmoCrafted=ChargefrontProgression.bounded(saved.totalAmmoCrafted);totalMedkitsCrafted=ChargefrontProgression.bounded(saved.totalMedkitsCrafted);
+    restorePersistentPickups(saved.pickups);
+    endlessUpgradeOffers=(saved.offers||[]).map(id=>ENDLESS_RELAY_UPGRADES.find(u=>u.id===id)).filter(Boolean);
+    if(endlessRun.turretOwned) buildEndlessTurret();
+    endlessBoundary=JSON.parse(JSON.stringify(saved));
+}
+function startEndless(configuration = {}, saved = null) {
     stopIntroSfx();
+    if (!saved) invalidateEndlessResume();
+    clearEndlessCombatEntities();
     endlessConfiguration = ChargefrontCombat.endlessConfig(configuration);
     mode = 'endless';
+    syncLockerPickups();
     resetEndlessRun();
+    if (saved) {endlessRun.arena = ENDLESS_ARENAS.find(a=>a.id===saved.arena);endlessRun.worldSeed=ChargefrontProgression.bounded(saved.run.worldSeed,0,4294967295);}
     buildEndlessWorld();
     placeEndlessSquad();
+    if (saved) applyEndlessBoundary(saved);
     if (menuBackdrop) menuBackdrop.group.visible = false;
     beginEndless();
+    if (!saved) saveEndlessBoundary();
 }
 function beginEndless(waitForLockGesture = true) {
     const startEl = document.getElementById('start-screen');
@@ -3665,8 +3818,9 @@ function beginEndless(waitForLockGesture = true) {
     viewModel.visible = true;
     notify('ENDLESS RUN — ' + endlessRun.arena.name + '. Survive waves, bank DNA.', '#d6a6ff');
     prewarmCombatEffects();
-    notify('Hold E at the relay to start wave 1', '#d6a6ff');
+    notify(endlessRun.waveActive?'RESUMED WAVE '+endlessRun.wave+' — wave-start checkpoint':endlessRun.wave>0?'WAVE '+endlessRun.wave+' CLEARED — rest, upgrade, go again':'Hold E at the relay to start wave 1', '#d6a6ff');
     if (waitForLockGesture) lockOnNextGesture();
+    if (endlessRun.waveActive) music.play(endlessRun.wave%5===0||endlessRun.wave%8===0?'combat':'relayCombat',.85);
 }
 /* ── endless HUD extras ── */
 function drawEndlessMarkers(W, H) {
@@ -5170,6 +5324,7 @@ function playerTakeDamage(dmg, fromEnemy) {
     if (player.hp <= 0) {
         player.hp = 0;
         player.dead = true;
+        if(mode==='endless')invalidateEndlessResume();
         phase = P.DEAD;
         LJS.pointerLockExit();
         music.play('safe', 0.6);
@@ -5253,6 +5408,7 @@ class Infested extends LJS.ThreeJSObject {
         this.attackT = 0; this.spitT = 0; this.stunT = 0; this.markedT = 0; this.specialT = rand(1, 3);
         this.mesh.castShadow = true;
         this.animT = rand(TAU);
+        this.hoverPhase = this.animT; this.hoverOffset = 6;
         this.sep = LJS.vec2();
         this.dead = false; this.dying = false; this.dieT = 0;
         this.aggroT = 0;
@@ -5337,11 +5493,9 @@ class Infested extends LJS.ThreeJSObject {
             }
             notify('BROOD CARRIER BURSTS — SKITTERS RELEASED', '#ff99cc');
         }
+        const scrapAmount = ChargefrontProgression.scrapReward(this.type);
+        if(scrapAmount) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1.4,1.4),rand(-1.4,1.4))),'scrap',scrapAmount);
         if (Math.random() < 0.32) {
-            const n = 1 + randInt(2);   // 1-2 scrap pickups
-            for (let i = 0; i < n; i++) {
-                spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1.4, 1.4), rand(-1.4, 1.4))), 'scrap');
-            }
             const rainCells = mode === 'endless' && endlessRun.mutator && endlessRun.mutator.id === 'corrosive' ? 0.22 : 0;
             if (Math.random() < 0.08 + (mode === 'endless' ? endlessRun.cellChance || 0 : 0) + rainCells) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'power');
             if (Math.random() < 0.06) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'grenade');
@@ -5374,6 +5528,10 @@ class Infested extends LJS.ThreeJSObject {
         }
         animateInfestedVisuals(this, false, dt);
         if (this.armT <= 0) this.detonate();
+    }
+    hoverHeight(dt) {
+        this.hoverOffset=lerp(this.hoverOffset,6+Math.sin(LJS.time*1.6+this.hoverPhase)*.22,1-Math.exp(-5*dt));
+        return terrainHeight(this.pos.x,this.pos.y)+this.hoverOffset;
     }
     update() {
         this.mesh.visible = true;
@@ -5411,7 +5569,7 @@ class Infested extends LJS.ThreeJSObject {
         }
         if (this.stunT > 0) {
             this.stunT -= dt;
-            this.z = terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : this.type === 'screecher' ? 6 : 0);
+            this.z = this.type==='screecher'?this.hoverHeight(dt):terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : 0);
             animateInfestedVisuals(this, false, dt);
             super.update();
             return;
@@ -5471,7 +5629,7 @@ class Infested extends LJS.ThreeJSObject {
             if (p) { this.pos.x = p.x; this.pos.y = p.y; this.unburrowing = true; this.unburrowT = this.unburrowDur; this.mesh.scale.setScalar(0.01); playFileSfx('unburrow', 0.5, 1.15, p.x, p.y); }
         }
         if (debugNoAggro) {               // playtest: visible + facing the player, but no chase/attack
-            this.z = terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : this.type === 'screecher' ? 6 : 0);
+            this.z = this.type==='screecher'?this.hoverHeight(dt):terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : 0);
             this.angle = -Math.atan2(player.pos.y - this.pos.y, player.pos.x - this.pos.x);
             animateInfestedVisuals(this, false, dt);
             super.update();
@@ -5628,7 +5786,7 @@ class Infested extends LJS.ThreeJSObject {
                 this.swoopT -= dt;
                 const dP = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
                 const swooping = false;
-                this.z = swooping ? gh + 0.9 : gh + 6 + Math.sin(LJS.time * 2 + this.animT) * 1.5;
+                this.z = this.hoverHeight(dt);
             } else if (this.type === 'drone') {
                 /* drone flight: hover low near the facility, lunge in when the squad gets close */
                 const gh = terrainHeight(this.pos.x, this.pos.y);
@@ -5642,7 +5800,7 @@ class Infested extends LJS.ThreeJSObject {
             this.animT += dt * (this.type === 'drone' ? 16 : this.type === 'skitter' ? 14 : this.type === 'screecher' ? 20 : 7);
         } else {
             const egh = terrainHeight(this.pos.x, this.pos.y);
-            this.z = this.type === 'drone' ? egh + 3.2 + Math.sin(LJS.time * 3 + this.animT) * 0.6 : this.type === 'screecher' ? egh + 6 + Math.sin(LJS.time * 2 + this.animT) * 1.5 : egh;
+            this.z = this.type === 'drone' ? egh + 3.2 + Math.sin(LJS.time * 3 + this.animT) * 0.6 : this.type === 'screecher' ? this.hoverHeight(dt) : egh;
             /* attack target */
             this.attackT -= dt;
             const attackDistance = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
@@ -7511,15 +7669,15 @@ function updatePickups(dt) {
             p.taken = true;
             scene.remove(p.group);
             pickups.splice(i, 1);
-            applyPickup(p.kind);
+            applyPickup(p.kind,p.quantity);
         }
     }
 }
-function applyPickup(kind) {
+function applyPickup(kind, quantity = 0) {
     cacheFound++;
     playSnd(sfx.pickup, 0.8);
     if (kind === 'scrap') {
-        const n = randInt(2, 5);   // 2-4 scrap units per pickup
+        const n = quantity || randInt(2, 5);   // enemy bundle quantity resolves once at death
         craft.scraps += n;
         notify('+ SCRAP x' + n, '#e8c060');
     } else if (kind === 'power') {
@@ -7661,6 +7819,10 @@ let missionAnalysisTimer = 0;
 function resetCampaignRun() {
     objectiveHUD.clear(); clearOptionalMarkerState();
     stopIntroSfx();
+    clearCampaignTransitionCombat();
+    for (const pickup of pickups) scene.remove(pickup.group);
+    pickups.length = 0;
+    squadCommand = 'assist';
     mode = 'campaign';
     const snapshot = campaignSnapshot();
     kills = 0; cacheFound = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
@@ -7672,7 +7834,7 @@ function resetCampaignRun() {
     const startPos = snapshot.start, startTarget = snapshot.target;
     player.pos = startPos.copy(); player.yaw = Math.atan2(startTarget.y - startPos.y, startTarget.x - startPos.x); player.pitch = -0.04; player.lastMoveYaw = player.yaw;
     player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true; player.fallStart = player.zPos;
-    player.dead = false; player.maxHp = 100; player.hp = snapshot.combat.hp; player.maxShield = 100; player.shield = snapshot.combat.shield; player.stamina = 100;
+    player.dead = false; player.maxHp = COMMANDER_VITALS.maxHp; player.hp = player.maxHp; player.maxShield = COMMANDER_VITALS.maxShield; player.shield = player.maxShield; player.stamina = 100;
     player.sprintExhausted = false; player.sprinting = false; player.sprintFireBlocked = false; player.firePending = false;
     player.speed = 5.2; player.shieldDelayT = 0; player.hpDelayT = 0;
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
@@ -7686,7 +7848,7 @@ function resetCampaignRun() {
         member.pos.x = player.pos.x + offset[0]; member.pos.y = player.pos.y + offset[1]; member.z = terrainHeight(member.pos.x, member.pos.y);
         member.maxHp = member.def.hp; member.hp = Math.max(1, Math.round(member.maxHp * snapshot.combat.squadHp)); member.maxShield = Math.round(member.def.hp * 0.8); member.shield = Math.round(member.maxShield * snapshot.combat.squadShield);
         member.dmgMult = 1; member.rateMult = 1; member.dmgTakenMult = 1; member.critChance = 0; member.reloadMult = 1; member.speedMult = 1; member.critMult = 2;
-        member.mag = member.def.magSize; member.magSize = member.def.magSize; member.reserve = Math.max(1, Math.round(member.def.reserve * snapshot.combat.squadReserve));
+        member.mag = member.def.magSize; member.magSize = member.def.magSize; member.reserve = ChargefrontProgression.reserves[activeMissionId].squad;
         member.downed = false; member.reloading = false; member.reloadT = 0; member.abilityCd = 0; member.bulwarkT = 0;
         member.fireT = 0; member.evadeCd = 0.5;
         member.shieldDelayT = 0; member.hpDelayT = 0; member.dnaDelayT = 0; member.acidDelayT = 0;
@@ -7698,7 +7860,7 @@ function makeCampaignRun(entryMode = 'standalone', carriedState = {}) {
     const mission = campaignMission();
     const snapshot = campaignSnapshot();
     const run = {
-        mainIndex: 0, optional: {}, discovered: {},
+        mainIndex: 0, optional: {}, discovered: {}, rewards:{},
         worldState: Object.assign({}, snapshot.worldState, { spacecraftState: snapshot.spacecraftState }, carriedState.worldState || {}),
         enemyIntel: !!carriedState.enemyIntel, completion: null, entryMode,
         encounter: { active: false, t: 0, duration: 0, stage: -1, spawnT: 0, pausedWarned: false },
@@ -7751,31 +7913,29 @@ function applyCampaignWorldSnapshot() {
     if (snapshot.spacecraftState === SPACECRAFT_STATE.INSERTION_APPROACH) setCampaignSpacecraftState(snapshot.spacecraftState, true);
     else ensureCampaignShipLanded(snapshot.spacecraftState);
     budgetLightsT = 0; // mission snapshot changes source groups, never structural geometry
+    syncLockerPickups();
 }
 function initializeCampaignMission() {
     const entryMode = campaignRunOrigin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT ? 'standalone'
         : campaignRunOrigin === CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN ? 'campaign_start' : 'campaign_resume';
     campaignRun = makeCampaignRun(entryMode);
     applyCampaignWorldSnapshot();
-    if (isPersistentCampaignRun()) {
-        campaignProfile.campaignStarted = true;
-        campaignProfile.lastMission = activeMissionId;
-        campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: campaignSnapshot().spacecraftState, continuedState: null };
-        saveCampaignProfile();
-    }
+    // Persist only after initialization/restore has produced a stable checkpoint.
 }
-function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign = false, continuedState = null) {
+function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign = false, continuedState = null, fresh = false) {
     if (newCampaign) resetCampaignProfile();
     const mission = CAMPAIGN_MISSION_BY_ID[missionId];
     if (!mission) return false;
     const state = campaignProfile.missions[mission.id];
     if (!mission.implemented || !state || !state.unlocked) return false;
-    const savedContinuation = continuedState || (origin === CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN && campaignProfile.operation.worldSnapshot === missionId ? campaignProfile.operation.continuedState : null);
+    const candidate = !fresh&&origin === CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN ? continuedState || (campaignProfile.operation.worldSnapshot === missionId ? campaignProfile.operation.continuedState : null) : null;
+    const savedContinuation = ChargefrontProgression.checkpointValid(candidate) && candidate.missionId === missionId ? candidate : null;
     activeMissionId = mission.id;
     campaignRunOrigin = origin;
     resetCampaignRun();
     if (!campaignWorldBuilt) buildCampaignWorld();
     initializeCampaignMission();
+    if (!savedContinuation && !pickups.length) spawnPickups();
     if (savedContinuation) {
         if (missionId === 'break_contact') applyContinuedMission4Snapshot(savedContinuation);
         else applyCampaignCheckpointSnapshot(savedContinuation);
@@ -7856,8 +8016,7 @@ function startIntro() {
         // before the first expensive world shader is linked.
         introLoadingEl = document.createElement('div');
         introLoadingEl.id = 'cf-intro-loading';
-        introLoadingEl.style.cssText = 'position:fixed;inset:0;z-index:45;display:grid;place-items:center;background:#0d0514;color:#d6a6ff;font:22px "Segoe UI",sans-serif;letter-spacing:.2em';
-        introLoadingEl.textContent = 'PREPARING DEPLOYMENT';
+        const preparingText=document.createElement('span');preparingText.textContent='PREPARING DEPLOYMENT';introLoadingEl.appendChild(preparingText);
         document.body.appendChild(introLoadingEl);
     }
     viewModel.visible = false;
@@ -8279,6 +8438,7 @@ function buildCampaignObjectives() {
     campaignContent.localConsole = makeConsole(LJS.vec2(344, 630), 0xff744f);
     campaignContent.commandConsole = makeConsole(LJS.vec2(382, 648), 0x66bfff);
     campaignContent.supplyConsole = makeConsole(LJS.vec2(376, 626), 0xffc45b);
+    prepareLockerPickups();
     campaignContent.networkIndicators = [];
     for (let i = 0; i < 3; i++) {
         const indicator = box(0.2, 0.7, 0.22, 0xff5544, EMISSIVE(0xff2211, 1.5));
@@ -8354,7 +8514,8 @@ function completeSurveyDrone() {
     escort.state = SURVEY_DRONE_STATE.COMPLETE; escort.active = false; escort.downed = true; escort.hp = Math.max(1, escort.hp);
     campaignRun.optional.escort_drone = true; campaignRun.enemyIntel = true; campaignRun.worldState.betaSurvey = true; retargetSurveyAttackers(escort);
     setSurveyDroneVisual(escort, 0x66ffcc, 2.25);
-    notify('SURVEY DATA ACQUIRED — Beta approaches and specialists marked', '#66ffcc'); playFileSfx('accessOk', 0.7);
+    notify('SURVEY DATA ACQUIRED — Beta approaches and specialists marked; GAMMA SURVEY ROUTE unlocked', '#66ffcc'); playFileSfx('accessOk', 0.7);
+    campaignRun.rewards={...campaignRun.rewards,gammaIntel:true};checkpointCampaignState();
 }
 function abandonSurveyDrone() {
     const escort = campaignContent.escort;
@@ -8418,7 +8579,7 @@ function recordCampaignMissionCompletion(mission = campaignMission()) {
             for (const entry of CAMPAIGN_MISSIONS) campaignProfile.missions[entry.id].unlocked = true;
             campaignProfile.operation = { worldSnapshot: mission.id, spacecraftState: ship.campaignState, continuedState: null };
         }
-        saveCampaignProfile();
+        if (!mission.nextMission) saveCampaignProfile();
     }
     const completion = { missionId: mission.id, nextMission: mission.nextMission, nextUnlocked, optionalCount, optionalTotal: mission.optionalObjectives.length, origin: campaignRunOrigin };
     return completion;
@@ -8475,11 +8636,13 @@ function beginCampaignChapterTransition(completion) {
     clearOptionalMarkerState();
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
+    const rewards = { ...(campaignRun.rewards || {}) };
     campaignRun.encounter.active = false;
     clearCampaignTransitionCombat();
     playerCombat.cancelActions(); // preserve magazines, cancel transient actions at the checkpoint boundary
     activeMissionId = toId;
     campaignRun = makeCampaignRun('continued', { worldState: carriedTurret ? { securityTurret: true } : {}, enemyIntel: carriedTurret });
+    campaignRun.rewards = rewards;
     applyCampaignWorldSnapshot();
     const snapshot = campaignSnapshot(toId);
     phase = snapshot.firstPhase; campaignRun.mainIndex = snapshot.firstMainIndex;
@@ -8488,8 +8651,8 @@ function beginCampaignChapterTransition(completion) {
     if (isPersistentCampaignRun()) {
         campaignProfile.campaignStarted = true;
         campaignProfile.lastMission = toId;
-        campaignProfile.operation = { worldSnapshot: toId, spacecraftState: snapshot.spacecraftState, continuedState: null };
-        saveCampaignProfile();
+        // The final checkpoint below atomically carries incoming progression
+        // and authoritative outgoing actor/resources; no empty intermediate save.
     }
     if (toId === 'break_contact') {
         sanitizeContinuedMission4State();
@@ -8828,6 +8991,7 @@ function gameUpdate() {
     if (!menuOpen) {
         movePlayer(dt);
         updateObjectiveBearing(dt);
+        updateIntelRouteProgress();
         if (LJS.keyWasPressed('Digit1')) equipWeapon(0);
         if (LJS.keyWasPressed('Digit2')) equipWeapon(1);
         if (LJS.keyWasPressed('KeyQ')) cycleWeapon();
@@ -8928,6 +9092,7 @@ function gameUpdate() {
 }
 
 function updateInteract(dt) {
+    if(mode==='campaign'&&updateLockerInteract())return;
     if (updateCampaignOptionalInteract(dt)) return;
     if (phase === P.M3_OVERRIDE && campaignContent.lab) {
         const consoleUnit = campaignContent.lab.securityConsole;
@@ -9147,13 +9312,14 @@ function updateCampaignOptionalInteract(dt) {
                     heldInteract = 0;
                     if (sensorsReady) {
                         campaignRun.enemyIntel = true;
-                        notify('SECURITY SENSORS ONLINE — nearby hostiles highlighted', '#66ffcc');
+                        campaignRun.rewards = {...campaignRun.rewards,alphaIntel:true};
+                        notify('SECURITY SENSORS ONLINE — nearby hostiles highlighted; ALPHA INTEL ROUTE unlocked', '#66ffcc');
                     } else {
-                        spawnPickup(player.pos.copy().add(LJS.vec2(2, 0)), 'scrap');
-                        spawnPickup(player.pos.copy().add(LJS.vec2(-2, 0)), 'grenade');
-                        spawnPickup(player.pos.copy().add(LJS.vec2(0, 2)), 'scrap');
-                        notify('SUPPLY LOCKER OPEN — field supplies released', '#66ffcc');
+                        campaignRun.rewards = {...campaignRun.rewards,lockerRemaining:{cartridges:3,grenade:2}};
+                        syncLockerPickups();
+                        notify('SUPPLY LOCKER OPEN — collect reserve cartridges and electric grenades with E', '#66ffcc');
                     }
+                    checkpointCampaignState();
                     playFileSfx('accessOk', 0.7);
                 }
                 return true;
@@ -9896,17 +10062,86 @@ const CAMPAIGN_CHECKPOINT_PHASES = Object.freeze({
     power_through: [P.MOVE_R1, P.DEFEND_R1, P.MOVE_R2, P.DEFEND_R2, P.MOVE_R3, P.DEFEND_R3, P.M2_CONFIRM],
     sample_zero: [P.M3_ENTER_LAB, P.M3_REACH_SECURITY, P.M3_OVERRIDE, P.M3_REACH_SAMPLE, P.M3_STABILIZE],
 });
+function persistentPlayerSnapshot() {
+    const weaponStats = {};
+    for (const id of playerCombat.slots) {
+        weaponStats[id] = {};
+        for (const key of ChargefrontProgression.weaponNumbers) weaponStats[id][key] = playerCombat.weapons[id][key];
+    }
+    return { ...ChargefrontProgression.actorSnapshot(player), ability:'surge', weaponStats,
+        position:{x:player.pos.x,y:player.pos.y},yaw:player.yaw,combat:playerCombat.snapshot() };
+}
+function persistentSquadSnapshot() {
+    return squadMembers.map(m=>({ ...ChargefrontProgression.actorSnapshot(m), weapon:m.def.weapon || m.def.role,
+        ability:m.def.ability.id,position:{x:m.pos.x,y:m.pos.y} }));
+}
+function restorePersistentActors(snapshot) {
+    ChargefrontProgression.restoreActor(player,snapshot.player);
+    for (const id of playerCombat.slots) {
+        const stats = snapshot.player?.weaponStats?.[id], weapon = playerCombat.weapons[id];
+        if (stats) for (const key of ChargefrontProgression.weaponNumbers)
+            if (Number.isFinite(stats[key])) weapon[key] = ChargefrontProgression.bounded(stats[key],weapon[key],key==='magSize'?1000:1e4);
+        weapon.magSize = Math.max(1,weapon.magSize);
+        const mag = snapshot.player?.combat?.weapons?.[id]?.mag;
+        if (Number.isFinite(mag)) weapon.mag = Math.floor(clamp(mag,0,weapon.magSize));
+    }
+    for (let i=0;i<squadMembers.length;i++) {
+        const m = squadMembers[i], saved = snapshot.squad?.[i];
+        if (!saved) continue;
+        ChargefrontProgression.restoreActor(m,saved);
+        const ability = ChargefrontCombat.abilities.find(a=>a.id===saved.ability);
+        if (ability) m.def = Object.freeze({...m.def,ability});
+        m.mesh.rotation.x = m.downed ? 1.35 : 0;
+    }
+}
+function persistentPickupsSnapshot() {
+    return pickups.filter(p=>!p.taken&&!p.explicit).slice(0,160).map(p=>({kind:p.kind,quantity:p.quantity || 0,x:p.pos.x,y:p.pos.y}));
+}
+function persistentHostilesSnapshot() {
+    const living=enemies.filter(e=>!e.dead&&!e.dying).slice(0,100);
+    return living.map(e=>({type:e.type,x:e.pos.x,y:e.pos.y,hp:e.hp,maxHp:e.maxHp,shield:e.shield,
+        speed:e.speed,dmg:e.dmg,ambient:e.ambient,scale:e.finalScale,focus:squadMembers.indexOf(e.focus),extractionNode:e.extractionInfestationNode || null,
+        enemyFocus:living.indexOf(e.focus),relayFocus:relays.indexOf(e.focus),escortFocus:e.focus===campaignContent.escort,
+        attackT:e.attackT,armed:e.armed,armT:e.armT,armBeep:e.armBeep}));
+}
+function restorePersistentHostiles(list) {
+    if(!Array.isArray(list))return;
+    for(const e of [...enemies])e.destroy(true);
+    const restored=[];
+    for(const saved of list.slice(0,100)) {
+        if(!ENEMY_STATS[saved.type]||!Number.isFinite(saved.x)||!Number.isFinite(saved.y)||!(saved.hp>0))continue;
+        const target=squadMembers[saved.focus]||player;
+        const e=new Infested(saved.type,LJS.vec2(clamp(saved.x,2,WORLD-2),clamp(saved.y,2,WORLD-2)),target);
+        e.focus=target;e.hp=ChargefrontProgression.bounded(saved.hp,ENEMY_STATS[saved.type].hp);e.maxHp=Math.max(e.hp,ChargefrontProgression.bounded(saved.maxHp,e.hp));
+        e.attackT=ChargefrontProgression.bounded(saved.attackT);
+        e.shield=ChargefrontProgression.bounded(saved.shield);e.speed=ChargefrontProgression.bounded(saved.speed,e.speed,100);e.dmg=ChargefrontProgression.bounded(saved.dmg,e.dmg,1000);
+        e.ambient=!!saved.ambient;e.skySpawnT=0;e.unburrowing=false;e.finalScale=ChargefrontProgression.bounded(saved.scale,1,10)||1;e.mesh.scale.setScalar(e.finalScale);
+        e.extractionInfestationNode=saved.extractionNode;e.z=terrainHeight(e.pos.x,e.pos.y)+(e.type==='screecher'?6:e.type==='drone'?3.2:0);
+        if(saved.armed&&RUNNER_ATTACKS[e.type]&&saved.armT>0){e.armed=true;e.armT=Math.min(RUNNER_FUSE,saved.armT);e.armBeep=Math.floor(clamp(saved.armBeep||0,0,7));e.armPosition={x:e.pos.x,y:e.pos.y,z:e.z};}
+        recordEncounterSpawn(e,'checkpoint');
+        restored.push({e,saved});
+    }
+    for(const {e,saved} of restored) {
+        e.focus=restored[saved.enemyFocus]?.e||relays[saved.relayFocus]||(saved.escortFocus?campaignContent.escort:null)||squadMembers[saved.focus]||player;
+        e.target=e.focus;
+    }
+}
+function restorePersistentPickups(list) {
+    if (!Array.isArray(list)) return; // older compatible saves retain their authored supplies
+    for (const p of pickups) scene.remove(p.group);
+    pickups.length=0;
+    for (const p of list.slice(0,160)) if (['scrap','power','grenade','dna'].includes(p.kind)&&Number.isFinite(p.x)&&Number.isFinite(p.y))
+        spawnPickup(LJS.vec2(clamp(p.x,2,WORLD-2),clamp(p.y,2,WORLD-2)),p.kind,Math.floor(ChargefrontProgression.bounded(p.quantity,0,100)));
+}
 function checkpointPhaseForMission(missionId, currentPhase) {
     const phases = CAMPAIGN_CHECKPOINT_PHASES[missionId] || [];
-    if (currentPhase === P.DEFEND_R1) return P.MOVE_R1;
-    if (currentPhase === P.DEFEND_R2) return P.MOVE_R2;
-    if (currentPhase === P.DEFEND_R3) return P.MOVE_R3;
     return phases.includes(currentPhase) ? currentPhase : campaignSnapshot(missionId).firstPhase;
 }
 function createCampaignCheckpointSnapshot() {
     if (!CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return null;
     const savedPhase = checkpointPhaseForMission(activeMissionId, phase);
     return {
+        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
         missionId: activeMissionId,
         phase: savedPhase,
         mainIndex: phase === P.DEPLOY ? campaignSnapshot().firstMainIndex : campaignRun.mainIndex,
@@ -9915,21 +10150,20 @@ function createCampaignCheckpointSnapshot() {
         optional: Object.assign({}, campaignRun.optional),
         discovered: Object.assign({}, campaignRun.discovered || {}),
         enemyIntel: !!campaignRun.enemyIntel,
-        player: {
-            hp: player.hp, shield: player.shield, grenades: player.grenades,
-            position: { x: player.pos.x, y: player.pos.y }, yaw: player.yaw,
-            combat: playerCombat.snapshot(),
-        },
+        player:persistentPlayerSnapshot(),
         craft: { scraps: craft.scraps, powerCells: craft.powerCells, medkits: craft.medkits },
         squadCommand,
-        squad: squadMembers.map((member) => ({ hp: member.hp, shield: member.shield, mag: member.mag, reserve: member.reserve, downed: member.downed, position: { x: member.pos.x, y: member.pos.y } })),
+        squad:persistentSquadSnapshot(),
         mission: {
             maintenanceBatteryCarried: !!campaignContent.maintenanceBatteryCarried,
             scanned: !!campaignContent.scanned,
             cellCarried: !!campaignContent.cellCarried,
             cellUsed: !!campaignContent.cellUsed,
             cellDestination: campaignContent.cellDestination || null,
-            relays: relays.map((relay) => ({ powered: !!relay.powered })),
+            relays: relays.map(r => ({ powered:!!r.powered,powering:!!r.powering,progress:r.progress,hp:r.hp,defenseT:r.defenseT||0,budgetLeft:r.budgetLeft,spawnT:r.spawnT||0,spawnIndex:r.spawnIndex||0 })),
+            escort:campaignContent.escort?{state:campaignContent.escort.state,hp:campaignContent.escort.hp,routeIndex:campaignContent.escort.routeIndex,
+                position:{x:campaignContent.escort.pos.x,y:campaignContent.escort.pos.y},scanT:campaignContent.escort.scanT,ambushesLeft:campaignContent.escort.ambushesLeft,
+                spawnT:campaignContent.escort.spawnT,disableCount:campaignContent.escort.disableCount,emergencyRepairT:campaignContent.escort.emergencyRepairT}:null,
             surveyComplete: !!campaignRun.optional.escort_drone,
             encounter: Object.assign({}, campaignRun.encounter),
         },
@@ -9939,6 +10173,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     if (!snapshot || snapshot.missionId !== activeMissionId || !CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return false;
     objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
+    campaignRun.rewards = { ...(boundary.rewards || {}) };
     campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
     // Retire the experimental phase 30 and its flags at the save boundary.
@@ -10003,6 +10238,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         campaignContent.maintenanceBatteryCarried = !!mission.maintenanceBatteryCarried;
         campaignContent.scanned = !!mission.scanned || !!campaignRun.optional.scan_growth;
         campaignContent.cellCarried = !!mission.cellCarried; campaignContent.cellUsed = !!mission.cellUsed; campaignContent.cellDestination = mission.cellDestination || null;
+        if(!boundary.rewards&&mission.cellDestination==='SENSORS')campaignRun.rewards.alphaIntel=true;
         if (campaignContent.scan) campaignContent.scan.group.visible = !campaignContent.scanned;
         if (campaignContent.cell) campaignContent.cell.group.visible = !campaignContent.cellCarried && !campaignContent.cellUsed && !campaignRun.optional.portable_cell;
         if (campaignContent.maintenanceBatteryCarried && !campaignRun.worldState.maintenanceBatteryInstalled && campaignContent.maintenanceBattery) campaignContent.maintenanceBattery.group.visible = false;
@@ -10015,14 +10251,30 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         for (let i = 0; i < relays.length; i++) {
             const powered = !!(savedRelays[i] && savedRelays[i].powered);
             relays[i].powered = powered; relays[i].powering = false; relays[i].progress = powered ? 1 : 0;
+            const saved=savedRelays[i],r=relays[i];
+            if(boundary.version>=4&&saved){
+                for(const key of ['progress','hp','defenseT','budgetLeft','spawnT','spawnIndex'])if(Number.isFinite(saved[key]))r[key]=ChargefrontProgression.bounded(saved[key]);
+                r.powering=!!saved.powering&&!powered;
+            }
             setRelayVisualState(relays[i], powered ? 'online' : 'offline');
         }
-        activeRelay = null;
+        activeRelay = relays.find(r=>r.powering)||null;
         if (mission.surveyComplete && campaignContent.escort) {
+            campaignRun.worldState.betaSurvey=true;
+            campaignRun.rewards.gammaIntel=true; // migrate completed older survey saves without replaying rewards
             const escort = campaignContent.escort;
             escort.state = SURVEY_DRONE_STATE.COMPLETE; escort.active = false; escort.downed = true; escort.group.visible = true;
             escort.pos.copy(SURVEY_DRONE_ROUTE[SURVEY_DRONE_ROUTE.length - 1]); escort.group.position.set(escort.pos.x, escort.pos.y, terrainHeight(escort.pos.x, escort.pos.y) + 3);
             setSurveyDroneVisual(escort, 0x66ffcc, 2.25);
+        } else if (mission.escort&&Object.values(SURVEY_DRONE_STATE).includes(mission.escort.state)&&campaignContent.escort) {
+            const escort=campaignContent.escort,saved=mission.escort;
+            escort.state=saved.state;
+            for(const key of ['hp','scanT','ambushesLeft','spawnT','disableCount','emergencyRepairT'])if(Number.isFinite(saved[key]))escort[key]=ChargefrontProgression.bounded(saved[key]);
+            escort.routeIndex=Math.floor(clamp(saved.routeIndex||1,1,SURVEY_DRONE_ROUTE.length));escort.target=escort.route[escort.routeIndex]||escort.route.at(-1);
+            if(saved.position&&Number.isFinite(saved.position.x)&&Number.isFinite(saved.position.y))escort.pos.set(saved.position.x,saved.position.y);
+            escort.active=escort.state===SURVEY_DRONE_STATE.ESCORTING;escort.downed=!escort.active;
+            escort.group.visible=![SURVEY_DRONE_STATE.DORMANT,SURVEY_DRONE_STATE.ABANDONED].includes(escort.state);
+            escort.group.position.set(escort.pos.x,escort.pos.y,terrainHeight(escort.pos.x,escort.pos.y)+(escort.downed?1.1:3));
         } else if (relays[0] && relays[0].powered) makeSurveyDroneAvailable();
     } else if (activeMissionId === 'sample_zero') {
         campaignRun.encounter = Object.assign(campaignRun.encounter, mission.encounter || {});
@@ -10033,6 +10285,10 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         } else spawnLaboratoryConflict();
         setFinalMissionWorldState();
     }
+    restorePersistentActors(boundary);
+    restorePersistentPickups(boundary.pickups);
+    restorePersistentHostiles(boundary.hostiles);
+    syncLockerPickups();
     camera.position.set(player.pos.x, player.pos.y, player.zPos + player.eye);
     camera.lookAt(player.pos.x + Math.cos(player.yaw), player.pos.y + Math.sin(player.yaw), player.zPos + player.eye);
     if (['assist', 'spread', 'hold'].includes(boundary.squadCommand)) issueCommand(boundary.squadCommand);
@@ -10044,16 +10300,13 @@ function createContinuedMission4Snapshot() {
     const savedPhase = phase === P.M4_DEPART ? P.M4_BOARD : resumablePhases.includes(phase) ? phase : P.M4_BREAK_CONTACT;
     const extraction = campaignContent.extraction;
     return {
+        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
         missionId: 'break_contact',
         missionTime, kills, totalAmmoCrafted, totalMedkitsCrafted,
-        player: {
-            hp: player.hp, shield: player.shield, grenades: player.grenades,
-            position: { x: player.pos.x, y: player.pos.y }, yaw: player.yaw,
-            combat: playerCombat.snapshot(),
-        },
+        player:persistentPlayerSnapshot(),
         craft: { scraps: craft.scraps, powerCells: craft.powerCells, medkits: craft.medkits },
         squadCommand,
-        squad: squadMembers.map((member) => ({ hp: member.hp, shield: member.shield, mag: member.mag, reserve: member.reserve, downed: member.downed, position: { x: member.pos.x, y: member.pos.y } })),
+        squad:persistentSquadSnapshot(),
         securityTurret: !!campaignRun.worldState.securityTurret,
         enemyIntel: !!campaignRun.enemyIntel,
         extraction: {
@@ -10067,32 +10320,34 @@ function createContinuedMission4Snapshot() {
 }
 function checkpointCampaignState() {
     if (mode !== 'campaign' || !isPersistentCampaignRun() || phase === P.DEAD || phase === P.DONE) return false;
-    if (activeMissionId === 'break_contact') { checkpointMission4State(); return true; }
+    if (activeMissionId === 'break_contact') return checkpointMission4State();
     const snapshot = createCampaignCheckpointSnapshot();
     if (!snapshot) return false;
     campaignRun.restartSnapshot = snapshot;
     campaignProfile.campaignStarted = true;
     campaignProfile.lastMission = activeMissionId;
     campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: ship.campaignState, continuedState: snapshot };
-    saveCampaignProfile();
+    const saved=saveCampaignProfile();
     campaignCheckpointT = 10;
-    return true;
+    return saved;
 }
 function checkpointMission4State() {
     if (activeMissionId !== 'break_contact') return;
     const snapshot = createContinuedMission4Snapshot();
     campaignRun.restartSnapshot = snapshot;
-    if (!isPersistentCampaignRun()) return;
+    if (!isPersistentCampaignRun()) return false;
     campaignProfile.campaignStarted = true;
     campaignProfile.lastMission = activeMissionId;
     campaignProfile.operation = { worldSnapshot: activeMissionId, spacecraftState: ship.campaignState, continuedState: snapshot };
-    saveCampaignProfile();
+    const saved=saveCampaignProfile();
     campaignCheckpointT = 10;
+    return saved;
 }
 function applyContinuedMission4Snapshot(snapshot) {
     if (!snapshot || activeMissionId !== 'break_contact') return;
     objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
+    campaignRun.rewards = { ...(boundary.rewards || {}) };
     campaignRun.entryMode = 'continued'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState.securityTurret = !!boundary.securityTurret; campaignRun.enemyIntel = !!boundary.enemyIntel;
     missionTime = Math.max(0, Number(boundary.missionTime) || 0); kills = Math.max(0, boundary.kills | 0);
@@ -10119,6 +10374,8 @@ function applyContinuedMission4Snapshot(snapshot) {
         }
     }
     if (['assist', 'spread', 'hold'].includes(boundary.squadCommand)) issueCommand(boundary.squadCommand);
+    restorePersistentActors(boundary);
+    restorePersistentPickups(boundary.pickups);
     const savedExtraction = boundary.extraction || {};
     const resumablePhases = [P.M4_BREAK_CONTACT, P.M4_REACH_LZ, P.M4_CALL_EXTRACTION, P.M4_HOLD_LZ, P.M4_BOARD];
     phase = resumablePhases.includes(savedExtraction.phase) ? savedExtraction.phase : P.M4_BREAK_CONTACT;
@@ -10143,6 +10400,7 @@ function applyContinuedMission4Snapshot(snapshot) {
     ensureCampaignShipLanded(campaignRun.worldState.extractionInfestationCleared ? SPACECRAFT_STATE.LANDED_EXTRACTION_READY : SPACECRAFT_STATE.LANDED_INFESTED);
     if (phase === P.M4_HOLD_LZ) spawnExtractionInfestationDefenders();
     setExtractionInfestationVisuals();
+    restorePersistentHostiles(boundary.hostiles);
     checkpointMission4State();
 }
 function clearResultInputHandler() {
@@ -10176,19 +10434,23 @@ function focusGameCanvas() {
     try { canvas.focus({ preventScroll: true }); } catch (e) { canvas.focus(); }
 }
 function restartEndlessRun() {
+    invalidateEndlessResume();
     focusGameCanvas();
     requestLock();
     clearResultInputHandler();
     clearEndlessCombatEntities();
     const currentArena = endlessRun.arena;
+    const currentSeed = endlessRun.worldSeed;
     resetEndlessRun();
     endlessRun.arena = currentArena;
+    endlessRun.worldSeed = currentSeed;
     placeEndlessSquad();
     resultScreen = null; doneT = 0; lastAttackerPos = null; lastAttackerT = 0; damageFlashT = 0;
     document.getElementById('campaign-result-screen').classList.add('hidden');
     document.getElementById('pause-screen').classList.add('hidden');
     LJS.setPaused(false);
     beginEndless(false);
+    saveEndlessBoundary();
 }
 function restartCurrentRun() {
     if (mode === 'endless') {
@@ -10197,11 +10459,12 @@ function restartCurrentRun() {
     }
     try {
         const restartOrigin = isPersistentCampaignRun() ? CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN : CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
-        sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, origin: restartOrigin, continuedState: campaignRun.restartSnapshot || null });
+        sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, origin: restartOrigin, fresh:phase===P.DEAD, continuedState:phase===P.DEAD?null:campaignRun.restartSnapshot || null });
     } catch (e) { }
     location.reload();
 }
 function enterResultScreen() {
+    if(mode==='endless'&&(phase===P.DEAD||phase===P.DONE))invalidateEndlessResume();
     clearResultInputHandler();
     resultScreen = { startMs: performance.now(), chimed: {} };
     LJS.setPaused(true);                       // the mission result screen pauses the game
@@ -10305,23 +10568,18 @@ function optionalMarkerVisible(target) {
 function clearOptionalMarkerState() { optionalMarkerState.clear(); }
 function drawMarkers(W, H) {
     if (mode === 'endless') { drawEndlessMarkers(W, H); return; }
+    drawSurveyIntel(W,H);
     const targets = [];
     const rel = relayByPhase();
     if (rel && !rel.powered) {
-        const routeTarget = activeMissionId === 'power_through' ? nextRouteWaypoint(missionRoute(), player.pos.x, player.pos.y) : null;
-        const guided = routeTarget && routeTarget !== rel.pos;
-        targets.push({ pos: guided ? routeTarget : rel.pos, label: guided ? 'ROUTE TO ' + rel.R.name : rel.R.name, short: guided ? rel.R.name.replace('RELAY ', '') + ' ROUTE' : rel.R.name.replace('RELAY ', ''), color: 0xffcc44, priority: 100, primary: true });
+        targets.push({ pos:rel.pos,label:rel.R.name,short:rel.R.name.replace('RELAY ',''),color:0xffcc44,priority:100,primary:true });
     }
     if (phase === P.M1_MOVE_FAC) targets.push({ pos: FACILITY, label: 'FACILITY PERIMETER', short: 'FACILITY', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.M1_INVESTIGATE && campaignContent.maintenanceBattery) targets.push({ pos: campaignContent.maintenanceBattery.pos, label: 'EMERGENCY MAINTENANCE BATTERY', short: 'MAINT. BATTERY', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.M1_RESTORE_POWER && campaignContent.localConsole) targets.push({ pos: campaignContent.localConsole.pos, label: 'EMERGENCY GRID', short: 'POWER GRID', color: 0xffaa55, priority: 100, primary: true });
     if (phase === P.M1_COMMAND && campaignContent.commandConsole) targets.push({ pos: campaignContent.commandConsole.pos, label: 'COMMAND AREA', short: 'COMMAND', color: 0x66ccff, priority: 100, primary: true });
     if (phase === P.M2_CONFIRM && campaignContent.commandConsole) {
-        const inHall = player.pos.x > 331 && player.pos.x < 389 && player.pos.y > 619 && player.pos.y < 659;
-        const waypoint = nextRouteWaypoint(MISSION2_RETURN_ROUTE, player.pos.x, player.pos.y, 5);
-        targets.push({ pos: inHall ? campaignContent.commandConsole.pos : waypoint,
-            label: inHall ? 'REACTIVATE FACILITY TERMINAL' : 'RETURN VIA FRONT ENTRANCE',
-            short: inHall ? 'TERMINAL' : 'FRONT ENTRANCE', color: 0x66ccff, priority: 100, primary: true });
+        targets.push({pos:campaignContent.commandConsole.pos,label:'REACTIVATE FACILITY TERMINAL',short:'TERMINAL',color:0x66ccff,priority:100,primary:true});
     }
     if (activeMissionId === 'dead_signal' && campaignRun.discovered.scan_growth && !campaignRun.optional.scan_growth && campaignContent.scan) targets.push({ pos: campaignContent.scan.pos, label: 'OPTIONAL: INFESTED GROWTH BIO-SCAN', short: 'BIO-SCAN', color: 0x66ffcc, priority: 55, optional: true });
     if (activeMissionId === 'dead_signal' && campaignRun.discovered.portable_cell && !campaignRun.optional.portable_cell && campaignContent.cell) {
@@ -10362,10 +10620,12 @@ function drawMarkers(W, H) {
     if (phase === P.MOVE_FAC) targets.push({ pos: FACILITY, label: 'FACILITY', short: 'FACILITY', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.SEARCH && vial.group) targets.push({ pos: LJS.vec2(vial.group.position.x, vial.group.position.y), label: 'CLONE DNA VIAL', short: 'DNA VIAL', color: 0x66ffcc, priority: 100, primary: true });
     if (phase === P.FINALE) targets.push({ pos: LZ, label: 'LANDING ZONE', short: 'LZ', color: 0x66ffcc, priority: 100, primary: true });
+    const intel=activeIntelRoute();
+    if(intel){const i=intelRouteIndex(intel);targets.push({pos:intel.path[i],label:intel.name+' '+(i+1)+' / '+intel.path.length,short:intel.name+' '+(i+1),color:0x66e0ff,priority:65,route:true});}
     for (const target of targets) target.distance = Math.hypot(target.pos.x - player.pos.x, target.pos.y - player.pos.y);
     const visibleTargets = targets.filter((target) => !target.optional || optionalMarkerVisible(target));
     visibleTargets.sort((a, b) => b.priority - a.priority || a.distance - b.distance);
-    const selected = visibleTargets.filter((target) => target.primary).concat(visibleTargets.filter((target) => target.optional).slice(0, 2));
+    const selected = visibleTargets.filter((target) => target.primary).concat(visibleTargets.filter(t=>t.route),visibleTargets.filter((target) => target.optional).slice(0, 2));
     const placed = [];
     const forward = new THREE.Vector3(); camera.getWorldDirection(forward);
     const cameraRight = new THREE.Vector3().setFromMatrixColumn(camera.matrixWorld, 0);
@@ -10381,7 +10641,7 @@ function drawMarkers(W, H) {
             if (!inFront) sx = world.clone().sub(camera.position).dot(cameraRight) >= 0 ? W - 28 : 28;
             const dx = clamp(sx, 28, W - 28), dy = clamp(sy, 38, H - 48);
             const edgeText = t.primary ? '◆ ' + t.short + ' ' + Math.round(t.distance) + 'm' : '◇ ' + Math.round(t.distance) + 'm';
-            hudText(edgeText, LJS.vec2(dx, dy), 12, LJS.rgb(1, 0.85, 0.4, t.primary ? 0.95 : 0.62), 'center');
+            hudText(edgeText, LJS.vec2(dx, dy), 12, t.route?LJS.rgb(.3,.9,1,.85):LJS.rgb(1, 0.85, 0.4, t.primary ? 0.95 : 0.62), dx<W/2?'left':'right');
             continue;
         }
         if (Math.abs(sx - W / 2) < 70 && Math.abs(sy - H / 2) < 70) sy -= 82;
@@ -10411,6 +10671,21 @@ function drawMarkers(W, H) {
 }
 
 /* precomputed terrain grid for the minimap (fast lookups instead of sampling noise each frame) */
+const surveyProjection=new THREE.Vector3();
+let surveyContactsShown=0;
+function drawSurveyIntel(W,H) {
+    surveyContactsShown=0;
+    if(mode!=='campaign'||!((activeMissionId==='power_through'&&campaignRun.worldState.betaSurvey)||(activeMissionId==='dead_signal'&&campaignRun.rewards?.alphaIntel)))return;
+    for(const e of enemies) {
+        if(surveyContactsShown>=8)break;
+        if(e.dead||e.dying||e.unburrowing||Math.hypot(e.pos.x-player.pos.x,e.pos.y-player.pos.y)>95||!hasLOS(player.pos.x,player.pos.y,e.pos.x,e.pos.y,.8))continue;
+        surveyProjection.set(e.pos.x,e.pos.y,e.z+1.6).project(camera);
+        const x=(surveyProjection.x*.5+.5)*W,y=(-surveyProjection.y*.5+.5)*H;
+        if(surveyProjection.z< -1||surveyProjection.z>1||x<290||x>W-190||y<65||y>H-65)continue;
+        LJS.drawRect(LJS.vec2(x,y),LJS.vec2(9,9),LJS.rgb(.3,.9,1,.65),Math.PI/4,false,true);
+        surveyContactsShown++;
+    }
+}
 const MAP_RES = 200;                 // grid cells per WORLD axis (~4 m per cell)
 const mapH = new Float32Array(MAP_RES * MAP_RES);
 const mapCliff = new Uint8Array(MAP_RES * MAP_RES);
@@ -10476,8 +10751,8 @@ function drawMinimap(W, H) {
     const toMini = (x, y) => LJS.vec2(ox + (x - player.pos.x) * scale, oy - (y - player.pos.y) * scale);   // north-up: world +y (north) = up
     /* exact route path (clipped to the radar bounds) — campaign only, endless has no route */
     if (mode !== 'endless') {
-        const pathCol = LJS.rgb(1, 0.82, 0.28, 0.95);
-        const route = missionRoute();
+        const pathCol = LJS.rgb(.3,.9,1,.9);
+        const route = activeIntelRoute()?.path || [];
         for (let i = 0; i < route.length - 1; i++) {
             const a = toMini(route[i].x, route[i].y), b = toMini(route[i + 1].x, route[i + 1].y);
             const s = clipSeg(a.x, a.y, b.x, b.y, mx, my, mx + size, my + size);
@@ -10501,6 +10776,8 @@ function drawMinimap(W, H) {
         if (Math.abs(p.x - ox) > size / 2 || Math.abs(p.y - oy) > size / 2) return;
         LJS.drawRect(p, LJS.vec2(s, s), c, 0, false, true);
     };
+    const objective=mode==='campaign'?targetOfPhase():null;
+    if(objective)dot(objective.pos.x,objective.pos.y,LJS.rgb(1,.85,.35),7);
     /* north-up radar: player is a dot with a heading line pointing where they face.
        the map plots world +y UPWARD (north), so the heading uses -sin to match. */
     const hx = ox + Math.cos(player.yaw) * 6, hy = oy - Math.sin(player.yaw) * 6;
@@ -10615,6 +10892,7 @@ function reloadToMainMenu(openMissionSelect = false) {
     }
     checkpointCampaignState();
     clearTransientSessionState();
+    if(mode==='endless'&&phase!==P.DEAD&&phase!==P.DONE&&!endlessRun.waveActive)saveEndlessBoundary();
     location.reload();
 }
 /* start / pause overlays are appended after the canvas so they paint on top */
@@ -10631,14 +10909,31 @@ function buildOverlays() {
         <div class="cf-title">CHARGE FRONT</div>
 
         <div class="cf-menu" id="menu-buttons">
-            <button class="cf-menu-btn" id="btn-start">NEW CAMPAIGN</button>
-            <button class="cf-menu-btn hidden" id="btn-continue-campaign">CONTINUE CAMPAIGN</button>
-            <button class="cf-menu-btn" id="btn-select-mission">SELECT MISSION</button>
+            <button class="cf-menu-btn" id="btn-campaign">CAMPAIGN</button>
             <button class="cf-menu-btn" id="btn-endless">ENDLESS HORDE</button>
             <button class="cf-menu-btn" id="btn-options">OPTIONS</button>
             <button class="cf-menu-btn" id="btn-guide">CONTROLS &amp; GUIDE</button>
             <button class="cf-menu-btn" id="btn-credits">CREDITS</button>
             <button class="cf-menu-btn danger" id="btn-quit">QUIT GAME</button>
+        </div>
+        <div class="cf-panel-box cf-submenu hidden" id="campaign-panel">
+            <h2>CAMPAIGN</h2><div class="cf-menu">
+                <button class="cf-menu-btn" id="btn-start">START NEW GAME</button>
+                <button class="cf-menu-btn" id="btn-select-mission">SELECT MISSION</button>
+                <button class="cf-menu-btn" id="btn-continue-campaign" style="font-size:14px;letter-spacing:.08em">CONTINUE LAST CHECKPOINT</button>
+                <button class="cf-menu-btn back" id="btn-campaign-back">BACK</button>
+            </div><p id="save-status" role="status"></p>
+        </div>
+        <div class="cf-panel-box cf-submenu hidden" id="endless-resume-panel">
+            <h2>ENDLESS HORDE</h2><p>Active waves resume from their saved start. Intermissions retain completed-wave rewards.</p>
+            <div class="cf-menu"><button class="cf-menu-btn" id="btn-endless-continue" style="font-size:13px;letter-spacing:.06em">CONTINUE LAST SAVED WAVE</button>
+                <button class="cf-menu-btn" id="btn-endless-new">START NEW GAME</button>
+                <button class="cf-menu-btn back" id="btn-endless-resume-back">BACK</button></div>
+        </div>
+        <div class="cf-panel-box cf-submenu hidden" id="confirm-panel">
+            <h2>START NEW GAME?</h2><p id="confirm-message"></p><div class="cf-menu">
+                <button class="cf-menu-btn danger" id="btn-confirm-new">START NEW GAME</button>
+                <button class="cf-menu-btn back" id="btn-confirm-back">CANCEL</button></div>
         </div>
         <div class="cf-quit-note hidden" id="quit-note">Thanks for playing CHARGE FRONT! Your browser blocks closing this tab, so keep it as a trophy.</div>
 
@@ -10664,18 +10959,19 @@ function buildOverlays() {
 
         <div class="cf-panel-box hidden" id="endless-setup-panel">
             <h2>ENDLESS DEPLOYMENT</h2>
+            <p id="endless-save-status" role="status"></p>
             <p>Choose two different weapons. Full magazines + 8 universal cartridges.<br>Customize all three operators. Restart retains this deployment with fresh supplies.</p>
             <div class="cf-loadout-grid">
                 <section class="cf-loadout-group"><h3>PLAYER LOADOUT</h3>
                     <div class="row"><label for="endless-slot1">Weapon Slot 1</label><select id="endless-slot1">${weaponOptions('rifle')}</select></div>
                     <div class="row"><label for="endless-slot2">Weapon Slot 2</label><select id="endless-slot2">${weaponOptions('scatter')}</select></div>
-                    <div class="row"><label for="endless-starting-slot">Starting Slot</label><select id="endless-starting-slot"><option value="1">Slot 1</option><option value="2">Slot 2</option></select></div>
+                    <div class="row"><label for="endless-player-ability">Ability</label><select id="endless-player-ability"><option value="surge">SURGE PULSE</option></select></div>
                 </section>
                 ${squadSetup}
             </div>
             <h3 style="font-size:13px;color:#9adcff;margin:12px 0 4px">SQUAD</h3>
             <div class="row"><label for="endless-squad-posture">Squad posture</label><select id="endless-squad-posture"><option value="balanced">BALANCED</option><option value="escort">CLOSE ESCORT</option><option value="screen">WIDE SCREEN</option></select></div>
-            <p>Balanced: standard formation · Close escort: tight leash · Wide screen: spaced support.<br>1 / 2 equip slots · Q cycles · Z / X / Y operator abilities · Tab / arrows / Enter navigate.</p>
+            <p>Balanced: standard formation · Close escort: tight leash · Wide screen: spaced support.<br>1 / 2 equip slots · Q cycles · F Commander Surge · Z / X / Y operator abilities.</p>
             <div class="cf-deployment-footer">
                 <button class="cf-menu-btn" id="btn-endless-ready">CONFIRM SETUP</button>
                 <button class="cf-menu-btn back" id="btn-endless-back">BACK TO MAIN MENU</button>
@@ -10728,7 +11024,9 @@ function buildOverlays() {
                     <div><span class="key">R</span> Reload (consumes 1 cartridge)</div>
                     <div><span class="key">E</span> Interact — hold to power relays, revive squadmates, take the vial</div>
                     <div><span class="key">G</span> Throw an ESG-180 grenade</div>
-                    <div><span class="key">1 / 2</span> Equip Slot 1 / Slot 2; Q cycles both</div>
+                    <div><span class="key">1 / 2</span> Directly equip weapon slots 1 or 2</div>
+                    <div><span class="key">Q</span> Cycle between equipped weapons</div>
+                    <div><span class="key">H</span> Use MEDKIT <span class="sub">(+60 HP, up to 3 stored)</span></div>
                     <div><span class="key">F</span> SURGE PULSE — restore nearby shields and disrupt hostiles</div>
                     <div><span class="key">M</span> Cycle sound mode — music / highlights / all sounds</div>
                     <h3>SQUAD</h3>
@@ -10743,13 +11041,14 @@ function buildOverlays() {
                 <div>
                     <h3>CRAFTING</h3>
                     <div><span class="key">C</span> Craft MEDKIT — <span class="cost">6 scrap</span></div>
-                    <div><span class="key">H</span> Use MEDKIT <span class="sub">(+60 HP, up to 3 stored)</span></div>
                     <div><span class="key">V</span> Craft UNIVERSAL CARTRIDGE — <span class="cost">4 scrap</span> <span class="sub">(one magazine replacement for any equipped gun)</span></div>
                     <div><span class="key">B</span> Craft GRENADE — <span class="cost">1 power cell</span> <span class="sub">(+2, up to 5)</span></div>
                     <p class="sub" style="margin-top:8px">Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles.</p>
                     <h3>WEAPONRY</h3>
-                    <div><b>BUL-117</b> — Fast, accurate laser rifle. <b>CRW-8</b> — close-range 8-pellet scattergun.</div>
-                    <div><b>ARC-9</b> — collision-authorized chain disruption. <b>PX-4</b> — explosive plasma. Choose two of four in Endless.</div>
+                    <div><b>BUL-117</b> — Fast, accurate sustained laser rifle.</div>
+                    <div><b>CRW-8</b> — Close-range 8-pellet scattergun.</div>
+                    <div><b>ARC-9</b> — Collision-authorized chain disruption.</div>
+                    <div><b>PX-4</b> — Explosive plasma. Choose two of four in Endless.</div>
                     <div>Independent magazines, one shared cartridge pool. Switching cancels reload without spending a cartridge.</div>
                     <div><b>ESG-180</b> — Electricshock grenades, homing; they seek the nearest hostiles and detonate with a wide electric arc. Mind your own blast radius.</div>
                     <h3>ENDLESS MUTATORS</h3>
@@ -10819,6 +11118,9 @@ function renderMissionSelect() {
 
 function campaignContinueMissionId() {
     if (campaignProfile.campaignComplete) return null;
+    const saved=campaignProfile.operation.continuedState;
+    if(ChargefrontProgression.checkpointValid(saved))return saved.missionId;
+    if(!campaignProfile.campaignStarted||!legacyCampaignEntry)return null;
     const preferred = campaignProfile.missions[campaignProfile.lastMission];
     if (preferred && preferred.unlocked && !preferred.completed) return campaignProfile.lastMission;
     const next = CAMPAIGN_MISSIONS.find((mission) => campaignProfile.missions[mission.id].unlocked && !campaignProfile.missions[mission.id].completed);
@@ -10852,7 +11154,7 @@ async function boot() {
     /* main menu navigation */
     const el = (id) => document.getElementById(id);
     const showPanel = (id) => {
-        ['menu-buttons', 'mission-panel', 'sound-panel', 'endless-setup-panel', 'options-panel', 'credits-panel', 'guide-panel', 'quit-note'].forEach((pid) => el(pid).classList.add('hidden'));
+        ['menu-buttons','campaign-panel','endless-resume-panel','confirm-panel', 'mission-panel', 'sound-panel', 'endless-setup-panel', 'options-panel', 'credits-panel', 'guide-panel', 'quit-note'].forEach((pid) => el(pid).classList.add('hidden'));
         start.querySelector('.cf-title').classList.toggle('hidden', id !== 'menu-buttons');   // title only on the main menu
         if (id) el(id).classList.remove('hidden');
         start.classList.toggle('panel-open', id === 'guide-panel' || id === 'options-panel');
@@ -10867,9 +11169,16 @@ async function boot() {
     let pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true };
     const continueMissionId = campaignContinueMissionId();
     const continueButton = el('btn-continue-campaign');
-    continueButton.classList.toggle('hidden', !continueMissionId || !campaignProfile.campaignStarted);
-    if (continueMissionId) continueButton.textContent = 'CONTINUE CAMPAIGN — MISSION ' + campaignMission(continueMissionId).number;
-    el('btn-start').addEventListener('click', () => { pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true }; refreshSoundModeButtons(); showPanel('sound-panel'); });
+    continueButton.disabled = !continueMissionId;
+    el('save-status').textContent = saveFeedback || (!continueMissionId?'No valid campaign checkpoint available.':legacyCampaignEntry?'Legacy save: Continue restores the unlocked mission entry with fresh supplies.':'Continue Mission '+campaignMission(continueMissionId).number);
+    el('btn-campaign').addEventListener('click',()=>showPanel('campaign-panel'));
+    el('btn-campaign-back').addEventListener('click',()=>showPanel('menu-buttons'));
+    let confirmedAction=null,confirmationBack='menu-buttons';
+    const confirmNew=(message,back,action)=>{confirmedAction=action;confirmationBack=back;el('confirm-message').textContent=message;showPanel('confirm-panel');};
+    el('btn-confirm-new').addEventListener('click',()=>{const action=confirmedAction;confirmedAction=null;if(action)action();});
+    el('btn-confirm-back').addEventListener('click',()=>{confirmedAction=null;showPanel(confirmationBack);});
+    const campaignNew=()=>{pendingLaunch={mode:'campaign',missionId:'dead_signal',origin:CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN,newCampaign:true};refreshSoundModeButtons();showPanel('sound-panel');};
+    el('btn-start').addEventListener('click',()=>{if(campaignProfile.campaignStarted)confirmNew('This will replace the current campaign progress and checkpoint.','campaign-panel',campaignNew);else campaignNew();});
     continueButton.addEventListener('click', () => { if (!continueMissionId) return; pendingLaunch = { mode: 'campaign', missionId: continueMissionId, origin: CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, newCampaign: false }; refreshSoundModeButtons(); showPanel('sound-panel'); });
     el('btn-select-mission').addEventListener('click', () => { renderMissionSelect(); showPanel('mission-panel'); });
     el('mission-list').addEventListener('click', (event) => {
@@ -10882,7 +11191,7 @@ async function boot() {
         setSoundMode(button.dataset.soundMode);
     }));
     el('btn-sound-back').addEventListener('click', () => showPanel('menu-buttons'));
-    el('btn-mission-back').addEventListener('click', () => showPanel('menu-buttons'));
+    el('btn-mission-back').addEventListener('click', () => showPanel('campaign-panel'));
     el('btn-sound-start').addEventListener('click', () => {
         if (menuLaunchTimer) return;
         if (opts.soundMode !== 'music') { activateSfxPlayback(); playFileSfx('accessOk', 0.5); }
@@ -10897,7 +11206,7 @@ async function boot() {
             menuLaunchTimer = 0;
             if (menuLaunchFade && menuLaunchFade.parentNode) menuLaunchFade.parentNode.removeChild(menuLaunchFade);
             menuLaunchFade = null;
-            if (pendingLaunch.mode === 'endless') startEndless(pendingLaunch.configuration);
+            if (pendingLaunch.mode === 'endless') startEndless(pendingLaunch.configuration,pendingLaunch.saved || null);
             else startCampaignMission(pendingLaunch.missionId, pendingLaunch.origin, pendingLaunch.newCampaign);
         }, 2000);
     });
@@ -10913,12 +11222,15 @@ async function boot() {
     for (const id of ['endless-slot1', 'endless-slot2']) el(id).addEventListener('change', event => synchronizeSlots(event.target));
     synchronizeSlots(el('endless-slot1'));
     const openEndlessSetup = () => { pendingLaunch = { mode: 'endless' }; showPanel('endless-setup-panel'); el('endless-slot1').focus(); };
-    el('btn-endless').addEventListener('click', openEndlessSetup);
+    el('btn-endless').addEventListener('click',()=>{const saved=loadEndlessBoundary();if(saved)showPanel('endless-resume-panel');else {openEndlessSetup();el('endless-save-status').textContent=saveFeedback;}});
+    el('btn-endless-continue').addEventListener('click',()=>{const saved=loadEndlessBoundary();if(!saved){openEndlessSetup();return;}pendingLaunch={mode:'endless',configuration:ChargefrontCombat.endlessConfig(saved.configuration),saved};refreshSoundModeButtons();showPanel('sound-panel');});
+    el('btn-endless-new').addEventListener('click',()=>confirmNew('This will replace the saved Endless run when your new deployment begins.','endless-resume-panel',openEndlessSetup));
+    el('btn-endless-resume-back').addEventListener('click',()=>showPanel('menu-buttons'));
     el('btn-endless-back').addEventListener('click', () => showPanel('menu-buttons'));
     el('btn-endless-ready').addEventListener('click', () => {
         const squad = {};
         for (const id of ['rook', 'vex', 'kade']) squad[id] = { weapon: el('endless-' + id + '-weapon').value, ability: el('endless-' + id + '-ability').value };
-        pendingLaunch = { mode: 'endless', configuration: ChargefrontCombat.endlessConfig({ player: { slot1: el('endless-slot1').value, slot2: el('endless-slot2').value, startingSlot: +el('endless-starting-slot').value }, squad, posture: el('endless-squad-posture').value }) };
+        pendingLaunch = { mode: 'endless', configuration: ChargefrontCombat.endlessConfig({ player: { slot1: el('endless-slot1').value, slot2: el('endless-slot2').value, ability:el('endless-player-ability').value }, squad, posture: el('endless-squad-posture').value }) };
         refreshSoundModeButtons(); showPanel('sound-panel');
     });
     el('btn-options').addEventListener('click', () => showPanel('options-panel'));
@@ -11033,12 +11345,15 @@ async function boot() {
     document.addEventListener('blur', () => {
         if (gameActive) LJS.pointerLockExit();
     });
+    window.addEventListener('beforeunload',()=>{
+        if(mode==='endless'&&gameActive&&!player.dead&&!endlessRun.waveActive&&phase===P.ENDLESS)saveEndlessBoundary();
+    });
 
     try {
         const queued = JSON.parse(sessionStorage.cf_campaign_autostart || 'null');
         if (queued && queued.missionId) {
             delete sessionStorage.cf_campaign_autostart;
-            startCampaignMission(queued.missionId, queued.origin || CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, false, queued.continuedState || null);
+            startCampaignMission(queued.missionId, queued.origin || CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, false, queued.continuedState || null,!!queued.fresh);
         } else if (sessionStorage.cf_endless_autostart === '1') {
             delete sessionStorage.cf_endless_autostart;
             openEndlessSetup();
@@ -11390,6 +11705,15 @@ window.__cf = {
     startMission(id, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT) { return startCampaignMission(id, origin, false); },
     startEndlessMode(configuration) { startEndless(configuration); return mode; },
     get combat() { return playerCombat; },
+    saveEndless() {return saveEndlessBoundary();},
+    createCheckpointForTest() {return createCampaignCheckpointSnapshot();},
+    restoreCheckpointForTest(saved) {return applyCampaignCheckpointSnapshot(saved);},
+    endlessSaveInfo() {return loadEndlessBoundary();},
+    continueEndless() {const saved=loadEndlessBoundary();if(saved)startEndless(saved.configuration,saved);return !!saved;},
+    additionalInfo() {return {reserves:ChargefrontProgression.reserves,scrap:ChargefrontProgression.scrap,intel:activeIntelRoute()?.id||null,routeIndex:activeIntelRoute()?intelRouteIndex(activeIntelRoute()):0,
+        routes:Object.fromEntries(Object.entries(INTEL_ROUTES).map(([id,r])=>[id,r.path.map(p=>[p.x,p.y])])),contacts:surveyContactsShown,
+        locker:lockerPickups.map(p=>({kind:p.kind,visible:p.group.visible,pos:[p.pos.x,p.pos.y,p.group.position.z],remaining:campaignRun.rewards?.lockerRemaining?.[p.kind]||0})),pickups:persistentPickupsSnapshot()};},
+    endlessDecorInfo() {return scene.children.filter(g=>g.name.startsWith('EndlessTree')).map(g=>({position:g.position.toArray(),scale:g.scale.toArray(),angle:g.rotation.z}));},
     checkpoint() { return checkpointCampaignState(); },
     combatPoolInfo() { return { shots: shots.length, shotPool: shotPool.length, impacts: impacts.length, impactPool: impactPool.length, sparks: sparks.length, sparkPool: sparkPool.length }; },
     inspectHUD() {

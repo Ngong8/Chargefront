@@ -40,7 +40,7 @@ assert.equal(migrated.weapons.scatter.mag, 20); assert.equal(migrated.cartridges
 assert.deepEqual(api.endlessConfig({ player: { slot1: 'invalid', slot2: 'invalid' }, posture: 'fake' }), api.endlessConfig());
 const config = api.endlessConfig({ player: { slot1: 'rifle', slot2: 'scatter', startingSlot: 2 }, posture: 'escort' });
 assert(Object.isFrozen(config)); c.reset({ loadout: config.player });
-assert.equal(c.active.id, 'scatter'); assert.equal(c.active.mag, 20); assert.equal(c.cartridges, 8);
+assert.equal(c.active.id, 'rifle'); assert.equal(c.active.mag, 50); assert.equal(c.cartridges, 8);assert.equal(config.player.ability,'surge');assert(!('startingSlot' in config.player));
 // Holding fire for 600 ticks consumes at most one shot per cooldown, even if
 // called twice each tick. Switching cannot grant a faster cadence.
 c.reset(); let accepted = 0;
@@ -50,13 +50,13 @@ assert.equal(accepted, 50); assert.equal(c.shotsFired, 50);
 for (const a of api.definitions) for (const b of api.definitions) if (a !== b) for (const startingSlot of [1, 2]) {
     const cfg = api.endlessConfig({ player: { slot1: a.id, slot2: b.id, startingSlot } });
     c.reset({ loadout: cfg.player }); assert.deepEqual(c.slots, [a.id, b.id]);
-    assert.equal(c.activeId, startingSlot === 1 ? a.id : b.id); assert.equal(Object.keys(c.weapons).length, 2);
+    assert.equal(c.activeId,a.id); assert.equal(Object.keys(c.weapons).length, 2);
     assert(!c.select(2));
     for (const index of [0, 1]) {
         c.select(index); c.tick(1); c.active.mag = 0; const supply = c.cartridges;
         assert(c.reload()); c.tick(3); assert.equal(c.cartridges, supply - 1); assert.equal(c.active.mag, c.active.magSize);
     }
-    c.reset({ loadout: cfg.player }); assert.equal(c.activeId, startingSlot === 1 ? a.id : b.id);
+    c.reset({ loadout: cfg.player }); assert.equal(c.activeId,a.id);
     c.restore({ combat: c.snapshot() }); assert.deepEqual(c.slots, ['rifle', 'scatter']);
 }
 for (const w of api.definitions) {
@@ -79,4 +79,4 @@ assert.equal(api.chooseMutator(6, null, mods, () => 0), null);
 for (let i = 1; i <= 4; i++) assert.equal(api.chooseMutator(6, null, mods, () => i / 5).id, mods[i - 1].id);
 for (let i = 0; i < 100; i++) assert.notEqual(api.chooseMutator(7, 'storm', mods, () => i / 100)?.id, 'storm');
 assert.equal(api.terminalOpacity(.2), 1); assert.equal(api.terminalOpacity(.06), .5); assert.equal(api.terminalOpacity(0), 0);
-console.log('PASS combat state: 24 ordered pair/starting-slot configurations, shared ammo, migration, squad catalog, mutators, fade, cadence');
+console.log('PASS combat state: 12 ordered pairs with both obsolete-starting-slot migrations, Surge ability, shared ammo, squad catalog, mutators, fade, cadence');

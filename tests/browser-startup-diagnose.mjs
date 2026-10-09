@@ -1,6 +1,7 @@
 // Bounded Firefox startup/input diagnosis; --baseline serves accepted ef3ad59
 // without modifying the checkout. Does not weaken any gameplay regression gate.
 import { resolve } from 'node:path';
+import {campaignClick} from './menu-helpers.mjs';
 import { pathToFileURL } from 'node:url';
 import { mkdirSync, writeFileSync } from 'node:fs';
 import { execFileSync } from 'node:child_process';
@@ -21,7 +22,7 @@ try {
     await page.waitForFunction(() => { try { return !!window.__cf?.renderer; } catch { return false; } }, undefined, { timeout: 120000 }); note('renderer');
     await page.waitForTimeout(4000);
     const before = await page.evaluate(() => { const p = __cfPerf.summary(); return { ready: document.readyState, ua: navigator.userAgent, time: __cf.performanceInfo(), perf: { frames: p.frames, p95: p.p95Ms, worst: p.worstMs, counters: p.counters } }; }); note('before-click', before);
-    try { await page.locator('#btn-start').click({ timeout: 15000 }); note('click-receipt'); } catch (e) { note('click-failed', String(e)); }
+    try { await campaignClick(page); note('click-receipt'); } catch (e) { note('click-failed', String(e)); }
     const after = await Promise.race([page.evaluate(() => { const p = __cfPerf.summary(); return { soundPanel: !document.getElementById('sound-panel').classList.contains('hidden'), intro: !!__cf.intro, mode: __cf.mode, perf: { frames: p.frames, p95: p.p95Ms, worst: p.worstMs, counters: p.counters } }; }), new Promise(resolve => setTimeout(() => resolve({ evaluationTimedOut: true }), 10000))]);
     note('after-click', after);
 } catch (e) {

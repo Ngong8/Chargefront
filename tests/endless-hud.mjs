@@ -1,6 +1,7 @@
 // Milestone 4.1: real deployment/input and guided rendered gameplay. Bounded
 // fixtures accelerate wave counters and position contacts; controls remain real.
 import assert from 'node:assert/strict';
+import {endlessDeployment} from './menu-helpers.mjs';
 import { mkdirSync, writeFileSync, readFileSync } from 'node:fs';
 import { resolve } from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -30,22 +31,22 @@ const select = async index => {
     catch(error) { console.log('selection timeout',await page.evaluate(()=>({index:__cf.player.weaponIndex,swap:__cf.player.swapT,phase:__cf.phaseName,pause:document.getElementById('pause-screen').className,lock:!!document.pointerLockElement}))); throw error; }
 };
 const hud = () => page.evaluate(() => __cf.inspectHUD());
-const configA = { player: { slot1: 'rifle', slot2: 'scatter', startingSlot: 2 }, squad: {
+const configA = { player: { slot1: 'rifle', slot2: 'scatter', ability:'surge' }, squad: {
     rook: { weapon: 'arc', ability: 'medic_pulse' }, vex: { weapon: 'plasma', ability: 'target_designator' }, kade: { weapon: 'scatter', ability: 'bulwark' } }, posture: 'escort' };
-const configB = { player: { slot1: 'arc', slot2: 'plasma', startingSlot: 1 }, squad: {
+const configB = { player: { slot1: 'arc', slot2: 'plasma', ability:'surge' }, squad: {
     rook: { weapon: 'rifle', ability: 'target_designator' }, vex: { weapon: 'scatter', ability: 'bulwark' }, kade: { weapon: 'arc', ability: 'medic_pulse' } }, posture: 'screen' };
-const configC = { player: { slot1: 'scatter', slot2: 'arc', startingSlot: 2 }, squad: {
+const configC = { player: { slot1: 'scatter', slot2: 'arc', ability:'surge' }, squad: {
     rook: { weapon: 'plasma', ability: 'bulwark' }, vex: { weapon: 'arc', ability: 'medic_pulse' }, kade: { weapon: 'rifle', ability: 'target_designator' } }, posture: 'balanced' };
-const configD = { player: { slot1: 'plasma', slot2: 'rifle', startingSlot: 2 }, squad: {
+const configD = { player: { slot1: 'plasma', slot2: 'rifle', ability:'surge' }, squad: {
     rook: { weapon: 'scatter', ability: 'target_designator' }, vex: { weapon: 'rifle', ability: 'medic_pulse' }, kade: { weapon: 'plasma', ability: 'bulwark' } }, posture: 'balanced' };
 async function setup(config, index) {
-    await page.goto(url.href); await ready(); await page.locator('#btn-endless').click();
+    await page.goto(url.href); await ready(); await endlessDeployment(page);
     // Native duplicate prevention: free slot 1's requested gun before selecting.
     const current1 = await page.locator('#endless-slot1').inputValue(), current2 = await page.locator('#endless-slot2').inputValue();
     if (config.player.slot1 === current2) await page.locator('#endless-slot2').selectOption(['rifle','scatter','arc','plasma'].find(id=>id!==current1&&id!==config.player.slot1));
     await page.locator('#endless-slot1').selectOption(config.player.slot1);
     await page.locator('#endless-slot2').selectOption(config.player.slot2);
-    await page.locator('#endless-starting-slot').selectOption(String(config.player.startingSlot));
+    await page.locator('#endless-player-ability').selectOption(config.player.ability);
     for (const id of ['rook', 'vex', 'kade']) {
         await page.locator('#endless-' + id + '-weapon').selectOption(config.squad[id].weapon);
         await page.locator('#endless-' + id + '-ability').selectOption(config.squad[id].ability);
@@ -60,10 +61,10 @@ async function setup(config, index) {
     if (index === 1) await capture('02-player-arc-px-pair');
     if (index === 2) await capture('03-squad-customization');
     // Draft survives Back; native keyboard navigation and footer focus order.
-    await page.locator('#btn-endless-back').click(); await page.locator('#btn-endless').click();
+    await page.locator('#btn-endless-back').click(); await endlessDeployment(page);
     assert.equal(await page.locator('#endless-slot1').inputValue(), config.player.slot1);
-    await page.locator('#endless-starting-slot').focus(); await page.keyboard.press('Home');
-    if (config.player.startingSlot === 2) await page.keyboard.press('ArrowDown');
+    await page.locator('#endless-player-ability').focus(); await page.keyboard.press('Home');
+    assert.equal(await page.locator('#endless-player-ability').inputValue(),'surge');
     await page.locator('#btn-endless-ready').focus(); await page.keyboard.press('Tab');
     assert.equal(await page.evaluate(() => document.activeElement.id), 'btn-endless-back');
     await page.locator('#btn-endless-ready').click(); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();
@@ -72,7 +73,7 @@ async function setup(config, index) {
     const deployed = await page.evaluate(() => ({ config: __cf.endlessConfiguration, combat: __cf.combat.snapshot(), squad: __cf.squadInfo(),
         weaponTuning: __cf.squad.map(m => ({ weapon: m.def.weapon, preferred: m.def.combat.preferredRange, cadence: m.def.cd, damage: m.def.dmg, ability: m.def.ability.id })) }));
     assert.deepEqual(deployed.config, config); assert.equal(Object.keys(deployed.combat.weapons).length, 2);
-    assert.equal(deployed.combat.activeId, config.player[config.player.startingSlot === 1 ? 'slot1' : 'slot2']); assert.equal(deployed.combat.cartridges, 8);
+    assert.equal(deployed.combat.activeId, config.player.slot1); assert.equal(deployed.combat.cartridges, 8);
     for (let i = 0; i < 3; i++) assert.equal(deployed.weaponTuning[i].weapon, config.squad[['rook', 'vex', 'kade'][i]].weapon);
     return deployed;
 }

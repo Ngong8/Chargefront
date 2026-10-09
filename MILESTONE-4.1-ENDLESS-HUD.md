@@ -692,3 +692,15 @@ That follow-up replaces the earlier two-beep, pursuing Runner fuse with seven
 accelerating beeps at a locked position, extends it to the existing gold
 `tunneler`, restores reserve/crafting labels, and corrects sprint/fire arbitration,
 procedural pose boundaries, objective bearing and shared Options/Guide behavior.
+
+## Additional refinement — persistence, mission rewards and reliable guidance
+
+See [MILESTONE-4.1-ADDITIONAL-REFINEMENT.md](MILESTONE-4.1-ADDITIONAL-REFINEMENT.md)
+for the subsequent single-commit refinement. It supersedes the earlier Starting
+Slot deployment setting, fresh Campaign reserve/health allocations, flat scrap
+drop rule and default player-facing intermediate routes. Campaign stays in its
+existing save namespace with versioned durable checkpoints; Endless gains a
+separate wave-boundary resume lifecycle. Optional intel unlocks authored Alpha/
+Gamma guidance, the aux locker supplies explicit ground pickups, and Screecher
+hover/loading/guide/menu presentation receive targeted updates. Milestone 4.2
+remains outside this work.

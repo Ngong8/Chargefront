@@ -244,6 +244,7 @@ try {
     results.projectiles = await page.evaluate(() => {
         const c = __cf; c.pause(true); c.clearTestEnemies(); c.advanceShots(10); const rows = [];
         for (const w of c.weaponDefinitions) {
+            if(w.id==='arc'){const before=c.shots.length;c.spawnTestShot(400,450,150,1,0,0,'arc');const hit=c.arcHitInfo();rows.push({id:w.id,mechanism:hit.mechanism,range:hit.range,projectiles:c.shots.length-before});continue;}
             c.spawnTestShot(400, 450, 150, 1, 0, 0, w.id); const s = c.shots[c.shots.length - 1], material = s.bolt.material;
             c.advanceShots(w.range / 85 - .15); const full = s.bolt.material.opacity;
             c.advanceShots(.09); const faded = s.bolt.material.opacity, travel = s.x - s.ox;
@@ -280,7 +281,7 @@ try {
         const outOfRangeDamage = farBefore - far.hp; c.clearTestEnemies(); c.pause(false);
         return { rows, chainDamage, chainStun, blastDamage, edgeChainDamage, edgeBlastDamage, blockedDamage, outOfRangeDamage, isolationBoundary, pool: c.combatPoolInfo() };
     });
-    for (const row of results.projectiles.rows) { assert.equal(row.full,.95); assert(row.faded > 0 && row.faded < .95); assert(row.pooled && row.sameMaterial); assert(row.finalTravel <= ({rifle:153,scatter:60,arc:72,plasma:110})[row.id]+1e-8); }
+    for (const row of results.projectiles.rows) {if(row.id==='arc'){assert.equal(row.mechanism,'hitscan');assert.equal(row.range,72);assert.equal(row.projectiles,0);continue;}assert.equal(row.full,.95); assert(row.faded > 0 && row.faded < .95); assert(row.pooled && row.sameMaterial); assert(row.finalTravel <= ({rifle:153,scatter:60,plasma:110})[row.id]+1e-8); }
     assert.equal(results.projectiles.blockedDamage,0); assert.equal(results.projectiles.outOfRangeDamage,0);
     assert(results.projectiles.chainDamage.every(d=>d>0)); assert(results.projectiles.chainStun.every(t=>t===.65)); assert(results.projectiles.blastDamage.every(d=>d>0));
     assert(results.projectiles.edgeChainDamage[0]>0); assert.equal(results.projectiles.edgeChainDamage[1],0);

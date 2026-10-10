@@ -34,7 +34,8 @@ try{
    const [x,y]=[[420,450],[450,430],[375,455],[425,475]].find(([x,y])=>!c.insideSolid(x,y)&&!c.probeBlocked(x,y,c.terrainHeight(x,y)+1.6,x+1.5,y,c.terrainHeight(x,y)+1.3,.1));
    const h=c.terrainHeight(x,y),z=h+1.6,targetZ=c.terrainHeight(x+distance,y)+.1,dx=distance,dz=targetZ-z,length=Math.hypot(dx,dz),before=c.effectInfo().impacts.length;
    const fire=performance.now();c.spawnTestShot(x,y,z,dx/length,0,dz/length,'arc');const shot=c.shots.at(-1),created=performance.now();let tick=0;
-   while(c.shots.includes(shot)&&tick<120){c.advanceShots(1/60);tick++;}
+   const hitscan=typeof c.arcHitInfo==='function'&&c.arcHitInfo()?.mechanism==='hitscan';
+   while(!hitscan&&c.shots.includes(shot)&&tick<120){c.advanceShots(1/60);tick++;}
    const collision=performance.now(),activated=c.effectInfo().impacts.length>before,activation=performance.now();c.render();
    rows.push({label,distance,ticks:tick,flightSeconds:tick/60,expectedSeconds:length/85,fire,created,collision,activation,activated,firstEligibleRender:c.renderer.info.render.frame,impact:c.effectInfo().impacts.at(-1)});
   }return rows;});

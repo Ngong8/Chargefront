@@ -33,5 +33,30 @@
         }
         return {mesh,points,rebuild};
     }
-    root.ChargefrontRibbons=Object.freeze({createElectric});
+    function configureGround(THREE,material) {
+        const viewport={value:new THREE.Vector2(1920,1080)},width={value:3.8},near={value:.0525};
+        material.onBeforeCompile=shader=>{
+            shader.uniforms.cfRouteViewport=viewport;shader.uniforms.cfRouteWidth=width;shader.uniforms.cfRouteNear=near;
+            shader.vertexShader='attribute vec3 routeOther;\nattribute float routeSide;\nattribute vec2 routeCap;\nuniform vec2 cfRouteViewport;\nuniform float cfRouteWidth;\nuniform float cfRouteNear;\n'+shader.vertexShader;
+            shader.vertexShader=shader.vertexShader.replace('#include <project_vertex>',`#include <project_vertex>
+                vec4 cfOtherView = modelViewMatrix * vec4(routeOther, 1.0);
+                float cfNear = -cfRouteNear;
+                if (mvPosition.z > cfNear && cfOtherView.z < cfNear) {
+                    mvPosition.xyz = mix(mvPosition.xyz, cfOtherView.xyz, (cfNear-mvPosition.z)/(cfOtherView.z-mvPosition.z));
+                }
+                vec4 cfClip = projectionMatrix * mvPosition;
+                vec4 cfOtherClip = projectionMatrix * cfOtherView;
+                vec2 cfDelta = (cfOtherClip.xy / max(abs(cfOtherClip.w), 0.00001) - cfClip.xy / max(abs(cfClip.w), 0.00001)) * cfRouteViewport;
+                float cfLength = length(cfDelta);
+                vec2 cfNormal = cfLength > 0.00001 ? vec2(-cfDelta.y, cfDelta.x) / cfLength : vec2(1.0,0.0);
+                vec2 cfOffset = abs(routeSide) > 0.5 ? cfNormal * routeSide : routeCap;
+                cfClip.xy += cfOffset * cfRouteWidth / cfRouteViewport * cfClip.w;
+                gl_Position = cfClip;
+            `);
+        };
+        material.customProgramCacheKey=()=> 'chargefront-ground-ribbon-screen-v1';
+        material.polygonOffset=true;material.polygonOffsetFactor=-1;material.polygonOffsetUnits=-1;
+        return {viewport,width,near};
+    }
+    root.ChargefrontRibbons=Object.freeze({createElectric,configureGround});
 })(globalThis);

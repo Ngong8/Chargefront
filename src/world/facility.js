@@ -42,6 +42,13 @@
     function create({ THREE, getScene, box, addWallPanel, addSolid, addRotatedSolid, SOLIDS, makeSeam, sound, denied, getTime, envBoxGeometry, envMat, envBoxMesh, envBox, envPipe, mat, colors, terrainHeight, addBudgetLight, makeFacilitySign, makeInfestedTree, makeSpecimenTube, rand, vec2 }) {
         const sections = new Map(); // retained roots and solids; no scene traversal on the update path
         const doors = [], cutawayMeshes = [], referenceLights = [];
+        const guidanceFloors=[];
+        const rememberGuidanceFloor=(mesh,x,y,w,d,top)=>guidanceFloors.push({mesh,x0:x-w/2,x1:x+w/2,y0:y-d/2,y1:y+d/2,top});
+        function guidanceHeight(x,y,naturalHeight){
+            let height=naturalHeight+.12;
+            for(const floor of guidanceFloors)if(floor.mesh.visible&&x>=floor.x0&&x<=floor.x1&&y>=floor.y0&&y<=floor.y1)height=Math.max(height,floor.top+.06);
+            return height;
+        }
         const fx = { dust: null, dustBase: null, screens: [], powerStrips: [], labIndicators: [] };
         let zones = null;
         let fxUpdateT = 0, fxAccum = 0, lastNearFacility;
@@ -72,6 +79,7 @@
                 seg(368, 690, 390, 690, H + 1);
                 const apron = box(16, 10, 0.12, 0x343b47, { metalness: 0.35, roughness: 0.7 });
                 apron.position.set(fx, 613, 0.12); scene.add(apron);
+                rememberGuidanceFloor(apron,fx,613,16,10,.18);
                 const stripe = box(18, 0.4, 0.18, 0xd8b322, makeSeam(0xd8b322, 0.7));
                 stripe.position.set(fx, 610, H + 0.6); scene.add(stripe);
                 for (const x of [351.2, 368.8]) {
@@ -96,6 +104,7 @@
                 hallRoof.name = 'FacilityHallRoof'; cutawayMeshes.push(hallRoof);
                 const hallFloor = box(hx1 - hx0, hy1 - hy0, 0.4, 0x343a48, { metalness: 0.3, roughness: 0.6, emissive: 0x273342, emissiveIntensity: 0.32 });
                 hallFloor.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, 0.05); hallFloor.receiveShadow = true; scene.add(hallFloor);
+                rememberGuidanceFloor(hallFloor,(hx0+hx1)/2,(hy0+hy1)/2,hx1-hx0,hy1-hy0,.25);
                 const vx0 = 342, vx1 = 378, vy1 = 684;
                 seg(vx0, 660, vx0, vy1, H, trim);
                 seg(vx1, 660, vx1, vy1, H, trim);
@@ -106,6 +115,7 @@
                 vaultRoof.name = 'FacilityVaultRoof'; cutawayMeshes.push(vaultRoof);
                 const vaultFloor = box(vx1 - vx0, vy1 - 660, 0.4, 0x303442, { metalness: 0.3, roughness: 0.6, emissive: 0x3b2d2d, emissiveIntensity: 0.28 });
                 vaultFloor.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, 0.05); vaultFloor.receiveShadow = true; scene.add(vaultFloor);
+                rememberGuidanceFloor(vaultFloor,(vx0+vx1)/2,(660+vy1)/2,vx1-vx0,vy1-660,.25);
             });
         }
 
@@ -398,20 +408,23 @@
             const floorPlate = (x, y, w, d) => {
                 const p = box(w, d, 0.06, 0x2e3442, { metalness: 0.5, roughness: 0.6 });
                 p.position.set(x, y, 0.3); p.receiveShadow = true; scene.add(p);
+                rememberGuidanceFloor(p,x,y,w,d,.33);
             };
             floorPlate(338, 632, 6, 4); floorPlate(382, 646, 6, 4);
             floorPlate(360, 664, 8, 4);
             const floorStripe = (x, y, horiz, len) => {
                 const s = box(horiz ? len : 0.3, horiz ? 0.3 : len, 0.05, 0xd8b322, makeSeam(0xd8b322, 0.55));
                 s.position.set(x, y, 0.29); scene.add(s);
+                rememberGuidanceFloor(s,x,y,horiz?len:.3,horiz?.3:len,.315);
             };
             floorStripe(360, 619.2, true, 14);
             floorStripe(360, 659.8, true, 14);
             const lane = box(0.9, 38, 0.05, 0x2a6a8a, { emissive: 0x1a4a6a, emissiveIntensity: 0.6, metalness: 0.3, roughness: 0.6 });
             lane.position.set(360, 638, 0.28); scene.add(lane);
+            rememberGuidanceFloor(lane,360,638,.9,38,.305);
             const zoneStrip = (x, y, w, d, color, base = 0.9) => {
                 const strip = box(w, d, 0.055, color, { emissive: color, emissiveIntensity: base, metalness: 0.25, roughness: 0.58 });
-                strip.position.set(x, y, 0.31); scene.add(strip); fx.powerStrips.push({ mat: strip.material, base, color }); return strip;
+                strip.position.set(x, y, 0.31); scene.add(strip); fx.powerStrips.push({ mat: strip.material, base, color });rememberGuidanceFloor(strip,x,y,w,d,.3375);return strip;
             };
             zoneStrip(332.2, 639, 0.16, 36, 0xffa64d, 0.72);
             zoneStrip(387.8, 639, 0.16, 36, 0x66cfff, 0.8);
@@ -1220,7 +1233,7 @@
         }
 
         return {
-            buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,
+            buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,guidanceHeight,
             set zones(value) { zones = value; }, get zones() { return zones; },
             doors, cutawayMeshes, referenceLights, fx,
             sectionSummary() { return [...sections].map(([name, section]) => ({ name, objects: section.objects.length, solids: section.solids.length })); },

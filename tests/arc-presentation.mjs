@@ -1,4 +1,4 @@
-// Commit-2 checks: ARC-9 lightning arc firing, hidden logical projectile,
+// ARC-9 hitscan lightning, no logical projectile,
 // static magazine glow, reload channel power-down/power-up, bounded effects.
 import assert from 'node:assert/strict';
 import {mkdirSync,writeFileSync} from 'node:fs';
@@ -25,15 +25,14 @@ try{
  for(let i=0;i<5;i++){const a=await info();mag.push(a.magazineBoltOpacity);chanReady.push(a.channelOpacity[0]);await page.waitForTimeout(90);}
  assert(new Set(mag).size===1&&mag[0]===1,'Magazine glow must stay static');assert(Math.max(...chanReady)-Math.min(...chanReady)>0.15,'Ready channel must pulse');
  assert.equal((await info()).magazineWindowOpacity,1);assert.equal((await info()).magazineTransparent,false);results.magazine={bolt:mag[0],window:1};results.channelReady={min:Math.min(...chanReady),max:Math.max(...chanReady)};
- // 2) Firing produces a muzzle lightning arc and hides the logical projectile.
+  // 2) Firing produces muzzle lightning without creating a damaging projectile.
  const fired=await page.evaluate(()=>{
   __cf.combat.weapons.arc.mag=20;const before=__cf.effectInfo().arcs;__cf.fire();
-  const s=__cf.shots[__cf.shots.length-1];
-  return {before,after:__cf.effectInfo().arcs,shot:s?{style:s.style,boltVisible:s.bolt.visible,glowVisible:s.glow.visible}:null};
+   return {before,after:__cf.effectInfo().arcs,hit:__cf.arcHitInfo(),arcProjectiles:__cf.shots.filter(s=>s.style==='arc').length};
  });
- assert(fired.shot&&fired.shot.style==='arc'&&fired.shot.boltVisible===false&&fired.shot.glowVisible===false,'ARC projectile visuals hidden');
+  assert.equal(fired.hit.mechanism,'hitscan');assert.equal(fired.arcProjectiles,0,'No ARC primary projectile exists');
  assert(fired.after-fired.before>=2,'Muzzle lightning arcs emitted');
- results.firing={shot:fired.shot,arcs:fired.after-fired.before};
+  results.firing={hit:fired.hit,arcs:fired.after-fired.before};
  await page.evaluate(()=>{__cf.player.yaw=Math.PI/2;__cf.player.pitch=0;window.__arcSpam=setInterval(()=>{__cf.combat.weapons.arc.mag=32;__cf.combat.fireT=0;__cf.player.swapT=0;__cf.fire();},40);});
  await page.waitForTimeout(260);await capture('06-arc-muzzle-lightning');await page.evaluate(()=>clearInterval(window.__arcSpam));
  // 3) Chain arcs connect to a valid secondary target after a real hit.

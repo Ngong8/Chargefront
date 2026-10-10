@@ -3016,8 +3016,8 @@ function activeIntelRoute() {
     if(phase===P.MOVE_R3&&campaignRun.worldState.betaSurvey)return INTEL_ROUTES.gamma;
     return null;
 }
-const RELAY_REPLAN_SECONDS=3;
-const relayGuide = { id:null, path:[], timer:0, renderT:0, lastX:NaN, lastY:NaN, observedX:NaN, observedY:NaN, destinationX:NaN,destinationY:NaN, obstacleState:new Uint8Array(0), obstacleBounds:new Float64Array(0),doorMap:new WeakMap(), line:null, renderedX:NaN,renderedY:NaN,renderedFov:NaN,renderedHeight:0,doorVisibility:0,dirty:true };
+const RELAY_REPLAN_SECONDS=1;
+const relayGuide = { id:null, solvedPath:[],path:[], timer:0, connectorT:0,connectorUpdates:0,connectorX:NaN,connectorY:NaN,renderT:0, lastX:NaN, lastY:NaN, observedX:NaN, observedY:NaN, destinationX:NaN,destinationY:NaN, obstacleState:new Uint8Array(0), obstacleBounds:new Float64Array(0),doorMap:new WeakMap(), line:null, uniforms:null,renderedX:NaN,renderedY:NaN,doorVisibility:0,dirty:true };
 function guideDoorLocked(door) {return door.locked||(door.id==='bio_lab'&&!campaignRun.worldState.labAccess);}
 function relayGuideObstacleChanged() {
     let changed=false;
@@ -3054,7 +3054,7 @@ function relayGuideSegmentClear(a,b, allowDoors=true) {
 }
 const relayRouteSolver=ChargefrontRelayRouting.create({world:WORLD,clear:relayGuideSegmentClear});
 function resetRelayGuide() {
-    relayGuide.id=null;relayGuide.path=[];relayGuide.timer=0;relayGuide.lastX=relayGuide.lastY=relayGuide.observedX=relayGuide.observedY=NaN;
+    relayGuide.id=null;relayGuide.solvedPath=[];relayGuide.path=[];relayGuide.timer=relayGuide.connectorT=relayGuide.renderT=0;relayGuide.lastX=relayGuide.lastY=relayGuide.observedX=relayGuide.observedY=relayGuide.connectorX=relayGuide.connectorY=NaN;
     relayGuide.destinationX=relayGuide.destinationY=NaN;
     relayGuide.obstacleState.fill(255);relayGuide.dirty=true;relayRouteSolver.invalidate();
     if(relayGuide.line){relayGuide.line.visible=false;relayGuide.line.geometry.setDrawRange(0,0);}
@@ -3093,55 +3093,59 @@ function updateIntelRouteProgress(dt=LJS.timeDelta) {
     relayGuide.observedX=player.pos.x;relayGuide.observedY=player.pos.y;
     relayGuide.timer=Math.max(0,relayGuide.timer-dt);
     if(relayGuide.timer<1e-6)relayGuide.timer=0;
-    const moved=Math.hypot(player.pos.x-relayGuide.lastX,player.pos.y-relayGuide.lastY)>.35;
+    const moved=Math.hypot(player.pos.x-relayGuide.lastX,player.pos.y-relayGuide.lastY)>.02;
     const destination=relayGuideDestination(route,rel),destinationChanged=destination.x!==relayGuide.destinationX||destination.y!==relayGuide.destinationY;
     if(relayGuide.id!==route.id||changed||destinationChanged||teleported||(moved&&relayGuide.timer===0)) {
         const origin={x:player.pos.x,y:player.pos.y};
         const path=relayRouteSolver.solve(origin,destination,route.path);
-        relayGuide.path=!changed&&!destinationChanged&&!teleported&&relayGuide.id===route.id?stableRelayPath(path,relayGuide.path,origin,route.path):path;
+        relayGuide.solvedPath=!changed&&!destinationChanged&&!teleported&&relayGuide.id===route.id?stableRelayPath(path,relayGuide.path,origin,route.path):path;
         relayGuide.destinationX=destination.x;relayGuide.destinationY=destination.y;
-        relayGuide.id=route.id;relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;relayGuide.renderT=0;relayGuide.dirty=true;
+        relayGuide.id=route.id;relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;relayGuide.connectorT=0;relayGuide.renderT=0;relayGuide.dirty=true;
         if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
     }
-    // Trim only a physically authorized prefix; no irreversible point counter.
+    // Independent one-second authoritative connector refresh; lightweight display
+    // attachment follows the actual foot position at 10 Hz between refreshes.
+    relayGuide.connectorT=Math.max(0,relayGuide.connectorT-dt);
+    if(relayGuide.connectorT<1e-6)relayGuide.connectorT=0;
+    if(relayGuide.connectorT===0&&Math.hypot(player.pos.x-relayGuide.connectorX,player.pos.y-relayGuide.connectorY)>.001||relayGuide.dirty){
+        relayGuide.connectorUpdates++;relayGuide.connectorX=player.pos.x;relayGuide.connectorY=player.pos.y;relayGuide.connectorT=1;
+    }
     relayGuide.renderT-=dt;if(relayGuide.renderT>0)return;relayGuide.renderT=.1;
     const doorVisibility=facilityDoors.reduce((mask,d,i)=>mask|(Number(!d.solid.disabled)<<i),0);
-    if(!relayGuide.dirty&&player.pos.x===relayGuide.renderedX&&player.pos.y===relayGuide.renderedY&&doorVisibility===relayGuide.doorVisibility&&camera.fov===relayGuide.renderedFov&&LJS.mainCanvasSize.y===relayGuide.renderedHeight)return;
+    if(!relayGuide.dirty&&player.pos.x===relayGuide.renderedX&&player.pos.y===relayGuide.renderedY&&doorVisibility===relayGuide.doorVisibility)return;
     relayGuide.dirty=false;relayGuide.renderedX=player.pos.x;relayGuide.renderedY=player.pos.y;relayGuide.doorVisibility=doorVisibility;
-    relayGuide.renderedFov=camera.fov;relayGuide.renderedHeight=LJS.mainCanvasSize.y;
-    const path=relayGuide.path;
-    if(path.length>1){const origin={x:player.pos.x,y:player.pos.y};
-        let nearest=1,best=Infinity;
-        for(let i=1;i<path.length;i++){const d=Math.hypot(origin.x-path[i].x,origin.y-path[i].y);
-            if(d<best&&relayGuideSegmentClear(origin,path[i])){best=d;nearest=i;}}
-        if(best<Infinity){
-            if(best<1.25&&nearest<path.length-1&&relayGuideSegmentClear(origin,path[nearest+1]))nearest++;
-            if(nearest>1)path.splice(1,nearest-1);path[0].x=origin.x;path[0].y=origin.y;
-        }
-        else {
-            // The Commander can no longer attach to the old path (e.g. an
-            // alternate passage around a corner). Invalid navigation bypasses
-            // the ordinary three-second movement gate, with one bounded solve.
-            relayGuide.path=relayRouteSolver.solve(origin,relayGuideDestination(route,rel),route.path);
-            relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;
-            if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
-        }
+    const origin={x:player.pos.x,y:player.pos.y};
+    relayGuide.path=ChargefrontRelayRouting.attach(origin,relayGuide.solvedPath,relayGuideSegmentClear);
+    if(relayGuide.solvedPath.length>1&&relayGuide.path.length<2){
+        // No safe connector: solve immediately once, never paint an obsolete link.
+        relayGuide.solvedPath=relayRouteSolver.solve(origin,destination,route.path);
+        relayGuide.path=ChargefrontRelayRouting.attach(origin,relayGuide.solvedPath,relayGuideSegmentClear);
+        relayGuide.lastX=origin.x;relayGuide.lastY=origin.y;relayGuide.timer=RELAY_REPLAN_SECONDS;
+        if(PERF_DIAGNOSTICS)perfDiagnostics.count('relayGuideSolve');
     }
     updateRelayGuideGeometry();
 }
 function prepareRelayGuideGeometry() {
     if(!relayGuide.line){
         const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.BufferAttribute(new Float32Array(49152),3).setUsage(THREE.DynamicDrawUsage));
+        geometry.setAttribute('routeOther',new THREE.BufferAttribute(new Float32Array(49152),3).setUsage(THREE.DynamicDrawUsage));
+        geometry.setAttribute('routeSide',new THREE.BufferAttribute(new Float32Array(16384),1).setUsage(THREE.DynamicDrawUsage));
+        geometry.setAttribute('routeCap',new THREE.BufferAttribute(new Float32Array(32768),2).setUsage(THREE.DynamicDrawUsage));
         relayGuide.line=new THREE.Mesh(geometry,new THREE.MeshBasicMaterial({color:0x66e0ff,transparent:true,opacity:.85,depthWrite:false,side:THREE.DoubleSide,forceSinglePass:true}));
+        relayGuide.uniforms=ChargefrontRibbons.configureGround(THREE,relayGuide.line.material);
         relayGuide.line.name='AdaptiveRelayGuide';relayGuide.line.frustumCulled=false;scene.add(relayGuide.line);
         relayGuide.line.visible=false;
     }
 }
+function updateRelayRibbonView(){if(relayGuide.uniforms){relayGuide.uniforms.viewport.value.set(LJS.mainCanvasSize.x,LJS.mainCanvasSize.y);relayGuide.uniforms.near.value=camera.near*1.05;}}
 function updateRelayGuideGeometry() {
     const path=enhancedRelayPath();prepareRelayGuideGeometry();
     const attribute=relayGuide.line.geometry.attributes.position;let vertices=0;
-    const focal=Math.max(1,LJS.mainCanvasSize.y)/(2*Math.tan(camera.fov*Math.PI/360));
-    const vertex=(x,y)=>attribute.setXYZ(vertices++,x,y,terrainHeight(x,y)+.12);
+    const attributes=relayGuide.line.geometry.attributes;
+    const vertex=(p,other,side,capX=0,capY=0)=>{
+        attribute.setXYZ(vertices,p.x,p.y,facilityWorld.guidanceHeight(p.x,p.y,terrainHeight(p.x,p.y)));attributes.routeOther.setXYZ(vertices,other.x,other.y,facilityWorld.guidanceHeight(other.x,other.y,terrainHeight(other.x,other.y)));
+        attributes.routeSide.setX(vertices,side);attributes.routeCap.setXY(vertices,capX,capY);vertices++;
+    };
     let previousEndX=NaN,previousEndY=NaN;
     for(let i=1;i<path.length;i++){
         const a=path[i-1],b=path[i],n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/2));
@@ -3149,20 +3153,18 @@ function updateRelayGuideGeometry() {
             const p={x:lerp(a.x,b.x,j/n),y:lerp(a.y,b.y,j/n)},q={x:lerp(a.x,b.x,(j+1)/n),y:lerp(a.y,b.y,(j+1)/n)};
             // Never paint through a currently closed door, even though it is operable.
             if(!relayGuideSegmentClear(p,q,false)){previousEndX=NaN;continue;}
-            const length=Math.hypot(q.x-p.x,q.y-p.y)||1,nx=-(q.y-p.y)/length,ny=(q.x-p.x)/length;
-            const wp=clamp(Math.hypot(p.x-camera.position.x,p.y-camera.position.y)/focal*.9,.004,.16);
-            const wq=clamp(Math.hypot(q.x-camera.position.x,q.y-camera.position.y)/focal*.9,.004,.16);
-            vertex(p.x+nx*wp,p.y+ny*wp);vertex(p.x-nx*wp,p.y-ny*wp);vertex(q.x+nx*wq,q.y+ny*wq);
-            vertex(q.x+nx*wq,q.y+ny*wq);vertex(p.x-nx*wp,p.y-ny*wp);vertex(q.x-nx*wq,q.y-ny*wq);
+            vertex(p,q,1);vertex(p,q,-1);vertex(q,p,-1);
+            vertex(q,p,-1);vertex(p,q,-1);vertex(q,p,1);
             if(Math.hypot(previousEndX-p.x,previousEndY-p.y)<.001){
                 // Small bevel/diamond fills preserve joins without long miter spikes.
-                vertex(p.x-wp,p.y);vertex(p.x,p.y+wp);vertex(p.x+wp,p.y);
-                vertex(p.x-wp,p.y);vertex(p.x+wp,p.y);vertex(p.x,p.y-wp);
+                vertex(p,q,0,-1,0);vertex(p,q,0,0,1);vertex(p,q,0,1,0);
+                vertex(p,q,0,-1,0);vertex(p,q,0,1,0);vertex(p,q,0,0,-1);
             }
             previousEndX=q.x;previousEndY=q.y;
         }
     }
-    attribute.needsUpdate=true;relayGuide.line.geometry.setDrawRange(0,vertices);relayGuide.line.visible=vertices>0;
+    for(const a of Object.values(attributes))a.needsUpdate=true;
+    relayGuide.line.geometry.setDrawRange(0,vertices);relayGuide.line.visible=vertices>0;updateRelayRibbonView();
 }
 let started = false, gameActive = false;
 let kills = 0, cacheFound = 0, startTime = 0, missionTime = 0;
@@ -5307,7 +5309,7 @@ function fireWeapon() {
             spawnShot(ox, oy, oz, Math.cos(a) * Math.cos(p), Math.sin(a) * Math.cos(p), Math.sin(p), boltDmg, w.color, 'player', { range: w.range });
         }
     } else {
-        spawnShot(ox, oy, oz, dx, dy, dz, boltDmg, w.color, 'player', w, w.kind === 'arc' ? arcWeaponMuzzleWorld() : undefined,arcFireAt);
+        spawnShot(ox, oy, w.kind==='arc'?camera.position.z:oz, dx, dy, dz, boltDmg, w.color, 'player', w, w.kind === 'arc' ? arcWeaponMuzzleWorld() : undefined,arcFireAt);
     }
     /* TWIN BARRELS (relay epic) — a chance to squeeze off a second bolt */
     if (mode === 'endless' && w.kind === 'bolt' && Math.random() < (endlessRun.duplicateChance || 0)) {
@@ -7185,7 +7187,7 @@ function throwGrenade() {
     new Grenade(player.pos.x + fwdX * 0.6, player.pos.y + fwdY * 0.6, camera.position.z - 0.2, fwdX * 15, fwdY * 15, fwdZ * 15 + 7);
 }
 
-/* fast projectile bolts (replaces hit-scan for player + squad laser fire) */
+/* Physical bolts for BUL/CRW/PX; ARC dispatches synchronously to bounded hitscan. */
 const shots = [];
 const shotPool = [];
 const shotBoltGeometry = new THREE.SphereGeometry(0.07, 6, 5);
@@ -7266,56 +7268,69 @@ function arcWeaponMuzzleWorld() {
     const mx = model ? model.userData.muzzleX : -0.087, my = model ? model.userData.muzzleY : -0.099, mz = model ? model.userData.muzzleZ : -0.96;
     return weaponMount.localToWorld(_arcMuzzleWorld.set(mx, my, mz));
 }
-/* Presentation-only forward ray using the same terrain/solid/enemy authorization
-   as the logical projectile. Never inflicts damage; only picks the arc endpoint. */
+/* One bounded nearest-contact ray, shared by ARC resolution and diagnostics. */
 function predictArcEndpoint(ox, oy, oz, dx, dy, dz, range) {
-    const step = 1.5;
-    let px = ox, py = oy, pz = oz;
-    for (let d = step; d <= range+step; d += step) {
-        d=Math.min(d,range);
-        const x = ox + dx * d, y = oy + dy * d, z = oz + dz * d;
-        const surface=arcSurfaceContact(px,py,pz,x,y,z),enemy=arcEnemyContact(px,py,pz,x,y,z,ox,oy,oz,range);
-        if(enemy&&(!surface||enemy.t<surface.t))return enemy;
-        if(surface)return surface;
-        px = x; py = y; pz = z;
-        if(d===range)break;
-    }
-    return { x: ox + dx * range, y: oy + dy * range, z: oz + dz * range };
+    const x=ox+dx*range,y=oy+dy*range,z=oz+dz*range;
+    const surface=arcSurfaceContact(ox,oy,oz,x,y,z),enemy=arcEnemyContact(ox,oy,oz,x,y,z,ox,oy,oz,range);
+    return enemy&&(!surface||enemy.t<surface.t)?enemy:surface||{x,y,z,kind:'range'};
 }
-/* ARC-9 reads as chain lightning: a brief jittered arc from the muzzle to the
-   authorized endpoint. The logical projectile is hidden but keeps resolving damage. */
-function emitArcShotPresentation(ox, oy, oz, dx, dy, dz, range, color, muzzle) {
-    const sx = muzzle ? muzzle.x : ox, sy = muzzle ? muzzle.y : oy, sz = muzzle ? muzzle.z : oz;
-    const end = predictArcEndpoint(ox, oy, oz, dx, dy, dz, range);
-    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color,'primary');
-    emitLightningArc(sx, sy, sz, end.x, end.y, end.z, color,'primary');
+const ARC_MAX_RANGE=PLAYER_WEAPONS.find(w=>w.id==='arc').range;
+const arcHitPool=[{chainHits:[]}];
+let lastArcHit=null;
+function resolveArcHitscan(ox,oy,oz,dx,dy,dz,dmg,color,owner,options,muzzle,fireAt) {
+    const range=Math.min(ARC_MAX_RANGE,Math.max(0,options?.range??ARC_MAX_RANGE));
+    const s=arcHitPool.pop()||{chainHits:[]};
+    Object.assign(s,{ox,oy,oz,range,dmg,color,owner,chains:options?.chains||0,arcAge:0,arcTraceId:PERF_DIAGNOSTICS?++arcTraceSequence:0});s.chainHits.length=0;
+    recordArcTiming(s.arcTraceId,'fire',{now:fireAt??performance.now(),owner,mechanism:'hitscan'});
+    recordArcTiming(s.arcTraceId,'created',{origin:[ox,oy,oz],mechanism:'hitscan'});
+    try{
+        let contact=predictArcEndpoint(ox,oy,oz,dx,dy,dz,range);
+        const sx=muzzle?muzzle.x:ox,sy=muzzle?muzzle.y:oy,sz=muzzle?muzzle.z:oz;
+        if(muzzle){
+            const obstruction=arcSurfaceContact(sx,sy,sz,contact.x,contact.y,contact.z);
+            if(obstruction&&Math.hypot(obstruction.x-sx,obstruction.y-sy,obstruction.z-sz)+.01<Math.hypot(contact.x-sx,contact.y-sy,contact.z-sz))contact=obstruction;
+        }
+        s.x=contact.x;s.y=contact.y;s.z=contact.z;
+        recordArcTiming(s.arcTraceId,'resolved',{mechanism:'hitscan',kind:contact.kind,distance:Math.hypot(s.x-ox,s.y-oy,s.z-oz),position:[s.x,s.y,s.z]});
+        if(contact.enemy){
+            contact.enemy.takeDamage(s.dmg);
+            recordArcTiming(s.arcTraceId,'damage',{damage:s.dmg});
+            if(s.chains)chainArcShot(s,contact.enemy);
+            if(owner==='player'){hitMarkerT=.22;hitMarkerKill=contact.enemy.dead||contact.enemy.dying;}
+        }
+        emitLightningArc(sx,sy,sz,s.x,s.y,s.z,color,'primary');
+        emitLightningArc(sx,sy,sz,s.x,s.y,s.z,color,'primary');
+        if(contact.kind!=='range')activateArcContact(s,contact);
+        if(PERF_DIAGNOSTICS)lastArcHit={id:s.arcTraceId,kind:contact.kind,mechanism:'hitscan',origin:[ox,oy,oz],muzzle:[sx,sy,sz],position:[s.x,s.y,s.z],range,primaryDamage:contact.enemy?s.dmg:0,chainTargets:s.chainHits.length};
+        return contact;
+    }finally{arcHitPool.push(s);}
 }
 function spawnShot(ox, oy, oz, dx, dy, dz, dmg, color, owner, options, muzzle,fireAt=null) {
+    if(options?.kind==='arc'){
+        const direction=shotDirection.set(dx,dy,dz).normalize();
+        return resolveArcHitscan(ox,oy,oz,direction.x,direction.y,direction.z,dmg,color,owner,options,muzzle,fireAt);
+    }
     if (shots.length >= 192) return;
     const dir = shotDirection.set(dx, dy, dz).normalize();
     const recycled = shotPool.pop() || createShotEffect(); // only pre-preparation/debug first use
     const bolt = recycled.bolt;
     const style = options?.kind || 'bolt';
-    const arcStyle = style === 'arc';
-    bolt.scale.set(style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 3.5 : arcStyle ? 5 : 8);
+    bolt.scale.set(style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 2.8 : 1, style === 'plasma' ? 3.5 : 8);
     if (Math.abs(shotUp.dot(dir)) > 0.9999) bolt.quaternion.setFromAxisAngle(shotAxis, dir.z < 0 ? Math.PI : 0);
     else bolt.quaternion.setFromUnitVectors(shotUp, dir);
     bolt.material.color.setHex(color);
     bolt.material.opacity = 0.95;
-    bolt.visible = !arcStyle;   // logical projectile stays hidden; lightning arc is the visual
+    bolt.visible = true;
     scene.add(bolt);
     const glow = recycled.glow;
-    glow.scale.setScalar(style === 'plasma' ? 2.8 : arcStyle ? 1.4 : 1);
+    glow.scale.setScalar(style === 'plasma' ? 2.8 : 1);
     glow.material.color.setHex(color);
     glow.material.opacity = 0.35;
-    glow.visible = !arcStyle;
+    glow.visible = true;
     scene.add(glow);
-    if (arcStyle) emitArcShotPresentation(ox, oy, oz, dir.x, dir.y, dir.z, options?.range || 153, color, muzzle);
     Object.assign(recycled, { x: ox, y: oy, z: oz, px: ox, py: oy, pz: oz, dx: dir.x, dy: dir.y, dz: dir.z, speed: 85,
         ox, oy, oz, range: options?.range || 153, life: (options?.range || 153) / 85, dmg, color, owner,
-        style, splash: options?.splash || 0, chains: options?.chains || 0 });
-    recycled.arcAge=0;recycled.arcTraceId=arcStyle&&PERF_DIAGNOSTICS?++arcTraceSequence:0;
-    if(recycled.arcTraceId){recordArcTiming(recycled.arcTraceId,'fire',{now:fireAt??performance.now(),owner});recordArcTiming(recycled.arcTraceId,'created',{origin:[ox,oy,oz]});}
+        style, splash: options?.splash || 0, chains:0 });
     recycled.chainHits.length = 0;
     bolt.position.set(ox, oy, oz); glow.position.set(ox, oy, oz);
     shots.push(recycled);
@@ -7392,6 +7407,9 @@ function chainArcShot(s, first) {
 function updateShots(dt) {
     for (let i = shots.length - 1; i >= 0; i--) {
         const s = shots[i];
+        // Defense-in-depth: obsolete ARC records can never execute collision or
+        // damage, even if a diagnostic/legacy caller supplies one explicitly.
+        if(s.style==='arc'){scene.remove(s.bolt);scene.remove(s.glow);shots.splice(i,1);shotPool.push(s);continue;}
         const travelDt = Math.min(dt, Math.max(0, s.life));
         const step = s.speed * travelDt;
         s.px = s.x; s.py = s.y; s.pz = s.z;
@@ -7402,31 +7420,21 @@ function updateShots(dt) {
         const opacity = ChargefrontCombat.terminalOpacity(s.life);
         s.bolt.material.opacity = 0.95 * opacity; s.glow.material.opacity = 0.35 * opacity;
         const shrink = 0.8 + opacity * 0.2;
-        s.glow.scale.setScalar((s.style === 'plasma' ? 2.8 : s.style === 'arc' ? 1.4 : 1) * shrink);
+        s.glow.scale.setScalar((s.style === 'plasma' ? 2.8 : 1) * shrink);
         let dead = false, impact = false;
-        if(s.style==='arc'&&travelDt>0){
-            s.arcAge+=travelDt;
-            const surface=arcSurfaceContact(s.px,s.py,s.pz,s.x,s.y,s.z),enemy=arcEnemyContact(s.px,s.py,s.pz,s.x,s.y,s.z,s.ox,s.oy,s.oz,s.range);
-            const contact=enemy&&(!surface||enemy.t<surface.t)?enemy:surface;
-            if(contact){
-                s.x=contact.x;s.y=contact.y;s.z=contact.z;
-                if(contact.enemy){contact.enemy.takeDamage(s.dmg);if(s.chains)chainArcShot(s,contact.enemy);if(s.owner==='player'){hitMarkerT=.22;hitMarkerKill=contact.enemy.dead||contact.enemy.dying;}}
-                activateArcContact(s,contact);dead=impact=true;
-            }
-        }
-        if (s.style!=='arc'&&travelDt > 0 && s.z < terrainHeight(s.x, s.y) + 0.12) {
+        if (travelDt > 0 && s.z < terrainHeight(s.x, s.y) + 0.12) {
             spawnImpact(s.x, s.y, terrainHeight(s.x, s.y) + 0.15, s.color, 1);
             boltImpactSfx(s.x, s.y);
             dead = impact = true;
         }
         /* height-aware obstacle hit — low cover only blocks when the bolt is inside
            its vertical bounds, so shots pass cleanly over waist-high props */
-        if (s.style!=='arc'&&!dead && travelDt > 0 && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
+        if (!dead && travelDt > 0 && solidBlocksSegment(s.px, s.py, s.pz, s.x, s.y, s.z, 0.1, null)) {
             spawnImpact(s.x, s.y, s.z, s.color, 1);
             boltImpactSfx(s.x, s.y);
             dead = impact = true;
         }
-        if (s.style!=='arc'&&!dead && travelDt > 0) {
+        if (!dead && travelDt > 0) {
             let hit = null, bestD = 1e9;
             for (const e of enemies) {
                 if (e.dead || e.dying || e.unburrowing || Math.hypot(e.pos.x - s.ox, e.pos.y - s.oy, e.z + 0.8 - s.oz) > s.range) continue;
@@ -7436,7 +7444,6 @@ function updateShots(dt) {
             }
             if (hit) {
                 if (!s.splash) hit.takeDamage(s.dmg);
-                if (s.chains) chainArcShot(s, hit);
                 if (s.owner === 'player') { hitMarkerT = 0.22; hitMarkerKill = hit.dead || hit.dying; }
                 spawnImpact(s.x, s.y, s.z, 0xbb44ff, 1);
                 boltImpactSfx(s.x, s.y);
@@ -8797,6 +8804,7 @@ function updateChapterDialogue(dt) {
     if (chapterDialogue.t >= chapterDialogue.lines.length * chapterDialogue.lineDuration) chapterDialogue = null;
 }
 function clearCampaignTransitionCombat() {
+    lastArcHit=null;
     for (const enemy of [...enemies]) enemy.destroy(true);
     while (acid.length) acid[acid.length - 1].removeSelf();
     while (acidPools.length) acidPools[acidPools.length - 1].removeSelf();
@@ -9790,6 +9798,7 @@ const HFONT = () => 'Glitch Slap';
 let coverPose = null;   // debug: cover-art camera pose (set via __cf.setCoverPose) — [px,py,pz,tx,ty,tz]
 let facilityCaptureView = null;
 function gameRender() {
+    updateRelayRibbonView();
     if (MOVEMENT_DIAGNOSTICS) movementDiagnostics.sample();
     if (facilityCaptureView) {
         const view = FACILITY_CAPTURE_VIEWS[facilityCaptureView];
@@ -10600,6 +10609,7 @@ function clearResultInputHandler() {
     resultInputHandler = null;
 }
 function clearEndlessCombatEntities() {
+    lastArcHit=null;
     for (const enemy of [...enemies]) enemy.destroy(true);
     while (acid.length) acid[acid.length - 1].removeSelf();
     while (acidPools.length) acidPools[acidPools.length - 1].removeSelf();
@@ -11907,7 +11917,7 @@ window.__cf = {
     restoreCheckpointForTest(saved) {return applyCampaignCheckpointSnapshot(saved);},
     endlessSaveInfo() {return loadEndlessBoundary();},
     continueEndless() {const saved=loadEndlessBoundary();if(saved)startEndless(saved.configuration,saved);return !!saved;},
-    relayRouteInfo() {return {id:relayGuide.id,path:enhancedRelayPath().map(p=>[p.x,p.y]),timer:relayGuide.timer,arrived:{alpha:!!campaignRun.rewards?.alphaRouteArrived,gamma:!!campaignRun.rewards?.gammaRouteArrived},stats:relayRouteSolver.stats(),vertices:relayGuide.line?.geometry.drawRange.count||0,visible:!!relayGuide.line?.visible};},
+    relayRouteInfo() {return {id:relayGuide.id,path:enhancedRelayPath().map(p=>[p.x,p.y]),solvedOrigin:relayGuide.solvedPath.length?[relayGuide.solvedPath[0].x,relayGuide.solvedPath[0].y]:null,connectorUpdates:relayGuide.connectorUpdates,connectorOrigin:[relayGuide.connectorX,relayGuide.connectorY],timer:relayGuide.timer,arrived:{alpha:!!campaignRun.rewards?.alphaRouteArrived,gamma:!!campaignRun.rewards?.gammaRouteArrived},stats:relayRouteSolver.stats(),vertices:relayGuide.line?.geometry.drawRange.count||0,visible:!!relayGuide.line?.visible};},
     advanceRelayGuide(dt=0) {updateIntelRouteProgress(dt);},
     relaySegmentClear(a,b) {return relayGuideSegmentClear({x:a[0],y:a[1]},{x:b[0],y:b[1]});},
     addTestSolid(x0,y0,x1,y1) {return addSolid(x0,y0,x1,y1);},
@@ -11959,6 +11969,7 @@ window.__cf = {
     effectInfo() { return { impacts: impacts.map(f => f.mesh.position.toArray()), arcs: electricArcs.length, arcPool: electricArcPool.length }; },
     arcVfxInfo() {return electricArcs.map(a=>({kind:a.kind,points:Array.from(a.ribbon.points),vertices:a.line.geometry.drawRange.count,vertexVersion:a.line.geometry.attributes.position.version,frustumCulled:a.line.frustumCulled,depthTest:a.line.material.depthTest,life:a.life,geometry:a.line.geometry.uuid,material:a.line.material.uuid}));},
     arcTimingInfo(reset=false) {const events=arcTimingEvents.map(e=>({...e}));if(reset)arcTimingEvents.length=0;return events;},
+    arcHitInfo() {return lastArcHit?{...lastArcHit}:null;},
     advanceElectricalFx(seconds) {updateElectricArcs(seconds);updateImpacts(seconds);updateSparks(seconds);},
     waitCombatPreparation() {return combatEffectsPreparation;},
     emitArcForTest(from,to) {emitLightningArc(...from,...to,0x88eeff,'primary');},
@@ -12185,7 +12196,7 @@ window.__cf = {
     },
     /* cover-art / screenshot staging hooks */
     get renderer() { return threeJS && threeJS.renderer; },
-    render() { if (threeJS && threeJS.renderer) {updateArcRibbons();threeJS.renderer.render(scene, camera);} },
+    render() { if (threeJS && threeJS.renderer) {updateRelayRibbonView();updateArcRibbons();threeJS.renderer.render(scene, camera);} },
     pause(on) { LJS.setPaused(!!on); },
     setCoverPose(p) { coverPose = p ? [p[0], p[1], p[2], p[3], p[4], p[5]] : null; },
     hideViewmodel(on) { viewModel.visible = !on; },

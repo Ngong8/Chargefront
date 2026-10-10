@@ -99,5 +99,27 @@
         return { solve(...args) {const start=performance.now(),path=solve(...args);lastMs=performance.now()-start;maxMs=Math.max(maxMs,lastMs);return path;},
             invalidate() { edges.clear(); }, stats() { return { solves, expanded, cachedEdges: edges.size,lastMs,maxMs }; } };
     }
-    root.ChargefrontRelayRouting = Object.freeze({ create, corridorDistance });
+    // Display attachment is independent of A*. Project onto a reachable segment,
+    // not a stale whole vertex; ties prefer the farther-along valid suffix.
+    function attach(origin,path,clear) {
+        let best=null,bestDistance=Infinity;
+        for(let i=1;i<path.length;i++){
+            const a=path[i-1],b=path[i],dx=b.x-a.x,dy=b.y-a.y,length2=dx*dx+dy*dy;
+            const t=Math.max(0,Math.min(1,((origin.x-a.x)*dx+(origin.y-a.y)*dy)/(length2||1)));
+            const point={x:a.x+dx*t,y:a.y+dy*t},d=distance(origin,point);
+            if(d>bestDistance+.02||!clear(origin,point))continue;
+            bestDistance=d;best={point,index:i,t};
+        }
+        if(!best)return [];
+        const result=[{x:origin.x,y:origin.y}];
+        if(distance(origin,best.point)>.2)result.push(best.point);
+        const next=path[best.index];
+        if(distance(best.point,next)>1.25||best.index===path.length-1||!clear(origin,path[best.index+1]))result.push({x:next.x,y:next.y});
+        for(let i=best.index+1;i<path.length;i++)result.push({x:path[i].x,y:path[i].y});
+        // A short collision-authorized diagonal avoids an unnecessary lateral
+        // dogleg without discarding the authored corridor's remaining suffix.
+        if(result.length>2&&distance(origin,best.point)>.2&&distance(origin,best.point)<2&&clear(origin,result[2]))result.splice(1,1);
+        return result;
+    }
+    root.ChargefrontRelayRouting = Object.freeze({ create, corridorDistance,attach });
 })(globalThis);

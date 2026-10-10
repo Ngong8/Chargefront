@@ -11,7 +11,7 @@ if (process.argv.includes('--corrective')||process.argv.includes('--additional')
     'objective-hud-flow', 'arc-presentation', 'screecher-wings', 'runner-kamikaze', 'sprint-recovery',
     'combat-squad', 'combat-playtest', 'endless-hud');
 if(process.argv.includes('--additional')||process.argv.includes('--final-refinement'))suites.push('additional-refinement');
-if(process.argv.includes('--final-refinement'))suites.push('route-reload-refinement','combat-vfx-refinement','universal-abilities');
+if(process.argv.includes('--final-refinement'))suites.push('route-reload-refinement','combat-vfx-refinement','universal-abilities','route-hitscan-correction');
 // Bounded batches let long browser runs finish within terminal-operation budgets.
 const selection = process.argv.find(arg=>arg.startsWith('--suites='))?.slice(9).split(',');
 if (selection) {

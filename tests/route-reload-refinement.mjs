@@ -29,8 +29,8 @@ async function walkToArrival(id,timeout=90000){
  try{while(Date.now()-started<timeout){
   const row=await page.evaluate(()=>{const c=__cf,r=c.relayRouteInfo();if(r.path.length>1){const p=r.path[1];c.player.yaw=Math.atan2(p[1]-c.player.pos.y,p[0]-c.player.pos.x);c.player.pitch=0;}return {...r,position:[c.player.pos.x,c.player.pos.y],solid:c.insideSolid(c.player.pos.x,c.player.pos.y)};});
   if(samples.length===0||Date.now()-started>samples.length*1000){samples.push(row);if(samples.length===2){
-   if(id==='alpha')results.ribbonWidths=await page.evaluate(()=>{const c=__cf,g=c.scene.getObjectByName('AdaptiveRelayGuide'),p=g.geometry.attributes.position,T=c.camera.position.constructor,rows=[];c.render();
-    for(let i=0;i+5<g.geometry.drawRange.count;i+=6){const a=new T().fromBufferAttribute(p,i),b=new T().fromBufferAttribute(p,i+1),u=new T().fromBufferAttribute(p,i+2),v=new T().fromBufferAttribute(p,i+3);if(u.distanceTo(v)>.00001)continue;const center=a.clone().add(b).multiplyScalar(.5),d=Math.hypot(center.x-c.player.pos.x,center.y-c.player.pos.y);if(d<8||d>15)continue;a.project(c.camera);b.project(c.camera);if(a.z>1||a.z<0)continue;rows.push(Math.hypot((a.x-b.x)*innerWidth/2,(a.y-b.y)*innerHeight/2));}return rows;});
+   if(id==='alpha')results.ribbonWidths=await page.evaluate(()=>{const c=__cf,g=c.scene.getObjectByName('AdaptiveRelayGuide'),p=g.geometry.attributes.position,T=c.camera.position.constructor,rows=[],gl=c.renderer.getContext();g.visible=false;c.render();const before=new Uint8Array(gl.drawingBufferWidth*gl.drawingBufferHeight*4);gl.readPixels(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight,gl.RGBA,gl.UNSIGNED_BYTE,before);g.visible=true;c.render();const after=new Uint8Array(before.length);gl.readPixels(0,0,gl.drawingBufferWidth,gl.drawingBufferHeight,gl.RGBA,gl.UNSIGNED_BYTE,after);
+    for(let i=0;i+5<g.geometry.drawRange.count;i+=6){if(g.geometry.attributes.routeSide.getX(i)<.5)continue;const a=new T().fromBufferAttribute(p,i),b=new T().fromBufferAttribute(p,i+2),center=a.clone().lerp(b,.5),d=Math.hypot(center.x-c.player.pos.x,center.y-c.player.pos.y);if(d<8||d>15)continue;a.project(c.camera);b.project(c.camera);center.project(c.camera);if(center.z>1||center.z<0)continue;const dx=(b.x-a.x)*innerWidth,dy=(b.y-a.y)*innerHeight,len=Math.hypot(dx,dy),cx=(center.x*.5+.5)*gl.drawingBufferWidth,cy=(center.y*.5+.5)*gl.drawingBufferHeight,values=[];for(let j=-8;j<=8;j++){const x=Math.round(cx-dy/len*j),y=Math.round(cy+dx/len*j),k=(y*gl.drawingBufferWidth+x)*4;values.push(Math.max(0,after[k]-before[k],after[k+1]-before[k+1],after[k+2]-before[k+2]));}const peak=Math.max(...values);if(peak>15)rows.push(values.reduce((n,v)=>n+v/peak,0));}return rows;});
    await capture(id+'-adaptive-guide');
   }}
   if(row.arrived[id]){samples.push(row);return samples;}await page.waitForTimeout(100);
@@ -57,15 +57,15 @@ try{
  results.skips=[];
  for(const p of [[360,610],[300,575],[280,595],[270,575],[290,575]])results.skips.push(await validate(await place(...p)));
  assert(results.skips[1].path.every(p=>p[0]<=301),'Skipping Hall and staging points never guides backward');
- // Same authoritative origin moves slowly: one solve per three seconds, no per-member solves.
- results.cadence=await page.evaluate(()=>{const before=__cf.relayRouteInfo().stats.solves,changes=[];for(let i=0;i<720;i++){__cf.player.pos.x-=.02;const old=__cf.relayRouteInfo().stats.solves;__cf.advanceRelayGuide(1/60);if(__cf.relayRouteInfo().stats.solves!==old)changes.push(i);}return {count:__cf.relayRouteInfo().stats.solves-before,changes};});
- assert.equal(results.cadence.count,4);assert(results.cadence.changes.slice(1).every((v,i)=>v-results.cadence.changes[i]>=179&&v-results.cadence.changes[i]<=181));
+ // One-second solves and independent authoritative connector refreshes.
+ results.cadence=await page.evaluate(()=>{const before=__cf.relayRouteInfo(),changes=[];for(let i=0;i<240;i++){__cf.player.pos.x-=.02;const old=__cf.relayRouteInfo().stats.solves;__cf.advanceRelayGuide(1/60);if(__cf.relayRouteInfo().stats.solves!==old)changes.push(i);}const after=__cf.relayRouteInfo();return {count:after.stats.solves-before.stats.solves,changes,connectors:after.connectorUpdates-before.connectorUpdates};});
+ assert.equal(results.cadence.count,4);assert.equal(results.cadence.connectors,4);assert(results.cadence.changes.slice(1).every((v,i)=>v-results.cadence.changes[i]>=59&&v-results.cadence.changes[i]<=61));
  const checkpoint=await page.evaluate(()=>__cf.createCheckpointForTest());
  await place(350,575);await page.evaluate(saved=>{__cf.restoreCheckpointForTest(saved);__cf.advanceRelayGuide(0);},checkpoint);
  const restored=await validate(await page.evaluate(()=>__cf.relayRouteInfo()));assert(dist(restored.path[0],[checkpoint.player.position.x,checkpoint.player.position.y])<.01);results.restore=restored;
  // Walk from the Hall with real W, automatic door and adaptive steering; earlier skipped indices have no authority.
  await place(382,646);await page.evaluate(()=>__cfPerf.reset());results.alphaWalk=await walkToArrival('alpha');
- assert(results.ribbonWidths.length>0);assert(results.ribbonWidths.every(w=>w>=1.5&&w<=2.3),'Actual camera-projected ground ribbon width must be approximately 1.5–2× a native one-pixel line');
+ assert(results.ribbonWidths.length>0);assert(results.ribbonWidths.every(w=>w>=2.8&&w<=4.8),'Actual rendered ground ribbon must be genuinely 3–4 pixels wide');
  results.routePerformance=await page.evaluate(()=>__cfPerf.summary());
  for(const key of ['materialsCreated','geometriesCreated','linkProgram'])assert.equal(results.routePerformance.counters[key]||0,0,'Route traversal '+key);
  assert(results.alphaWalk.at(-1).arrived.alpha);assert.equal((await place(300,575)).path.length,0,'Arrival is latched when moving away');

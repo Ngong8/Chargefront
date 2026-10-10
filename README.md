@@ -42,7 +42,7 @@ the Hall to Relay Alpha in Mission 2. Choosing the **Supply Locker** instead rel
 3 reserve cartridges and 2 electric grenades as ground items: hold E to collect,
 with full/partial inventory handled safely. Completing Mission 2's Survey Drone
 retains tactical contact indicators and unlocks a cyan adaptive bypass route to Relay Gamma.
-Rewarded guidance replans from the Commander about once every three seconds while moving,
+Rewarded guidance replans from the Commander about once every second while moving,
 uses the authored safe corridors as preferences, and retires at relay interaction range.
 
 Native lifeforms burrow up from the ground and attack on sight. Automated security drones still patrol the facility. Expect contact.
@@ -103,7 +103,7 @@ sprinting again. **Options** in the main/pause menus includes Fullscreen. Contro
 & Guide scrolls inside its panel with its heading and Back button kept accessible.
 
 Endless deployment chooses **two of four**: BUL-117, CRW-8, **ARC-9** (32 rounds,
-72 m, chain disruption) and **PX-4** (15 rounds, 110 m, explosive plasma). Choose
+72 m instant hitscan, chain disruption) and **PX-4** (15 rounds, 110 m, explosive plasma). Choose
 starting slot, each operator's weapon/ability and squad posture. Restart preserves
 deployment and arena, resets resources/upgrades/waves. Waves 1–5 are unmodified;
 wave 6 onward automatically chooses a modifier or NONE. No Contract menu.
@@ -151,6 +151,11 @@ The final 4.1 combat/presentation follow-up is documented in
 [MILESTONE-4.1-COMBAT-VFX-ABILITY-REFINEMENT.md](MILESTONE-4.1-COMBAT-VFX-ABILITY-REFINEMENT.md):
 three-second/thicker relay guidance, flat ARC magazine display, robust electrical
 ribbons/contact timing, 15-shot PX-4 and universal Endless abilities.
+
+The subsequent [route/hitscan correction](MILESTONE-4.1-ROUTE-HITSCAN-CORRECTION.md)
+restores one-second A*, independently reconnects guidance from the Commander,
+uses a visibly 3–4-pixel ground ribbon, and resolves ARC-9 hits immediately within
+72 m. Continuous reloads, PX-4 and universal abilities retain their accepted settings.
 
 ---
 

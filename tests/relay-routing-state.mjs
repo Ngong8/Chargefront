@@ -14,3 +14,8 @@ for(const origin of [{x:10,y:50},{x:72,y:18},{x:80,y:70},{x:20,y:80}]){
 }
 const sealed=ChargefrontRelayRouting.create({world:100,clear:()=>false});assert.deepEqual(sealed.solve({x:10,y:10},{x:90,y:90},corridor),[]);
 console.log('PASS relay routing: obstacle traversal, skipped corridors, rejoin, reverse, deterministic ties, no-path fallback');
+const line=[{x:10,y:10},{x:50,y:10},{x:90,y:10}];
+const attached=ChargefrontRelayRouting.attach({x:70,y:12},line,()=>true);
+assert.deepEqual(attached[0],{x:70,y:12});assert(attached.slice(1).every(p=>p.x>=70),'Connector cannot pull back to an obsolete vertex');
+assert.deepEqual(ChargefrontRelayRouting.attach({x:20,y:20},line,()=>false),[],'An obstructed projected connector must remain hidden');
+assert.deepEqual(line,[{x:10,y:10},{x:50,y:10},{x:90,y:10}],'Display attachment never mutates the solved path');

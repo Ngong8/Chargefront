@@ -191,6 +191,7 @@
 
 <!-- Classic script keeps local file:// play working; facility geometry is built on campaign startup. -->
 <script src="src/world/facility.js"></script>
+<script src="src/world/environment-placement.js"></script>
 <script src="src/combat.js"></script>
 <script src="src/progression.js"></script>
 <script src="src/relay-routing.js"></script>
@@ -432,6 +433,12 @@ const MISSION2_PATHS = [
 const SURVEY_DRONE_DOCK = LJS.vec2(205, 600);
 const SURVEY_DRONE_ROUTE = [SURVEY_DRONE_DOCK, LJS.vec2(205, 665), LJS.vec2(224, 710), LJS.vec2(238, 736)];
 const SURVEY_DRONE_STATE = { DORMANT: 'dormant', AVAILABLE: 'available', ESCORTING: 'escorting', DISABLED: 'disabled', ARRIVED: 'arrived', SCANNING: 'scanning', COMPLETE: 'complete', ABANDONED: 'abandoned' };
+// Shared authored attachment coordinates for construction and placement exclusions.
+// Values are unchanged; unlike scatter they are never relocated by validation.
+const ENV_INTERACTION_ANCHORS = Object.freeze(Object.fromEntries(Object.entries({
+    scan: { x: 398, y: 470 }, cell: { x: 288, y: 620 }, maintenanceBattery: { x: 321, y: 603 },
+    localConsole: { x: 344, y: 630 }, commandConsole: { x: 382, y: 648 }, supplyConsole: { x: 376, y: 626 },
+}).map(([id, point]) => [id, Object.freeze(point)])));
 const WORLD_PATHS = [MISSION1_ROUTE, ...MISSION2_PATHS, MISSION3_ROUTE, MISSION4_ROUTE];
 const MAX_STEP = 2.6;              // cliff climb limit (metres)
 
@@ -1803,10 +1810,12 @@ function solidQueryBounds(x0, y0, x1, y1, visit) {
     }
     return false;
 }
+/* `overhead` solids (door lintels, CP2-R) start above every actor: they block
+   projectiles/LOS through their real vertical bounds but never ground movement. */
 function resolveCircle(p, r) {
     const startX = p.x, startY = p.y;
     solidQueryBounds(p.x - r, p.y - r, p.x + r, p.y + r, (s) => {
-        if (s.disabled) return false;   // sliding doors toggle their solid on/off
+        if (s.disabled || s.overhead) return false;   // sliding doors toggle their solid on/off
         const cx = clamp(p.x, s.x0, s.x1), cy = clamp(p.y, s.y0, s.y1);
         let dx = p.x - cx, dy = p.y - cy;
         const d2 = dx * dx + dy * dy;
@@ -1821,7 +1830,7 @@ function resolveCircle(p, r) {
 }
 function isInsideSolid(x, y, r = 0.4) {
     return solidQueryBounds(x - r, y - r, x + r, y + r, (s) => {
-        if (s.disabled) return false;   // sliding doors toggle their solid on/off
+        if (s.disabled || s.overhead) return false;   // sliding doors toggle their solid on/off
         const cx = clamp(x, s.x0, s.x1), cy = clamp(y, s.y0, s.y1);
         return (x - cx) * (x - cx) + (y - cy) * (y - cy) < r * r;
     });
@@ -2580,14 +2589,36 @@ function envMat(color, opts = {}) {
 
 /* place a vertical box on the terrain (optionally solid).  Only structural cover
    casts shadows; decorative/emissive boxes stay shadow-free. */
-function envBox(parent, x, y, w, d, h, color, opts = {}, solid = false) {
+function envBox(parent, x, y, w, d, h, color, opts = {}, solid = false, placement = null) {
+    // Opt-in for newly authored props. Legacy generation/seed consumption remains
+    // unchanged in CP1; validation runs before any geometry, material or solid.
+    let admitted = null;
+    if (placement) {
+        const occupied = placement.occupied;
+        if (!Array.isArray(occupied) || occupied.length >= ChargefrontEnvironmentPlacement.LIMITS.occupied) return null;
+        admitted = environmentPlacement.validate({ ...placement, x, y, width: w, depth: d, height: h }, occupied);
+        if (!admitted.ok || admitted.solid !== solid) return null;
+    }
     const castShadow = opts.castShadow === true || solid;
     const matOpts = Object.assign({}, opts); delete matOpts.castShadow;
     const mesh = envBoxMesh(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.55 }, matOpts));
-    mesh.position.set(x, y, terrainHeight(x, y) + h / 2);
+    mesh.position.set(x, y, admitted ? admitted.centerZ : terrainHeight(x, y) + h / 2);
+    if (admitted) {
+        mesh.scale.setScalar(admitted.scale);
+        // box geometry is Y-up, world is Z-up: this is world-Z yaw, not a
+        // local-Z Euler twist that would tilt an upright scaled prop.
+        mesh.rotation.set(Math.PI / 2, admitted.yaw, 0);
+        mesh.userData.environmentPurpose = admitted.purpose;
+    }
     mesh.castShadow = castShadow; mesh.receiveShadow = castShadow;
     parent.add(mesh);
-    if (solid) addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y));
+    if (admitted) {
+        if (solid) {
+            if (admitted.yaw) addRotatedSolid(x, y, admitted.width, admitted.depth, admitted.yaw, admitted.topY, admitted.bottomY);
+            else addSolid(admitted.bounds.x0, admitted.bounds.y0, admitted.bounds.x1, admitted.bounds.y1, admitted.topY, admitted.bottomY);
+        }
+        placement.occupied.push({ ...admitted.bounds }); // caller-owned build batch, not another collision registry
+    } else if (solid) addSolid(x - w / 2, y - d / 2, x + w / 2, y + d / 2, terrainHeight(x, y) + h, terrainHeight(x, y));
     return mesh;
 }
 /* horizontal pipe / conduit spanning two terrain points */
@@ -2603,7 +2634,8 @@ function envPipe(parent, ax, ay, bx, by, z, radius, color, intensity = 0.32) {
 }
 /* never let authored dressing land inside a relay pad, facility, deep lab or
    the extraction apron */
-function envClearPoint(x, y) {
+function envClearPoint(x, y, placement = null) {
+    if (placement) return environmentPlacement.validate({ ...placement, x, y }, placement.occupied).ok;
     if (Math.hypot(x - FACILITY.x, y - FACILITY.y) < 34) return false;
     if (x > 320 && x < 460 && y > 675 && y < 805) return false;     // deep lab footprint
     if (x > 400 && x < 500 && y > 30 && y < 125) return false;      // extraction apron
@@ -2615,7 +2647,7 @@ function envClearPoint(x, y) {
    piece is approximated by small axis-aligned squares laid along its long axis.
    This keeps player/projectile/LOS collision in step with the visible geometry
    without adding an oriented-collision system. */
-function addRotatedSolid(cx, cy, w, d, rot, topY, bottomY) {
+function rotatedSolidRects(cx, cy, w, d, rot) {
     const seg = Math.max(2, Math.round(w / Math.max(d, 0.8)));
     const segLen = w / seg;
     const r = Math.max(d, segLen) / 2;
@@ -2623,10 +2655,80 @@ function addRotatedSolid(cx, cy, w, d, rot, topY, bottomY) {
     const pieces = [];
     for (let i = 0; i < seg; i++) {
         const t = -w / 2 + segLen * (i + 0.5);
-        pieces.push(addSolid(cx + t * cos - r, cy + t * sin - r, cx + t * cos + r, cy + t * sin + r, topY, bottomY));
+        pieces.push({ x0: cx + t * cos - r, y0: cy + t * sin - r, x1: cx + t * cos + r, y1: cy + t * sin + r });
     }
     return pieces;
 }
+function addRotatedSolid(cx, cy, w, d, rot, topY, bottomY) {
+    return rotatedSolidRects(cx, cy, w, d, rot).map(s => addSolid(s.x0, s.y0, s.x1, s.y1, topY, bottomY));
+}
+
+// CP1 protected ground space. Metadata only: no meshes, lights, solids or agents.
+// Derived from the current mission routes, attachment positions and facility data.
+const environmentZoneCache = { campaign: null, doorCount: -1, endless: null };
+function environmentPlacementZones() {
+    if (mode === 'endless') {
+        if (!environmentZoneCache.endless) environmentZoneCache.endless = Object.freeze([
+            { id: 'endless:center', type: 'circle', x: ENDLESS_CENTER.x, y: ENDLESS_CENTER.y, radius: 42 },
+            { id: 'endless:vial', type: 'circle', x: ENDLESS_VIAL_POS.x, y: ENDLESS_VIAL_POS.y, radius: 8 },
+            { id: 'endless:deployment', type: 'circle', x: ENDLESS_SPAWN.x, y: ENDLESS_SPAWN.y, radius: 8 },
+        ].map(Object.freeze));
+        return environmentZoneCache.endless;
+    }
+    if (campaignWorldBuilt && environmentZoneCache.campaign && environmentZoneCache.doorCount === facilityDoors.length) return environmentZoneCache.campaign;
+    const zones = [];
+    const circle = (id, point, radius) => zones.push({ id, type: 'circle', x: point.x, y: point.y, radius });
+    for (const [i, f] of ChargefrontFacility.PLACEMENT_FOOTPRINTS.entries()) zones.push({ id: 'facility:' + i, type: 'rect', x0: f[0] - 2, y0: f[2] - 2, x1: f[1] + 2, y1: f[3] + 2 });
+    zones.push(...facilityWorld.doorPlacementZones());
+    circle('deployment:landing', LAND, 22);
+    circle('deployment:staging', FACILITY_STAGING, 14);
+    circle('deployment:staging-ship', STAGING_SHIP, 14);
+    for (const [id, snapshot] of Object.entries(CANONICAL_WORLD_SNAPSHOTS)) circle('deployment:' + id, snapshot.start, 8);
+    zones.push({ id: 'extraction:apron', type: 'rect', x0: 400, y0: 30, x1: 500, y1: 125 });
+    for (const relay of RELAYS) {
+        circle('objective:relay-' + relay.id, relay.pos, 13);
+        for (const [i, angle] of RELAY_SPAWN_LANES[relay.id].entries()) zones.push({ id: 'spawn:relay-' + relay.id + ':' + i, type: 'corridor',
+            ax: relay.pos.x + Math.cos(angle) * 13, ay: relay.pos.y + Math.sin(angle) * 13,
+            bx: relay.pos.x + Math.cos(angle) * 60, by: relay.pos.y + Math.sin(angle) * 60, radius: 8 });
+    }
+    for (const [i, [x, y]] of FACILITY_GARRISON_SPOTS.entries()) circle('spawn:garrison-' + i, { x, y }, 4);
+    circle('objective:sample', LAB_CONTAINMENT, 7);
+    circle('objective:escape', LAB_EMERGENCY_EXIT, 8);
+    circle('objective:beacon', EXTRACTION_BEACON, 8);
+    circle('objective:boarding', EXTRACTION_BOARD, 16);
+    for (const key of ['maintenanceBattery', 'localConsole', 'commandConsole', 'supplyConsole', 'scan', 'cell']) {
+        circle('interactable:' + key, campaignContent[key]?.pos || ENV_INTERACTION_ANCHORS[key], key === 'scan' ? 7 : 6);
+    }
+    for (const pickup of lockerPickups) circle('interactable:locker-' + pickup.kind, pickup.pos, 4);
+    circle('interactable:survey-dock', SURVEY_DRONE_DOCK, 8);
+    if (campaignContent.lab) for (const key of ['securityConsole', 'turretConsole', 'turret']) circle('interactable:' + key, campaignContent.lab[key].pos, 6);
+    if (campaignContent.extraction) {
+        circle('interactable:extraction-cache', campaignContent.extraction.cache.pos, 6);
+        for (const node of campaignContent.extraction.infestation.nodes) circle('objective:purge-' + node.id, node.pos, 8);
+    }
+    const paths = [['m1', MISSION1_ROUTE, 7.5], ['alpha', MISSION2_ROUTE_ALPHA, 7.5], ['beta', MISSION2_ROUTE_BETA, 7.5],
+        ['gamma', MISSION2_ROUTE_GAMMA, 7.5], ['return', MISSION2_RETURN_ROUTE, 7.5], ['lab', MISSION3_ROUTE, 6],
+        ['escape', MISSION4_ROUTE, 7.5], ['survey', SURVEY_DRONE_ROUTE, 5]];
+    for (const [id, path, radius] of paths) for (let i = 1; i < path.length; i++) zones.push({ id: 'corridor:' + id + ':' + i, type: 'corridor',
+        ax: path[i - 1].x, ay: path[i - 1].y, bx: path[i].x, by: path[i].y, radius });
+    environmentZoneCache.doorCount = facilityDoors.length;
+    const result = Object.freeze(zones.map(Object.freeze));
+    if (campaignWorldBuilt) environmentZoneCache.campaign = result;
+    return result;
+}
+const environmentPlacement = ChargefrontEnvironmentPlacement.create({
+    terrainHeight,
+    intersectsSolid: b => solidQueryBounds(b.x0, b.y0, b.x1, b.y1, s => !s.disabled && s.x0 <= b.x1 && s.x1 >= b.x0 && s.y0 <= b.y1 && s.y1 >= b.y0),
+    getZones: environmentPlacementZones,
+    getBounds: () => ({ x0: 2, y0: 2, x1: WORLD - 2, y1: WORLD - 2,
+        ...(mode === 'endless' ? { circle: { x: ENDLESS_CENTER.x, y: ENDLESS_CENTER.y, radius: ENDLESS_RADIUS - 6 } } : {}) }),
+    collisionBounds: (bounds, p) => {
+        if (!p.yaw) return bounds;
+        const rects = rotatedSolidRects(p.x, p.y, p.width, p.depth, p.yaw);
+        return { x0: Math.min(...rects.map(r => r.x0)), y0: Math.min(...rects.map(r => r.y0)),
+            x1: Math.max(...rects.map(r => r.x1)), y1: Math.max(...rects.map(r => r.y1)) };
+    },
+});
 
 /* ─── 3.5A combat-space cover clusters + landmarks ─────────────────────── */
 function buildCombatSpaces() {
@@ -3044,7 +3146,7 @@ function relayGuideSegmentClear(a,b, allowDoors=true) {
     if(solidQueryBounds(Math.min(a.x,b.x)-.65,Math.min(a.y,b.y)-.65,Math.max(a.x,b.x)+.65,Math.max(a.y,b.y)+.65,s=>{
         const door=relayGuide.doorMap.get(s);
         if(allowDoors&&door)return door.enabled&&guideDoorLocked(door)&&segIntersectsRect(a.x,a.y,b.x,b.y,s.x0-.65,s.y0-.65,s.x1+.65,s.y1+.65);
-        return !s.disabled&&segIntersectsRect(a.x,a.y,b.x,b.y,s.x0-.65,s.y0-.65,s.x1+.65,s.y1+.65);
+        return !s.disabled&&!s.overhead&&segIntersectsRect(a.x,a.y,b.x,b.y,s.x0-.65,s.y0-.65,s.x1+.65,s.y1+.65);
     }))return false;
     const length=Math.hypot(b.x-a.x,b.y-a.y),n=Math.max(1,Math.ceil(length/.75));
     let h=terrainHeight(a.x,a.y);
@@ -6306,8 +6408,9 @@ function spawnDroneWave() {
 }
 
 /* one-time facility security presence: a few drones inside/around the compound */
+const FACILITY_GARRISON_SPOTS = Object.freeze([[360, 645], [370, 638], [350, 632], [398, 674]].map(Object.freeze));
 function spawnInitialFacilityDrones(additionalCount = null) {
-    const spots = [[360, 645], [370, 638], [350, 632], [398, 674]];
+    const spots = FACILITY_GARRISON_SPOTS;
     const count = additionalCount === null ? (activeMissionId === 'dead_signal' ? 2 : 4) : additionalCount;
     const start = additionalCount === null ? 0 : Math.max(0, spots.length - count);
     for (const s of spots.slice(start, start + count)) {
@@ -8577,12 +8680,14 @@ function buildCampaignWorld() {
     spawnPickups();
     buildCampaignObjectives();
     spawnInitialFacilityDrones();
+    facilityWorld.finalizeExteriorIdentity(); // mounted detail after accepted seeded scenery/asset construction
     campaignWorldBuilt = true;
     threeJS.renderer.shadowMap.needsUpdate = true;
 }
 
 function buildCampaignObjectives() {
-    const scanPos = LJS.vec2(398, 470);
+    const anchor = id => LJS.vec2(ENV_INTERACTION_ANCHORS[id].x, ENV_INTERACTION_ANCHORS[id].y);
+    const scanPos = anchor('scan');
     const scan = new THREE.Group();
     const base = new THREE.Mesh(new THREE.CylinderGeometry(1.4, 1.7, 0.45, 8), mat(0x28354a, { metalness: 0.6, roughness: 0.35 }));
     base.rotation.x = Math.PI / 2; base.position.z = 0.25; scan.add(base);
@@ -8592,11 +8697,11 @@ function buildCampaignObjectives() {
     ring.rotation.x = Math.PI / 2; ring.position.z = 1.35; scan.add(ring);
     scan.position.set(scanPos.x, scanPos.y, terrainHeight(scanPos.x, scanPos.y)); scene.add(scan);
     campaignContent.scan = { group: scan, pos: scanPos, core, ring };
-    const cellPos = LJS.vec2(288, 620);
+    const cellPos = anchor('cell');
     const cell = makeAuxiliaryFieldCell();
     cell.position.set(cellPos.x, cellPos.y, terrainHeight(cellPos.x, cellPos.y) + 0.6); scene.add(cell);
     campaignContent.cell = { group: cell, pos: cellPos };
-    const batteryPos = LJS.vec2(321, 603);
+    const batteryPos = anchor('maintenanceBattery');
     const battery = makeMaintenanceBattery();
     battery.scale.setScalar(1.35);
     battery.position.set(batteryPos.x, batteryPos.y, terrainHeight(batteryPos.x, batteryPos.y) + 0.7); scene.add(battery);
@@ -8626,9 +8731,9 @@ function buildCampaignObjectives() {
         group.position.set(pos.x, pos.y, terrainHeight(pos.x, pos.y)); scene.add(group);
         return { group, pos, screen };
     };
-    campaignContent.localConsole = makeConsole(LJS.vec2(344, 630), 0xff744f);
-    campaignContent.commandConsole = makeConsole(LJS.vec2(382, 648), 0x66bfff);
-    campaignContent.supplyConsole = makeConsole(LJS.vec2(376, 626), 0xffc45b);
+    campaignContent.localConsole = makeConsole(anchor('localConsole'), 0xff744f);
+    campaignContent.commandConsole = makeConsole(anchor('commandConsole'), 0x66bfff);
+    campaignContent.supplyConsole = makeConsole(anchor('supplyConsole'), 0xffc45b);
     prepareLockerPickups();
     campaignContent.networkIndicators = [];
     for (let i = 0; i < 3; i++) {
@@ -12160,9 +12265,20 @@ window.__cf = {
     get acidPools() { return acidPools; },
     terrainHeight(x, y) { return terrainHeight(x, y); },
     get solidCount() { return SOLIDS.length; },
+    validateEnvironmentPlacement(candidate, occupied = []) { return environmentPlacement.validate(candidate, occupied); },
+    findEnvironmentPlacement(options) { return environmentPlacement.find(options); },
+    environmentPlacementZones() { return environmentPlacementZones(); },
+    environmentPlacementStats() { return environmentPlacement.stats(); },
+    environmentPlacementSolidsForTest() { return SOLIDS.map(({ x0, y0, x1, y1, topY, bottomY }) => ({ x0, y0, x1, y1, topY, bottomY })); },
+    environmentBoxForTest(parent, candidate, occupied = []) {
+        const policy = ChargefrontEnvironmentPlacement.PURPOSES[candidate.purpose];
+        return envBox(parent, candidate.x, candidate.y, candidate.width, candidate.depth, candidate.height, 0x465064, {}, !!policy?.solid, { ...candidate, occupied });
+    },
     get sceneObjects() { return scene.children.length; },
     get scene() { return scene; },   // debug: full scene graph
     facilitySections() { return facilityWorld.sectionSummary(); },
+    get facilityDoors() { return facilityDoors; },   // CP2-R enclosure test: live door records (read/force in tests only)
+    solidsForTest() { return SOLIDS; },
     performanceInfo() {
         const counts = { objects: 0, meshes: 0, visibleMeshes: 0, lights: 0, visibleLights: 0, casters: 0 };
         const effectivelyVisible = (object) => { for (let current = object; current; current = current.parent) if (!current.visible) return false; return true; };

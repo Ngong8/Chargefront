@@ -1,0 +1,1047 @@
+{
+  "checkpoint": "Milestone 4.2 CP2-R",
+  "verdict": "engineering_pass_manual_approval_pending",
+  "sources": {
+    "src/world/facility.js": "55ad43d86c337facb0b1a57d349373e6caa8a5217fb730e64602e11e8ddf267d",
+    "chargefront.html": "b80cb512d7cdc33793c3ca9f5804d19d7230ec49797858d7a396402aa15a7632",
+    "Credits.txt": "b897856e40032087130a6c1774d7c224e3dcb65e52a5cb388bcaf2e19f85465e"
+  },
+  "visibility": {
+    "firefox": {
+      "passed": true,
+      "comparison": [
+        {
+          "label": "west-eye",
+          "callsDelta": 3,
+          "luminanceBefore": 6.011999999999999,
+          "luminanceAfter": 20.331400000000002,
+          "programs": 42
+        },
+        {
+          "label": "east-eye",
+          "callsDelta": 2,
+          "luminanceBefore": 8.625711111111109,
+          "luminanceAfter": 26.276711111111112,
+          "programs": 45
+        },
+        {
+          "label": "west-service-eye",
+          "callsDelta": 3,
+          "luminanceBefore": 14.576844444444447,
+          "luminanceAfter": 38.88415555555555,
+          "programs": 45
+        },
+        {
+          "label": "east-service-eye",
+          "callsDelta": 2,
+          "luminanceBefore": 18.612666666666666,
+          "luminanceAfter": 48.08595555555556,
+          "programs": 45
+        }
+      ],
+      "fixedGeometry": {
+        "before": "dad535b8252f1a6ca618136b403cf35299af3d961ce667785712ffdcef9e0529",
+        "after": "dad535b8252f1a6ca618136b403cf35299af3d961ce667785712ffdcef9e0529"
+      },
+      "warmedTour": {
+        "before": 45,
+        "after": 45
+      },
+      "materialBenchmark": {
+        "samplesPerState": 96,
+        "medianBeforeMs": 53,
+        "medianAfterMs": 58,
+        "ratio": 1.0943396226415094,
+        "drawCalls": {
+          "before": 757,
+          "after": 759
+        },
+        "programStart": 45,
+        "programEnd": 45
+      },
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8,
+      "lightCount": 135,
+      "sourceSha256": "55ad43d86c337facb0b1a57d349373e6caa8a5217fb730e64602e11e8ddf267d"
+    },
+    "edge": {
+      "passed": true,
+      "comparison": [
+        {
+          "label": "west-eye",
+          "callsDelta": 3,
+          "luminanceBefore": 6.060133333333332,
+          "luminanceAfter": 20.331400000000002,
+          "programs": 42
+        },
+        {
+          "label": "east-eye",
+          "callsDelta": 2,
+          "luminanceBefore": 8.625711111111109,
+          "luminanceAfter": 26.276711111111112,
+          "programs": 43
+        },
+        {
+          "label": "west-service-eye",
+          "callsDelta": 3,
+          "luminanceBefore": 14.576844444444447,
+          "luminanceAfter": 38.88415555555555,
+          "programs": 45
+        },
+        {
+          "label": "east-service-eye",
+          "callsDelta": 2,
+          "luminanceBefore": 18.612666666666666,
+          "luminanceAfter": 47.20375555555557,
+          "programs": 45
+        }
+      ],
+      "fixedGeometry": {
+        "before": "741c73765b9ed4d4ce665fbcf1167423a6af69d2d8c4055906032ac521ceb2ab",
+        "after": "741c73765b9ed4d4ce665fbcf1167423a6af69d2d8c4055906032ac521ceb2ab"
+      },
+      "warmedTour": {
+        "before": 45,
+        "after": 45
+      },
+      "materialBenchmark": {
+        "samplesPerState": 96,
+        "medianBeforeMs": 18.900000005960464,
+        "medianAfterMs": 16.099999994039536,
+        "ratio": 0.8518518512678361,
+        "drawCalls": {
+          "before": 757,
+          "after": 759
+        },
+        "programStart": 45,
+        "programEnd": 45
+      },
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8,
+      "lightCount": 135,
+      "sourceSha256": "55ad43d86c337facb0b1a57d349373e6caa8a5217fb730e64602e11e8ddf267d"
+    }
+  },
+  "regression": {
+    "firefox": {
+      "finalResults": [
+        {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 163.879
+        },
+        {
+          "browser": "firefox",
+          "suite": "runtime-stability",
+          "status": 0,
+          "signal": null,
+          "seconds": 206.747
+        },
+        {
+          "browser": "firefox",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 198.497
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "seconds": 58.313
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "seconds": 81.906
+        },
+        {
+          "browser": "firefox",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "seconds": 40.058
+        }
+      ],
+      "firstAttempts": [
+        {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 163.879
+        },
+        {
+          "browser": "firefox",
+          "suite": "runtime-stability",
+          "status": 0,
+          "signal": null,
+          "seconds": 206.747
+        },
+        {
+          "browser": "firefox",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 198.497
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-regression",
+          "status": 1,
+          "signal": null,
+          "seconds": 63.697
+        }
+      ],
+      "stress": {
+        "frames": 271,
+        "p95Ms": 50,
+        "p99Ms": 133.3,
+        "worstMs": 183.3,
+        "over100": 4,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1339,
+        "triangles": 294804,
+        "geometries": 2159,
+        "materials": 1694,
+        "meshes": 2426,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      }
+    },
+    "edge": {
+      "finalResults": [
+        {
+          "browser": "edge",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 107.329
+        },
+        {
+          "browser": "edge",
+          "suite": "runtime-stability",
+          "status": 0,
+          "signal": null,
+          "seconds": 199.372
+        },
+        {
+          "browser": "edge",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 144.592
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "seconds": 22.793
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "seconds": 61.117
+        },
+        {
+          "browser": "edge",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "seconds": 31.157
+        }
+      ],
+      "firstAttempts": [
+        {
+          "browser": "edge",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 107.329
+        },
+        {
+          "browser": "edge",
+          "suite": "runtime-stability",
+          "status": 0,
+          "signal": null,
+          "seconds": 199.372
+        },
+        {
+          "browser": "edge",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 144.592
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "seconds": 22.793
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "seconds": 61.117
+        },
+        {
+          "browser": "edge",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "seconds": 31.157
+        }
+      ],
+      "stress": {
+        "frames": 271,
+        "p95Ms": 33.3,
+        "p99Ms": 33.5,
+        "worstMs": 133.4,
+        "over100": 1,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1378,
+        "triangles": 296555,
+        "geometries": 2161,
+        "materials": 1696,
+        "meshes": 2428,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      }
+    }
+  },
+  "enclosure": {
+    "firefox": {
+      "states": [
+        {
+          "mission": "dead_signal",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "power_through",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "sample_zero",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "break_contact",
+          "closed": 0,
+          "live": 29474,
+          "exitClosed": 0
+        }
+      ],
+      "walks": [
+        {
+          "name": "west recess -> vault",
+          "end": {
+            "x": 340.5,
+            "y": 674.18
+          },
+          "pass": true
+        },
+        {
+          "name": "east recess -> vault",
+          "end": {
+            "x": 379.5,
+            "y": 674.22
+          },
+          "pass": true
+        },
+        {
+          "name": "vault -> west recess",
+          "end": {
+            "x": 331.2,
+            "y": 685.5
+          },
+          "pass": true
+        },
+        {
+          "name": "vault -> east recess",
+          "end": {
+            "x": 388.8,
+            "y": 685.5
+          },
+          "pass": true
+        }
+      ],
+      "doors": [
+        {
+          "id": "front",
+          "openT": 0.985,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.012,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "bio_lab",
+          "openT": 0.987,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.012,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_access",
+          "openT": 0.986,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.012,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_security",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_emergency",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.014,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_emergency_exit",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        }
+      ],
+      "mapSegments": 30
+    },
+    "edge": {
+      "states": [
+        {
+          "mission": "dead_signal",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "power_through",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "sample_zero",
+          "closed": 0,
+          "live": 0
+        },
+        {
+          "mission": "break_contact",
+          "closed": 0,
+          "live": 29474,
+          "exitClosed": 0
+        }
+      ],
+      "walks": [
+        {
+          "name": "west recess -> vault",
+          "end": {
+            "x": 340.5,
+            "y": 674.23
+          },
+          "pass": true
+        },
+        {
+          "name": "east recess -> vault",
+          "end": {
+            "x": 379.5,
+            "y": 674.23
+          },
+          "pass": true
+        },
+        {
+          "name": "vault -> west recess",
+          "end": {
+            "x": 331.2,
+            "y": 685.5
+          },
+          "pass": true
+        },
+        {
+          "name": "vault -> east recess",
+          "end": {
+            "x": 388.8,
+            "y": 685.5
+          },
+          "pass": true
+        }
+      ],
+      "doors": [
+        {
+          "id": "front",
+          "openT": 0.988,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "bio_lab",
+          "openT": 0.988,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_access",
+          "openT": 0.988,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_security",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_emergency",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.013,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        },
+        {
+          "id": "lab_emergency_exit",
+          "openT": 1,
+          "solidDisabled": true,
+          "doorTop": 8.2,
+          "panelHeights": [
+            8.2,
+            8.2
+          ],
+          "passLow": true,
+          "passHigh": true,
+          "lintelBlocks": true,
+          "actorClear": true,
+          "postSolid": true,
+          "openPanelPostHits": false,
+          "closed": {
+            "openT": 0.012,
+            "solidDisabled": false,
+            "panelLeavesWall": false,
+            "blocksLow": true
+          }
+        }
+      ],
+      "mapSegments": 30
+    }
+  },
+  "refinement": {
+    "firefox": {
+      "passed": true,
+      "forbiddenPresent": [],
+      "cabinets": [
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            328.8200036585331,
+            637.1000000238419,
+            0.40000003576278687
+          ],
+          "max": [
+            329.00000366568565,
+            638.8999999761581,
+            2.0000000596046448
+          ]
+        },
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            390.99999633431435,
+            637.1000000238419,
+            0.40000003576278687
+          ],
+          "max": [
+            391.1799963414669,
+            638.8999999761581,
+            2.0000000596046448
+          ]
+        },
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            429.10000002384186,
+            735.0000268518925,
+            0.40000003576278687
+          ],
+          "max": [
+            430.89999997615814,
+            735.180026859045,
+            2.0000000596046448
+          ]
+        }
+      ],
+      "maxProjection": [
+        0.1799963414669037,
+        0.1799963414669037,
+        0.2999731481074832
+      ],
+      "serviceProjection": [
+        0.1799963414669037,
+        0.1799963414669037,
+        0.21000732388347387,
+        0.21000732388347387,
+        0.3300146481021784,
+        0.09001342952251434,
+        0.09001342952251434,
+        0.08999511897559387,
+        0.2999731481074832
+      ],
+      "sweepHits": [],
+      "exitSign": {
+        "pos": [
+          448.95,
+          752,
+          8.55
+        ],
+        "scale": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "rotation": [
+          1.5707963267948966,
+          -1.5707963267948966,
+          0,
+          "XYZ"
+        ],
+        "parent": "DeepLaboratory"
+      },
+      "identifier": {
+        "pos": [
+          451.05,
+          752,
+          8.55
+        ],
+        "text": "E-04"
+      },
+      "northOrRearIdentity": []
+    },
+    "edge": {
+      "passed": true,
+      "forbiddenPresent": [],
+      "cabinets": [
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            328.8200036585331,
+            637.1000000238419,
+            0.40000003576278687
+          ],
+          "max": [
+            329.00000366568565,
+            638.8999999761581,
+            2.0000000596046448
+          ]
+        },
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            390.99999633431435,
+            637.1000000238419,
+            0.40000003576278687
+          ],
+          "max": [
+            391.1799963414669,
+            638.8999999761581,
+            2.0000000596046448
+          ]
+        },
+        {
+          "name": "ExteriorIdentityMaintenanceCabinet",
+          "min": [
+            429.10000002384186,
+            735.0000268518925,
+            0.40000003576278687
+          ],
+          "max": [
+            430.89999997615814,
+            735.180026859045,
+            2.0000000596046448
+          ]
+        }
+      ],
+      "maxProjection": [
+        0.1799963414669037,
+        0.1799963414669037,
+        0.2999731481074832
+      ],
+      "serviceProjection": [
+        0.1799963414669037,
+        0.1799963414669037,
+        0.21000732388347387,
+        0.21000732388347387,
+        0.3300146481021784,
+        0.09001342952251434,
+        0.09001342952251434,
+        0.08999511897559387,
+        0.2999731481074832
+      ],
+      "sweepHits": [],
+      "exitSign": {
+        "pos": [
+          448.95,
+          752,
+          8.55
+        ],
+        "scale": [
+          0.45,
+          0.45,
+          0.45
+        ],
+        "rotation": [
+          1.5707963267948966,
+          -1.5707963267948966,
+          0,
+          "XYZ"
+        ],
+        "parent": "DeepLaboratory"
+      },
+      "identifier": {
+        "pos": [
+          451.05,
+          752,
+          8.55
+        ],
+        "text": "E-04"
+      },
+      "northOrRearIdentity": []
+    }
+  },
+  "placement": {
+    "firefox": {
+      "cases": 14,
+      "baselineParity": [
+        {
+          "mode": "campaign",
+          "arena": null,
+          "seed": 420042,
+          "sha256": "819ab2936e6770c0b948bee6199ba5b797de2de66cccd87a16501a8d315b5a77",
+          "solids": 329,
+          "headSolids": 306,
+          "facilityEnvelopeSolids": [
+            102,
+            125
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "valley",
+          "seed": 420042,
+          "sha256": "86aec50396ad34b7ccc9137a33cbaa8765129f906b1c99ebe42adbb96f547b87",
+          "solids": 46,
+          "headSolids": 46,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "crater",
+          "seed": 420042,
+          "sha256": "ff5dfef6a0dbd85f30782cb7a8f22b6676b2e90edcf5f8665f2e50866ac167cd",
+          "solids": 32,
+          "headSolids": 32,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "ridges",
+          "seed": 420042,
+          "sha256": "e632fc1d08e0904c4138ae49ba2a2a94b93efab6e8382a8b09d706af3ec72229",
+          "solids": 46,
+          "headSolids": 46,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "edge": {
+      "cases": 14,
+      "baselineParity": [
+        {
+          "mode": "campaign",
+          "arena": null,
+          "seed": 420042,
+          "sha256": "192cb2cb5c57bab40661d128e2233e9c1f5cb5ccd8f6a9679b1c07997d75d771",
+          "solids": 329,
+          "headSolids": 306,
+          "facilityEnvelopeSolids": [
+            102,
+            125
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "valley",
+          "seed": 420042,
+          "sha256": "d35e512778834893721a8471dc9fbec6270083f978e50c1f7caf744b86df46c0",
+          "solids": 46,
+          "headSolids": 46,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "crater",
+          "seed": 420042,
+          "sha256": "e8e057e999d866d30ac04f3f16a79de9dc2df8abf81a75e8b6e1c3d3bd88bed2",
+          "solids": 32,
+          "headSolids": 32,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        },
+        {
+          "mode": "endless",
+          "arena": "ridges",
+          "seed": 420042,
+          "sha256": "f2033474010c660f61db5a94aef73ff9468fb60cc4ae4a30107d87c8aeb73fe2",
+          "solids": 46,
+          "headSolids": 46,
+          "facilityEnvelopeSolids": [
+            0,
+            0
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  "deferred": [
+    "Small interior emergency exit plaque",
+    "Simplified rooftop housings",
+    "Staging board support and partially buried yard equipment: consider CP4"
+  ],
+  "committed": false,
+  "merged": false,
+  "pushed": false,
+  "setupNotes": [
+    "Firefox facility-regression and placement initial file navigation timeouts; affected checks passed on retry.",
+    "Initial visibility harness compared animated meshes/cold-start variants; narrowed to fixed geometry and matching warmed program inventories."
+  ]
+}

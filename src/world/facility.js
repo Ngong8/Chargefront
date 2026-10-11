@@ -5,12 +5,27 @@
     'use strict';
 
     // South-to-north: staging hall, relay vault, decontamination and research.
-    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
-    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 690, 330, 795], [390, 690, 390, 735], [367, 704, 367, 712], [367, 725, 367, 735], [330, 735, 352, 735], [368, 735, 410, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 746], [410, 758, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
+    // CP2-R: the lab block's south face (y684) is closed either side of the
+    // Vault, so the Vault/Decon vestibule no longer opens into the two recesses.
+    const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 684, 342, 684], [378, 684, 390, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
+    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 684, 330, 795], [390, 684, 390, 735], [367, 704, 367, 712], [367, 725, 367, 734.3], [330, 735, 352, 735], [368, 735, 410, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 745], [410, 759, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
+    // Every structural opening shares one portal: casing posts on both wall
+    // faces, a lintel and a header. Door panels stop at DOOR_CLEAR; the lintel
+    // above is projectile/LOS-only collision so all actors keep the full width.
+    const DOOR_CLEAR = 8.2, CASING = 0.25, POST = 0.6, HEADER_TOP = 8.9;
+    const PORTALS = Object.freeze([
+        { id: 'front', x: 360, y: 618, axis: 'x', half: 8, face0: 617, face1: 619, top: 9, tone: 'service' },
+        { id: 'bio_lab', x: 360, y: 660, axis: 'x', half: 8, face0: 659, face1: 661, top: 9, tone: 'bio' },
+        { id: 'vault_north', x: 360, y: 684, axis: 'x', half: 8, face0: 683, face1: 685, top: 9, tone: 'lab' },
+        { id: 'lab_access', x: 360, y: 690, axis: 'x', half: 8, face0: 689, face1: 691, top: 9, tone: 'lab' },
+        { id: 'lab_security', x: 360, y: 735, axis: 'x', half: 8, face0: 734.3, face1: 735.7, top: 9, tone: 'service' },
+        { id: 'lab_emergency', x: 410, y: 752, axis: 'y', half: 7, face0: 409.3, face1: 410.7, top: 9, tone: 'crisis' },
+        { id: 'lab_emergency_exit', x: 450, y: 752, axis: 'y', half: 6, face0: 449.3, face1: 450.7, top: 9, tone: 'crisis' },
+    ].map(Object.freeze));
     const NAV_BLOCK = Object.freeze({ x0: 325, y0: 612, x1: 455, y1: 799 });
     const BYPASS_WEST = Object.freeze({ x: 285, y: 585 });
     const BYPASS_EAST = Object.freeze({ x: 450, y: 570 });
-    const FOUNDATION = Object.freeze([[330, 390, 618, 735], [330, 410, 735, 795], [410, 450, 736, 770]]);
+    const FOUNDATION = Object.freeze([[330, 390, 618, 735], [330, 410, 735, 795], [410, 450, 736, 770]].map(Object.freeze));
 
     function foundationHeight(x, y, naturalHeight) {
         if (x <= 312 || x >= 468 || y <= 600 || y >= 813) return naturalHeight;
@@ -52,6 +67,18 @@
         const fx = { dust: null, dustBase: null, screens: [], powerStrips: [], labIndicators: [] };
         let zones = null;
         let fxUpdateT = 0, fxAccum = 0, lastNearFacility;
+        let pendingExteriorIdentity = null, exteriorIdentityBuilt = false;
+        // CP2-R1 determinism. Three.js constructors draw Math.random (UUIDs) and
+        // the env geometry/material caches change later draw counts, so any
+        // change in what the legacy builders construct shifts the seeded
+        // Campaign scatter built afterwards. Legacy builders therefore keep
+        // their exact construction stream: superseded pieces are still built in
+        // the original order into a detached group and discarded (never
+        // rendered, no collision), and every new structural piece is added by
+        // finalizeStructure() after all legacy population (scoped stream).
+        const retiredScratch = new THREE.Group(); // never attached to the scene
+        const retire = build => { build(retiredScratch); retiredScratch.clear(); };
+        const pendingStructure = {};
 
         function buildSection(name, builder) {
             if (sections.has(name)) return sections.get(name);
@@ -74,9 +101,12 @@
                     const d = horiz ? 2 : Math.abs(y1 - y0);
                     return addWallPanel(cx, cy, w, d, h, col || wallC);
                 };
-                // Only the actual building and lab-access facade: no old compound enclosure.
-                seg(330, 690, 352, 690, H + 1);
-                seg(368, 690, 390, 690, H + 1);
+                // Decon partition. CP2-R: it is now fully inside the lab block
+                // (whose south face is y684), so it no longer rises 1 m through
+                // the lab roof as an orphaned exterior ridge.
+                seg(330, 690, 352, 690, H);
+                seg(368, 690, 390, 690, H);
+                // CP2-R AC-1 closure walls are added by finalizeStructure().
                 const apron = box(16, 10, 0.12, 0x343b47, { metalness: 0.35, roughness: 0.7 });
                 apron.position.set(fx, 613, 0.12); scene.add(apron);
                 rememberGuidanceFloor(apron,fx,613,16,10,.18);
@@ -95,11 +125,17 @@
                 const hx0 = 330, hx1 = 390, hy0 = 618, hy1 = 660;
                 seg(hx0, hy0, 352, hy0, H, trim);
                 seg(368, hy0, hx1, hy0, H, trim);
-                seg(hx0, hy0, hx0, hy1, H, trim);
-                seg(hx1, hy0, hx1, hy1, H, trim).name = 'HallEastPerimeterWall';
+                // Side walls run the full 2 m wall width past the end walls so
+                // the exterior corners are solid (previously 1 x 1 m notches).
+                const westSide = seg(hx0, hy0 - 1, hx0, hy1 + 1, H, trim);
+                const eastSide = seg(hx1, hy0 - 1, hx1, hy1 + 1, H, trim); eastSide.name = 'HallEastPerimeterWall';
+                pendingStructure.sideWalls = [westSide, eastSide];
                 seg(hx0, hy1, 352, hy1, H, trim);
                 seg(368, hy1, hx1, hy1, H, trim);
-                const hallRoof = box(hx1 - hx0, hy1 - hy0, 1.0, 0x262d3b, { metalness: 0.5, roughness: 0.5 });
+                // The roof slab bears on the full wall thickness (its outer edge
+                // is flush with the wall faces) instead of stopping at the wall
+                // centre lines and leaving a 1 m drop around the parapet.
+                const hallRoof = box(hx1 - hx0 + 2, hy1 - hy0 + 2, 1.0, 0x262d3b, { metalness: 0.5, roughness: 0.5 });
                 hallRoof.position.set((hx0 + hx1) / 2, (hy0 + hy1) / 2, H + 0.5); hallRoof.castShadow = true; scene.add(hallRoof);
                 hallRoof.name = 'FacilityHallRoof'; cutawayMeshes.push(hallRoof);
                 const hallFloor = box(hx1 - hx0, hy1 - hy0, 0.4, 0x343a48, { metalness: 0.3, roughness: 0.6, emissive: 0x273342, emissiveIntensity: 0.32 });
@@ -110,8 +146,10 @@
                 seg(vx1, 660, vx1, vy1, H, trim);
                 seg(vx0, vy1, 352, vy1, H, trim);
                 seg(368, vy1, vx1, vy1, H, trim);
-                const vaultRoof = box(vx1 - vx0, vy1 - 660, 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
-                vaultRoof.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, H + 0.5); vaultRoof.castShadow = true; scene.add(vaultRoof);
+                // Vault roof covers its full wall thickness; it starts where the
+                // (now wider) Hall roof ends so the two top faces never overlap.
+                const vaultRoof = box(vx1 - vx0 + 2, vy1 + 1 - (hy1 + 1), 1.0, 0x333848, { metalness: 0.5, roughness: 0.5 });
+                vaultRoof.position.set((vx0 + vx1) / 2, (hy1 + 1 + vy1 + 1) / 2, H + 0.5); vaultRoof.castShadow = true; scene.add(vaultRoof);
                 vaultRoof.name = 'FacilityVaultRoof'; cutawayMeshes.push(vaultRoof);
                 const vaultFloor = box(vx1 - vx0, vy1 - 660, 0.4, 0x303442, { metalness: 0.3, roughness: 0.6, emissive: 0x3b2d2d, emissiveIntensity: 0.28 });
                 vaultFloor.position.set((vx0 + vx1) / 2, (660 + vy1) / 2, 0.05); vaultFloor.receiveShadow = true; scene.add(vaultFloor);
@@ -222,7 +260,8 @@
             const commandSign = makeFacilitySign('COMMAND // SECURITY', 8.0, '#66d8ff');
             commandSign.rotation.x = Math.PI / 2; commandSign.position.set(382, 659.82, 6.35); scene.add(commandSign);
             const labSign = makeFacilitySign('VAULT // 3-RELAY LOCK', 10.5, '#ffb24d');
-            labSign.rotation.x = Math.PI / 2; labSign.position.set(360, 659.78, 7.35); scene.add(labSign);
+            // Top edge sits just below the new bio_lab lintel (8.2 m).
+            labSign.rotation.x = Math.PI / 2; labSign.position.set(360, 659.78, 7.1); scene.add(labSign);
             const sensorSign = makeFacilitySign('SENSORS // INTEL', 5.8, '#66d8ff');
             sensorSign.rotation.y = -Math.PI / 2; sensorSign.position.set(331.18, 630, 5.55); scene.add(sensorSign);
             const supplySign = makeFacilitySign('SUPPLY // FIELD GEAR', 6.2, '#ffb24d');
@@ -257,16 +296,10 @@
             towerTip.position.set(tx, ty, 27); scene.add(towerTip);
             addSolid(tx - 1, ty - 1, tx + 1, ty + 1, 26, 0);
 
-            const wallTrim = (x0, y0, x1, y1) => {
-                const cx = (x0 + x1) / 2, cy = (y0 + y1) / 2;
-                const horiz = Math.abs(y1 - y0) < 0.001;
-                const w = (horiz ? Math.abs(x1 - x0) : 2) - 0.5;
-                const d = (horiz ? 2 : Math.abs(y1 - y0)) - 0.5;
-                const t = box(w, d, 0.18, 0xd8b322, makeSeam(0xd8b322, 0.5));
-                t.position.set(cx, cy, H + 1.15); scene.add(t);
-            };
-            wallTrim(330, 690, 352, 690);
-            wallTrim(368, 690, 390, 690);
+            // CP2-R: the former y690 roof-ridge trims were removed with the
+            // ridge itself (the decon partition is now under the lab roof).
+            // Retired construction keeps the legacy random stream (see retire).
+            retire(group => { for (let i = 0; i < 2; i++) group.add(box(21.5, 1.5, 0.18, 0xd8b322, makeSeam(0xd8b322, 0.5))); });
 
             // Recessed panels belong to real walls; no artificial enclosure.
             const exteriorPanels = [[341, 618, 20, 0.16], [379, 618, 20, 0.16], [330, 639, 0.16, 38], [390, 639, 0.16, 38], [341, 690, 20, 0.16], [379, 690, 20, 0.16]];
@@ -325,8 +358,8 @@
         }
 
         function buildHallInterior(scene, H, px, py) {
-            addDoor(360, 618, 'x', 8, 9, H);
-            addDoor(360, 660, 'x', 8, 9, H, 'bio_lab');
+            addDoor(360, 618, 'x', 8, 9, DOOR_CLEAR);
+            addDoor(360, 660, 'x', 8, 9, DOOR_CLEAR, 'bio_lab');
             const pillar = (x, y) => {
                 const p = new THREE.Mesh(new THREE.CylinderGeometry(0.26, 0.32, H, 6), mat(0x4a5268, { metalness: 0.55, roughness: 0.4 }));
                 p.rotation.x = Math.PI / 2; p.position.set(x, y, H / 2); p.castShadow = true; scene.add(p);
@@ -380,10 +413,15 @@
             wallScreen(377, 668, 1.7, 1.2, true);
             wallScreen(377, 676, 1.7, 1.2, true);
             sconce(343, 672); sconce(377, 672);
-            const vaultNorthPanel = box(26, 0.14, 1.1, 0x22262e, { metalness: 0.5, roughness: 0.5 });
-            vaultNorthPanel.position.set(360, 682.9, 4.4); scene.add(vaultNorthPanel);
-            const vaultNorthGlow = box(24, 0.18, 0.5, 0x66e0ff, makeSeam(0x2ab0d0, 1.3));
-            vaultNorthGlow.position.set(360, 682.8, 4.4); scene.add(vaultNorthGlow);
+            // CP2-R: the north status screen previously spanned the Vault's
+            // north opening at head height. It now flanks the opening on the
+            // wall either side of the portal posts (one shared animated material;
+            // the east twins are added by finalizeStructure()).
+            const vaultNorthPanel = box(4.4, 0.14, 1.1, 0x22262e, { metalness: 0.5, roughness: 0.5 });
+            vaultNorthPanel.position.set(349.2, 682.9, 4.4); scene.add(vaultNorthPanel);
+            const vaultNorthGlow = box(3.2, 0.18, 0.5, 0x66e0ff, makeSeam(0x2ab0d0, 1.3));
+            vaultNorthGlow.position.set(349.6, 682.8, 4.4); scene.add(vaultNorthGlow);
+            pendingStructure.vaultNorth = [vaultNorthPanel, vaultNorthGlow];
             fx.screens.push({ mat: vaultNorthGlow.material, base: 1.3, seed: rand(Math.PI * 2) });
 
             const ceilingBeam = (x, y, horiz, len) => {
@@ -461,20 +499,27 @@
                 mesh.position.set(x, y, h / 2); mesh.castShadow = false; mesh.receiveShadow = false; root.add(mesh);
                 return mesh;
             };
-            const doorFrame = (x, y, horiz, color) => {
-                const span = 9.2;
-                for (const s of [-1, 1]) {
-                    if (horiz) placed(x + s * span / 2, y, 0.4, 0.6, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
-                    else placed(x, y + s * span / 2, 0.6, 0.4, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
+            // CP2-R AC-2: the legacy 9.2 m frames (inside 14-16 m openings, no
+            // collision, crossed by the sliding panels) are retired; their exact
+            // construction, including the batch meshes they formed, is replayed
+            // for stream parity. Fitted portals come from finalizeStructure().
+            retire(group => {
+                const frame = (x, y, w, d, h, color, opts) => group.add(new THREE.Mesh(envBoxGeometry(w, d, h),
+                    envMat(color, Object.assign({ metalness: 0.55, roughness: 0.45 }, opts))));
+                for (const [x, y, horiz, color] of [[360, 618, true, colors.service], [360, 660, true, colors.bio], [360, 690, true, colors.lab],
+                    [360, 735, true, colors.service], [410, 752, false, colors.crisis]]) {
+                    for (let i = 0; i < 2; i++) frame(x, y, horiz ? 0.4 : 0.6, horiz ? 0.6 : 0.4, 8.6, 0x2a3040, { metalness: 0.7, roughness: 0.35 });
+                    frame(x, y, horiz ? 9.2 : 0.16, horiz ? 0.16 : 9.2, 0.24, color, makeSeam(color, 1.5));
                 }
-                const glow = horiz ? placed(x, y, span, 0.16, 0.24, color, makeSeam(color, 1.5)) : placed(x, y, 0.16, span, 0.24, color, makeSeam(color, 1.5));
-                glow.position.z = 8.7;
-            };
-            doorFrame(360, 618, true, colors.service);
-            doorFrame(360, 660, true, colors.bio);
-            doorFrame(360, 690, true, colors.lab);
-            doorFrame(360, 735, true, colors.service);
-            doorFrame(410, 752, false, colors.crisis);
+                const groups = new Map();
+                for (const mesh of group.children) {
+                    const key = mesh.geometry.uuid + '/' + mesh.material.uuid;
+                    groups.set(key, (groups.get(key) || []).concat(mesh));
+                }
+                for (const members of groups.values()) if (members.length > 1) new THREE.InstancedMesh(members[0].geometry, members[0].material, members.length);
+            });
+            pendingStructure.interiorRoot = root;
+            // Remaining static interior identity.
             for (const y of [640, 646, 652]) placed(386.4, y, 0.9, 2.0, 1.1, 0x2a2e3a, { metalness: 0.5, roughness: 0.5 });
             placed(386.2, 646, 0.12, 4.6, 0.7, colors.comms, makeSeam(colors.comms, 1.1)).position.z = 1.35;
             for (let i = 0; i < 3; i++) {
@@ -531,6 +576,54 @@
                 }
                 instances.computeBoundingSphere();
                 root.add(instances);
+            }
+        }
+
+        // CP2-R AC-2/AC-3: portals sized to the real openings. Casing posts sit
+        // on each wall face just outside the opening (panels slide inside the
+        // wall, never through a post), with a lintel and header above
+        // DOOR_CLEAR. Called only from finalizeStructure().
+        function buildPortals(root) {
+            const frameSteel = { metalness: 0.7, roughness: 0.35 };
+            // All portal pieces are scaled unit boxes, instanced once per
+            // material (a handful of draw calls for all seven portals).
+            const portalBatches = new Map(), unitBox = envBoxGeometry(1, 1, 1);
+            for (const p of PORTALS) {
+                const alongX = p.axis === 'x', c = alongX ? p.x : p.y;
+                const at = (along, across, alongSize, acrossSize, h, z, color, opts) => {
+                    const material = envMat(color, Object.assign({ metalness: 0.55, roughness: 0.45 }, opts));
+                    if (!portalBatches.has(material)) portalBatches.set(material, []);
+                    const [x, y, w, d] = alongX ? [along, across, alongSize, acrossSize] : [across, along, acrossSize, alongSize];
+                    // Unit box is Y-up: scale (w, h, d) then rotate into the Z-up world.
+                    portalBatches.get(material).push(new THREE.Matrix4().makeTranslation(x, y, z)
+                        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+                };
+                const thickness = p.face1 - p.face0, mid = (p.face0 + p.face1) / 2;
+                // Lintel infill fills the opening from the door head to the wall top.
+                at(c, mid, p.half * 2, thickness, p.top - DOOR_CLEAR, (p.top + DOOR_CLEAR) / 2, 0x3c4558, frameSteel);
+                for (const face of [p.face0 - CASING / 2, p.face1 + CASING / 2]) {
+                    for (const s of [-1, 1]) at(c + s * (p.half + POST / 2), face, POST, CASING, DOOR_CLEAR, DOOR_CLEAR / 2, 0x2a3040, frameSteel);
+                    at(c, face, p.half * 2 + POST * 2, CASING, HEADER_TOP - DOOR_CLEAR, (HEADER_TOP + DOOR_CLEAR) / 2, 0x2a3040, frameSteel);
+                    // Zone identity glow carried over from the old frames, on the header face.
+                    const glowAcross = face + (face < mid ? -1 : 1) * (CASING / 2 + 0.04);
+                    at(c, glowAcross, p.half * 2 - 0.8, 0.08, 0.16, 8.55, colors[p.tone], makeSeam(colors[p.tone], 1.5));
+                }
+                // Posts are ordinary full-height collision; the lintel is
+                // overhead-only (blocks shots/LOS above the door head, never feet).
+                for (const s of [-1, 1]) {
+                    const a0 = Math.min(c + s * p.half, c + s * (p.half + POST)), a1 = Math.max(c + s * p.half, c + s * (p.half + POST));
+                    const b0 = p.face0 - CASING, b1 = p.face1 + CASING;
+                    if (alongX) addSolid(a0, b0, a1, b1, HEADER_TOP, 0); else addSolid(b0, a0, b1, a1, HEADER_TOP, 0);
+                }
+                const lintel = alongX ? addSolid(c - p.half, p.face0 - CASING, c + p.half, p.face1 + CASING, p.top, DOOR_CLEAR - 0.05)
+                    : addSolid(p.face0 - CASING, c - p.half, p.face1 + CASING, c + p.half, p.top, DOOR_CLEAR - 0.05);
+                lintel.overhead = true; lintel.portal = p.id;
+            }
+            for (const [material, transforms] of portalBatches) {
+                const instances = new THREE.InstancedMesh(unitBox, material, transforms.length);
+                instances.name = 'DoorPortalBatch'; instances.userData.structure = 'portal';
+                transforms.forEach((m, i) => instances.setMatrixAt(i, m));
+                instances.computeBoundingSphere(); instances.castShadow = false; instances.receiveShadow = false; root.add(instances);
             }
         }
 
@@ -606,6 +699,7 @@
 
         function buildExteriorDetail(gamma) {
             const root = new THREE.Group(); root.name = 'FacilityExterior'; getScene().add(root);
+            const equipment = [];
             const H = 10;
             const placed = (x, y, w, d, h, color, opts = {}) => {
                 const mesh = new THREE.Mesh(envBoxGeometry(w, d, h), envMat(color, Object.assign({ metalness: 0.55, roughness: 0.5 }, opts)));
@@ -648,6 +742,7 @@
             vent(328.8, 712, false); vent(411.2, 780, false); vent(437, 771.2, true);
             const hallRoofHousing = placed(360, 639, 18, 12, 3.0, 0x2e3442, { metalness: 0.55, roughness: 0.5 });
             const hallRoofCap = placed(360, 639, 14, 8, 1.0, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
+            equipment.push([hallRoofHousing, 'skin'], [hallRoofCap, 'cap']);
             hallRoofHousing.position.z = H + 2.0; hallRoofCap.position.z = H + 4.0;
             cutawayMeshes.push(hallRoofHousing, hallRoofCap);
             for (const [x, y] of [[352, 636], [368, 642]]) {
@@ -656,11 +751,13 @@
             }
             const vaultRoofHousing = placed(360, 672, 14, 10, 2.2, 0x2e3442, { metalness: 0.55, roughness: 0.5 });
             const vaultRoofCap = placed(360, 672, 10, 6, 0.9, 0x3e4658, { metalness: 0.6, roughness: 0.45 });
+            equipment.push([vaultRoofHousing, 'skin'], [vaultRoofCap, 'cap']);
             vaultRoofHousing.position.z = H + 1.6; vaultRoofCap.position.z = H + 3.1;
             cutawayMeshes.push(vaultRoofHousing, vaultRoofCap);
             for (const [x, y, w, d, height] of [[358, 717, 18, 9, 2.1], [370, 769, 21, 12, 2.6], [431, 752, 14, 8, 1.9]]) {
                 const housing = placed(x, y, w, d, height, 0x303848, { metalness: 0.55, roughness: 0.5 });
                 const cap = placed(x, y, w - 2, d - 2, 0.5, 0x48566a, { metalness: 0.65, roughness: 0.43 });
+                equipment.push([housing, 'skin'], [cap, 'cap']);
                 housing.position.z = H + height * 0.5; cap.position.z = H + height + 0.45;
                 cutawayMeshes.push(housing, cap);
             }
@@ -674,15 +771,19 @@
             const roofSteel = { metalness: 0.6, roughness: 0.45 };
             const roofDark = { metalness: 0.7, roughness: 0.4 };
             const roofGlow = makeSeam(colors.comms, 0.65);
-            for (const [x, y, w, d] of [[341, 618, 20, 0.8], [379, 618, 20, 0.8],
-                [330, 639, 0.8, 41], [390, 627, 0.8, 17], [390, 656, 0.8, 8],
-                [342, 795, 24, 0.8], [397, 795, 24, 0.8], [430, 770, 38, 0.8]]) {
-                roofPiece(x, y, w, d, 0.85, 10.45, 0x3e4658, roofSteel);
-            }
+            // CP2-R AC-4: the legacy roof-edge trims (floating 0.4 m above the
+            // lab roofs, overhanging a 1 m Hall drop, with a 16 m gap at the
+            // deleted east door) are retired for stream parity; the continuous
+            // coping comes from finalizeStructure().
+            retire(group => {
+                for (const [w, d] of [[20, 0.8], [20, 0.8], [0.8, 41], [0.8, 17], [0.8, 8], [24, 0.8], [24, 0.8], [38, 0.8]])
+                    group.add(new THREE.Mesh(envBoxGeometry(w, d, 0.85), envMat(0x3e4658, Object.assign({ metalness: 0.55, roughness: 0.5 }, roofSteel))));
+            });
+            pendingStructure.exteriorRoot = root;
             // Repeated HVAC banks, short raised duct runs and a small antenna
             // cluster give the hall, containment and power wing separate profiles.
             for (const [x, y] of [[344, 645], [377, 645], [343, 772], [397, 772], [432, 758]]) {
-                roofPiece(x, y, 5.0, 3.2, 1.3, 10.75, 0x4a5361, roofSteel);
+                equipment.push([roofPiece(x, y, 5.0, 3.2, 1.3, 10.75, 0x4a5361, roofSteel), 'hvac']);
                 roofPiece(x, y, 4.2, 2.4, 0.16, 11.48, 0x101722, roofDark);
                 for (const dy of [-0.7, 0, 0.7]) roofPiece(x, y + dy, 3.6, 0.2, 0.2, 11.59, 0x5b6878, roofSteel);
             }
@@ -702,7 +803,8 @@
                 placed(x, 617.3, 0.65, 0.7, 3.4, 0x4a5361, roofSteel).position.z = 7.0;
                 placed(x, 616.88, 0.14, 0.14, 2.2, colors.comms, roofGlow).position.z = 7.0;
             }
-            for (const [x, y, z, w, d] of [[329.1, 718, 6.7, 0.3, 10], [410.9, 782, 6.7, 0.3, 10], [450.9, 762, 6.7, 0.3, 8]]) {
+            // The exit-side bracket clears the new x450 portal casing (y<=758.6).
+            for (const [x, y, z, w, d] of [[329.1, 718, 6.7, 0.3, 10], [410.9, 782, 6.7, 0.3, 10], [450.9, 763, 6.7, 0.3, 8]]) {
                 placed(x, y, w, d, 0.35, 0x5b6878, roofSteel).position.z = z;
                 placed(x, y, w, d, 0.12, colors.comms, roofGlow).position.z = z - 0.3;
             }
@@ -718,20 +820,23 @@
                 placed(x, y, 1.5, 1.5, 0.14, colors.hazard, makeSeam(colors.hazard, 0.6));
             }
             const craneMast = new THREE.Mesh(new THREE.CylinderGeometry(0.22, 0.35, 8, 6), mat(0x4a5361, { metalness: 0.65, roughness: 0.4 }));
+            craneMast.name = 'FacilityCraneMast';
             craneMast.rotation.x = Math.PI / 2; craneMast.position.set(437, 674, 4); root.add(craneMast);
             envPipe(root, 437, 674, 428, 662, 7.6, 0.2, 0x4a5361, 0.1);
             const sign = (text, x, y, z, w, color, face) => {
                 const s = makeFacilitySign(text, w, color);
                 s.material.side = THREE.DoubleSide;
-                if (face === 'y') s.rotation.x = Math.PI / 2; else s.rotation.y = Math.PI / 2;
+                s.rotation.set(Math.PI / 2, face === 'y' ? 0 : face === 'back_y' ? Math.PI : Math.PI / 2, 0);
                 s.position.set(x, y, z); root.add(s); return s;
             };
-            sign('CF-07 // BIO-RESEARCH', 360, 607.6, 8.1, 12, '#66d8ff', 'y');
-            sign('LOADING // SERVICE YARD', 415.4, 668, 7.0, 9, '#ffb24d', 'x');
+            sign('CF-07 // BIO-RESEARCH', 360, 607.6, 8.1, 12, '#66d8ff', 'y').name = 'FacilityNameSign';
+            // Correct the audited floating/vertical yard banner by mounting the
+            // same utility label horizontally on the continuous east wall.
+            sign('LOADING // SERVICE YARD', 391.13, 650, 4.8, 9, '#ffb24d', 'x').name = 'FacilityLoadingSign';
             // Keep the staging board at the edge of the approach, not in front
             // of the primary CF-07 entrance sign from the south-facing view.
             sign('STAGING // FORWARD DEPLOYMENT', 316, 576.8, 6.4, 12, '#ffbf55', 'y');
-            sign('POWER // EMERGENCY EGRESS', 430, 770.85, 6.0, 10, '#ffb24d', 'y');
+            sign('POWER // EGRESS E-04', 430, 770.85, 6.0, 10, '#ffb24d', 'back_y').name = 'FacilityPowerSign';
             const marking = (x, y, w, d) => {
                 const m = envBoxMesh(w, d, 0.06, colors.service, makeSeam(colors.service, 0.5));
                 m.position.set(x, y, terrainHeight(x, y) + 0.16); root.add(m); return m;
@@ -754,6 +859,187 @@
             }
             envBox(root, 304, 626, 6.0, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
             envBox(root, 420, 585, 5.2, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
+            pendingExteriorIdentity = { root, sign, equipment };
+        }
+
+        function finalizeExteriorIdentity() {
+            if (!pendingExteriorIdentity || exteriorIdentityBuilt) return;
+            // Three.js UUID construction also draws Math.random. Finalize after
+            // all legacy scenery so neither these UUIDs nor new cache entries
+            // can shift its seeded construction/placement sequence.
+            const random = Math.random;
+            try {
+                // CP2-R1 structure first, on its own scoped stream, so the CP2
+                // exterior identity keeps its accepted construction stream.
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070043);
+                finalizeStructure();
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070042);
+                buildExteriorIdentity(pendingExteriorIdentity.root, pendingExteriorIdentity.sign, pendingExteriorIdentity.equipment);
+                exteriorIdentityBuilt = true;
+            } finally { Math.random = random; }
+        }
+
+        // CP2-R1 structural repair, added after all legacy population (see
+        // retire): AC-1 lab-face closure walls, fitted door portals (AC-2/3),
+        // continuous roof coping (AC-4) and the Vault north screen's east twin.
+        // In-place legacy edits (wall extents, roof slabs, door heights) stay in
+        // their builders because they do not change the construction stream.
+        function finalizeStructure() {
+            const scene = getScene(), H = 9;
+            addWallPanel(335.65, 684, 12.7, 2, H, 0x465064).name = 'LabSouthReturnWallWest';
+            addWallPanel(384.35, 684, 12.7, 2, H, 0x465064).name = 'LabSouthReturnWallEast';
+            for (const [source, x] of [[pendingStructure.vaultNorth[0], 370.8], [pendingStructure.vaultNorth[1], 370.4]]) {
+                const twin = new THREE.Mesh(source.geometry, source.material);
+                twin.rotation.copy(source.rotation); twin.position.set(x, source.position.y, source.position.z); scene.add(twin);
+            }
+            buildPortals(pendingStructure.interiorRoot);
+            // One continuous coping along every module's outer roof edge, seated
+            // on the actual roof top (Hall/Vault 10 m, lab block and Power Wing
+            // 9.625 m); a single instanced draw of scaled unit boxes.
+            const copingRects = [[329, 391, 617, 617.8, 10], [329, 329.8, 617.8, 661, 10], [390.2, 391, 617.8, 661, 10],
+                [329.8, 341, 660.2, 661, 10], [379, 390.2, 660.2, 661, 10],
+                [341, 341.8, 661, 685, 10], [378.2, 379, 661, 685, 10], [341.8, 378.2, 684.2, 685, 10],
+                [329.3, 341, 683, 683.8, 9.625], [379, 390.7, 683, 683.8, 9.625],
+                [329.3, 330.1, 683.8, 795.7, 9.625], [389.9, 390.7, 683.8, 734.3, 9.625],
+                [389.9, 410.7, 734.3, 735.1, 9.625], [409.9, 410.7, 770.7, 795.7, 9.625], [330.1, 409.9, 794.9, 795.7, 9.625],
+                [410.7, 450.7, 735.3, 736.1, 9.625], [410.7, 450.7, 769.9, 770.7, 9.625], [449.9, 450.7, 736.1, 769.9, 9.625]];
+            const coping = new THREE.InstancedMesh(envBoxGeometry(1, 1, 1), envMat(0x3e4658, { metalness: 0.6, roughness: 0.45 }), copingRects.length);
+            copingRects.forEach(([x0, x1, y0, y1, roofTop], i) => coping.setMatrixAt(i, new THREE.Matrix4().makeTranslation((x0 + x1) / 2, (y0 + y1) / 2, roofTop + 0.3)
+                .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(x1 - x0, 0.6, y1 - y0))));
+            coping.name = 'FacilityRoofCoping'; coping.userData.structure = 'coping';
+            coping.computeBoundingSphere(); coping.castShadow = false; coping.receiveShadow = false;
+            pendingStructure.exteriorRoot.add(coping); cutawayMeshes.push(coping);
+        }
+
+        function buildExteriorIdentity(exterior, sign, equipment) {
+            // Mounted exterior-only surfaces/supports. No scatter, random draws,
+            // ground obstacles, additional lights, shadow casters or route changes.
+            const root = new THREE.Group(); root.name = 'ExteriorIdentity'; exterior.add(root);
+            const batches = new Map();
+            const equipmentSkin = envMat(0x4d5b69, { metalness:.45,roughness:.65,emissive:0x35465a,emissiveIntensity:.24 });
+            const equipmentCap = envMat(0x6b7b89, { metalness:.4,roughness:.7,emissive:0x405166,emissiveIntensity:.30 });
+            const hvacSkin = envMat(0x5b6d7c, { metalness:.45,roughness:.65,emissive:0x35465a,emissiveIntensity:.24 });
+            for (const [mesh,kind] of equipment) mesh.material = kind==='cap'?equipmentCap:kind==='hvac'?hvacSkin:equipmentSkin;
+            // The existing yard mast used a zero base while its arm already used
+            // terrain elevation, leaving a visible disconnect. Seat that same
+            // narrow mast on its sampled support; do not add cover/scatter/solids.
+            const crane = getScene().getObjectByName('FacilityCraneMast'), support = [];
+            for (const dx of [-.35,0,.35]) for (const dy of [-.35,0,.35]) support.push(terrainHeight(437+dx,674+dy));
+            crane.position.z = Math.max(...support) + 4;
+            const steel = { metalness: 0.4, roughness: 0.7, emissive: 0x35465a, emissiveIntensity: 0.24 };
+            const skin = { metalness: 0.35, roughness: 0.76, emissive: 0x42566c, emissiveIntensity: 0.32 };
+            const powerSkin = { metalness: 0.35, roughness: 0.76, emissive: 0x54483a, emissiveIntensity: 0.32 };
+            // Final R2 correction: softly lifted, weathered service metal only
+            // on the west/east walls. Keep the Power-yard palette unchanged.
+            const sideSkin = { metalness: 0.15, roughness: 0.82, emissive: 0x42566c, emissiveIntensity: 0.4 };
+            const detail = (name, x, y, z, w, d, h, color, opts, yaw = 0, roof = false) => {
+                const geometry = envBoxGeometry(w, d, h), material = envMat(color, opts);
+                const key = name + '/' + geometry.uuid + '/' + material.uuid + '/' + roof;
+                if (!batches.has(key)) batches.set(key, { name, geometry, material, roof, transforms: [] });
+                const transform = new THREE.Matrix4().makeRotationZ(yaw).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2));
+                transform.setPosition(x, y, z); batches.get(key).transforms.push(transform);
+            };
+            // CP2-R2 M1: compact intake banks instead of broad blank panels.
+            // Each front bank feeds an exposed riser/elbow and a roof duct into
+            // the existing Hall air handler (x344/x377,y645). Ducts bear on the
+            // accepted roof; no new shell/collision or unrelated roof clutter.
+            const intake = (name, x, y, z, w, h, yaw = 0, color = 0x5d6b79, finish = skin) => {
+                detail(name + 'Frame', x, y, z, w, .12, h, color, finish, yaw);
+                const outward = yaw ? (x < 360 ? -.09 : .09) : -.09;
+                const xx = x + (yaw ? outward : 0), yy = y + (yaw ? 0 : outward);
+                detail(name + 'Recess', xx, yy, z, w - .45, .05, h - .35, 0x17212c,
+                    { metalness:.3,roughness:.9,emissive:0x17232e,emissiveIntensity:.12 }, yaw);
+                for (let i = 0; i < 5; i++) detail(name + 'Louver', xx + (yaw ? outward * .4 : 0), yy + (yaw ? 0 : outward * .4),
+                    z + (i - 2) * (h - .55) / 5, w - .7, .06, .12, 0x798895, steel, yaw);
+            };
+            for (const [x, handlerX] of [[341,344],[379,377]]) {
+                intake('AirIntake', x, 616.94, 6.2, 6.2, 2);
+                detail('IntakeRiser', x, 616.90, 8.775, 2, .3, 3.15, 0x4f5d6b, steel);
+                detail('IntakeElbow', (x + handlerX) / 2, 617.2, 10.175, Math.abs(x - handlerX) + 1.1, .8, .35, 0x4f5d6b, steel, 0, true);
+                detail('IntakeRoofFeed', handlerX, 631.3, 10.175, 1.1, 27.4, .35, 0x4f5d6b, steel, 0, true);
+            }
+            // M2: one small ventilation bank per side, with service cabinets
+            // below. M3: no inaccessible rear panels. M4: only a yard-facing
+            // generator ventilation bank; no north-face panel/sign overlap.
+            intake('SideVent', 328.94, 650, 5.2, 4.6, 1.5, Math.PI / 2, 0x8796a5, sideSkin);
+            intake('SideVent', 391.06, 626, 5.2, 4.6, 1.5, Math.PI / 2, 0x8796a5, sideSkin);
+            intake('PowerVent', 430, 735.24, 4.4, 6.2, 2, 0, 0x746e63);
+            // Arbitrary brown stick-like scuffs removed. Existing rough materials
+            // carry restrained wear; no replacement grime props or random scatter.
+            // Three deliberately grouped maintenance cabinets/raceways give the
+            // side/service panels a function. All contact their existing walls;
+            // their slight projection stays within the wall's actor stand-off.
+            for (const [x,y,yaw] of [[328.91,638,Math.PI/2],[391.09,638,Math.PI/2],[430,735.09,0]]) {
+                detail('MaintenanceCabinet',x,y,1.2,1.8,.18,1.6,yaw?0x8796a5:0x657586,yaw?sideSkin:skin,yaw);
+                detail('CabinetStatus',x+(yaw?(x<360?-.105:.105):0),y+(yaw?0:-.105),1.4,1.2,.03,.18,colors.service,powerSkin,yaw);
+                detail('WallRaceway',yaw?(x<360?328.955:391.045):x,yaw?y:735.255,4.6,.12,.09,5.2,0x445363,steel,yaw);
+            }
+
+            // Existing housings/banks/raised ducts keep their exact transforms.
+            // Support plinths and small cap gaskets meet the authored roof tops.
+            for (const [x,y,w,d,base,roofTop] of [[360,639,18,12,10.5,10],[360,672,14,10,10.5,10],
+                [358,717,18,9,10,9.625],[370,769,21,12,10,9.625],[431,752,14,8,10,9.625]])
+                detail('EquipmentPlinth',x,y,(base+roofTop)/2,w,d,base-roofTop,0x445363,steel,0,true);
+            for (const [x,y,w,d,h] of [[358,717,18,9,2.1],[370,769,21,12,2.6],[431,752,14,8,1.9]])
+                detail('CapGasket',x,y,10+h+.1,w-2,d-2,.2,0x445363,steel,0,true);
+            for (const [x,y,roofTop] of [[344,645,10],[377,645,10],[343,772,9.625],[397,772,9.625],[432,758,9.625]])
+                detail('HvacSkid',x,y,(10.1+roofTop)/2,5,3.2,10.1-roofTop,0x445363,steel,0,true);
+            for (const [x,y,w,roofTop] of [[360,645,27,10],[370,780,42,9.625],[430,744,22,9.625]]) for (const side of [-1,1])
+                detail('DuctFoot',x+side*w*.32,y,(10.35+roofTop)/2,.6,.8,10.35-roofTop,0x445363,steel,0,true);
+
+            // CF-07's existing primary sign gains a real backing and two brackets
+            // joining the accepted gate header; its location/text/size are kept.
+            detail('NameBacking',360,607.7,8.1,12.4,.16,2.6,0x445363,steel);
+            for (const x of [354,366]) {
+                detail('NameBracket',x,608.8,8.1,.18,2.4,.18,0x445363,steel);
+                detail('NameUpright',x,610,7.8,.18,.18,.6,0x445363,steel);
+            }
+            // CP2-R2 S2/S5: no roof billboard or inaccessible archive sign/backing.
+            // S3/S4 were legacy-builder signs: remove them here, after population,
+            // to preserve its UUID/cache/random stream. They are detached and
+            // disposed, not left invisible in the runtime scene. Keep staging.
+            for (const name of ['FacilityLoadingSign', 'FacilityPowerSign']) {
+                const obsolete = exterior.getObjectByName(name);
+                obsolete.removeFromParent(); obsolete.geometry.dispose();
+                obsolete.material.map.dispose(); obsolete.material.dispose();
+            }
+            // S6: the existing emergency plaque belongs inside on the accepted
+            // x450 lintel, facing evacuating actors (-X). Scale its 8 m source
+            // down to 3.6 x .675 m to fit the 8.2-8.9 m header band. Plaques
+            // stand just proud of the existing emissive header strip, not in it.
+            const egress=getScene().getObjectByName('FacilityEmergencyExitSign');
+            egress.position.set(448.95,752,8.55);egress.rotation.set(Math.PI/2,-Math.PI/2,0);egress.scale.setScalar(.45);
+            egress.material.side=THREE.FrontSide;
+            detail('ExitInteriorBacking',448.975,752,8.55,3.72,.03,.69,0x445363,steel,Math.PI/2);
+            // Only the actual exit ID appears outside; mounted on the existing
+            // portal header face, with no parapet-mounted billboard/supports.
+            const exitId=sign('E-04',451.05,752,8.55,2.8,'#ffb895','x');
+            exitId.name='FacilityExitIdentifier';exitId.userData.text='E-04';exitId.material.side=THREE.FrontSide;
+            detail('ExitIdentifierBacking',451.025,752,8.55,2.95,.03,.58,0x445363,steel,Math.PI/2);
+            // Batch static repeated pieces only once. Roof batches join cutaway
+            // metadata; animated doors/lights and all original meshes stay owned.
+            for (const batch of batches.values()) {
+                const mesh = new THREE.InstancedMesh(batch.geometry,batch.material,batch.transforms.length);
+                mesh.name='ExteriorIdentity'+batch.name;
+                for (let i=0;i<batch.transforms.length;i++) mesh.setMatrixAt(i,batch.transforms[i]);
+                mesh.computeBoundingSphere();mesh.castShadow=false;mesh.receiveShadow=false;root.add(mesh);
+                if (batch.roof) cutawayMeshes.push(mesh);
+            }
+            // Lift only the outward side-wall face. Other faces (especially the
+            // accepted Hall interior) retain their original material. Reorder
+            // the same 36 indices into two contiguous material groups instead
+            // of six separate box-face draws. No mesh/solid/light is added and
+            // the standard warmed shader variant is reused. Construction-only.
+            const sideWall = envMat(0x75828e, { metalness: 0.12, roughness: 0.82, emissive: 0x293844, emissiveIntensity: 0.08 });
+            pendingStructure.sideWalls.forEach((wall, i) => {
+                const original = wall.geometry, exteriorFace = i === 0 ? 1 : 0;
+                const indices = [], baseGroups = original.groups.filter((_, face) => face !== exteriorFace);
+                const append = g => { for (let k = g.start; k < g.start + g.count; k++) indices.push(original.index.getX(k)); };
+                baseGroups.forEach(append); const exteriorStart = indices.length; append(original.groups[exteriorFace]);
+                wall.geometry = original.clone(); wall.geometry.setIndex(indices); wall.geometry.clearGroups();
+                wall.geometry.addGroup(0, exteriorStart, 0); wall.geometry.addGroup(exteriorStart, indices.length - exteriorStart, 1);
+                wall.material = [wall.material, sideWall]; original.dispose();
+            });
         }
 
         function buildLaboratory(securityPos, containmentPos) {
@@ -798,9 +1084,13 @@
             placed(root, 378.5, 719, 22, 30, 0.08, 0x303e50, { emissive: 0x244b65, emissiveIntensity: 0.32 }).position.z = 0.27;
             placed(root, 370, 765, 80, 60, 0.35, 0x38334b, { emissive: 0x43314e, emissiveIntensity: 0.33 });
             placed(root, 430, 753, 40, 34, 0.35, 0x354151, { emissive: 0x483a2b, emissiveIntensity: 0.3 });
-            const researchCeiling = placed(root, 360, 710, 60, 52, 0.65, 0x1c222d);
-            const containmentCeiling = placed(root, 370, 765, 80, 60, 0.65, 0x211b2a);
-            const emergencyCeiling = placed(root, 430, 753, 40, 34, 0.65, 0x1c222d);
+            // CP2-R AC-4: the lab roofs bear on the full 1.4 m wall thickness
+            // (outer edges flush with the wall faces) and abut without
+            // overlapping, so there is no exposed wall-top ledge and no
+            // coincident roof faces. Research now reaches the closed y684 face.
+            const researchCeiling = placed(root, 360, 709, 61.4, 52, 0.65, 0x1c222d);
+            const containmentCeiling = placed(root, 370, 765.35, 81.4, 60.7, 0.65, 0x211b2a);
+            const emergencyCeiling = placed(root, 430.7, 753, 40, 35.4, 0.65, 0x1c222d);
             researchCeiling.position.z = containmentCeiling.position.z = emergencyCeiling.position.z = 9.3;
             researchCeiling.name = 'ResearchCeiling';
             containmentCeiling.name = 'ContainmentCeiling';
@@ -808,24 +1098,38 @@
             cutawayMeshes.push(researchCeiling, containmentCeiling, emergencyCeiling);
             wall(330, 710, 1.4, 52); wall(390, 710, 1.4, 52);
             wall(341, 704, 22, 1.4); wall(379, 704, 22, 1.4);
-            wall(367, 708, 1.0, 8); wall(367, 730, 1.0, 10);
+            // CP2-R: the partition stops at the Security doorway's wall face
+            // (y734.3); it previously entered the doorway plane, narrowing the
+            // opening and intersecting the east sliding panel.
+            wall(367, 708, 1.0, 8); wall(367, 729.65, 1.0, 9.3);
             wall(341, 735, 22, 1.4); wall(379, 735, 22, 1.4);
             // Research ends at x390; Containment extends to x410. Close that
             // 20 m north-perimeter return with the same 1.4 m thick, 9 m high
             // wall as its neighbors, including a height-aware collision solid.
-            wall(400, 735, 20, 1.4).name = 'ContainmentNorthReturnWall';
-            wall(330, 765, 1.4, 60); wall(370, 795, 80, 1.4);
+            // CP2-R: exterior corners close the 0.7 m wall-thickness notches.
+            wall(400.35, 735, 20.7, 1.4).name = 'ContainmentNorthReturnWall';
+            wall(330, 765, 1.4, 60); wall(370, 795, 81.4, 1.4);
             wall(410, 740, 1.4, 10); wall(410, 764, 1.4, 10); wall(410, 782, 1.4, 26);
-            wall(430, 736, 40, 1.4); wall(430, 770, 40, 1.4);
+            wall(430.35, 736, 40.7, 1.4); wall(430.35, 770, 40.7, 1.4);
             wall(450, 741, 1.4, 10); wall(450, 764, 1.4, 12);
-            const accessDoor = addDoor(360, 690, 'x', 8, 9, 9, 'lab_access');
-            const securityDoor = addDoor(360, 735, 'x', 8, 9, 9, 'lab_security');
-            const emergencyDoor = addDoor(410, 752, 'y', 7, 8, 9, 'lab_emergency');
-            const serviceDoor = addDoor(450, 752, 'y', 6, 7, 9, 'lab_emergency_exit');
+            // Panels stop at the portal lintel (DOOR_CLEAR); widths are unchanged.
+            const accessDoor = addDoor(360, 690, 'x', 8, 9, DOOR_CLEAR, 'lab_access');
+            const securityDoor = addDoor(360, 735, 'x', 8, 9, DOOR_CLEAR, 'lab_security');
+            const emergencyDoor = addDoor(410, 752, 'y', 7, 8, DOOR_CLEAR, 'lab_emergency');
+            const serviceDoor = addDoor(450, 752, 'y', 6, 7, DOOR_CLEAR, 'lab_emergency_exit');
             accessDoor.enabled = securityDoor.enabled = emergencyDoor.enabled = serviceDoor.enabled = false;
             sign('ACCESS // DECONTAMINATION', 360, 690.82, 6.7, 10.5, '#66ddff');
             sign('RESEARCH // ANALYSIS', 360, 704.82, 6.7, 9.5, '#66ddff');
-            for (const y of [690.8, 703.2]) {
+            // The y690 door is framed by its shared portal (CP2-R); only the
+            // door-less research partition opening keeps these lab posts. The
+            // retired y690.8 set is replayed for stream parity (see retire).
+            retire(group => {
+                const glow = (x, w, d, intensity) => placed(group, x, 690.8, w, d, 0.07, 0x66ddff,
+                    { emissive: 0x66ddff, emissiveIntensity: intensity, metalness: 0.2, roughness: 0.5 });
+                for (const x of [351.6, 368.4]) { placed(group, x, 690.8, 0.75, 0.75, 8.6, 0x252f3e); glow(x, 0.16, 0.8, 1.45); }
+                glow(360, 16.8, 0.32, 1.5);
+            });
+            for (const y of [703.2]) {
                 for (const x of [351.6, 368.4]) {
                     placed(root, x, y, 0.75, 0.75, 8.6, 0x252f3e);
                     strip(root, x + (x < 360 ? 0.42 : -0.42), y, 0.16, 0.8, 0x66ddff, 1.45).position.z = 4.0;
@@ -997,7 +1301,9 @@
             detail('EmergencyExitThreshold', 446.5, 752, 0.18, 10, 0.06, 0.35,
                 colors.crisis, makeSeam(0x99251d, 0.95));
             for (const x of [419, 433, 447]) strip(root, x, 752, 0.22, 11, 0xe0a84a, 0.85);
-            sign('EMERGENCY EXIT', 449.0, 752, 7.2, 8, '#ff493d', 'x');
+            // The exterior finalizer corrects this shared outer-door marker's
+            // audited orientation/mount; no interior room details are changed.
+            sign('EMERGENCY EXIT', 449.0, 752, 7.2, 8, '#ff493d', 'x').name = 'FacilityEmergencyExitSign';
             for (const y of [746.3, 757.7]) {
                 const beacon = placed(root, 449.65, y, 0.18, 0.3, 5.2, 0xff493d, makeSeam(0xff2211, 1.5));
                 beacon.position.z = 4.0;
@@ -1013,7 +1319,9 @@
                 const status = placed(root, x + (x < 360 ? 1.3 : -1.3), y, 0.12, 2.0, 1.0, 0x78dcf2, makeSeam(0x2286ae, 1.15));
                 status.position.z = 2.35;
             }
-            for (const x of [331.05, 408.95]) for (const y of [757, 782]) {
+            // CP2-R: east-wall panels/ribs/conduit previously crossed the x410
+            // Containment/Power doorway (y745-759); they now stay on solid wall.
+            for (const x of [331.05, 408.95]) for (const y of (x < 360 ? [757, 782] : [764, 782])) {
                 detail('ContainmentWallPanel', x, y, 0.12, 8.0, 2.6, 3.3, 0x6c7d92,
                     { emissive: 0x344f69, emissiveIntensity: 0.8, metalness: 0.2, roughness: 0.7 });
                 detail('ContainmentCoolGuide', x + (x < 360 ? 0.1 : -0.1), y, 0.13, 6.2, 0.18, 4.5,
@@ -1032,9 +1340,11 @@
                     colors.bio, makeSeam(0x853653, 0.65));
             }
             for (const x of [331.04, 408.96]) {
-                for (const y of [750, 762, 778, 790]) detail('ContainmentWallRib', x, y, 0.16, 0.65, 4.0, 6.2,
+                for (const y of (x < 360 ? [750, 762, 778, 790] : [740, 762, 778, 790])) detail('ContainmentWallRib', x, y, 0.16, 0.65, 4.0, 6.2,
                     0x687d93, { emissive: 0x2b4157, emissiveIntensity: 0.6, metalness: 0.45, roughness: 0.6 });
-                detail('ContainmentWallConduit', x + (x < 360 ? 0.1 : -0.1), 770, 0.12, 35, 0.2, 7.7,
+                // Same shared 35 m run both sides; the east run starts past the
+                // x410 doorway portal (y759.6) and ends inside the rear wall.
+                detail('ContainmentWallConduit', x + (x < 360 ? 0.1 : -0.1), x < 360 ? 770 : 777.2, 0.12, 35, 0.2, 7.7,
                     0x8dcbdd, makeSeam(0x326789, 0.55));
             }
             detail('ArchiveCeilingFeed', 360, 785, 0.26, 18, 0.2, 8.8, 0x68849a,
@@ -1118,6 +1428,23 @@
                 : { x0: x - 0.5, y0: y - gapHalf, x1: x + 0.5, y1: y + gapHalf, topY: panelH, bottomY: 0, disabled: false };
             SOLIDS.push(solid); door.solid = solid; doors.push(door);
             return door;
+        }
+
+        // Read-only placement exclusion from the actual closed/open panel extents.
+        // Locks/visibility do not remove a doorway's future travel/approach zone.
+        function doorPlacementZones() {
+            return doors.map((door, index) => {
+                let span = 0;
+                for (const panel of door.panels) {
+                    const size = panel.g.children[0].geometry.parameters;
+                    const half = (door.axis === 'x' ? size.width : size.depth) / 2;
+                    span = Math.max(span, Math.abs(panel.offC) + half, Math.abs(panel.offO) + half);
+                }
+                const [x, y] = door.base, approach = 5, shoulder = 0.5;
+                return { id: 'door:' + (door.id || index), type: 'rect',
+                    x0: x - (door.axis === 'x' ? span + shoulder : approach), y0: y - (door.axis === 'x' ? approach : span + shoulder),
+                    x1: x + (door.axis === 'x' ? span + shoulder : approach), y1: y + (door.axis === 'x' ? approach : span + shoulder) };
+            });
         }
 
         function updateDoors(dt, player, squadMembers, hostiles, labAccess, campaign) {
@@ -1235,10 +1562,10 @@
         return {
             buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,guidanceHeight,
             set zones(value) { zones = value; }, get zones() { return zones; },
-            doors, cutawayMeshes, referenceLights, fx,
+            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity,
             sectionSummary() { return [...sections].map(([name, section]) => ({ name, objects: section.objects.length, solids: section.solids.length })); },
         };
     }
 
-    global.ChargefrontFacility = Object.freeze({ create, navigationWaypoint, foundationHeight, MAP_SEGMENTS, LAB_MAP_SEGMENTS, NAV_BLOCK, BYPASS_WEST, BYPASS_EAST });
+    global.ChargefrontFacility = Object.freeze({ create, navigationWaypoint, foundationHeight, MAP_SEGMENTS, LAB_MAP_SEGMENTS, NAV_BLOCK, BYPASS_WEST, BYPASS_EAST, PLACEMENT_FOOTPRINTS: FOUNDATION, PORTALS, DOOR_CLEAR });
 })(globalThis);

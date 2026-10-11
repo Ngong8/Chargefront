@@ -23,6 +23,59 @@ The HTML game imports `src/world/facility.js` as a **classic script** ahead of i
 
 `buildCampaignWorld()` remains the sole coordinator and is called once per campaign world. `buildSection(name, builder)` records direct scene objects and solids at build time, and refuses to rebuild a section on a second call. The stabilized eight renderer-side `LocalLightSlot` PointLights and their authored source lights remain in the HTML and are untouched by facility construction. Movement updates only door transforms/collision-enabled flags and facility FX at the previous 12 Hz / 190 m gate. Snapshot changes toggle existing group/material state; no geometry is allocated.
 
+**Milestone 4.2 CP2 exterior:** `buildExteriorDetail()` retains accepted construction
+and stores references for `finalizeExteriorIdentity()`. The coordinator finalizes
+mounted exterior detail once, after legacy scenery/objectives/garrison construction,
+using a scoped independent random stream so Three.js UUID draws and cache entries
+cannot shift accepted seeded scenery. Cached static instances remain under the
+existing exterior root; roof-mounted batches join cutaway metadata. No new solids,
+light sources, room topology or movement-time rebuilding. The audited shared outer
+exit sign is corrected on an exterior mount; interior-room dressing is retained.
+See `MILESTONE-4.2-ENVIRONMENT.md` for matched visual evidence and preservation gates.
+
+**Milestone 4.2 CP2-R1 architecture repair:** the approved y684 return walls seal
+both outdoor Vault recesses. Seven fitted portals (six doors plus the Vault north
+opening) use posts outside the opening edges and 8.2 m clear-height lintels;
+the x450 and x410 widths remain 12 m and 14 m. Posts block movement; overhead
+lintel solids block height-aware shots/LOS but are skipped by ground and guide
+clearance queries. Roof slabs extend to wall faces and continuous coping replaces
+floating trims. The current baseline is **329 solids / 30 minimap segments**, with
+the same six sections, mission anchors, eight rendered light slots and 29 warmed
+programs. These counts supersede the historical 306/28 figures below.
+
+New structure is constructed by `finalizeStructure()` within the existing guarded
+finalizer after legacy scenery/objectives/drones, using a scoped independent
+random stream. Superseded legacy pieces replay their constructor/cache effects
+unattached so seeded scenery remains identical. Post-finalization solids are in
+the live global collision list; `sectionSummary()` remains a builder-time snapshot,
+not the final total. `tests/facility-enclosure.mjs` guards closed/live mission-state
+enclosure, both breach walks, portal collision/door cycles and map lines; the
+corrected placement parity test loads a real archived HEAD site in both browsers.
+R1 engineering validation passes; manual acceptance is pending. R2/CP3 have not
+begun. Full receipt and screenshot index: the CP2-R1 section of the milestone doc.
+
+**Milestone 4.2 CP2-R2 (after user R1 wall review):** only the scoped post-build
+exterior identity pass changes. It replaces broad facade panels with compact
+utility intakes/roof feeds, reduces side/rear/north-face dressing, lowers the three
+shallow service cabinets, removes unused signage and mounts the Emergency Exit
+plaque inside/E-04 outside on the existing x450 header. Nameplate, staging board,
+crane and roof supports persist. No R1 solids, map lines, portal/coping transforms,
+door dimensions/mechanisms or gameplay systems change. The new matched-source
+`tests/facility-refinement.mjs` checks exact R1 preservation, runtime absence of
+removed objects and service/door-sweep clearance. R2 engineering checks pass in
+Firefox and Edge; manual visual acceptance is pending. See
+`_playtest/m42/cp2r2-20261011/REPORT.md`. No CP3 work has begun.
+
+**Final side-wall visibility correction:** after manual acceptance of R1/R2, only
+the Hall side walls' outward faces and the adjacent side service-metal finishes
+are gently lifted. Interior faces retain their original material. Each side wall
+uses two contiguous material groups over the same box indices; no new light,
+shader variant, collision or geometry shape is introduced. The eight-slot system,
+fog/exposure and accepted architecture persist. `tests/facility-visibility.mjs`
+records matched normal-lighting eye views and fixed-shape/render-state checks;
+the prepared checkpoint summary is `_playtest/m42/cp2r-checkpoint/README.md`.
+Engineering validation passes; final manual approval and committing remain pending.
+
 **Part A checkpoint:** `be4f6b4` extracted the original geometry without changing its appearance. All facility structural, dressing and navigation code lives in `src/world/facility.js`; `chargefront.html` retains the thin section builder wrappers and mission/campaign state that consumes attachment data. The specimen-tube cradle belongs to the facility; its pickup, world-state toggling and M3 reveal remain in campaign code.
 
 ## Part B reconstruction

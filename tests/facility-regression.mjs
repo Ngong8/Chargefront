@@ -52,7 +52,7 @@ try {
         };
     });
     assert(geometry.hallWall && !geometry.frontOpening && !geometry.bypass && geometry.wallBlocksShot);
-    assert.equal(geometry.mapSegments, 28); // continuous Hall wall replaces two side-door segments
+    assert.equal(geometry.mapSegments, 30); // continuous Hall wall (3.8.1) + CP2-R y684 lab-face closure
 
     const continuity = await check('M1→M4', () => {
         const cf = window.__cf;

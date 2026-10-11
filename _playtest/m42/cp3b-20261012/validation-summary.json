@@ -1,0 +1,2336 @@
+{
+  "checkpoint": "CP3-B",
+  "verdict": "engineering_pass_manual_review_pending",
+  "sourceSha256": "bea2e25fafcee459a93ba7c722da0cd832c4d2af5b0277c09abe10003feb002b",
+  "browsers": {
+    "firefox": {
+      "correctionsPassed": true,
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940697
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.3578124910593035
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.5140624910593035
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940697
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.92109375
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.07890625
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [
+            {
+              "position": [
+                381.2136679949762,
+                696.7925529263841,
+                0.35
+              ],
+              "radius": 0.9132799505721778
+            }
+          ],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940697
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.3578124910593035
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.5140624910593035
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940697
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.92109375
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.07890625
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940697
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.3578124910593035
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.5140624910593035
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940697
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.92109375
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.07890625
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940697
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.3578124910593035
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.5140624910593035
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940697
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.92109375
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.07890625
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [
+            {
+              "position": [
+                388.14899424821897,
+                699.7460199617648,
+                0.35
+              ],
+              "radius": 0.9012572142295538
+            }
+          ],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940697
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.3578124910593035
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.5140624910593035
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940697
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.92109375
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.07890625
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1.0000000000000004,
+                0,
+                -4.440892098500626e-16
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "results": [
+        {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 164.679
+        },
+        {
+          "browser": "firefox",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 156.505
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "seconds": 58.967
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "seconds": 76.921
+        },
+        {
+          "browser": "firefox",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "seconds": 39.391
+        }
+      ],
+      "stress": {
+        "frames": 271,
+        "p95Ms": 50,
+        "p99Ms": 100,
+        "worstMs": 200,
+        "over100": 3,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1405,
+        "triangles": 297904,
+        "geometries": 2158,
+        "materials": 1692,
+        "meshes": 2438,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      },
+      "regions": [
+        {
+          "label": "M1 exterior",
+          "p95": 50,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 33.4,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 16.7,
+          "worst": 33.4,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 33.3,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 50,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 50,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 33.3,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 50,
+          "worst": 83.4,
+          "counters": {
+            "shadowRefresh": 102,
+            "sceneObjectsAdded": 564,
+            "sceneObjectsRemoved": 550
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 16.7,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 151,
+            "sceneObjectsAdded": 558,
+            "sceneObjectsRemoved": 526,
+            "meshesCreated": 203,
+            "geometriesCreated": 17,
+            "materialsCreated": 11,
+            "groupsObjectsCreated": 94,
+            "materialDisposes": 1
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 16.7,
+          "worst": 33.3,
+          "counters": {
+            "sceneObjectsAdded": 868,
+            "shadowRefresh": 150,
+            "sceneObjectsRemoved": 857,
+            "meshesCreated": 13,
+            "geometriesCreated": 13,
+            "materialsCreated": 7,
+            "groupsObjectsCreated": 3,
+            "materialDisposes": 7
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "file": "R1-analysis-instrument-normal.png",
+          "diagnostic": false,
+          "callsBefore": 318,
+          "callsAfter": 321,
+          "callsDelta": 3,
+          "trianglesDelta": 48,
+          "programsBefore": 37,
+          "programsAfter": 37
+        },
+        {
+          "file": "R2-workstation-instrument-normal.png",
+          "diagnostic": false,
+          "callsBefore": 292,
+          "callsAfter": 295,
+          "callsDelta": 3,
+          "trianglesDelta": 48,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "R3-workstation-readout-normal.png",
+          "diagnostic": false,
+          "callsBefore": 269,
+          "callsAfter": 271,
+          "callsDelta": 2,
+          "trianglesDelta": 36,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "R4-research-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 269,
+          "callsAfter": 273,
+          "callsDelta": 4,
+          "trianglesDelta": 60,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "S1-desk-monitor-normal.png",
+          "diagnostic": false,
+          "callsBefore": 402,
+          "callsAfter": 405,
+          "callsDelta": 3,
+          "trianglesDelta": 60,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "S2-security-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 392,
+          "callsAfter": 395,
+          "callsDelta": 3,
+          "trianglesDelta": 60,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H1-sensor-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 281,
+          "callsAfter": 283,
+          "callsDelta": 2,
+          "trianglesDelta": 36,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "H2-supply-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 344,
+          "callsAfter": 347,
+          "callsDelta": 3,
+          "trianglesDelta": 40,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-mount-normal.png",
+          "diagnostic": false,
+          "callsBefore": 393,
+          "callsAfter": 404,
+          "callsDelta": 11,
+          "trianglesDelta": 336,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-nozzle-mount-normal.png",
+          "diagnostic": false,
+          "callsBefore": 79,
+          "callsAfter": 84,
+          "callsDelta": 5,
+          "trianglesDelta": 228,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-growth-exclusion-normal.png",
+          "diagnostic": false,
+          "callsBefore": 292,
+          "callsAfter": 294,
+          "callsDelta": 2,
+          "trianglesDelta": -10,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-mount-diagnostic.png",
+          "diagnostic": true,
+          "callsBefore": 393,
+          "callsAfter": 404,
+          "callsDelta": 11,
+          "trianglesDelta": 336,
+          "programsBefore": 50,
+          "programsAfter": 48
+        },
+        {
+          "file": "D1-nozzle-mount-diagnostic.png",
+          "diagnostic": true,
+          "callsBefore": 79,
+          "callsAfter": 84,
+          "callsDelta": 5,
+          "trianglesDelta": 228,
+          "programsBefore": 50,
+          "programsAfter": 50
+        }
+      ],
+      "enclosure": {
+        "states": [
+          {
+            "mission": "dead_signal",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "power_through",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "sample_zero",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "break_contact",
+            "closed": 0,
+            "live": 29474,
+            "exitClosed": 0
+          }
+        ],
+        "doors": [
+          {
+            "id": "front",
+            "openT": 0.988,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.012,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "bio_lab",
+            "openT": 0.987,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_access",
+            "openT": 0.987,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_security",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_emergency",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.014,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_emergency_exit",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.012,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          }
+        ],
+        "walks": [
+          {
+            "name": "west recess -> vault",
+            "start": [
+              318,
+              672
+            ],
+            "trail": [
+              {
+                "x": 335.55,
+                "y": 672.01
+              },
+              {
+                "x": 336,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 674.23
+              }
+            ],
+            "end": {
+              "x": 340.5,
+              "y": 674.23
+            },
+            "pass": true
+          },
+          {
+            "name": "east recess -> vault",
+            "start": [
+              402,
+              672
+            ],
+            "trail": [
+              {
+                "x": 401.5,
+                "y": 672
+              },
+              {
+                "x": 384.29,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 674.19
+              }
+            ],
+            "end": {
+              "x": 379.5,
+              "y": 674.19
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> west recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.3
+              },
+              {
+                "x": 336.35,
+                "y": 686.99
+              },
+              {
+                "x": 336.03,
+                "y": 685.5
+              },
+              {
+                "x": 331.2,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 331.2,
+              "y": 685.5
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> east recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.56
+              },
+              {
+                "x": 383.48,
+                "y": 686.99
+              },
+              {
+                "x": 383.95,
+                "y": 685.5
+              },
+              {
+                "x": 388.8,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 388.8,
+              "y": 685.5
+            },
+            "pass": true
+          }
+        ]
+      },
+      "placement": {
+        "cases": 14,
+        "baselineParity": [
+          {
+            "mode": "campaign",
+            "arena": null,
+            "seed": 420042,
+            "sha256": "819ab2936e6770c0b948bee6199ba5b797de2de66cccd87a16501a8d315b5a77",
+            "solids": 329,
+            "headSolids": 306,
+            "facilityEnvelopeSolids": [
+              102,
+              125
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "valley",
+            "seed": 420042,
+            "sha256": "86aec50396ad34b7ccc9137a33cbaa8765129f906b1c99ebe42adbb96f547b87",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "crater",
+            "seed": 420042,
+            "sha256": "ff5dfef6a0dbd85f30782cb7a8f22b6676b2e90edcf5f8665f2e50866ac167cd",
+            "solids": 32,
+            "headSolids": 32,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "ridges",
+            "seed": 420042,
+            "sha256": "e632fc1d08e0904c4138ae49ba2a2a94b93efab6e8382a8b09d706af3ec72229",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          }
+        ],
+        "errors": []
+      },
+      "normalTourPrograms": {
+        "before": 41,
+        "after": 41
+      }
+    },
+    "edge": {
+      "correctionsPassed": true,
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940696
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.357812491059304
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.514062491059303
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940698
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.921093749999999
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.078906250000001
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [
+            {
+              "position": [
+                381.2136679949762,
+                696.7925529263841,
+                0.35
+              ],
+              "radius": 0.9132799505721778
+            }
+          ],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940696
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.357812491059304
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.514062491059303
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940698
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.921093749999999
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.078906250000001
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940696
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.357812491059304
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.514062491059303
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940698
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.921093749999999
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.078906250000001
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940696
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.357812491059304
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.514062491059303
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940698
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.921093749999999
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.078906250000001
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [
+            {
+              "position": [
+                388.14899424821897,
+                699.7460199617648,
+                0.35
+              ],
+              "radius": 0.9012572142295538
+            }
+          ],
+          "signs": [
+            {
+              "name": "CP3BSensorSign",
+              "position": [
+                331.45,
+                633,
+                5.95
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331.45,
+                630.8249999284744,
+                5.542187508940696
+              ],
+              "max": [
+                331.45,
+                635.1750000715256,
+                6.357812491059304
+              ]
+            },
+            {
+              "name": "CP3BSupplySign",
+              "position": [
+                388.55,
+                626,
+                5.95
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                388.55,
+                623.6750000715256,
+                5.514062491059303
+              ],
+              "max": [
+                388.55,
+                628.3249999284744,
+                6.385937508940698
+              ]
+            },
+            {
+              "name": "CP3BResearchSign",
+              "position": [
+                331,
+                710,
+                6.5
+              ],
+              "normal": [
+                1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                331,
+                706.9125,
+                5.921093749999999
+              ],
+              "max": [
+                331,
+                713.0875,
+                7.078906250000001
+              ]
+            },
+            {
+              "name": "CP3BSecuritySign",
+              "position": [
+                389,
+                717,
+                6.5
+              ],
+              "normal": [
+                -1,
+                -2.220446049250313e-16,
+                0
+              ],
+              "min": [
+                389,
+                714.2375,
+                5.9820312499999995
+              ],
+              "max": [
+                389,
+                719.7625,
+                7.0179687500000005
+              ]
+            }
+          ],
+          "doorSweepHits": [],
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "results": [
+        {
+          "browser": "edge",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "seconds": 105.891
+        },
+        {
+          "browser": "edge",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "seconds": 143.954
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "seconds": 23.268
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "seconds": 60.56
+        },
+        {
+          "browser": "edge",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "seconds": 31.441
+        }
+      ],
+      "stress": {
+        "frames": 271,
+        "p95Ms": 17.3,
+        "p99Ms": 50,
+        "worstMs": 133.3,
+        "over100": 1,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1299,
+        "triangles": 292322,
+        "geometries": 2155,
+        "materials": 1689,
+        "meshes": 2435,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      },
+      "regions": [
+        {
+          "label": "M1 exterior",
+          "p95": 33.4,
+          "worst": 50.1,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 17,
+          "worst": 33.3,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 17,
+          "worst": 17.4,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 17.1,
+          "worst": 17.4,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 16.9,
+          "worst": 33.5,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 16.8,
+          "worst": 33.4,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 17,
+          "worst": 17.3,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 33.4,
+          "worst": 33.5,
+          "counters": {
+            "shadowRefresh": 101,
+            "sceneObjectsAdded": 189,
+            "sceneObjectsRemoved": 153
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 17.1,
+          "worst": 33.2,
+          "counters": {
+            "shadowRefresh": 151,
+            "sceneObjectsAdded": 944,
+            "meshesCreated": 203,
+            "geometriesCreated": 17,
+            "materialsCreated": 11,
+            "groupsObjectsCreated": 94,
+            "sceneObjectsRemoved": 907,
+            "materialDisposes": 1
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 17.1,
+          "worst": 17.5,
+          "counters": {
+            "sceneObjectsAdded": 811,
+            "shadowRefresh": 150,
+            "meshesCreated": 281,
+            "geometriesCreated": 28,
+            "materialsCreated": 17,
+            "groupsObjectsCreated": 88,
+            "sceneObjectsRemoved": 778
+          }
+        }
+      ],
+      "comparison": [
+        {
+          "file": "R1-analysis-instrument-normal.png",
+          "diagnostic": false,
+          "callsBefore": 318,
+          "callsAfter": 321,
+          "callsDelta": 3,
+          "trianglesDelta": 48,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "R2-workstation-instrument-normal.png",
+          "diagnostic": false,
+          "callsBefore": 292,
+          "callsAfter": 295,
+          "callsDelta": 3,
+          "trianglesDelta": 48,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "R3-workstation-readout-normal.png",
+          "diagnostic": false,
+          "callsBefore": 269,
+          "callsAfter": 271,
+          "callsDelta": 2,
+          "trianglesDelta": 36,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "R4-research-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 269,
+          "callsAfter": 273,
+          "callsDelta": 4,
+          "trianglesDelta": 60,
+          "programsBefore": 39,
+          "programsAfter": 39
+        },
+        {
+          "file": "S1-desk-monitor-normal.png",
+          "diagnostic": false,
+          "callsBefore": 402,
+          "callsAfter": 405,
+          "callsDelta": 3,
+          "trianglesDelta": 60,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "S2-security-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 392,
+          "callsAfter": 395,
+          "callsDelta": 3,
+          "trianglesDelta": 60,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H1-sensor-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 281,
+          "callsAfter": 283,
+          "callsDelta": 2,
+          "trianglesDelta": 36,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "H2-supply-sign-normal.png",
+          "diagnostic": false,
+          "callsBefore": 344,
+          "callsAfter": 346,
+          "callsDelta": 2,
+          "trianglesDelta": 36,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-mount-normal.png",
+          "diagnostic": false,
+          "callsBefore": 393,
+          "callsAfter": 404,
+          "callsDelta": 11,
+          "trianglesDelta": 336,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-nozzle-mount-normal.png",
+          "diagnostic": false,
+          "callsBefore": 79,
+          "callsAfter": 84,
+          "callsDelta": 5,
+          "trianglesDelta": 228,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-growth-exclusion-normal.png",
+          "diagnostic": false,
+          "callsBefore": 292,
+          "callsAfter": 294,
+          "callsDelta": 2,
+          "trianglesDelta": -10,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-mount-diagnostic.png",
+          "diagnostic": true,
+          "callsBefore": 393,
+          "callsAfter": 404,
+          "callsDelta": 11,
+          "trianglesDelta": 336,
+          "programsBefore": 50,
+          "programsAfter": 50
+        },
+        {
+          "file": "D1-nozzle-mount-diagnostic.png",
+          "diagnostic": true,
+          "callsBefore": 79,
+          "callsAfter": 84,
+          "callsDelta": 5,
+          "trianglesDelta": 228,
+          "programsBefore": 50,
+          "programsAfter": 50
+        }
+      ],
+      "enclosure": {
+        "states": [
+          {
+            "mission": "dead_signal",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "power_through",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "sample_zero",
+            "closed": 0,
+            "live": 0
+          },
+          {
+            "mission": "break_contact",
+            "closed": 0,
+            "live": 29474,
+            "exitClosed": 0
+          }
+        ],
+        "doors": [
+          {
+            "id": "front",
+            "openT": 0.988,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "bio_lab",
+            "openT": 0.987,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_access",
+            "openT": 0.987,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_security",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_emergency",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          },
+          {
+            "id": "lab_emergency_exit",
+            "openT": 1,
+            "solidDisabled": true,
+            "doorTop": 8.2,
+            "panelHeights": [
+              8.2,
+              8.2
+            ],
+            "passLow": true,
+            "passHigh": true,
+            "lintelBlocks": true,
+            "actorClear": true,
+            "postSolid": true,
+            "openPanelPostHits": false,
+            "closed": {
+              "openT": 0.013,
+              "solidDisabled": false,
+              "panelLeavesWall": false,
+              "blocksLow": true
+            }
+          }
+        ],
+        "walks": [
+          {
+            "name": "west recess -> vault",
+            "start": [
+              318,
+              672
+            ],
+            "trail": [
+              {
+                "x": 335.49,
+                "y": 672
+              },
+              {
+                "x": 336,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 674.21
+              }
+            ],
+            "end": {
+              "x": 340.5,
+              "y": 674.21
+            },
+            "pass": true
+          },
+          {
+            "name": "east recess -> vault",
+            "start": [
+              402,
+              672
+            ],
+            "trail": [
+              {
+                "x": 401.5,
+                "y": 672
+              },
+              {
+                "x": 384.29,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 674.2
+              }
+            ],
+            "end": {
+              "x": 379.5,
+              "y": 674.2
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> west recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 359.99,
+                "y": 686.37
+              },
+              {
+                "x": 336.77,
+                "y": 686.99
+              },
+              {
+                "x": 336.06,
+                "y": 685.5
+              },
+              {
+                "x": 331.2,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 331.2,
+              "y": 685.5
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> east recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.61
+              },
+              {
+                "x": 383.22,
+                "y": 686.99
+              },
+              {
+                "x": 383.93,
+                "y": 685.5
+              },
+              {
+                "x": 388.8,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 388.8,
+              "y": 685.5
+            },
+            "pass": true
+          }
+        ]
+      },
+      "placement": {
+        "cases": 14,
+        "baselineParity": [
+          {
+            "mode": "campaign",
+            "arena": null,
+            "seed": 420042,
+            "sha256": "192cb2cb5c57bab40661d128e2233e9c1f5cb5ccd8f6a9679b1c07997d75d771",
+            "solids": 329,
+            "headSolids": 306,
+            "facilityEnvelopeSolids": [
+              102,
+              125
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "valley",
+            "seed": 420042,
+            "sha256": "d35e512778834893721a8471dc9fbec6270083f978e50c1f7caf744b86df46c0",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "crater",
+            "seed": 420042,
+            "sha256": "e8e057e999d866d30ac04f3f16a79de9dc2df8abf81a75e8b6e1c3d3bd88bed2",
+            "solids": 32,
+            "headSolids": 32,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "ridges",
+            "seed": 420042,
+            "sha256": "f2033474010c660f61db5a94aef73ff9468fb60cc4ae4a30107d87c8aeb73fe2",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          }
+        ],
+        "errors": []
+      },
+      "normalTourPrograms": {
+        "before": 41,
+        "after": 41
+      }
+    }
+  }
+}

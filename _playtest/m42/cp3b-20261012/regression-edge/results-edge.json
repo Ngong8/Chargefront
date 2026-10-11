@@ -1,0 +1,37 @@
+[
+  {
+    "browser": "edge",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "seconds": 105.891
+  },
+  {
+    "browser": "edge",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "seconds": 143.954
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "seconds": 23.268
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "seconds": 60.56
+  },
+  {
+    "browser": "edge",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "seconds": 31.441
+  }
+]

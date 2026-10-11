@@ -1,9 +1,10 @@
 # Charge Front — Milestone 4.2: Environment & Final Prop Pass
 
-**Current checkpoint: CP2 — CF-07 Facility Exterior Enhancement, complete for
-review.** STOP at CP2: no interior-room pass, CP3–CP5 work, commit, merge or push.
-See the CP2 implementation/visual-validation record at the end of this document.
-CP0–CP1 records below are retained as accepted historical baseline evidence.
+**Current checkpoint: CP3-B — Interior Equipment, Signage and Support Corrections,
+engineering PASS; manual review pending.** STOP at CP3-B: no CP3-C/D/E work,
+commit, merge or push. The accepted CP2-R checkpoint is `45c05f4`.
+See the CP3-B implementation/validation record at the end of this document.
+Earlier checkpoint records are retained as historical baseline evidence.
 
 ## CP0 status and scope
 
@@ -1383,3 +1384,214 @@ Deferred to CP3 (do not begin yet):
 Also retained: the interior emergency exit plaque size, the simplified rooftop
 housing geometry, and the staging-board support / partially buried yard equipment
 (consider during CP4).
+
+---
+
+## CP3-A acceptance and approved environmental direction
+
+The user accepted the current-source CP3-A inspection and indexed screenshots
+under `_playtest/m42/cp3a-20261011/`. Approved direction: **restrained abandoned
+operations**, residual task lighting and believable equipment, with intentional
+empty combat spaces retained. Containment keeps its magenta Sample Zero focus,
+cyan peripheral light and dark composition; no substantial redesign.
+
+For **later CP3-D only**, compact guarded exterior service fixtures and two
+functional side-wall source positions are approved. Existing-source reuse is
+preferred; up to two added authored registrations are conditionally permitted if
+reuse compromises their original areas, through the same eight rendered slots.
+Selection, spill, transitions and performance require subsequent validation.
+No such exterior fixture or lighting treatment is implemented in CP3-B.
+
+## CP3-B — Interior equipment, signage and support corrections
+
+### Baseline, scope and status
+
+**Engineering PASS; corrected normal-lighting screenshots inspected; manual
+acceptance pending. STOP after CP3-B.** Starting/current branch `milestone-4.2`,
+HEAD `45c05f43c7570b4e677f661581e13cdc7a13920d`. Starting tracked diff was only the
+pre-existing one-line `Credits.txt` addition. No reset/clean, existing evidence
+replacement, staging, commit, merge or push occurred.
+
+Scope is the approved correction of existing Research/Security equipment, four
+interior signs, relay/nozzle supports and the Decon exterior-growth intrusion.
+Reception dressing, surveillance props, full room refinement and lighting remain
+later checkpoints. The architectural shell, doors, collision and gameplay are
+unchanged. `chargefront.html` and the placement module were not edited.
+
+### Implemented corrections
+
+| Target | Actual implementation | Preservation |
+|---|---|---|
+| Research analysis benches | Replace the two bulky 2.075 m silhouettes with shallow seated assemblies ending at **1.27 m**. Lower the existing small instrument/readout batches to the same envelope; cap bottoms meet the 1.15 m bench tops and device bottoms meet the caps. | Same 1.15 m solids, bench bodies/footprints and lanes. No extra collision or taller cover. |
+| Research side workstation equipment | Slim/reseat both overhanging instruments wholly on their existing top surfaces. Corrected assembly ends at **1.52 m**; top plates meet the unchanged 1.4 m tables. | Same supporting table bodies/solids. Standing-shot clearance preserved. |
+| Buried Research readout | Move the existing animated screen from inside the table to its east equipment face at x336.30, z1.02; its top is **1.33 m**, below the 1.35 m table cover. | Same material/FX reference; no new console, interaction or source light. |
+| Security desk monitors | Reuse both animated displays as thin, seated desktop screens on 5 cm bases touching the desks at z1.4. Display tops end at **1.475 m**, replacing the .275 m unsupported gap and 2.725 m bulk. | Same 1.4 m desk solids, workstations, actual tall server banks, mission console and partition opening. |
+| Interior signage | Reorient/reseat Sensors, Supply, Research and Security signs upright and inward-facing. Reuse their existing textures, scale Hall signs to .75 and lab signs to .65, and fit shallow backings/two stand-offs each. Hall centers are z5.95, lab centers z6.5; all tops remain below 8 m. Sensors moves to y633 between unchanged hanging cables, after normal-view review found cable occlusion at y630. | Existing text/style, Hall composition and ceiling/structure unchanged. No new signs or textures. |
+| Vault relay installation | Two narrow ceiling straps and fitted ceiling plates per unchanged housing. Straps meet housing tops near z7.7 and plates contact the roof underside at z9.0. | Housings and state-bearing materials/signals do not move or change; no repaired screen, portal, wall or door alteration. |
+| Decon nozzle installation | One restrained manifold meets the unchanged nozzle tops at z8.25. Three hangers/mount plates connect it to the actual ceiling underside, z8.975. | Original nozzle poses, process cabinets, crossing and architecture retained. No sterilization mechanic or new light. |
+| Decon growth | Test each of the five legacy exterior-growth spheres' **full radius** against x330–390/y690–704 and detach only intrusions after original construction. Detach the corresponding source too, so existing `budgetSourceEnabled()` rejects it. | Original random draws, registrations and all non-intruding patches/source definitions retained. No retry/scatter relocation, broad procedural rewrite or selector change. |
+
+### Construction, resource and lighting ownership
+
+`src/world/facility.js` records the original equipment during the unchanged legacy
+construction stream. `finalizeInteriorCorrections()` runs once at the end of the
+existing guarded post-population finalizer on scoped seed `0xcf070044`, after the
+accepted structural and exterior passes. The caller's random function is restored
+by the existing `finally`. Original constructor/cache effects therefore still
+precede seeded scenery. No corrections run on movement or mission transitions.
+
+Thirty-three small support/backing pieces are represented by **14 static batches**,
+sharing the existing unit-box geometry and cached steel material. No new shadow
+caster, emissive material, sign texture, custom shader, direct light or collision
+solid is added. Existing animated display/state materials remain independent and
+retain their existing FX references. The shallow corrected raw equipment no
+longer casts tall equipment shadows.
+
+The removed growth's light registration stays in the source ledger but is
+detached from the scene, hence ineligible for selection; this preserves the legacy
+registration/construction behavior without leaving magenta illumination in Decon.
+It is the **only approved light-source exclusion**. All other normal source
+positions/colors/intensities/ranges/decay/shadow flags, eight slots, exposure .78,
+fog 40–280, lighting selection/animation and prewarming remain unchanged.
+
+### Targeted before/after verification
+
+New permanent `tests/facility-interior-corrections.mjs` reuses Playwright, real
+file:// gameplay and the existing `__cf` capture/collision hooks. It records the
+actual accepted source before edits and compares final CP3-B to that immutable
+receipt. Five matching seeds in **each browser**: 0, 1, 420042, 2147483647,
+4294967295. Results:
+
+- Exact equality of all 329 solid bounds/vertical intervals/overhead flags,
+  30 map lines, six door dimensions/travel records, section summaries, selected
+  structural/portal/coping/support meshes, exterior geometry, unaffected lab
+  geometry and original relay/nozzle poses.
+- Device support contacts, containment inside top-plate footprints, slim-height
+  envelopes, visible Research readout, ceiling contacts and all four horizontal
+  inward sign normals pass. No corrected support/equipment volume intersects any
+  door's complete swept panel volume.
+- **32 height-aware projectile samples per seed** match accepted results exactly:
+  low bench/desk shots blocked; analysis z1.3 and standing z1.62/1.7 clear;
+  Security/side-workstation z1.55 and standing shots clear. The small .12 m visual
+  analysis cap/device lip does not become gameplay cover.
+- No tested growth sphere footprint touches Decon afterward. Seeds 1 and 420042
+  each exclude one intrusion; the other three seeds exclude none. Every remaining
+  sphere position/radius and source definition matches its accepted counterpart.
+  The whole-scene sphere inventory also contains an unrelated origin mesh; it is
+  retained and is not described as a sixth facility patch.
+- No capture-page errors in either final browser run.
+
+Two initial comparison-fixture issues were corrected without changing product
+semantics: JSON normalizes negative zero in saved transforms, and the unchanged
+specimen source uses the existing 3.7 ± .7 time pulse. Snapshot comparison now
+normalizes serialization and bounds that one known pulse while strictly comparing
+the remaining source definitions. Initial attempts remain under `after/` and
+`checked/`; `verified/` precedes the final Sensors position correction. The
+authoritative final-source snapshots/captures are **`final/{firefox,edge}/`**.
+
+### Screenshots and direct visual review
+
+Evidence root: [`_playtest/m42/cp3b-20261012/`](_playtest/m42/cp3b-20261012/).
+[Full paired index](_playtest/m42/cp3b-20261012/SCREENSHOT-INDEX.md) links both
+browsers' individual before/after PNGs and comparison sheets. **13 matching poses
+per browser/stage: 11 normal gameplay + two diagnostic mounting views** (52
+selected full-size PNGs), same seed420042/camera/FOV75/exposure .78/fog 40–280.
+All final before/after comparison sheets in both browsers were visually inspected.
+
+| Review target | Normal-lighting comparison sheet (Firefox; Edge counterpart in index) |
+|---|---|
+| Analysis and side workstation equipment | [01](_playtest/m42/cp3b-20261012/review/01-research-equipment-firefox.png) |
+| Restored readout / seated Security screens | [02](_playtest/m42/cp3b-20261012/review/02-readout-security-desk-firefox.png) |
+| Research / Security signage | [03](_playtest/m42/cp3b-20261012/review/03-lab-signs-firefox.png) |
+| Hall Sensors / Supply signs | [04](_playtest/m42/cp3b-20261012/review/04-hall-signs-firefox.png) |
+| Vault supports / Decon nozzle mounting | [05](_playtest/m42/cp3b-20261012/review/05-mounts-normal-firefox.png) |
+| Removed growth and magenta illumination | [06](_playtest/m42/cp3b-20261012/review/06-growth-exclusion-firefox.png) |
+
+Captures use actual gameplay eight-slot lighting and quiet/invulnerable setup
+teleports with HUD/viewmodel/squad hidden. They are composition evidence, not
+unassisted walking proof. Diagnostic views only add temporary non-shadow fill;
+their pixels are not normal-lighting acceptance evidence. Existing normal/emergency
+lighting is not globally lifted. No CP3-C/D preview objects are shown.
+
+### Final-code regression results
+
+| Suite | Firefox 155 | Edge 155 |
+|---|---|---|
+| New interior corrections: five seeds, exact preservation, height samples, captures | PASS | PASS |
+| Existing M2 progression | PASS | PASS |
+| Facility regression: cover, M3 override/sample, M4 extraction/result/Continue/lifecycle | PASS | PASS |
+| Facility real-input playthrough: walking/sprint/FOLLOW/combat/hostile pursuit | PASS | PASS |
+| Traversal performance | PASS | PASS |
+| Visible intro and mission-transition diagnosis | PASS | PASS |
+| Permanent enclosure, four breach walks and all six door cycles | PASS | PASS |
+| Environmental placement / archived accepted scenery and Endless parity | PASS | PASS |
+
+Placement-state and product/test JavaScript syntax checks PASS. Placement browser
+coverage is 14 Campaign/Endless cases per browser, including all three arenas and
+original archived `5c8704f` scenery parity. The new five-seed correction receipts
+add exact current accepted-CP2-R solid/structure/growth comparison. The existing
+placement harness and authoritative regression suites were not weakened or edited.
+
+Native input tests cross all sections and both M4 doors, exercise standing shots,
+FOLLOW and hostile pursuit, and restore the exit checkpoint. These are bounded
+automated scenarios with existing test hooks, not full-duration unassisted play.
+
+### Rendering and performance results
+
+| Quiet A–E sweep (271 frames) | Firefox | Edge |
+|---|---:|---:|
+| p95 / p99 / worst, ms | 50 / 100 / 200 | 17.3 / 50 / 133.3 |
+| Shader links / world / facility / grid rebuilds | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 |
+| Geometry/material allocation or disposal | 0 | 0 |
+| Solids / slots / warmed programs | 329 / 8 / 29 | 329 / 8 / 29 |
+
+Matched normal capture tours retain **41 programs before and after** in both
+browsers. Most target views add 2–4 calls; the upward Vault mount view adds 11
+(393→404) and nozzle view adds 5 (79→84). Maximum matched triangle increase is
+336. These are small static draw costs, not a claim of zero overhead. Independent
+randomized sweep totals are not paired asset deltas or evidence of higher FPS.
+
+Quiet regional p95/worst: Facility interior **50/66.7 ms Firefox**, **16.8/33.4 ms
+Edge**; M4 service/exit **33.3/50 ms Firefox**, **17/17.3 ms Edge**. Quiet region
+counters record shadow refresh only. The mixed live playthrough permits existing
+encounter/effect allocation (Edge reports 10 geometries/10 materials; both report
+two material disposals), while retaining zero links/rebuilds; do not misreport
+that mixed test as allocation-free. The quiet sweep is the static-environment
+churn gate.
+
+All five visible intro cuts and M2/M3/M4/result transitions remain link-free;
+covered cold preparation still has multi-second compilation costs. Timing tails
+remain in headless WebGL and are not a new desktop-performance certification.
+Compact measured receipts: [validation summary](_playtest/m42/cp3b-20261012/validation-summary.json).
+
+### Outstanding observations, files and stop boundary
+
+No unresolved **CP3-B** structural, collision, placement, sign-orientation or
+regression blocker remains. Manual art review is pending. Shallow desk/bench
+devices are deliberately simpler; scientific/surveillance specificity belongs to
+CP3-C. Relay straps remain subdued under current normal lighting; no brightness
+adjustment was used to expose them. Existing wall-panel repetition, ceiling light
+hotspots and exterior darkness remain for the approved later phases.
+
+The multi-seed inventory also confirms an existing Research-area legacy growth
+placement at seed0 (approximately 346.65,715.24). It remains unchanged: this
+checkpoint's approved exclusion is specifically Decon, not a broad facility
+scatter cleanup. Flag it for separate design approval rather than silently changing
+more seeded decoration. Containment, exit plaque, staging board, rooftop housings
+and yard grounding are unchanged.
+
+Actual intended changes:
+
+- `src/world/facility.js` — scoped corrective finalizer and legacy target references.
+- `tests/facility-interior-corrections.mjs` — new targeted preservation/placement/
+  projectile/capture test using existing hooks.
+- `MILESTONE-4.2-ENVIRONMENT.md` — current checkpoint and this implementation record.
+- New `_playtest/m42/cp3b-20261012/` evidence: accepted before source/receipts, final
+  snapshots/PNGs, retained initial attempts, regression/enclosure/placement outputs,
+  comparison sheets, index, summary and `prepare-review.mjs`.
+
+Credits remains the original unrelated local change; existing CP3-A and older
+evidence remain untouched. Nothing is staged or committed.
+
+**Final CP3-B verdict: ENGINEERING PASS — READY FOR MANUAL REVIEW. STOP HERE.
+No CP3-C/D/E implementation, exterior lighting, commit, merge or push.**

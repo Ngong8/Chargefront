@@ -79,6 +79,10 @@
         const retiredScratch = new THREE.Group(); // never attached to the scene
         const retire = build => { build(retiredScratch); retiredScratch.clear(); };
         const pendingStructure = {};
+        // CP3-B retains every legacy constructor/cache/random draw. Correct the
+        // recorded equipment only after scenery population, alongside the guarded
+        // CP2 finalizer; nothing is rebuilt during traversal or mission changes.
+        const pendingInterior = { signs: [], analysis: [], workstations: [], displays: [], growth: [] };
 
         function buildSection(name, builder) {
             if (sections.has(name)) return sections.get(name);
@@ -266,6 +270,7 @@
             sensorSign.rotation.y = -Math.PI / 2; sensorSign.position.set(331.18, 630, 5.55); scene.add(sensorSign);
             const supplySign = makeFacilitySign('SUPPLY // FIELD GEAR', 6.2, '#ffb24d');
             supplySign.rotation.y = Math.PI / 2; supplySign.position.set(388.82, 626, 5.55); scene.add(supplySign);
+            pendingInterior.signs.push([sensorSign, 'Sensor'], [supplySign, 'Supply']);
             for (let i = 0; i < 3; i++) {
                 const indicator = box(1.5, 0.12, 0.24, 0xff5544, makeSeam(0xff2211, 1.25));
                 indicator.position.set(357.8 + i * 2.2, 659.64, 5.85); scene.add(indicator); fx.labIndicators.push(indicator.material);
@@ -354,6 +359,7 @@
                 patch.position.set(sx, sy, 0.35); scene.add(patch);
                 const patchLight = new THREE.PointLight(0xaa44ff, 12, 30, 1.8);
                 patchLight.position.set(sx, sy, 1.2); scene.add(addBudgetLight(patchLight));
+                pendingInterior.growth.push({ patch, light: patchLight });
             }
         }
 
@@ -875,8 +881,101 @@
                 finalizeStructure();
                 Math.random = global.ChargefrontProgression.seedRandom(0xcf070042);
                 buildExteriorIdentity(pendingExteriorIdentity.root, pendingExteriorIdentity.sign, pendingExteriorIdentity.equipment);
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070044);
+                finalizeInteriorCorrections();
                 exteriorIdentityBuilt = true;
             } finally { Math.random = random; }
+        }
+
+        function finalizeInteriorCorrections() {
+            const scene = getScene(), lab = pendingInterior.labRoot;
+            const records = new Map(), unit = envBoxGeometry(1, 1, 1);
+            const steel = envMat(0x536174, { metalness: 0.5, roughness: 0.48 });
+            // Scaled unit boxes share the existing static instancing variant and
+            // material. No extra shadow casters, source lights or collision.
+            const mounted = (parent, name, x, y, z, w, d, h) => {
+                const key = name;
+                if (!records.has(key)) records.set(key, { parent, name, transforms: [] });
+                records.get(key).transforms.push(new THREE.Matrix4().makeTranslation(x, y, z)
+                    .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+            };
+            const shape = (mesh, w, d, h, x, y, z, name) => {
+                mesh.geometry = envBoxGeometry(w, d, h); mesh.position.set(x, y, z);
+                mesh.name = name; mesh.castShadow = false;
+            };
+            // Shallow seated instruments, not an opaque head-height cover cube.
+            // Benches stay 1.15 m solid: the small visual cap/device ends at 1.27 m.
+            for (const { top, instrument, y } of pendingInterior.analysis) {
+                shape(top, 3.8, 1.8, 0.06, 347, y, 1.18, 'CP3BAnalysisTop');
+                shape(instrument, 0.8, 0.8, 0.06, 348, y, 1.24, 'CP3BAnalysisInstrument');
+            }
+            for (const [name, dimensions, z] of [['ResearchInstrument', [0.9, 0.55, 0.06], 1.24], ['ResearchReadout', [0.65, 0.07, 0.05], 1.245]]) {
+                const batch = lab.getObjectByName(name), transform = new THREE.Matrix4();
+                batch.geometry = envBoxGeometry(...dimensions);
+                for (let i = 0; i < batch.count; i++) {
+                    batch.getMatrixAt(i, transform); transform.elements[14] = z; batch.setMatrixAt(i, transform);
+                }
+                batch.instanceMatrix.needsUpdate = true; batch.computeBoundingSphere();
+            }
+            // Both side instruments now fit wholly on their actual top plates.
+            // The 1.4 m table solid is unchanged; the compact assembly ends at 1.52.
+            for (const { top, instrument, y } of pendingInterior.workstations) {
+                shape(top, 3.6, 1.8, 0.02, 338, y, 1.41, 'CP3BWorkstationTop');
+                shape(instrument, 1.2, 0.8, 0.1, 338.8, y, 1.47, 'CP3BWorkstationInstrument');
+            }
+            // Reuse the animated display material; move it out of the table body
+            // onto its east face, entirely below the existing 1.35 m cover top.
+            shape(pendingInterior.researchScreen, 0.12, 1.4, 0.62, 336.30, 718, 1.02, 'CP3BResearchWorkstationScreen');
+            for (const display of pendingInterior.displays) {
+                const y = display.position.y;
+                mounted(lab, 'CP3BSecurityDisplayBase', 383.7, y, 1.425, 0.9, 1.55, 0.05);
+                shape(display, 0.76, 1.4, 0.035, 383.7, y, 1.4575, 'CP3BSecurityDisplay');
+            }
+            // Plane local Y remains vertical in the Z-up world; local X spans
+            // the wall. The same four textures face their room, never outward.
+            const signMounts = {
+                // y633 fits between the unchanged hanging cables at 629.5/637.5.
+                Sensor: [331.45, 633, 5.95, 0.75, 331, 1], Supply: [388.55, 626, 5.95, 0.75, 389, -1],
+                Research: [331, 710, 6.5, 0.65, 330.7, 1], Security: [389, 717, 6.5, 0.65, 389.3, -1],
+            };
+            for (const [sign, id] of pendingInterior.signs) {
+                const [x, y, z, scale, wallFace, inward] = signMounts[id];
+                sign.name = 'CP3B' + id + 'Sign'; sign.position.set(x, y, z); sign.scale.setScalar(scale);
+                sign.rotation.set(Math.PI / 2, inward * Math.PI / 2, 0); sign.material.side = THREE.FrontSide;
+                const width = sign.geometry.parameters.width * scale, height = sign.geometry.parameters.height * scale;
+                const backingFace = x - inward * 0.015, backingBack = backingFace - inward * 0.07;
+                mounted(sign.parent, 'CP3B' + id + 'SignBacking', backingFace - inward * 0.035, y, z, 0.07, width + 0.12, height + 0.10);
+                for (const side of [-1, 1]) mounted(sign.parent, 'CP3B' + id + 'SignStandOff', (wallFace + backingBack) / 2,
+                    y + side * width * 0.35, z, Math.abs(backingBack - wallFace), 0.12, 0.20);
+            }
+            // Six discreet ceiling straps meet the unchanged housing tops at
+            // z7.7 and the Vault roof underside at z9.0; none crosses door travel.
+            for (const x of [350, 360, 370]) for (const side of [-1, 1]) {
+                mounted(pendingStructure.interiorRoot, 'CP3BRelayHanger', x + side * 0.75, 682.5, 8.30, 0.14, 0.20, 1.24);
+                mounted(pendingStructure.interiorRoot, 'CP3BRelayCeilingMount', x + side * 0.75, 682.5, 8.96, 0.28, 0.32, 0.08);
+            }
+            // The existing nozzle tops remain at z8.25. One manifold and three
+            // hangers connect them to the actual lab-ceiling underside (8.975).
+            mounted(lab, 'CP3BDeconManifold', 360, 698, 8.38, 24.5, 0.32, 0.26);
+            for (const x of [348, 360, 372]) {
+                mounted(lab, 'CP3BDeconHanger', x, 698, 8.71, 0.12, 0.18, 0.42);
+                mounted(lab, 'CP3BDeconCeilingMount', x, 698, 8.9475, 0.28, 0.32, 0.055);
+            }
+            for (const { parent, name, transforms } of records.values()) {
+                const batch = new THREE.InstancedMesh(unit, steel, transforms.length); batch.name = name;
+                transforms.forEach((transform, i) => batch.setMatrixAt(i, transform)); batch.computeBoundingSphere();
+                batch.castShadow = false; batch.receiveShadow = false; parent.add(batch);
+            }
+            // Only this legacy exterior-growth family needs correction. Test its
+            // full radius against Decon, after preserving every original draw and
+            // registration. Detaching its source makes budgetSourceEnabled false;
+            // the selector/slots and all legitimate exterior sources are unchanged.
+            for (const { patch, light } of pendingInterior.growth) {
+                const { x, y } = patch.position, radius = patch.geometry.parameters.radius;
+                if (x + radius < 330 || x - radius > 390 || y + radius < 690 || y - radius > 704) continue;
+                patch.removeFromParent(); light.removeFromParent(); patch.geometry.dispose(); patch.material.dispose();
+            }
+            pendingInterior.growth.length = 0;
         }
 
         // CP2-R1 structural repair, added after all legacy population (see
@@ -1046,6 +1145,7 @@
             const root = new THREE.Group(), emergency = new THREE.Group();
             root.name = 'DeepLaboratory'; emergency.name = 'ContainmentEmergency';
             root.visible = false; emergency.visible = false; getScene().add(root, emergency);
+            pendingInterior.labRoot = root;
             const solids = [], emergencyMats = [], normalMats = [], lights = [];
             const placed = (group, x, y, w, d, h, color, opts = {}, collision = false) => {
                 const materialOpts = Object.assign({ metalness: 0.5, roughness: 0.48 }, opts);
@@ -1164,8 +1264,8 @@
                 const light = new THREE.PointLight(color, intensity, distance, 1.7);
                 light.position.set(x, y, 6.4); root.add(addBudgetLight(light)); lights.push({ light, color, intensity, emergencyColor });
             }
-            sign('RESEARCH // SAMPLE ZERO', 331.0, 710, 6.4, 9.5, '#b9e7ff', 'x');
-            sign('SECURITY // OPERATIONS', 389.0, 717, 6.4, 8.5, '#ffb24d', 'x');
+            pendingInterior.signs.push([sign('RESEARCH // SAMPLE ZERO', 331.0, 710, 6.4, 9.5, '#b9e7ff', 'x'), 'Research']);
+            pendingInterior.signs.push([sign('SECURITY // OPERATIONS', 389.0, 717, 6.4, 8.5, '#ffb24d', 'x'), 'Security']);
             for (const y of [711, 726]) {
                 const wallPanel = placed(root, 331.0, y, 0.12, 4.8, 2.8, 0x426981,
                     { emissive: 0x255e85, emissiveIntensity: 0.8 });
@@ -1179,6 +1279,7 @@
                 station.name = 'SecurityWorkstation';
                 const display = placed(root, 383.7, y, 0.15, 1.4, 1.05, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
                 display.position.z = 2.2;
+                pendingInterior.displays.push(display);
                 fx.screens.push({ mat: display.material, base: 1.2, seed: rand(Math.PI * 2) });
             }
             for (const y of [710, 716, 722, 728]) {
@@ -1188,16 +1289,18 @@
             }
             for (const y of [710, 728]) {
                 placed(root, 338, y, 5.0, 2.8, 1.4, 0x495667, {}, true);
-                placed(root, 338, y, 3.6, 1.8, 0.12, 0x8ba6b4).position.z = 1.48;
-                placed(root, 341, y, 1.2, 0.8, 1.0, 0x364458).position.z = 1.95;
+                const top = placed(root, 338, y, 3.6, 1.8, 0.12, 0x8ba6b4); top.position.z = 1.48;
+                const instrument = placed(root, 341, y, 1.2, 0.8, 1.0, 0x364458); instrument.position.z = 1.95;
+                pendingInterior.workstations.push({ top, instrument, y });
             }
             for (const y of [714, 722]) {
                 const bench = placed(root, 347, y, 5.0, 2.4, 1.15, 0x425269, {}, true);
                 bench.name = 'AnalysisBench';
-                placed(root, 347, y, 3.8, 1.8, 0.14, 0x7795a5).position.z = 1.24;
-                placed(root, 348, y, 0.8, 0.8, 0.75, 0x467ea0, makeSeam(0x176194, 0.45)).position.z = 1.7;
-                // Instruments share the bench's existing low-cover footprint;
-                // their tops remain below standing fire height (~1.7 m).
+                const top = placed(root, 347, y, 3.8, 1.8, 0.14, 0x7795a5); top.position.z = 1.24;
+                const instrument = placed(root, 348, y, 0.8, 0.8, 0.75, 0x467ea0, makeSeam(0x176194, 0.45)); instrument.position.z = 1.7;
+                pendingInterior.analysis.push({ top, instrument, y });
+                // Finalized below standing fire height by CP3-B, after legacy
+                // scenery construction; initial shapes retain cache/UUID parity.
                 detail('ResearchInstrument', 345.6, y, 0.9, 0.55, 0.2, 1.38, 0x91afbc,
                     { emissive: 0x31586c, emissiveIntensity: 0.65 });
                 detail('ResearchReadout', 345.6, y - 0.29, 0.65, 0.07, 0.24, 1.51, 0x9ae7f2,
@@ -1223,6 +1326,7 @@
                 0x84cce0, makeSeam(0x256a86, 0.55));
             placed(root, 334, 718, 4.5, 2.1, 1.35, 0x485565, {}, true);
             const researchScreen = placed(root, 335.7, 718, 0.12, 1.4, 0.62, 0x8edfff, makeSeam(0x2a8fc9, 1.2));
+            pendingInterior.researchScreen = researchScreen;
             fx.screens.push({ mat: researchScreen.material, base: 1.2, seed: rand(Math.PI * 2) });
             for (const y of [706, 716, 726]) {
                 const glass = placed(root, 389.18, y, 0.08, 6.4, 4.1, 0x79bfe8, { transparent: true, opacity: 0.2, emissive: 0x173d66, emissiveIntensity: 0.35, depthWrite: false });

@@ -1,0 +1,15 @@
+{
+  "inspectionOnly": true,
+  "head": "c0bb414492d5359b2d98367bf31ca7511f65f9ba",
+  "branch": "milestone-4.2",
+  "stagedFiles": [],
+  "productSourceSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86",
+  "protectedFilesVerified": 52,
+  "productContentUnchanged": true,
+  "linksChecked": 63,
+  "captureCount": 32,
+  "normalLightSlots": 8,
+  "findingsReport": "REPORT.md",
+  "screenshotIndex": "SCREENSHOT-INDEX.md",
+  "implementationApproved": false
+}

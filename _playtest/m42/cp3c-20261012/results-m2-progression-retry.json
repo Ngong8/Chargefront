@@ -1,0 +1,11 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 168.482,
+    "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+  }
+]

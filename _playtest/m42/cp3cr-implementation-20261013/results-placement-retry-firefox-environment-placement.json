@@ -1,0 +1,11 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "environment-placement",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 254.856,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  }
+]

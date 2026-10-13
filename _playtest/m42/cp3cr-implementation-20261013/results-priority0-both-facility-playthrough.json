@@ -1,0 +1,20 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 124.854,
+    "sourceSha256": "a33e254df516dcf706ab8ad22191c0b542edefc30c8c95d1247e983812bc088f"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 65.851,
+    "sourceSha256": "a33e254df516dcf706ab8ad22191c0b542edefc30c8c95d1247e983812bc088f"
+  }
+]

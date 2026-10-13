@@ -1,0 +1,766 @@
+{
+ "browser": "edge",
+ "states": [
+  {
+   "mission": "dead_signal",
+   "phase": "DEPLOY",
+   "closed": 0,
+   "live": 0,
+   "liveReach": {
+    "hall": {
+     "cells": 0,
+     "sample": []
+    },
+    "vault": {
+     "cells": 0,
+     "sample": []
+    },
+    "vestibule": {
+     "cells": 0,
+     "sample": []
+    },
+    "decon": {
+     "cells": 0,
+     "sample": []
+    },
+    "research": {
+     "cells": 0,
+     "sample": []
+    },
+    "containment": {
+     "cells": 0,
+     "sample": []
+    },
+    "power": {
+     "cells": 0,
+     "sample": []
+    }
+   },
+   "doors": [
+    {
+     "id": "front",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "bio_lab",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_access",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_security",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency_exit",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    }
+   ]
+  },
+  {
+   "mission": "power_through",
+   "phase": "MOVE_R1",
+   "closed": 0,
+   "live": 0,
+   "liveReach": {
+    "hall": {
+     "cells": 0,
+     "sample": []
+    },
+    "vault": {
+     "cells": 0,
+     "sample": []
+    },
+    "vestibule": {
+     "cells": 0,
+     "sample": []
+    },
+    "decon": {
+     "cells": 0,
+     "sample": []
+    },
+    "research": {
+     "cells": 0,
+     "sample": []
+    },
+    "containment": {
+     "cells": 0,
+     "sample": []
+    },
+    "power": {
+     "cells": 0,
+     "sample": []
+    }
+   },
+   "doors": [
+    {
+     "id": "front",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "bio_lab",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_access",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_security",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency_exit",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    }
+   ]
+  },
+  {
+   "mission": "sample_zero",
+   "phase": "M3_ENTER_LAB",
+   "closed": 0,
+   "live": 0,
+   "liveReach": {
+    "hall": {
+     "cells": 0,
+     "sample": []
+    },
+    "vault": {
+     "cells": 0,
+     "sample": []
+    },
+    "vestibule": {
+     "cells": 0,
+     "sample": []
+    },
+    "decon": {
+     "cells": 0,
+     "sample": []
+    },
+    "research": {
+     "cells": 0,
+     "sample": []
+    },
+    "containment": {
+     "cells": 0,
+     "sample": []
+    },
+    "power": {
+     "cells": 0,
+     "sample": []
+    }
+   },
+   "doors": [
+    {
+     "id": "front",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "bio_lab",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_access",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_security",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency_exit",
+     "disabled": false,
+     "locked": true,
+     "forceOpen": false,
+     "enabled": true
+    }
+   ]
+  },
+  {
+   "mission": "break_contact",
+   "phase": "M4_BREAK_CONTACT",
+   "closed": 0,
+   "live": 29474,
+   "liveReach": {
+    "hall": {
+     "cells": 0,
+     "sample": []
+    },
+    "vault": {
+     "cells": 0,
+     "sample": []
+    },
+    "vestibule": {
+     "cells": 0,
+     "sample": []
+    },
+    "decon": {
+     "cells": 2445,
+     "sample": [
+      [
+       331.5,
+       691.5
+      ],
+      [
+       331.5,
+       692
+      ],
+      [
+       331.5,
+       692.5
+      ]
+     ]
+    },
+    "research": {
+     "cells": 5808,
+     "sample": [
+      [
+       331.5,
+       705.5
+      ],
+      [
+       331.5,
+       706
+      ],
+      [
+       331.5,
+       706.5
+      ]
+     ]
+    },
+    "containment": {
+     "cells": 16992,
+     "sample": [
+      [
+       331.5,
+       736.5
+      ],
+      [
+       331.5,
+       737
+      ],
+      [
+       331.5,
+       737.5
+      ]
+     ]
+    },
+    "power": {
+     "cells": 4229,
+     "sample": [
+      [
+       411.5,
+       737.5
+      ],
+      [
+       411.5,
+       738
+      ],
+      [
+       411.5,
+       738.5
+      ]
+     ]
+    }
+   },
+   "doors": [
+    {
+     "id": "front",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "bio_lab",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_access",
+     "disabled": false,
+     "locked": false,
+     "forceOpen": false,
+     "enabled": true
+    },
+    {
+     "id": "lab_security",
+     "disabled": true,
+     "locked": false,
+     "forceOpen": true,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency",
+     "disabled": true,
+     "locked": false,
+     "forceOpen": true,
+     "enabled": true
+    },
+    {
+     "id": "lab_emergency_exit",
+     "disabled": true,
+     "locked": false,
+     "forceOpen": true,
+     "enabled": true
+    }
+   ],
+   "liveWithExitClosed": 0
+  }
+ ],
+ "walks": [
+  {
+   "name": "west recess -> vault",
+   "start": [
+    318,
+    672
+   ],
+   "trail": [
+    {
+     "x": 335.75,
+     "y": 672
+    },
+    {
+     "x": 336,
+     "y": 682.5
+    },
+    {
+     "x": 340.5,
+     "y": 682.5
+    },
+    {
+     "x": 340.5,
+     "y": 674.23
+    }
+   ],
+   "end": {
+    "x": 340.5,
+    "y": 674.23
+   },
+   "pass": true
+  },
+  {
+   "name": "east recess -> vault",
+   "start": [
+    402,
+    672
+   ],
+   "trail": [
+    {
+     "x": 401.5,
+     "y": 672
+    },
+    {
+     "x": 384.27,
+     "y": 682.5
+    },
+    {
+     "x": 379.5,
+     "y": 682.5
+    },
+    {
+     "x": 379.5,
+     "y": 674.23
+    }
+   ],
+   "end": {
+    "x": 379.5,
+    "y": 674.23
+   },
+   "pass": true
+  },
+  {
+   "name": "vault -> west recess",
+   "start": [
+    360,
+    672
+   ],
+   "trail": [
+    {
+     "x": 359.99,
+     "y": 686.35
+    },
+    {
+     "x": 336.77,
+     "y": 686.98
+    },
+    {
+     "x": 336.07,
+     "y": 685.5
+    },
+    {
+     "x": 331.2,
+     "y": 685.5
+    }
+   ],
+   "end": {
+    "x": 331.2,
+    "y": 685.5
+   },
+   "pass": true
+  },
+  {
+   "name": "vault -> east recess",
+   "start": [
+    360,
+    672
+   ],
+   "trail": [
+    {
+     "x": 360,
+     "y": 686.44
+    },
+    {
+     "x": 383.57,
+     "y": 686.99
+    },
+    {
+     "x": 383.98,
+     "y": 685.5
+    },
+    {
+     "x": 388.8,
+     "y": 685.5
+    }
+   ],
+   "end": {
+    "x": 388.8,
+    "y": 685.5
+   },
+   "pass": true
+  }
+ ],
+ "errors": [],
+ "structure": {
+  "walls": [
+   {
+    "n": "LabSouthReturnWallWest",
+    "p": {
+     "width": 12.7,
+     "height": 9,
+     "depth": 2,
+     "widthSegments": 1,
+     "heightSegments": 1,
+     "depthSegments": 1
+    }
+   },
+   {
+    "n": "LabSouthReturnWallEast",
+    "p": {
+     "width": 12.7,
+     "height": 9,
+     "depth": 2,
+     "widthSegments": 1,
+     "heightSegments": 1,
+     "depthSegments": 1
+    }
+   }
+  ],
+  "shots": [
+   {
+    "x": 332,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 332,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 332,
+    "z": 8.8,
+    "blocked": true
+   },
+   {
+    "x": 336,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 336,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 336,
+    "z": 8.8,
+    "blocked": true
+   },
+   {
+    "x": 340,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 340,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 340,
+    "z": 8.8,
+    "blocked": true
+   },
+   {
+    "x": 380,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 380,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 380,
+    "z": 8.8,
+    "blocked": true
+   },
+   {
+    "x": 384,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 384,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 384,
+    "z": 8.8,
+    "blocked": true
+   },
+   {
+    "x": 388,
+    "z": 0.5,
+    "blocked": true
+   },
+   {
+    "x": 388,
+    "z": 1.8,
+    "blocked": true
+   },
+   {
+    "x": 388,
+    "z": 8.8,
+    "blocked": true
+   }
+  ],
+  "vaultNorth": {
+   "passLow": true,
+   "passHigh": true,
+   "lintel": true,
+   "actorClear": true,
+   "posts": true
+  },
+  "segmentCount": 30,
+  "offStructure": [],
+  "closure": true,
+  "doorClear": 8.2,
+  "portals": 7,
+  "overhead": 7
+ },
+ "doors": [
+  {
+   "id": "front",
+   "openT": 0.988,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  },
+  {
+   "id": "bio_lab",
+   "openT": 0.987,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  },
+  {
+   "id": "lab_access",
+   "openT": 0.987,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  },
+  {
+   "id": "lab_security",
+   "openT": 1,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  },
+  {
+   "id": "lab_emergency",
+   "openT": 1,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  },
+  {
+   "id": "lab_emergency_exit",
+   "openT": 1,
+   "solidDisabled": true,
+   "doorTop": 8.2,
+   "panelHeights": [
+    8.2,
+    8.2
+   ],
+   "passLow": true,
+   "passHigh": true,
+   "lintelBlocks": true,
+   "actorClear": true,
+   "postSolid": true,
+   "openPanelPostHits": false,
+   "closed": {
+    "openT": 0.013,
+    "solidDisabled": false,
+    "panelLeavesWall": false,
+    "blocksLow": true
+   }
+  }
+ ]
+}

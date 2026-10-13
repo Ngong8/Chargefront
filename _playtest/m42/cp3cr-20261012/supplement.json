@@ -1,0 +1,321 @@
+{
+  "checkpoint": "CP3-C-R inspection supplement",
+  "head": "c0bb414492d5359b2d98367bf31ca7511f65f9ba",
+  "hashesBefore": {
+    "Credits.txt": "b897856e40032087130a6c1774d7c224e3dcb65e52a5cb388bcaf2e19f85465e",
+    "FACILITY-ARCHITECTURE.md": "26b1b64d88018dc9f6856005128b60c9aae9e7e5682bc7881fe216a1608d72ce",
+    "MILESTONE-4.2-ENVIRONMENT.md": "f3d157ce4043e00a8fd8ef7c9708b10e2648bfa73c4f6d7828d78529e08d121b",
+    "chargefront.html": "b80cb512d7cdc33793c3ca9f5804d19d7230ec49797858d7a396402aa15a7632",
+    "src/combat.js": "a950fb7ccea8e227879164ba8f3196549933928971a6ff50c4e1c4a790223dff",
+    "src/fps-reload.js": "f6509c14545e2034135e41ba0d0ae69bd252939d410f7e9bf2e48d1c033a37b7",
+    "src/hud-objectives.js": "56792ee99ac44122f6504300f4163fbfb9858e7d39463dcec69d9d7b306b6ef1",
+    "src/presentation-ribbons.js": "960ef9828997a2eb654a4bbe60ad6a045839742f8d30e7e078ea226078969517",
+    "src/progression.js": "63d401ac7cd60204be01ad1cd6430454e1c89dc81a03d0f591b4d4525bafc450",
+    "src/relay-routing.js": "b1ac55b5c6f05c8b2b25cc40fc5103d96b5e7db7442f7519fd38e985914c12cd",
+    "src/world/environment-placement.js": "4c2bed8edb1cb748f748583fb698ab64f97a1740d21183a88ac767b8f7e227b7",
+    "src/world/facility.js": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86",
+    "tests/additional-refinement.mjs": "44575f158b9bf4e7caf533403fe0ab79780f3f9f625fb5dc5366158f764918e0",
+    "tests/arc-presentation.mjs": "5720c37cf532abf684859345c3a2ce5fc9bc9843086f5581850841c473047515",
+    "tests/browser-startup-diagnose.mjs": "af0fca4da44b4beeb3920b08510e568fae2544dcd0b8e9d93d3fb68f42cfdd86",
+    "tests/combat-playtest.mjs": "75e3a06afbd75c29b48f93fa031e1032e0f2045d8b5657d9b6bcdb54db04e628",
+    "tests/combat-squad.mjs": "28c63a97e7caf8a4d6a668ab6e6ed25e206150de604cb185bef0d252cbf99bc0",
+    "tests/combat-state.mjs": "1ae5676ca61ba45d616c399e9651e4e92470d4a0b745e5df6a1844fec73176f9",
+    "tests/combat-vfx-diagnose.mjs": "10272196009bf0c1e318fbc61cc65c90b943f288cf76ce42e328692241994ece",
+    "tests/combat-vfx-refinement.mjs": "9d375e58a5520d3586a413fda8bd4cbe365c7852a24389a515081b80151eb837",
+    "tests/corrective-refinement.mjs": "9e3b011f2fd73402d9ffccd90a67a2189dc881d3d7f393e28bcffb78c8951e51",
+    "tests/endless-hud.mjs": "e163ec7e9179f29f00fbde1158c375964d49f8b0c2f611ac3441744260285a6f",
+    "tests/environment-placement-state.mjs": "27577e441a0a42420ca92023526770dc0b4f15355bca20a5f7f0a76e4ad03213",
+    "tests/environment-placement.mjs": "11f0b9bcf15126f9580d50eb3909572103249194fe269ad5f949a6cb8969260b",
+    "tests/facility-enclosure.mjs": "7c0633fb00c4c939c7a6b10f7c8eb8d0dd4e3a3fbc7a1509436edd051095dd80",
+    "tests/facility-exterior.mjs": "562fec7f01be0b50827d361f115a4d9a49f810765a73ddbf685a67d60f24a033",
+    "tests/facility-interior-corrections.mjs": "79292777d87338002e49ef62e6977b747e807d436097e751d21fac0be8eff336",
+    "tests/facility-playthrough.mjs": "018c8a0a737ae7c0a38686b98cfa0aeeee701b787fde91a26f4375a220fb07a9",
+    "tests/facility-refinement.mjs": "40c18f270bc66f43ff2f9bb3111609ca701f694f4fe77e6d8b8ba774a7a04052",
+    "tests/facility-regression.mjs": "7559342218a52e743e1be9a011c8d78fe545941923f75eb7047763928af51fa2",
+    "tests/facility-visibility.mjs": "24a66ff8c8d36d04114d400ce09d265ed4bf86d482f0135aba2ec5b368b65fba",
+    "tests/hud-navigation.mjs": "749d008269eb9ae7e581f0fcce77225459be4fa807781a28cc620456128af2d9",
+    "tests/hud-refinement.mjs": "e5c443a6706095a1bbadc5229d58dd38f652c305d25ca63cd43e2c5af0eb415d",
+    "tests/intro-smoke.mjs": "0eec84aeead5fe5f0976284a5a8608bee3936665630a397c6e47db41ca022131",
+    "tests/m2-progression.mjs": "0e7b5b858a6902c511e7e4e2977bf6921c2bd4f4f41269c67b13dd44ac3602ab",
+    "tests/m40-regressions.mjs": "cc506b883f414c080b5f08393036db5da230791ce7c6876e13e8a6c0684dcc22",
+    "tests/m41-summary.mjs": "50e6a9bc077ad272b55180189dd3af0c5a12ebe23be63412847cd5cce1a0b485",
+    "tests/menu-helpers.mjs": "b94aab9034760c24dbc376b934616ccde9a0e7ecf435d7c186bc9cefe92cee25",
+    "tests/objective-hud-flow.mjs": "47420ee2aed1c07e4408aa4c0c734d086a5890525b1d6b33f9870c5ed3fc5c9c",
+    "tests/objective-hud-state.mjs": "bac53f19f5d8af61bff6ec0a00c76fbdb049a45bf8ba4aaa3aa4abf8fa8a14ef",
+    "tests/progression-state.mjs": "8e02cddbdc2c88bf32b56b543bbe7a7bf72be1be9ac652aa8aafadadb201061a",
+    "tests/relay-routing-state.mjs": "991e076e41f6ac06272afcc3168bf0733a337ba4efb71c8b52754ee0c4005122",
+    "tests/route-hitscan-correction.mjs": "390ad808f0f9fab0d363bcdc8f0ddc061389e02830702fb457c8e73d6f30e306",
+    "tests/route-reload-refinement.mjs": "85454bde9ba3c910a31acd21a3b7274933f938b17c5a2a9718eebe98fd43e072",
+    "tests/runner-kamikaze.mjs": "b3f927267639b79a4c84840cc3c19d4f66197ecfa4d81ec947d6d5193e0c9ad0",
+    "tests/runtime-stability.mjs": "fc31d93093a2dd7d7fe97053a85badfc4818a4a7d2cdee6be2e909903191d975",
+    "tests/screecher-wings.mjs": "4b451047f91bfdffe8e73c28fdb7b046b7933564570475141d193013c1b22b50",
+    "tests/sprint-recovery.mjs": "d1511dc4c71c5ecc5757ec076f1da02ecfa0d742b99ea04cd51ce328a1ee9ac7",
+    "tests/transition-diagnose.mjs": "1a80aa20f8cc387c8d61cbfd2f52db4d5d4add1325de7caddacc5b5ac009368d",
+    "tests/traversal-performance.mjs": "210d70170852469cbc61ce1dc00a12bc7822b912edefa8117740ff68d82a478c",
+    "tests/universal-abilities.mjs": "199208c73ef6779bfc496f6e5b7d7d43456a534ba7972751f184509b872dde36",
+    "tests/facility-interior-refinement.mjs": "1119651d3264b00a6bc6fa17e5579e49bec40e085074244ca37d4da4dddc17b9"
+  },
+  "errors": [],
+  "views": [
+    {
+      "id": "H6",
+      "title": "Utility gauge player-height",
+      "angle": "player-height",
+      "file": "H6-current-normal.png",
+      "camera": [
+        336,
+        626,
+        1.62
+      ],
+      "fov": 75,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8
+    },
+    {
+      "id": "H7",
+      "title": "Utility gauge side",
+      "angle": "elevated side",
+      "file": "H7-current-normal.png",
+      "camera": [
+        339,
+        623,
+        2.6
+      ],
+      "fov": 75,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8
+    },
+    {
+      "id": "H8",
+      "title": "Isolated service pipe",
+      "angle": "player-height",
+      "file": "H8-current-normal.png",
+      "camera": [
+        340,
+        643,
+        1.62
+      ],
+      "fov": 75,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8
+    },
+    {
+      "id": "C4",
+      "title": "Turret base and head",
+      "angle": "player-height",
+      "file": "C4-current-normal.png",
+      "camera": [
+        345,
+        743,
+        1.62
+      ],
+      "fov": 75,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8
+    },
+    {
+      "id": "C5",
+      "title": "Turret base side",
+      "angle": "elevated side",
+      "file": "C5-current-normal.png",
+      "camera": [
+        344.5,
+        745,
+        2.3
+      ],
+      "fov": 75,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "slots": 8
+    }
+  ],
+  "turret": [
+    {
+      "geometry": "CylinderGeometry",
+      "parameters": {
+        "radiusTop": 0.75,
+        "radiusBottom": 1,
+        "height": 0.5,
+        "radialSegments": 8,
+        "heightSegments": 1,
+        "openEnded": false,
+        "thetaStart": 0,
+        "thetaLength": 6.283185307179586
+      },
+      "position": [
+        0,
+        0,
+        0.28
+      ],
+      "min": [
+        341,
+        743,
+        0.02999999999999975
+      ],
+      "max": [
+        343,
+        745,
+        0.5300000000000002
+      ],
+      "head": false
+    },
+    {
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 1.25,
+        "height": 0.62,
+        "depth": 0.8,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "position": [
+        0,
+        0,
+        1.25
+      ],
+      "min": [
+        341.375,
+        743.5999999940395,
+        0.939999997615814
+      ],
+      "max": [
+        342.625,
+        744.4000000059605,
+        1.560000002384186
+      ],
+      "head": true
+    },
+    {
+      "geometry": "CylinderGeometry",
+      "parameters": {
+        "radiusTop": 0.11,
+        "radiusBottom": 0.16,
+        "height": 2.2,
+        "radialSegments": 7,
+        "heightSegments": 1,
+        "openEnded": false,
+        "thetaStart": 0,
+        "thetaLength": 6.283185307179586
+      },
+      "position": [
+        1.25,
+        0,
+        1.25
+      ],
+      "min": [
+        342.14999997615814,
+        743.8440115302801,
+        1.1058449745178223
+      ],
+      "max": [
+        344.35000002384186,
+        744.1559884697199,
+        1.4099999964237213
+      ],
+      "head": false
+    },
+    {
+      "geometry": "SphereGeometry",
+      "parameters": {
+        "radius": 0.15,
+        "widthSegments": 7,
+        "heightSegments": 6,
+        "phiStart": 0,
+        "phiLength": 6.283185307179586,
+        "thetaStart": 0,
+        "thetaLength": 3.141592653589793
+      },
+      "position": [
+        0.62,
+        -0.42,
+        1.45
+      ],
+      "min": [
+        342.46999999403954,
+        743.4299999940396,
+        1.3037608087062835
+      ],
+      "max": [
+        342.75514533638955,
+        743.7300000059605,
+        1.5962391912937164
+      ],
+      "head": false
+    }
+  ],
+  "hashesAfter": {
+    "Credits.txt": "b897856e40032087130a6c1774d7c224e3dcb65e52a5cb388bcaf2e19f85465e",
+    "FACILITY-ARCHITECTURE.md": "26b1b64d88018dc9f6856005128b60c9aae9e7e5682bc7881fe216a1608d72ce",
+    "MILESTONE-4.2-ENVIRONMENT.md": "f3d157ce4043e00a8fd8ef7c9708b10e2648bfa73c4f6d7828d78529e08d121b",
+    "chargefront.html": "b80cb512d7cdc33793c3ca9f5804d19d7230ec49797858d7a396402aa15a7632",
+    "src/combat.js": "a950fb7ccea8e227879164ba8f3196549933928971a6ff50c4e1c4a790223dff",
+    "src/fps-reload.js": "f6509c14545e2034135e41ba0d0ae69bd252939d410f7e9bf2e48d1c033a37b7",
+    "src/hud-objectives.js": "56792ee99ac44122f6504300f4163fbfb9858e7d39463dcec69d9d7b306b6ef1",
+    "src/presentation-ribbons.js": "960ef9828997a2eb654a4bbe60ad6a045839742f8d30e7e078ea226078969517",
+    "src/progression.js": "63d401ac7cd60204be01ad1cd6430454e1c89dc81a03d0f591b4d4525bafc450",
+    "src/relay-routing.js": "b1ac55b5c6f05c8b2b25cc40fc5103d96b5e7db7442f7519fd38e985914c12cd",
+    "src/world/environment-placement.js": "4c2bed8edb1cb748f748583fb698ab64f97a1740d21183a88ac767b8f7e227b7",
+    "src/world/facility.js": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86",
+    "tests/additional-refinement.mjs": "44575f158b9bf4e7caf533403fe0ab79780f3f9f625fb5dc5366158f764918e0",
+    "tests/arc-presentation.mjs": "5720c37cf532abf684859345c3a2ce5fc9bc9843086f5581850841c473047515",
+    "tests/browser-startup-diagnose.mjs": "af0fca4da44b4beeb3920b08510e568fae2544dcd0b8e9d93d3fb68f42cfdd86",
+    "tests/combat-playtest.mjs": "75e3a06afbd75c29b48f93fa031e1032e0f2045d8b5657d9b6bcdb54db04e628",
+    "tests/combat-squad.mjs": "28c63a97e7caf8a4d6a668ab6e6ed25e206150de604cb185bef0d252cbf99bc0",
+    "tests/combat-state.mjs": "1ae5676ca61ba45d616c399e9651e4e92470d4a0b745e5df6a1844fec73176f9",
+    "tests/combat-vfx-diagnose.mjs": "10272196009bf0c1e318fbc61cc65c90b943f288cf76ce42e328692241994ece",
+    "tests/combat-vfx-refinement.mjs": "9d375e58a5520d3586a413fda8bd4cbe365c7852a24389a515081b80151eb837",
+    "tests/corrective-refinement.mjs": "9e3b011f2fd73402d9ffccd90a67a2189dc881d3d7f393e28bcffb78c8951e51",
+    "tests/endless-hud.mjs": "e163ec7e9179f29f00fbde1158c375964d49f8b0c2f611ac3441744260285a6f",
+    "tests/environment-placement-state.mjs": "27577e441a0a42420ca92023526770dc0b4f15355bca20a5f7f0a76e4ad03213",
+    "tests/environment-placement.mjs": "11f0b9bcf15126f9580d50eb3909572103249194fe269ad5f949a6cb8969260b",
+    "tests/facility-enclosure.mjs": "7c0633fb00c4c939c7a6b10f7c8eb8d0dd4e3a3fbc7a1509436edd051095dd80",
+    "tests/facility-exterior.mjs": "562fec7f01be0b50827d361f115a4d9a49f810765a73ddbf685a67d60f24a033",
+    "tests/facility-interior-corrections.mjs": "79292777d87338002e49ef62e6977b747e807d436097e751d21fac0be8eff336",
+    "tests/facility-playthrough.mjs": "018c8a0a737ae7c0a38686b98cfa0aeeee701b787fde91a26f4375a220fb07a9",
+    "tests/facility-refinement.mjs": "40c18f270bc66f43ff2f9bb3111609ca701f694f4fe77e6d8b8ba774a7a04052",
+    "tests/facility-regression.mjs": "7559342218a52e743e1be9a011c8d78fe545941923f75eb7047763928af51fa2",
+    "tests/facility-visibility.mjs": "24a66ff8c8d36d04114d400ce09d265ed4bf86d482f0135aba2ec5b368b65fba",
+    "tests/hud-navigation.mjs": "749d008269eb9ae7e581f0fcce77225459be4fa807781a28cc620456128af2d9",
+    "tests/hud-refinement.mjs": "e5c443a6706095a1bbadc5229d58dd38f652c305d25ca63cd43e2c5af0eb415d",
+    "tests/intro-smoke.mjs": "0eec84aeead5fe5f0976284a5a8608bee3936665630a397c6e47db41ca022131",
+    "tests/m2-progression.mjs": "0e7b5b858a6902c511e7e4e2977bf6921c2bd4f4f41269c67b13dd44ac3602ab",
+    "tests/m40-regressions.mjs": "cc506b883f414c080b5f08393036db5da230791ce7c6876e13e8a6c0684dcc22",
+    "tests/m41-summary.mjs": "50e6a9bc077ad272b55180189dd3af0c5a12ebe23be63412847cd5cce1a0b485",
+    "tests/menu-helpers.mjs": "b94aab9034760c24dbc376b934616ccde9a0e7ecf435d7c186bc9cefe92cee25",
+    "tests/objective-hud-flow.mjs": "47420ee2aed1c07e4408aa4c0c734d086a5890525b1d6b33f9870c5ed3fc5c9c",
+    "tests/objective-hud-state.mjs": "bac53f19f5d8af61bff6ec0a00c76fbdb049a45bf8ba4aaa3aa4abf8fa8a14ef",
+    "tests/progression-state.mjs": "8e02cddbdc2c88bf32b56b543bbe7a7bf72be1be9ac652aa8aafadadb201061a",
+    "tests/relay-routing-state.mjs": "991e076e41f6ac06272afcc3168bf0733a337ba4efb71c8b52754ee0c4005122",
+    "tests/route-hitscan-correction.mjs": "390ad808f0f9fab0d363bcdc8f0ddc061389e02830702fb457c8e73d6f30e306",
+    "tests/route-reload-refinement.mjs": "85454bde9ba3c910a31acd21a3b7274933f938b17c5a2a9718eebe98fd43e072",
+    "tests/runner-kamikaze.mjs": "b3f927267639b79a4c84840cc3c19d4f66197ecfa4d81ec947d6d5193e0c9ad0",
+    "tests/runtime-stability.mjs": "fc31d93093a2dd7d7fe97053a85badfc4818a4a7d2cdee6be2e909903191d975",
+    "tests/screecher-wings.mjs": "4b451047f91bfdffe8e73c28fdb7b046b7933564570475141d193013c1b22b50",
+    "tests/sprint-recovery.mjs": "d1511dc4c71c5ecc5757ec076f1da02ecfa0d742b99ea04cd51ce328a1ee9ac7",
+    "tests/transition-diagnose.mjs": "1a80aa20f8cc387c8d61cbfd2f52db4d5d4add1325de7caddacc5b5ac009368d",
+    "tests/traversal-performance.mjs": "210d70170852469cbc61ce1dc00a12bc7822b912edefa8117740ff68d82a478c",
+    "tests/universal-abilities.mjs": "199208c73ef6779bfc496f6e5b7d7d43456a534ba7972751f184509b872dde36",
+    "tests/facility-interior-refinement.mjs": "1119651d3264b00a6bc6fa17e5579e49bec40e085074244ca37d4da4dddc17b9"
+  },
+  "productUnchanged": true
+}

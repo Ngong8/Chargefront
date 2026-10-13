@@ -1,0 +1,13 @@
+{
+  "checkpoint": "CP3-C-R",
+  "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b",
+  "head": "c0bb414492d5359b2d98367bf31ca7511f65f9ba",
+  "branch": "milestone-4.2",
+  "stagedFiles": [],
+  "protectedExistingFiles": 50,
+  "creditsUnchanged": true,
+  "linksChecked": 131,
+  "latestSuitesPassBothBrowsers": true,
+  "comparativeTiming": "inconclusive",
+  "manualVisualAcceptance": "pending"
+}

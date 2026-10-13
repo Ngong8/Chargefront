@@ -1,0 +1,3225 @@
+{
+  "checkpoint": "CP3-C",
+  "baseline": "c0bb414492d5359b2d98367bf31ca7511f65f9ba",
+  "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960",
+  "verdict": "engineering_pass_manual_review_pending",
+  "lightingBoundary": "No CP3-D; only the explicitly approved exterior-Research growth/source exclusion",
+  "browsers": {
+    "firefox": {
+      "passed": true,
+      "errors": [],
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [
+            {
+              "position": [
+                346.6523554000807,
+                715.2358730376908,
+                0.35
+              ],
+              "radius": 0.9509626951999962
+            }
+          ],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "file": "R0-growth-exclusion-normal.png",
+          "seed": 0,
+          "callsBefore": 373,
+          "callsAfter": 378,
+          "trianglesDelta": 618,
+          "programsBefore": 42,
+          "programsAfter": 42
+        },
+        {
+          "file": "H1-intake-normal.png",
+          "seed": 420042,
+          "callsBefore": 420,
+          "callsAfter": 436,
+          "trianglesDelta": 1750,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H2-hall-axis-normal.png",
+          "seed": 420042,
+          "callsBefore": 621,
+          "callsAfter": 643,
+          "trianglesDelta": 2412,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-normal.png",
+          "seed": 420042,
+          "callsBefore": 220,
+          "callsAfter": 238,
+          "trianglesDelta": 2238,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-process-normal.png",
+          "seed": 420042,
+          "callsBefore": 300,
+          "callsAfter": 303,
+          "trianglesDelta": 392,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-nozzle-mount-normal.png",
+          "seed": 420042,
+          "callsBefore": 84,
+          "callsAfter": 90,
+          "trianglesDelta": 758,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R1-analysis-normal.png",
+          "seed": 420042,
+          "callsBefore": 320,
+          "callsAfter": 326,
+          "trianglesDelta": 688,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R2-workstation-normal.png",
+          "seed": 420042,
+          "callsBefore": 276,
+          "callsAfter": 279,
+          "trianglesDelta": 296,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S1-surveillance-normal.png",
+          "seed": 420042,
+          "callsBefore": 233,
+          "callsAfter": 241,
+          "trianglesDelta": 1176,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S2-desktop-normal.png",
+          "seed": 420042,
+          "callsBefore": 404,
+          "callsAfter": 411,
+          "trianglesDelta": 1032,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C1-sample-composition-normal.png",
+          "seed": 420042,
+          "callsBefore": 112,
+          "callsAfter": 118,
+          "trianglesDelta": 812,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C2-archive-normal.png",
+          "seed": 420042,
+          "callsBefore": 39,
+          "callsAfter": 42,
+          "trianglesDelta": 272,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P1-generator-normal.png",
+          "seed": 420042,
+          "callsBefore": 69,
+          "callsAfter": 73,
+          "trianglesDelta": 660,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P2-distribution-normal.png",
+          "seed": 420042,
+          "callsBefore": 55,
+          "callsAfter": 61,
+          "trianglesDelta": 812,
+          "programsBefore": 41,
+          "programsAfter": 41
+        }
+      ],
+      "attempts": [
+        {
+          "browser": "firefox",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 81.898,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-playthrough",
+          "status": 1,
+          "signal": null,
+          "error": null,
+          "seconds": 36.443,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 60.719,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 1,
+          "signal": null,
+          "error": null,
+          "seconds": 93.621,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 157.302,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-enclosure",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 127.783,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "environment-placement",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 225.162,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 87.589,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 168.482,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        }
+      ],
+      "latest": {
+        "facility-regression": {
+          "browser": "firefox",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 81.898,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "facility-playthrough": {
+          "browser": "firefox",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 87.589,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "transition-diagnose": {
+          "browser": "firefox",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 60.719,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "m2-progression": {
+          "browser": "firefox",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 168.482,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "traversal-performance": {
+          "browser": "firefox",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 157.302,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "facility-enclosure": {
+          "browser": "firefox",
+          "suite": "facility-enclosure",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 127.783,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "environment-placement": {
+          "browser": "firefox",
+          "suite": "environment-placement",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 225.162,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        }
+      },
+      "stress": {
+        "frames": 271,
+        "p95Ms": 183.4,
+        "p99Ms": 300.1,
+        "worstMs": 366.7,
+        "over100": 88,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1419,
+        "triangles": 299443,
+        "geometries": 2166,
+        "materials": 1695,
+        "meshes": 2461,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      },
+      "regions": [
+        {
+          "label": "Facility interior",
+          "summary": {
+            "frames": 180,
+            "p95": 66.7,
+            "p99": 83.4,
+            "worst": 83.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 59
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "summary": {
+            "frames": 138,
+            "p95": 83.4,
+            "p99": 116.7,
+            "worst": 116.7,
+            "over100": 5,
+            "counters": {
+              "shadowRefresh": 50
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        }
+      ],
+      "enclosure": {
+        "doorCount": 6,
+        "walks": [
+          {
+            "name": "west recess -> vault",
+            "start": [
+              318,
+              672
+            ],
+            "trail": [
+              {
+                "x": 335.51,
+                "y": 672
+              },
+              {
+                "x": 336,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 674.18
+              }
+            ],
+            "end": {
+              "x": 340.5,
+              "y": 674.18
+            },
+            "pass": true
+          },
+          {
+            "name": "east recess -> vault",
+            "start": [
+              402,
+              672
+            ],
+            "trail": [
+              {
+                "x": 401.5,
+                "y": 672
+              },
+              {
+                "x": 384.28,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 674.22
+              }
+            ],
+            "end": {
+              "x": 379.5,
+              "y": 674.22
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> west recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.73
+              },
+              {
+                "x": 336.69,
+                "y": 686.99
+              },
+              {
+                "x": 336.06,
+                "y": 685.5
+              },
+              {
+                "x": 331.2,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 331.2,
+              "y": 685.5
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> east recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.56
+              },
+              {
+                "x": 383.22,
+                "y": 686.99
+              },
+              {
+                "x": 383.93,
+                "y": 685.5
+              },
+              {
+                "x": 388.8,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 388.8,
+              "y": 685.5
+            },
+            "pass": true
+          }
+        ],
+        "states": [
+          {
+            "mission": "dead_signal",
+            "phase": "DEPLOY",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "power_through",
+            "phase": "MOVE_R1",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "sample_zero",
+            "phase": "M3_ENTER_LAB",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "break_contact",
+            "phase": "M4_BREAK_CONTACT",
+            "closed": 0,
+            "live": 29474,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 2445,
+                "sample": [
+                  [
+                    331.5,
+                    691.5
+                  ],
+                  [
+                    331.5,
+                    692
+                  ],
+                  [
+                    331.5,
+                    692.5
+                  ]
+                ]
+              },
+              "research": {
+                "cells": 5808,
+                "sample": [
+                  [
+                    331.5,
+                    705.5
+                  ],
+                  [
+                    331.5,
+                    706
+                  ],
+                  [
+                    331.5,
+                    706.5
+                  ]
+                ]
+              },
+              "containment": {
+                "cells": 16992,
+                "sample": [
+                  [
+                    331.5,
+                    736.5
+                  ],
+                  [
+                    331.5,
+                    737
+                  ],
+                  [
+                    331.5,
+                    737.5
+                  ]
+                ]
+              },
+              "power": {
+                "cells": 4229,
+                "sample": [
+                  [
+                    411.5,
+                    737.5
+                  ],
+                  [
+                    411.5,
+                    738
+                  ],
+                  [
+                    411.5,
+                    738.5
+                  ]
+                ]
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              }
+            ],
+            "liveWithExitClosed": 0
+          }
+        ]
+      },
+      "placement": {
+        "cases": 14,
+        "baselineParity": [
+          {
+            "mode": "campaign",
+            "arena": null,
+            "seed": 420042,
+            "sha256": "819ab2936e6770c0b948bee6199ba5b797de2de66cccd87a16501a8d315b5a77",
+            "solids": 329,
+            "headSolids": 306,
+            "facilityEnvelopeSolids": [
+              102,
+              125
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "valley",
+            "seed": 420042,
+            "sha256": "86aec50396ad34b7ccc9137a33cbaa8765129f906b1c99ebe42adbb96f547b87",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "crater",
+            "seed": 420042,
+            "sha256": "ff5dfef6a0dbd85f30782cb7a8f22b6676b2e90edcf5f8665f2e50866ac167cd",
+            "solids": 32,
+            "headSolids": 32,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "ridges",
+            "seed": 420042,
+            "sha256": "e632fc1d08e0904c4138ae49ba2a2a94b93efab6e8382a8b09d706af3ec72229",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          }
+        ],
+        "errors": []
+      },
+      "paired": {
+        "runs": [
+          {
+            "stage": "before",
+            "regions": [
+              {
+                "label": "Hall",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 18.5,
+                  "p95Ms": 33.3,
+                  "p99Ms": 33.3,
+                  "worstMs": 33.3,
+                  "over33": 7,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 12
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8,
+                "renderP95": 10,
+                "calls": 419,
+                "programs": 47
+              },
+              {
+                "label": "Vault",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 17,
+                  "p95Ms": 16.7,
+                  "p99Ms": 33.3,
+                  "worstMs": 33.3,
+                  "over33": 1,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4,
+                "renderP95": 6,
+                "calls": 223,
+                "programs": 47
+              },
+              {
+                "label": "Decon",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 17.5,
+                  "p95Ms": 16.7,
+                  "p99Ms": 50,
+                  "worstMs": 50,
+                  "over33": 2,
+                  "over50": 1,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [
+                    {
+                      "at": 30058.1,
+                      "ms": 50,
+                      "renderMs": 5,
+                      "ops": {
+                        "updateShots": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "setShipThrusters": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateShip": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateBudgetLights": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateEncounterDirector": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateHorde": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateAmbient": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateDrones": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFacilityDoors": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateObjectives": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateRouteGuideVisibility": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateLabSystems": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFinalCampaignEncounter": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "rebuildEnemyGrid": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateSquadAbilityAutonomy": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdate": {
+                          "calls": 1,
+                          "ms": 1,
+                          "maxMs": 1
+                        },
+                        "rebuildSolidGrid": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "SquadMember.update": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdatePost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameRenderPost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        }
+                      },
+                      "events": [],
+                      "delta": {},
+                      "renderer": {
+                        "programs": 47,
+                        "calls": 299,
+                        "triangles": 267235,
+                        "geometries": 1516,
+                        "textures": 18,
+                        "shadowPending": false
+                      },
+                      "state": {
+                        "x": 342,
+                        "y": 697,
+                        "z": 0,
+                        "mode": "campaign",
+                        "mission": "sample_zero",
+                        "phase": "M3_OVERRIDE",
+                        "relay": [
+                          {
+                            "id": 1,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 2,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 3,
+                            "powered": true,
+                            "powering": false
+                          }
+                        ],
+                        "objective": "Bypass the local containment security lock",
+                        "near": {
+                          "name": "facility",
+                          "distance": 50
+                        },
+                        "navigation": {
+                          "route": [
+                            [
+                              382,
+                              646
+                            ],
+                            [
+                              360,
+                              662
+                            ],
+                            [
+                              360,
+                              680
+                            ],
+                            [
+                              360,
+                              710
+                            ],
+                            [
+                              376,
+                              718
+                            ],
+                            [
+                              361,
+                              718
+                            ],
+                            [
+                              360,
+                              742
+                            ],
+                            [
+                              360,
+                              774
+                            ]
+                          ],
+                          "squad": "assist",
+                          "enemyGridCells": 0,
+                          "solidGridCells": 143
+                        },
+                        "enemies": 0,
+                        "projectiles": 0,
+                        "world": {
+                          "objects": 2828,
+                          "meshes": 2441,
+                          "lights": 134
+                        },
+                        "sceneRoots": 411,
+                        "solids": 329
+                      }
+                    }
+                  ],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 7,
+                "renderP95": 8,
+                "calls": 299,
+                "programs": 47
+              },
+              {
+                "label": "Research",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8,
+                "renderP95": 9,
+                "calls": 320,
+                "programs": 47
+              },
+              {
+                "label": "Security",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 5,
+                "renderP95": 7,
+                "calls": 233,
+                "programs": 47
+              },
+              {
+                "label": "Containment",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 17,
+                  "p95Ms": 16.7,
+                  "p99Ms": 33.3,
+                  "worstMs": 33.3,
+                  "over33": 1,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 3,
+                "renderP95": 5,
+                "calls": 112,
+                "programs": 47
+              },
+              {
+                "label": "Power",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4,
+                "renderP95": 5,
+                "calls": 69,
+                "programs": 47
+              }
+            ]
+          },
+          {
+            "stage": "after",
+            "regions": [
+              {
+                "label": "Hall",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 17.5,
+                  "p95Ms": 16.7,
+                  "p99Ms": 33.3,
+                  "worstMs": 33.3,
+                  "over33": 3,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 9,
+                "renderP95": 12,
+                "calls": 435,
+                "programs": 47
+              },
+              {
+                "label": "Vault",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 5,
+                "renderP95": 7,
+                "calls": 241,
+                "programs": 47
+              },
+              {
+                "label": "Decon",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8,
+                "renderP95": 10,
+                "calls": 302,
+                "programs": 47
+              },
+              {
+                "label": "Research",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 9,
+                "renderP95": 11,
+                "calls": 326,
+                "programs": 47
+              },
+              {
+                "label": "Security",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 17,
+                  "p95Ms": 16.7,
+                  "p99Ms": 33.3,
+                  "worstMs": 33.3,
+                  "over33": 1,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 7,
+                "renderP95": 8,
+                "calls": 241,
+                "programs": 47
+              },
+              {
+                "label": "Containment",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 20.7,
+                  "p95Ms": 50,
+                  "p99Ms": 83.4,
+                  "worstMs": 83.4,
+                  "over33": 8,
+                  "over50": 2,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 13
+                  },
+                  "hitches": [
+                    {
+                      "at": 30326.8,
+                      "ms": 66.7,
+                      "renderMs": 6,
+                      "ops": {
+                        "updateShots": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "setShipThrusters": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateShip": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateBudgetLights": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateEncounterDirector": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateHorde": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateAmbient": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateDrones": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFacilityDoors": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateObjectives": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateRouteGuideVisibility": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateLabSystems": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFinalCampaignEncounter": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "rebuildEnemyGrid": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateSquadAbilityAutonomy": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdate": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "rebuildSolidGrid": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "SquadMember.update": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateEnvironmentFx": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdatePost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameRenderPost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        }
+                      },
+                      "events": [],
+                      "delta": {
+                        "shadowRefresh": 1
+                      },
+                      "renderer": {
+                        "programs": 47,
+                        "calls": 118,
+                        "triangles": 261809,
+                        "geometries": 1523,
+                        "textures": 19,
+                        "shadowPending": false
+                      },
+                      "state": {
+                        "x": 351,
+                        "y": 762,
+                        "z": 0,
+                        "mode": "campaign",
+                        "mission": "sample_zero",
+                        "phase": "M3_OVERRIDE",
+                        "relay": [
+                          {
+                            "id": 1,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 2,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 3,
+                            "powered": true,
+                            "powering": false
+                          }
+                        ],
+                        "objective": "Bypass the local containment security lock",
+                        "near": {
+                          "name": "lab",
+                          "distance": 15
+                        },
+                        "navigation": {
+                          "route": [
+                            [
+                              382,
+                              646
+                            ],
+                            [
+                              360,
+                              662
+                            ],
+                            [
+                              360,
+                              680
+                            ],
+                            [
+                              360,
+                              710
+                            ],
+                            [
+                              376,
+                              718
+                            ],
+                            [
+                              361,
+                              718
+                            ],
+                            [
+                              360,
+                              742
+                            ],
+                            [
+                              360,
+                              774
+                            ]
+                          ],
+                          "squad": "assist",
+                          "enemyGridCells": 0,
+                          "solidGridCells": 143
+                        },
+                        "enemies": 0,
+                        "projectiles": 0,
+                        "world": {
+                          "objects": 2850,
+                          "meshes": 2463,
+                          "lights": 134
+                        },
+                        "sceneRoots": 411,
+                        "solids": 329
+                      }
+                    },
+                    {
+                      "at": 30760.3,
+                      "ms": 83.4,
+                      "renderMs": 5,
+                      "ops": {
+                        "updateShots": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "setShipThrusters": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateShip": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateBudgetLights": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateEncounterDirector": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateHorde": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateAmbient": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateDrones": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFacilityDoors": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateObjectives": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateRouteGuideVisibility": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateLabSystems": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateFinalCampaignEncounter": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "rebuildEnemyGrid": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "updateSquadAbilityAutonomy": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdate": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "rebuildSolidGrid": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "SquadMember.update": {
+                          "calls": 3,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameUpdatePost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        },
+                        "gameRenderPost": {
+                          "calls": 1,
+                          "ms": 0,
+                          "maxMs": 0
+                        }
+                      },
+                      "events": [],
+                      "delta": {},
+                      "renderer": {
+                        "programs": 47,
+                        "calls": 118,
+                        "triangles": 261809,
+                        "geometries": 1523,
+                        "textures": 19,
+                        "shadowPending": false
+                      },
+                      "state": {
+                        "x": 351,
+                        "y": 762,
+                        "z": 0,
+                        "mode": "campaign",
+                        "mission": "sample_zero",
+                        "phase": "M3_OVERRIDE",
+                        "relay": [
+                          {
+                            "id": 1,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 2,
+                            "powered": true,
+                            "powering": false
+                          },
+                          {
+                            "id": 3,
+                            "powered": true,
+                            "powering": false
+                          }
+                        ],
+                        "objective": "Bypass the local containment security lock",
+                        "near": {
+                          "name": "lab",
+                          "distance": 15
+                        },
+                        "navigation": {
+                          "route": [
+                            [
+                              382,
+                              646
+                            ],
+                            [
+                              360,
+                              662
+                            ],
+                            [
+                              360,
+                              680
+                            ],
+                            [
+                              360,
+                              710
+                            ],
+                            [
+                              376,
+                              718
+                            ],
+                            [
+                              361,
+                              718
+                            ],
+                            [
+                              360,
+                              742
+                            ],
+                            [
+                              360,
+                              774
+                            ]
+                          ],
+                          "squad": "assist",
+                          "enemyGridCells": 0,
+                          "solidGridCells": 143
+                        },
+                        "enemies": 0,
+                        "projectiles": 0,
+                        "world": {
+                          "objects": 2850,
+                          "meshes": 2463,
+                          "lights": 134
+                        },
+                        "sceneRoots": 411,
+                        "solids": 329
+                      }
+                    }
+                  ],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4,
+                "renderP95": 7,
+                "calls": 118,
+                "programs": 47
+              },
+              {
+                "label": "Power",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 16.7,
+                  "p99Ms": 16.7,
+                  "worstMs": 16.7,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 3,
+                "renderP95": 5,
+                "calls": 73,
+                "programs": 47
+              }
+            ]
+          }
+        ],
+        "errors": []
+      }
+    },
+    "edge": {
+      "passed": true,
+      "errors": [],
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [
+            {
+              "position": [
+                346.6523554000807,
+                715.2358730376908,
+                0.35
+              ],
+              "radius": 0.9509626951999962
+            }
+          ],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [],
+          "doorSweepHits": [],
+          "contacts": true,
+          "batches": 15,
+          "pieces": 196,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "file": "R0-growth-exclusion-normal.png",
+          "seed": 0,
+          "callsBefore": 373,
+          "callsAfter": 378,
+          "trianglesDelta": 618,
+          "programsBefore": 42,
+          "programsAfter": 42
+        },
+        {
+          "file": "H1-intake-normal.png",
+          "seed": 420042,
+          "callsBefore": 420,
+          "callsAfter": 436,
+          "trianglesDelta": 1750,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H2-hall-axis-normal.png",
+          "seed": 420042,
+          "callsBefore": 621,
+          "callsAfter": 643,
+          "trianglesDelta": 2412,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-normal.png",
+          "seed": 420042,
+          "callsBefore": 220,
+          "callsAfter": 238,
+          "trianglesDelta": 2238,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-process-normal.png",
+          "seed": 420042,
+          "callsBefore": 300,
+          "callsAfter": 303,
+          "trianglesDelta": 392,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-nozzle-mount-normal.png",
+          "seed": 420042,
+          "callsBefore": 84,
+          "callsAfter": 90,
+          "trianglesDelta": 758,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R1-analysis-normal.png",
+          "seed": 420042,
+          "callsBefore": 320,
+          "callsAfter": 326,
+          "trianglesDelta": 688,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R2-workstation-normal.png",
+          "seed": 420042,
+          "callsBefore": 276,
+          "callsAfter": 279,
+          "trianglesDelta": 296,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S1-surveillance-normal.png",
+          "seed": 420042,
+          "callsBefore": 233,
+          "callsAfter": 241,
+          "trianglesDelta": 1176,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S2-desktop-normal.png",
+          "seed": 420042,
+          "callsBefore": 404,
+          "callsAfter": 411,
+          "trianglesDelta": 1032,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C1-sample-composition-normal.png",
+          "seed": 420042,
+          "callsBefore": 112,
+          "callsAfter": 118,
+          "trianglesDelta": 812,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C2-archive-normal.png",
+          "seed": 420042,
+          "callsBefore": 39,
+          "callsAfter": 42,
+          "trianglesDelta": 272,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P1-generator-normal.png",
+          "seed": 420042,
+          "callsBefore": 69,
+          "callsAfter": 73,
+          "trianglesDelta": 660,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P2-distribution-normal.png",
+          "seed": 420042,
+          "callsBefore": 55,
+          "callsAfter": 61,
+          "trianglesDelta": 812,
+          "programsBefore": 41,
+          "programsAfter": 41
+        }
+      ],
+      "attempts": [
+        {
+          "browser": "edge",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 44.364,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 74.871,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 55.342,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 111.729,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 145.013,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "facility-enclosure",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 120,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        {
+          "browser": "edge",
+          "suite": "environment-placement",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 118.499,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        }
+      ],
+      "latest": {
+        "facility-regression": {
+          "browser": "edge",
+          "suite": "facility-regression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 44.364,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "facility-playthrough": {
+          "browser": "edge",
+          "suite": "facility-playthrough",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 74.871,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "transition-diagnose": {
+          "browser": "edge",
+          "suite": "transition-diagnose",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 55.342,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "m2-progression": {
+          "browser": "edge",
+          "suite": "m2-progression",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 111.729,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "traversal-performance": {
+          "browser": "edge",
+          "suite": "traversal-performance",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 145.013,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "facility-enclosure": {
+          "browser": "edge",
+          "suite": "facility-enclosure",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 120,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        },
+        "environment-placement": {
+          "browser": "edge",
+          "suite": "environment-placement",
+          "status": 0,
+          "signal": null,
+          "error": null,
+          "seconds": 118.499,
+          "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960"
+        }
+      },
+      "stress": {
+        "frames": 271,
+        "p95Ms": 50.2,
+        "p99Ms": 83.4,
+        "worstMs": 199.9,
+        "over100": 2,
+        "links": 0,
+        "geometryCreated": 0,
+        "materialsCreated": 0,
+        "worldBuilds": 0,
+        "navRebuilds": 0,
+        "facilityBuilds": 0,
+        "geometryDisposes": 0,
+        "materialDisposes": 0,
+        "drawCalls": 1385,
+        "triangles": 298188,
+        "geometries": 2166,
+        "materials": 1695,
+        "meshes": 2461,
+        "solids": 329,
+        "lightSlots": 8,
+        "programs": 29,
+        "minimapFrames": 271,
+        "linkFrames": [],
+        "staticFacility": true
+      },
+      "regions": [
+        {
+          "label": "Facility interior",
+          "summary": {
+            "frames": 316,
+            "p95": 33.4,
+            "p99": 33.5,
+            "worst": 33.8,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 61
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "summary": {
+            "frames": 361,
+            "p95": 17,
+            "p99": 17.3,
+            "worst": 33.3,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        }
+      ],
+      "enclosure": {
+        "doorCount": 6,
+        "walks": [
+          {
+            "name": "west recess -> vault",
+            "start": [
+              318,
+              672
+            ],
+            "trail": [
+              {
+                "x": 335.75,
+                "y": 672
+              },
+              {
+                "x": 336,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 682.5
+              },
+              {
+                "x": 340.5,
+                "y": 674.23
+              }
+            ],
+            "end": {
+              "x": 340.5,
+              "y": 674.23
+            },
+            "pass": true
+          },
+          {
+            "name": "east recess -> vault",
+            "start": [
+              402,
+              672
+            ],
+            "trail": [
+              {
+                "x": 401.5,
+                "y": 672
+              },
+              {
+                "x": 384.27,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 682.5
+              },
+              {
+                "x": 379.5,
+                "y": 674.23
+              }
+            ],
+            "end": {
+              "x": 379.5,
+              "y": 674.23
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> west recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 359.99,
+                "y": 686.35
+              },
+              {
+                "x": 336.77,
+                "y": 686.98
+              },
+              {
+                "x": 336.07,
+                "y": 685.5
+              },
+              {
+                "x": 331.2,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 331.2,
+              "y": 685.5
+            },
+            "pass": true
+          },
+          {
+            "name": "vault -> east recess",
+            "start": [
+              360,
+              672
+            ],
+            "trail": [
+              {
+                "x": 360,
+                "y": 686.44
+              },
+              {
+                "x": 383.57,
+                "y": 686.99
+              },
+              {
+                "x": 383.98,
+                "y": 685.5
+              },
+              {
+                "x": 388.8,
+                "y": 685.5
+              }
+            ],
+            "end": {
+              "x": 388.8,
+              "y": 685.5
+            },
+            "pass": true
+          }
+        ],
+        "states": [
+          {
+            "mission": "dead_signal",
+            "phase": "DEPLOY",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "power_through",
+            "phase": "MOVE_R1",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "sample_zero",
+            "phase": "M3_ENTER_LAB",
+            "closed": 0,
+            "live": 0,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 0,
+                "sample": []
+              },
+              "research": {
+                "cells": 0,
+                "sample": []
+              },
+              "containment": {
+                "cells": 0,
+                "sample": []
+              },
+              "power": {
+                "cells": 0,
+                "sample": []
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": false,
+                "locked": true,
+                "forceOpen": false,
+                "enabled": true
+              }
+            ]
+          },
+          {
+            "mission": "break_contact",
+            "phase": "M4_BREAK_CONTACT",
+            "closed": 0,
+            "live": 29474,
+            "liveReach": {
+              "hall": {
+                "cells": 0,
+                "sample": []
+              },
+              "vault": {
+                "cells": 0,
+                "sample": []
+              },
+              "vestibule": {
+                "cells": 0,
+                "sample": []
+              },
+              "decon": {
+                "cells": 2445,
+                "sample": [
+                  [
+                    331.5,
+                    691.5
+                  ],
+                  [
+                    331.5,
+                    692
+                  ],
+                  [
+                    331.5,
+                    692.5
+                  ]
+                ]
+              },
+              "research": {
+                "cells": 5808,
+                "sample": [
+                  [
+                    331.5,
+                    705.5
+                  ],
+                  [
+                    331.5,
+                    706
+                  ],
+                  [
+                    331.5,
+                    706.5
+                  ]
+                ]
+              },
+              "containment": {
+                "cells": 16992,
+                "sample": [
+                  [
+                    331.5,
+                    736.5
+                  ],
+                  [
+                    331.5,
+                    737
+                  ],
+                  [
+                    331.5,
+                    737.5
+                  ]
+                ]
+              },
+              "power": {
+                "cells": 4229,
+                "sample": [
+                  [
+                    411.5,
+                    737.5
+                  ],
+                  [
+                    411.5,
+                    738
+                  ],
+                  [
+                    411.5,
+                    738.5
+                  ]
+                ]
+              }
+            },
+            "doors": [
+              {
+                "id": "front",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "bio_lab",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_access",
+                "disabled": false,
+                "locked": false,
+                "forceOpen": false,
+                "enabled": true
+              },
+              {
+                "id": "lab_security",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              },
+              {
+                "id": "lab_emergency_exit",
+                "disabled": true,
+                "locked": false,
+                "forceOpen": true,
+                "enabled": true
+              }
+            ],
+            "liveWithExitClosed": 0
+          }
+        ]
+      },
+      "placement": {
+        "cases": 14,
+        "baselineParity": [
+          {
+            "mode": "campaign",
+            "arena": null,
+            "seed": 420042,
+            "sha256": "192cb2cb5c57bab40661d128e2233e9c1f5cb5ccd8f6a9679b1c07997d75d771",
+            "solids": 329,
+            "headSolids": 306,
+            "facilityEnvelopeSolids": [
+              102,
+              125
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "valley",
+            "seed": 420042,
+            "sha256": "d35e512778834893721a8471dc9fbec6270083f978e50c1f7caf744b86df46c0",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "crater",
+            "seed": 420042,
+            "sha256": "e8e057e999d866d30ac04f3f16a79de9dc2df8abf81a75e8b6e1c3d3bd88bed2",
+            "solids": 32,
+            "headSolids": 32,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          },
+          {
+            "mode": "endless",
+            "arena": "ridges",
+            "seed": 420042,
+            "sha256": "f2033474010c660f61db5a94aef73ff9468fb60cc4ae4a30107d87c8aeb73fe2",
+            "solids": 46,
+            "headSolids": 46,
+            "facilityEnvelopeSolids": [
+              0,
+              0
+            ]
+          }
+        ],
+        "errors": []
+      },
+      "paired": {
+        "runs": [
+          {
+            "stage": "before",
+            "regions": [
+              {
+                "label": "Hall",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.1,
+                  "worstMs": 17.1,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8,
+                "renderP95": 10,
+                "calls": 419,
+                "programs": 47
+              },
+              {
+                "label": "Vault",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.1,
+                  "worstMs": 17.1,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 5.1,
+                "renderP95": 6.5,
+                "calls": 223,
+                "programs": 47
+              },
+              {
+                "label": "Decon",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.2,
+                  "worstMs": 17.2,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 7.2,
+                "renderP95": 8.8,
+                "calls": 299,
+                "programs": 47
+              },
+              {
+                "label": "Research",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.2,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8,
+                "renderP95": 9.8,
+                "calls": 320,
+                "programs": 47
+              },
+              {
+                "label": "Security",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.1,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 6.1,
+                "renderP95": 8.6,
+                "calls": 233,
+                "programs": 47
+              },
+              {
+                "label": "Containment",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4.8,
+                "renderP95": 6.2,
+                "calls": 112,
+                "programs": 47
+              },
+              {
+                "label": "Power",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.2,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4.3,
+                "renderP95": 5.6,
+                "calls": 69,
+                "programs": 47
+              }
+            ]
+          },
+          {
+            "stage": "after",
+            "regions": [
+              {
+                "label": "Hall",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.1,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 8.3,
+                "renderP95": 9.5,
+                "calls": 435,
+                "programs": 47
+              },
+              {
+                "label": "Vault",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.1,
+                  "p99Ms": 17.5,
+                  "worstMs": 17.5,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 5,
+                "renderP95": 6.6,
+                "calls": 241,
+                "programs": 47
+              },
+              {
+                "label": "Decon",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17,
+                  "worstMs": 17,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 7,
+                "renderP95": 8.8,
+                "calls": 302,
+                "programs": 47
+              },
+              {
+                "label": "Research",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.3,
+                  "worstMs": 17.3,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 7.7,
+                "renderP95": 9.8,
+                "calls": 326,
+                "programs": 47
+              },
+              {
+                "label": "Security",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17.1,
+                  "p99Ms": 17.2,
+                  "worstMs": 17.2,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 11
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 6.4,
+                "renderP95": 8.4,
+                "calls": 241,
+                "programs": 47
+              },
+              {
+                "label": "Containment",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.2,
+                  "worstMs": 17.2,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4.9,
+                "renderP95": 6.5,
+                "calls": 118,
+                "programs": 47
+              },
+              {
+                "label": "Power",
+                "summary": {
+                  "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                  "frames": 63,
+                  "sampleWindow": 63,
+                  "averageMs": 16.7,
+                  "p95Ms": 17,
+                  "p99Ms": 17.4,
+                  "worstMs": 17.4,
+                  "over33": 0,
+                  "over50": 0,
+                  "over100": 0,
+                  "counters": {
+                    "shadowRefresh": 10
+                  },
+                  "hitches": [],
+                  "longAnimationFrames": []
+                },
+                "renderP50": 4.4,
+                "renderP95": 5.5,
+                "calls": 73,
+                "programs": 47
+              }
+            ]
+          }
+        ],
+        "errors": []
+      }
+    }
+  }
+}

@@ -1,0 +1,404 @@
+{
+  "checkpoint": "CP3-C",
+  "stage": "checked",
+  "verdict": "engineering_validation_in_progress",
+  "sourceSha256": "fd1e51ae9d63984e9bcaf18d25bd3ae270cfa1ed72b55645f585db791f6c69e0",
+  "browsers": {
+    "firefox": {
+      "passed": true,
+      "errors": [],
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [
+            {
+              "position": [
+                346.6523554000807,
+                715.2358730376908,
+                0.35
+              ],
+              "radius": 0.9509626951999962
+            }
+          ],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "file": "R0-growth-exclusion-normal.png",
+          "seed": 0,
+          "callsBefore": 373,
+          "callsAfter": 378,
+          "trianglesDelta": 618,
+          "programsBefore": 42,
+          "programsAfter": 42
+        },
+        {
+          "file": "H1-intake-normal.png",
+          "seed": 420042,
+          "callsBefore": 420,
+          "callsAfter": 437,
+          "trianglesDelta": 1856,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H2-hall-axis-normal.png",
+          "seed": 420042,
+          "callsBefore": 621,
+          "callsAfter": 644,
+          "trianglesDelta": 2518,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-normal.png",
+          "seed": 420042,
+          "callsBefore": 220,
+          "callsAfter": 239,
+          "trianglesDelta": 2346,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-process-normal.png",
+          "seed": 420042,
+          "callsBefore": 300,
+          "callsAfter": 303,
+          "trianglesDelta": 392,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-nozzle-mount-normal.png",
+          "seed": 420042,
+          "callsBefore": 84,
+          "callsAfter": 92,
+          "trianglesDelta": 1046,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R1-analysis-normal.png",
+          "seed": 420042,
+          "callsBefore": 320,
+          "callsAfter": 326,
+          "trianglesDelta": 688,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R2-workstation-normal.png",
+          "seed": 420042,
+          "callsBefore": 276,
+          "callsAfter": 280,
+          "trianglesDelta": 488,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S1-surveillance-normal.png",
+          "seed": 420042,
+          "callsBefore": 233,
+          "callsAfter": 241,
+          "trianglesDelta": 1188,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S2-desktop-normal.png",
+          "seed": 420042,
+          "callsBefore": 404,
+          "callsAfter": 411,
+          "trianglesDelta": 996,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C1-sample-composition-normal.png",
+          "seed": 420042,
+          "callsBefore": 112,
+          "callsAfter": 119,
+          "trianglesDelta": 920,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C2-archive-normal.png",
+          "seed": 420042,
+          "callsBefore": 39,
+          "callsAfter": 42,
+          "trianglesDelta": 284,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P1-generator-normal.png",
+          "seed": 420042,
+          "callsBefore": 69,
+          "callsAfter": 73,
+          "trianglesDelta": 624,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P2-distribution-normal.png",
+          "seed": 420042,
+          "callsBefore": 55,
+          "callsAfter": 61,
+          "trianglesDelta": 824,
+          "programsBefore": 41,
+          "programsAfter": 41
+        }
+      ]
+    },
+    "edge": {
+      "passed": true,
+      "errors": [],
+      "seeds": [
+        {
+          "seed": 0,
+          "removed": [
+            {
+              "position": [
+                346.6523554000807,
+                715.2358730376908,
+                0.35
+              ],
+              "radius": 0.9509626951999962
+            }
+          ],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "removed": [],
+          "doorSweepHits": [],
+          "batches": 16,
+          "pieces": 205,
+          "preservation": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "file": "R0-growth-exclusion-normal.png",
+          "seed": 0,
+          "callsBefore": 373,
+          "callsAfter": 378,
+          "trianglesDelta": 618,
+          "programsBefore": 42,
+          "programsAfter": 42
+        },
+        {
+          "file": "H1-intake-normal.png",
+          "seed": 420042,
+          "callsBefore": 420,
+          "callsAfter": 437,
+          "trianglesDelta": 1856,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "file": "H2-hall-axis-normal.png",
+          "seed": 420042,
+          "callsBefore": 621,
+          "callsAfter": 644,
+          "trianglesDelta": 2518,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "V1-relay-normal.png",
+          "seed": 420042,
+          "callsBefore": 220,
+          "callsAfter": 239,
+          "trianglesDelta": 2346,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D1-process-normal.png",
+          "seed": 420042,
+          "callsBefore": 300,
+          "callsAfter": 303,
+          "trianglesDelta": 392,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "D2-nozzle-mount-normal.png",
+          "seed": 420042,
+          "callsBefore": 84,
+          "callsAfter": 92,
+          "trianglesDelta": 1046,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R1-analysis-normal.png",
+          "seed": 420042,
+          "callsBefore": 320,
+          "callsAfter": 326,
+          "trianglesDelta": 688,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "R2-workstation-normal.png",
+          "seed": 420042,
+          "callsBefore": 276,
+          "callsAfter": 280,
+          "trianglesDelta": 488,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S1-surveillance-normal.png",
+          "seed": 420042,
+          "callsBefore": 233,
+          "callsAfter": 241,
+          "trianglesDelta": 1188,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "S2-desktop-normal.png",
+          "seed": 420042,
+          "callsBefore": 404,
+          "callsAfter": 411,
+          "trianglesDelta": 996,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C1-sample-composition-normal.png",
+          "seed": 420042,
+          "callsBefore": 112,
+          "callsAfter": 119,
+          "trianglesDelta": 920,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "C2-archive-normal.png",
+          "seed": 420042,
+          "callsBefore": 39,
+          "callsAfter": 42,
+          "trianglesDelta": 284,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P1-generator-normal.png",
+          "seed": 420042,
+          "callsBefore": 69,
+          "callsAfter": 73,
+          "trianglesDelta": 624,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "file": "P2-distribution-normal.png",
+          "seed": 420042,
+          "callsBefore": 55,
+          "callsAfter": 61,
+          "trianglesDelta": 824,
+          "programsBefore": 41,
+          "programsAfter": 41
+        }
+      ]
+    }
+  }
+}

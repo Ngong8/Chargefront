@@ -1,0 +1,10 @@
+{
+  "checkpoint": "CP3-C-R",
+  "stage": "priority0",
+  "browser": "firefox",
+  "priority0": true,
+  "sourceSha256": "a33e254df516dcf706ab8ad22191c0b542edefc30c8c95d1247e983812bc088f",
+  "seeds": [],
+  "views": [],
+  "errors": []
+}

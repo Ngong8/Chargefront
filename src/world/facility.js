@@ -83,6 +83,10 @@
         // recorded equipment only after scenery population, alongside the guarded
         // CP2 finalizer; nothing is rebuilt during traversal or mission changes.
         const pendingInterior = { signs: [], analysis: [], workstations: [], displays: [], growth: [] };
+        // CP3-C-R keeps the original construction stream, including retired
+        // dressing. References are corrected only after all seeded population.
+        const pendingPlacement = { debris: [], pipes: [], warnings: [], deconBars: [], researchPanels: [],
+            archivePanels: [], glass: [], glassRails: [], rearVents: [] };
 
         function buildSection(name, builder) {
             if (sections.has(name)) return sections.get(name);
@@ -215,6 +219,7 @@
                 const py2 = 628 + i * 14;
                 const pipe = new THREE.Mesh(new THREE.CylinderGeometry(0.16, 0.16, 56, 8), mat(0x4a4e60, { metalness: 0.5, roughness: 0.5 }));
                 pipe.rotation.z = Math.PI / 2; pipe.position.set(360, py2, 7.4); scene.add(pipe);
+                pendingPlacement.pipes.push(pipe);
             }
             const hallLightPos = [[344, 630], [360, 626], [376, 630], [352, 652], [368, 652]];
             for (let i = 0; i < hallLightPos.length; i++) {
@@ -245,9 +250,12 @@
             for (const [x, y] of [[332.0, 634], [388.0, 650]]) {
                 const warningPanel = box(0.12, 3.4, 1.1, 0xffa13e, makeSeam(0xff591b, 1.7));
                 warningPanel.position.set(x, y, 4.1); scene.add(warningPanel);
+                const warning = { panel: warningPanel, stripes: [], west: x < 360 };
+                pendingPlacement.warnings.push(warning);
                 for (let j = -1; j <= 1; j++) {
                     const stripeDecal = box(0.13, 0.28, 0.9, 0x241d23, { metalness: 0.25, roughness: 0.85 });
                     stripeDecal.position.set(x + (x < 360 ? 0.07 : -0.07), y + j * 0.85, 4.1); stripeDecal.rotation.z = 0.38; scene.add(stripeDecal);
+                    warning.stripes.push(stripeDecal);
                 }
             }
             const signCanvas = document.createElement('canvas');
@@ -399,9 +407,11 @@
             gauge.rotation.x = Math.PI / 2; gauge.position.set(336, 623.6, 1.9); scene.add(gauge);
             const gaugeFace = new THREE.Mesh(new THREE.CylinderGeometry(0.13, 0.13, 0.03, 12), mat(0x66ffcc, makeSeam(0x33ffaa, 1.5)));
             gaugeFace.rotation.x = Math.PI / 2; gaugeFace.position.set(336, 623.4, 1.9); scene.add(gaugeFace);
+            Object.assign(pendingPlacement, { servicePipe: genPipe, gauge, gaugeFace });
 
             const toppled = box(1.8, 2.5, 1.2, 0x1e222c, { metalness: 0.5, roughness: 0.55 });
             toppled.position.set(337, 656, 0.9); toppled.rotation.z = 1.35; toppled.castShadow = true; scene.add(toppled);
+            pendingPlacement.fallen = toppled;
             addSolid(335.5, 654.5, 338.5, 657.5, 1.4, 0);
             for (const [bx, by, br] of [[377, 655, 0.35], [380, 656, -0.2]]) {
                 const barrel = new THREE.Mesh(new THREE.CylinderGeometry(0.42, 0.42, 1.0, 8), mat(0x6a5a3a, { metalness: 0.5, roughness: 0.5 }));
@@ -883,6 +893,12 @@
                 buildExteriorIdentity(pendingExteriorIdentity.root, pendingExteriorIdentity.sign, pendingExteriorIdentity.equipment);
                 Math.random = global.ChargefrontProgression.seedRandom(0xcf070044);
                 finalizeInteriorCorrections();
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070045);
+                finalizeInteriorRefinement();
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070046);
+                finalizeInteriorCoverCorrections();
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070047);
+                finalizeInteriorInstallationCorrections();
                 exteriorIdentityBuilt = true;
             } finally { Math.random = random; }
         }
@@ -972,10 +988,359 @@
             // the selector/slots and all legitimate exterior sources are unchanged.
             for (const { patch, light } of pendingInterior.growth) {
                 const { x, y } = patch.position, radius = patch.geometry.parameters.radius;
-                if (x + radius < 330 || x - radius > 390 || y + radius < 690 || y - radius > 704) continue;
+                const decon = x + radius >= 330 && x - radius <= 390 && y + radius >= 690 && y - radius <= 704;
+                // CP3-C approval: this is exterior scatter, not the intentional
+                // emergency growth. Circle contact with Research's inner faces
+                // also catches edge intrusions without excluding Security/yard.
+                const research = y > 704 && Math.hypot(Math.max(330.7 - x, 0, x - 366.5),
+                    Math.max(704.7 - y, 0, y - 734.3)) <= radius;
+                if (!decon && !research) continue;
                 patch.removeFromParent(); light.removeFromParent(); patch.geometry.dispose(); patch.material.dispose();
             }
             pendingInterior.growth.length = 0;
+        }
+
+        // CP3-C: surface-bound engineering details only. Independent stream after
+        // CP3-B preserves all legacy UUID/cache/random draws and seeded scenery.
+        // The seven rooms' material batches share the unit box and cached materials;
+        // printed plates share one atlas/material, merged once per room.
+        function finalizeInteriorRefinement() {
+            const hall = pendingStructure.interiorRoot, lab = pendingInterior.labRoot;
+            const batches = new Map(), plates = new Map(), unit = envBoxGeometry(1, 1, 1);
+            const palette = { steel: 0x536174, dark: 0x151d2a, pale: 0x91afbc };
+            const parents = { Hall: hall, Vault: hall, Decon: lab, Research: lab, Security: lab, Containment: lab, Power: lab };
+            const piece = (room, tone, x, y, z, w, d, h) => {
+                const key = room + '/' + tone;
+                if (!batches.has(key)) batches.set(key, { room, tone, transforms: [] });
+                batches.get(key).transforms.push(new THREE.Matrix4().makeTranslation(x, y, z)
+                    .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+            };
+            const plate = (room, text, x, y, z, w, h, face = '-y') => {
+                if (!plates.has(room)) plates.set(room, []);
+                plates.get(room).push({ text, x, y, z, w, h, face });
+            };
+            // Existing east command-side workstations become a small intake
+            // counter: wipe-clean tops, an ID-reader recess and document slot.
+            // No new desk/floor solid; all pieces stay within the original cluster.
+            for (const y of [646, 650]) {
+                const z = y === 646 ? 1.1 : 1.3, x = y === 646 ? 386.4 : 386;
+                piece('Hall', 'pale', x, y, z + .015, .86, 1.9, .03);
+                piece('Hall', 'dark', x - .16, y - .4, z + .035, .42, .54, .01);
+                piece('Hall', 'steel', x + .15, y + .5, z + .055, .28, .75, .05);
+                piece('Hall', 'dark', x + .15, y + .5, z + .081, .19, .58, .004);
+            }
+            // Bezel and divided information fields over the existing live screen.
+            for (const y of [626, 650]) {
+                piece('Hall', 'dark', 385.089, y, 1.35, .022, .045, .84);
+                for (const z of [.93, 1.77]) piece('Hall', 'steel', 385.09, y, z, .02, 1.72, .04);
+            }
+            plate('Hall', 'INTAKE / ID CHECK', 385.085, 650, 1.15, 1.5, .24, '-x');
+            plate('Hall', 'VISITOR RECORDS', 386.4, 646, 1.132, .67, .13, 'top');
+            plate('Hall', 'RECEPTION / INTAKE', 388.659, 648, 5.18, 2.65, .4, '-x');
+
+            // Each unchanged suspended relay housing gets a fitted rear service
+            // backplane, two short ceiling feeds and face seams around its live LED.
+            for (const [i, x] of [350, 360, 370].entries()) {
+                piece('Vault', 'steel', x, 682.79, 6.8, 1.8, .08, 1.35);
+                for (const dx of [-.42, .42]) {
+                    piece('Vault', 'dark', x + dx, 682.85, 7.35, .08, .08, .75);
+                    piece('Vault', 'steel', x + dx, 682.66, 7.72, .16, .46, .10);
+                }
+                for (const dx of [-.97,.97]) piece('Vault','steel',x+dx,682.239,6.8,.025,.022,1.55);
+                for (const z of [6.08,7.52]) piece('Vault','steel',x,682.239,z,1.95,.022,.025);
+                piece('Vault','dark',x,682.235,6.37,1.7,.028,.3);
+                plate('Vault', 'R' + (i + 1) + ' / ISOLATE BEFORE SERVICE', x, 682.217, 6.37, 1.6, .22);
+            }
+
+            // Existing process cabinets: washable intake grilles, filter-door
+            // seams and service handles. No nozzle pose/mount defect was found in
+            // normal upward views: retain the CP3-B manifold and all three hangers.
+            for (const x of [334, 386]) for (const y of [695, 701]) {
+                const inward = x < 360 ? 1 : -1, face = x + inward * 1.31;
+                piece('Decon','steel',face,y,.85,.035,2.35,1.0);
+                for (const dy of [-.85,-.51,-.17,.17,.51,.85]) piece('Decon','dark',face+inward*.024,y+dy,.91,.022,.13,.68);
+                piece('Decon','steel',face+inward*.026,y+.95,1.8,.026,.08,.46);
+                plate('Decon',y===695?'FILTER / INTAKE':'PURGE / EXHAUST',face+inward*.043,y,1.35,1.6,.2,inward>0?'+x':'-x');
+            }
+
+            // Recess-like control beds and sample trays stay inside the corrected
+            // shallow bench envelope. Tiny rims do not imply additional cover.
+            for (const y of [714,722]) {
+                piece('Research','dark',348,y,1.271,.64,.64,.002);
+                for (const dx of [-.22,0,.22]) piece('Research','pale',348+dx,y+.13,1.274,.10,.20,.004);
+                piece('Research','pale',346.5,y,1.22,.70,.52,.02);
+                piece('Research','dark',346.5,y,1.232,.58,.4,.004);
+                for (const dy of [-.13,.13]) piece('Research','pale',346.5,y+dy,1.239,.40,.065,.01);
+                plate('Research','ANALYSIS / SEALED SAMPLE',347.25,y-.6,1.212,1.15,.18,'top');
+            }
+            for (const y of [710,728]) {
+                piece('Research','dark',338.8,y,1.521,.95,.64,.002);
+                for (const dy of [-.20,0,.20]) piece('Research','pale',339.12,y+dy,1.525,.12,.10,.006);
+                plate('Research','CALIBRATION / OPTICAL',338.63,y,1.523,.68,.19,'top');
+            }
+
+            // Surveillance quad divisions are masks on existing animated network
+            // faces, not new luminous screens or interactions. Desktop bezels sit
+            // within the seated CP3-B display/base footprint.
+            for (const y of [712,722]) {
+                for (const dy of [-.65,.65]) piece('Security','dark',383.7,y+dy,1.476,.7,.055,.002);
+                for (const x of [383.38,384.02]) piece('Security','dark',x,y,1.476,.055,1.3,.002);
+                piece('Security','dark',383.7,y,1.476,.03,1.3,.002);
+                plate('Security','CCTV / LOCAL RECORD',383.7,y-.5,1.478,.52,.11,'top');
+            }
+            for (const y of [710,716,722,728]) {
+                piece('Security','dark',386.648,y,2.5,.02,.055,1.22);
+                piece('Security','dark',386.648,y,2.5,.02,1.52,.05);
+                // Cabinet hinge line and existing wall-monitor bezel.
+                piece('Security','steel',386.79,y+.96,1.7,.025,.025,3.05);
+                for (const z of [3.91,4.59]) piece('Security','dark',388.859,y,z,.02,1.52,.035);
+                plate('Security','NETWORK / RECORDER',386.785,y,1.3,1.45,.20,'-x');
+            }
+
+            // Archive cassette divisions remain peripheral, unlit and outside
+            // Sample Zero's 12 m clear annulus. Leave the cylindrical pods alone:
+            // rectangular cosmetic seams would poorly follow their tapered skins.
+            for (const x of [344,356,382,394]) {
+                for (const dx of [-2.1,0,2.1]) piece('Containment','dark',x+dx,793.94,6.45,.05,.025,2.3);
+                plate('Containment','ARCHIVE / SEALED',x,793.91,5.53,2.3,.22);
+            }
+
+            // Aisle-facing generator service doors, louvers and analog-style
+            // gauge plates use the original four cover bodies. One upper north-
+            // wall feeder joins the existing distribution bays, clear of egress.
+            for (const [x,y] of [[418,742],[434,742],[418,764],[434,764]]) {
+                const inward = y < 752 ? 1 : -1, face = y + inward * 2.125;
+                for (const dx of [-1.5,-1,-.5,0]) piece('Power','dark',x+dx,face,1.75,.14,.025,.95);
+                piece('Power','dark',x+1.25,face,2.0,.85,.03,.6);
+                piece('Power','pale',x+1.25,face+inward*.019,2.0,.61,.008,.38);
+                piece('Power','dark',x+1.25,face+inward*.025,2.0,.035,.008,.29);
+                piece('Power','steel',x+.35,face,1.75,.05,.04,1.3);
+                plate('Power','GEN / SERVICE',x,face+inward*.025,1.13,2.9,.24,inward>0?'+y':'-y');
+            }
+            piece('Power','steel',429,769.10,7.75,28,.20,.20);
+            for (const x of [415,429,443]) piece('Power','steel',x,769.23,7.75,.36,.14,.32);
+            for (const x of [419,439]) {
+                piece('Power','steel',x,769.10,6.72,.18,.20,2.26);
+                for (const dx of [-2.2,-.7,.7,2.2]) {
+                    piece('Power','dark',x+dx,768.977,4.0,.9,.025,1.25);
+                    piece('Power','pale',x+dx,768.958,4.0,.28,.012,.18);
+                }
+                plate('Power','DISTRIBUTION / ISOLATION',x,768.963,5.35,5.4,.28);
+            }
+            for (const batch of batches.values()) {
+                const material = envMat(palette[batch.tone], {metalness:.5,roughness:.48});
+                const mesh = new THREE.InstancedMesh(unit,material,batch.transforms.length);
+                mesh.name = 'CP3C' + batch.room + batch.tone;
+                batch.transforms.forEach((m,i)=>mesh.setMatrixAt(i,m));mesh.computeBoundingSphere();
+                mesh.castShadow = mesh.receiveShadow = false;parents[batch.room].add(mesh);
+            }
+            // One ordinary canvas atlas, no shaders or asset pipeline. envMat's
+            // key does not include maps, so own this single shared mapped material
+            // explicitly rather than contaminating the static material cache.
+            const canvas = document.createElement('canvas');canvas.width=512;canvas.height=4096;
+            const ctx=canvas.getContext('2d');ctx.fillStyle='#18232c';ctx.fillRect(0,0,512,4096);
+            const texture=new THREE.CanvasTexture(canvas);
+            const material=mat(0xffffff,{map:texture,metalness:0,roughness:.85});
+            let row=0;
+            for (const [room,labels] of plates) {
+                const positions=[],uvs=[],normals=[];
+                for (const p of labels) {
+                    ctx.fillStyle='#c0cbd0';ctx.font='bold 26px monospace';ctx.textAlign='center';ctx.textBaseline='middle';
+                    ctx.fillText(p.text,256,row*96+48,480);
+                    ctx.strokeStyle='#75878c';ctx.lineWidth=3;ctx.strokeRect(8,row*96+8,496,80);
+                    const right=p.face==='top'?[1,0,0]:p.face==='-x'?[0,-1,0]:p.face==='+x'?[0,1,0]:p.face==='+y'?[-1,0,0]:[1,0,0];
+                    const up=p.face==='top'?[0,1,0]:[0,0,1];
+                    const normal=new THREE.Vector3(...right).cross(new THREE.Vector3(...up));
+                    for(const [a,b] of [[-1,-1],[1,-1],[1,1],[-1,-1],[1,1],[-1,1]]) {
+                        positions.push(p.x+right[0]*a*p.w/2+up[0]*b*p.h/2,p.y+right[1]*a*p.w/2+up[1]*b*p.h/2,p.z+right[2]*a*p.w/2+up[2]*b*p.h/2);
+                        uvs.push(a<0?0:1,1-(row*96+(b<0?96:0))/4096);normals.push(normal.x,normal.y,normal.z);
+                    }
+                    row++;
+                }
+                const geometry=new THREE.BufferGeometry();geometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));
+                geometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));geometry.setAttribute('normal',new THREE.Float32BufferAttribute(normals,3));
+                const mesh=new THREE.Mesh(geometry,material);mesh.name='CP3C'+room+'Labels';parents[room].add(mesh);
+            }
+            texture.needsUpdate=true;
+        }
+
+        // Compact an existing static batch without replacing cached resources.
+        // Returning false retires just that instance; updates never run in play.
+        function editPlacementBatch(mesh, edit) {
+            const matrix = new THREE.Matrix4(), position = new THREE.Vector3();
+            let count = 0;
+            for (let i = 0; i < mesh.count; i++) {
+                mesh.getMatrixAt(i, matrix); position.setFromMatrixPosition(matrix);
+                if (edit(matrix, position, i) === false) continue;
+                mesh.setMatrixAt(count++, matrix);
+            }
+            mesh.count = count; mesh.instanceMatrix.needsUpdate = true;
+            mesh.boundingBox = null; mesh.boundingSphere = null;
+            if (count) mesh.computeBoundingSphere(); else mesh.removeFromParent();
+        }
+
+        function movePlacementPlate(mesh, index, dx, dy, dz) {
+            const positions = mesh.geometry.attributes.position;
+            for (let i = index * 6; i < index * 6 + 6; i++) positions.setXYZ(i,
+                positions.getX(i) + dx, positions.getY(i) + dy, positions.getZ(i) + dz);
+            positions.needsUpdate = true; mesh.geometry.computeBoundingBox(); mesh.geometry.computeBoundingSphere();
+        }
+
+        function finalizeInteriorCoverCorrections() {
+            const hall = pendingStructure.interiorRoot;
+            // H02: these three shells never owned solids. Keep their original
+            // constructors/cache effects, retire only the final rendered batch.
+            const shells = hall.children.find(o => o.isInstancedMesh && o.geometry.parameters.width === .9
+                && o.geometry.parameters.depth === 2 && o.geometry.parameters.height === 1.1);
+            if (!shells || shells.count !== 3) throw Error('CP3-C-R intake shells not found');
+            shells.removeFromParent();
+            // The real y650 station already has the same reader/document tray.
+            // Consolidate duplicate y646 skins there, preserving the visitor plate.
+            for (const name of ['CP3CHallpale', 'CP3CHalldark', 'CP3CHallsteel']) {
+                const batch = hall.getObjectByName(name);
+                editPlacementBatch(batch, (matrix, position) => position.y < 645 || position.y > 647);
+            }
+            movePlacementPlate(hall.getObjectByName('CP3CHallLabels'), 1, -.4, 4, .2);
+            // H01 is the dependent intake-host correction: reuse the oversized
+            // face as a narrow status ribbon seated on the solid station's front.
+            const face = hall.children.find(o => o.isMesh && !o.isInstancedMesh && o.geometry.parameters.width === .12
+                && o.geometry.parameters.depth === 4.6 && o.geometry.parameters.height === .7);
+            if (!face) throw Error('CP3-C-R intake face not found');
+            face.name = 'CP3CRIntakeStatusFace'; face.geometry = envBoxGeometry(.12, 1.55, .18);
+            face.position.set(385.24, 650, .72);
+            // H08: floor contact and all visible bulk within the existing 1.4 m
+            // cover. Euler local-Z tilt was not a floor-plane yaw in this world.
+            const casing = pendingPlacement.fallen;
+            casing.name = 'CP3CRFallenCasing'; casing.geometry = envBoxGeometry(1.8, 2.5, 1.14);
+            casing.rotation.set(Math.PI / 2, 1.35, 0); casing.position.z = .82;
+            // E01: retain exactly three state-dependent wreckage pieces, no
+            // solids. Move the service fragment off the y752 evacuation axis.
+            const positions = [[395, 750], [415.5, 759.4], [405, 760]];
+            for (let i = 0; i < pendingPlacement.debris.length; i++) {
+                const { mesh, yaw } = pendingPlacement.debris[i];
+                mesh.name = 'CP3CRDebris' + (i + 1); mesh.geometry = envBoxGeometry(4.6, .65, .12);
+                mesh.rotation.set(Math.PI / 2, yaw, 0); mesh.position.set(...positions[i], .41);
+            }
+        }
+
+        function finalizeInteriorInstallationCorrections() {
+            const hall = pendingStructure.interiorRoot, lab = pendingInterior.labRoot;
+            // Fill only the unsupported rear case depth. Keep the established
+            // room-facing surface/trim positions and legitimate service spacing.
+            const caseX = (mesh, wall) => {
+                const p = mesh.geometry.parameters, matrix = new THREE.Matrix4(), pos = new THREE.Vector3();
+                mesh.getMatrixAt(0, matrix); pos.setFromMatrixPosition(matrix);
+                const west = pos.x < 360, face = pos.x + (west ? 1 : -1) * p.width / 2;
+                const width = Math.abs(face - wall);
+                mesh.geometry = envBoxGeometry(width, p.depth, p.height);
+                editPlacementBatch(mesh, (m, at) => {
+                    const targetWall = at.x < 360 ? 330.7 : (at.x > 400 ? 409.3 : 389.3);
+                    // Hall's perimeter is 1 m thick on the room side, not .7 m.
+                    const actualWall = mesh.parent === hall ? (at.x < 360 ? 331 : 389) : targetWall;
+                    const front = at.x + (at.x < 360 ? 1 : -1) * p.width / 2;
+                    m.elements[12] = (front + actualWall) / 2;
+                });
+            };
+            const caseY = (name, wall, north) => {
+                const mesh = lab.getObjectByName(name), p = mesh.geometry.parameters;
+                const matrix = new THREE.Matrix4(), pos = new THREE.Vector3(); mesh.getMatrixAt(0, matrix); pos.setFromMatrixPosition(matrix);
+                const face = pos.y + (north ? -1 : 1) * p.depth / 2;
+                mesh.geometry = envBoxGeometry(p.width, Math.abs(wall - face), p.height);
+                editPlacementBatch(mesh, m => { m.elements[13] = (face + wall) / 2; });
+            };
+            for (const mesh of hall.children.filter(o => o.isInstancedMesh && o.geometry.parameters.width === .16
+                && o.geometry.parameters.depth === 3.2 && o.geometry.parameters.height === 2.7)) {
+                // The shared batch has both east/west cases, with equal gaps.
+                caseX(mesh, 331);
+            }
+            caseX(lab.getObjectByName('DeconWallPanel'), 330.7);
+            caseX(lab.getObjectByName('DeconStatus'), 330.7);
+            caseX(lab.getObjectByName('ResearchWallPanel'), 330.7);
+            caseX(lab.getObjectByName('SecurityMonitor'), 389.3);
+            caseX(lab.getObjectByName('SecurityStatus'), 389.3);
+            caseX(lab.getObjectByName('ContainmentWallPanel'), 330.7);
+            caseX(lab.getObjectByName('ContainmentWallRib'), 330.7);
+            caseY('ResearchFarWall', 734.3, true); caseY('ResearchUpperReturn', 734.3, true);
+            caseY('ContainmentFarWall', 794.3, true); caseY('ArchiveMonitorBay', 794.3, true);
+            caseY('PowerBus', 769.3, true); caseY('PowerWallPanel', 736.7, false); caseY('PowerWallHousing', 736.7, false);
+            editPlacementBatch(lab.getObjectByName('PowerBusStatus'), m => { m.elements[13] += .03; });
+            // Printed archive plates are surface skins, not floating signs.
+            for (let i = 0; i < 4; i++) movePlacementPlate(lab.getObjectByName('CP3CContainmentLabels'), i, 0, .048, 0);
+            // R01/C01: redundant independent layers, not an intentional gasket.
+            // Dispose only their unshared materials; geometry belongs to the cache.
+            for (const mesh of pendingPlacement.researchPanels.concat(pendingPlacement.archivePanels)) {
+                mesh.removeFromParent(); mesh.material.dispose();
+            }
+            // S01: placed(..., collision=false), no exported mission/FX refs.
+            // The opaque perimeter and actual Security partition remain intact.
+            for (const mesh of pendingPlacement.glass.concat(pendingPlacement.glassRails)) {
+                mesh.removeFromParent(); mesh.material.dispose();
+            }
+            // P03 cached vent resources are also used by retained far-side vents.
+            for (const mesh of pendingPlacement.rearVents) mesh.removeFromParent();
+            // H03: divide the information field, never the printed ID-check plate.
+            editPlacementBatch(hall.getObjectByName('CP3CHalldark'), (m, pos) => {
+                if (Math.abs(pos.x - 385.089) < .005 && Math.abs(pos.y - 650) < .005) {
+                    m.makeTranslation(pos.x, pos.y, 1.52).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2))
+                        .multiply(new THREE.Matrix4().makeScale(.022, .44, .045));
+                }
+            });
+            // H04: clear wall bays, fitted thin stripes on the plaque face.
+            for (const { panel, stripes, west } of pendingPlacement.warnings) {
+                const x = west ? 331.06 : 388.94, y = west ? 635 : 650.9;
+                panel.name = 'CP3CRHallWarning'; panel.geometry = envBoxGeometry(.12, 2, .85); panel.position.set(x, y, 4.1);
+                for (let i = 0; i < stripes.length; i++) {
+                    const stripe = stripes[i]; stripe.name = 'CP3CRHallWarningStripe'; stripe.geometry = envBoxGeometry(.015, .14, .65);
+                    stripe.rotation.set(Math.PI / 2 + .38, 0, 0);
+                    stripe.position.set(x + (west ? 1 : -1) * (.06 + .0075), y + (i - 1) * .55, 4.1);
+                }
+            }
+            // H05: a vertically presented dial, with rim and face in contact.
+            pendingPlacement.gauge.name = 'CP3CRUtilityGauge'; pendingPlacement.gauge.rotation.set(0, 0, 0);
+            pendingPlacement.gauge.position.set(336, 623.63, 1.55);
+            pendingPlacement.gaugeFace.name = 'CP3CRUtilityGaugeFace'; pendingPlacement.gaugeFace.rotation.set(0, 0, 0);
+            pendingPlacement.gaugeFace.position.set(336, 623.675, 1.55);
+            // H06: reuse the pole as a thin unit-to-roof service riser, clear of
+            // the original status cube and inside the existing utility footprint.
+            const riser = pendingPlacement.servicePipe; riser.name = 'CP3CRUtilityRiser'; riser.scale.y = 7 / 8;
+            riser.position.set(335, 621.1, 5.5);
+            // H07: wall endpoints and six necessary beam-grid saddles. The 18
+            // small pieces share the existing unit box/material in ONE batch.
+            const transforms = [], at = (x, y, z, w, d, h) => transforms.push(new THREE.Matrix4().makeTranslation(x, y, z)
+                .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+            for (const pipe of pendingPlacement.pipes) {
+                pipe.name = 'CP3CRHallUtilityRun'; pipe.scale.y = 58 / 56;
+                for (const x of [340, 380]) {
+                    for (const side of [-1, 1]) at(x, pipe.position.y + side * .19, 7.55, .14, .06, .70);
+                    at(x, pipe.position.y, 7.21, .14, .44, .06);
+                }
+            }
+            const mounts = new THREE.InstancedMesh(envBoxGeometry(1, 1, 1), envMat(0x536174, { metalness: .5, roughness: .48 }), transforms.length);
+            mounts.name = 'CP3CRHallPipeMounts'; transforms.forEach((m, i) => mounts.setMatrixAt(i, m)); mounts.computeBoundingSphere(); hall.add(mounts);
+            // D01: original posts top out at 7.8; the .35 m crossbars now bear on
+            // them without touching the accepted 8.25 m nozzle/manifold contact.
+            for (const bar of pendingPlacement.deconBars) { bar.name = 'CP3CRDeconCrossbar'; bar.position.z = 7.975; }
+            // C02: base-only presentation correction; head/barrel/lamp and all
+            // gameplay references, aim and firing origin remain exactly in place.
+            const base = pendingPlacement.turretBase; base.name = 'CP3CRTurretBase'; base.scale.y = .59 / .5; base.position.z = .645;
+            // P04: sealed terminal/status plates, not high manual door handles.
+            editPlacementBatch(lab.getObjectByName('CP3CPowerdark'), (m, pos) => {
+                if (Math.abs(pos.y - 768.977) < .005 && Math.abs(pos.z - 4) < .005)
+                    m.makeTranslation(pos.x, pos.y, 4.1).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(.9, .65, .025));
+            });
+            editPlacementBatch(lab.getObjectByName('CP3CPowerpale'), (m, pos) => {
+                if (Math.abs(pos.y - 768.958) < .005 && Math.abs(pos.z - 4) < .005)
+                    m.makeTranslation(pos.x, pos.y, 4.1).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(.45, .045, .012));
+            });
+            const plates = lab.getObjectByName('CP3CPowerLabels'), texture = plates.material.map, ctx = texture.image.getContext('2d');
+            for (const [index, row] of [[4, 28], [5, 29]]) {
+                movePlacementPlate(plates, index, 0, .025, 0);
+                ctx.fillStyle = '#18232c'; ctx.fillRect(0, row * 96, 512, 96);
+                ctx.fillStyle = '#c0cbd0'; ctx.font = 'bold 26px monospace'; ctx.textAlign = 'center'; ctx.textBaseline = 'middle';
+                ctx.fillText('BUS / REMOTE STATUS', 256, row * 96 + 48, 480);
+                ctx.strokeStyle = '#75878c'; ctx.lineWidth = 3; ctx.strokeRect(8, row * 96 + 8, 496, 80);
+            }
+            texture.needsUpdate = true;
         }
 
         // CP2-R1 structural repair, added after all legacy population (see
@@ -1238,7 +1603,7 @@
             }
             for (const y of [695, 701]) {
                 for (const x of [340, 380]) placed(root, x, y, 0.5, 0.5, 7.8, 0x536174);
-                placed(root, 360, y, 40, 0.35, 0.35, 0x66ddff, makeSeam(0x2288cc, 1.4));
+                pendingPlacement.deconBars.push(placed(root, 360, y, 40, 0.35, 0.35, 0x66ddff, makeSeam(0x2288cc, 1.4)));
                 strip(root, 360, y + 1.2, 17, 0.18, 0x66ddff, 1.25);
                 for (const x of [334, 386]) {
                     placed(root, x, y, 2.6, 3.0, 2.1, 0x354858, {}, true);
@@ -1270,6 +1635,7 @@
                 const wallPanel = placed(root, 331.0, y, 0.12, 4.8, 2.8, 0x426981,
                     { emissive: 0x255e85, emissiveIntensity: 0.8 });
                 wallPanel.position.z = 4.1;
+                pendingPlacement.researchPanels.push(wallPanel);
             }
             for (const y of [707, 731]) {
                 strip(root, 367, y, 0.18, 5.5, 0x66ddff, 1.1).position.z = 6.8;
@@ -1331,7 +1697,8 @@
             for (const y of [706, 716, 726]) {
                 const glass = placed(root, 389.18, y, 0.08, 6.4, 4.1, 0x79bfe8, { transparent: true, opacity: 0.2, emissive: 0x173d66, emissiveIntensity: 0.35, depthWrite: false });
                 glass.renderOrder = 2;
-                for (const z of [2.0, 5.7]) placed(root, 389.0, y, 0.2, 6.5, 0.14, 0xb4d8ef, makeSeam(0x3b7199, 0.65));
+                pendingPlacement.glass.push(glass);
+                for (const z of [2.0, 5.7]) pendingPlacement.glassRails.push(placed(root, 389.0, y, 0.2, 6.5, 0.14, 0xb4d8ef, makeSeam(0x3b7199, 0.65)));
             }
             for (const y of [710, 716, 722, 728]) {
                 detail('SecurityMonitor', 388.93, y, 0.13, 1.6, 0.72, 4.25, 0x93d5e2,
@@ -1351,6 +1718,7 @@
             const turretPos = vec2(342, 744);
             const turretGroup = new THREE.Group(); turretGroup.position.set(turretPos.x, turretPos.y, 0); root.add(turretGroup);
             const turretBase = new THREE.Mesh(new THREE.CylinderGeometry(0.75, 1.0, 0.5, 8), mat(0x435061, { metalness: 0.7, roughness: 0.34 })); turretBase.rotation.x = Math.PI / 2; turretBase.position.z = 0.28; turretGroup.add(turretBase);
+            pendingPlacement.turretBase = turretBase;
             const turretHead = box(1.25, 0.8, 0.62, 0x5b6878, { metalness: 0.72, roughness: 0.3 }); turretHead.position.z = 1.25; turretGroup.add(turretHead);
             const turretBarrel = new THREE.Mesh(new THREE.CylinderGeometry(0.11, 0.16, 2.2, 7), mat(0x7b8799, { metalness: 0.82, roughness: 0.25 })); turretBarrel.rotation.z = Math.PI / 2; turretBarrel.position.set(1.25, 0, 1.25); turretGroup.add(turretBarrel);
             const turretLamp = new THREE.Mesh(new THREE.SphereGeometry(0.15, 7, 6), mat(0xff6644, makeSeam(0xff2211, 1.5))); turretLamp.position.set(0.62, -0.42, 1.45); turretGroup.add(turretLamp);
@@ -1359,6 +1727,7 @@
                 const archivePanel = placed(root, x, 793.95, 6.0, 0.12, 2.8, 0x627c9a,
                     { emissive: 0x28577d, emissiveIntensity: 0.7 });
                 archivePanel.position.z = 3.8;
+                pendingPlacement.archivePanels.push(archivePanel);
             }
             strip(root, 360, 716, 0.32, 43, 0xaedfff, 1.0);
             strip(root, 360, 761, 0.34, 50, 0xff5577, 0.85);
@@ -1370,6 +1739,7 @@
                 for (const dx of [-1.4, 0, 1.4]) {
                     const vent = placed(root, x + dx, y - 2.06, 0.8, 0.12, 1.2, 0x151d2a);
                     vent.position.z = 2.1;
+                    if (y === 764) pendingPlacement.rearVents.push(vent);
                 }
                 const warning = placed(root, x, y + 2.1, 3.5, 0.14, 0.22, 0xffae4f, makeSeam(0xff7425, 1.0));
                 warning.position.z = 2.8;
@@ -1483,6 +1853,7 @@
             for (const y of [694, 704, 724, 742, 760, 786]) strip(emergency, 360, y, 12, 0.22, 0xff3f35, 1.8, true);
             for (const [x, y, r] of [[395, 750, 0.45], [415, 752, -0.3], [405, 760, 0.75]]) {
                 const debris = placed(emergency, x, y, 5.5, 0.7, 0.7, 0x332936); debris.rotation.z = r;
+                pendingPlacement.debris.push({ mesh: debris, yaw: r });
             }
             for (const [x, y] of [[335, 738], [405, 770], [386, 790]]) {
                 const growth = makeInfestedTree(0.42); growth.position.set(x, y, 0); emergency.add(growth);

@@ -1,0 +1,16 @@
+STRUCTURE {"walls":[{"n":"LabSouthReturnWallWest","p":{"width":12.7,"height":9,"depth":2,"widthSegments":1,"heightSegments":1,"depthSegments":1}},{"n":"LabSouthReturnWallEast","p":{"width":12.7,"height":9,"depth":2,"widthSegments":1,"heightSegments":1,"depthSegments":1}}],"shots":[],"vaultNorth":{"passLow":true,"passHigh":true,"lintel":true,"actorClear":true,"posts":true},"segmentCount":30,"offStructure":[],"closure":true,"doorClear":8.2,"portals":7,"overhead":7}
+ENCLOSURE {"mission":"dead_signal","closed":0,"live":0}
+ENCLOSURE {"mission":"power_through","closed":0,"live":0}
+WALK {"name":"west recess -> vault","end":{"x":340.5,"y":674.2},"pass":true}
+WALK {"name":"east recess -> vault","end":{"x":379.5,"y":674.22},"pass":true}
+WALK {"name":"vault -> west recess","end":{"x":331.2,"y":685.5},"pass":true}
+WALK {"name":"vault -> east recess","end":{"x":388.8,"y":685.5},"pass":true}
+ENCLOSURE {"mission":"sample_zero","closed":0,"live":0}
+ENCLOSURE {"mission":"break_contact","closed":0,"live":29474,"exitClosed":0}
+DOOR {"id":"front","openT":0.988,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.013,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+DOOR {"id":"bio_lab","openT":0.988,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.012,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+DOOR {"id":"lab_access","openT":0.986,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.013,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+DOOR {"id":"lab_security","openT":1,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.012,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+DOOR {"id":"lab_emergency","openT":1,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.014,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+DOOR {"id":"lab_emergency_exit","openT":1,"solidDisabled":true,"doorTop":8.2,"panelHeights":[8.2,8.2],"passLow":true,"passHigh":true,"lintelBlocks":true,"actorClear":true,"postSolid":true,"openPanelPostHits":false,"closed":{"openT":0.014,"solidDisabled":false,"panelLeavesWall":false,"blocksLow":true}}
+PASS facility enclosure firefox

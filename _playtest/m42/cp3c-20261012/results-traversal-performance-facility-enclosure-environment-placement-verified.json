@@ -1,0 +1,29 @@
+[
+  {
+    "browser": "edge",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 148.08,
+    "sourceSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-enclosure",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 122.396,
+    "sourceSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86"
+  },
+  {
+    "browser": "edge",
+    "suite": "environment-placement",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 114.156,
+    "sourceSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86"
+  }
+]

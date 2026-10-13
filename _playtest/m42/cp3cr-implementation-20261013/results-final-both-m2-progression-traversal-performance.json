@@ -1,0 +1,38 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 212.965,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "firefox",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 174.506,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "edge",
+    "suite": "m2-progression",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 141.433,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "edge",
+    "suite": "traversal-performance",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 171.232,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  }
+]

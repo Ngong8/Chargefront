@@ -1,0 +1,56 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 88.499,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 92.993,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "firefox",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 52.597,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 54.519,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 78.678,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  },
+  {
+    "browser": "edge",
+    "suite": "transition-diagnose",
+    "status": 0,
+    "signal": null,
+    "error": null,
+    "seconds": 42.807,
+    "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b"
+  }
+]

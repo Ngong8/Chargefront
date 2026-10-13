@@ -1,0 +1,564 @@
+{
+  "checkpoint": "CP3-C-R",
+  "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b",
+  "browsers": {
+    "firefox": {
+      "seeds": [
+        {
+          "seed": 0,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "id": "H1",
+          "mission": "M3",
+          "callsBefore": 359,
+          "callsAfter": 359,
+          "trianglesDelta": 132,
+          "programsBefore": 40,
+          "programsAfter": 38
+        },
+        {
+          "id": "H3",
+          "mission": "M3",
+          "callsBefore": 368,
+          "callsAfter": 368,
+          "trianglesDelta": 132,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "id": "H4",
+          "mission": "M3",
+          "callsBefore": 332,
+          "callsAfter": 330,
+          "trianglesDelta": 180,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "id": "H5",
+          "mission": "M3",
+          "callsBefore": 404,
+          "callsAfter": 404,
+          "trianglesDelta": 116,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H6",
+          "mission": "M3",
+          "callsBefore": 563,
+          "callsAfter": 565,
+          "trianglesDelta": 248,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H8",
+          "mission": "M3",
+          "callsBefore": 310,
+          "callsAfter": 312,
+          "trianglesDelta": 208,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H9",
+          "mission": "M3",
+          "callsBefore": 288,
+          "callsAfter": 290,
+          "trianglesDelta": 248,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "D1",
+          "mission": "M3",
+          "callsBefore": 327,
+          "callsAfter": 326,
+          "trianglesDelta": 8,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "D3",
+          "mission": "M3",
+          "callsBefore": 561,
+          "callsAfter": 546,
+          "trianglesDelta": -180,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "R1",
+          "mission": "M3",
+          "callsBefore": 345,
+          "callsAfter": 345,
+          "trianglesDelta": 204,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "R2",
+          "mission": "M3",
+          "callsBefore": 1064,
+          "callsAfter": 1063,
+          "trianglesDelta": 120,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "S0",
+          "mission": "M3",
+          "callsBefore": 241,
+          "callsAfter": 229,
+          "trianglesDelta": -144,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "S1",
+          "mission": "M3",
+          "callsBefore": 219,
+          "callsAfter": 207,
+          "trianglesDelta": -144,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C1",
+          "mission": "M3",
+          "callsBefore": 134,
+          "callsAfter": 132,
+          "trianglesDelta": -24,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C3",
+          "mission": "M3",
+          "callsBefore": 32,
+          "callsAfter": 31,
+          "trianglesDelta": -12,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C4",
+          "mission": "M3",
+          "callsBefore": 131,
+          "callsAfter": 131,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C0",
+          "mission": "M3",
+          "callsBefore": 118,
+          "callsAfter": 116,
+          "trianglesDelta": -24,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P1",
+          "mission": "M3",
+          "callsBefore": 37,
+          "callsAfter": 37,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P3",
+          "mission": "M3",
+          "callsBefore": 78,
+          "callsAfter": 78,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P4",
+          "mission": "M3",
+          "callsBefore": 61,
+          "callsAfter": 58,
+          "trianglesDelta": -36,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "E2",
+          "mission": "M4",
+          "callsBefore": 562,
+          "callsAfter": 552,
+          "trianglesDelta": -120,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "E3",
+          "mission": "M4",
+          "callsBefore": 840,
+          "callsAfter": 828,
+          "trianglesDelta": -12,
+          "programsBefore": 43,
+          "programsAfter": 43
+        }
+      ]
+    },
+    "edge": {
+      "seeds": [
+        {
+          "seed": 0,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 1,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 2147483647,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 4294967295,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        },
+        {
+          "seed": 420042,
+          "preservation": true,
+          "cover": true,
+          "doorSweepHits": [],
+          "decorativeSecurityBefore": {
+            "glass": 3,
+            "rails": 6,
+            "decorative": true
+          },
+          "contacts": true,
+          "solids": 329,
+          "map": 30,
+          "slots": 8
+        }
+      ],
+      "views": [
+        {
+          "id": "H1",
+          "mission": "M3",
+          "callsBefore": 359,
+          "callsAfter": 359,
+          "trianglesDelta": 132,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "id": "H3",
+          "mission": "M3",
+          "callsBefore": 368,
+          "callsAfter": 368,
+          "trianglesDelta": 132,
+          "programsBefore": 40,
+          "programsAfter": 40
+        },
+        {
+          "id": "H4",
+          "mission": "M3",
+          "callsBefore": 332,
+          "callsAfter": 330,
+          "trianglesDelta": 180,
+          "programsBefore": 41,
+          "programsAfter": 41
+        },
+        {
+          "id": "H5",
+          "mission": "M3",
+          "callsBefore": 404,
+          "callsAfter": 404,
+          "trianglesDelta": 116,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H6",
+          "mission": "M3",
+          "callsBefore": 563,
+          "callsAfter": 565,
+          "trianglesDelta": 248,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H8",
+          "mission": "M3",
+          "callsBefore": 310,
+          "callsAfter": 312,
+          "trianglesDelta": 208,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "H9",
+          "mission": "M3",
+          "callsBefore": 288,
+          "callsAfter": 290,
+          "trianglesDelta": 248,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "D1",
+          "mission": "M3",
+          "callsBefore": 327,
+          "callsAfter": 326,
+          "trianglesDelta": 8,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "D3",
+          "mission": "M3",
+          "callsBefore": 561,
+          "callsAfter": 546,
+          "trianglesDelta": -180,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "R1",
+          "mission": "M3",
+          "callsBefore": 345,
+          "callsAfter": 345,
+          "trianglesDelta": 204,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "R2",
+          "mission": "M3",
+          "callsBefore": 1064,
+          "callsAfter": 1063,
+          "trianglesDelta": 120,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "S0",
+          "mission": "M3",
+          "callsBefore": 241,
+          "callsAfter": 229,
+          "trianglesDelta": -144,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "S1",
+          "mission": "M3",
+          "callsBefore": 219,
+          "callsAfter": 207,
+          "trianglesDelta": -144,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C1",
+          "mission": "M3",
+          "callsBefore": 134,
+          "callsAfter": 132,
+          "trianglesDelta": -24,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C3",
+          "mission": "M3",
+          "callsBefore": 32,
+          "callsAfter": 31,
+          "trianglesDelta": -12,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C4",
+          "mission": "M3",
+          "callsBefore": 131,
+          "callsAfter": 131,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "C0",
+          "mission": "M3",
+          "callsBefore": 118,
+          "callsAfter": 116,
+          "trianglesDelta": -24,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P1",
+          "mission": "M3",
+          "callsBefore": 37,
+          "callsAfter": 37,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P3",
+          "mission": "M3",
+          "callsBefore": 78,
+          "callsAfter": 78,
+          "trianglesDelta": 0,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "P4",
+          "mission": "M3",
+          "callsBefore": 61,
+          "callsAfter": 58,
+          "trianglesDelta": -36,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "E2",
+          "mission": "M4",
+          "callsBefore": 562,
+          "callsAfter": 552,
+          "trianglesDelta": -120,
+          "programsBefore": 43,
+          "programsAfter": 43
+        },
+        {
+          "id": "E3",
+          "mission": "M4",
+          "callsBefore": 840,
+          "callsAfter": 828,
+          "trianglesDelta": -12,
+          "programsBefore": 43,
+          "programsAfter": 43
+        }
+      ]
+    }
+  }
+}

@@ -1,0 +1,1304 @@
+{
+  "baseline": "c0bb414",
+  "seed": 420042,
+  "sourceSha256": "c038eeb3fa0d2c69a8a4c9ec6fa24a2b111b571f5a6a16b9a6c4cee6b2b3f960",
+  "browsers": {
+    "firefox": {
+      "runs": [
+        {
+          "stage": "before",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 18.5,
+                "p95Ms": 33.3,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 7,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 12
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 10,
+              "calls": 419,
+              "programs": 47
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4,
+              "renderP95": 6,
+              "calls": 223,
+              "programs": 47
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.5,
+                "p95Ms": 16.7,
+                "p99Ms": 50,
+                "worstMs": 50,
+                "over33": 2,
+                "over50": 1,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [
+                  {
+                    "at": 30058.1,
+                    "ms": 50,
+                    "renderMs": 5,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 47,
+                      "calls": 299,
+                      "triangles": 267235,
+                      "geometries": 1516,
+                      "textures": 18,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 342,
+                      "y": 697,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 50
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2828,
+                        "meshes": 2441,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7,
+              "renderP95": 8,
+              "calls": 299,
+              "programs": 47
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 9,
+              "calls": 320,
+              "programs": 47
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 5,
+              "renderP95": 7,
+              "calls": 233,
+              "programs": 47
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 3,
+              "renderP95": 5,
+              "calls": 112,
+              "programs": 47
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4,
+              "renderP95": 5,
+              "calls": 69,
+              "programs": 47
+            }
+          ]
+        },
+        {
+          "stage": "after",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.5,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 3,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 12,
+              "calls": 435,
+              "programs": 47
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 5,
+              "renderP95": 7,
+              "calls": 241,
+              "programs": 47
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 10,
+              "calls": 302,
+              "programs": 47
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 11,
+              "calls": 326,
+              "programs": 47
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7,
+              "renderP95": 8,
+              "calls": 241,
+              "programs": 47
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 20.7,
+                "p95Ms": 50,
+                "p99Ms": 83.4,
+                "worstMs": 83.4,
+                "over33": 8,
+                "over50": 2,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 13
+                },
+                "hitches": [
+                  {
+                    "at": 30326.8,
+                    "ms": 66.7,
+                    "renderMs": 6,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 47,
+                      "calls": 118,
+                      "triangles": 261809,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 351,
+                      "y": 762,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "lab",
+                        "distance": 15
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 30760.3,
+                    "ms": 83.4,
+                    "renderMs": 5,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 47,
+                      "calls": 118,
+                      "triangles": 261809,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 351,
+                      "y": 762,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "lab",
+                        "distance": 15
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4,
+              "renderP95": 7,
+              "calls": 118,
+              "programs": 47
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 3,
+              "renderP95": 5,
+              "calls": 73,
+              "programs": 47
+            }
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "edge": {
+      "runs": [
+        {
+          "stage": "before",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.1,
+                "worstMs": 17.1,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 10,
+              "calls": 419,
+              "programs": 47
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.1,
+                "worstMs": 17.1,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 5.1,
+              "renderP95": 6.5,
+              "calls": 223,
+              "programs": 47
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7.2,
+              "renderP95": 8.8,
+              "calls": 299,
+              "programs": 47
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.2,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 9.8,
+              "calls": 320,
+              "programs": 47
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.1,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6.1,
+              "renderP95": 8.6,
+              "calls": 233,
+              "programs": 47
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4.8,
+              "renderP95": 6.2,
+              "calls": 112,
+              "programs": 47
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.2,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4.3,
+              "renderP95": 5.6,
+              "calls": 69,
+              "programs": 47
+            }
+          ]
+        },
+        {
+          "stage": "after",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.1,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8.3,
+              "renderP95": 9.5,
+              "calls": 435,
+              "programs": 47
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.1,
+                "p99Ms": 17.5,
+                "worstMs": 17.5,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 5,
+              "renderP95": 6.6,
+              "calls": 241,
+              "programs": 47
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17,
+                "worstMs": 17,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7,
+              "renderP95": 8.8,
+              "calls": 302,
+              "programs": 47
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7.7,
+              "renderP95": 9.8,
+              "calls": 326,
+              "programs": 47
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.1,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6.4,
+              "renderP95": 8.4,
+              "calls": 241,
+              "programs": 47
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4.9,
+              "renderP95": 6.5,
+              "calls": 118,
+              "programs": 47
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.4,
+                "worstMs": 17.4,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4.4,
+              "renderP95": 5.5,
+              "calls": 73,
+              "programs": 47
+            }
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  "passed": true
+}

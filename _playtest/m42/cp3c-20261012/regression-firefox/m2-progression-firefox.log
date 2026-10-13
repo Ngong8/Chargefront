@@ -1,0 +1,11 @@
+node:internal/modules/run_main:122
+    triggerUncaughtException(
+    ^
+
+page.waitForFunction: Timeout 90000ms exceeded.
+    at C:\Game projects\GenAI projects\Chargefront\tests\m2-progression.mjs:61:16 {
+  log: [],
+  name: 'TimeoutError'
+}
+
+Node.js v22.14.0

@@ -1,0 +1,691 @@
+{
+  "sourceSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86",
+  "productUnchanged": true,
+  "hallLongScreen": {
+    "name": "(unnamed)",
+    "instance": null,
+    "geometry": "BoxGeometry",
+    "parameters": {
+      "width": 0.12,
+      "height": 0.7,
+      "depth": 4.6,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    "center": [
+      386.2,
+      646,
+      1.35
+    ],
+    "min": [
+      386.1400000013411,
+      643.7000000476837,
+      1.0000000059604641
+    ],
+    "max": [
+      386.2599999986589,
+      648.2999999523163,
+      1.699999994039536
+    ],
+    "color": 7391487,
+    "opacity": 1,
+    "renderOrder": 0,
+    "visible": true
+  },
+  "hallHost": {
+    "name": "InteriorIdentityBatch",
+    "instance": 1,
+    "geometry": "BoxGeometry",
+    "parameters": {
+      "width": 0.9,
+      "height": 1.1,
+      "depth": 2,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    "center": [
+      386.3999938964844,
+      646,
+      0.550000011920929
+    ],
+    "min": [
+      385.9499939084053,
+      645,
+      -2.220446049250313e-16
+    ],
+    "max": [
+      386.84999388456345,
+      647,
+      1.1000000238418581
+    ],
+    "color": 2764346,
+    "opacity": 1,
+    "renderOrder": 0,
+    "visible": true
+  },
+  "hallWarning": {
+    "name": "(unnamed)",
+    "instance": null,
+    "geometry": "BoxGeometry",
+    "parameters": {
+      "width": 0.12,
+      "height": 1.1,
+      "depth": 3.4,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    "center": [
+      388,
+      650,
+      4.1
+    ],
+    "min": [
+      387.9400000013411,
+      648.2999999523163,
+      3.5499999880790702
+    ],
+    "max": [
+      388.0599999986589,
+      651.7000000476837,
+      4.650000011920929
+    ],
+    "color": 16752958,
+    "opacity": 1,
+    "renderOrder": 0,
+    "visible": true
+  },
+  "hallToppled": {
+    "name": "(unnamed)",
+    "instance": null,
+    "geometry": "BoxGeometry",
+    "parameters": {
+      "width": 1.8,
+      "height": 1.2,
+      "depth": 2.5,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    "center": [
+      337,
+      656,
+      0.9000000000000001
+    ],
+    "min": [
+      336.21745994887874,
+      654.75,
+      -0.10955501625828667
+    ],
+    "max": [
+      337.78254005112126,
+      657.25,
+      1.9095550162582868
+    ],
+    "color": 1974828,
+    "opacity": 1,
+    "renderOrder": 0,
+    "visible": true
+  },
+  "hallGauge": [
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "CylinderGeometry",
+      "parameters": {
+        "radiusTop": 0.16,
+        "radiusBottom": 0.16,
+        "height": 0.06,
+        "radialSegments": 12,
+        "heightSegments": 1,
+        "openEnded": false,
+        "thetaStart": 0,
+        "thetaLength": 6.283185307179586
+      },
+      "center": [
+        336,
+        623.6,
+        1.9
+      ],
+      "min": [
+        335.8400000035763,
+        623.4400000035763,
+        1.8700000006705522
+      ],
+      "max": [
+        336.1599999964237,
+        623.7599999964237,
+        1.9299999993294477
+      ],
+      "color": 2237998,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "CylinderGeometry",
+      "parameters": {
+        "radiusTop": 0.13,
+        "radiusBottom": 0.13,
+        "height": 0.03,
+        "radialSegments": 12,
+        "heightSegments": 1,
+        "openEnded": false,
+        "thetaStart": 0,
+        "thetaLength": 6.283185307179586
+      },
+      "center": [
+        336,
+        623.4,
+        1.9
+      ],
+      "min": [
+        335.8700000047684,
+        623.2700000047683,
+        1.885000000335276
+      ],
+      "max": [
+        336.1299999952316,
+        623.5299999952316,
+        1.9149999996647238
+      ],
+      "color": 6750156,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    }
+  ],
+  "hallServicePipe": {
+    "name": "(unnamed)",
+    "instance": null,
+    "geometry": "CylinderGeometry",
+    "parameters": {
+      "radiusTop": 0.09,
+      "radiusBottom": 0.09,
+      "height": 8,
+      "radialSegments": 8,
+      "heightSegments": 1,
+      "openEnded": false,
+      "thetaStart": 0,
+      "thetaLength": 6.283185307179586
+    },
+    "center": [
+      336,
+      644,
+      1
+    ],
+    "min": [
+      335.9099999964237,
+      643.9099999964237,
+      -3.000000000000001
+    ],
+    "max": [
+      336.0900000035763,
+      644.0900000035763,
+      5.000000000000001
+    ],
+    "color": 6975368,
+    "opacity": 1,
+    "renderOrder": 0,
+    "visible": true
+  },
+  "researchPanelOverlap": [
+    0.07001220434904099,
+    4.800000190734863,
+    2.100000047683717
+  ],
+  "archivePanelOverlap": [
+    6,
+    0.02001220434908646,
+    2.2000001192092897
+  ],
+  "archiveLayers": [
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 6,
+        "height": 2.8,
+        "depth": 0.12,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        392,
+        793.95,
+        3.8
+      ],
+      "min": [
+        389,
+        793.8900000013411,
+        2.4000000238418577
+      ],
+      "max": [
+        395,
+        794.0099999986589,
+        5.199999976158142
+      ],
+      "color": 6454426,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "ContainmentFarWall",
+      "instance": 1,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 10,
+        "height": 2.4,
+        "depth": 0.12,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        393,
+        794.0499877929688,
+        3.4000000953674316
+      ],
+      "min": [
+        388,
+        793.9899877943099,
+        2.200000047683716
+      ],
+      "max": [
+        398,
+        794.1099877916276,
+        4.6000001430511475
+      ],
+      "color": 7110034,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    }
+  ],
+  "rearGeneratorVentFaceOverlap": [
+    0.800000011920929,
+    0.10998779028659555,
+    1.1250000238418578
+  ],
+  "rearGeneratorLayers": [
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.8,
+        "height": 1.2,
+        "depth": 0.12,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        432.6,
+        761.94,
+        2.1
+      ],
+      "min": [
+        432.19999999403956,
+        761.8800000013412,
+        1.4999999761581422
+      ],
+      "max": [
+        433.0000000059605,
+        761.999999998659,
+        2.700000023841858
+      ],
+      "color": 1383722,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "ServiceGeneratorFace",
+      "instance": 3,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 4,
+        "height": 1.55,
+        "depth": 0.12,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        434,
+        761.9500122070312,
+        1.850000023841858
+      ],
+      "min": [
+        432,
+        761.8900122083724,
+        1.0750000476837158
+      ],
+      "max": [
+        436,
+        762.0100122056901,
+        2.625
+      ],
+      "color": 7897741,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    }
+  ],
+  "turretHeadBaseGap": 0.40999999761581374,
+  "turretBase": {
+    "geometry": "CylinderGeometry",
+    "parameters": {
+      "radiusTop": 0.75,
+      "radiusBottom": 1,
+      "height": 0.5,
+      "radialSegments": 8,
+      "heightSegments": 1,
+      "openEnded": false,
+      "thetaStart": 0,
+      "thetaLength": 6.283185307179586
+    },
+    "position": [
+      0,
+      0,
+      0.28
+    ],
+    "min": [
+      341,
+      743,
+      0.02999999999999975
+    ],
+    "max": [
+      343,
+      745,
+      0.5300000000000002
+    ],
+    "head": false
+  },
+  "turretHead": {
+    "geometry": "BoxGeometry",
+    "parameters": {
+      "width": 1.25,
+      "height": 0.62,
+      "depth": 0.8,
+      "widthSegments": 1,
+      "heightSegments": 1,
+      "depthSegments": 1
+    },
+    "position": [
+      0,
+      0,
+      1.25
+    ],
+    "min": [
+      341.375,
+      743.5999999940395,
+      0.939999997615814
+    ],
+    "max": [
+      342.625,
+      744.4000000059605,
+      1.560000002384186
+    ],
+    "head": true
+  },
+  "floorQueries": [
+    {
+      "x": 386.4,
+      "y": 640,
+      "solid": false
+    },
+    {
+      "x": 386.4,
+      "y": 646,
+      "solid": false
+    },
+    {
+      "x": 386.4,
+      "y": 652,
+      "solid": false
+    },
+    {
+      "x": 386,
+      "y": 650,
+      "solid": true
+    },
+    {
+      "x": 337,
+      "y": 656,
+      "solid": true
+    },
+    {
+      "x": 347,
+      "y": 714,
+      "solid": true
+    },
+    {
+      "x": 384,
+      "y": 722,
+      "solid": true
+    },
+    {
+      "x": 434,
+      "y": 764,
+      "solid": true
+    }
+  ],
+  "glassRails": [
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        706,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        702.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        709.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        706,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        702.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        709.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        716,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        712.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        719.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        716,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        712.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        719.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        726,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        722.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        729.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    },
+    {
+      "name": "(unnamed)",
+      "instance": null,
+      "geometry": "BoxGeometry",
+      "parameters": {
+        "width": 0.2,
+        "height": 0.14,
+        "depth": 6.5,
+        "widthSegments": 1,
+        "heightSegments": 1,
+        "depthSegments": 1
+      },
+      "center": [
+        389,
+        726,
+        0.07
+      ],
+      "min": [
+        388.8999999985099,
+        722.75,
+        -2.980239527383688e-10
+      ],
+      "max": [
+        389.1000000014901,
+        729.25,
+        0.14000000029802395
+      ],
+      "color": 11852015,
+      "opacity": 1,
+      "renderOrder": 0,
+      "visible": true
+    }
+  ],
+  "supportGaps": {
+    "hallRack": 0.17000000178813934,
+    "researchWest": 0.2899877943098659,
+    "deconWest": 0.2899877943098659,
+    "securityMonitor": 0.30500732660294716,
+    "containmentWest": 0.2899877943098659,
+    "archiveUpper": 0.1999707028269313,
+    "powerBus": 0.19001220837230903
+  },
+  "invariants": {
+    "solids": 329,
+    "map": 30,
+    "doors": 6,
+    "slots": 8
+  }
+}

@@ -1,0 +1,3091 @@
+{
+  "baseline": "inspected CP3-C working source",
+  "baselineSha256": "62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86",
+  "sourceSha256": "2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b",
+  "seed": 420042,
+  "browsers": {
+    "firefox": {
+      "runs": [
+        {
+          "stage": "before",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 25.1,
+                "p95Ms": 33.3,
+                "p99Ms": 50,
+                "worstMs": 50,
+                "over33": 31,
+                "over50": 1,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 17
+                },
+                "hitches": [
+                  {
+                    "at": 48421.8,
+                    "ms": 50,
+                    "renderMs": 7,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270198,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 13,
+              "calls": 359,
+              "programs": 49
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 22.2,
+                "p95Ms": 33.3,
+                "p99Ms": 50,
+                "worstMs": 50,
+                "over33": 20,
+                "over50": 1,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 14
+                },
+                "hitches": [
+                  {
+                    "at": 51922.6,
+                    "ms": 50,
+                    "renderMs": 5,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 238,
+                      "triangles": 262643,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 360,
+                      "y": 677,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 27
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6,
+              "renderP95": 9,
+              "calls": 238,
+              "programs": 49
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 25.9,
+                "p95Ms": 50,
+                "p99Ms": 66.7,
+                "worstMs": 66.7,
+                "over33": 29,
+                "over50": 4,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 17
+                },
+                "hitches": [
+                  {
+                    "at": 53939.8,
+                    "ms": 50,
+                    "renderMs": 17,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 2,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 327,
+                      "triangles": 267508,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 360,
+                      "y": 693,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 43
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 54039.8,
+                    "ms": 66.7,
+                    "renderMs": 16,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 2,
+                        "ms": 2,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 327,
+                      "triangles": 267508,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 360,
+                      "y": 693,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 43
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 54239.9,
+                    "ms": 66.7,
+                    "renderMs": 16,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 2,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 327,
+                      "triangles": 267508,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 360,
+                      "y": 693,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 43
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 54323.2,
+                    "ms": 50,
+                    "renderMs": 14,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 9,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 9,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "gameUpdatePost": {
+                        "calls": 3,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 327,
+                      "triangles": 267508,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 360,
+                      "y": 693,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 43
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 10,
+              "renderP95": 17,
+              "calls": 327,
+              "programs": 49
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 21.2,
+                "p95Ms": 33.3,
+                "p99Ms": 83.4,
+                "worstMs": 83.4,
+                "over33": 13,
+                "over50": 1,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 14
+                },
+                "hitches": [
+                  {
+                    "at": 56507.1,
+                    "ms": 83.4,
+                    "renderMs": 9,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 345,
+                      "triangles": 268991,
+                      "geometries": 1523,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 338,
+                      "y": 715,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "lab",
+                        "distance": 63
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2850,
+                        "meshes": 2463,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 10,
+              "renderP95": 15,
+              "calls": 345,
+              "programs": 49
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 19.9,
+                "p95Ms": 33.3,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 12,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 13
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8,
+              "renderP95": 12,
+              "calls": 241,
+              "programs": 49
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 18.3,
+                "p95Ms": 33.3,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 6,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 12
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6,
+              "renderP95": 9,
+              "calls": 118,
+              "programs": 49
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.7,
+                "p99Ms": 16.7,
+                "worstMs": 16.7,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6,
+              "renderP95": 8,
+              "calls": 61,
+              "programs": 49
+            }
+          ]
+        },
+        {
+          "stage": "after",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 23.8,
+                "p95Ms": 50,
+                "p99Ms": 83.4,
+                "worstMs": 83.4,
+                "over33": 18,
+                "over50": 5,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 16
+                },
+                "hitches": [
+                  {
+                    "at": 23057.8,
+                    "ms": 50,
+                    "renderMs": 8,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 1,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270330,
+                      "geometries": 1512,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2831,
+                        "meshes": 2444,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 23174.5,
+                    "ms": 83.4,
+                    "renderMs": 7,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 3,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 9,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 9,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEnvironmentFx": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {
+                      "shadowRefresh": 1
+                    },
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270330,
+                      "geometries": 1512,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2831,
+                        "meshes": 2444,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 23407.8,
+                    "ms": 50,
+                    "renderMs": 6,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 3,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 9,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 9,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 3,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270330,
+                      "geometries": 1512,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2831,
+                        "meshes": 2444,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 23491.2,
+                    "ms": 50,
+                    "renderMs": 8,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270330,
+                      "geometries": 1512,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2831,
+                        "meshes": 2444,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  },
+                  {
+                    "at": 23807.9,
+                    "ms": 50,
+                    "renderMs": 6,
+                    "ops": {
+                      "updateShots": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "setShipThrusters": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateShip": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateBudgetLights": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateEncounterDirector": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateHorde": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateAmbient": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateDrones": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFacilityDoors": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateObjectives": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateRouteGuideVisibility": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateLabSystems": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateFinalCampaignEncounter": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "rebuildEnemyGrid": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "updateSquadAbilityAutonomy": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdate": {
+                        "calls": 2,
+                        "ms": 1,
+                        "maxMs": 1
+                      },
+                      "rebuildSolidGrid": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "SquadMember.update": {
+                        "calls": 6,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameUpdatePost": {
+                        "calls": 2,
+                        "ms": 0,
+                        "maxMs": 0
+                      },
+                      "gameRenderPost": {
+                        "calls": 1,
+                        "ms": 0,
+                        "maxMs": 0
+                      }
+                    },
+                    "events": [],
+                    "delta": {},
+                    "renderer": {
+                      "programs": 49,
+                      "calls": 359,
+                      "triangles": 270330,
+                      "geometries": 1512,
+                      "textures": 19,
+                      "shadowPending": false
+                    },
+                    "state": {
+                      "x": 382.5,
+                      "y": 648.5,
+                      "z": 0,
+                      "mode": "campaign",
+                      "mission": "sample_zero",
+                      "phase": "M3_OVERRIDE",
+                      "relay": [
+                        {
+                          "id": 1,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 2,
+                          "powered": true,
+                          "powering": false
+                        },
+                        {
+                          "id": 3,
+                          "powered": true,
+                          "powering": false
+                        }
+                      ],
+                      "objective": "Bypass the local containment security lock",
+                      "near": {
+                        "name": "facility",
+                        "distance": 23
+                      },
+                      "navigation": {
+                        "route": [
+                          [
+                            382,
+                            646
+                          ],
+                          [
+                            360,
+                            662
+                          ],
+                          [
+                            360,
+                            680
+                          ],
+                          [
+                            360,
+                            710
+                          ],
+                          [
+                            376,
+                            718
+                          ],
+                          [
+                            361,
+                            718
+                          ],
+                          [
+                            360,
+                            742
+                          ],
+                          [
+                            360,
+                            774
+                          ]
+                        ],
+                        "squad": "assist",
+                        "enemyGridCells": 0,
+                        "solidGridCells": 143
+                      },
+                      "enemies": 0,
+                      "projectiles": 0,
+                      "world": {
+                        "objects": 2831,
+                        "meshes": 2444,
+                        "lights": 134
+                      },
+                      "sceneRoots": 411,
+                      "solids": 329
+                    }
+                  }
+                ],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 14,
+              "calls": 359,
+              "programs": 49
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6,
+              "renderP95": 8,
+              "calls": 234,
+              "programs": 49
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.2,
+                "p95Ms": 16.7,
+                "p99Ms": 33.4,
+                "worstMs": 33.4,
+                "over33": 2,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 10,
+              "renderP95": 13,
+              "calls": 326,
+              "programs": 49
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.8,
+                "p95Ms": 33.3,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 4,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 12
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 10,
+              "renderP95": 14,
+              "calls": 345,
+              "programs": 49
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.2,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 2,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 13,
+              "calls": 229,
+              "programs": 49
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6,
+              "renderP95": 8,
+              "calls": 116,
+              "programs": 49
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:155.0) Gecko/20100101 Firefox/155.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17,
+                "p95Ms": 16.7,
+                "p99Ms": 33.3,
+                "worstMs": 33.3,
+                "over33": 1,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4,
+              "renderP95": 6,
+              "calls": 58,
+              "programs": 49
+            }
+          ]
+        }
+      ],
+      "errors": []
+    },
+    "edge": {
+      "runs": [
+        {
+          "stage": "before",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 12.3,
+              "renderP95": 14.6,
+              "calls": 359,
+              "programs": 49
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.9,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6.2,
+              "renderP95": 9.2,
+              "calls": 238,
+              "programs": 49
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.1,
+                "worstMs": 17.1,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9.1,
+              "renderP95": 12.9,
+              "calls": 327,
+              "programs": 49
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17.1,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9.7,
+              "renderP95": 12.6,
+              "calls": 345,
+              "programs": 49
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.4,
+                "worstMs": 17.4,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 9,
+              "renderP95": 11.7,
+              "calls": 241,
+              "programs": 49
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 5.2,
+              "renderP95": 8.1,
+              "calls": 118,
+              "programs": 49
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.2,
+                "worstMs": 17.2,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 4.8,
+              "renderP95": 7,
+              "calls": 61,
+              "programs": 49
+            }
+          ]
+        },
+        {
+          "stage": "after",
+          "regions": [
+            {
+              "label": "Hall",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 17.7,
+                "p95Ms": 33.2,
+                "p99Ms": 33.6,
+                "worstMs": 33.6,
+                "over33": 4,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 13.3,
+              "renderP95": 17,
+              "calls": 359,
+              "programs": 49
+            },
+            {
+              "label": "Vault",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.9,
+                "p99Ms": 17.1,
+                "worstMs": 17.1,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 10
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 7.7,
+              "renderP95": 10.1,
+              "calls": 234,
+              "programs": 49
+            },
+            {
+              "label": "Decon",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.8,
+                "p99Ms": 16.8,
+                "worstMs": 16.8,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 12.1,
+              "renderP95": 18.2,
+              "calls": 326,
+              "programs": 49
+            },
+            {
+              "label": "Research",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.8,
+                "p99Ms": 16.9,
+                "worstMs": 16.9,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 13.5,
+              "renderP95": 17.3,
+              "calls": 345,
+              "programs": 49
+            },
+            {
+              "label": "Security",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.8,
+                "p99Ms": 17,
+                "worstMs": 17,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 10.7,
+              "renderP95": 13.9,
+              "calls": 229,
+              "programs": 49
+            },
+            {
+              "label": "Containment",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 17,
+                "p99Ms": 17.3,
+                "worstMs": 17.3,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 8.5,
+              "renderP95": 11.1,
+              "calls": 116,
+              "programs": 49
+            },
+            {
+              "label": "Power",
+              "summary": {
+                "browser": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/155.0.0.0 Safari/537.36 Edg/155.0.0.0",
+                "frames": 63,
+                "sampleWindow": 63,
+                "averageMs": 16.7,
+                "p95Ms": 16.9,
+                "p99Ms": 17.1,
+                "worstMs": 17.1,
+                "over33": 0,
+                "over50": 0,
+                "over100": 0,
+                "counters": {
+                  "shadowRefresh": 11
+                },
+                "hitches": [],
+                "longAnimationFrames": []
+              },
+              "renderP50": 6.6,
+              "renderP95": 9.6,
+              "calls": 58,
+              "programs": 49
+            }
+          ]
+        }
+      ],
+      "errors": []
+    }
+  },
+  "passed": true
+}

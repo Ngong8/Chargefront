@@ -1,0 +1,10 @@
+PLACEMENT {"mode":"campaign","seed":0,"arena":null,"zones":95,"accepted":79,"ms1000":157.29999999701977,"reasons":{"exclusion":9,"slope":12}}
+PLACEMENT {"mode":"campaign","seed":1,"arena":null,"zones":95,"accepted":72,"ms1000":157.69999999552965,"reasons":{"exclusion":12,"slope":15,"solid":1}}
+PLACEMENT {"mode":"campaign","seed":420042,"arena":null,"zones":95,"accepted":74,"ms1000":146.20000000298023,"reasons":{"exclusion":16,"slope":10}}
+PLACEMENT {"mode":"campaign","seed":2147483647,"arena":null,"zones":95,"accepted":76,"ms1000":160.5,"reasons":{"exclusion":9,"slope":14,"solid":1}}
+PLACEMENT {"mode":"campaign","seed":4294967295,"arena":null,"zones":95,"accepted":70,"ms1000":155.20000000298023,"reasons":{"exclusion":15,"slope":15}}
+PLACEMENT {"mode":"endless","seed":0,"arena":"valley","zones":3,"accepted":99,"ms1000":23,"reasons":{"solid":1}}
+PLACEMENT {"mode":"endless","seed":420042,"arena":"valley","zones":3,"accepted":100,"ms1000":24.799999997019768,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":4294967295,"arena":"valley","zones":3,"accepted":100,"ms1000":21.399999998509884,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":0,"arena":"crater","zones":3,"accepted":100,"ms1000":23.600000001490116,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":420042,"arena":"crater","zones":3,"accepted":100,"ms1000":26.299999997019768,"reasons":{}}

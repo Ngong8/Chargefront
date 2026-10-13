@@ -1,9 +1,11 @@
 # Charge Front — Milestone 4.2: Environment & Final Prop Pass
 
-**Current checkpoint: CP3-B — Interior Equipment, Signage and Support Corrections,
-engineering PASS; manual review pending.** STOP at CP3-B: no CP3-C/D/E work,
-commit, merge or push. The accepted CP2-R checkpoint is `45c05f4`.
-See the CP3-B implementation/validation record at the end of this document.
+**Current checkpoint: CP3-C-R — Approved Interior Prop Placement Corrections,
+functional/preservation/prewarming PASS; manual visual review pending.**
+Comparative frame-time results remain inconclusive on this host. STOP at CP3-C-R:
+no CP3-D lighting, CP3-E, staging, commit, merge or push. CP3-A and CP3-B are accepted;
+CP3-B was committed as `c0bb414` with manual verdict PASS WITH MINOR VISUAL ISSUES.
+See the CP3-C-R implementation/validation record at the end of this document.
 Earlier checkpoint records are retained as historical baseline evidence.
 
 ## CP0 status and scope
@@ -1595,3 +1597,510 @@ evidence remain untouched. Nothing is staged or committed.
 
 **Final CP3-B verdict: ENGINEERING PASS — READY FOR MANUAL REVIEW. STOP HERE.
 No CP3-C/D/E implementation, exterior lighting, commit, merge or push.**
+
+---
+
+## CP3-C — Functional interior environmental refinement
+
+### Baseline, scope and verdict
+
+**ENGINEERING PASS — READY FOR MANUAL REVIEW. STOP AT CP3-C.** Date 2026-10-12.
+Accepted source/HEAD: `c0bb414492d5359b2d98367bf31ca7511f65f9ba`, branch
+`milestone-4.2`. The user accepted CP3-A and CP3-B; CP3-B's manual verdict was
+**PASS WITH MINOR VISUAL ISSUES**. Its earlier pending-review text above is retained
+as a historical engineering record, superseded by this acceptance statement.
+
+Direction: **RESTRICTED ABANDONED OPERATIONS**. This pass refines existing intake,
+research, surveillance, archive and utility equipment surfaces. Small service
+seams, controls, sample trays, filter faces and printed maintenance plates have
+specific functions. Empty fighting/formation spaces remain intentional. No new
+floor machinery, collision, interaction, camera prop or authored luminaire is added.
+
+The only approved scenery/light eligibility correction is the confirmed seed0
+**exterior** growth intrusion into Research. No CP3-D lighting is implemented.
+
+### Actual room changes
+
+| Area | Functional refinement | Preservation / visual outcome |
+|---|---|---|
+| Main Hall | Wipe-clean tops on two existing command-side stations, a compact ID-reader recess, document slot, divided existing screen and printed intake/visitor-record plates. | All new pieces stay east of x379. Sensors/Supply signs and entrance–Vault axis unchanged; no new central-lane floor object. Intake details remain subordinate to existing live screens. |
+| Three-Relay Vault | Fitted rear service backplanes, two short feeds per unchanged suspended housing, restrained face seams and R1/R2/R3 isolation-service markings. | CP3-B hangers, housing dimensions, state-bearing LED/material references, pads/interactions and floor unchanged. No cover or additional relay machinery. |
+| Decontamination | Intake/filter and purge/exhaust labels, seated washable grille faces and service handles on the four existing process cabinets. | Existing nozzles/manifold/hangers inspected in normal upward views; no genuine remaining mounting defect found, so all remain unchanged. CP3-B exclusion retained. |
+| Research | Thin dark analyzer control beds, small pale controls, shallow sample-handling trays and optical-calibration plates on existing corrected bays. | Original CP3-B meshes/dimensions unchanged. Added analysis details end below 1.28 m and side controls below 1.53 m; no bulky false cover. Existing animated readout retained. |
+| Security | Seated desktop bezels, divided surveillance/network faces, equipment hinge lines, wall-monitor borders and local-recorder plates. | Existing animated screens, tall rack cover, mission console and partition opening unchanged. Research's sample/control vocabulary remains distinct from Security's surveillance divisions. No decorative camera needed. |
+| Containment / Deep Lab | Restrained archive cassette divisions and sealed-archive labels on existing peripheral bays. | Pod geometry left alone rather than applying rectangular seams to tapered skins. No new bright accent. All additions stay outside the 12 m sample annulus; dark breathing space and Sample Zero composition retained. |
+| Service / Power | Aisle-facing generator service louvers, small gauge plates and hinge details; distribution isolation faces; one coherent upper north-wall feeder with three wall-contacting clamps and two fitted drops. | Four generators, existing tall-cover bounds and complete M4 route unchanged. Feeder at z7.75, drops meet existing bays at z5.59; emergency signage unchanged. |
+
+### Research-growth investigation and narrow correction
+
+Both accepted-source browsers reproduce the exterior-family sphere at
+**(346.6523554, 715.2358730, .35), radius .9509626952** for seed0. Its full footprint
+lies in Research and visibly casts an unintended magenta pool alongside the analysis
+bench (indexed R0 before/after). This is not the intentional Containment/emergency
+growth family.
+
+The existing post-population exclusion now also tests circle/rectangle contact with
+Research's actual inner faces **x330.7–366.5, y704.7–734.3**. Only the legacy
+exterior-family patch and its associated source are detached/disposed on intrusion.
+Construction/random draws and the source registration ledger are retained.
+`budgetSourceEnabled()` already rejects detached sources, so no orphan magenta spill
+or selector change is required. No relocation, reseeding, broad scatter cleanup or
+Security exclusion occurs.
+
+Seeds **0, 1, 420042, 2147483647, 4294967295**, in each browser, exclude exactly
+one additional Research patch at seed0 and none at the other four. All remaining
+sphere positions/radii and all remaining source definitions match accepted CP3-B
+exactly. CP3-B's Decon exclusions remain in effect. The unrelated origin sphere
+remains; it is not counted as exterior facility growth.
+
+### Construction, batching and lighting ownership
+
+`finalizeInteriorRefinement()` executes once after accepted CP3-B corrections,
+on independent scoped seed **0xcf070045**, inside the existing guarded finalizer.
+The caller's random function is restored by the existing `finally`. The legacy
+stream and CP2-R/CP3-B construction streams remain intact. No work is added to
+movement, lighting selection, mission-transition or animation update paths.
+
+**196 small surface-detail components in 15 instanced batches** share the existing
+unit-box geometry and three cached non-emissive steel/dark/pale materials. They are
+subcomponents of existing equipment, not 196 new independent floor props.
+Thirty printed plates share **one 512×4096 canvas atlas and one ordinary mapped
+standard material**, merged into seven room meshes. The mapped material is owned
+explicitly because `envMat` does not key on texture maps. It is shared across all
+plates rather than contaminating the cache. No custom shader or asset pipeline.
+
+All new details are non-shadow-casting, non-emissive and non-colliding. Original
+animated materials/FX references remain independent. No authored light position,
+color, intensity, range, decay or shadow setting changes. Eight rendered slots,
+selection/animation, exposure **.78**, fog **40–280** and prewarming remain intact.
+The approved detached Research-growth source is the sole new eligibility exception.
+
+### Targeted preservation and seating verification
+
+New permanent `tests/facility-interior-refinement.mjs` runs real file:// gameplay
+against immutable accepted-CP3-B receipts captured **before any product edit**.
+Both browsers pass all five seeds:
+
+- Exact original mesh/instance geometry and transforms for the laboratory (apart
+  from the existing animated field/turret-head pose), direct facility meshes,
+  InteriorIdentity and FacilityExterior. Includes all CP3-B signs, equipment,
+  supports and all four generators; no original material-color or shadow-flag change.
+- Exact 329 solid bounds/vertical/overhead flags, 30 minimap segments, six door
+  dimensions/travel records, section inventories and eight slots.
+- All **32 height-aware projectile samples per seed** unchanged: low analysis/desk
+  shots blocked; accepted standing/over-cover shots clear.
+- Added detail bounds clear every door's complete swept volume; no Hall detail in
+  the formation lane or Containment detail in the sample annulus.
+- Intake tops contact the original 1.1/1.3 m station tops; analyzer/workstation
+  control beds contact the 1.27/1.52 m device tops; desktop bezels contact 1.475 m;
+  three feeder clamps contact the actual y769.3 wall and both drops connect to
+  distribution/upper-run elevations.
+- Remaining light definitions exact, with only the known specimen 3.7 ± .7 time
+  pulse bounded rather than falsely compared at different times. No page errors.
+
+An initial test-fixture assertion mistook a whole merged label mesh's union bounds
+for one desktop object. It now checks each six-vertex plate separately and scopes
+desktop checks to the actual workstation. Product cover/collision semantics were
+not changed to pass the test. `draft/`, `checked/` and `final/` retain earlier
+receipts. Final seating review lifted the visitor plate above its intake top and
+the reception plate clear of the existing warning panel/rack border. Both contacts
+now have explicit assertions. **`final-verified/{firefox,edge}/` is authoritative**.
+
+The CP3-B checkpoint-specific fixture remains unchanged. Its historical exact
+CP2-R lab/growth expectations predate these approved additions/exclusion; the new
+CP3-C preservation fixture compares directly to accepted CP3-B instead. Existing
+authoritative gameplay, enclosure and placement tests are unchanged.
+
+### Indexed normal-lighting evidence
+
+Evidence root: [`_playtest/m42/cp3c-20261012/`](_playtest/m42/cp3c-20261012/).
+[Final paired index](_playtest/m42/cp3c-20261012/SCREENSHOT-INDEX-final-verified.md) links
+every before/after PNG and eight compact comparison sheets per browser.
+**14 matching normal-lighting poses × two stages × two browsers = 56 full-size
+PNGs**, plus 16 paired sheets. All final sheets in both browsers were directly
+inspected. No entire archive was attached to the session.
+
+| Area / purpose | Firefox comparison (Edge counterpart in index) |
+|---|---|
+| Intake details / clear Hall axis | [01](_playtest/m42/cp3c-20261012/review-final-verified/01-hall-firefox.png) |
+| Suspended relay faces and supports | [02](_playtest/m42/cp3c-20261012/review-final-verified/02-vault-firefox.png) |
+| Process cabinets / unchanged nozzle mount | [03](_playtest/m42/cp3c-20261012/review-final-verified/03-decon-firefox.png) |
+| Analysis controls / optical workstation | [04](_playtest/m42/cp3c-20261012/review-final-verified/04-research-firefox.png) |
+| Surveillance / seated desktops | [05](_playtest/m42/cp3c-20261012/review-final-verified/05-security-firefox.png) |
+| Sample composition / archive bay | [06](_playtest/m42/cp3c-20261012/review-final-verified/06-containment-firefox.png) |
+| Generators / connected distribution feeder | [07](_playtest/m42/cp3c-20261012/review-final-verified/07-power-firefox.png) |
+| Seed0 Research intrusion and spill removed | [08](_playtest/m42/cp3c-20261012/review-final-verified/08-research-growth-firefox.png) |
+
+All views use normal gameplay lighting, FOV75, exposure .78 and fog40–280, seed420042
+except the R0 growth comparison (seed0). HUD/viewmodel/squad are hidden; setup
+teleports are quiet/invulnerable composition fixtures, not unassisted walking proof.
+No diagnostic light, lifted exposure, cutaway or CP3-D preview was needed.
+
+### Final-source regressions and honest first-attempt results
+
+Final facility source SHA256:
+`62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86`.
+All authoritative final-verified captures, paired-performance-verified and
+regression-*-verified receipts identify this source. Earlier draft receipts retain
+their original source hashes rather than being silently updated.
+
+| Suite | Firefox155 | Edge155 |
+|---|---|---|
+| Five-seed CP3-C preservation/seating/cover/exclusion | PASS | PASS |
+| Facility regression: cover, sample, M4/result/Continue/lifecycle | PASS | PASS |
+| Facility real-input playthrough, sprint, FOLLOW, combat and pursuit | PASS | PASS |
+| Canonical M2 progression / relay return / save | PASS | PASS |
+| Visible intro cuts and mission/result transitions | PASS | PASS |
+| Traversal performance | PASS | PASS |
+| Permanent enclosure, four breach walks and six door cycles | PASS | PASS |
+| Environmental placement / archived scenery / Endless parity | PASS | PASS |
+
+Environment placement-state and changed JavaScript syntax checks also PASS.
+Placement covers 14 cases/browser including all three Endless arenas and archived
+`5c8704f` parity. Native-input tests traverse all interior sections and M4 doors,
+exercise standing shots, squad combat, FOLLOW, hostile pursuit and restored exit save.
+
+Two earlier Firefox runs failed and are preserved, not relabeled as passes:
+
+1. Fixed-time playthrough reached y617.63 rather than crossing the Hall threshold
+   within 3 s. Unchanged isolated rerun crosses at y627.69 and completes all checks.
+2. M2 test timed out at its initial 90 s renderer-ready gate. Unchanged isolated
+   rerun completes progression and save checks. No test timeout, assertion, movement
+   or product semantics were loosened.
+
+After the final intake-plate correction, all seven suites were rerun in both
+browsers and PASS directly on the final source. The batch command reached its
+20-minute orchestration budget after eleven completed suites; no worker remained
+running. Only the three remaining Edge suites were resumed in a bounded command,
+and their separate successful receipts are joined in the final summary.
+
+### Rendering / generation results
+
+Matched final normal capture tours retain the exact accepted program counts in
+both browsers: **40–41** for seed420042 views and **42** for the seed0 setup.
+Added calls range **+3 to +22**, with +22 at Hall-axis (621→643) and +18 at the
+upward relay view (220→238). Maximum matched triangle delta **2412**. No new shader
+variant appeared in these matched views. This pass has small static draw cost;
+it is not claimed to be free.
+
+The authoritative 271-frame randomized A–E sweep records:
+
+| Metric | Firefox | Edge |
+|---|---:|---:|
+| p95 / p99 / worst, ms | 66.7 / 116.7 / 150 | 33.3 / 50 / 100 |
+| Shader links / world / facility / nav rebuilds | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 |
+| Geometry/material creation or disposal | 0 | 0 |
+| Solids / slots / warmed programs | 329 / 8 / 29 | 329 / 8 / 29 |
+
+Earlier A–E timings (183.4/300.1/366.7 ms Firefox, 50.2/83.4/199.9 ms Edge) are
+retained in the earlier receipts. Neither sweep is presented as an FPS improvement
+or a paired performance delta. Final quiet regional p95/worst: Facility interior
+**50/66.7 ms Firefox**, **16.8/33.4 ms Edge**;
+M4 service/exit **33.3/50 ms Firefox**, **17/17.5 ms Edge**. Regional counters show
+shadow refresh, no static-environment churn. The live playthrough retains its
+existing two material disposals and is not called allocation/disposal-free.
+
+A fresh accepted-CP3-B site was extracted using `git archive c0bb414` to temporary
+storage, then compared with the actual current site in each browser. Identical
+seed420042, seven room poses, 1280×720, 64 measured RAF frames/pose, quiet gameplay
+and a common priming tour. No product files were swapped or rewritten.
+
+- Edge paired p95 stays approximately **17 ms** before/after in every room.
+- Firefox paired p95 is **16.7 ms** after in five rooms; Hall is **50 ms** versus
+  33.3 before and Research is **33.3 ms** versus 16.7 before. Their measured render
+  p95 changes are 12→14 ms in both cases, with unchanged 9 ms median render time.
+- Firefox median render deltas range **−1 to +1 ms**, render p95 deltas **0 to +2 ms**.
+  Edge render p95 deltas range **−.2 to +2.5 ms** (Security 7.1→9.6 ms).
+- Both paired tours retain **47 programs before/after**, with zero measured shader
+  links, allocation/disposal, world or nav rebuilds in every warmed room sample.
+- Initial probe caught two cold-view links on the accepted baseline itself; both
+  sites were given the same normal-view priming tour before steady measurements.
+
+No significant new generation/rendering churn or program growth was found. The
+small draw delta and noisy frame-time tails are explicitly retained for review;
+these headless ANGLE browser measurements are not a desktop-performance certification.
+See [joined final receipts](_playtest/m42/cp3c-20261012/validation-summary-verified.json) and
+[paired final measurements](_playtest/m42/cp3c-20261012/paired-performance-verified.json).
+
+### Manual-review observations, files and hard stop
+
+Functional details intentionally stay subdued under existing lighting. Printed
+plates are small; final intake placement is clear of its existing warning/rack
+border, with the visitor plate visibly seated. Scientific controls are shallow and
+the Vault rear feeds remain hard to read from straight-on floor views. The archive
+detail is deliberately peripheral. These are manual art-review observations, not
+claims that additional lighting or floor clutter was required.
+
+Changed/new files:
+
+- `src/world/facility.js` — independent static refinement finalizer and approved
+  Research footprint/source exclusion.
+- `tests/facility-interior-refinement.mjs` — immutable five-seed preservation,
+  seating/bounds/cover and matched normal-capture harness.
+- `MILESTONE-4.2-ENVIRONMENT.md` — current status, CP3-B acceptance, this record.
+- `_playtest/m42/cp3c-20261012/` — accepted before source/receipts, final normal PNGs,
+  index/sheets, summary, untouched suite outputs/retries and small evidence tools.
+
+`Credits.txt` remains the original unrelated local modification. Older evidence
+and untracked files remain intact. No staging, commit, merge or push occurred.
+**STOP: CP3-C READY FOR MANUAL REVIEW. No CP3-D lighting or CP3-E work begun.**
+
+---
+
+## CP3-C-R — Approved interior prop placement corrections
+
+### Approval, baseline and verdict
+
+The user reviewed the [placement report](_playtest/m42/cp3cr-20261012/REPORT.md)
+and [inspection index](_playtest/m42/cp3cr-20261012/SCREENSHOT-INDEX.md), accepted
+the seven room identities, and approved **F01, H01–H08, D01, R01, S01, C01–C02,
+P02–P04 and E01**. CP3-C had engineering validation, not final visual acceptance.
+This is the approved corrective refinement, not another decoration expansion.
+
+**Verdict: functional/preservation PASS; prewarming/static-churn PASS;
+comparative frame-time timing INCONCLUSIVE. Ready for manual visual review.**
+No unresolved approved collision, door, progression, mounting-contact or seeded
+placement blocker remains. The timing limitation below is explicit; it is not
+silently relabeled as a clean performance certification.
+
+Starting/current HEAD `c0bb414492d5359b2d98367bf31ca7511f65f9ba`, branch
+`milestone-4.2`. Starting facility was the inspected, uncommitted CP3-C source
+SHA256 `62f23aed1589ae2508c4f96a6274f6407a599d8980ab850c5a720075999aeb86`,
+not the older CP3-B file in HEAD. An immutable actual before copy and five-seed
+receipts were saved before editing. Existing CP3-C source/documentation/test work,
+Credits.txt and all older evidence were preserved.
+
+Final facility SHA256:
+`2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b`.
+Every final capture/suite/paired-performance receipt identifies this source.
+
+### Priority 0 gate — completed before installation work
+
+H02/H08/E01 were corrected first. H01's dependent intake-host correction was
+included with H02 so the oversized face did not lose its apparent host and remain
+unsupported. Source at this gate was `a33e254d...`.
+
+- Retired the three non-colliding .9×2×1.1 m Hall shells at x386.4/y640,646,652.
+  The real solid stations remain. Four duplicate y646 CP3-C surface components
+  were consolidated into the existing y650 reader/document installation; the
+  visitor plate was rehomed onto its actual top.
+- Reused the 4.6 m face as a **1.55×.18 m** status ribbon seated on the solid
+  station's front. No added desk, station or floor solid.
+- Refit the fallen casing with proper Z-up floor-plane yaw. It rests at **z.25**,
+  ends at **z1.39**, and stays inside the existing 3×3 m / 1.4 m solid envelope.
+  Its old local-Z tilt had raised meaningful visible bulk to approximately 1.91 m.
+- Kept exactly three M4 fragments, now **4.6×.65×.12 m**, bottom **z.35**, top
+  **z.47**. The service fragment moved to **(415.5,759.4)**, off the y752 evacuation
+  axis. Wreckage remains state-dependent and non-cover; no obstacles or solids added.
+
+Five-seed checks and the existing native-input facility playthrough **PASS in
+Firefox and Edge before Priority 1 began**. Projectile results, M4 lane queries,
+329 solid records, six door sweeps, FOLLOW, sprint, hostile pursuit and saved exit
+checkpoint behavior were retained. Gate receipts remain in `priority0-checked/`
+and `regression-priority0-{firefox,edge}/`.
+
+### Actual installation corrections
+
+| Approved group | Implemented correction | Preserved |
+|---|---|---|
+| F01 | Fill the existing cases' unsupported rear depth to contact their actual wall while retaining established front faces: Hall racks, Decon panels/status, Research faces/returns, Security overview/status, Containment panels/ribs/archive bays and Power distribution/housings. | Legitimate spacing supported by the now-seated Containment ribs/conduit remains; no blanket wall-plane flattening. Vault local jumpers and accepted supports unchanged. |
+| H03 | Shorten the y650 information divider to z1.30–1.74, clear of the printed ID-check plate ending at z1.27. | Existing screen, label, reader/document functions and materials retained. |
+| H04 | Seat the two warning plaques against actual wall faces in clear bays: west (331.06,635,4.1), east (388.94,650.9,4.1). Fit their 2×.85 m faces and thin correctly oriented stripes. | Warning style and accepted Sensors/Supply signs/supports unchanged; no reception-board overlap or new signage. |
+| H05 | Reorient the existing gauge rim/face vertically on the utility unit at z1.55; casing/rim/face contacts are y623.60/.66/.69. | Same casing solid and existing gauge materials; no new control or authored source. |
+| H06 | Reuse the isolated pipe as a thin service riser at (335,621.1), contacting the existing utility top z2 and Hall roof underside z9. Clear of the unit's original status cube. | No independent floor pole, machinery or collision addition. |
+| H07 | Extend the three existing runs to the Hall's x331/x389 wall faces. Six necessary saddles attach them to the existing longitudinal beam grid. | Original routes/materials/lights; six saddles use 18 small unit-box parts in **one** cached-material instanced batch, not another cable network. |
+| D01 | Move the two .35 m crossbars onto the unchanged z7.8 post tops; bar range z7.8–8.15. | Existing posts, floor guidance, nozzles and CP3-B manifold/hangers/ceiling mounts exact. |
+| R01 | Retire the two independent intersecting smaller Research slabs; the existing larger faces become seated analyzer cases with coherent readouts. | Corrected shallow benches/instruments/readout, all collision and turret-console interaction exact; no taller cover or more screens. |
+| S01 | Retire exactly three glass skins and six duplicate buried rails after original construction. | No collision/FX/exported mission references belonged to them. The genuine opaque perimeter, x367 partition/opening, four tall banks, desks, overview screens and override console remain. |
+| C01 | Retire two conflicting lower archive slabs and seat the surviving coherent archive cases/upper bays. Surface-seat the existing sealed-archive plates. | No Sample Zero, pod, annulus, upper cassette identity or source-light change. |
+| C02 | Refit only the existing turret base to span z.35–.94 and meet the head underside. | Head, barrel, lamp, console, aim/firing components, positions and mission references exact; no new turret or cover. |
+| P02 | Seat the existing distribution cases on the y769.3 wall and fit their status strips. | Entire CP3-C feeder/clamps/drops exact, including their terminal contacts. |
+| P03 | Retire only six old competing aisle-side vent masks on the two rear generators. | All four generator bodies/solids, retained far-side vents and coherent CP3-C service/gauge/louver faces remain. |
+| P04 | Refit the existing high patches as narrow fixed status/terminal faces. Relabel the two existing plates **BUS / REMOTE STATUS** in their original shared atlas. | No high manual-handle implication, added buttons, interactables, textures or assets; manual service remains with existing floor equipment. |
+
+No new environmental machinery, floor props, geometry pipeline, shaders or light
+sources were introduced. The only added installation geometry is H07's necessary
+six saddles, batched once. Resource reuse, lower redundant-object count and no new
+shadow-caster family are retained.
+
+### Construction and preservation
+
+Legacy builders keep every original constructor/cache/random draw and only record
+references. Existing CP2-R/CP3-B/CP3-C finalizers remain in their original streams.
+`finalizeInteriorCoverCorrections()` and `finalizeInteriorInstallationCorrections()`
+run once afterward on scoped seeds **0xcf070046 / 0xcf070047**; the existing
+`finally` restores the caller's random function. No correction runs during movement,
+mission transitions or lighting updates.
+
+Retired cached geometry/materials are not disposed out from under retained users.
+Only removed unshared slab/glass/rail materials are disposed during construction,
+before warming; this is not steady-gameplay churn. The label atlas/material is
+reused for P04, with only its two approved rows redrawn. Static batches are compacted
+in place and their bounds refreshed.
+
+Permanent `tests/facility-prop-placement.mjs` compares actual inspected CP3-C with
+final code for **0,1,420042,2147483647,4294967295 in each browser**:
+
+- Exact **329** solid bounds/vertical/overhead/portal records, **30** map segments,
+  six door dimensions/travel records and section inventories.
+- Exact unaffected original mesh/instance data; explicit exceptions are the
+  approved correcting/retired families. CP3-B equipment/sign/mount data, Research
+  compact devices, mission anchors, turret head/barrel/lamp components and the
+  complete CP3-C Power feeder data remain exact.
+- All **36 normal-state projectile samples per seed** match, covering fallen-case
+  heights, low bench/desk cover, standing clearance and the genuine Security wall.
+  An additional **16 M4 samples** match at old/new debris points; all 57 sampled
+  evacuation-lane cells match. These are bounded geometry checks, supplemented by
+  actual native-input traversal below.
+- Added/corrected bounds clear every door's complete swept volume. Casing fits
+  its real cover footprint; exactly three debris pieces end below .5 m.
+- Actual wall contacts, crossbar/post contacts, gauge rim/face contacts, unit/roof
+  riser contacts, pipe endpoints, turret support and intake label seating pass.
+- Exact source definitions/count ledger, eight slots, exposure .78 and fog40–280.
+  Existing specimen and emergency-source animation definitions are normalized to
+  their authored values; no lighting-selection or source modification is hidden.
+- Existing CP3-C growth exclusions/remaining sphere geometry and M4 legitimate
+  growth anchors/structure remain unchanged. Four generator bodies and four tall
+  Security banks remain. Decorative S01 reference checks were captured before removal.
+- Actual native canvas text calls retain all first 28 atlas rows; only the last
+  two have the approved new status text. No capture-page errors.
+
+Initial fixture attempts are preserved. Pixel readback hashes varied on unchanged
+Firefox canvas text, so glyph preservation uses native `fillText` arguments, with
+the drawing call forwarded unchanged. Three connected companion families
+(SecurityStatus, PowerBusStatus, archive plates) were explicitly included in the
+approved mounting scope; the immutable before receipt was not rewritten. No
+authoritative gameplay/placement assertions, inputs or controller semantics were
+weakened to obtain passes.
+
+### Targeted before/after evidence
+
+Root: [`_playtest/m42/cp3cr-implementation-20261013/`](_playtest/m42/cp3cr-implementation-20261013/).
+[Complete targeted index](_playtest/m42/cp3cr-implementation-20261013/SCREENSHOT-INDEX.md)
+links **22 paired poses/browser**, player-height and useful side/elevated views.
+The 19 matching Firefox inspection images were reused for before evidence; fresh
+before receipts independently sampled their actual source/camera poses. Edge
+before and both final tours were captured directly. No entire screenshot archive
+was loaded into a model request. Compact contact pages were inspected in both browsers;
+full-size pairs remain available for manual review.
+
+| Corrected finding group | Firefox paired sheet (Edge counterpart in index) |
+|---|---|
+| H01–H04 intake/consolidation/divider/mounting | [01](_playtest/m42/cp3cr-implementation-20261013/review/01-intake-firefox.png) |
+| H08 real cover / E01 evacuation wreckage | [02](_playtest/m42/cp3cr-implementation-20261013/review/02-real-cover-firefox.png) |
+| H05–H06 gauge / pipe removal / connected riser | [03](_playtest/m42/cp3cr-implementation-20261013/review/03-utility-firefox.png) |
+| H07 overhead attachment | [04](_playtest/m42/cp3cr-implementation-20261013/review/04-overhead-firefox.png) |
+| D01 frame / retained CP3-B nozzle installation | [05](_playtest/m42/cp3cr-implementation-20261013/review/05-decon-firefox.png) |
+| F01/R01 seated analyzer cases | [06](_playtest/m42/cp3cr-implementation-20261013/review/06-research-firefox.png) |
+| F01/S01 genuine Security equipment retained | [07](_playtest/m42/cp3cr-implementation-20261013/review/07-security-firefox.png) |
+| F01/C01 archive consolidation | [08](_playtest/m42/cp3cr-implementation-20261013/review/08-archive-firefox.png) |
+| C02 turret / retained Sample Zero focus | [09](_playtest/m42/cp3cr-implementation-20261013/review/09-turret-focus-firefox.png) |
+| F01/P02–P04 distribution / retained feeder / four generators | [10](_playtest/m42/cp3cr-implementation-20261013/review/10-power-firefox.png) |
+
+All use **normal gameplay lighting**, seed420042, FOV75, exposure .78, fog40–280,
+eight slots, quiet setup teleports and hidden HUD/viewmodel/squad. E2/E3 use the
+existing M4 emergency gameplay state, not a lighting preview. No diagnostic fill,
+cutaway, lifted exposure or proposed CP3-D objects were used. Screenshot composition
+is not represented as unassisted walking proof.
+
+### Final-source regression results
+
+| Suite | Firefox155 | Edge155 |
+|---|---|---|
+| New five-seed preservation/projectiles/contacts/captures | PASS | PASS |
+| Existing facility regression, M3 sample/override, M4/result/Continue/lifecycle | PASS | PASS |
+| Existing real-input playthrough, sprint, FOLLOW, combat/hostile pursuit/exit save | PASS | PASS |
+| Canonical M2 progression and checkpoint/relay return | PASS | PASS |
+| Permanent enclosure, four breach walks and six door cycles | PASS | PASS |
+| Five-seed Campaign / three-arena Endless / archived scenery placement parity | PASS on unchanged retry | PASS on unchanged retry |
+| Traversal performance and visible intro/mission/result prewarming | PASS | PASS |
+
+Placement retries complete **14 cases/browser**, including the five Campaign seeds
+and nine Endless cases, plus the existing archived `5c8704f` parity check. Placement
+state tests also PASS. Existing suites and their internal timeouts/assertions are
+unchanged. Full native input covers the evacuation doors, actual shooting over
+Research cover, Squad FOLLOW/combat, Infested pursuit and restored exit checkpoint.
+
+The first placement attempts were terminated by external operation timeouts,
+after 13 cases in Firefox and 10 in Edge, without a logged assertion failure.
+The Edge receipt includes 21148 s of wall-clock elapsed time across interruption;
+it is not used as a startup/performance measurement. Fresh isolated retries used
+a 720 s external process budget and PASS in **254.856 s Firefox / 114.652 s Edge**.
+Their original incomplete receipts/logs remain alongside the final passes.
+
+### Rendering, generation and timing caveat
+
+Matched normal tour draw-call deltas range **−15 to +2**, maximum triangle increase
+**248**. Security views drop 12 calls, the rear-generator view drops 3, and inspected
+M4 views drop 10–12. The Hall utility views add 2. These are pose-matched measured
+costs; randomized scene totals are not asserted to be paired asset deltas.
+Complete tours retain **43** programs in both browsers; the early Firefox H1 sample
+has fewer warmed programs after, not program growth.
+
+| 271-frame A–E sweep | Firefox | Edge |
+|---|---:|---:|
+| p95 / p99 / worst, ms | 63.2 / 155.3 / 232.2 | 53.1 / 108.1 / 177.5 |
+| Shader links / world / facility / nav rebuilds | 0 / 0 / 0 / 0 | 0 / 0 / 0 / 0 |
+| Geometry/material creation or disposal | 0 | 0 |
+| Solids / slots / warmed programs | 329 / 8 / 29 | 329 / 8 / 29 |
+
+Quiet regional p95/worst: Facility interior **50/83.4 ms Firefox**, **33.4/50.1 ms
+Edge**; M4 service/exit **50/83.4 ms Firefox**, **16.9/49.7 ms Edge**. Region counters
+record shadow refresh without static-environment churn. Live combat/playthrough
+retains legitimate encounter/effect lifetime behavior and is not described as
+allocation/disposal-free.
+
+A fresh private site was built from unchanged HEAD game files plus the saved
+actual inspected CP3-C facility source. It was compared with the current workspace
+without swapping product files: seven identical room poses, seed420042, 1280×720,
+64 measured RAF frames/pose after a shared priming tour, one browser at a time.
+Both before/after tours retain **49 programs**, zero warm links, geometry/material
+allocation/disposal, world/nav rebuilds and equal/lower region calls.
+
+- Firefox forward pair: median render deltas **−2 to +1 ms**; render p95 deltas
+  **−4 to +1 ms**. Hall frame p95 is 33.3→50 ms despite unchanged 9 ms median render.
+- Edge forward pair: median render deltas **+1 to +3.8 ms**, render p95 deltas
+  **+.9 to +5.3 ms**; Hall frame p95 17→33.2 ms, other rooms approximately 17 ms.
+- Because Edge slowed broadly, a single reverse-order comparison was added. Both
+  baseline and corrected runs then have highly variable **100–250 ms** frame p95
+  tails; corrected-minus-baseline median render deltas **−1.8 to +3.3 ms**, render
+  p95 **0 to +4.3 ms**. Zero churn/program growth again.
+
+**Timing conclusion: inconclusive.** There is no new generation churn, source/slot
+growth, shader growth or significant draw-call multiplication. Stable comparative
+frame-time performance cannot be certified from these volatile headless host runs,
+and the positive Edge render-time deltas are not discarded. No FPS improvement or
+clean timing-regression verdict is claimed. This remains an explicit review caveat,
+not an excuse to implement CP3-D lighting or unrelated performance changes.
+
+Receipts: [joined summary](_playtest/m42/cp3cr-implementation-20261013/validation-summary.json),
+[forward pair](_playtest/m42/cp3cr-implementation-20261013/paired-performance.json),
+[reverse pair](_playtest/m42/cp3cr-implementation-20261013/paired-performance-reverse.json).
+
+### Actual files, remaining observations and hard stop
+
+Changed/new for this corrective pass:
+
+- `src/world/facility.js` — recorded legacy refs, Priority 0 and installation
+  finalizers, in-place batch/plate helpers, necessary cached/batched pipe saddles.
+- `tests/facility-prop-placement.mjs` — immutable before comparison and meaningful
+  preservation, cover, source, seating, text, M4 navigation and capture assertions.
+- `MILESTONE-4.2-ENVIRONMENT.md` — current checkpoint and this actual-results record.
+- `_playtest/m42/cp3cr-implementation-20261013/` — before source/receipts, targeted
+  PNGs/index/pairs, gates, final suites/retries, paired measurements and small
+  evidence/report helpers. Existing CP3-C and inspection files were not overwritten.
+
+Existing `tests/facility-interior-refinement.mjs` and authoritative suites remain
+unchanged. Their earlier CP3-C-specific exact geometry/printed-text expectations
+are historical; the new fixture compares to inspected CP3-C with only the approved
+exceptions. No broader verification was weakened.
+
+Remaining observations: printed plates and the reused gauge face are deliberately
+simple/subdued; the Decon bars retain their existing cyan material while occupying
+the corrected upper frame. No extra detail or brightness was used to mask placement.
+Manual visual acceptance is still required, and comparative timing is inconclusive
+as documented. No approved functional/cover/contact/enclosure blocker remains.
+
+Credits.txt and unrelated tracked/untracked work are preserved. The staging index
+is empty and HEAD remains `c0bb414`. **STOP AFTER CP3-C-R. No CP3-D, CP3-E, stage,
+commit, merge or push. Ready for manual review with the stated timing caveat.**

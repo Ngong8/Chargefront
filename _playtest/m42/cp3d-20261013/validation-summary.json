@@ -1,0 +1,2152 @@
+{
+  "checkpoint": "CP3-D",
+  "status": "Implementation and automated gates complete; manual visual acceptance pending",
+  "hashes": {
+    "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+    "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+  },
+  "suites": [
+    {
+      "browser": "firefox",
+      "suite": "facility-d0",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 81.522,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 67.607,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 126.205,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 81.926,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-d0",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 40.282,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 33.063,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 124.374,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 66.275,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 171.096,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 42.353,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "traversal-performance",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 156.18,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "environment-placement",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 259.985,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "firefox",
+      "suite": "environment-placement-state",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 0.196,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 118.951,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 35.758,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "traversal-performance",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 150.391,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 128.768,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement-state",
+      "status": 0,
+      "signal": null,
+      "error": null,
+      "seconds": 0.109,
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      }
+    }
+  ],
+  "browsers": [
+    {
+      "browser": "firefox",
+      "gate": true,
+      "d0Seeds": [
+        {
+          "seed": 0,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.122502256758253e-17,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.122502256758253e-17,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 1,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 2147483647,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 4294967295,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.159999999999999,
+              "normal": [
+                0,
+                -7.338693455011258e-17,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 420042,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.122502256758253e-17,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.122502256758253e-17,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        }
+      ],
+      "states": [
+        {
+          "label": "before",
+          "phase": "M3_REACH_SAMPLE",
+          "dnaSecured": false,
+          "payloadVisible": true,
+          "installationVisible": true,
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "immediate",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 0,
+            "duration": 34,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "during",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "death",
+          "phase": "DEAD",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "actual-continue",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8.100000000000005,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.1000000000000005,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "restored",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "complete",
+          "phase": "M4_BREAK_CONTACT",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          }
+        }
+      ],
+      "sourceCountBefore": 104,
+      "sourceCountAfter": 106,
+      "newExterior": [
+        {
+          "name": "WestServiceWallLight",
+          "position": [
+            328.82,
+            714,
+            3.36
+          ],
+          "color": 16769205,
+          "intensity": 45,
+          "range": 22,
+          "decay": 1.85,
+          "shadow": false,
+          "enabled": true
+        },
+        {
+          "name": "EastServiceWallLight",
+          "position": [
+            391.48,
+            657,
+            3.36
+          ],
+          "color": 16769205,
+          "intensity": 45,
+          "range": 22,
+          "decay": 1.85,
+          "shadow": false,
+          "enabled": true
+        }
+      ],
+      "occlusion": {
+        "wall": [
+          false,
+          false
+        ],
+        "doors": [
+          {
+            "id": "front",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "bio_lab",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_access",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_security",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_emergency",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "label": "west-outside",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "west-inside",
+          "selected": [
+            "ResearchTaskLight"
+          ]
+        },
+        {
+          "label": "east-outside",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "east-inside",
+          "selected": [
+            "FunctionalWallAccent4",
+            "HallTaskLight5",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight2"
+          ]
+        },
+        {
+          "label": "front-outside",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "front-inside",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight5"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "id": "X1-west-wall",
+          "before": "lighting-baseline-verified/firefox/X1-west-wall.png",
+          "after": "lighting-verified/firefox/X1-west-wall.png",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X2-west-cabinet",
+          "before": "lighting-baseline-verified/firefox/X2-west-cabinet.png",
+          "after": "lighting-verified/firefox/X2-west-cabinet.png",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X3-east-wall",
+          "before": "lighting-baseline-verified/firefox/X3-east-wall.png",
+          "after": "lighting-verified/firefox/X3-east-wall.png",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X4-east-cabinet",
+          "before": "lighting-baseline-verified/firefox/X4-east-cabinet.png",
+          "after": "lighting-verified/firefox/X4-east-cabinet.png",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 3,
+          "triangleDelta": 432
+        },
+        {
+          "id": "X5-main-entry",
+          "before": "lighting-baseline-verified/firefox/X5-main-entry.png",
+          "after": "lighting-verified/firefox/X5-main-entry.png",
+          "selected": [
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 12,
+          "triangleDelta": 780
+        },
+        {
+          "id": "H1-hall",
+          "before": "lighting-baseline-verified/firefox/H1-hall.png",
+          "after": "lighting-verified/firefox/H1-hall.png",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight5"
+          ],
+          "callsDelta": 11,
+          "triangleDelta": 768
+        },
+        {
+          "id": "H2-extractor",
+          "before": "lighting-baseline-verified/firefox/H2-extractor.png",
+          "after": "lighting-verified/firefox/H2-extractor.png",
+          "selected": [
+            "HallTaskLight3",
+            "FunctionalWallAccent3",
+            "HallTaskLight5",
+            "HallTaskLight2",
+            "FunctionalWallAccent4",
+            "HallTaskLight4",
+            "HallTaskLight1"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 660
+        },
+        {
+          "id": "V1-vault",
+          "before": "lighting-baseline-verified/firefox/V1-vault.png",
+          "after": "lighting-verified/firefox/V1-vault.png",
+          "selected": [
+            "VaultElectricalTaskLight",
+            "FunctionalWallAccent5",
+            "FunctionalWallAccent6"
+          ],
+          "callsDelta": 11,
+          "triangleDelta": 768
+        },
+        {
+          "id": "V2-header",
+          "before": "lighting-baseline-verified/firefox/V2-header.png",
+          "after": "lighting-verified/firefox/V2-header.png",
+          "selected": [
+            "HallTaskLight4",
+            "HallTaskLight5",
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3"
+          ],
+          "callsDelta": 6,
+          "triangleDelta": 708
+        },
+        {
+          "id": "D1-decon",
+          "before": "lighting-baseline-verified/firefox/D1-decon.png",
+          "after": "lighting-verified/firefox/D1-decon.png",
+          "selected": [
+            "DeconTaskLight",
+            "VaultElectricalTaskLight",
+            "ResearchTaskLight"
+          ],
+          "callsDelta": 3,
+          "triangleDelta": 672
+        },
+        {
+          "id": "R1-research",
+          "before": "lighting-baseline-verified/firefox/R1-research.png",
+          "after": "lighting-verified/firefox/R1-research.png",
+          "selected": [
+            "ResearchTaskLight",
+            "DeconTaskLight",
+            "SecurityOperationalLight"
+          ],
+          "callsDelta": 4,
+          "triangleDelta": 684
+        },
+        {
+          "id": "S1-security",
+          "before": "lighting-baseline-verified/firefox/S1-security.png",
+          "after": "lighting-verified/firefox/S1-security.png",
+          "selected": [
+            "SecurityOperationalLight",
+            "ResearchTaskLight"
+          ],
+          "callsDelta": 5,
+          "triangleDelta": 696
+        },
+        {
+          "id": "C1-containment",
+          "before": "lighting-baseline-verified/firefox/C1-containment.png",
+          "after": "lighting-verified/firefox/C1-containment.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "P1-power-normal",
+          "before": "lighting-baseline-verified/firefox/P1-power-normal.png",
+          "after": "lighting-verified/firefox/P1-power-normal.png",
+          "selected": [
+            "PowerUtilityLight"
+          ],
+          "callsDelta": 1,
+          "triangleDelta": 252
+        },
+        {
+          "id": "J1-junction",
+          "before": "lighting-baseline-verified/firefox/J1-junction.png",
+          "after": "lighting-verified/firefox/J1-junction.png",
+          "selected": [
+            "ContainmentPeripheralLight",
+            "SampleZeroFocalLight",
+            "ServiceTransitionLight"
+          ],
+          "callsDelta": 8,
+          "triangleDelta": 732
+        },
+        {
+          "id": "C2-defence-immediate",
+          "before": "lighting-baseline-verified/firefox/C2-defence-immediate.png",
+          "after": "lighting-verified/firefox/C2-defence-immediate.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "C3-defence-running",
+          "before": "lighting-baseline-verified/firefox/C3-defence-running.png",
+          "after": "lighting-verified/firefox/C3-defence-running.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "C4-post-defence",
+          "before": "lighting-baseline-verified/firefox/C4-post-defence.png",
+          "after": "lighting-verified/firefox/C4-post-defence.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "P2-power-emergency",
+          "before": "lighting-baseline-verified/firefox/P2-power-emergency.png",
+          "after": "lighting-verified/firefox/P2-power-emergency.png",
+          "selected": [
+            "PowerUtilityLight",
+            "ServiceTransitionLight"
+          ],
+          "callsDelta": 1,
+          "triangleDelta": 252
+        },
+        {
+          "id": "X6-emergency-exit",
+          "before": "lighting-baseline-verified/firefox/X6-emergency-exit.png",
+          "after": "lighting-verified/firefox/X6-emergency-exit.png",
+          "selected": [
+            "PowerUtilityLight"
+          ],
+          "callsDelta": 12,
+          "triangleDelta": 780
+        }
+      ],
+      "warm": {
+        "samples": 12,
+        "frames": 768,
+        "p95Range": [
+          31.7,
+          32.2
+        ],
+        "worst": 63.3,
+        "selectorMaxMs": 1,
+        "programs": [
+          47
+        ],
+        "p95DeltaRange": [
+          -0.2,
+          0.5
+        ],
+        "renderMedianDeltaRange": [
+          0,
+          0
+        ],
+        "renderP95DeltaRange": [
+          -1,
+          1
+        ],
+        "callsDeltaRange": [
+          1,
+          11
+        ],
+        "triangleDeltaRange": [
+          252,
+          768
+        ],
+        "deltas": [
+          {
+            "label": "west",
+            "repetition": 0,
+            "p95": 0,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "east",
+            "repetition": 0,
+            "p95": 0.1999999999999993,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "hall",
+            "repetition": 0,
+            "p95": 0,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 11,
+            "triangles": 768
+          },
+          {
+            "label": "security",
+            "repetition": 0,
+            "p95": 0.09999999999999787,
+            "renderMedian": 0,
+            "renderP95": -1,
+            "calls": 5,
+            "triangles": 696
+          },
+          {
+            "label": "containment",
+            "repetition": 0,
+            "p95": 0.5,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 2,
+            "triangles": 264
+          },
+          {
+            "label": "power",
+            "repetition": 0,
+            "p95": -0.1999999999999993,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 1,
+            "triangles": 252
+          },
+          {
+            "label": "west",
+            "repetition": 1,
+            "p95": 0,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "east",
+            "repetition": 1,
+            "p95": 0.3000000000000007,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "hall",
+            "repetition": 1,
+            "p95": 0.40000000000000213,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 11,
+            "triangles": 768
+          },
+          {
+            "label": "security",
+            "repetition": 1,
+            "p95": 0,
+            "renderMedian": 0,
+            "renderP95": 1,
+            "calls": 5,
+            "triangles": 696
+          },
+          {
+            "label": "containment",
+            "repetition": 1,
+            "p95": 0,
+            "renderMedian": 0,
+            "renderP95": 1,
+            "calls": 2,
+            "triangles": 264
+          },
+          {
+            "label": "power",
+            "repetition": 1,
+            "p95": 0.10000000000000142,
+            "renderMedian": 0,
+            "renderP95": 0,
+            "calls": 1,
+            "triangles": 252
+          }
+        ]
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "p95": 48.1,
+          "p99": 63,
+          "worst": 64.1,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 32,
+          "p99": 61.2,
+          "worst": 62.6,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 31.9,
+          "p99": 48,
+          "worst": 63.1,
+          "counters": {
+            "shadowRefresh": 61
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 31.9,
+          "p99": 60.9,
+          "worst": 62.1,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 31.9,
+          "p99": 47.6,
+          "worst": 62.1,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 32.1,
+          "p99": 47.9,
+          "worst": 62.7,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 32.1,
+          "p99": 48,
+          "worst": 76.5,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 47,
+          "p99": 63.4,
+          "worst": 78,
+          "counters": {
+            "shadowRefresh": 100,
+            "sceneObjectsAdded": 512,
+            "sceneObjectsRemoved": 481
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 61.7,
+          "counters": {
+            "sceneObjectsAdded": 786,
+            "sceneObjectsRemoved": 732,
+            "shadowRefresh": 150,
+            "meshesCreated": 213,
+            "geometriesCreated": 27,
+            "materialsCreated": 15,
+            "groupsObjectsCreated": 96,
+            "materialDisposes": 3
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 31.7,
+          "p99": 32.1,
+          "worst": 32.5,
+          "counters": {
+            "sceneObjectsAdded": 1069,
+            "shadowRefresh": 150,
+            "sceneObjectsRemoved": 1059,
+            "materialDisposes": 7,
+            "meshesCreated": 10,
+            "geometriesCreated": 10,
+            "materialsCreated": 4,
+            "groupsObjectsCreated": 2
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        }
+      ]
+    },
+    {
+      "browser": "edge",
+      "gate": true,
+      "d0Seeds": [
+        {
+          "seed": 0,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 1,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.6399999999999983,
+              "normal": [
+                0,
+                1.3183898417423734e-16,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.6399999999999983,
+              "normal": [
+                0,
+                1.3183898417423734e-16,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 2147483647,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 4294967295,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.6399999999999983,
+              "normal": [
+                0,
+                1.3183898417423734e-16,
+                1
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.6399999999999983,
+              "normal": [
+                0,
+                1.3183898417423734e-16,
+                1
+              ],
+              "speed": 2.4
+            }
+          ]
+        },
+        {
+          "seed": 420042,
+          "solids": 329,
+          "map": 30,
+          "slots": 8,
+          "wallShots": [
+            true,
+            true,
+            true
+          ],
+          "fanAxes": [
+            {
+              "name": "InstalledExtractorRotor1",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            },
+            {
+              "name": "InstalledExtractorRotor2",
+              "angle": 3.3999999999999986,
+              "normal": [
+                0,
+                3.712308238590367e-16,
+                0.9999999999999999
+              ],
+              "speed": 2.4
+            }
+          ]
+        }
+      ],
+      "states": [
+        {
+          "label": "before",
+          "phase": "M3_REACH_SAMPLE",
+          "dnaSecured": false,
+          "payloadVisible": true,
+          "installationVisible": true,
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "immediate",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 0,
+            "duration": 34,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "during",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "death",
+          "phase": "DEAD",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "actual-continue",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8.016666666666667,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.183333333333334,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "restored",
+          "phase": "M3_STABILIZE",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 34,
+            "stage": 0,
+            "spawnT": 4.2,
+            "pausedWarned": false
+          }
+        },
+        {
+          "label": "complete",
+          "phase": "M4_BREAK_CONTACT",
+          "dnaSecured": true,
+          "payloadVisible": false,
+          "installationVisible": true,
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          }
+        }
+      ],
+      "sourceCountBefore": 104,
+      "sourceCountAfter": 106,
+      "newExterior": [
+        {
+          "name": "WestServiceWallLight",
+          "position": [
+            328.82,
+            714,
+            3.36
+          ],
+          "color": 16769205,
+          "intensity": 45,
+          "range": 22,
+          "decay": 1.85,
+          "shadow": false,
+          "enabled": true
+        },
+        {
+          "name": "EastServiceWallLight",
+          "position": [
+            391.48,
+            657,
+            3.36
+          ],
+          "color": 16769205,
+          "intensity": 45,
+          "range": 22,
+          "decay": 1.85,
+          "shadow": false,
+          "enabled": true
+        }
+      ],
+      "occlusion": {
+        "wall": [
+          false,
+          false
+        ],
+        "doors": [
+          {
+            "id": "front",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "bio_lab",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_access",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_security",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_emergency",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "closed": false,
+            "open": true,
+            "overhead": false
+          }
+        ]
+      },
+      "transitions": [
+        {
+          "label": "west-outside",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "west-inside",
+          "selected": [
+            "ResearchTaskLight"
+          ]
+        },
+        {
+          "label": "east-outside",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "east-inside",
+          "selected": [
+            "FunctionalWallAccent4",
+            "HallTaskLight5",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight2"
+          ]
+        },
+        {
+          "label": "front-outside",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ]
+        },
+        {
+          "label": "front-inside",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight5"
+          ]
+        }
+      ],
+      "views": [
+        {
+          "id": "X1-west-wall",
+          "before": "lighting-baseline-verified/edge/X1-west-wall.png",
+          "after": "lighting-verified/edge/X1-west-wall.png",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X2-west-cabinet",
+          "before": "lighting-baseline-verified/edge/X2-west-cabinet.png",
+          "after": "lighting-verified/edge/X2-west-cabinet.png",
+          "selected": [
+            "WestServiceWallLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X3-east-wall",
+          "before": "lighting-baseline-verified/edge/X3-east-wall.png",
+          "after": "lighting-verified/edge/X3-east-wall.png",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 10,
+          "triangleDelta": 756
+        },
+        {
+          "id": "X4-east-cabinet",
+          "before": "lighting-baseline-verified/edge/X4-east-cabinet.png",
+          "after": "lighting-verified/edge/X4-east-cabinet.png",
+          "selected": [
+            "EastServiceWallLight",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 3,
+          "triangleDelta": 432
+        },
+        {
+          "id": "X5-main-entry",
+          "before": "lighting-baseline-verified/edge/X5-main-entry.png",
+          "after": "lighting-verified/edge/X5-main-entry.png",
+          "selected": [
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 12,
+          "triangleDelta": 780
+        },
+        {
+          "id": "H1-hall",
+          "before": "lighting-baseline-verified/edge/H1-hall.png",
+          "after": "lighting-verified/edge/H1-hall.png",
+          "selected": [
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3",
+            "HallTaskLight4",
+            "HallTaskLight5"
+          ],
+          "callsDelta": 11,
+          "triangleDelta": 768
+        },
+        {
+          "id": "H2-extractor",
+          "before": "lighting-baseline-verified/edge/H2-extractor.png",
+          "after": "lighting-verified/edge/H2-extractor.png",
+          "selected": [
+            "HallTaskLight3",
+            "FunctionalWallAccent3",
+            "HallTaskLight5",
+            "HallTaskLight2",
+            "FunctionalWallAccent4",
+            "HallTaskLight4",
+            "HallTaskLight1"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 660
+        },
+        {
+          "id": "V1-vault",
+          "before": "lighting-baseline-verified/edge/V1-vault.png",
+          "after": "lighting-verified/edge/V1-vault.png",
+          "selected": [
+            "VaultElectricalTaskLight",
+            "FunctionalWallAccent5",
+            "FunctionalWallAccent6"
+          ],
+          "callsDelta": 11,
+          "triangleDelta": 768
+        },
+        {
+          "id": "V2-header",
+          "before": "lighting-baseline-verified/edge/V2-header.png",
+          "after": "lighting-verified/edge/V2-header.png",
+          "selected": [
+            "HallTaskLight4",
+            "HallTaskLight5",
+            "HallTaskLight2",
+            "HallTaskLight1",
+            "HallTaskLight3"
+          ],
+          "callsDelta": 6,
+          "triangleDelta": 708
+        },
+        {
+          "id": "D1-decon",
+          "before": "lighting-baseline-verified/edge/D1-decon.png",
+          "after": "lighting-verified/edge/D1-decon.png",
+          "selected": [
+            "DeconTaskLight",
+            "VaultElectricalTaskLight",
+            "ResearchTaskLight"
+          ],
+          "callsDelta": 3,
+          "triangleDelta": 672
+        },
+        {
+          "id": "R1-research",
+          "before": "lighting-baseline-verified/edge/R1-research.png",
+          "after": "lighting-verified/edge/R1-research.png",
+          "selected": [
+            "ResearchTaskLight",
+            "DeconTaskLight",
+            "SecurityOperationalLight"
+          ],
+          "callsDelta": 4,
+          "triangleDelta": 684
+        },
+        {
+          "id": "S1-security",
+          "before": "lighting-baseline-verified/edge/S1-security.png",
+          "after": "lighting-verified/edge/S1-security.png",
+          "selected": [
+            "SecurityOperationalLight",
+            "ResearchTaskLight"
+          ],
+          "callsDelta": 5,
+          "triangleDelta": 696
+        },
+        {
+          "id": "C1-containment",
+          "before": "lighting-baseline-verified/edge/C1-containment.png",
+          "after": "lighting-verified/edge/C1-containment.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight",
+            "(retained unnamed source)"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "P1-power-normal",
+          "before": "lighting-baseline-verified/edge/P1-power-normal.png",
+          "after": "lighting-verified/edge/P1-power-normal.png",
+          "selected": [
+            "PowerUtilityLight"
+          ],
+          "callsDelta": 1,
+          "triangleDelta": 252
+        },
+        {
+          "id": "J1-junction",
+          "before": "lighting-baseline-verified/edge/J1-junction.png",
+          "after": "lighting-verified/edge/J1-junction.png",
+          "selected": [
+            "ContainmentPeripheralLight",
+            "SampleZeroFocalLight",
+            "ServiceTransitionLight"
+          ],
+          "callsDelta": 8,
+          "triangleDelta": 732
+        },
+        {
+          "id": "C2-defence-immediate",
+          "before": "lighting-baseline-verified/edge/C2-defence-immediate.png",
+          "after": "lighting-verified/edge/C2-defence-immediate.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "C3-defence-running",
+          "before": "lighting-baseline-verified/edge/C3-defence-running.png",
+          "after": "lighting-verified/edge/C3-defence-running.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "C4-post-defence",
+          "before": "lighting-baseline-verified/edge/C4-post-defence.png",
+          "after": "lighting-verified/edge/C4-post-defence.png",
+          "selected": [
+            "SampleZeroFocalLight",
+            "ContainmentPeripheralLight"
+          ],
+          "callsDelta": 2,
+          "triangleDelta": 264
+        },
+        {
+          "id": "P2-power-emergency",
+          "before": "lighting-baseline-verified/edge/P2-power-emergency.png",
+          "after": "lighting-verified/edge/P2-power-emergency.png",
+          "selected": [
+            "PowerUtilityLight",
+            "ServiceTransitionLight"
+          ],
+          "callsDelta": 1,
+          "triangleDelta": 252
+        },
+        {
+          "id": "X6-emergency-exit",
+          "before": "lighting-baseline-verified/edge/X6-emergency-exit.png",
+          "after": "lighting-verified/edge/X6-emergency-exit.png",
+          "selected": [
+            "PowerUtilityLight"
+          ],
+          "callsDelta": 12,
+          "triangleDelta": 780
+        }
+      ],
+      "warm": {
+        "samples": 12,
+        "frames": 768,
+        "p95Range": [
+          18.2,
+          18.8
+        ],
+        "worst": 19.6,
+        "selectorMaxMs": 0.30000001192092896,
+        "programs": [
+          47
+        ],
+        "p95DeltaRange": [
+          -0.4,
+          0.4
+        ],
+        "renderMedianDeltaRange": [
+          -0.2,
+          1
+        ],
+        "renderP95DeltaRange": [
+          -1,
+          3.9
+        ],
+        "callsDeltaRange": [
+          1,
+          11
+        ],
+        "triangleDeltaRange": [
+          252,
+          768
+        ],
+        "deltas": [
+          {
+            "label": "west",
+            "repetition": 0,
+            "p95": -0.3000000000000007,
+            "renderMedian": -0.10000000000000053,
+            "renderP95": -0.5999999999999996,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "east",
+            "repetition": 0,
+            "p95": -0.1999999999999993,
+            "renderMedian": 1,
+            "renderP95": 3.9000000000000004,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "hall",
+            "repetition": 0,
+            "p95": 0,
+            "renderMedian": 0.10000000000000142,
+            "renderP95": -1,
+            "calls": 11,
+            "triangles": 768
+          },
+          {
+            "label": "security",
+            "repetition": 0,
+            "p95": -0.1999999999999993,
+            "renderMedian": 0.3000000000000007,
+            "renderP95": 1.1000000000000005,
+            "calls": 5,
+            "triangles": 696
+          },
+          {
+            "label": "containment",
+            "repetition": 0,
+            "p95": -0.3999999999999986,
+            "renderMedian": 0,
+            "renderP95": -0.7000000000000002,
+            "calls": 2,
+            "triangles": 264
+          },
+          {
+            "label": "power",
+            "repetition": 0,
+            "p95": 0.3000000000000007,
+            "renderMedian": 0.10000000000000009,
+            "renderP95": 0.09999999999999964,
+            "calls": 1,
+            "triangles": 252
+          },
+          {
+            "label": "west",
+            "repetition": 1,
+            "p95": 0.40000000000000213,
+            "renderMedian": 0.9000000000000004,
+            "renderP95": 0.40000000000000036,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "east",
+            "repetition": 1,
+            "p95": 0,
+            "renderMedian": 0.9000000000000004,
+            "renderP95": -0.29999999999999893,
+            "calls": 10,
+            "triangles": 756
+          },
+          {
+            "label": "hall",
+            "repetition": 1,
+            "p95": -0.10000000000000142,
+            "renderMedian": -0.20000000000000107,
+            "renderP95": 0.20000000000000107,
+            "calls": 11,
+            "triangles": 768
+          },
+          {
+            "label": "security",
+            "repetition": 1,
+            "p95": 0.3999999999999986,
+            "renderMedian": 0.2999999999999998,
+            "renderP95": 1.3000000000000007,
+            "calls": 5,
+            "triangles": 696
+          },
+          {
+            "label": "containment",
+            "repetition": 1,
+            "p95": 0.20000000000000284,
+            "renderMedian": 0,
+            "renderP95": -0.6000000000000005,
+            "calls": 2,
+            "triangles": 264
+          },
+          {
+            "label": "power",
+            "repetition": 1,
+            "p95": 0,
+            "renderMedian": 0.2999999999999998,
+            "renderP95": 0.5,
+            "calls": 1,
+            "triangles": 252
+          }
+        ]
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "p95": 35.7,
+          "p99": 36.7,
+          "worst": 53.5,
+          "counters": {
+            "shadowRefresh": 61
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 18.6,
+          "p99": 18.9,
+          "worst": 19.1,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 19,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 18.6,
+          "p99": 18.9,
+          "worst": 19,
+          "counters": {
+            "shadowRefresh": 61
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 18.6,
+          "p99": 35.8,
+          "worst": 36.1,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 18.5,
+          "p99": 19.2,
+          "worst": 36.5,
+          "counters": {
+            "shadowRefresh": 61
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 19.3,
+          "counters": {
+            "shadowRefresh": 60
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 35.7,
+          "p99": 36.3,
+          "worst": 53.6,
+          "counters": {
+            "shadowRefresh": 101,
+            "sceneObjectsAdded": 184,
+            "sceneObjectsRemoved": 148
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 18.5,
+          "p99": 18.9,
+          "worst": 55.2,
+          "counters": {
+            "shadowRefresh": 151,
+            "sceneObjectsAdded": 1170,
+            "meshesCreated": 206,
+            "geometriesCreated": 20,
+            "materialsCreated": 14,
+            "groupsObjectsCreated": 95,
+            "sceneObjectsRemoved": 1145,
+            "materialDisposes": 5
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 18.5,
+          "p99": 18.9,
+          "worst": 19.1,
+          "counters": {
+            "shadowRefresh": 150,
+            "sceneObjectsAdded": 858,
+            "meshesCreated": 216,
+            "groupsObjectsCreated": 73,
+            "sceneObjectsRemoved": 824,
+            "geometriesCreated": 5,
+            "materialsCreated": 2,
+            "materialDisposes": 1
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        }
+      ]
+    }
+  ],
+  "caveats": [
+    "D0-03 geometry/jamb seating and projectile/enclosure checks pass; a narrow coloured junction highlight remains visible and requires manual visual review.",
+    "Eligibility blocks source-to-camera paths; eight non-shadow point slots do not provide per-pixel shadow occlusion.",
+    "Bounded warm timing deltas are small in this pair, with two Firefox tail spikes. Prior cross-checkpoint timing remains inconclusive; no general FPS or timing-equivalence claim."
+  ],
+  "changedFiles": [
+    "chargefront.html",
+    "src/world/facility.js",
+    "tests/facility-d0.mjs",
+    "tests/facility-lighting.mjs",
+    "tests/facility-enclosure.mjs (comment only)",
+    "tests/facility-regression.mjs (comment only)",
+    "MILESTONE-4.2-ENVIRONMENT.md",
+    "_playtest/m42/cp3d-20261013/"
+  ],
+  "stop": "CP3-D only. No CP3-E, staging, commit, merge or push."
+}

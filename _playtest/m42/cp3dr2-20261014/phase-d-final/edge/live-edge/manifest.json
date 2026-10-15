@@ -1,0 +1,860 @@
+{
+  "browser": "edge",
+  "hashes": {
+    "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+    "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+  },
+  "samples": [
+    {
+      "label": "defence-start",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 0.016666666666666666,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 0.02836681303610101
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [],
+      "squad": [
+        {
+          "x": 356.528626599361,
+          "y": 767.1318324842844,
+          "mag": 30,
+          "downed": false
+        },
+        {
+          "x": 358.8128878435974,
+          "y": 769.7035490349177,
+          "mag": 70,
+          "downed": false
+        },
+        {
+          "x": 362.8097425649784,
+          "y": 765.668103846007,
+          "mag": 50,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 0,
+        "engagedHostiles": 0,
+        "activeCap": 18,
+        "budgetUsed": 0,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 0,
+        "accepted": 0,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": null,
+        "lastRejectReason": null,
+        "sourceCounts": {},
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-15",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 15.016666666666993,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 1.0719816245169145e-23
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "drone",
+          "x": 379.1079402949763,
+          "y": 758.1726339766901
+        }
+      ],
+      "squad": [
+        {
+          "x": 361.2746104495904,
+          "y": 771.5417125529048,
+          "mag": 26,
+          "downed": false
+        },
+        {
+          "x": 354.5245976500134,
+          "y": 778.181508234397,
+          "mag": 50,
+          "downed": false
+        },
+        {
+          "x": 359.8700149787129,
+          "y": 767.1842986436864,
+          "mag": 35,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 1,
+        "engagedHostiles": 1,
+        "activeCap": 18,
+        "budgetUsed": 2,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 4,
+        "accepted": 4,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "m3_stabilization": 1
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-30",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 30.016666666666243,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 4.051017651646215e-45
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [],
+      "squad": [
+        {
+          "x": 364.49751691477053,
+          "y": 774.9731033723233,
+          "mag": 18,
+          "downed": false
+        },
+        {
+          "x": 354.5203165554743,
+          "y": 778.1025987109122,
+          "mag": 26,
+          "downed": false
+        },
+        {
+          "x": 359.96923486148876,
+          "y": 767.1242563906399,
+          "mag": 18,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 0,
+        "engagedHostiles": 0,
+        "activeCap": 18,
+        "budgetUsed": 0,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 7,
+        "accepted": 7,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {},
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-45",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 45.016666666665394,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 1.5308792276495104e-66
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "drone",
+          "x": 371.1423867470019,
+          "y": 753.2221476450862
+        },
+        {
+          "type": "drone",
+          "x": 383.4158560608821,
+          "y": 784.6787208334854
+        }
+      ],
+      "squad": [
+        {
+          "x": 365.7010267729735,
+          "y": 775.4685152552469,
+          "mag": 17,
+          "downed": false
+        },
+        {
+          "x": 354.52332453988106,
+          "y": 778.1389323904559,
+          "mag": 1,
+          "downed": false
+        },
+        {
+          "x": 356.940760163914,
+          "y": 767.5862588376425,
+          "mag": 0,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 2,
+        "engagedHostiles": 1,
+        "activeCap": 18,
+        "budgetUsed": 4,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 12,
+        "accepted": 12,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "m3_stabilization": 2
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-60",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 60.01666666666454,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 5.785191305439989e-88
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "drone",
+          "x": 383.18219848523495,
+          "y": 784.5502091668795
+        }
+      ],
+      "squad": [
+        {
+          "x": 367.0448875660416,
+          "y": 776.5712221479993,
+          "mag": 1,
+          "downed": false
+        },
+        {
+          "x": 354.4864164775585,
+          "y": 777.9463755338529,
+          "mag": 52,
+          "downed": false
+        },
+        {
+          "x": 358.7690169166998,
+          "y": 765.853371137948,
+          "mag": 27,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 1,
+        "engagedHostiles": 1,
+        "activeCap": 18,
+        "budgetUsed": 2,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 16,
+        "accepted": 16,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "m3_stabilization": 1
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-75",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 75.03333333333036,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 2.0696247283784274e-109
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [],
+      "squad": [
+        {
+          "x": 361.60631135507623,
+          "y": 772.115752860527,
+          "mag": 30,
+          "downed": false
+        },
+        {
+          "x": 354.52344505189916,
+          "y": 778.2274019981237,
+          "mag": 34,
+          "downed": false
+        },
+        {
+          "x": 353.16233884247185,
+          "y": 769.502528752549,
+          "mag": 0,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 0,
+        "engagedHostiles": 0,
+        "activeCap": 18,
+        "budgetUsed": 0,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 19,
+        "accepted": 19,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {},
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "live-89",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 89.0166666666629,
+      "state": "defence",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 2.2143496325890228e-129
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "drone",
+          "x": 385.9386634035784,
+          "y": 774.6268189543905
+        }
+      ],
+      "squad": [
+        {
+          "x": 366.5296713586878,
+          "y": 776.7033677227523,
+          "mag": 23,
+          "downed": false
+        },
+        {
+          "x": 355.2915396091973,
+          "y": 778.3736709734901,
+          "mag": 34,
+          "downed": false
+        },
+        {
+          "x": 358.6092372774644,
+          "y": 765.9003403690007,
+          "mag": 39,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 1,
+        "engagedHostiles": 1,
+        "activeCap": 18,
+        "budgetUsed": 2,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 22,
+        "accepted": 22,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "m3_stabilization": 1
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "transfer-start",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 90,
+      "state": "transfer",
+      "transferT": 0,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 8.261736017599826e-131
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "drone",
+          "x": 385.9386634035784,
+          "y": 774.6268189543905
+        }
+      ],
+      "squad": [
+        {
+          "x": 363.6479551753295,
+          "y": 776.1049981267938,
+          "mag": 22,
+          "downed": false
+        },
+        {
+          "x": 359.1026845218477,
+          "y": 779.2416339531856,
+          "mag": 27,
+          "downed": false
+        },
+        {
+          "x": 356.6399558783115,
+          "y": 762.5796084867042,
+          "mag": 35,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 1,
+        "engagedHostiles": 1,
+        "activeCap": 18,
+        "budgetUsed": 2,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 22,
+        "accepted": 22,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "m3_stabilization": 1
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "transfer-mid",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "t": 90,
+      "state": "transfer",
+      "transferT": 1.7166666666666655,
+      "payload": true,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 2.919921008631583e-133
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [],
+      "squad": [
+        {
+          "x": 366.04482456510556,
+          "y": 777.0137592006857,
+          "mag": 22,
+          "downed": false
+        },
+        {
+          "x": 354.5257657122028,
+          "y": 778.3459899204474,
+          "mag": 25,
+          "downed": false
+        },
+        {
+          "x": 359.10775836125976,
+          "y": 765.8855685502241,
+          "mag": 34,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 0,
+        "engagedHostiles": 0,
+        "activeCap": 18,
+        "budgetUsed": 0,
+        "budgetAvailable": 22,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 22,
+        "accepted": 22,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "m3_stabilization",
+        "lastRejectReason": null,
+        "sourceCounts": {},
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "completed",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "t": 0,
+      "payload": false,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 7.846144789937835e-136
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "disabled": false,
+          "openT": 0
+        }
+      ],
+      "enemies": [
+        {
+          "type": "shielded",
+          "x": 380,
+          "y": 760
+        },
+        {
+          "type": "runner",
+          "x": 372,
+          "y": 748
+        },
+        {
+          "type": "drone",
+          "x": 398.8885726027065,
+          "y": 751.0732237182215
+        }
+      ],
+      "squad": [
+        {
+          "x": 365.9899235618428,
+          "y": 776.9545775349058,
+          "mag": 22,
+          "downed": false
+        },
+        {
+          "x": 354.5864442239356,
+          "y": 778.3220217516855,
+          "mag": 25,
+          "downed": false
+        },
+        {
+          "x": 359.0922115541876,
+          "y": 765.9718057211998,
+          "mag": 34,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "SCRIPTED_STABILIZATION",
+        "pressure": "LOW",
+        "activeHostiles": 3,
+        "engagedHostiles": 0,
+        "activeCap": 12,
+        "budgetUsed": 6,
+        "budgetAvailable": 16,
+        "ammoPressure": 0,
+        "squadCondition": 1,
+        "requests": 3,
+        "accepted": 3,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "authored",
+        "lastRejectReason": null,
+        "sourceCounts": {
+          "authored": 3
+        },
+        "rejectReasons": {}
+      }
+    },
+    {
+      "label": "exit-after",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "t": 0,
+      "payload": false,
+      "glass": true,
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "disabled": false,
+          "openT": 1.4374697512602103e-139
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "disabled": true,
+          "openT": 0.9998167928594557
+        }
+      ],
+      "enemies": [],
+      "squad": [
+        {
+          "x": 387.11715620175227,
+          "y": 769.5681636467484,
+          "mag": 22,
+          "downed": false
+        },
+        {
+          "x": 376.2525689784084,
+          "y": 772.7058579460673,
+          "mag": 25,
+          "downed": false
+        },
+        {
+          "x": 381.1618379009589,
+          "y": 762.2423592485613,
+          "mag": 34,
+          "downed": false
+        }
+      ],
+      "director": {
+        "phase": "FACILITY",
+        "pressure": "LOW",
+        "activeHostiles": 0,
+        "engagedHostiles": 0,
+        "activeCap": 12,
+        "budgetUsed": 0,
+        "budgetAvailable": 19,
+        "ammoPressure": 0.4285714285714286,
+        "squadCondition": 1,
+        "requests": 3,
+        "accepted": 3,
+        "rejected": 0,
+        "acceptance": 1,
+        "lastSpawnSource": "authored",
+        "lastRejectReason": null,
+        "sourceCounts": {},
+        "rejectReasons": {}
+      }
+    }
+  ],
+  "errors": [],
+  "closing": {
+    "state": "locking",
+    "t": 0,
+    "positions": [
+      [
+        352.7385600857116,
+        763.4435558624687
+      ],
+      [
+        360.68346577854004,
+        765.0193442004324
+      ],
+      [
+        367.89011214912944,
+        764.265378142356
+      ]
+    ],
+    "same": true
+  },
+  "exitBlocked": true,
+  "blockedPosition": [
+    449,
+    752
+  ],
+  "elapsedWallSeconds": 97.977,
+  "exitAfter": {
+    "mission": "break_contact",
+    "phase": "M4_REACH_LZ",
+    "t": 0,
+    "payload": false,
+    "glass": true,
+    "doors": [
+      {
+        "id": "front",
+        "locked": true,
+        "disabled": false,
+        "openT": 1.4374697512602103e-139
+      },
+      {
+        "id": "lab_emergency_exit",
+        "locked": false,
+        "disabled": true,
+        "openT": 0.9998167928594557
+      }
+    ],
+    "enemies": [],
+    "squad": [
+      {
+        "x": 387.11715620175227,
+        "y": 769.5681636467484,
+        "mag": 22,
+        "downed": false
+      },
+      {
+        "x": 376.2525689784084,
+        "y": 772.7058579460673,
+        "mag": 25,
+        "downed": false
+      },
+      {
+        "x": 381.1618379009589,
+        "y": 762.2423592485613,
+        "mag": 34,
+        "downed": false
+      }
+    ],
+    "director": {
+      "phase": "FACILITY",
+      "pressure": "LOW",
+      "activeHostiles": 0,
+      "engagedHostiles": 0,
+      "activeCap": 12,
+      "budgetUsed": 0,
+      "budgetAvailable": 19,
+      "ammoPressure": 0.4285714285714286,
+      "squadCondition": 1,
+      "requests": 3,
+      "accepted": 3,
+      "rejected": 0,
+      "acceptance": 1,
+      "lastSpawnSource": "authored",
+      "lastRejectReason": null,
+      "sourceCounts": {},
+      "rejectReasons": {}
+    }
+  },
+  "passed": true
+}

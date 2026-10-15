@@ -1,0 +1,21 @@
+{
+  "sourceHashes": true,
+  "inlineScripts": 1,
+  "syntaxFiles": [
+    "src/world/facility.js",
+    "tests/facility-d0.mjs",
+    "tests/facility-lighting.mjs",
+    "tests/facility-enclosure.mjs",
+    "tests/facility-regression.mjs",
+    "_playtest/m42/cp3d-20261013/inspect-d0.mjs",
+    "_playtest/m42/cp3d-20261013/compose-d0.mjs",
+    "_playtest/m42/cp3d-20261013/compose-lighting.mjs",
+    "_playtest/m42/cp3d-20261013/measure-lighting.mjs",
+    "_playtest/m42/cp3d-20261013/summarize.mjs",
+    "_playtest/m42/cp3d-20261013/run-regressions.mjs",
+    "_playtest/m42/cp3d-20261013/check-evidence.mjs"
+  ],
+  "links": 73,
+  "creditsPreserved": true,
+  "passed": true
+}

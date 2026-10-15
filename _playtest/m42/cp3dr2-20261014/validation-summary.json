@@ -1,0 +1,4012 @@
+{
+  "checkpoint": "CP3-D-R2",
+  "status": "A/B/C/D implementation and automated verification complete; manual visual acceptance pending",
+  "hashes": {
+    "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+    "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+  },
+  "suites": [
+    {
+      "browser": "firefox",
+      "suite": "facility-r2-a",
+      "status": 0,
+      "error": null,
+      "seconds": 33.251,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/firefox/facility-r2-a.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-containment-r2",
+      "status": 0,
+      "error": null,
+      "seconds": 40.185,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/firefox/sample-containment-r2.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-lockdown-live",
+      "status": 0,
+      "error": null,
+      "seconds": 125.96,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/firefox/sample-lockdown-live.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "error": null,
+      "seconds": 125.587,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/firefox/facility-enclosure.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 63.813,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/firefox/facility-regression.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-r2-a",
+      "status": 0,
+      "error": null,
+      "seconds": 23.711,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/edge/facility-r2-a.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-containment-r2",
+      "status": 0,
+      "error": null,
+      "seconds": 24.71,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/edge/sample-containment-r2.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-lockdown-live",
+      "status": 0,
+      "error": null,
+      "seconds": 113.146,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/edge/sample-lockdown-live.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "error": null,
+      "seconds": 115.585,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/edge/facility-enclosure.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 31.463,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final/edge/facility-regression.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "error": null,
+      "seconds": 93.029,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-playthrough/firefox/facility-playthrough.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "error": null,
+      "seconds": 65.647,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-playthrough/edge/facility-playthrough.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": 0,
+      "error": null,
+      "seconds": 167.634,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/m2-progression.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "error": null,
+      "seconds": 40.569,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/transition-diagnose.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "traversal-performance",
+      "status": 0,
+      "error": null,
+      "seconds": 157.32,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/traversal-performance.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "environment-placement",
+      "status": 0,
+      "error": null,
+      "seconds": 238.124,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/environment-placement.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "environment-placement-state",
+      "status": 0,
+      "error": null,
+      "seconds": 0.116,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/environment-placement-state.log"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-persistent-lighting",
+      "status": 0,
+      "error": null,
+      "seconds": 46.73,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/firefox/facility-persistent-lighting.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": 0,
+      "error": null,
+      "seconds": 117.576,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/m2-progression.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "error": null,
+      "seconds": 32.783,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/transition-diagnose.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "traversal-performance",
+      "status": 0,
+      "error": null,
+      "seconds": 149.046,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/traversal-performance.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement",
+      "status": 0,
+      "error": null,
+      "seconds": 128.603,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/environment-placement.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement-state",
+      "status": 0,
+      "error": null,
+      "seconds": 0.082,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/environment-placement-state.log"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-persistent-lighting",
+      "status": 0,
+      "error": null,
+      "seconds": 37.082,
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "log": "phase-d-final-extended/edge/facility-persistent-lighting.log"
+    }
+  ],
+  "browsers": [
+    {
+      "browser": "firefox",
+      "solids": 327,
+      "map": 28,
+      "doors": [
+        {
+          "id": "front",
+          "base": [
+            360,
+            618
+          ]
+        },
+        {
+          "id": "bio_lab",
+          "base": [
+            360,
+            660
+          ]
+        },
+        {
+          "id": "lab_access",
+          "base": [
+            360,
+            690
+          ]
+        },
+        {
+          "id": "lab_security",
+          "base": [
+            360,
+            735
+          ]
+        },
+        {
+          "id": "lab_emergency",
+          "base": [
+            410,
+            752
+          ]
+        },
+        {
+          "id": "lab_emergency_exit",
+          "base": [
+            450,
+            752
+          ]
+        }
+      ],
+      "walk": [
+        371.0533333333308,
+        708
+      ],
+      "lifecycle": [
+        {
+          "label": "before",
+          "phase": "M3_REACH_SAMPLE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "immediate",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "paused",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "duplicate",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-30",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 30,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-60",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 60,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 4.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-89",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 89,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 4.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "at-90",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-mid",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 1.75,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-restored",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 1.75,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-3.49",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 3.49,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "complete",
+          "phase": "M4_BREAK_CONTACT",
+          "mission": "break_contact",
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          },
+          "payload": false,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "dead",
+          "phase": "DEAD",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "continue-launch",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30.099999999999994,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.5000000000000004,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "actual-continue",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30.14999999999999,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.4500000000000006,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-restored",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "legacy-migrated",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 90,
+            "stage": 0,
+            "spawnT": 2,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "live-combat",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 33.06666666666649,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 0.5333333333333412,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        }
+      ],
+      "carriedStats": [
+        {
+          "missionId": "dead_signal",
+          "kills": 0,
+          "activeSeconds": 0,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        {
+          "missionId": "power_through",
+          "kills": 0,
+          "activeSeconds": 0,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 0,
+          "activeSeconds": 0.6000000000000002,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        }
+      ],
+      "live": [
+        {
+          "label": "defence-start",
+          "mission": "sample_zero",
+          "t": 0.03333333333333333,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 0.026853916340842287
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 356.6443704651482,
+              "y": 767.2465086746804,
+              "mag": 30,
+              "downed": false
+            },
+            {
+              "x": 358.7296572115775,
+              "y": 769.8436202061297,
+              "mag": 70,
+              "downed": false
+            },
+            {
+              "x": 362.6519862838623,
+              "y": 765.7088497277564,
+              "mag": 50,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-15",
+          "mission": "sample_zero",
+          "t": 15.016666666666993,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.0719816245169145e-23
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 368.8003175005682,
+              "y": 777.1994909331819,
+              "mag": 25,
+              "downed": false
+            },
+            {
+              "x": 354.59227920751414,
+              "y": 777.7473044932515,
+              "mag": 57,
+              "downed": false
+            },
+            {
+              "x": 352.9044017343189,
+              "y": 768.2823048218713,
+              "mag": 25,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-30",
+          "mission": "sample_zero",
+          "t": 30.03333333333291,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 3.83496337689175e-45
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 367.0301562982861,
+              "y": 777.9592926057298,
+              "mag": 21,
+              "downed": false
+            },
+            {
+              "x": 354.50344486099857,
+              "y": 778.005757893838,
+              "mag": 35,
+              "downed": false
+            },
+            {
+              "x": 360.2315245100338,
+              "y": 766.9002611954586,
+              "mag": 14,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-45",
+          "mission": "sample_zero",
+          "t": 45.016666666665394,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.5308792276495104e-66
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 339.2505970257366,
+              "y": 764.8335544539759
+            }
+          ],
+          "squad": [
+            {
+              "x": 367.1357086337589,
+              "y": 776.616407784337,
+              "mag": 20,
+              "downed": false
+            },
+            {
+              "x": 354.6261984029067,
+              "y": 778.1649526412579,
+              "mag": 15,
+              "downed": false
+            },
+            {
+              "x": 357.108670339644,
+              "y": 764.9622163436899,
+              "mag": 36,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-60",
+          "mission": "sample_zero",
+          "t": 60.03333333333121,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 5.476647769149856e-88
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 372.7894575741247,
+              "y": 748.4306688752741
+            }
+          ],
+          "squad": [
+            {
+              "x": 367.44102803509566,
+              "y": 776.9627748933248,
+              "mag": 10,
+              "downed": false
+            },
+            {
+              "x": 354.5236323273388,
+              "y": 778.1445712892345,
+              "mag": 70,
+              "downed": false
+            },
+            {
+              "x": 359.61765678736714,
+              "y": 765.7693931863496,
+              "mag": 11,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-75",
+          "mission": "sample_zero",
+          "t": 75.04999999999703,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.959244742864911e-109
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 367.1072825592568,
+              "y": 776.3788996160339,
+              "mag": 2,
+              "downed": false
+            },
+            {
+              "x": 354.53738471833043,
+              "y": 778.3029177474108,
+              "mag": 34,
+              "downed": false
+            },
+            {
+              "x": 360.1527848760371,
+              "y": 767.1500198504456,
+              "mag": 49,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-89",
+          "mission": "sample_zero",
+          "t": 89.0166666666629,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 2.2143496325890228e-129
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 385.9386634035784,
+              "y": 774.6268189543905
+            }
+          ],
+          "squad": [
+            {
+              "x": 366.9227860751119,
+              "y": 776.4261070746669,
+              "mag": 29,
+              "downed": false
+            },
+            {
+              "x": 356.05986596386055,
+              "y": 778.5190123317757,
+              "mag": 20,
+              "downed": false
+            },
+            {
+              "x": 359.82943220177987,
+              "y": 766.9864400358131,
+              "mag": 40,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "transfer-start",
+          "mission": "sample_zero",
+          "t": 90,
+          "state": "transfer",
+          "transferT": 0.03333333333333333,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 7.40398422483924e-131
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 385.9386634035784,
+              "y": 774.6268189543905
+            },
+            {
+              "type": "drone",
+              "x": 397.800489496247,
+              "y": 774.9657282713217
+            }
+          ],
+          "squad": [
+            {
+              "x": 370.37378787226857,
+              "y": 774.3426925260354,
+              "mag": 28,
+              "downed": false
+            },
+            {
+              "x": 359.95964290083475,
+              "y": 779.5541480659753,
+              "mag": 12,
+              "downed": false
+            },
+            {
+              "x": 357.30099075693585,
+              "y": 763.8750189042398,
+              "mag": 36,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "transfer-mid",
+          "mission": "sample_zero",
+          "t": 90,
+          "state": "transfer",
+          "transferT": 1.7166666666666655,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 2.919921008631583e-133
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 385.9386634035784,
+              "y": 774.6268189543905
+            }
+          ],
+          "squad": [
+            {
+              "x": 367.3401962807737,
+              "y": 776.7900517958938,
+              "mag": 27,
+              "downed": false
+            },
+            {
+              "x": 354.55467713567117,
+              "y": 778.3647891223686,
+              "mag": 11,
+              "downed": false
+            },
+            {
+              "x": 359.0642512329451,
+              "y": 765.9270642111658,
+              "mag": 36,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "completed",
+          "mission": "break_contact",
+          "t": 0,
+          "payload": false,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 6.6565251031974884e-136
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": false,
+              "disabled": false,
+              "openT": 0.15161837037037038
+            }
+          ],
+          "enemies": [
+            {
+              "type": "shielded",
+              "x": 380,
+              "y": 760
+            },
+            {
+              "type": "runner",
+              "x": 372,
+              "y": 748
+            },
+            {
+              "type": "drone",
+              "x": 398.55429041082607,
+              "y": 751.2928948728859
+            }
+          ],
+          "squad": [
+            {
+              "x": 366.4243923137717,
+              "y": 776.6630555710241,
+              "mag": 27,
+              "downed": false
+            },
+            {
+              "x": 355.83841516839755,
+              "y": 778.4372894987887,
+              "mag": 10,
+              "downed": false
+            },
+            {
+              "x": 358.3441535427998,
+              "y": 765.3681472576833,
+              "mag": 36,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "exit-after",
+          "mission": "break_contact",
+          "t": 0,
+          "payload": false,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.3608046978596657e-139
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": false,
+              "disabled": true,
+              "openT": 0.9998265639069513
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 387.2947654242972,
+              "y": 769.4059460226448,
+              "mag": 27,
+              "downed": false
+            },
+            {
+              "x": 377.20325010147724,
+              "y": 772.7961984964895,
+              "mag": 10,
+              "downed": false
+            },
+            {
+              "x": 380.16341526645834,
+              "y": 761.8728833500934,
+              "mag": 36,
+              "downed": false
+            }
+          ]
+        }
+      ],
+      "liveWallSeconds": 95.953,
+      "fixtures": [
+        {
+          "zone": "front",
+          "x": 338,
+          "y": 617,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "front",
+          "x": 382,
+          "y": 617,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "front-header",
+          "x": 360,
+          "y": 616.75,
+          "nx": 0,
+          "ny": -1,
+          "z": 8.55,
+          "poolWidth": 15.2
+        },
+        {
+          "zone": "hall-west",
+          "x": 329,
+          "y": 626,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 14
+        },
+        {
+          "zone": "hall-west",
+          "x": 329,
+          "y": 645,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "hall-east",
+          "x": 391,
+          "y": 626,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 14
+        },
+        {
+          "zone": "hall-east",
+          "x": 391,
+          "y": 657,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 7.5
+        },
+        {
+          "zone": "vault-west",
+          "x": 341,
+          "y": 672,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "vault-east",
+          "x": 379,
+          "y": 672,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "lab-recess",
+          "x": 335,
+          "y": 683,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 11
+        },
+        {
+          "zone": "lab-recess",
+          "x": 385,
+          "y": 683,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 11
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 690,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 714,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 738,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 762,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 787,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "east",
+          "x": 390.7,
+          "y": 690,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "east",
+          "x": 390.7,
+          "y": 714,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "containment-east",
+          "x": 410.7,
+          "y": 779,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "containment-east",
+          "x": 410.7,
+          "y": 790,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 10
+        },
+        {
+          "zone": "containment-return",
+          "x": 400,
+          "y": 734.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-front",
+          "x": 422,
+          "y": 735.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-front",
+          "x": 444,
+          "y": 735.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "power-rear",
+          "x": 422,
+          "y": 770.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-rear",
+          "x": 442,
+          "y": 770.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "exit-facade",
+          "x": 450.7,
+          "y": 741,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 8
+        },
+        {
+          "zone": "exit-facade",
+          "x": 450.7,
+          "y": 762,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 7
+        },
+        {
+          "zone": "exit-header",
+          "x": 450.95,
+          "y": 752,
+          "nx": 1,
+          "ny": 0,
+          "z": 8.55,
+          "poolWidth": 15.2
+        },
+        {
+          "zone": "rear",
+          "x": 342,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 363,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 386,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 403,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 12
+        }
+      ],
+      "lightSources": 104,
+      "registeredSources": 107,
+      "slots": 8,
+      "terrainPool": {
+        "vertices": 1120,
+        "maxError": 0.00001269375691642649
+      },
+      "lightingViews": [
+        {
+          "id": "west-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "west-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "west-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "power-exit-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "power-exit-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "power-exit-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "front-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "front-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "front-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "vault-recess-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "vault-recess-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "vault-recess-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "lab-east-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "lab-east-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "lab-east-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "rear-corner-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "rear-corner-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "rear-corner-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "power-exit-emergency",
+          "player": [
+            456,
+            752
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        }
+      ],
+      "warm": {
+        "frames": 768,
+        "programsBefore": [
+          47
+        ],
+        "programsAfter": [
+          48
+        ],
+        "frameP95": [
+          16.7,
+          33.3
+        ],
+        "worst": 50,
+        "p95Delta": [
+          0,
+          16.6
+        ],
+        "medianRenderDelta": [
+          -1,
+          1
+        ],
+        "p95RenderDelta": [
+          -1,
+          1
+        ],
+        "callsDelta": [
+          -2,
+          4
+        ],
+        "trianglesDelta": [
+          3436,
+          3904
+        ],
+        "selectorMax": 1,
+        "deltas": [
+          {
+            "label": "west",
+            "repetition": 0,
+            "p95": 16.599999999999998,
+            "medianRender": 0,
+            "p95Render": 0,
+            "calls": -2,
+            "triangles": 3436
+          },
+          {
+            "label": "front",
+            "repetition": 0,
+            "p95": 0,
+            "medianRender": -1,
+            "p95Render": 0,
+            "calls": -2,
+            "triangles": 3712
+          },
+          {
+            "label": "research",
+            "repetition": 0,
+            "p95": 16.599999999999998,
+            "medianRender": -1,
+            "p95Render": 1,
+            "calls": -1,
+            "triangles": 3448
+          },
+          {
+            "label": "sample",
+            "repetition": 0,
+            "p95": 0,
+            "medianRender": 1,
+            "p95Render": -1,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "power",
+            "repetition": 0,
+            "p95": 0,
+            "medianRender": 1,
+            "p95Render": 0,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "rear",
+            "repetition": 0,
+            "p95": 16.599999999999998,
+            "medianRender": 0,
+            "p95Render": 0,
+            "calls": 0,
+            "triangles": 3724
+          },
+          {
+            "label": "west",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 0,
+            "p95Render": 0,
+            "calls": -2,
+            "triangles": 3436
+          },
+          {
+            "label": "front",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 1,
+            "p95Render": 1,
+            "calls": -2,
+            "triangles": 3712
+          },
+          {
+            "label": "research",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 0,
+            "p95Render": 0,
+            "calls": -1,
+            "triangles": 3448
+          },
+          {
+            "label": "sample",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 1,
+            "p95Render": 0,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "power",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 1,
+            "p95Render": 0,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "rear",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 0,
+            "p95Render": 1,
+            "calls": 0,
+            "triangles": 3724
+          }
+        ]
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "summary": {
+            "frames": 183,
+            "p95": 50,
+            "p99": 66.7,
+            "worst": 66.7,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 61
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "summary": {
+            "frames": 238,
+            "p95": 33.4,
+            "p99": 50,
+            "worst": 66.7,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "summary": {
+            "frames": 338,
+            "p95": 33.3,
+            "p99": 33.3,
+            "worst": 33.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 61
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "summary": {
+            "frames": 255,
+            "p95": 33.3,
+            "p99": 50,
+            "worst": 50,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 61
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "summary": {
+            "frames": 214,
+            "p95": 50,
+            "p99": 50,
+            "worst": 66.7,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Facility interior",
+          "summary": {
+            "frames": 207,
+            "p95": 50,
+            "p99": 66.7,
+            "worst": 83.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "summary": {
+            "frames": 282,
+            "p95": 33.3,
+            "p99": 50,
+            "worst": 50,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "summary": {
+            "frames": 318,
+            "p95": 50,
+            "p99": 66.7,
+            "worst": 66.7,
+            "over100": 0,
+            "counters": {
+              "sceneObjectsAdded": 521,
+              "sceneObjectsRemoved": 488,
+              "shadowRefresh": 101
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "summary": {
+            "frames": 864,
+            "p95": 16.7,
+            "p99": 33.3,
+            "worst": 50,
+            "over100": 0,
+            "counters": {
+              "sceneObjectsAdded": 1101,
+              "shadowRefresh": 151,
+              "meshesCreated": 203,
+              "geometriesCreated": 17,
+              "materialsCreated": 11,
+              "groupsObjectsCreated": 94,
+              "sceneObjectsRemoved": 1077,
+              "materialDisposes": 3
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "summary": {
+            "frames": 898,
+            "p95": 16.7,
+            "p99": 16.7,
+            "worst": 33.3,
+            "over100": 0,
+            "counters": {
+              "sceneObjectsAdded": 1391,
+              "shadowRefresh": 150,
+              "meshesCreated": 311,
+              "geometriesCreated": 35,
+              "materialsCreated": 18,
+              "groupsObjectsCreated": 93,
+              "sceneObjectsRemoved": 1335,
+              "materialDisposes": 3
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+          }
+        }
+      ]
+    },
+    {
+      "browser": "edge",
+      "solids": 327,
+      "map": 28,
+      "doors": [
+        {
+          "id": "front",
+          "base": [
+            360,
+            618
+          ]
+        },
+        {
+          "id": "bio_lab",
+          "base": [
+            360,
+            660
+          ]
+        },
+        {
+          "id": "lab_access",
+          "base": [
+            360,
+            690
+          ]
+        },
+        {
+          "id": "lab_security",
+          "base": [
+            360,
+            735
+          ]
+        },
+        {
+          "id": "lab_emergency",
+          "base": [
+            410,
+            752
+          ]
+        },
+        {
+          "id": "lab_emergency_exit",
+          "base": [
+            450,
+            752
+          ]
+        }
+      ],
+      "walk": [
+        371.1399999999974,
+        708
+      ],
+      "lifecycle": [
+        {
+          "label": "before",
+          "phase": "M3_REACH_SAMPLE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "immediate",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "paused",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "duplicate",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 0,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": -1,
+            "spawnT": 0.4,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-30",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 30,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-60",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 60,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 4.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-89",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "defence",
+            "t": 89,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 4.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "at-90",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 0,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-mid",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 1.75,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-restored",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 1.75,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "transfer-3.49",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "state": "transfer",
+            "t": 90,
+            "duration": 90,
+            "transferT": 3.49,
+            "transferDuration": 3.5,
+            "stage": 2,
+            "spawnT": 3.5,
+            "pausedWarned": false
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "complete",
+          "phase": "M4_BREAK_CONTACT",
+          "mission": "break_contact",
+          "encounter": {
+            "active": false,
+            "t": 0,
+            "duration": 0,
+            "stage": -1,
+            "spawnT": 0,
+            "pausedWarned": false
+          },
+          "payload": false,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "dead",
+          "phase": "DEAD",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "continue-launch",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30.016666666666666,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.5833333333333335,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "actual-continue",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30.133333333333326,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.4666666666666672,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "defence-restored",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 30,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 3.6,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "legacy-migrated",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 8,
+            "duration": 90,
+            "stage": 0,
+            "spawnT": 2,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        },
+        {
+          "label": "live-combat",
+          "phase": "M3_STABILIZE",
+          "mission": "sample_zero",
+          "encounter": {
+            "active": true,
+            "t": 33.016666666666495,
+            "duration": 90,
+            "stage": 1,
+            "spawnT": 0.5833333333333414,
+            "pausedWarned": false,
+            "state": "defence",
+            "transferT": 0,
+            "transferDuration": 3.5
+          },
+          "payload": true,
+          "glass": true,
+          "field": true,
+          "installation": true,
+          "dnaCount": 1
+        }
+      ],
+      "carriedStats": [
+        {
+          "missionId": "dead_signal",
+          "kills": 0,
+          "activeSeconds": 0,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        {
+          "missionId": "power_through",
+          "kills": 0,
+          "activeSeconds": 0,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 0,
+          "activeSeconds": 0.6166666666666669,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        }
+      ],
+      "live": [
+        {
+          "label": "defence-start",
+          "mission": "sample_zero",
+          "t": 0.016666666666666666,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 0.02836681303610101
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 356.528626599361,
+              "y": 767.1318324842844,
+              "mag": 30,
+              "downed": false
+            },
+            {
+              "x": 358.8128878435974,
+              "y": 769.7035490349177,
+              "mag": 70,
+              "downed": false
+            },
+            {
+              "x": 362.8097425649784,
+              "y": 765.668103846007,
+              "mag": 50,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-15",
+          "mission": "sample_zero",
+          "t": 15.016666666666993,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.0719816245169145e-23
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 379.1079402949763,
+              "y": 758.1726339766901
+            }
+          ],
+          "squad": [
+            {
+              "x": 361.2746104495904,
+              "y": 771.5417125529048,
+              "mag": 26,
+              "downed": false
+            },
+            {
+              "x": 354.5245976500134,
+              "y": 778.181508234397,
+              "mag": 50,
+              "downed": false
+            },
+            {
+              "x": 359.8700149787129,
+              "y": 767.1842986436864,
+              "mag": 35,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-30",
+          "mission": "sample_zero",
+          "t": 30.016666666666243,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 4.051017651646215e-45
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 364.49751691477053,
+              "y": 774.9731033723233,
+              "mag": 18,
+              "downed": false
+            },
+            {
+              "x": 354.5203165554743,
+              "y": 778.1025987109122,
+              "mag": 26,
+              "downed": false
+            },
+            {
+              "x": 359.96923486148876,
+              "y": 767.1242563906399,
+              "mag": 18,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-45",
+          "mission": "sample_zero",
+          "t": 45.016666666665394,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.5308792276495104e-66
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 371.1423867470019,
+              "y": 753.2221476450862
+            },
+            {
+              "type": "drone",
+              "x": 383.4158560608821,
+              "y": 784.6787208334854
+            }
+          ],
+          "squad": [
+            {
+              "x": 365.7010267729735,
+              "y": 775.4685152552469,
+              "mag": 17,
+              "downed": false
+            },
+            {
+              "x": 354.52332453988106,
+              "y": 778.1389323904559,
+              "mag": 1,
+              "downed": false
+            },
+            {
+              "x": 356.940760163914,
+              "y": 767.5862588376425,
+              "mag": 0,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-60",
+          "mission": "sample_zero",
+          "t": 60.01666666666454,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 5.785191305439989e-88
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 383.18219848523495,
+              "y": 784.5502091668795
+            }
+          ],
+          "squad": [
+            {
+              "x": 367.0448875660416,
+              "y": 776.5712221479993,
+              "mag": 1,
+              "downed": false
+            },
+            {
+              "x": 354.4864164775585,
+              "y": 777.9463755338529,
+              "mag": 52,
+              "downed": false
+            },
+            {
+              "x": 358.7690169166998,
+              "y": 765.853371137948,
+              "mag": 27,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-75",
+          "mission": "sample_zero",
+          "t": 75.03333333333036,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 2.0696247283784274e-109
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 361.60631135507623,
+              "y": 772.115752860527,
+              "mag": 30,
+              "downed": false
+            },
+            {
+              "x": 354.52344505189916,
+              "y": 778.2274019981237,
+              "mag": 34,
+              "downed": false
+            },
+            {
+              "x": 353.16233884247185,
+              "y": 769.502528752549,
+              "mag": 0,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "live-89",
+          "mission": "sample_zero",
+          "t": 89.0166666666629,
+          "state": "defence",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 2.2143496325890228e-129
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 385.9386634035784,
+              "y": 774.6268189543905
+            }
+          ],
+          "squad": [
+            {
+              "x": 366.5296713586878,
+              "y": 776.7033677227523,
+              "mag": 23,
+              "downed": false
+            },
+            {
+              "x": 355.2915396091973,
+              "y": 778.3736709734901,
+              "mag": 34,
+              "downed": false
+            },
+            {
+              "x": 358.6092372774644,
+              "y": 765.9003403690007,
+              "mag": 39,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "transfer-start",
+          "mission": "sample_zero",
+          "t": 90,
+          "state": "transfer",
+          "transferT": 0,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 8.261736017599826e-131
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "drone",
+              "x": 385.9386634035784,
+              "y": 774.6268189543905
+            }
+          ],
+          "squad": [
+            {
+              "x": 363.6479551753295,
+              "y": 776.1049981267938,
+              "mag": 22,
+              "downed": false
+            },
+            {
+              "x": 359.1026845218477,
+              "y": 779.2416339531856,
+              "mag": 27,
+              "downed": false
+            },
+            {
+              "x": 356.6399558783115,
+              "y": 762.5796084867042,
+              "mag": 35,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "transfer-mid",
+          "mission": "sample_zero",
+          "t": 90,
+          "state": "transfer",
+          "transferT": 1.7166666666666655,
+          "payload": true,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 2.919921008631583e-133
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": true,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 366.04482456510556,
+              "y": 777.0137592006857,
+              "mag": 22,
+              "downed": false
+            },
+            {
+              "x": 354.5257657122028,
+              "y": 778.3459899204474,
+              "mag": 25,
+              "downed": false
+            },
+            {
+              "x": 359.10775836125976,
+              "y": 765.8855685502241,
+              "mag": 34,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "completed",
+          "mission": "break_contact",
+          "t": 0,
+          "payload": false,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 7.846144789937835e-136
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": false,
+              "disabled": false,
+              "openT": 0
+            }
+          ],
+          "enemies": [
+            {
+              "type": "shielded",
+              "x": 380,
+              "y": 760
+            },
+            {
+              "type": "runner",
+              "x": 372,
+              "y": 748
+            },
+            {
+              "type": "drone",
+              "x": 398.8885726027065,
+              "y": 751.0732237182215
+            }
+          ],
+          "squad": [
+            {
+              "x": 365.9899235618428,
+              "y": 776.9545775349058,
+              "mag": 22,
+              "downed": false
+            },
+            {
+              "x": 354.5864442239356,
+              "y": 778.3220217516855,
+              "mag": 25,
+              "downed": false
+            },
+            {
+              "x": 359.0922115541876,
+              "y": 765.9718057211998,
+              "mag": 34,
+              "downed": false
+            }
+          ]
+        },
+        {
+          "label": "exit-after",
+          "mission": "break_contact",
+          "t": 0,
+          "payload": false,
+          "glass": true,
+          "doors": [
+            {
+              "id": "front",
+              "locked": true,
+              "disabled": false,
+              "openT": 1.4374697512602103e-139
+            },
+            {
+              "id": "lab_emergency_exit",
+              "locked": false,
+              "disabled": true,
+              "openT": 0.9998167928594557
+            }
+          ],
+          "enemies": [],
+          "squad": [
+            {
+              "x": 387.11715620175227,
+              "y": 769.5681636467484,
+              "mag": 22,
+              "downed": false
+            },
+            {
+              "x": 376.2525689784084,
+              "y": 772.7058579460673,
+              "mag": 25,
+              "downed": false
+            },
+            {
+              "x": 381.1618379009589,
+              "y": 762.2423592485613,
+              "mag": 34,
+              "downed": false
+            }
+          ]
+        }
+      ],
+      "liveWallSeconds": 97.977,
+      "fixtures": [
+        {
+          "zone": "front",
+          "x": 338,
+          "y": 617,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "front",
+          "x": 382,
+          "y": 617,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "front-header",
+          "x": 360,
+          "y": 616.75,
+          "nx": 0,
+          "ny": -1,
+          "z": 8.55,
+          "poolWidth": 15.2
+        },
+        {
+          "zone": "hall-west",
+          "x": 329,
+          "y": 626,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 14
+        },
+        {
+          "zone": "hall-west",
+          "x": 329,
+          "y": 645,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "hall-east",
+          "x": 391,
+          "y": 626,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 14
+        },
+        {
+          "zone": "hall-east",
+          "x": 391,
+          "y": 657,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 7.5
+        },
+        {
+          "zone": "vault-west",
+          "x": 341,
+          "y": 672,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "vault-east",
+          "x": 379,
+          "y": 672,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "lab-recess",
+          "x": 335,
+          "y": 683,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 11
+        },
+        {
+          "zone": "lab-recess",
+          "x": 385,
+          "y": 683,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 11
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 690,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 714,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 738,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 762,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "west",
+          "x": 329.3,
+          "y": 787,
+          "nx": -1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "east",
+          "x": 390.7,
+          "y": 690,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "east",
+          "x": 390.7,
+          "y": 714,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "containment-east",
+          "x": 410.7,
+          "y": 779,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "containment-east",
+          "x": 410.7,
+          "y": 790,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 10
+        },
+        {
+          "zone": "containment-return",
+          "x": 400,
+          "y": 734.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-front",
+          "x": 422,
+          "y": 735.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-front",
+          "x": 444,
+          "y": 735.3,
+          "nx": 0,
+          "ny": -1,
+          "z": 3.6,
+          "poolWidth": 12
+        },
+        {
+          "zone": "power-rear",
+          "x": 422,
+          "y": 770.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "power-rear",
+          "x": 442,
+          "y": 770.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "exit-facade",
+          "x": 450.7,
+          "y": 741,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 8
+        },
+        {
+          "zone": "exit-facade",
+          "x": 450.7,
+          "y": 762,
+          "nx": 1,
+          "ny": 0,
+          "z": 3.6,
+          "poolWidth": 7
+        },
+        {
+          "zone": "exit-header",
+          "x": 450.95,
+          "y": 752,
+          "nx": 1,
+          "ny": 0,
+          "z": 8.55,
+          "poolWidth": 15.2
+        },
+        {
+          "zone": "rear",
+          "x": 342,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 363,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 386,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 16
+        },
+        {
+          "zone": "rear",
+          "x": 403,
+          "y": 795.7,
+          "nx": 0,
+          "ny": 1,
+          "z": 3.6,
+          "poolWidth": 12
+        }
+      ],
+      "lightSources": 104,
+      "registeredSources": 107,
+      "slots": 8,
+      "terrainPool": {
+        "vertices": 1120,
+        "maxError": 0.000012693756915982402
+      },
+      "lightingViews": [
+        {
+          "id": "west-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "west-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "west-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            310,
+            706,
+            7
+          ]
+        },
+        {
+          "id": "power-exit-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "power-exit-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "power-exit-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        },
+        {
+          "id": "front-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "front-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "front-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            360,
+            574,
+            8
+          ]
+        },
+        {
+          "id": "vault-recess-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "vault-recess-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "vault-recess-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            320,
+            674,
+            3
+          ]
+        },
+        {
+          "id": "lab-east-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "lab-east-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "lab-east-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            402,
+            686,
+            4
+          ]
+        },
+        {
+          "id": "rear-corner-near",
+          "player": [
+            324,
+            710
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "rear-corner-far",
+          "player": [
+            255,
+            620
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "rear-corner-inside",
+          "player": [
+            360,
+            724
+          ],
+          "camera": [
+            413,
+            798,
+            3
+          ]
+        },
+        {
+          "id": "power-exit-emergency",
+          "player": [
+            456,
+            752
+          ],
+          "camera": [
+            467,
+            727,
+            8
+          ]
+        }
+      ],
+      "warm": {
+        "frames": 768,
+        "programsBefore": [
+          49
+        ],
+        "programsAfter": [
+          50
+        ],
+        "frameP95": [
+          16.9,
+          17
+        ],
+        "worst": 17.2,
+        "p95Delta": [
+          -0.1,
+          0.1
+        ],
+        "medianRenderDelta": [
+          -0.6,
+          0.2
+        ],
+        "p95RenderDelta": [
+          -1,
+          0.6
+        ],
+        "callsDelta": [
+          -2,
+          4
+        ],
+        "trianglesDelta": [
+          3436,
+          3904
+        ],
+        "selectorMax": 0.3999999761581421,
+        "deltas": [
+          {
+            "label": "west",
+            "repetition": 0,
+            "p95": 0,
+            "medianRender": 0,
+            "p95Render": -0.09999999999999964,
+            "calls": -2,
+            "triangles": 3436
+          },
+          {
+            "label": "front",
+            "repetition": 0,
+            "p95": -0.10000000000000142,
+            "medianRender": 0.10000000000000142,
+            "p95Render": 0.3000000000000007,
+            "calls": -2,
+            "triangles": 3712
+          },
+          {
+            "label": "research",
+            "repetition": 0,
+            "p95": -0.10000000000000142,
+            "medianRender": -0.20000000000000107,
+            "p95Render": -0.09999999999999964,
+            "calls": -1,
+            "triangles": 3448
+          },
+          {
+            "label": "sample",
+            "repetition": 0,
+            "p95": -0.10000000000000142,
+            "medianRender": 0.10000000000000053,
+            "p95Render": 0.5999999999999996,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "power",
+            "repetition": 0,
+            "p95": -0.10000000000000142,
+            "medianRender": -0.10000000000000053,
+            "p95Render": -0.1999999999999993,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "rear",
+            "repetition": 0,
+            "p95": -0.10000000000000142,
+            "medianRender": -0.10000000000000142,
+            "p95Render": 0,
+            "calls": 0,
+            "triangles": 3724
+          },
+          {
+            "label": "west",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 0.10000000000000142,
+            "p95Render": 0,
+            "calls": -2,
+            "triangles": 3436
+          },
+          {
+            "label": "front",
+            "repetition": 1,
+            "p95": 0.09999999999999787,
+            "medianRender": 0.1999999999999993,
+            "p95Render": 0.5,
+            "calls": -2,
+            "triangles": 3712
+          },
+          {
+            "label": "research",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": -0.5999999999999996,
+            "p95Render": -1,
+            "calls": -1,
+            "triangles": 3448
+          },
+          {
+            "label": "sample",
+            "repetition": 1,
+            "p95": -0.10000000000000142,
+            "medianRender": 0,
+            "p95Render": -0.1999999999999993,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "power",
+            "repetition": 1,
+            "p95": -0.10000000000000142,
+            "medianRender": -0.20000000000000018,
+            "p95Render": 0.09999999999999964,
+            "calls": 4,
+            "triangles": 3904
+          },
+          {
+            "label": "rear",
+            "repetition": 1,
+            "p95": 0,
+            "medianRender": 0,
+            "p95Render": 0,
+            "calls": 0,
+            "triangles": 3724
+          }
+        ]
+      },
+      "traversal": [
+        {
+          "label": "M1 exterior",
+          "summary": {
+            "frames": 291,
+            "p95": 33.4,
+            "p99": 33.5,
+            "worst": 50.1,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "summary": {
+            "frames": 360,
+            "p95": 16.8,
+            "p99": 16.9,
+            "worst": 33.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "summary": {
+            "frames": 360,
+            "p95": 17,
+            "p99": 17.1,
+            "worst": 17.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "summary": {
+            "frames": 360,
+            "p95": 16.9,
+            "p99": 16.9,
+            "worst": 17.3,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "summary": {
+            "frames": 346,
+            "p95": 17,
+            "p99": 33.4,
+            "worst": 33.5,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Facility interior",
+          "summary": {
+            "frames": 352,
+            "p95": 16.8,
+            "p99": 33.4,
+            "worst": 33.4,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 60
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "summary": {
+            "frames": 360,
+            "p95": 16.9,
+            "p99": 17.2,
+            "worst": 17.2,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 61
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "summary": {
+            "frames": 520,
+            "p95": 33.4,
+            "p99": 33.5,
+            "worst": 33.5,
+            "over100": 0,
+            "counters": {
+              "sceneObjectsAdded": 189,
+              "shadowRefresh": 100,
+              "sceneObjectsRemoved": 153
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "summary": {
+            "frames": 901,
+            "p95": 17,
+            "p99": 17.1,
+            "worst": 33.5,
+            "over100": 0,
+            "counters": {
+              "shadowRefresh": 151,
+              "sceneObjectsAdded": 1096,
+              "meshesCreated": 208,
+              "geometriesCreated": 22,
+              "materialsCreated": 13,
+              "groupsObjectsCreated": 95,
+              "sceneObjectsRemoved": 1072,
+              "materialDisposes": 4
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "summary": {
+            "frames": 899,
+            "p95": 17,
+            "p99": 17.2,
+            "worst": 18,
+            "over100": 0,
+            "counters": {
+              "sceneObjectsAdded": 1022,
+              "shadowRefresh": 150,
+              "meshesCreated": 251,
+              "groupsObjectsCreated": 84,
+              "sceneObjectsRemoved": 981,
+              "materialDisposes": 1
+            }
+          },
+          "renderer": {
+            "version": "WebGL 2.0 (OpenGL ES 3.0 Chromium)",
+            "vendor": "Google Inc. (AMD)",
+            "device": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+          }
+        }
+      ]
+    }
+  ],
+  "limitations": [
+    "Persistent exterior pools are low-cost static surface illumination; moving actors still use the existing dynamic lighting. No new shadow source.",
+    "Normal fog and geometry occlusion affect distant visibility; facade fixtures/pools have no proximity activation.",
+    "Headless frame-time comparisons remain inconclusive, especially Firefox. One new warmed shader variant; no warm links or static-resource churn."
+  ],
+  "stop": "No CP3-E, staging, commit, merge or push."
+}

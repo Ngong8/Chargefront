@@ -1985,13 +1985,14 @@ function buildRelayArena(relay) {
     }
 }
 
-const vial = { group: null, light: null, tube: null, solid: null, picked: false, bobT: 0 };
+const vial = { group: null, light: null, tube: null, solid: null, installation: null, picked: false, bobT: 0 };
 function buildFacility() {
     const specimen = facilityWorld.buildHall(FACILITY, LAB_CONTAINMENT);
     vial.solid = specimen.solid;
     vial.group = specimen.group;
     vial.light = specimen.light;
     vial.tube = specimen.tube;
+    vial.installation = null;
 
 }
 
@@ -2120,17 +2121,38 @@ function setExtractionInfestationVisuals() {
     extraction.pad.material.emissive.setHex(cleared ? 0x22cc99 : 0xff1f18);
 }
 
+const SAMPLE_DEFENCE_SECONDS = 90, SAMPLE_TRANSFER_SECONDS = 3.5;
+function sampleLockdownActive() {
+    return mode === 'campaign' && activeMissionId === 'sample_zero' && !!campaignRun.worldState.sampleOperationStarted && !campaignRun.worldState.dnaSecured;
+}
+function insideFacility(pos) {
+    // Actual rooms, excluding the exterior recesses either side of the Vault.
+    return [[330.8,389.2,619.1,660],[342.8,377.2,660,685],[331,389,685,690],
+        [330.8,389.2,690,735],[330.8,409.2,735,794.2],[410,449.0,736.8,769.2]]
+        .some(([x0,x1,y0,y1])=>pos.x>x0&&pos.x<x1&&pos.y>=y0&&pos.y<=y1);
+}
+function updateSampleTransferVisual() {
+    if (!vial.tube || activeMissionId !== 'sample_zero' || !campaignRun.encounter) return;
+    const e = campaignRun.encounter, q = e.state === 'transfer' ? clamp(e.transferT / SAMPLE_TRANSFER_SECONDS, 0, 1) : 0;
+    const smooth = q * q * (3 - 2 * q);
+    vial.tube.vial.scale.setScalar(2.4 * (1 - .94 * smooth));
+    if (e.state === 'transfer') vial.tube.vial.position.z = 3.72 - 2.8 * smooth;
+}
 function setFinalMissionWorldState() {
     const lab = campaignContent.lab, extraction = campaignContent.extraction;
-    const emergency = !!campaignRun.worldState.emergency;
+    const emergency = !!campaignRun.worldState.emergency, lockdown = sampleLockdownActive();
+    const released = activeMissionId === 'break_contact' && !!campaignRun.worldState.dnaSecured;
+    const front = facilityDoors.find(d => !d.id);
+    if (front) { front.locked = lockdown || released; front.forceOpen = false; front.lockReason = front.locked ? 'FACILITY LOCKDOWN — use the emergency route after sample transfer' : ''; }
     if (lab) {
         lab.root.visible = true; lab.emergency.visible = emergency;
         for (const solid of lab.solids) solid.disabled = false;
         lab.accessDoor.enabled = true; lab.accessDoor.locked = !campaignRun.worldState.labAccess; lab.accessDoor.forceOpen = false;
         lab.securityDoor.enabled = true; lab.securityDoor.locked = !campaignRun.worldState.labOverride; lab.securityDoor.forceOpen = activeMissionId === 'break_contact';
-        lab.emergencyDoor.enabled = true; lab.emergencyDoor.locked = !emergency; lab.emergencyDoor.forceOpen = emergency;
-        lab.serviceDoor.enabled = true; lab.serviceDoor.locked = !emergency; lab.serviceDoor.forceOpen = emergency;
-        lab.field.visible = activeMissionId === 'sample_zero' && !campaignRun.worldState.dnaSecured;
+        lab.emergencyDoor.enabled = true; lab.emergencyDoor.locked = !released; lab.emergencyDoor.forceOpen = released;
+        lab.serviceDoor.enabled = true; lab.serviceDoor.locked = !released; lab.serviceDoor.forceOpen = released;
+        lab.serviceDoor.lockReason = lockdown ? 'FACILITY LOCKDOWN — stabilization and sample transfer incomplete' : '';
+        lab.field.visible = activeMissionId === 'sample_zero' || activeMissionId === 'break_contact';
         lab.chamberRing.material.color.setHex(emergency ? 0xff5544 : 0x7eeeff);
         lab.chamberRing.material.emissive.setHex(emergency ? 0xff2211 : 0x2abddd);
         lab.turret.active = !!campaignRun.worldState.securityTurret;
@@ -2154,10 +2176,12 @@ function setFinalMissionWorldState() {
     }
     if (vial.group) {
         if (!vial.group.parent) scene.add(vial.group);
-        vial.picked = !!campaignRun.worldState.dnaSecured;
+        vial.picked = !!campaignRun.worldState.dnaSecured || !!campaignRun.worldState.sampleOperationStarted;
         vial.group.visible = activeMissionId === 'sample_zero' && !campaignRun.worldState.dnaSecured;
-        if (vial.solid) vial.solid.disabled = !vial.group.visible;
+        if (vial.installation) vial.installation.visible = ['sample_zero', 'break_contact'].includes(activeMissionId);
+        if (vial.solid) vial.solid.disabled = !['sample_zero','break_contact'].includes(activeMissionId);
         if (vial.light) vial.light.intensity = vial.group.visible ? 4 : 0;
+        updateSampleTransferVisual();
     }
     applyEnvironmentWorldState();   // Stage 3.5E — same authoritative worldState drives the dressing
 }
@@ -2186,11 +2210,16 @@ function updateLabSystems(dt) {
         entry.light.intensity = emergency
             ? entry.intensity * (entry.emergencyColor === 0xff493d ? 0.65 + Math.sin(LJS.time * 7.5 + i) * 0.24 : 0.8)
             : entry.intensity;
+        if (entry.fixture) {
+            entry.fixture.material.color.copy(entry.light.color); entry.fixture.material.emissive.copy(entry.light.color);
+            entry.fixture.material.emissiveIntensity = .55 * entry.light.intensity / entry.intensity;
+        }
     }
     if (lab.field.visible) {
         lab.field.rotation.y += dt * 0.35;
         lab.field.material.opacity = 0.11 + Math.sin(LJS.time * 2.4) * 0.025;
         animateSpecimenTube(vial.tube, LJS.time);
+        updateSampleTransferVisual();
     }
     const turret = lab.turret;
     if (!turret.active || !emergency) return;
@@ -2931,6 +2960,17 @@ function buildEnvironmentStateLayers() {
         pole.position.set(x, y, terrainHeight(x, y) + h / 2); group.add(pole);
         const lamp = new THREE.Mesh(new THREE.SphereGeometry(0.22, 8, 6), mat(color, EMISSIVE(color, intensity)));
         lamp.position.set(x, y, terrainHeight(x, y) + h + 0.22); group.add(lamp);
+        // R2-A: state indicators inside the facility are compact mounted status
+        // fittings, not uncollidable floor poles in doorways/defence lanes.
+        const mounts = { '360,688': [351.65,685.12,6.1], '360,686': [368.35,685.12,6.1],
+            '348,660': [348,658.89,5.5], '342,700': [331.02,700,3.8],
+            '378,700': [388.98,700,3.8], '360,744': [350,735.81,5.8], '360,780': [360,794.19,4.6] };
+        const mount = mounts[x + ',' + y];
+        if (mount) {
+            pole.name = 'MountedStateBeaconCase-' + x + '-' + y; lamp.name = 'MountedStateBeacon-' + x + '-' + y;
+            pole.scale.set(.5 / .26, .4 / h, .22 / .26); pole.position.set(...mount);
+            lamp.scale.setScalar(.65); lamp.position.set(mount[0], mount[1], mount[2] + .3);
+        }
         matArr.push(lamp.material);
         return lamp;
     };
@@ -3052,7 +3092,7 @@ function updateEnvironmentFx(dt = LJS.timeDelta) {
     if (env.labActive.visible) {
         for (let i = 0; i < env.labMats.length; i++) env.labMats[i].emissiveIntensity = 1.25 + Math.sin(t * 2.2 + i) * 0.3;
     }
-    for (const s of env.spinners) s.rotation.z += dt * (s.userData.spin || 1);
+    for (const s of env.spinners) s.rotation[s.userData.spinAxis || 'z'] += dt * (s.userData.spin || 1);
 }
 
 /* ═══════════════════════════════════════════════════════════════════════════
@@ -3072,6 +3112,7 @@ const SPACECRAFT_STATE = Object.freeze({
 const BASE_WORLD_STATE = Object.freeze({
     localPower: false, maintenanceBatteryInstalled: false, relaysOnline: false, betaSurvey: false, shortcutOpen: false,
     labAccess: false, labOverride: false, securityTurret: false, emergency: false, dnaSecured: false,
+    sampleOperationStarted: false, containmentSynchronized: false,
     extractionRouteActive: false, extractionBeaconActive: false, extractionInfestationStarted: false, extractionInfestationCleared: false, containmentIntact: true,
 });
 /* These are the authoritative deterministic views of one physical campaign world.
@@ -3098,7 +3139,7 @@ const CANONICAL_WORLD_SNAPSHOTS = Object.freeze({
     break_contact: {
         start: LAB_CONTAINMENT, target: LAB_EMERGENCY_EXIT, firstPhase: P.M4_BREAK_CONTACT, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_INFESTED, stagingActive: true,
-        worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: false }),
+        worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, sampleOperationStarted: true, containmentSynchronized: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: true }),
         combat: { hp: 100, shield: 100, grenades: 2, medkits: 2, cartridges: ChargefrontProgression.reserves.break_contact.player, squadHp: 1, squadShield: 1 },
     },
 });
@@ -4312,6 +4353,9 @@ function directorReject(reason) {
 function requestEncounter(source, types, options = {}) {
     encounterDirector.requests++;
     if (mode === 'endless') { encounterDirector.spawnAccepted++; encounterDirector.lastSpawnSource = source; return true; }
+    // Authoritative encounter gate, including essential/authored/carrier requests.
+    // Normal directors resume automatically once this local operation releases.
+    if (sampleLockdownActive() && (campaignRun.encounter.state !== 'defence' || source !== 'm3_stabilization' || types.some(type => type !== 'drone'))) return directorReject('sample_lockdown');
     const count = types.length;
     const cost = types.reduce((total, type) => total + (ENCOUNTER_ENEMY_COST[type] || 1), 0);
     if (encounterDirector.activeHostiles + count > 72) return directorReject('hard_cap');
@@ -4558,7 +4602,7 @@ function objectiveLine() {
         case P.M3_REACH_SECURITY: return 'Advance through decontamination to laboratory security';
         case P.M3_OVERRIDE: return 'Bypass the local containment security lock';
         case P.M3_REACH_SAMPLE: return 'Reach the DNA sample chamber and secure the sample';
-        case P.M3_STABILIZE: return 'Protect the sample during portable containment sync';
+        case P.M3_STABILIZE: return campaignRun.encounter.state === 'transfer' ? 'Sample transfer in progress — exits remain locked' : campaignRun.encounter.state === 'locking' ? 'Facility lockdown — securing entrances' : 'Defend the chamber — stabilize DNA sample';
         case P.M4_BREAK_CONTACT: return 'Escape through the east maintenance breach';
         case P.M4_REACH_LZ: return 'Reach the restoration LZ';
         case P.M4_CALL_EXTRACTION: return 'Initiate the transport perimeter purge';
@@ -6289,8 +6333,8 @@ const CAMPAIGN_RELAY_COMPOSITIONS = {
 const CAMPAIGN_DIRECTOR_COMPOSITIONS = Object.freeze({
     m3Stabilization: [
         [[347, 755, 'drone'], [385, 752, 'drone']],
-        [[345, 724, 'runner'], [376, 727, 'skitter'], [382, 746, 'spitter']],
-        [[344, 746, 'shielded'], [384, 744, 'runner'], [398, 770, 'support']],
+        [[337, 764, 'drone'], [384, 785, 'drone'], [375, 742, 'drone']],
+        [[347, 755, 'drone'], [399, 775, 'drone'], [385, 752, 'drone']],
     ],
     m4Pursuit: [['drone', 'runner'], ['screecher', 'skitter'], ['shielded', 'spitter']],
     surveyAmbush: [['runner', 'skitter', 'shielded'], ['spitter', 'runner', 'skitter']],
@@ -7748,6 +7792,8 @@ function updateBudgetLights(dt) {
         const distance = Math.sqrt(distanceSquared);
         const ratio = distance / (light.distance || 40);
         const falloff = Math.max(0, 1 - ratio * ratio * ratio * ratio);
+        if (falloff <= 0) continue;
+        if (mode === 'campaign' && facilityWorld && !facilityWorld.lightReachable(worldPosition, origin)) continue;
         candidates.push({ light, x: worldPosition.x, y: worldPosition.y, z: worldPosition.z,
             score: light.intensity * falloff * falloff / Math.max(16, distanceSquared) });
     }
@@ -8158,7 +8204,7 @@ function makeCampaignRun(entryMode = 'standalone', carriedState = {}) {
         worldState: Object.assign({}, snapshot.worldState, { spacecraftState: snapshot.spacecraftState }, carriedState.worldState || {}),
         enemyIntel: !!carriedState.enemyIntel, completion: null, entryMode,
         encounter: { active: false, t: 0, duration: 0, stage: -1, spawnT: 0, pausedWarned: false },
-        extractionClearedNodes: [], restartSnapshot: null,
+        extractionClearedNodes: [], restartSnapshot: null, chapterStats: [],
     };
     for (const objective of mission.optionalObjectives) run.optional[objective.id] = false;
     return run;
@@ -8681,6 +8727,9 @@ function buildCampaignWorld() {
     buildCampaignObjectives();
     spawnInitialFacilityDrones();
     facilityWorld.finalizeExteriorIdentity(); // mounted detail after accepted seeded scenery/asset construction
+    facilityWorld.finalizeAdditionalCorrections(campaignContent.env, vial);
+    facilityWorld.finalizeCoordinatedLighting(campaignContent.lab);
+    if (['sample_zero', 'break_contact'].includes(activeMissionId)) setFinalMissionWorldState();
     campaignWorldBuilt = true;
     threeJS.renderer.shadowMap.needsUpdate = true;
 }
@@ -8843,15 +8892,26 @@ function restoreLaboratoryTurret() {
 }
 
 function startMission3Stabilization() {
-    if (campaignRun.worldState.dnaSecured) return;
-    campaignRun.worldState.dnaSecured = true; campaignRun.worldState.emergency = true; campaignRun.worldState.labOverride = true;
+    if (phase !== P.M3_REACH_SAMPLE || campaignRun.worldState.sampleOperationStarted || campaignRun.worldState.dnaSecured) return;
+    // Do not teleport or seal a lagging squad outside, or close through an actor.
+    const entrants = [player, ...squadMembers];
+    const entrances = facilityDoors.filter(d => !d.id || d.id === 'lab_emergency_exit');
+    if (entrants.some(a => !insideFacility(a.pos) || entrances.some(d => a.pos.x > d.solid.x0 - .6 && a.pos.x < d.solid.x1 + .6 && a.pos.y > d.solid.y0 - .6 && a.pos.y < d.solid.y1 + .6))) {
+        notify('RALLY SQUAD INSIDE — clear entrance thresholds before lockdown', '#ffcc66'); return;
+    }
+    campaignRun.worldState.sampleOperationStarted = true; campaignRun.worldState.emergency = true; campaignRun.worldState.labOverride = true;
     campaignRun.mainIndex = 5; phase = P.M3_STABILIZE;
-    vial.picked = true; vial.group.visible = false; vial.light.intensity = 0;
-    campaignContent.lab.field.visible = false;
-    campaignRun.encounter = { active: true, t: 0, duration: 34, stage: -1, spawnT: 0.4, pausedWarned: false };
+    vial.picked = true;
+    campaignRun.encounter = { active: true, state: 'locking', t: 0, duration: SAMPLE_DEFENCE_SECONDS, transferT: 0, transferDuration: SAMPLE_TRANSFER_SECONDS, stage: -1, spawnT: .4, pausedWarned: false };
+    // Retire pre-existing biological/exterior contacts without granting rewards.
+    for (const enemy of [...enemies]) if (enemy.type !== 'drone' || !insideFacility(enemy.pos)) enemy.destroy(true);
+    resetEncounterDirector();
     setFinalMissionWorldState();
+    updateFacilityDoors(0);
+    if (entrances.every(d => d.openT < .03 && !d.solid.disabled)) campaignRun.encounter.state = 'defence';
+    checkpointCampaignState();
     playSnd(sfx.vial, 0.95); playFileSfx('accessOk', 0.75); music.play('combat', 0.9);
-    notify('DNA SAMPLE SECURED — portable containment sync 34 seconds', '#66ffcc');
+    notify('FACILITY LOCKDOWN — exits sealed; defend sample for 90 seconds', '#66ffcc');
     clearTimeout(missionAnalysisTimer);
     missionAnalysisTimer = setTimeout(() => {
         missionAnalysisTimer = 0;
@@ -8934,12 +8994,15 @@ function beginCampaignChapterTransition(completion) {
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
     const rewards = { ...(campaignRun.rewards || {}) };
+    const chapterStats = (campaignRun.chapterStats || []).filter(s => s.missionId !== fromId).concat({ missionId:fromId,
+        kills, activeSeconds:missionTime, cartridgesCrafted:totalAmmoCrafted, medkitsCrafted:totalMedkitsCrafted });
     campaignRun.encounter.active = false;
     clearCampaignTransitionCombat();
     playerCombat.cancelActions(); // preserve magazines, cancel transient actions at the checkpoint boundary
     activeMissionId = toId;
     campaignRun = makeCampaignRun('continued', { worldState: carriedTurret ? { securityTurret: true } : {}, enemyIntel: carriedTurret });
     campaignRun.rewards = rewards;
+    campaignRun.chapterStats = chapterStats; // retain accumulated results while per-chapter HUD counters reset
     applyCampaignWorldSnapshot();
     const snapshot = campaignSnapshot(toId);
     phase = snapshot.firstPhase; campaignRun.mainIndex = snapshot.firstMainIndex;
@@ -8971,7 +9034,7 @@ function beginCampaignChapterTransition(completion) {
 function beginMission4Transition() {
     const completion = recordCampaignMissionCompletion(campaignMission());
     beginCampaignChapterTransition(completion);
-    notify('CONTAINMENT FAILURE — immediate extraction ordered', '#ff6655');
+    notify('DNA TRANSFER COMPLETE — emergency route released; evacuate', '#66ffcc');
 }
 
 function sanitizeContinuedMission4State() {
@@ -9080,24 +9143,42 @@ function finishCampaignExtraction() {
 function updateFinalCampaignEncounter(dt) {
     if (activeMissionId === 'sample_zero' && phase === P.M3_STABILIZE) {
         const encounter = campaignRun.encounter;
-        const distance = Math.hypot(player.pos.x - LAB_CONTAINMENT.x, player.pos.y - LAB_CONTAINMENT.y);
-        if (distance > 30) {
-            if (!encounter.pausedWarned) { encounter.pausedWarned = true; notify('CONTAINMENT SYNC PAUSED — return to the sample chamber', '#ff8866'); }
+        if (encounter.state === 'locking') {
+            const entrances = facilityDoors.filter(d => !d.id || d.id === 'lab_emergency_exit');
+            if (entrances.every(d => d.openT < .03 && !d.solid.disabled)) { encounter.state = 'defence'; checkpointCampaignState(); }
             return;
         }
-        encounter.pausedWarned = false;
-        encounter.t += dt; encounter.spawnT -= dt;
-        const stage = encounter.t < 10 ? 0 : encounter.t < 23 ? 1 : 2;
+        if (encounter.state === 'transfer') {
+            encounter.transferT = Math.min(SAMPLE_TRANSFER_SECONDS, encounter.transferT + dt); updateSampleTransferVisual();
+            if (encounter.transferT >= SAMPLE_TRANSFER_SECONDS) {
+                encounter.active = false; campaignRun.worldState.dnaSecured = true; campaignRun.worldState.containmentSynchronized = true;
+                setFinalMissionWorldState(); beginMission4Transition();
+            }
+            return;
+        }
+        encounter.t = Math.min(SAMPLE_DEFENCE_SECONDS, encounter.t + dt);
+        if (encounter.t >= SAMPLE_DEFENCE_SECONDS) {
+            encounter.state = 'transfer'; encounter.transferT = 0;
+            // Finite saved values only; no further wave-generation during transfer.
+            encounter.spawnT = SAMPLE_TRANSFER_SECONDS; updateSampleTransferVisual(); checkpointCampaignState();
+            notify('STABILIZATION COMPLETE — transferring DNA; exits remain locked', '#66ffcc'); return;
+        }
+        encounter.spawnT -= dt;
+        const stage = encounter.t < 30 ? 0 : encounter.t < 60 ? 1 : 2;
         if (stage !== encounter.stage) {
             encounter.stage = stage;
-            notify(stage === 0 ? 'SECURITY PROTOCOL PURGE — drones entering containment' : stage === 1 ? 'BIOLOGICAL BREACH — research corridor compromised' : 'CONTAINMENT SYNC CRITICAL — shielded contacts inbound', '#ff8866');
+            notify(stage === 0 ? 'SECURITY PROTOCOL PURGE — drones entering containment' : stage === 1 ? 'STABILIZATION 30s — drone pressure increasing' : 'STABILIZATION 60s — final drone defence', '#ff8866');
         }
-        if (encounter.spawnT <= 0) {
+        if (!debugNoSpawn && encounter.spawnT <= 0) {
             encounter.spawnT = stage === 0 ? 4.2 : stage === 1 ? 3.6 : 4.5;
             const points = CAMPAIGN_DIRECTOR_COMPOSITIONS.m3Stabilization[stage];
-            const pick = points[randInt(points.length)]; spawnIndoorEnemy(pick[2], pick[0], pick[1], player, { source: 'm3_stabilization', essential: false });
+            const first = randInt(points.length);
+            for (let i = 0; i < points.length; i++) {
+                const pick = points[(first+i)%points.length];
+                if (Math.hypot(player.pos.x-pick[0],player.pos.y-pick[1]) < 8 || enemies.some(e => !e.dead && Math.hypot(e.pos.x-pick[0],e.pos.y-pick[1]) < 3)) continue;
+                if (spawnIndoorEnemy('drone', pick[0], pick[1], player, { source: 'm3_stabilization', essential: false })) break;
+            }
         }
-        if (encounter.t >= encounter.duration) beginMission4Transition();
         return;
     }
     if (activeMissionId !== 'break_contact') return;
@@ -9407,7 +9488,7 @@ function updateInteract(dt) {
             return;
         }
     }
-    if (phase === P.M3_REACH_SAMPLE && !campaignRun.worldState.dnaSecured) {
+    if (phase === P.M3_REACH_SAMPLE && !campaignRun.worldState.sampleOperationStarted && !campaignRun.worldState.dnaSecured) {
         if (Math.hypot(player.pos.x - LAB_CONTAINMENT.x, player.pos.y - LAB_CONTAINMENT.y) < 4.2) {
             interactPrompt = 'HOLD [E] — SECURE DNA SAMPLE';
             interactProgress = clamp(heldInteract / 1.35, 0, 1);
@@ -9751,7 +9832,7 @@ function updateObjectives(dt) {
             }
             break;
         case P.M3_OVERRIDE: case P.M3_REACH_SAMPLE: case P.M3_STABILIZE:
-            /* Interactions and the short containment encounter advance these phases. */
+            /* Interactions, 90-second defence and transfer advance these phases. */
             break;
         case P.M4_BREAK_CONTACT:
             if (player.pos.x > 454 && player.pos.y > 738) {
@@ -10120,8 +10201,9 @@ function drawObjectiveProgress(right, y, width) {
     const relay = relayByPhase();
     if (relay?.powering) { text = relay.R.name + '  ' + Math.round(relay.progress * 100) + '%'; progress = relay.progress; }
     else if (phase === P.M3_STABILIZE) {
-        const e = campaignRun.encounter; text = 'CONTAINMENT SYNC  ' + Math.max(0, Math.ceil(e.duration - e.t)) + 's';
-        progress = clamp(e.t / e.duration, 0, 1); color = LJS.rgb(1, 0.32, 0.45);
+        const e = campaignRun.encounter;
+        text = e.state === 'transfer' ? 'DNA TRANSFER  ' + Math.max(0, SAMPLE_TRANSFER_SECONDS - e.transferT).toFixed(1) + 's' : e.state === 'locking' ? 'FACILITY LOCKDOWN — SEALING ENTRANCES' : 'STABILIZATION  ' + Math.max(0, Math.ceil(SAMPLE_DEFENCE_SECONDS - e.t)) + 's';
+        progress = e.state === 'transfer' ? e.transferT / SAMPLE_TRANSFER_SECONDS : clamp(e.t / SAMPLE_DEFENCE_SECONDS, 0, 1); color = LJS.rgb(1, 0.32, 0.45);
     } else if (phase === P.M4_HOLD_LZ) {
         const nodes = campaignContent.extraction?.infestation?.nodes || []; let cleared = 0;
         for (const node of nodes) if (node.cleared) cleared++;
@@ -10405,7 +10487,7 @@ function persistentHostilesSnapshot() {
     return living.map(e=>({type:e.type,x:e.pos.x,y:e.pos.y,hp:e.hp,maxHp:e.maxHp,shield:e.shield,
         speed:e.speed,dmg:e.dmg,ambient:e.ambient,scale:e.finalScale,focus:squadMembers.indexOf(e.focus),extractionNode:e.extractionInfestationNode || null,
         enemyFocus:living.indexOf(e.focus),relayFocus:relays.indexOf(e.focus),escortFocus:e.focus===campaignContent.escort,
-        attackT:e.attackT,armed:e.armed,armT:e.armT,armBeep:e.armBeep}));
+        attackT:e.attackT,armed:e.armed,armT:e.armT,armBeep:e.armBeep,source:e.encounterSource||'checkpoint'}));
 }
 function restorePersistentHostiles(list) {
     if(!Array.isArray(list))return;
@@ -10413,6 +10495,7 @@ function restorePersistentHostiles(list) {
     const restored=[];
     for(const saved of list.slice(0,100)) {
         if(!ENEMY_STATS[saved.type]||!Number.isFinite(saved.x)||!Number.isFinite(saved.y)||!(saved.hp>0))continue;
+        if(sampleLockdownActive() && (saved.type!=='drone' || !insideFacility({x:saved.x,y:saved.y})))continue;
         const target=squadMembers[saved.focus]||player;
         const e=new Infested(saved.type,LJS.vec2(clamp(saved.x,2,WORLD-2),clamp(saved.y,2,WORLD-2)),target);
         e.focus=target;e.hp=ChargefrontProgression.bounded(saved.hp,ENEMY_STATS[saved.type].hp);e.maxHp=Math.max(e.hp,ChargefrontProgression.bounded(saved.maxHp,e.hp));
@@ -10421,7 +10504,7 @@ function restorePersistentHostiles(list) {
         e.ambient=!!saved.ambient;e.skySpawnT=0;e.unburrowing=false;e.finalScale=ChargefrontProgression.bounded(saved.scale,1,10)||1;e.mesh.scale.setScalar(e.finalScale);
         e.extractionInfestationNode=saved.extractionNode;e.z=terrainHeight(e.pos.x,e.pos.y)+(e.type==='screecher'?6:e.type==='drone'?3.2:0);
         if(saved.armed&&RUNNER_ATTACKS[e.type]&&saved.armT>0){e.armed=true;e.armT=Math.min(RUNNER_FUSE,saved.armT);e.armBeep=Math.floor(clamp(saved.armBeep||0,0,7));e.armPosition={x:e.pos.x,y:e.pos.y,z:e.z};}
-        recordEncounterSpawn(e,'checkpoint');
+        recordEncounterSpawn(e,sampleLockdownActive()?'m3_stabilization':saved.source||'checkpoint');
         restored.push({e,saved});
     }
     for(const {e,saved} of restored) {
@@ -10444,7 +10527,7 @@ function createCampaignCheckpointSnapshot() {
     if (!CAMPAIGN_CHECKPOINT_PHASES[activeMissionId]) return null;
     const savedPhase = checkpointPhaseForMission(activeMissionId, phase);
     return {
-        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
+        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), chapterStats:JSON.parse(JSON.stringify(campaignRun.chapterStats || [])), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
         missionId: activeMissionId,
         phase: savedPhase,
         mainIndex: phase === P.DEPLOY ? campaignSnapshot().firstMainIndex : campaignRun.mainIndex,
@@ -10469,6 +10552,7 @@ function createCampaignCheckpointSnapshot() {
                 spawnT:campaignContent.escort.spawnT,disableCount:campaignContent.escort.disableCount,emergencyRepairT:campaignContent.escort.emergencyRepairT}:null,
             surveyComplete: !!campaignRun.optional.escort_drone,
             encounter: Object.assign({}, campaignRun.encounter),
+            lockdownDoors: sampleLockdownActive() ? facilityDoors.filter(d=>!d.id||d.id==='lab_emergency_exit').map(d=>({id:d.id,openT:d.openT})) : null,
         },
     };
 }
@@ -10478,6 +10562,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     objectiveHUD.clear(); clearOptionalMarkerState();
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.rewards = { ...(boundary.rewards || {}) };
+    campaignRun.chapterStats = Array.isArray(boundary.chapterStats) ? boundary.chapterStats.slice(0,4) : [];
     campaignRun.entryMode = 'campaign_resume'; campaignRun.restartSnapshot = boundary;
     campaignRun.worldState = Object.assign({}, campaignRun.worldState, boundary.worldState || {});
     // Retire the experimental phase 30 and its flags at the save boundary.
@@ -10583,11 +10668,16 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     } else if (activeMissionId === 'sample_zero') {
         campaignRun.encounter = Object.assign(campaignRun.encounter, mission.encounter || {});
         campaignRun.worldState.labConflictSpawned = false;
-        if (campaignRun.worldState.dnaSecured) {
-            vial.picked = true; vial.group.visible = false; vial.light.intensity = 0;
-            if (campaignContent.lab) campaignContent.lab.field.visible = false;
-        } else spawnLaboratoryConflict();
+        if (phase === P.M3_STABILIZE) {
+            const e = campaignRun.encounter;
+            // Migrate old 34-second in-progress saves using elapsed active seconds.
+            campaignRun.worldState.sampleOperationStarted = true; campaignRun.worldState.dnaSecured = false; campaignRun.worldState.containmentSynchronized = false;
+            e.active = true; e.duration = SAMPLE_DEFENCE_SECONDS; e.t = clamp(Number(e.t)||0,0,SAMPLE_DEFENCE_SECONDS);
+            e.state = ['locking','defence','transfer'].includes(e.state)?e.state:'defence'; e.transferDuration = SAMPLE_TRANSFER_SECONDS; e.transferT = clamp(Number(e.transferT)||0,0,SAMPLE_TRANSFER_SECONDS);
+            for(const d of facilityDoors.filter(d=>!d.id||d.id==='lab_emergency_exit')) d.openT = e.state==='locking' ? clamp(mission.lockdownDoors?.find(s=>s.id===d.id)?.openT||0,0,1) : 0;
+        } else if (!campaignRun.worldState.dnaSecured) spawnLaboratoryConflict();
         setFinalMissionWorldState();
+        updateFacilityDoors(0);
     }
     restorePersistentActors(boundary);
     restorePersistentPickups(boundary.pickups);
@@ -10604,7 +10694,7 @@ function createContinuedMission4Snapshot() {
     const savedPhase = phase === P.M4_DEPART ? P.M4_BOARD : resumablePhases.includes(phase) ? phase : P.M4_BREAK_CONTACT;
     const extraction = campaignContent.extraction;
     return {
-        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
+        version:4, rewards:JSON.parse(JSON.stringify(campaignRun.rewards || {})), chapterStats:JSON.parse(JSON.stringify(campaignRun.chapterStats || [])), pickups:persistentPickupsSnapshot(),hostiles:persistentHostilesSnapshot(),
         missionId: 'break_contact',
         missionTime, kills, totalAmmoCrafted, totalMedkitsCrafted,
         player:persistentPlayerSnapshot(),
@@ -10653,6 +10743,7 @@ function applyContinuedMission4Snapshot(snapshot) {
     const boundary = JSON.parse(JSON.stringify(snapshot));
     campaignRun.rewards = { ...(boundary.rewards || {}) };
     campaignRun.entryMode = 'continued'; campaignRun.restartSnapshot = boundary;
+    campaignRun.chapterStats = Array.isArray(boundary.chapterStats) ? boundary.chapterStats.slice(0,4) : [];
     campaignRun.worldState.securityTurret = !!boundary.securityTurret; campaignRun.enemyIntel = !!boundary.enemyIntel;
     missionTime = Math.max(0, Number(boundary.missionTime) || 0); kills = Math.max(0, boundary.kills | 0);
     totalAmmoCrafted = Math.max(0, boundary.totalAmmoCrafted | 0); totalMedkitsCrafted = Math.max(0, boundary.totalMedkitsCrafted | 0);
@@ -10915,7 +11006,7 @@ function drawMarkers(W, H) {
         [P.M3_REACH_SECURITY]: ['LABORATORY SECURITY', 'SECURITY', LAB_SECURITY, 0xaedfff],
         [P.M3_OVERRIDE]: ['CONTAINMENT OVERRIDE', 'OVERRIDE', LAB_SECURITY, 0xffa34d],
         [P.M3_REACH_SAMPLE]: ['DNA SAMPLE', 'SAMPLE', LAB_CONTAINMENT, 0x66ffcc],
-        [P.M3_STABILIZE]: ['PORTABLE CONTAINMENT', 'SAMPLE', LAB_CONTAINMENT, 0xff6688],
+        [P.M3_STABILIZE]: ['DNA STABILIZATION', 'SAMPLE', LAB_CONTAINMENT, 0xff6688],
         [P.M4_BREAK_CONTACT]: ['EAST MAINTENANCE BREACH', 'ESCAPE', LAB_EMERGENCY_EXIT, 0xffa34d],
         [P.M4_REACH_LZ]: ['EXTRACTION LZ', 'LZ', EXTRACTION_BEACON, 0x66ddff],
         [P.M4_CALL_EXTRACTION]: ['PERIMETER PURGE CONTROL', 'PURGE CONTROL', EXTRACTION_BEACON, 0xffcc55],
@@ -12089,7 +12180,7 @@ window.__cf = {
     completeRelay(i) { const relay = relays[i]; if (!relay) return false; relay.defenseT = 0; updateRelays(0); return relay.powered; },
     restoreLabTurret() { restoreLaboratoryTurret(); return !!campaignRun.optional.security_turret; },
     advanceFinalEncounter(seconds) { updateFinalCampaignEncounter(Math.max(0, seconds || 0)); return { phase: CF_NAMES[phase] || String(phase), time: campaignRun.encounter.t, stage: campaignRun.encounter.stage, paused: !!campaignRun.encounter.pausedWarned }; },
-    completeStabilization() { if (phase !== P.M3_STABILIZE) return false; campaignRun.encounter.t = campaignRun.encounter.duration; updateFinalCampaignEncounter(0); return activeMissionId === 'break_contact'; },
+    completeStabilization() { if (phase !== P.M3_STABILIZE) return false; updateFacilityDoors(2); updateFinalCampaignEncounter(0); updateFinalCampaignEncounter(SAMPLE_DEFENCE_SECONDS); updateFinalCampaignEncounter(SAMPLE_TRANSFER_SECONDS); return activeMissionId === 'break_contact'; },
     startExtraction() { startExtractionHoldout(); return CF_NAMES[phase] || String(phase); },
     completeExtractionHoldout() {
         if (phase !== P.M4_HOLD_LZ) return false;

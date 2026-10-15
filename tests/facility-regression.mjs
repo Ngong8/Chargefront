@@ -52,7 +52,7 @@ try {
         };
     });
     assert(geometry.hallWall && !geometry.frontOpening && !geometry.bypass && geometry.wallBlocksShot);
-    assert.equal(geometry.mapSegments, 30); // continuous Hall wall (3.8.1) + CP2-R y684 lab-face closure
+    assert.equal(geometry.mapSegments, 28); // R2-A removes two internal partition segments; perimeter closure retained.
 
     const continuity = await check('M1→M4', () => {
         const cf = window.__cf;
@@ -104,7 +104,7 @@ try {
     });
     assert.deepEqual(interior.blocked, []);
     assert(interior.grade.slice(1).every((height) => height < 0.2));
-    assert(interior.labCover && !interior.overCover && interior.researchWall && !interior.partitionOpening && interior.exitWall);
+    assert(interior.labCover && !interior.overCover && !interior.researchWall && !interior.partitionOpening && interior.exitWall);
     assert(interior.researchBenches >= 2 && interior.securityStations >= 2 && interior.serviceGenerators === 4);
     const perimeter = await check('Repaired structural perimeter / retired side entrance', () => {
         const cf = window.__cf;
@@ -175,11 +175,13 @@ try {
         cf.move(364 - cf.player.pos.x, 774 - cf.player.pos.y);
         const secured = cf.interact(2);
         const tube = cf.scene.getObjectByName('DeepLaboratory');
-        return { unlocked, securityDoor, secured, tubeVisible: tube?.visible, phase: cf.phaseName,
+        return { unlocked, securityDoor, secured, tubeVisible: tube?.visible, phase: cf.phaseName, duration:cf.campaignRun.encounter.duration,
+            dnaVisible:cf.scene.getObjectByName('DNASequencePayload')?.visible,glassVisible:cf.scene.getObjectByName('PermanentContainmentGlass')?.visible,
             containmentSolid: cf.insideSolid(360, 774), playerSolid: cf.insideSolid(cf.player.pos.x, cf.player.pos.y) };
     });
     assert(specimen.securityDoor && specimen.unlocked === 'M3_REACH_SAMPLE');
-    assert(specimen.secured === 'M3_STABILIZE' && !specimen.playerSolid && !specimen.containmentSolid);
+    assert(specimen.secured === 'M3_STABILIZE' && !specimen.playerSolid && specimen.containmentSolid);
+    assert.equal(specimen.duration,90);assert(specimen.dnaVisible&&specimen.glassVisible);
 
     const navigation = await check('Squad / Infested / relay guidance / shooting', () => {
         const cf = window.__cf;

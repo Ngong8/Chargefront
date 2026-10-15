@@ -40,7 +40,13 @@ try {
         solid: window.__cf.insideSolid(window.__cf.player.pos.x, window.__cf.player.pos.y) }));
     console.log('Containment north perimeter blocks walking', JSON.stringify(repairedPerimeter));
     assert(repairedPerimeter.y >= 736.19 && !repairedPerimeter.solid);
+    // R2: normal entry/inner-room traversal is tested before acquisition. M4's
+    // front is deliberately sealed; actual lockdown/release has its own live gate.
+    await page.evaluate(() => { const c=__cf;c.startMission('sample_zero','continue_campaign');c.setNoAggro(true);c.setInvulnerable(true);c.clearTestEnemies();c.setPhase(21);c.move(373-c.player.pos.x,718-c.player.pos.y);c.interact(2); });
+    const warmBoundary = async () => {await page.evaluate(()=>__cfPerf.reset());await page.waitForFunction(()=>__cfPerf.summary().frames>=20,undefined,{timeout:15000});await page.evaluate(()=>__cfPerf.reset());};
+    await warmBoundary();
     await page.evaluate(() => window.__cfPerf.reset());
+    const nativeWindow = async label => {const counters=await page.evaluate(()=>__cfPerf.summary().counters);console.log('Native traversal window',label,JSON.stringify(counters));for(const key of ['linkProgram','collisionNavRebuild','buildCampaignWorld'])assert.equal(counters[key]||0,0,label+': '+key);};
     const walk = async (label, x, y, yaw, ms, minimum) => {
         await page.evaluate(({ x, y, yaw }) => {
             const cf = window.__cf;
@@ -65,11 +71,18 @@ try {
     await walk('Research threshold', 360, 699, Math.PI / 2, 3000, 708);
     await walk('Security partition', 361, 718, 0, 2600, 369);
     await walk('Containment access', 360, 729, Math.PI / 2, 2800, 737);
+    await nativeWindow('M3 normal entry / room traversal');
+    await page.evaluate(() => {__cf.completeMission();__cf.setNoAggro(true);__cf.setInvulnerable(true);__cf.clearTestEnemies();});
+    await warmBoundary();
     await walk('Service wing', 405, 752, 0, 3100, 414);
     await walk('Emergency exit', 443, 752, 0, 3100, 453);
     const exitCheckpoint = await page.evaluate(() => JSON.parse(localStorage.cf_campaign_v1)?.operation?.continuedState);
     assert.equal(exitCheckpoint?.extraction?.phase, 25, 'Exit did not save the M4_REACH_LZ checkpoint');
     assert(exitCheckpoint.player.position.x > 454, 'Exit checkpoint was saved before crossing the outer door');
+    await page.evaluate(()=>{const c=__cf;c.move(360-c.player.pos.x,625-c.player.pos.y);c.player.yaw=-Math.PI/2;});
+    await page.keyboard.down('w');await page.waitForTimeout(1400);await page.keyboard.up('w');
+    const sealedFront=await page.evaluate(()=>({y:__cf.player.pos.y,door:__cf.facilityDoors.find(d=>!d.id).locked,blocked:__cf.probeBlocked(360,625,1.7,360,612,1.7)}));
+    assert(sealedFront.y>=619&&sealedFront.door&&sealedFront.blocked,'M4 front entrance should remain sealed');
 
     // Sprint uses the actual ShiftLeft movement input, including stamina and
     // automatic doors, rather than a larger debug teleport step.
@@ -96,14 +109,17 @@ try {
 
     // FOLLOW is tested with the squad nearby, not left hundreds of metres
     // behind by the test's setup teleports.
+    await nativeWindow('M4 service / exit / sprint');
     await page.evaluate(() => {
         const cf = window.__cf;
+        cf.startMission('sample_zero','mission_select');cf.setPhase(19);cf.setInvulnerable(true);
         cf.setNoAggro(true); cf.clearTestEnemies(); cf.commandSquad('assist');
         for (let i = 0; i < cf.squad.length; i++) {
             cf.squad[i].pos.x = 357 + i * 3;
             cf.squad[i].pos.y = 610;
         }
     });
+    await warmBoundary();
     await walk('Squad FOLLOW through hall', 360, 613, Math.PI / 2, 3800, 630);
     const following = await page.evaluate(() => window.__cf.squadInfo().map((unit) => ({
         y: unit.position.y, blocked: window.__cf.insideSolid(unit.position.x, unit.position.y), mode: unit.mode,
@@ -186,13 +202,15 @@ try {
     // Hostiles must use both the interior service threshold and the outer exit.
     const interiorPursuit = await page.evaluate(() => {
         const cf = window.__cf;
+        cf.startMission('break_contact','mission_select');cf.setPhase(24);cf.setInvulnerable(true);
+        for (const member of cf.squad) { member.pos.x=350; member.pos.y=640; }
         cf.setNoAggro(false); cf.commandSquad('hold'); cf.clearTestEnemies();
         cf.move(425 - cf.player.pos.x, 752 - cf.player.pos.y);
         const enemy = cf.spawnTestEnemy('skitter', -21, 0);
         window.__facilityInteriorTarget = enemy;
         return enemy.pos.x;
     });
-    await page.waitForTimeout(2800);
+    await page.waitForFunction(() => !window.__facilityInteriorTarget.dead && window.__facilityInteriorTarget.pos.x > 411, undefined, { timeout: 6000 });
     const across = await page.evaluate(() => ({ x: window.__facilityInteriorTarget.pos.x,
         dead: window.__facilityInteriorTarget.dead }));
     console.log('Infested interior pursuit', JSON.stringify({ start: interiorPursuit, ...across }));

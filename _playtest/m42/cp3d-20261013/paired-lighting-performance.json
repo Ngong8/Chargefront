@@ -1,0 +1,1301 @@
+{
+  "method": "Serial Firefox then Edge; D0 then D1; 1280x720 seed420042; six poses primed, two 64-RAF-frame repetitions per pose",
+  "runs": [
+    {
+      "browser": "firefox",
+      "stage": "D0",
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 6,
+          "renderP95": 8,
+          "selectorCalls": 103,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 17
+          },
+          "render": {
+            "calls": 379,
+            "triangles": 267971,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.6,
+          "p99": 32.2,
+          "worst": 32.2,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 107,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 603,
+            "triangles": 275555,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "east",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.9,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 109,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 615,
+            "triangles": 275456,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "hall",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32,
+          "worst": 32,
+          "renderMedian": 5,
+          "renderP95": 7,
+          "selectorCalls": 108,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 237,
+            "triangles": 262663,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "security",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.5,
+          "p99": 31.7,
+          "worst": 31.7,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 110,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 115,
+            "triangles": 262253,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "containment",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.9,
+          "p99": 32.3,
+          "worst": 32.3,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 107,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 66,
+            "triangles": 257979,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 32,
+          "worst": 32,
+          "renderMedian": 6,
+          "renderP95": 8,
+          "selectorCalls": 106,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 379,
+            "triangles": 267971,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 31.8,
+          "worst": 31.8,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 106,
+          "selectorTotalMs": 3,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 603,
+            "triangles": 275555,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "east",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 104,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 17
+          },
+          "render": {
+            "calls": 615,
+            "triangles": 275456,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "hall",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 5,
+          "renderP95": 6,
+          "selectorCalls": 102,
+          "selectorTotalMs": 3,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 237,
+            "triangles": 262663,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "security",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 108,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 115,
+            "triangles": 262253,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "containment",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 32.4,
+          "worst": 32.4,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 106,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 66,
+            "triangles": 257979,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "power",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "73951e99fd6df52873a911344e8f824bcb59b201325326cd68ce9618952a466f",
+        "src/world/facility.js": "466efc0c774cc7e731cb3b6f4ba6ae432e3ac8e3b21e320c7563b1e604a81e56"
+      },
+      "passed": true
+    },
+    {
+      "browser": "firefox",
+      "stage": "D1",
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32,
+          "worst": 32,
+          "renderMedian": 6,
+          "renderP95": 8,
+          "selectorCalls": 109,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 32.1,
+          "worst": 32.1,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 108,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 613,
+            "triangles": 276311,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "east",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.9,
+          "p99": 32.4,
+          "worst": 32.4,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 104,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 17
+          },
+          "render": {
+            "calls": 626,
+            "triangles": 276224,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "hall",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.9,
+          "p99": 32.5,
+          "worst": 32.5,
+          "renderMedian": 5,
+          "renderP95": 6,
+          "selectorCalls": 110,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 242,
+            "triangles": 263359,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "security",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 32,
+          "p99": 32.3,
+          "worst": 32.3,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 108,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "containment",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 31.8,
+          "worst": 31.8,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 102,
+          "selectorTotalMs": 3,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 17
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 32.3,
+          "worst": 32.3,
+          "renderMedian": 6,
+          "renderP95": 8,
+          "selectorCalls": 107,
+          "selectorTotalMs": 4,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 32,
+          "p99": 63.3,
+          "worst": 63.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 111,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 613,
+            "triangles": 276311,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "east",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 32.2,
+          "p99": 32.3,
+          "worst": 32.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorCalls": 112,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 19
+          },
+          "render": {
+            "calls": 626,
+            "triangles": 276224,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "hall",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 31.9,
+          "worst": 31.9,
+          "renderMedian": 5,
+          "renderP95": 7,
+          "selectorCalls": 108,
+          "selectorTotalMs": 2,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 242,
+            "triangles": 263359,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "security",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.7,
+          "p99": 31.9,
+          "worst": 31.9,
+          "renderMedian": 4,
+          "renderP95": 6,
+          "selectorCalls": 105,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 17
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "containment",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 31.8,
+          "p99": 47.7,
+          "worst": 47.7,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorCalls": 108,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 1,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar",
+          "label": "power",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      },
+      "passed": true
+    },
+    {
+      "browser": "edge",
+      "stage": "D0",
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 7.4,
+          "renderP95": 9.7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 1.0999999940395355,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 379,
+            "triangles": 267971,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.7,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 8.6,
+          "renderP95": 11.2,
+          "selectorCalls": 68,
+          "selectorTotalMs": 1.4000000357627869,
+          "selectorMaxMs": 0.29999999701976776,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 603,
+            "triangles": 275555,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "east",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.3,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 8.2,
+          "renderP95": 11.7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 1.199999988079071,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 615,
+            "triangles": 275456,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "hall",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.4,
+          "p99": 19.4,
+          "worst": 19.4,
+          "renderMedian": 5.6,
+          "renderP95": 7.7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 1.100000023841858,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 237,
+            "triangles": 262663,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "security",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.9,
+          "p99": 19.4,
+          "worst": 19.4,
+          "renderMedian": 4.9,
+          "renderP95": 7.2,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.800000011920929,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 115,
+            "triangles": 262253,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "containment",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 18.9,
+          "worst": 18.9,
+          "renderMedian": 3.8,
+          "renderP95": 5.4,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.8999999761581421,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 66,
+            "triangles": 257979,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.4,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 7.5,
+          "renderP95": 9.4,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.7000000029802322,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 379,
+            "triangles": 267971,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 19.5,
+          "worst": 19.5,
+          "renderMedian": 8.6,
+          "renderP95": 13.6,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.9000000059604645,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 603,
+            "triangles": 275555,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "east",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 8.8,
+          "renderP95": 11.7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.699999988079071,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 615,
+            "triangles": 275456,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "hall",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.3,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 5.5,
+          "renderP95": 7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.5999999940395355,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 237,
+            "triangles": 262663,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "security",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.4,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 4.9,
+          "renderP95": 7.2,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.4999999850988388,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 115,
+            "triangles": 262253,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "containment",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.6,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 3.6,
+          "renderP95": 5.3,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.40000002086162567,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 66,
+            "triangles": 257979,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 107,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "power",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "73951e99fd6df52873a911344e8f824bcb59b201325326cd68ce9618952a466f",
+        "src/world/facility.js": "466efc0c774cc7e731cb3b6f4ba6ae432e3ac8e3b21e320c7563b1e604a81e56"
+      },
+      "passed": true
+    },
+    {
+      "browser": "edge",
+      "stage": "D1",
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 18.3,
+          "p99": 18.8,
+          "worst": 18.8,
+          "renderMedian": 7.3,
+          "renderP95": 9.1,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.5999999791383743,
+          "selectorMaxMs": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 9.6,
+          "renderP95": 15.1,
+          "selectorCalls": 68,
+          "selectorTotalMs": 1,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 613,
+            "triangles": 276311,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "east",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.3,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 8.3,
+          "renderP95": 10.7,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.7000000029802322,
+          "selectorMaxMs": 0.30000001192092896,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 626,
+            "triangles": 276224,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "hall",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.2,
+          "p99": 18.9,
+          "worst": 18.9,
+          "renderMedian": 5.9,
+          "renderP95": 8.8,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.4999999701976776,
+          "selectorMaxMs": 0.09999999403953552,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 242,
+            "triangles": 263359,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "security",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 4.9,
+          "renderP95": 6.5,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.5999999791383743,
+          "selectorMaxMs": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "containment",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.8,
+          "p99": 19,
+          "worst": 19,
+          "renderMedian": 3.9,
+          "renderP95": 5.5,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.5000000298023224,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 18.8,
+          "p99": 19,
+          "worst": 19,
+          "renderMedian": 8.4,
+          "renderP95": 9.8,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.5999999940395355,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 19,
+          "worst": 19,
+          "renderMedian": 9.5,
+          "renderP95": 13.3,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.8999999761581421,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 613,
+            "triangles": 276311,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "east",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.5,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 8.6,
+          "renderP95": 11.9,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.9000000059604645,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 626,
+            "triangles": 276224,
+            "points": 1060,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "hall",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.7,
+          "p99": 18.7,
+          "worst": 18.7,
+          "renderMedian": 5.8,
+          "renderP95": 8.3,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.8000000268220901,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 242,
+            "triangles": 263359,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "security",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.6,
+          "p99": 19,
+          "worst": 19,
+          "renderMedian": 4.9,
+          "renderP95": 6.6,
+          "selectorCalls": 69,
+          "selectorTotalMs": 0.699999988079071,
+          "selectorMaxMs": 0.10000000894069672,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "containment",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 18.6,
+          "p99": 19.6,
+          "worst": 19.6,
+          "renderMedian": 3.9,
+          "renderP95": 5.8,
+          "selectorCalls": 68,
+          "selectorTotalMs": 0.5999999940395355,
+          "selectorMaxMs": 0.20000000298023224,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "slots": 8,
+          "sources": 109,
+          "programs": 47,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+          "label": "power",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      },
+      "passed": true
+    }
+  ]
+}

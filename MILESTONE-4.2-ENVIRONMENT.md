@@ -1,11 +1,15 @@
 # Charge Front — Milestone 4.2: Environment & Final Prop Pass
 
-**Current checkpoint: CP3-C-R — Approved Interior Prop Placement Corrections,
-functional/preservation/prewarming PASS; manual visual review pending.**
-Comparative frame-time results remain inconclusive on this host. STOP at CP3-C-R:
-no CP3-D lighting, CP3-E, staging, commit, merge or push. CP3-A and CP3-B are accepted;
-CP3-B was committed as `c0bb414` with manual verdict PASS WITH MINOR VISUAL ISSUES.
-See the CP3-C-R implementation/validation record at the end of this document.
+**Current checkpoint: CP3-D-R2 — phases A/B/C/D implemented and verified;
+24 final Firefox/Edge suite runs PASS; manual visual acceptance pending.**
+CP3-D was not manually accepted; its remaining obstructions, containment lifecycle
+and proximity-dependent facade coverage are revised in the separate R2 record below.
+Comparative headless timing remains inconclusive, especially Firefox. STOP at R2:
+no CP3-E, staging, commit, merge or push. CP3-C-R is the accepted starting source;
+HEAD is `9267ceb` (`feat: refine facility interiors and correct prop installations`).
+See the separate CP3-D and CP3-D-R2 records below and the
+[indexed R2 handoff](_playtest/m42/cp3dr2-20261014/INDEX.html) and
+[recovery ledger](CP3-D-R2-PROGRESS.md).
 Earlier checkpoint records are retained as historical baseline evidence.
 
 ## CP0 status and scope
@@ -2104,3 +2108,397 @@ as documented. No approved functional/cover/contact/enclosure blocker remains.
 Credits.txt and unrelated tracked/untracked work are preserved. The staging index
 is empty and HEAD remains `c0bb414`. **STOP AFTER CP3-C-R. No CP3-D, CP3-E, stage,
 commit, merge or push. Ready for manual review with the stated timing caveat.**
+
+## CP3-D — D0 corrections and D1 coordinated lighting (2026-10-14)
+
+**Implementation and automated gates complete. Manual visual acceptance pending;
+stop after CP3-D.** The following is the current result. Earlier CP3-C-R stop/HEAD
+statements above are historical, superseded by the user's authorization for this pass.
+
+### Starting point, source separation and evidence
+
+- Branch `milestone-4.2`, HEAD `9267ceb32bf886fd4663c54bc5f18e023ba12d05`.
+- Accepted facility SHA256
+  `2720064cfcfc09480976262a42ce2b31b78a4d7e9d8683d9f9e8dc5df740eb2b`.
+- Original checkpoint source preserved as `before-chargefront.html` and
+  `before-facility.js`. Corrected D0 source preserved separately as
+  `d0-final-chargefront.html` and `d0-final-facility.js` before D1 implementation.
+- [Review index](_playtest/m42/cp3d-20261013/INDEX.html),
+  [handoff/provenance](_playtest/m42/cp3d-20261013/README.md),
+  [joined validation](_playtest/m42/cp3d-20261013/validation-summary.json).
+- All current D1 receipts match HTML SHA256
+  `51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608`
+  and facility SHA256
+  `432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064`.
+
+### D0 — targeted investigation, corrections and actual outcome
+
+The five supplied gameplay references identified the extractor, the pole under
+the Vault sign, the Research/Security–Containment doorway junction, and Sample
+Zero before/after defence activation. Source, transforms, animation and mission
+state were inspected before D1. D0 final gates passed in both browsers first.
+
+| Item | Investigation and final correction | Verification / review status |
+|---|---|---|
+| D0-01 ceiling extractor | Original disc had a changing tilted normal because its animated axis was wrong. Reuse it as the hub on a local-Y axial pivot, add four instanced blades and a roof-bearing frame at z8.82–9.0. Existing power visibility and spin speed 2.4 retained. | Both extractors rotate with +Z normal across all five seeds. Gameplay detail and before/after captured. Remains deliberately dark, without a fill-light workaround. |
+| D0-02 Vault pole | Existing lab-active emissive status beacon, not a registered PointLight. Reuse the beacon/case as a compact header-mounted fitting at z8.45. Keep original animated materials/FX ownership. | Tall obstruction removed; case contacts header; no added source registration. Header and old composition captured. |
+| D0-03 junction | Initial diagnosis confused an internal partition notch with the reference seam. Pixel-ray checks hit existing wall/jamb, not a view through an opening. Final correction seats only the right `lab_security` jamb .02 m farther into each host face while preserving exposed faces and passage. | Existing collision/map geometry remains exactly 329 solids / 30 segments; bidirectional shots blocked; six door mechanisms and enclosure PASS. **A narrow coloured highlight is still visible in the reference composition. Geometry/contact is verified; visual elimination is not claimed and requires manual review.** |
+| D0-04 Sample Zero | Acquisition already deliberately hides the payload/scan/light/inner energized glass and lab field; no portable displayed vial or apparatus-retraction story existed. Separate the installed plinth/rings/cap into `SampleZeroInstallation`, retain them after acquisition, and support the empty frame with four instanced struts. | Exactly one DNA payload; secured payload/field stay hidden while installed frame remains in M3/M4. Actual Continue, death, checkpoint restore, recollection prevention and 34-second defence completion PASS. Static empty frame remains non-cover, preserving existing post-pickup collision. |
+
+D0 is a one-time finalizer after accepted seeded construction. It uses independent
+seed `0xcf070048` and restores the caller RNG. Spinner update reads the explicit
+axis; the existing fallback remains available. Sample installation visibility is
+applied on fresh M3/M4 construction as well as normal world-state restoration.
+
+Final D0-only comparisons:
+[supports/header/junction](_playtest/m42/cp3d-20261013/review-d0-final-reviewed/01-support-junction.png),
+[sample lifecycle](_playtest/m42/cp3d-20261013/review-d0-final-reviewed/02-lifecycle.png).
+The new after-side was recaptured from the preserved D0 source through a private
+file:// evidence document; current product files were never swapped. Original
+reference captures are historical camera matches, not pixel-locked animation or
+light-state comparisons. Additional installed-detail views are indexed separately.
+
+The earlier added partition return/solid/map segment was removed before final
+D0 validation and D1. `d0-after`, `d0-review`, `d0-gate-confirmed` and
+`regression-d0-*` without `final` describe that superseded attempt. They are retained
+for provenance and must not be presented as current evidence. Final D0-only gate
+is `d0-gate-final`; current D1 revalidates D0 in `regression-d1-final-*`.
+
+### D1 — functional fixtures, room hierarchy and eight-slot coordination
+
+- Existing Hall lenses now have roof cases/support drops; Hall proxies move from
+  z8.2 to z8.46, immediately below the lenses. Warm task lighting and cool functional
+  wall accents retain their existing colours, intensity, range and decay.
+- Existing sconces receive fitted host-wall backing. Existing Vault and seven lab
+  sources receive suspended cases/diffusers with supports reaching their roofs.
+  These reuse sources rather than register replacement interior lights.
+- Lab diffuser materials remain independently owned and follow the actual source
+  colour and emergency pulse. Decon/Research stay cool/task-led; Security stays
+  warm/operational; Containment keeps its restrained peripheral/focal hierarchy;
+  Power remains amber utility-led with emergency red. No room-wide exposure lift.
+- Two new guarded exterior service lights: West `(328.82,714,3.36)` and East
+  `(391.48,657,3.36)`, pale warm `0xffe0b5`, intensity 45, range 22, decay 1.85.
+  Each has a wall-seated case/lens/guard and short feed to the existing utility area.
+  Reusing approach/yard sources would remove useful coverage there, so the two
+  conditionally approved registrations were used. Campaign ledger **104→106**;
+  rendered slots remain **eight**, with no added shadow source.
+- Source eligibility now skips zero-falloff candidates and rejects paths through
+  existing full-height opaque walls, portal overheads and live closed-door solids.
+  The blocker list is cached; door disabled flags are read from the real records.
+  Scalar clipping avoids per-candidate Vector/closure construction. Low cover is
+  intentionally excluded so a workbench does not eliminate a useful room source.
+- Both exterior lights are selected outside their respective walls and excluded
+  at the tested interior positions. All six doors block the probe with closed
+  solids and admit it with open solids; overheads block above the door opening.
+  Native door operation is independently covered by the enclosure/playthrough suites.
+
+This is **source-to-camera eligibility**, not per-pixel shadow occlusion. The
+existing non-shadow slots can still illuminate visible surfaces beyond a corner
+when a source is selected through an open portal. No shader/shadow expansion was
+used to claim complete light-leak elimination.
+
+Exposure **.78**, fog **40–280**, global ambient/environment lighting and existing
+shadow cadence are preserved. Cases/supports share cached unit-box/steel resources
+and two static instance batches; no per-traversal fixture construction. D1 uses
+independent seed `0xcf070049` and restores the caller RNG.
+
+### Current captures and actual regression results
+
+`lighting-verified/{firefox,edge}` and `lighting-baseline-verified/{firefox,edge}`
+contain **20 paired poses per browser** under normal gameplay lighting:
+west/east walls and cabinets, front/emergency entrances, Hall/extractor/Vault/header,
+Decon, Research, Security, Containment before/immediate/during/post-defence,
+Power normal/emergency, and the exact junction. Seven grouped sheets per browser
+are linked in the review index. Same cameras, seed420042, 1600×900 viewport,
+exposure/fog; HUD/viewmodel hidden through existing test hooks. The actual player
+remains at the view location; cameras do not use diagnostic fill/cutaway lighting.
+
+The harness now waits for the correct camera and at least 35 real selector updates
+before recording. Early `lighting-before`/`lighting-candidate` captures are retained
+but superseded because a few slot snapshots had not caught up with the pose.
+Early-after-acquisition images include this settling interval; the D0 lifecycle
+gate separately checks the exact t=0 acquisition boundary.
+`lighting-final/firefox` is a failed **test-setup** attempt: file:// route interception
+did not expose the frozen facility API. The corrected fixture captures the real
+exported constructor through an initialization setter; no product debug hook or
+controller/scene semantics change was made. The final gates pass without page errors.
+
+| Final suite | Firefox elapsed | Edge elapsed | Result |
+|---|---:|---:|---|
+| D0 five-seed preservation/lifecycle | 81.522 s | 40.282 s | PASS / PASS |
+| Facility regression / cover / M1→M4 / Continue | 67.607 s | 33.063 s | PASS / PASS |
+| Enclosure / breach walks / all six door cycles | 126.205 s | 124.374 s | PASS / PASS |
+| Real-input facility playthrough / FOLLOW / pursuit / evacuation | 81.926 s | 66.275 s | PASS / PASS |
+| Canonical M2 progression / relay return | 171.096 s | 118.951 s | PASS / PASS |
+| Intro/transition/result prewarming | 42.353 s | 35.758 s | PASS / PASS |
+| Traversal/performance / Campaign and Endless combat/restart | 156.180 s | 150.391 s | PASS / PASS |
+| Campaign/Endless seeded scenery placement/parity | 259.985 s | 128.768 s | PASS / PASS |
+| Pure placement-state unit checks | 0.196 s | 0.109 s | PASS, run by each batch |
+
+These are **suite wall-clock elapsed times**, not loading or frame-time benchmarks.
+Both fresh batch receipts and logs are indexed; all 18 entries have status 0 and
+match current product hashes. Existing gameplay assertions/timeouts are retained;
+the two existing test changes are comments explaining the unchanged 30 segments.
+
+### Rendering and bounded paired timing
+
+[Matched warm receipt](_playtest/m42/cp3d-20261013/paired-lighting-performance.json):
+serial browsers; D0 then D1; six identical poses, seed420042, 1280×720, common
+priming tour, two 64-RAF-frame repetitions/pose. **768 measured frames per browser
+per source version**. All four runs retain 47 warmed programs and eight slots.
+
+| Current D1 warm result | Firefox | Edge |
+|---|---:|---:|
+| Regional frame p95 range | 31.7–32.2 ms | 18.2–18.8 ms |
+| Current-minus-D0 frame p95 range | −.2 to +.5 ms | −.4 to +.4 ms |
+| Worst measured frame | 63.3 ms | 19.6 ms |
+| Maximum observed selector call | 1 ms | .300 ms |
+| Median-render delta range | 0 ms at Firefox timer resolution | −.2 to +1 ms |
+| Render-p95 delta range | −1 to +1 ms | −1 to +3.9 ms |
+| Warm links / geometry-material creation-disposal / world-nav rebuilds | 0 / 0 / 0 | 0 / 0 / 0 |
+
+Fixture costs in the six matched poses: **+1 to +11 draw calls**, **+252 to +768
+triangles**; no warmed-program growth. Firefox includes 63.3 ms east and 47.7 ms
+Power tail spikes. Edge's positive render deltas are recorded rather than discarded.
+Ordinary W-key regional traversal and live combat/restart are separately exercised
+by the permanent suite; legitimate combat/effect churn is not called allocation-free.
+
+This bounded pair shows small frame-p95 differences, stable shader count and no
+static-environment churn. It does **not** certify desktop FPS equivalence, prove a
+general speedup or erase the prior cross-checkpoint timing caveat. Headless browser
+timer resolution and ANGLE/software scheduling limit interpretation.
+
+### Changed files, review caveats and stop
+
+Changed/new: `chargefront.html`, `src/world/facility.js`, `tests/facility-d0.mjs`,
+`tests/facility-lighting.mjs`, comments in `tests/facility-enclosure.mjs` and
+`tests/facility-regression.mjs`, this milestone document, and the fresh CP3-D evidence
+directory (receipts, original/D0 source snapshots, paired PNGs, index and helpers).
+
+Manual review should focus on the dark installed extractor, Vault header fitting,
+the retained empty non-cover chamber frame, useful exterior pools, room hierarchy,
+emergency colours, and **the unresolved visual acceptability of the narrow junction
+highlight**. Geometry/gameplay checks pass; that subjective seam result is not marked
+visually accepted. Source-selection occlusion limitations and measured timing costs
+are explicit above.
+
+Credits.txt retains its unrelated attribution addition; prior artifacts are
+preserved. Final HTML module/import-map and JavaScript syntax checks, 73 indexed
+links, source-hash matching and original Credits hash all PASS; `git diff --check`
+is clean. [Check receipt](_playtest/m42/cp3d-20261013/final-checks.json).
+HEAD remains `9267ceb`; index empty. **STOP AFTER CP3-D. No CP3-E,
+staging, commit, merge or push. Ready for manual review with the stated caveats.**
+
+## CP3-D-R2 — facility clearance, containment lockdown and persistent lighting
+
+**A/B/C/D implemented sequentially with recorded gates. Automated verification
+complete; stop for manual acceptance.** Finalized 2026-10-15. Previously accepted
+CP3-A/B/C-R work remains the foundation; CP3-D above is an unaccepted historical
+implementation. This R2 section is the current authoritative correction record.
+
+[Review index](_playtest/m42/cp3dr2-20261014/INDEX.html) ·
+[Detailed handoff](_playtest/m42/cp3dr2-20261014/README.md) ·
+[Joined final results](_playtest/m42/cp3dr2-20261014/validation-summary.json) ·
+[Phase/recovery ledger](CP3-D-R2-PROGRESS.md).
+
+### A — actual obstruction origins and wider traversal audit
+
+All five numbered manual references and the additional exterior image were inspected
+before product edits. Fresh actual-game views reproduced both geometry references.
+
+- **Screenshot 1:** two unnamed full-height `BoxGeometry` children of
+  `DeepLaboratory`, generated by `buildLaboratory`'s `wall`/`placed` helpers.
+  Centres `(367,708,4.5)` and `(367,729.65,4.5)`; world dimensions **1×8×9 m** and
+  **1×9.3×9 m**; rotation X=π/2. They are obsolete Research/Security partitions,
+  not perimeter walls or useful low cover. Removed both live meshes, their two
+  exact collision records and two x367 minimap segments. Associated cyan trims
+  retired; two command rails remounted on the real east wall.
+- **Screenshot 2:** shared dead/powered state beacon at `(360,688)`, generated by
+  `buildEnvironmentStateLayers`, .26×.26×3.2 m floor pole with .22 m cap. It is a
+  non-colliding emissive state indicator, turning red in M4—not the previously
+  corrected `(360,658)` header beacon. Remounted as a compact case/cap on the Vault
+  north west shoulder `(351.65,685.12,6.1)`.
+- Wider audit remounts six other interior beacon locations `(360,686)`, `(348,660)`,
+  `(342,700)`, `(378,700)`, `(360,744)`, `(360,780)` to walls/portal shoulders.
+  No beacon had collision/nav/minimap records. Existing state animation ownership
+  and previous extractor/header corrections retained.
+- Hall/front, Vault/passages, Decon thresholds, Research/Security, Containment
+  entry/chamber, Power/service and emergency route inspected through ten views.
+  All six doors are tested. **327 solids / 28 segments**, an intentional −2/−2
+  difference from CP3-D. Every remaining physical bound/height/portal flag matches
+  the pre-R2 capture; no blanket count-preservation or weakened envelope test.
+- Legacy constructors replay only in detached scratch for seeded scenery parity.
+  Archived non-facility scenery and terrain still compare exactly. Navigation and
+  raycasting use the removed real collision records; useful tactical cover retained.
+
+### B — authoritative Sample Zero operation
+
+1. **Acquisition:** `sampleOperationStarted` blocks duplicate interaction. DNA stays
+   inside its inner glass; pedestal, supports and outer enclosure stay visible.
+   `dnaSecured` remains false. If squad is outside or in an entrance threshold,
+   activation is refused with a rally/clearance message; no actor teleport.
+2. **Lockdown:** front entrance and emergency exit lock through real door records,
+   rendered panels, collision and existing navigation/denial logic. A short internal
+   `locking` state waits for open panels to close before counting defence time.
+3. **Defence:** **exactly 90 active gameplay seconds**, without the old distance-based
+   pause. Pause/death stop progression. HUD shows remaining seconds/progress; both
+   entrances remain locked. Only `m3_stabilization` drone requests are admitted.
+   Essential/authored/director/carrier requests are also gated; pre-existing
+   biological/exterior leftovers retire without rewards. Valid in-facility points
+   and normal squad combat are used. Suppression is scoped to this operation.
+4. **Transfer:** at t90 stop wave generation and begin **3.5 active seconds** of eased
+   retraction/shrinkage into the pedestal. The payload does not vanish in one frame.
+   Both glass/enclosure visuals, pedestal and permanent installation remain. The
+   original chamber collider stays enabled in M3/M4; no resized/new solid record.
+5. **Release:** only after transfer, set `dnaSecured` and `containmentSynchronized`,
+   restore normal M4 spawning and advance through the existing M3→M4 transition.
+   Emergency/service route releases; front stays sealed for the intended east-route
+   evacuation. Rewards/resources persist; completed chapter statistics are carried
+   in both checkpoint forms while existing per-chapter HUD counters reset.
+
+Encounter substate/timers, locking panel progress, hostiles/source tags and transfer
+progress restore. Old 34-second in-progress saves migrate with elapsed seconds
+retained, visible payload and the new 90-second requirement. A genuine cold-M3
+Continue initialization error found during testing was fixed and retested.
+
+Exact pre/activation/30/60/89/90/transfer-mid/3.49/completed boundaries, duplicate
+prevention, pause, death, actual menu Continue, defence/transfer saves, legacy8s
+migration, before/after exit interaction and M3→M4 all PASS. Unaccelerated live runs
+reach exactly90s before transfer, with drone-only sampled hostiles, normal squad
+shooting and W-key blocked/released exit tests. Their wall elapsed95.953s Firefox /
+97.977s Edge includes capture pauses and transfer; it is not the defence timer.
+
+### C — persistent distributed exterior lighting
+
+- **32 repeated guarded industrial luminaires** across front/header, Hall west/east,
+  recessed Vault/lab shoulders, long lab facades, Containment return/east/rear,
+  Power facades and emergency-exit flanks/header. Exact placements are in the
+  joined receipt. Small warm diffusers preserve the restricted-operations hierarchy.
+- Constant emissive lenses plus soft static wall washes and terrain-conforming
+  ground pools: four shared draws, two shared generated gradient maps, no per-frame
+  fixture construction or player/squad activation condition. Alpha feathers to zero
+  on every boundary; pools are clipped to real opaque runs/lintels rather than
+  spanning open doorways. Ground mesh1120 vertices follows sampled terrain+.07m.
+- Two CP3-D proximity-budgeted service PointLights superseded: scene Campaign proxy
+  ledger **106→104**, eight rendered budget slots retained. No additional shadow
+  source, custom shader, exposure/ambient increase or fog removal. Existing dynamic
+  illumination remains available for important nearby surfaces and moving actors.
+- Six comparable exterior framings, each with actor near/far/inside, plus emergency
+  state: **19 captures/browser**. Fixture visibility, materials and transforms remain
+  identical, including a real W-key entrance transition and M1→M4 states. Fixed
+  camera framing isolates actor proximity; it is not a player-eye-distance benchmark.
+  Normal fog/occlusion still affects what is visible from a distance.
+
+### D — final-source results and visual inspection
+
+All rows below PASS on final source. **24 successful final suite runs**, including
+the pure placement-state suite run by each browser batch. All selected receipts
+match final HTML SHA256
+`3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c`
+and facility SHA256
+`3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15`.
+
+| Final suite | Firefox wall elapsed | Edge wall elapsed |
+|---|---:|---:|
+| R2 geometry / exact deltas / W crossing / audit captures |33.251s|23.711s|
+| Exact Sample Zero boundaries / source policy / death / Continue / restoration |40.185s|24.710s|
+| Unaccelerated90s defence / transfer / squad combat / locks / W evacuation |125.960s|113.146s|
+| Permanent enclosure / all six door cycles |125.587s|115.585s|
+| Native traversal / sprint / FOLLOW / pursuit / shooting / exit checkpoint |93.029s|65.647s|
+| Facility / cover / chapter progression regression |63.813s|31.463s|
+| Canonical M2 progression / relay return |167.634s|117.576s|
+| Intro/transition/result prewarming |40.569s|32.783s|
+| Regional traversal / Campaign and Endless combat/restart |157.320s|149.046s|
+| Five Campaign seeds / nine Endless cases / archived scenery parity |238.124s|128.603s|
+| Pure placement-state checks |.116s|.082s|
+| Persistent exterior lighting / native entrance transition |46.730s|37.082s|
+
+These are suite durations, not loading/FPS benchmarks. Final comparison sheets,
+normal live defence/transfer and wide facility views were visually inspected.
+The two reference obstructions are gone; payload stays visible at30/60/89 and
+retracts during transfer; both enclosures remain after completion; exterior pools
+stay present in all three actor conditions. Automated PASS does not grant manual
+visual acceptance. Index links the representative sheets and full-resolution PNGs.
+
+### Renderer measurements and limitations
+
+[Final paired measurement](_playtest/m42/cp3dr2-20261014/renderer-pair-final.json):
+actual pre-R2 source versus final R2 through separate file:// evidence documents,
+without swapping product files. Serial browsers/versions, seed420042, 1280×720,
+six primed poses, two64-frame repetitions: **768 frames/browser/version**.
+
+| Warm final R2 observation | Firefox | Edge |
+|---|---:|---:|
+| Regional frame-p95 range |16.7–33.3ms|16.9–17.0ms|
+| Current-minus-baseline p95 range |0 to +16.6ms|−.1 to +.1ms|
+| Worst final measured frame |50ms|17.2ms|
+| Median-render delta range |−1 to +1ms|−.6 to +.2ms|
+| Render-p95 delta range |−1 to +1ms|−1 to +.6ms|
+| Warmed resident programs |47→48|49→50|
+| Warm links / static geometry-material churn / world-nav rebuilds |0 /0 /0|0 /0 /0|
+
+Matched draw delta **−2 to +4**, triangle delta **+3436 to +3904**. One additional
+warmed shader variant supports the static textured pools; there is no per-luminaire
+shader growth or linking during the warm samples. The earlier retained renderer
+pair has larger Firefox timing tails. **Comparative headless timing remains
+inconclusive; no desktop FPS equivalence or improvement claim.** Real W traversal
+and combat are tested separately; normal combat/effect allocation remains legitimate.
+
+Static surface pools do not provide dynamic shadows or full moving-object light
+transport. Dynamic actor lighting retains its existing budget. Manual review should
+assess subdued pool strength/spacing, both-glass readability, the short transfer
+animation and all corrected passages. No additional known functional blocker remains.
+
+### Provenance, changed files and hard stop
+
+Retained failed/intermediate attempts are explicitly documented in the recovery
+ledger: cold-Continue initialization, transient bootstrap timeout, old M4 front-entry
+test assumption, pursuit observed after combat death, section-metadata parity and
+hard-edge lighting candidate. Test corrections preserve the physical assertions and
+exact intentional deltas; native no-rebuild counters use separate warmed windows
+around explicit mission-setup changes. Old CP3-D and R2 evidence is not overwritten.
+
+Current authoritative evidence: `phase-d-final-geometry`, selected passing rows in
+`phase-d-final`, `phase-d-final-playthrough`, `phase-d-final-extended`,
+`renderer-pair-final.json` and `final-review-verified`. Earlier post-transfer images
+that hide the outer enclosure are historical, not the final result.
+
+R2 changed/new files: `chargefront.html`, `src/world/facility.js`, four new R2 test
+suites, `tests/environment-placement.mjs`, `tests/facility-enclosure.mjs`,
+`tests/facility-playthrough.mjs`, `tests/facility-regression.mjs`, this milestone,
+`CP3-D-R2-PROGRESS.md`, and `_playtest/m42/cp3dr2-20261014/` evidence/helpers.
+
+Remain on `milestone-4.2`, HEAD `9267ceb`. Credits.txt retains its original unrelated
+attribution; other working-tree files preserved. Final syntax,76 handoff links,
+product/Credits hashes and `git diff --check` PASS. Index empty. **STOP FOR MANUAL
+ACCEPTANCE. No CP3-E, staging, commit, merge or push.**
+
+### Pending Manual Follow-ups
+
+Recorded from the latest manual acceptance review. These are observations to
+investigate in a future refinement. They are **not** confirmed defects and are
+outside the accepted CP3-D-R2 scope; they are not implementation requirements for
+the CP3-D-R2 commit and must not be treated as verified bugs before investigation.
+
+- **Observation A — Mission 4 entrance state.** The main entrance highlighted in the
+  review appears to remain open, or to reopen, when Mission 4 begins. Investigate
+  whether this entrance should stay physically closed and locked throughout Mission 4,
+  with the emergency exit serving as the intended evacuation route.
+- **Observation B — Laboratory Security Turret.** The activated turret highlighted in
+  the review does not appear to perform a visible offensive action. Investigate whether
+  it correctly detects enemies, acquires targets, fires projectiles or hitscan attacks,
+  produces appropriate firing effects and applies damage.
+
+### Evidence retention (committed vs local)
+
+The compact, indexed acceptance evidence referenced by this document is committed
+with the CP3-D-R2 checkpoint: the R2 review index/handoff, joined validation and
+renderer receipts, the referenced review sheets and per-phase logs, the R2 final
+checks, and the earlier accepted CP3 checkpoint summaries/sheets referenced above.
+Every committed link resolves to a committed file.
+
+Full-resolution per-phase capture sets, superseded/intermediate attempts, duplicated
+screenshots, ZIP archives and the private baseline HTML documents under
+`_playtest/m42/` are **retained locally (untracked)** and remain reproducible from the
+committed test suites. They are intentionally not committed to avoid repository
+bloat; no committed document links to a local-only file.

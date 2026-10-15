@@ -1,0 +1,28 @@
+{
+  "sourceHashes": true,
+  "creditsPreserved": true,
+  "inlineModule": true,
+  "syntax": [
+    "src/world/facility.js",
+    "tests/facility-r2-a.mjs",
+    "tests/sample-containment-r2.mjs",
+    "tests/sample-lockdown-live.mjs",
+    "tests/facility-persistent-lighting.mjs",
+    "tests/facility-enclosure.mjs",
+    "tests/facility-playthrough.mjs",
+    "tests/facility-regression.mjs",
+    "tests/environment-placement.mjs",
+    "_playtest/m42/cp3dr2-20261014/run-suites.mjs",
+    "_playtest/m42/cp3dr2-20261014/compose-a.mjs",
+    "_playtest/m42/cp3dr2-20261014/compose-review.mjs",
+    "_playtest/m42/cp3dr2-20261014/measure-renderer.mjs",
+    "_playtest/m42/cp3dr2-20261014/summarize-final.mjs",
+    "_playtest/m42/cp3dr2-20261014/check-final.mjs"
+  ],
+  "links": 76,
+  "branch": "milestone-4.2",
+  "head": "9267ceb32bf886fd4663c54bc5f18e023ba12d05",
+  "indexEmpty": true,
+  "diffCheck": true,
+  "passed": true
+}

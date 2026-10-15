@@ -1,0 +1,11 @@
+CAPTURE phase-d-final-geometry firefox A1-reference-panels
+CAPTURE phase-d-final-geometry firefox A2-reference-pole
+CAPTURE phase-d-final-geometry firefox A3-hall-front
+CAPTURE phase-d-final-geometry firefox A4-vault
+CAPTURE phase-d-final-geometry firefox A5-decon
+CAPTURE phase-d-final-geometry firefox A6-research-security
+CAPTURE phase-d-final-geometry firefox A7-containment-entry
+CAPTURE phase-d-final-geometry firefox A8-chamber
+CAPTURE phase-d-final-geometry firefox A9-service
+CAPTURE phase-d-final-geometry firefox A10-exit
+PASS phase A firefox {"solids":327,"map":28,"walk":[371.0533333333308,708]}

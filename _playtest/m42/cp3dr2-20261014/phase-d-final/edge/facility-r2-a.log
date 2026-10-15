@@ -1,0 +1,11 @@
+CAPTURE phase-d-final-geometry edge A1-reference-panels
+CAPTURE phase-d-final-geometry edge A2-reference-pole
+CAPTURE phase-d-final-geometry edge A3-hall-front
+CAPTURE phase-d-final-geometry edge A4-vault
+CAPTURE phase-d-final-geometry edge A5-decon
+CAPTURE phase-d-final-geometry edge A6-research-security
+CAPTURE phase-d-final-geometry edge A7-containment-entry
+CAPTURE phase-d-final-geometry edge A8-chamber
+CAPTURE phase-d-final-geometry edge A9-service
+CAPTURE phase-d-final-geometry edge A10-exit
+PASS phase A edge {"solids":327,"map":28,"walk":[371.1399999999974,708]}

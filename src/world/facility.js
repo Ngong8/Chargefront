@@ -8,7 +8,7 @@
     // CP2-R: the lab block's south face (y684) is closed either side of the
     // Vault, so the Vault/Decon vestibule no longer opens into the two recesses.
     const MAP_SEGMENTS = Object.freeze([[330, 618, 352, 618], [368, 618, 390, 618], [330, 618, 330, 660], [390, 618, 390, 660], [330, 660, 352, 660], [368, 660, 390, 660], [342, 660, 342, 684], [378, 660, 378, 684], [342, 684, 352, 684], [368, 684, 378, 684], [330, 684, 342, 684], [378, 684, 390, 684], [330, 690, 352, 690], [368, 690, 390, 690]]);
-    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 684, 330, 795], [390, 684, 390, 735], [367, 704, 367, 712], [367, 725, 367, 734.3], [330, 735, 352, 735], [368, 735, 410, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 745], [410, 759, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
+    const LAB_MAP_SEGMENTS = Object.freeze([[330, 704, 352, 704], [368, 704, 390, 704], [330, 684, 330, 795], [390, 684, 390, 735], [330, 735, 352, 735], [368, 735, 410, 735], [330, 735, 330, 795], [330, 795, 410, 795], [410, 735, 410, 745], [410, 759, 410, 795], [410, 736, 450, 736], [410, 770, 450, 770], [450, 736, 450, 746], [450, 758, 450, 770]]);
     // Every structural opening shares one portal: casing posts on both wall
     // faces, a lintel and a header. Door panels stop at DOOR_CLEAR; the lintel
     // above is projectile/LOS-only collision so all actors keep the full width.
@@ -68,6 +68,9 @@
         let zones = null;
         let fxUpdateT = 0, fxAccum = 0, lastNearFacility;
         let pendingExteriorIdentity = null, exteriorIdentityBuilt = false;
+        let additionalCorrectionsBuilt = false;
+        let coordinatedLightingBuilt = false, lightingBlockers = [], lightingBlockerCount = -1;
+        const pendingLighting = { hall: [], sconces: [], vault: null };
         // CP2-R1 determinism. Three.js constructors draw Math.random (UUIDs) and
         // the env geometry/material caches change later draw counts, so any
         // change in what the legacy builders construct shifts the seeded
@@ -228,6 +231,7 @@
                 panel.position.set(lp[0], lp[1], H - 0.4); scene.add(panel);
                 const lgt = new THREE.PointLight(0xffd09a, 90, 42, 1.7);
                 lgt.position.set(lp[0], lp[1], H - 0.8); scene.add(addBudgetLight(lgt));
+                pendingLighting.hall.push({ panel, light: lgt });
             }
             for (let i = 0; i < 5; i++) {
                 const y = 621 + i * 8;
@@ -299,6 +303,7 @@
             }
             const vaultLight = new THREE.PointLight(0xffb76c, 105, 35, 1.7);
             vaultLight.position.set(360, 672, 6.0); scene.add(addBudgetLight(vaultLight));
+            pendingLighting.vault = vaultLight;
         }
 
         function buildHallServiceYard(scene, H, fxPos, fyPos) {
@@ -397,6 +402,7 @@
                 strip.position.set(x + off, y, 2.6); scene.add(strip);
                 const lgt = new THREE.PointLight(0x2ab0d0, 48, 23, 1.7);
                 lgt.position.set(x + off * 2.6, y, 2.7); scene.add(addBudgetLight(lgt));
+                pendingLighting.sconces.push({ panel: strip, light: lgt });
             };
             sconce(331, 628); sconce(331, 646);
             sconce(389, 634); sconce(389, 652);
@@ -618,7 +624,13 @@
                 // Lintel infill fills the opening from the door head to the wall top.
                 at(c, mid, p.half * 2, thickness, p.top - DOOR_CLEAR, (p.top + DOOR_CLEAR) / 2, 0x3c4558, frameSteel);
                 for (const face of [p.face0 - CASING / 2, p.face1 + CASING / 2]) {
-                    for (const s of [-1, 1]) at(c + s * (p.half + POST / 2), face, POST, CASING, DOOR_CLEAR, DOOR_CLEAR / 2, 0x2a3040, frameSteel);
+                    for (const s of [-1, 1]) {
+                        // D0-03: robust right-jamb contact on both faces. Preserve
+                        // the exposed face, opening and every panel-travel record.
+                        const seated = p.id === 'lab_security' && s === 1;
+                        at(c + s * (p.half + POST / 2), face + (seated ? (face < mid ? .01 : -.01) : 0), POST,
+                            CASING + (seated ? .02 : 0), DOOR_CLEAR, DOOR_CLEAR / 2, 0x2a3040, frameSteel);
+                    }
                     at(c, face, p.half * 2 + POST * 2, CASING, HEADER_TOP - DOOR_CLEAR, (HEADER_TOP + DOOR_CLEAR) / 2, 0x2a3040, frameSteel);
                     // Zone identity glow carried over from the old frames, on the header face.
                     const glowAcross = face + (face < mid ? -1 : 1) * (CASING / 2 + 0.04);
@@ -1343,6 +1355,224 @@
             texture.needsUpdate = true;
         }
 
+        // D0 only. Run after accepted scenery and all earlier finalizers, never
+        // during traversal or mission-state/lighting updates.
+        function finalizeAdditionalCorrections(environment, sample) {
+            if (additionalCorrectionsBuilt) return;
+            const random = Math.random;
+            try {
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070048);
+                const lab = pendingInterior.labRoot;
+                // Reuse each original extractor disc as its hub on a proper
+                // local-Y axial pivot. Housing and hub meet the z9 roof underside.
+                const supports = [], unit = envBoxGeometry(1, 1, 1), steel = envMat(0x536174, { metalness: .5, roughness: .48 });
+                const support = (x, y, z, w, d, h) => supports.push(new THREE.Matrix4().makeTranslation(x, y, z)
+                    .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+                for (let i = 0; i < environment.spinners.length; i++) {
+                    const hub = environment.spinners[i], x = hub.position.x, y = hub.position.y;
+                    const rotor = new THREE.Group(); rotor.name = 'InstalledExtractorRotor' + (i + 1);
+                    rotor.position.set(x, y, 8.82); rotor.rotation.x = Math.PI / 2;
+                    rotor.userData.spin = hub.userData.spin; rotor.userData.spinAxis = 'y'; environment.powered.add(rotor);
+                    hub.removeFromParent(); hub.name = 'ExtractorHub'; hub.position.set(0, .04, 0); hub.rotation.set(0, 0, 0);
+                    hub.scale.set(.22 / .9, .28 / .22, .22 / .9); rotor.add(hub);
+                    const blades = new THREE.InstancedMesh(envBoxGeometry(.85, .16, .035), hub.material, 4); blades.name = 'ExtractorBlades';
+                    for (let b = 0; b < 4; b++) {
+                        const angle = b * Math.PI / 2;
+                        blades.setMatrixAt(b, new THREE.Matrix4().makeTranslation(Math.cos(angle) * .4, -.075, Math.sin(angle) * .4).multiply(new THREE.Matrix4().makeRotationY(-angle)));
+                    }
+                    blades.computeBoundingSphere(); rotor.add(blades); environment.spinners[i] = rotor;
+                    for (const side of [-1, 1]) {
+                        support(x + side * .925, y, 8.91, .15, 2, .18);
+                        support(x, y + side * .925, 8.91, 1.7, .15, .18);
+                    }
+                }
+                const casings = new THREE.InstancedMesh(unit, steel, supports.length); casings.name = 'ExtractorRoofHousings';
+                supports.forEach((m, i) => casings.setMatrixAt(i, m)); casings.computeBoundingSphere(); environment.powered.add(casings);
+                // This is an emissive lab-state status beacon, not a budget light.
+                // Material/FX ownership stays in the original lab-active layer.
+                const beacon = environment.labActive.children.filter(o => Math.abs(o.position.x - 360) < .001 && Math.abs(o.position.y - 658) < .001);
+                for (const object of beacon) {
+                    if (object.geometry.type === 'BoxGeometry') {
+                        object.name = 'VaultHeaderBeaconCase'; object.scale.set(.5 / .26, .52 / 4.2, .24 / .26); object.position.set(360, 658.63, 8.45);
+                    } else { object.name = 'VaultHeaderStatusBeacon'; object.position.set(360, 658.42, 8.45); }
+                }
+                // Preserve an empty non-cover installed frame. Payload, moving
+                // scan and energized inner glass retain original pickup visibility.
+                const fixed = new THREE.Group(); fixed.name = 'SampleZeroInstallation'; fixed.position.copy(sample.group.position); fixed.scale.copy(sample.group.scale);
+                const glass = sample.group.children.find(o => o.isMesh && o.geometry.type === 'CylinderGeometry' && o.geometry.parameters.openEnded);
+                for (const child of [...sample.group.children]) if (![sample.tube.vial, sample.tube.scan, sample.light].includes(child)) fixed.add(child);
+                glass.name = 'PermanentContainmentGlass'; sample.tube.glass = glass;
+                const struts = new THREE.InstancedMesh(unit, steel, 4); struts.name = 'SampleChamberSupportStruts';
+                for (let i = 0; i < 4; i++) {
+                    const angle = i * Math.PI / 2;
+                    struts.setMatrixAt(i, new THREE.Matrix4().makeTranslation(Math.cos(angle) * 1.63, Math.sin(angle) * 1.63, 4.695)
+                        .multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(.15, 7.95, .15)));
+                }
+                struts.computeBoundingSphere(); fixed.add(struts); lab.add(fixed);
+                sample.installation = fixed; sample.group.name = 'SampleZeroPayload'; sample.tube.vial.name = 'DNASequencePayload';
+                additionalCorrectionsBuilt = true;
+            } finally { Math.random = random; }
+        }
+
+        // Eight-slot eligibility: only opaque full-height structure and real
+        // doors occlude source selection. Low cover stays with existing rendering,
+        // so a useful room lamp is not discarded merely behind a workbench.
+        function lightReachable(from, to) {
+            if ((from.x < 300 || from.x > 480 || from.y < 590 || from.y > 820)
+                && (to.x < 300 || to.x > 480 || to.y < 590 || to.y > 820)) return true;
+            if (lightingBlockerCount !== SOLIDS.length) {
+                lightingBlockers = SOLIDS.filter(s => (s.topY >= 8.89 && s.bottomY <= .05) || (s.overhead && s.portal) || doors.some(d => d.solid === s));
+                lightingBlockerCount = SOLIDS.length;
+            }
+            const dx = to.x - from.x, dy = to.y - from.y, dz = to.z - from.z;
+            for (const s of lightingBlockers) {
+                if (s.disabled) continue;
+                let low = 0, high = 1;
+                // Scalar slab clipping avoids per-candidate Vector/closure work.
+                if (Math.abs(dx) < 1e-9) { if (from.x < s.x0 || from.x > s.x1) continue; }
+                else { const a=(s.x0-from.x)/dx,b=(s.x1-from.x)/dx;low=Math.max(low,Math.min(a,b));high=Math.min(high,Math.max(a,b)); }
+                if (high < low) continue;
+                if (Math.abs(dy) < 1e-9) { if (from.y < s.y0 || from.y > s.y1) continue; }
+                else { const a=(s.y0-from.y)/dy,b=(s.y1-from.y)/dy;low=Math.max(low,Math.min(a,b));high=Math.min(high,Math.max(a,b)); }
+                if (high < low) continue;
+                if (Math.abs(dz) < 1e-9) { if (from.z < s.bottomY || from.z > s.topY) continue; }
+                else { const a=(s.bottomY-from.z)/dz,b=(s.topY-from.z)/dz;low=Math.max(low,Math.min(a,b));high=Math.min(high,Math.max(a,b)); }
+                if (high >= low && high > .0001 && low < .9999) return false;
+            }
+            return true;
+        }
+
+        function finalizeCoordinatedLighting(laboratory) {
+            if (coordinatedLightingBuilt) return;
+            const random = Math.random;
+            try {
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf070049);
+                const scene = getScene(), root = new THREE.Group(); root.name = 'FacilityLightingFixtures'; scene.add(root);
+                const unit = envBoxGeometry(1, 1, 1), steel = envMat(0x536174, { metalness: .5, roughness: .48 });
+                const batches = new Map();
+                const piece = (parent, x, y, z, w, d, h) => {
+                    if (!batches.has(parent)) batches.set(parent, []);
+                    batches.get(parent).push(new THREE.Matrix4().makeTranslation(x, y, z).multiply(new THREE.Matrix4().makeRotationX(Math.PI / 2)).multiply(new THREE.Matrix4().makeScale(w, h, d)));
+                };
+                // Existing Hall lenses now have a supported roof case. Keep the
+                // warm/cool hierarchy; move each existing proxy just below its lens.
+                for (const [i, fixture] of pendingLighting.hall.entries()) {
+                    const { x, y } = fixture.panel.position;
+                    fixture.panel.name = 'HallOverheadDiffuser' + (i + 1); fixture.light.name = 'HallTaskLight' + (i + 1); fixture.light.position.z = 8.46;
+                    piece(root, x, y, 8.68, 1.56, .66, .14);
+                    for (const side of [-1, 1]) piece(root, x + side * .5, y, 8.875, .12, .12, .25);
+                }
+                for (const [i, fixture] of pendingLighting.sconces.entries()) {
+                    const { x, y, z } = fixture.panel.position, wall = x < 360 ? (x < 340 ? 331 : 343) : (x > 385 ? 389 : 377);
+                    const front = x + (x < 360 ? 1 : -1) * .07;
+                    piece(root, (front + wall) / 2, y, z, Math.abs(front - wall), .34, 1.1);
+                    fixture.light.name = 'FunctionalWallAccent' + (i + 1);
+                }
+                const hung = (light, parent, roof, name, color) => {
+                    const p = light.position; light.name = name;
+                    piece(parent, p.x, p.y, p.z + .17, 1.85, .65, .20);
+                    const top = p.z + .27;
+                    for (const side of [-1, 1]) piece(parent, p.x + side * .6, p.y, (top + roof) / 2, .09, .09, roof - top);
+                    const lens = new THREE.Mesh(envBoxGeometry(1.6, .42, .045), mat(color, { emissive: color, emissiveIntensity: .55, metalness: .15, roughness: .65 }));
+                    lens.name = name + 'Diffuser'; lens.rotation.x = Math.PI / 2; lens.position.set(p.x, p.y, p.z + .065); parent.add(lens); return lens;
+                };
+                hung(pendingLighting.vault, root, 9, 'VaultElectricalTaskLight', 0xffb76c);
+                const names = ['DeconTaskLight','ResearchTaskLight','SecurityOperationalLight','ContainmentPeripheralLight','SampleZeroFocalLight','ServiceTransitionLight','PowerUtilityLight'];
+                for (let i = 0; i < laboratory.lights.length; i++) {
+                    const entry = laboratory.lights[i]; entry.fixture = hung(entry.light, laboratory.root, 8.975, names[i], entry.color);
+                }
+                // R2-C replaces the two proximity-budgeted service sources with
+                // distributed persistent facade illumination, without adding slots.
+                buildPersistentExteriorLighting();
+                for (const [parent, transforms] of batches) {
+                    const mesh = new THREE.InstancedMesh(unit, steel, transforms.length); mesh.name = parent === root ? 'MountedFacilityLuminaireCases' : 'MountedLaboratoryLuminaireCases';
+                    transforms.forEach((m, i) => mesh.setMatrixAt(i, m)); mesh.computeBoundingSphere(); parent.add(mesh);
+                }
+                coordinatedLightingBuilt = true;
+            } finally { Math.random = random; }
+        }
+
+        function buildPersistentExteriorLighting() {
+            const random = Math.random;
+            try {
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf07004a);
+                const root = new THREE.Group(); root.name = 'PersistentExteriorLighting'; getScene().add(root);
+                // Actual outer wall faces, including recessed Vault facades and
+                // the service extension. Header fixtures stay above door clearance.
+                const sites = [], add = (zone, x, y, nx, ny, z = 3.6) => sites.push({zone,x,y,nx,ny,z});
+                for (const x of [338,382]) add('front',x,617,0,-1);
+                add('front-header',360,616.75,0,-1,8.55);
+                for (const y of [626,645]) add('hall-west',329,y,-1,0);
+                for (const y of [626,657]) add('hall-east',391,y,1,0);
+                add('vault-west',341,672,-1,0); add('vault-east',379,672,1,0);
+                for (const x of [335,385]) add('lab-recess',x,683,0,-1);
+                for (const y of [690,714,738,762,787]) add('west',329.3,y,-1,0);
+                for (const y of [690,714]) add('east',390.7,y,1,0);
+                for (const y of [779,790]) add('containment-east',410.7,y,1,0);
+                add('containment-return',400,734.3,0,-1);
+                for (const x of [422,444]) add('power-front',x,735.3,0,-1);
+                for (const x of [422,442]) add('power-rear',x,770.7,0,1);
+                for (const y of [741,762]) add('exit-facade',450.7,y,1,0);
+                add('exit-header',450.95,752,1,0,8.55);
+                for (const x of [342,363,386,403]) add('rear',x,795.7,0,1);
+                root.userData.fixtures = sites; root.userData.persistent = true;
+                const unit = envBoxGeometry(1,1,1), steel = envMat(0x536174,{metalness:.5,roughness:.48}), cases = [], lenses = [];
+                const transform = (s, along, out, z, w, d, h) => new THREE.Matrix4().makeTranslation(s.x-s.ny*along+s.nx*out,s.y+s.nx*along+s.ny*out,z)
+                    .multiply(new THREE.Matrix4().makeRotationZ(Math.atan2(s.nx,-s.ny))).multiply(new THREE.Matrix4().makeRotationX(Math.PI/2)).multiply(new THREE.Matrix4().makeScale(w,h,d));
+                for (const s of sites) {
+                    cases.push(transform(s,0,.16,s.z,1.35,.32,.5));
+                    lenses.push(transform(s,0,.34,s.z-.06,1.08,.045,.22));
+                    for (const along of [-.4,0,.4]) cases.push(transform(s,along,.385,s.z-.06,.045,.045,.32));
+                    cases.push(transform(s,0,.055,s.z-.65,.11,.11,.8));
+                }
+                const bodies = new THREE.InstancedMesh(unit,steel,cases.length); bodies.name='PersistentLuminaireCases'; cases.forEach((m,i)=>bodies.setMatrixAt(i,m)); bodies.computeBoundingSphere(); root.add(bodies);
+                const diffusers = new THREE.InstancedMesh(unit,envMat(0xffe0b5,{emissive:0xffe0b5,emissiveIntensity:.65,metalness:.1,roughness:.65}),lenses.length);
+                diffusers.name='PersistentLuminaireDiffusers';lenses.forEach((m,i)=>diffusers.setMatrixAt(i,m));diffusers.computeBoundingSphere();root.add(diffusers);
+                const gradient = (floor) => {
+                    const canvas=document.createElement('canvas');canvas.width=128;canvas.height=floor?128:256;
+                    const ctx=canvas.getContext('2d'), image=ctx.createImageData(canvas.width,canvas.height);
+                    // Every boundary reaches zero alpha: no rectangular luminous
+                    // panels or hard-edged ground patches at the pool limits.
+                    for(let y=0;y<canvas.height;y++)for(let x=0;x<canvas.width;x++){
+                        const u=(x+.5)/canvas.width,v=(y+.5)/canvas.height,dx=(u-.5)/.5,dy=(v-(floor?.25:.36))/.65;
+                        const alpha=.9*Math.sin(Math.PI*u)**2*Math.sin(Math.PI*v)**2*Math.exp(-2.5*dx*dx-3*dy*dy),i=(y*canvas.width+x)*4;
+                        image.data[i]=image.data[i+1]=image.data[i+2]=255;image.data[i+3]=Math.round(alpha*255);
+                    }
+                    ctx.putImageData(image,0,0);const texture=new THREE.CanvasTexture(canvas);texture.colorSpace=THREE.SRGBColorSpace;return texture;
+                };
+                const wallMaterial=new THREE.MeshBasicMaterial({map:gradient(false),color:0xffd6a3,transparent:true,opacity:.55,depthWrite:false,blending:THREE.AdditiveBlending,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1});
+                const walls=new THREE.InstancedMesh(new THREE.PlaneGeometry(1,1),wallMaterial,sites.length);walls.name='PersistentWallIllumination';
+                for(let i=0;i<sites.length;i++){
+                    const s=sites[i], basis=new THREE.Matrix4().makeBasis(new THREE.Vector3(-s.ny,s.nx,0),new THREE.Vector3(0,0,1),new THREE.Vector3(s.nx,s.ny,0));
+                    const h=s.z>8?.6:5.2, z=s.z>8?8.55:2.68;
+                    // Clip static wall wash to opaque wall runs, never project a
+                    // translucent rectangle across a doorway or past a corner.
+                    const width=s.zone==='lab-recess'?11:s.zone==='exit-facade'?(s.y<752?8:7):
+                        s.zone==='hall-east'&&s.y===657?7.5:s.zone==='hall-west'&&s.y===626||s.zone==='hall-east'&&s.y===626?14:
+                        s.zone==='containment-east'&&s.y===790?10:s.zone==='west'&&s.y===690||s.zone==='east'&&s.y===690?12:
+                        s.zone==='power-front'&&s.x===444||s.zone==='rear'&&s.x===403?12:s.z>8?15.2:16;
+                    s.poolWidth=width;
+                    walls.setMatrixAt(i,new THREE.Matrix4().makeTranslation(s.x+s.nx*.014,s.y+s.ny*.014,z).multiply(basis).multiply(new THREE.Matrix4().makeScale(width,h,1)));
+                }
+                walls.computeBoundingSphere();root.add(walls);
+                // Terrain-conforming static pools retain the existing ground
+                // texture below them. One shared mesh, no flat floating discs.
+                const positions=[],uvs=[],indices=[],cols=6,rows=4;
+                for(const s of sites){const start=positions.length/3;
+                    for(let j=0;j<=rows;j++)for(let i=0;i<=cols;i++){
+                        const along=(i/cols-.5)*16, out=.08+j/rows*7.5,x=s.x-s.ny*along+s.nx*out,y=s.y+s.nx*along+s.ny*out;
+                        positions.push(x,y,terrainHeight(x,y)+.07);uvs.push(i/cols,1-j/rows);
+                    }
+                    for(let j=0;j<rows;j++)for(let i=0;i<cols;i++){const a=start+j*(cols+1)+i,b=a+1,c=a+cols+1,d=c+1;
+                        // tangent × outward is downward; reverse winding for +Z.
+                        indices.push(a,c,b,b,c,d);
+                    }
+                }
+                const groundGeometry=new THREE.BufferGeometry();groundGeometry.setAttribute('position',new THREE.Float32BufferAttribute(positions,3));groundGeometry.setAttribute('uv',new THREE.Float32BufferAttribute(uvs,2));groundGeometry.setIndex(indices);groundGeometry.computeBoundingSphere();
+                const ground=new THREE.Mesh(groundGeometry,new THREE.MeshBasicMaterial({map:gradient(true),color:0xffd6a3,transparent:true,opacity:.34,depthWrite:false,blending:THREE.AdditiveBlending,polygonOffset:true,polygonOffsetFactor:-1,polygonOffsetUnits:-1}));ground.name='PersistentGroundIllumination';root.add(ground);
+            } finally { Math.random=random; }
+        }
+
         // CP2-R1 structural repair, added after all legacy population (see
         // retire): AC-1 lab-face closure walls, fitted door portals (AC-2/3),
         // continuous roof coping (AC-4) and the Vault north screen's east twin.
@@ -1563,10 +1793,13 @@
             cutawayMeshes.push(researchCeiling, containmentCeiling, emergencyCeiling);
             wall(330, 710, 1.4, 52); wall(390, 710, 1.4, 52);
             wall(341, 704, 22, 1.4); wall(379, 704, 22, 1.4);
-            // CP2-R: the partition stops at the Security doorway's wall face
-            // (y734.3); it previously entered the doorway plane, narrowing the
-            // opening and intersecting the east sliding panel.
-            wall(367, 708, 1.0, 8); wall(367, 729.65, 1.0, 9.3);
+            // R2-A: obsolete full-height internal partitions obstruct the
+            // Research/Security connection. Replay constructors for scenery RNG
+            // parity, but retain neither mesh nor collision/minimap records.
+            retire(group => {
+                placed(group, 367, 708, 1, 8, 9, 0x384354);
+                placed(group, 367, 729.65, 1, 9.3, 9, 0x384354);
+            });
             wall(341, 735, 22, 1.4); wall(379, 735, 22, 1.4);
             // Research ends at x390; Containment extends to x410. Close that
             // 20 m north-perimeter return with the same 1.4 m thick, 9 m high
@@ -1637,9 +1870,7 @@
                 wallPanel.position.z = 4.1;
                 pendingPlacement.researchPanels.push(wallPanel);
             }
-            for (const y of [707, 731]) {
-                strip(root, 367, y, 0.18, 5.5, 0x66ddff, 1.1).position.z = 6.8;
-            }
+            retire(group => { for (const y of [707, 731]) strip(group, 367, y, 0.18, 5.5, 0x66ddff, 1.1).position.z = 6.8; });
             for (const y of [712, 722]) {
                 const station = placed(root, 384, y, 4.0, 2.2, 1.4, 0x414c5d, {}, true);
                 station.name = 'SecurityWorkstation';
@@ -1706,7 +1937,7 @@
                 detail('SecurityStatus', 388.8, y, 0.12, 1.3, 0.12, 4.8, colors.service,
                     makeSeam(0x995a22, 0.7));
             }
-            for (const y of [711, 727]) detail('SecurityCommandRail', 367.65, y, 0.12, 3.2, 0.3, 4.1,
+            for (const y of [711, 727]) detail('SecurityCommandRail', 388.93, y, 0.12, 3.2, 0.3, 4.1,
                 colors.service, makeSeam(0x995a22, 0.85));
             detail('SecurityFloorGuide', 382, 718, 0.12, 19, 0.05, 0.35,
                 colors.service, makeSeam(0x995a22, 0.55));
@@ -1938,15 +2169,15 @@
                     if (!enemy.dead && !enemy.dying && Math.hypot(enemy.pos.x - door.base[0], enemy.pos.y - door.base[1]) < 4.2) { near = true; break; }
                 }
                 const locked = !!door.locked || (campaign && door.id === 'bio_lab' && !labAccess);
-                if (door.id === 'bio_lab' || door.id.startsWith('lab_')) {
+                if (!door.id || door.id === 'bio_lab' || door.id.startsWith('lab_')) {
                     const color = locked ? 0xff5544 : 0x66ffcc;
                     for (const p of door.panels) {
                         p.seam.material.color.setHex(color); p.seam.material.emissive.setHex(locked ? 0xff2211 : 0x22cc99);
                         p.seam.material.emissiveIntensity = locked ? 1.15 + Math.sin(getTime() * 2.2) * 0.18 : 1.8;
                     }
                     if (near && locked && !door.denied) {
-                        const text = door.id === 'lab_security' ? 'CONTAINMENT LOCKED — use the local security console'
-                            : door.id === 'lab_emergency' || door.id === 'lab_emergency_exit' ? 'MAINTENANCE PASSAGE SEALED' : 'BIO-LAB SEALED — inspect command records for lock status';
+                        const text = door.lockReason || (door.id === 'lab_security' ? 'CONTAINMENT LOCKED — use the local security console'
+                            : door.id === 'lab_emergency' || door.id === 'lab_emergency_exit' ? 'MAINTENANCE PASSAGE SEALED' : 'BIO-LAB SEALED — inspect command records for lock status');
                         door.denied = true; denied(text); sound('accessDeny', 0.45);
                     } else if (!near) door.denied = false;
                 }
@@ -1980,6 +2211,8 @@
         }
 
         function applySnapshot({ missionId, stagingActive, relaysOnline, shortcutOpen }) {
+            const front = doors.find(d => !d.id);
+            if (front) { front.locked = missionId === 'break_contact'; front.forceOpen = false; front.lockReason = ''; }
             if (zones) {
                 zones.dead_signal.visible = missionId === 'dead_signal';
                 zones.power_through.visible = stagingActive;
@@ -2037,7 +2270,7 @@
         return {
             buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,guidanceHeight,
             set zones(value) { zones = value; }, get zones() { return zones; },
-            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity,
+            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity, finalizeAdditionalCorrections, finalizeCoordinatedLighting, lightReachable,
             sectionSummary() { return [...sections].map(([name, section]) => ({ name, objects: section.objects.length, solids: section.solids.length })); },
         };
     }

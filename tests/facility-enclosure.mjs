@@ -110,7 +110,8 @@ try {
     report.structure = structure; console.log('STRUCTURE', JSON.stringify({ ...structure, shots: structure.shots.filter(s => !s.blocked) }));
     assert(structure.walls.every(w => w.p && w.p.height === 9), 'AC-1 walls missing');
     assert.deepEqual(structure.shots.filter(s => !s.blocked), [], 'y684 closure leaks shots');
-    assert.equal(structure.segmentCount, 30); assert(structure.closure, 'Minimap lacks the y684 closure');
+    assert.equal(structure.segmentCount, 28); // R2-A removes exactly two obsolete x367 internal partitions.
+    assert(structure.closure, 'Minimap lacks the y684 closure');
     assert.deepEqual(structure.offStructure, [], 'Minimap segment not on structure');
     assert(structure.doorClear >= 8, 'Door clear height below flying-actor envelope');
     assert.equal(structure.portals, 7); assert.equal(structure.overhead, 7);
@@ -155,7 +156,7 @@ try {
     const doorRows = [];
     for (const [index, id] of portal.ids.entries()) {
         const p = await page.evaluate(i => { const d = __cf.facilityDoors[i]; d.enabled = true; d.locked = false; d.forceOpen = true; return d.base; }, index);
-        await page.waitForTimeout(1300);
+        await page.waitForFunction(i => __cf.facilityDoors[i].openT > .97, index, { timeout: 6000 });
         const opened = await page.evaluate(i => {
             const c = __cf, F = ChargefrontFacility, d = c.facilityDoors[i], p = F.PORTALS.find(q => q.axis === d.axis && q.x === d.base[0] && q.y === d.base[1]);
             const ax = d.axis === 'x', [x, y] = d.base, mid = (p.face0 + p.face1) / 2;
@@ -177,7 +178,7 @@ try {
                 openPanelPostHits: boxes.some(b => posts.some(q => hit(b, q))) };
         }, index);
         await page.evaluate(i => { const d = __cf.facilityDoors[i]; d.forceOpen = false; d.locked = true; }, index);
-        await page.waitForTimeout(1300);
+        await page.waitForFunction(i => __cf.facilityDoors[i].openT < .03, index, { timeout: 6000 });
         const closed = await page.evaluate(i => {
             const c = __cf, d = c.facilityDoors[i], ax = d.axis === 'x';
             const boxes = d.panels.map(q => { const g = q.g.children[0].geometry.parameters, w = ax ? g.width : .32, dd = ax ? .32 : g.depth;

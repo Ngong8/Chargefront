@@ -1,0 +1,20 @@
+CAPTURE firefox west-near
+CAPTURE firefox west-far
+CAPTURE firefox west-inside
+CAPTURE firefox power-exit-near
+CAPTURE firefox power-exit-far
+CAPTURE firefox power-exit-inside
+CAPTURE firefox front-near
+CAPTURE firefox front-far
+CAPTURE firefox front-inside
+CAPTURE firefox vault-recess-near
+CAPTURE firefox vault-recess-far
+CAPTURE firefox vault-recess-inside
+CAPTURE firefox lab-east-near
+CAPTURE firefox lab-east-far
+CAPTURE firefox lab-east-inside
+CAPTURE firefox rear-corner-near
+CAPTURE firefox rear-corner-far
+CAPTURE firefox rear-corner-inside
+CAPTURE firefox power-exit-emergency
+PASS persistent exterior lighting firefox {"fixtures":32,"sources":104,"slots":8,"terrain":{"vertices":1120,"maxError":0.00001269375691642649}}

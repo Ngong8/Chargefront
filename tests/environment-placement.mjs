@@ -168,10 +168,14 @@ try {
             // CP2-R1 structure, guarded separately by tests/facility-enclosure.mjs.
             const envelope=s=>s.x0>=328.9&&s.x1<=451.1&&s.y0>=616.5&&s.y1<=796;
             const scenery=fp=>({...fp,solids:fp.solids.filter(s=>!envelope(s))});
-            // The only approved section difference: CP2-R1 retired the two y690
-            // roof-ridge trims from the hall section (still constructed, unattached,
-            // for stream parity). New structure attaches after section recording.
-            const approvedHead=fp=>({...scenery(fp),sections:fp.sections.map(s=>s.name==='hall'?{...s,objects:s.objects-2}:s)});
+            // Approved exact section deltas: CP2-R1 retires two Hall ridge trims;
+            // R2-A removes the two confirmed obsolete x367 lab partition solids.
+            // Scenery outside the envelope still compares exactly to the archive.
+            if(mode==='campaign'){
+                const partition=s=>s.x0===366.5&&s.x1===367.5&&s.topY===9&&(s.y0===704||s.y0===725);
+                assert.equal(previous.solids.filter(partition).length,2);assert.equal(before.solids.filter(partition).length,0);
+            }
+            const approvedHead=fp=>({...scenery(fp),sections:fp.sections.map(s=>s.name==='hall'?{...s,objects:s.objects-2}:s.name==='laboratory'?{...s,solids:s.solids-2}:s)});
             assert.deepEqual(mode==='campaign'?approvedHead(previous):scenery(previous),scenery(before),'Accepted seeded scenery/solid coordinates changed from HEAD');
             results.baselineParity.push({mode,arena:row.arena,seed,sha256:digest(scenery(before)),solids:before.solids.length,
                 headSolids:previous.solids.length,facilityEnvelopeSolids:[previous.solids.filter(envelope).length,before.solids.filter(envelope).length]});

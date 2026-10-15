@@ -1,0 +1,1157 @@
+{
+  "method": "Serial Firefox then Edge, pre-R2 then R2; seed420042 1280x720; primed six poses, two repetitions of64 frames/pose",
+  "runs": [
+    {
+      "browser": "firefox",
+      "baseline": true,
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 13,
+          "renderP95": 16,
+          "selectorMax": 0,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "render": {
+            "calls": 770,
+            "triangles": 277537,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "front",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 10,
+          "renderP95": 11,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 487,
+            "triangles": 273411,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "research",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 5,
+          "renderP95": 8,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "sample",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 16.7,
+          "worst": 16.7,
+          "renderMedian": 3,
+          "renderP95": 5,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 11,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 274267,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "rear",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 11,
+          "renderP95": 15,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "render": {
+            "calls": 770,
+            "triangles": 277537,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "front",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "selectorMax": 0,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 487,
+            "triangles": 273411,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "research",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 5,
+          "renderP95": 7,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "sample",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 16.7,
+          "worst": 16.7,
+          "renderMedian": 3,
+          "renderP95": 5,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "power",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 11,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 274267,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 47,
+          "slots": 8,
+          "solids": 329,
+          "label": "rear",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      },
+      "passed": true
+    },
+    {
+      "browser": "firefox",
+      "baseline": false,
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 50,
+          "worst": 50,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 387,
+            "triangles": 272163,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 12,
+          "renderP95": 16,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "render": {
+            "calls": 768,
+            "triangles": 281249,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "front",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 486,
+            "triangles": 276859,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "research",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 6,
+          "renderP95": 7,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 121,
+            "triangles": 266421,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "sample",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 16.7,
+          "worst": 16.7,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorMax": 0,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 71,
+            "triangles": 262135,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 11,
+          "selectorMax": 0,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 277991,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "rear",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 387,
+            "triangles": 272163,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 12,
+          "renderP95": 16,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "render": {
+            "calls": 768,
+            "triangles": 281249,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "front",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 486,
+            "triangles": 276859,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "research",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 6,
+          "renderP95": 7,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 121,
+            "triangles": 266421,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "sample",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 16.7,
+          "worst": 16.7,
+          "renderMedian": 4,
+          "renderP95": 5,
+          "selectorMax": 0,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 71,
+            "triangles": 262135,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "power",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "selectorMax": 1,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 277991,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 48,
+          "slots": 8,
+          "solids": 327,
+          "label": "rear",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "passed": true
+    },
+    {
+      "browser": "edge",
+      "baseline": true,
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 8.5,
+          "renderP95": 10,
+          "selectorMax": 0.29999998211860657,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8.7,
+          "renderP95": 10.5,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 770,
+            "triangles": 277537,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "front",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 9.3,
+          "renderP95": 10.7,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 10
+          },
+          "render": {
+            "calls": 487,
+            "triangles": 273411,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "research",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17.1,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 6.1,
+          "renderP95": 7.9,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "sample",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17.1,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 4.9,
+          "renderP95": 6.6,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8.8,
+          "renderP95": 10.2,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 274267,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "rear",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 8.2,
+          "renderP95": 9.9,
+          "selectorMax": 0.29999998211860657,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 389,
+            "triangles": 268727,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.8,
+          "p99": 16.9,
+          "worst": 16.9,
+          "renderMedian": 8.8,
+          "renderP95": 10.4,
+          "selectorMax": 0.30000001192092896,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 770,
+            "triangles": 277537,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "front",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.3,
+          "worst": 17.3,
+          "renderMedian": 9.6,
+          "renderP95": 11.6,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 487,
+            "triangles": 273411,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "research",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 17.1,
+          "p99": 17.4,
+          "worst": 17.4,
+          "renderMedian": 6.3,
+          "renderP95": 8.5,
+          "selectorMax": 0.09999999403953552,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 117,
+            "triangles": 262517,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "sample",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.4,
+          "worst": 17.4,
+          "renderMedian": 5,
+          "renderP95": 6.4,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 67,
+            "triangles": 258231,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "power",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 16.9,
+          "worst": 16.9,
+          "renderMedian": 8.7,
+          "renderP95": 10,
+          "selectorMax": 0.09999999403953552,
+          "counters": {
+            "shadowRefresh": 10
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 274267,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 49,
+          "slots": 8,
+          "solids": 329,
+          "label": "rear",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "51eed4946585ba953735dfe427324a7df638cac3a6f619ca91cb05eba8bce608",
+        "src/world/facility.js": "432b92c4568158bfb5ee01221203fd891ba0d95f4b2807db66bd87872f47a064"
+      },
+      "passed": true
+    },
+    {
+      "browser": "edge",
+      "baseline": false,
+      "samples": [
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 8.5,
+          "renderP95": 9.9,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 387,
+            "triangles": 272163,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "west",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 8.8,
+          "renderP95": 10.8,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 768,
+            "triangles": 281249,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "front",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 9.1,
+          "renderP95": 10.6,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 486,
+            "triangles": 276859,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "research",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 6.2,
+          "renderP95": 8.5,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 121,
+            "triangles": 266421,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "sample",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 4.8,
+          "renderP95": 6.4,
+          "selectorMax": 0.09999999403953552,
+          "counters": {
+            "shadowRefresh": 10
+          },
+          "render": {
+            "calls": 71,
+            "triangles": 262135,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "power",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8.7,
+          "renderP95": 10.2,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 277991,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "rear",
+          "repetition": 0
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8.3,
+          "renderP95": 9.9,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 387,
+            "triangles": 272163,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "west",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 9,
+          "renderP95": 10.9,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 768,
+            "triangles": 281249,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "front",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 9,
+          "renderP95": 10.6,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 486,
+            "triangles": 276859,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "research",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 6.3,
+          "renderP95": 8.3,
+          "selectorMax": 0.3999999761581421,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 121,
+            "triangles": 266421,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "sample",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 4.8,
+          "renderP95": 6.5,
+          "selectorMax": 0.19999998807907104,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "render": {
+            "calls": 71,
+            "triangles": 262135,
+            "points": 900,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "power",
+          "repetition": 1
+        },
+        {
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8.7,
+          "renderP95": 10,
+          "selectorMax": 0.20000001788139343,
+          "counters": {
+            "shadowRefresh": 10
+          },
+          "render": {
+            "calls": 466,
+            "triangles": 277991,
+            "points": 1060,
+            "lines": 0
+          },
+          "programs": 50,
+          "slots": 8,
+          "solids": 327,
+          "label": "rear",
+          "repetition": 1
+        }
+      ],
+      "errors": [],
+      "hashes": {
+        "chargefront.html": "3742111e7dcb55d4b491b40750803d2577418cead62dbb82859a044c15a35f4c",
+        "src/world/facility.js": "3c5a4b3ada8d19dfa3070a42d6587b27e9a17d7c891ecfaa0c03deafda2f4e15"
+      },
+      "passed": true
+    }
+  ]
+}

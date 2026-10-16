@@ -1,0 +1,816 @@
+{
+  "passed": true,
+  "method": "Current-source observed timings, not comparative FPS certification; first/warm and live windows separated",
+  "browsers": [
+    {
+      "browser": "firefox",
+      "hashes": {
+        "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+        "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+      },
+      "viewport": [
+        1280,
+        720
+      ],
+      "captures": 22,
+      "quietP95": [
+        16.7,
+        50
+      ],
+      "quietWorst": 66.7,
+      "liveP95": [
+        33.3,
+        33.3
+      ],
+      "liveWorst": 66.7,
+      "programs": [
+        34
+      ],
+      "regions": [
+        {
+          "label": "01-exterior-far",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 50,
+          "worst": 50,
+          "renderMedian": 12,
+          "renderP95": 13,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 14
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 22,
+            "p95": 66.7,
+            "worst": 150,
+            "counters": {
+              "shadowRefresh": 7
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "02-exterior-near",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 8,
+          "renderP95": 10,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "labMaxMs": 0,
+          "first": {
+            "frames": 21,
+            "p95": 16.7,
+            "worst": 16.7,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "03-exterior-approach",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 50,
+          "p99": 50,
+          "worst": 50,
+          "renderMedian": 12,
+          "renderP95": 16,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 16
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 21,
+            "p95": 33.3,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 5
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "04-front-entrance",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 50,
+          "p99": 66.7,
+          "worst": 66.7,
+          "renderMedian": 11,
+          "renderP95": 13,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 18
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 21,
+            "p95": 33.3,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 5
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "05-main-hall",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 10,
+          "renderP95": 13,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 14
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 21,
+            "p95": 33.3,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "06-vault",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 21,
+            "p95": 16.7,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "07-decontamination",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 8,
+          "renderP95": 11,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 20,
+            "p95": 33.3,
+            "worst": 50,
+            "counters": {
+              "shadowRefresh": 5
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "08-research-security",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 35.4,
+          "worst": 35.4,
+          "renderMedian": 9,
+          "renderP95": 13,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 14
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 20,
+            "p95": 33.3,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "09-containment-before",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 16.7,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 6,
+          "renderP95": 7,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 10
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 21,
+            "p95": 16.7,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "12-active-drone-defence-30",
+          "kind": "live-combat",
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 7,
+          "renderP95": 10,
+          "programs": 34,
+          "counters": {
+            "sceneObjectsAdded": 164,
+            "sceneObjectsRemoved": 108,
+            "materialDisposes": 3,
+            "shadowRefresh": 12,
+            "meshesCreated": 8,
+            "geometriesCreated": 8,
+            "materialsCreated": 5,
+            "groupsObjectsCreated": 4
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "12-active-drone-defence-60",
+          "kind": "live-combat",
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 7,
+          "renderP95": 11,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 15,
+            "meshesCreated": 3,
+            "geometriesCreated": 3,
+            "materialsCreated": 3,
+            "groupsObjectsCreated": 3,
+            "sceneObjectsAdded": 41,
+            "sceneObjectsRemoved": 48,
+            "materialDisposes": 2
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "15-sample-transfer",
+          "kind": "live-transfer",
+          "frames": 72,
+          "p95": 33.3,
+          "p99": 50,
+          "worst": 50,
+          "renderMedian": 7,
+          "renderP95": 11,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 16,
+            "sceneObjectsAdded": 30,
+            "sceneObjectsRemoved": 10,
+            "materialDisposes": 2,
+            "meshesCreated": 1,
+            "geometriesCreated": 1,
+            "materialsCreated": 1,
+            "groupsObjectsCreated": 1
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "16-transfer-release",
+          "kind": "transition",
+          "frames": 90,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 7,
+          "renderP95": 11,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 19,
+            "sceneObjectsRemoved": 41,
+            "meshesCreated": 78,
+            "geometriesCreated": 21,
+            "materialsCreated": 15,
+            "groupsObjectsCreated": 30,
+            "sceneObjectsAdded": 22,
+            "materialDisposes": 4,
+            "applyCampaignWorldSnapshot": 1
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "18-M4-native-evacuation",
+          "kind": "live-traversal",
+          "frames": 278,
+          "p95": 33.3,
+          "p99": 50,
+          "worst": 66.7,
+          "renderMedian": 9,
+          "renderP95": 12,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 58
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "19-power-service",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 50,
+          "p99": 66.7,
+          "worst": 66.7,
+          "renderMedian": 6,
+          "renderP95": 10,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 14
+          },
+          "labMaxMs": 0,
+          "first": {
+            "frames": 20,
+            "p95": 33.3,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        },
+        {
+          "label": "20-emergency-exit",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 33.3,
+          "p99": 33.3,
+          "worst": 33.3,
+          "renderMedian": 6,
+          "renderP95": 8,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "labMaxMs": 1,
+          "first": {
+            "frames": 20,
+            "p95": 16.7,
+            "worst": 16.7,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, Radeon R9 200 Series Direct3D11 vs_5_0 ps_5_0), or similar"
+        }
+      ]
+    },
+    {
+      "browser": "edge",
+      "hashes": {
+        "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+        "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+      },
+      "viewport": [
+        1280,
+        720
+      ],
+      "captures": 22,
+      "quietP95": [
+        16.8,
+        33.4
+      ],
+      "quietWorst": 33.5,
+      "liveP95": [
+        16.8,
+        16.9
+      ],
+      "liveWorst": 17.3,
+      "programs": [
+        34
+      ],
+      "regions": [
+        {
+          "label": "01-exterior-far",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.4,
+          "p99": 33.5,
+          "worst": 33.5,
+          "renderMedian": 11.2,
+          "renderP95": 16.4,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 50,
+            "worst": 66.7,
+            "counters": {
+              "shadowRefresh": 6
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "02-exterior-near",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 16.8,
+          "p99": 16.9,
+          "worst": 16.9,
+          "renderMedian": 9.7,
+          "renderP95": 14.6,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 20,
+            "p95": 16.8,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "03-exterior-approach",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 16.8,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 11.6,
+          "renderP95": 15.1,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 33.4,
+            "worst": 33.5,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "04-front-entrance",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 33.5,
+          "worst": 33.5,
+          "renderMedian": 12.8,
+          "renderP95": 18.4,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 13
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 33.4,
+            "worst": 33.4,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "05-main-hall",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 33.3,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 10.9,
+          "renderP95": 16.2,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 12
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 16.8,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "06-vault",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 16.8,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 10,
+          "renderP95": 15.9,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.19999998807907104,
+          "first": {
+            "frames": 21,
+            "p95": 16.8,
+            "worst": 16.8,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "07-decontamination",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 16.9,
+          "p99": 16.9,
+          "worst": 16.9,
+          "renderMedian": 9.7,
+          "renderP95": 13.5,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 16.8,
+            "worst": 17.2,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "08-research-security",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 16.8,
+          "p99": 33.4,
+          "worst": 33.4,
+          "renderMedian": 10.9,
+          "renderP95": 16.5,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 21,
+            "p95": 16.8,
+            "worst": 33.3,
+            "counters": {
+              "shadowRefresh": 4
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "09-containment-before",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.3,
+          "worst": 17.3,
+          "renderMedian": 7.7,
+          "renderP95": 10.6,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 20,
+            "p95": 16.8,
+            "worst": 16.8,
+            "counters": {
+              "shadowRefresh": 3
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "12-active-drone-defence-30",
+          "kind": "live-combat",
+          "frames": 65,
+          "p95": 16.9,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 8.9,
+          "renderP95": 12.1,
+          "programs": 34,
+          "counters": {
+            "sceneObjectsRemoved": 94,
+            "shadowRefresh": 11,
+            "sceneObjectsAdded": 118,
+            "materialDisposes": 2,
+            "meshesCreated": 2,
+            "geometriesCreated": 2,
+            "materialsCreated": 2,
+            "groupsObjectsCreated": 2
+          },
+          "labMaxMs": 1,
+          "first": null,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "12-active-drone-defence-60",
+          "kind": "live-combat",
+          "frames": 64,
+          "p95": 16.9,
+          "p99": 17,
+          "worst": 17,
+          "renderMedian": 8.8,
+          "renderP95": 11.9,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 10,
+            "sceneObjectsAdded": 40,
+            "sceneObjectsRemoved": 30,
+            "materialDisposes": 2,
+            "meshesCreated": 2,
+            "geometriesCreated": 2,
+            "materialsCreated": 2,
+            "groupsObjectsCreated": 2
+          },
+          "labMaxMs": 2,
+          "first": null,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "15-sample-transfer",
+          "kind": "live-transfer",
+          "frames": 95,
+          "p95": 16.9,
+          "p99": 17.3,
+          "worst": 17.3,
+          "renderMedian": 8.9,
+          "renderP95": 12.1,
+          "programs": 34,
+          "counters": {
+            "sceneObjectsAdded": 186,
+            "sceneObjectsRemoved": 213,
+            "shadowRefresh": 16,
+            "materialDisposes": 4,
+            "meshesCreated": 3,
+            "geometriesCreated": 3,
+            "materialsCreated": 3,
+            "groupsObjectsCreated": 3
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": null,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "16-transfer-release",
+          "kind": "transition",
+          "frames": 112,
+          "p95": 16.8,
+          "p99": 17.1,
+          "worst": 17.1,
+          "renderMedian": 8,
+          "renderP95": 11.7,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 19,
+            "sceneObjectsAdded": 114,
+            "sceneObjectsRemoved": 148,
+            "meshesCreated": 77,
+            "geometriesCreated": 20,
+            "materialsCreated": 14,
+            "groupsObjectsCreated": 29,
+            "materialDisposes": 5,
+            "applyCampaignWorldSnapshot": 1
+          },
+          "labMaxMs": 0.20000000298023224,
+          "first": null,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "18-M4-native-evacuation",
+          "kind": "live-traversal",
+          "frames": 347,
+          "p95": 16.8,
+          "p99": 17,
+          "worst": 17.1,
+          "renderMedian": 9.6,
+          "renderP95": 13.4,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 58
+          },
+          "labMaxMs": 0.20000000298023224,
+          "first": null,
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "19-power-service",
+          "kind": "quiet-warm",
+          "frames": 64,
+          "p95": 17,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 5.5,
+          "renderP95": 9.2,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 20,
+            "p95": 16.9,
+            "worst": 16.9,
+            "counters": {
+              "shadowRefresh": 3
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        },
+        {
+          "label": "20-emergency-exit",
+          "kind": "quiet-warm",
+          "frames": 65,
+          "p95": 16.9,
+          "p99": 17.2,
+          "worst": 17.2,
+          "renderMedian": 6.6,
+          "renderP95": 8.6,
+          "programs": 34,
+          "counters": {
+            "shadowRefresh": 11
+          },
+          "labMaxMs": 0.10000000894069672,
+          "first": {
+            "frames": 20,
+            "p95": 17,
+            "worst": 17.1,
+            "counters": {
+              "shadowRefresh": 3
+            }
+          },
+          "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)"
+        }
+      ]
+    }
+  ]
+}

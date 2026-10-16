@@ -1,0 +1,26 @@
+{
+  "requests": [
+    {
+      "url": "https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/littlejs.esm.min.js",
+      "status": 200
+    },
+    {
+      "url": "https://unpkg.com/three@0.160.0/build/three.module.js",
+      "status": 200
+    }
+  ],
+  "console": [
+    "[JavaScript Warning: \"An AudioContext was prevented from starting automatically. It must be created or resumed after a user gesture on the page.\" {file: \"https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/littlejs.esm.min.js\" line: 4}]"
+  ],
+  "states": [
+    {
+      "ready": "complete",
+      "visible": "visible",
+      "fonts": "loaded",
+      "cf": true,
+      "renderer": true,
+      "canvases": 2,
+      "body": "CHARGE FRONT\nCAMPAIGN\nENDLESS HORDE\nOPTIONS\nCONTROLS & GUIDE\nCREDITS\nQUIT GAME\nMusic by Tsorthan Gro"
+    }
+  ]
+}

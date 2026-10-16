@@ -1,0 +1,122 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-e-integration",
+    "status": 1,
+    "error": null,
+    "seconds": 19.524,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/firefox/facility-e-integration.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-enclosure",
+    "status": 0,
+    "error": null,
+    "seconds": 120.823,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/firefox/facility-enclosure.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "error": null,
+    "seconds": 78.06,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/firefox/facility-playthrough.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-regression",
+    "status": 0,
+    "error": null,
+    "seconds": 54.579,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/firefox/facility-regression.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "sample-containment-r2",
+    "status": 0,
+    "error": null,
+    "seconds": 41.12,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/firefox/sample-containment-r2.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-e-integration",
+    "status": 1,
+    "error": null,
+    "seconds": 11.627,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/edge/facility-e-integration.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-enclosure",
+    "status": 0,
+    "error": null,
+    "seconds": 119.498,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/edge/facility-enclosure.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "error": null,
+    "seconds": 66.347,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/edge/facility-playthrough.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "error": null,
+    "seconds": 36.414,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/edge/facility-regression.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "sample-containment-r2",
+    "status": 0,
+    "error": null,
+    "seconds": 35.841,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-core/edge/sample-containment-r2.log"
+  }
+]

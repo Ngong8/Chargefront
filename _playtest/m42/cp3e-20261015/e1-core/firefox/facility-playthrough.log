@@ -1,0 +1,26 @@
+Containment north perimeter blocks walking {"x":400,"y":736.2,"solid":false}
+Main Hall entrance {"x":360,"y":627.7733333333397,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[371,634],[373,636],[373,632]]}
+Vault entrance {"x":360,"y":669.1266666666723,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[366,646],[366,648],[367,644]]}
+Decontamination access {"x":360,"y":701.7733333333397,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[365,666],[362,667],[364,663]]}
+Research threshold {"x":360,"y":714.7733333333397,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[364,685],[359,687],[362,682]]}
+Security partition {"x":374.69333333332986,"y":718,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[365,699],[362,700],[362,697]]}
+Containment access {"x":360,"y":743.7333333333393,"solid":false,"phase":"M3_REACH_SAMPLE","paused":false,"locked":true,"focus":"BODY","squad":[[364,716],[359,716],[361,715]]}
+Native traversal window M3 normal entry / room traversal {"shadowRefresh":174}
+Service wing {"x":421.1199999999959,"y":752,"solid":false,"phase":"M4_BREAK_CONTACT","paused":false,"locked":true,"focus":"BODY","squad":[[381,730],[377,732],[379,730]]}
+Emergency exit {"x":459.2933333333292,"y":752,"solid":false,"phase":"M4_REACH_LZ","paused":false,"locked":true,"focus":"BODY","squad":[[389,732],[389,734],[389,734]]}
+Sprint Hall → Vault {"x":360,"y":669.8399999999986,"sprinting":true,"solid":false}
+Sprint Decon → Research {"x":360,"y":714.6999999999986,"sprinting":true,"solid":false}
+Sprint Service → Exit {"x":457.97999999999854,"y":752,"sprinting":true,"solid":false}
+Native traversal window M4 service / exit / sprint {"shadowRefresh":152,"meshesCreated":48,"geometriesCreated":24,"materialsCreated":17,"groupsObjectsCreated":20,"sceneObjectsAdded":10,"sceneObjectsRemoved":8}
+Squad FOLLOW through hall {"x":360,"y":632.760000000008,"solid":false,"phase":"M3_ENTER_LAB","paused":false,"locked":true,"focus":"BODY","squad":[[363,627],[357,627],[360,624]]}
+Squad FOLLOW [{"y":627.1477940170237,"blocked":false,"mode":"FOLLOW"},{"y":627.219025810752,"blocked":false,"mode":"FOLLOW"},{"y":623.7009031570906,"blocked":false,"mode":"FOLLOW"}]
+Interior traversal gate {"links":0,"worldBuilds":0,"navRebuilds":0,"geometryCreated":0,"materialsCreated":0,"geometryDisposes":0,"materialDisposes":0}
+Indoor shooting over research bench {"shots":1,"blockedAtEye":false,"blockedLow":true}
+Squad combat {"before":34,"enemyHp":-0.680095834773037,"dead":true,"modes":["FOLLOW","FOLLOW","FOLLOW"]}
+Infested exterior → hall {"start":611,"y":625.1666666666634,"dead":false}
+Infested hall → exterior {"start":632,"y":608.8333333333386,"dead":false}
+Infested interior pursuit {"start":404,"x":411.0000000000008,"dead":false}
+Infested pursuit {"start":445,"enemy":455.1666666666678,"dead":false,"player":457,"phase":"M4_REACH_LZ"}
+Traversal diagnostics {"links":0,"builds":0,"lightSlots":8,"calls":246,"triangles":269915}
+Continue after emergency exit {"phase":"M4_REACH_LZ","position":[454.0066666666639,752],"blocked":false,"lightSlots":8}
+PASS facility real-input traversal

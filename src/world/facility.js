@@ -2106,9 +2106,25 @@
                 root, emergency, solids, emergencyMats, normalMats, lights, accessDoor, securityDoor, emergencyDoor, serviceDoor,
                 securityConsole: { group: securityConsole, screen: securityScreen, pos: securityPos.copy() },
                 turretConsole: { group: turretConsole, screen: turretConsoleScreen, pos: turretConsolePos },
-                turret: { group: turretGroup, head: turretHead, lamp: turretLamp, pos: turretPos, active: false, fireT: 0 },
+                turret: { group: turretGroup, head: turretHead, barrel:turretBarrel, lamp: turretLamp, pos: turretPos, active: false, fireT: 0 },
                 field, chamberRing,
             };
+        }
+
+        function finalizeTurretIntegration(lab) {
+            const turret=lab.turret;if(turret.aimYaw)return;
+            const random=Math.random;
+            try{
+                Math.random=global.ChargefrontProgression.seedRandom(0xcf07004b);
+                const yaw=new THREE.Group();yaw.name='LaboratoryTurretYaw';yaw.position.z=1.25;turret.group.add(yaw);
+                const pitch=new THREE.Group();pitch.name='LaboratoryTurretPitch';yaw.add(pitch);
+                pitch.add(turret.head,turret.barrel,turret.lamp);
+                turret.head.position.set(0,0,0);turret.head.rotation.z=0;
+                turret.barrel.position.set(1.25,0,0);turret.barrel.rotation.z=-Math.PI/2;
+                turret.lamp.position.set(.62,-.42,.2);
+                const muzzle=new THREE.Object3D();muzzle.name='LaboratoryTurretMuzzle';muzzle.position.x=2.35;pitch.add(muzzle);
+                Object.assign(turret,{aimYaw:yaw,aimPitch:pitch,muzzle,muzzleWorld:new THREE.Vector3(),target:null,scanT:0,shots:0,events:[]});
+            }finally{Math.random=random;}
         }
 
         function addDoor(x, y, axis, gapHalf, panelW, panelH, id = '') {
@@ -2270,7 +2286,7 @@
         return {
             buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,guidanceHeight,
             set zones(value) { zones = value; }, get zones() { return zones; },
-            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity, finalizeAdditionalCorrections, finalizeCoordinatedLighting, lightReachable,
+            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity, finalizeAdditionalCorrections, finalizeCoordinatedLighting, finalizeTurretIntegration, lightReachable,
             sectionSummary() { return [...sections].map(([name, section]) => ({ name, objects: section.objects.length, solids: section.solids.length })); },
         };
     }

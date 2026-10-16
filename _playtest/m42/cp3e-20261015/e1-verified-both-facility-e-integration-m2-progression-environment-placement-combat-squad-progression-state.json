@@ -1,0 +1,122 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-e-integration",
+    "status": 1,
+    "error": null,
+    "seconds": 131.437,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/firefox/facility-e-integration.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "m2-progression",
+    "status": 1,
+    "error": null,
+    "seconds": 259.799,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/firefox/m2-progression.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "environment-placement",
+    "status": 0,
+    "error": null,
+    "seconds": 379.5,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/firefox/environment-placement.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "combat-squad",
+    "status": 1,
+    "error": null,
+    "seconds": 77.189,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/firefox/combat-squad.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "progression-state",
+    "status": 0,
+    "error": null,
+    "seconds": 0.18,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/firefox/progression-state.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-e-integration",
+    "status": 1,
+    "error": null,
+    "seconds": 77.382,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/edge/facility-e-integration.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "m2-progression",
+    "status": 0,
+    "error": null,
+    "seconds": 230.732,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/edge/m2-progression.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "environment-placement",
+    "status": 0,
+    "error": null,
+    "seconds": 129.042,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/edge/environment-placement.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "combat-squad",
+    "status": 0,
+    "error": null,
+    "seconds": 81.02,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/edge/combat-squad.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "progression-state",
+    "status": 0,
+    "error": null,
+    "seconds": 0.104,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-verified/edge/progression-state.log"
+  }
+]

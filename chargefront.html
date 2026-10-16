@@ -2138,6 +2138,23 @@ function updateSampleTransferVisual() {
     vial.tube.vial.scale.setScalar(2.4 * (1 - .94 * smooth));
     if (e.state === 'transfer') vial.tube.vial.position.z = 3.72 - 2.8 * smooth;
 }
+function securityPortalNeedsIngress(pos) {
+    // Only northern facility rooms/thresholds, not the exterior M4 route to the LZ.
+    return insideFacility(pos) && pos.x < 390 && pos.y < 736.7;
+}
+function securityPortalPartyClear() {
+    if (securityPortalNeedsIngress(player.pos)) return false;
+    for (const member of squadMembers) if (securityPortalNeedsIngress(member.pos)) return false;
+    return true;
+}
+function updateSecurityPortalRecovery() {
+    if (activeMissionId !== 'break_contact' || !campaignRun.worldState.securityPortalRecovery) return;
+    if (!securityPortalPartyClear()) return;
+    campaignRun.worldState.securityPortalRecovery = false;
+    campaignRun.worldState.securityPortalSealed = true;
+    setFinalMissionWorldState(); checkpointCampaignState();
+    notify('CONTAINMENT ACCESS RESEALED — east evacuation route remains open', '#66ffcc');
+}
 function setFinalMissionWorldState() {
     const lab = campaignContent.lab, extraction = campaignContent.extraction;
     const emergency = !!campaignRun.worldState.emergency, lockdown = sampleLockdownActive();
@@ -2148,7 +2165,10 @@ function setFinalMissionWorldState() {
         lab.root.visible = true; lab.emergency.visible = emergency;
         for (const solid of lab.solids) solid.disabled = false;
         lab.accessDoor.enabled = true; lab.accessDoor.locked = !campaignRun.worldState.labAccess; lab.accessDoor.forceOpen = false;
-        lab.securityDoor.enabled = true; lab.securityDoor.locked = !campaignRun.worldState.labOverride; lab.securityDoor.forceOpen = activeMissionId === 'break_contact';
+        const sealed = !!campaignRun.worldState.securityPortalSealed;
+        lab.securityDoor.enabled = true; lab.securityDoor.locked = !campaignRun.worldState.labOverride || sealed;
+        lab.securityDoor.forceOpen = released && !!campaignRun.worldState.securityPortalRecovery;
+        lab.securityDoor.lockReason = sealed ? 'CONTAINMENT ACCESS SEALED — evacuate through the east service wing' : '';
         lab.emergencyDoor.enabled = true; lab.emergencyDoor.locked = !released; lab.emergencyDoor.forceOpen = released;
         lab.serviceDoor.enabled = true; lab.serviceDoor.locked = !released; lab.serviceDoor.forceOpen = released;
         lab.serviceDoor.lockReason = lockdown ? 'FACILITY LOCKDOWN — stabilization and sample transfer incomplete' : '';
@@ -2221,22 +2241,42 @@ function updateLabSystems(dt) {
         animateSpecimenTube(vial.tube, LJS.time);
         updateSampleTransferVisual();
     }
-    const turret = lab.turret;
-    if (!turret.active || !emergency) return;
-    turret.fireT -= dt;
-    if (turret.fireT > 0) return;
-    let target = null, best = 42;
-    for (const enemy of enemies) {
-        if (enemy.dead || enemy.dying) continue;
-        const distance = Math.hypot(enemy.pos.x - turret.pos.x, enemy.pos.y - turret.pos.y);
-        if (distance < best && hasLOS(turret.pos.x, turret.pos.y, enemy.pos.x, enemy.pos.y, 0.8)) { best = distance; target = enemy; }
+    updateLaboratoryTurret(dt, lab.turret);
+}
+function updateLaboratoryTurret(dt, turret) {
+    if (!turret.aimYaw) return; // cold world construction precedes the finalizer
+    if (!turret.active) { turret.target = null; return; }
+    turret.fireT = Math.max(0, turret.fireT - dt); turret.scanT -= dt;
+    if (turret.scanT <= 0) {
+        turret.scanT = .12; turret.target = null;
+        let best = 42;
+        for (const enemy of enemies) {
+            if (enemy.dead || enemy.dying || enemy.unburrowing) continue;
+            const distance = Math.hypot(enemy.pos.x - turret.pos.x, enemy.pos.y - turret.pos.y);
+            if (distance >= best || arcSurfaceContact(turret.pos.x,turret.pos.y,1.25,enemy.pos.x,enemy.pos.y,enemy.z+.8)) continue;
+            best = distance; turret.target = enemy;
+        }
     }
-    if (!target) return;
-    turret.fireT = 0.72;
-    turret.head.rotation.z = -Math.atan2(target.pos.y - turret.pos.y, target.pos.x - turret.pos.x);
-    target.takeDamage(22); target.markedT = Math.max(target.markedT, 0.8);
-    spawnImpact(target.pos.x, target.pos.y, target.z + 0.8, 0x66ddff, 0.8);
-    playFileSfx('laserShot', 0.22, 1.3, turret.pos.x, turret.pos.y);
+    const target = turret.target;
+    if (!target || target.dead || target.dying) { turret.target = null; return; }
+    const dx=target.pos.x-turret.pos.x,dy=target.pos.y-turret.pos.y,dz=target.z+.8-1.25;
+    if (Math.hypot(dx,dy) >= 42) { turret.target=null;turret.scanT=0;return; }
+    turret.aimYaw.rotation.z=Math.atan2(dy,dx);turret.aimPitch.rotation.y=-Math.atan2(dz,Math.hypot(dx,dy));
+    if (turret.fireT > 0) return;
+    if (arcSurfaceContact(turret.pos.x,turret.pos.y,1.25,target.pos.x,target.pos.y,target.z+.8)) {turret.target=null;turret.scanT=0;return;}
+    turret.aimYaw.updateWorldMatrix(true,true);turret.muzzle.getWorldPosition(turret.muzzleWorld);
+    const muzzle=turret.muzzleWorld, tx=target.pos.x,ty=target.pos.y,tz=target.z+.8;
+    if (arcSurfaceContact(muzzle.x,muzzle.y,muzzle.z,tx,ty,tz)) {turret.target=null;return;}
+    const hpBefore=target.hp,shieldBefore=target.shield,markedBefore=target.markedT;
+    turret.fireT=.72;turret.shots++;
+    target.takeDamage(22);target.markedT=Math.max(target.markedT,.8);
+    const beam=emitLaboratoryTurretBeam(muzzle.x,muzzle.y,muzzle.z,tx,ty,tz);
+    spawnImpact(muzzle.x,muzzle.y,muzzle.z,0x66ddff,.45);spawnImpact(tx,ty,tz,0x66ddff,.8);
+    playFileSfx('laserShot',.22,1.3,turret.pos.x,turret.pos.y);
+    if (PERF_DIAGNOSTICS) {
+        turret.events.push({shot:turret.shots,time:LJS.time,target:target.type,rawDamage:22,hpBefore,hpAfter:target.hp,shieldBefore,shieldAfter:target.shield,markedBefore,from:[muzzle.x,muzzle.y,muzzle.z],to:[tx,ty,tz],beam});
+        if(turret.events.length>64)turret.events.shift();
+    }
 }
 
 const pickups = [];
@@ -3113,6 +3153,7 @@ const BASE_WORLD_STATE = Object.freeze({
     localPower: false, maintenanceBatteryInstalled: false, relaysOnline: false, betaSurvey: false, shortcutOpen: false,
     labAccess: false, labOverride: false, securityTurret: false, emergency: false, dnaSecured: false,
     sampleOperationStarted: false, containmentSynchronized: false,
+    securityPortalSealed: false, securityPortalRecovery: false,
     extractionRouteActive: false, extractionBeaconActive: false, extractionInfestationStarted: false, extractionInfestationCleared: false, containmentIntact: true,
 });
 /* These are the authoritative deterministic views of one physical campaign world.
@@ -3139,7 +3180,7 @@ const CANONICAL_WORLD_SNAPSHOTS = Object.freeze({
     break_contact: {
         start: LAB_CONTAINMENT, target: LAB_EMERGENCY_EXIT, firstPhase: P.M4_BREAK_CONTACT, firstMainIndex: 0,
         spacecraftState: SPACECRAFT_STATE.LANDED_INFESTED, stagingActive: true,
-        worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, sampleOperationStarted: true, containmentSynchronized: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: true }),
+        worldState: Object.assign({}, BASE_WORLD_STATE, { localPower: true, maintenanceBatteryInstalled: true, relaysOnline: true, shortcutOpen: true, labAccess: true, labOverride: true, emergency: true, dnaSecured: true, sampleOperationStarted: true, containmentSynchronized: true, securityPortalSealed: true, extractionRouteActive: true, extractionBeaconActive: true, containmentIntact: true }),
         combat: { hp: 100, shield: 100, grenades: 2, medkits: 2, cartridges: ChargefrontProgression.reserves.break_contact.player, squadHp: 1, squadShield: 1 },
     },
 });
@@ -7197,6 +7238,16 @@ function emitLightningArc(x0, y0, z0, x1, y1, z1, colorHex,kind='chain') {
     electricArcs.push(a);
     a.ribbon.rebuild(camera,LJS.mainCanvasSize.y);
 }
+function emitLaboratoryTurretBeam(x0,y0,z0,x1,y1,z1) {
+    // Straight visual trace of a confirmed hitscan, using the already-prewarmed
+    // ribbon pool. It has no independent projectile collision or damage.
+    if(electricArcs.length>=40)return false;
+    const a=electricArcPool.pop()||createElectricArcEffect(),points=a.ribbon.points;
+    for(let i=0;i<=5;i++){const t=i/5;points[i*3]=lerp(x0,x1,t);points[i*3+1]=lerp(y0,y1,t);points[i*3+2]=lerp(z0,z1,t);}
+    a.line.position.set(0,0,0);a.line.rotation.set(0,0,0);a.line.scale.setScalar(1);a.line.visible=true;a.kind='lab-turret';
+    a.line.material.color.setHex(0x66ddff);a.line.material.opacity=1;a.life=a.maxLife=.14;
+    scene.add(a.line);electricArcs.push(a);a.ribbon.rebuild(camera,LJS.mainCanvasSize.y);return true;
+}
 function emitElectricArcs(x, y, z, n, radius, colorHex,kind='blast') {
     for (let i = 0; i < n && electricArcs.length < 40; i++) {
         const ang = rand(TAU), tilt = rand(-0.6, 0.6);
@@ -8729,6 +8780,7 @@ function buildCampaignWorld() {
     facilityWorld.finalizeExteriorIdentity(); // mounted detail after accepted seeded scenery/asset construction
     facilityWorld.finalizeAdditionalCorrections(campaignContent.env, vial);
     facilityWorld.finalizeCoordinatedLighting(campaignContent.lab);
+    facilityWorld.finalizeTurretIntegration(campaignContent.lab);
     if (['sample_zero', 'break_contact'].includes(activeMissionId)) setFinalMissionWorldState();
     campaignWorldBuilt = true;
     threeJS.renderer.shadowMap.needsUpdate = true;
@@ -9151,6 +9203,14 @@ function updateFinalCampaignEncounter(dt) {
         if (encounter.state === 'transfer') {
             encounter.transferT = Math.min(SAMPLE_TRANSFER_SECONDS, encounter.transferT + dt); updateSampleTransferVisual();
             if (encounter.transferT >= SAMPLE_TRANSFER_SECONDS) {
+                const door=campaignContent.lab.securityDoor;
+                if(!securityPortalPartyClear()){
+                    if(campaignRun.worldState.securityPortalSealed){campaignRun.worldState.securityPortalSealed=false;setFinalMissionWorldState();}
+                    if(encounter.releaseWait!=='party')notify('TRANSFER COMPLETE — rally squad into Containment and clear the north threshold', '#ffcc66');
+                    encounter.releaseWait='party';return;
+                }
+                if(!campaignRun.worldState.securityPortalSealed){campaignRun.worldState.securityPortalSealed=true;setFinalMissionWorldState();}
+                if(door.openT>=.03||door.solid.disabled){encounter.releaseWait='door';return;}
                 encounter.active = false; campaignRun.worldState.dnaSecured = true; campaignRun.worldState.containmentSynchronized = true;
                 setFinalMissionWorldState(); beginMission4Transition();
             }
@@ -9182,6 +9242,7 @@ function updateFinalCampaignEncounter(dt) {
         return;
     }
     if (activeMissionId !== 'break_contact') return;
+    updateSecurityPortalRecovery();
     if (phase === P.M4_BREAK_CONTACT) return;
     if (phase === P.M4_REACH_LZ) {
         const encounter = campaignRun.encounter;
@@ -10202,7 +10263,7 @@ function drawObjectiveProgress(right, y, width) {
     if (relay?.powering) { text = relay.R.name + '  ' + Math.round(relay.progress * 100) + '%'; progress = relay.progress; }
     else if (phase === P.M3_STABILIZE) {
         const e = campaignRun.encounter;
-        text = e.state === 'transfer' ? 'DNA TRANSFER  ' + Math.max(0, SAMPLE_TRANSFER_SECONDS - e.transferT).toFixed(1) + 's' : e.state === 'locking' ? 'FACILITY LOCKDOWN — SEALING ENTRANCES' : 'STABILIZATION  ' + Math.max(0, Math.ceil(SAMPLE_DEFENCE_SECONDS - e.t)) + 's';
+        text = e.state === 'transfer' ? e.releaseWait==='party'?'RALLY SQUAD INTO CONTAINMENT':e.releaseWait==='door'?'SEALING NORTH ACCESS':'DNA TRANSFER  ' + Math.max(0, SAMPLE_TRANSFER_SECONDS - e.transferT).toFixed(1) + 's' : e.state === 'locking' ? 'FACILITY LOCKDOWN — SEALING ENTRANCES' : 'STABILIZATION  ' + Math.max(0, Math.ceil(SAMPLE_DEFENCE_SECONDS - e.t)) + 's';
         progress = e.state === 'transfer' ? e.transferT / SAMPLE_TRANSFER_SECONDS : clamp(e.t / SAMPLE_DEFENCE_SECONDS, 0, 1); color = LJS.rgb(1, 0.32, 0.45);
     } else if (phase === P.M4_HOLD_LZ) {
         const nodes = campaignContent.extraction?.infestation?.nodes || []; let cleared = 0;
@@ -10553,6 +10614,7 @@ function createCampaignCheckpointSnapshot() {
             surveyComplete: !!campaignRun.optional.escort_drone,
             encounter: Object.assign({}, campaignRun.encounter),
             lockdownDoors: sampleLockdownActive() ? facilityDoors.filter(d=>!d.id||d.id==='lab_emergency_exit').map(d=>({id:d.id,openT:d.openT})) : null,
+            turretFireT: campaignContent.lab?.turret.fireT || 0,
         },
     };
 }
@@ -10677,6 +10739,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
             for(const d of facilityDoors.filter(d=>!d.id||d.id==='lab_emergency_exit')) d.openT = e.state==='locking' ? clamp(mission.lockdownDoors?.find(s=>s.id===d.id)?.openT||0,0,1) : 0;
         } else if (!campaignRun.worldState.dnaSecured) spawnLaboratoryConflict();
         setFinalMissionWorldState();
+        campaignContent.lab.turret.fireT=clamp(Number(mission.turretFireT)||0,0,.72);campaignContent.lab.turret.target=null;
         updateFacilityDoors(0);
     }
     restorePersistentActors(boundary);
@@ -10702,6 +10765,9 @@ function createContinuedMission4Snapshot() {
         squadCommand,
         squad:persistentSquadSnapshot(),
         securityTurret: !!campaignRun.worldState.securityTurret,
+        turretFireT: campaignContent.lab?.turret.fireT || 0,
+        securityPortalSealed: !!campaignRun.worldState.securityPortalSealed,
+        securityPortalRecovery: !!campaignRun.worldState.securityPortalRecovery,
         enemyIntel: !!campaignRun.enemyIntel,
         extraction: {
             phase: savedPhase, mainIndex: savedPhase === P.M4_BOARD ? 4 : campaignRun.mainIndex,
@@ -10787,7 +10853,13 @@ function applyContinuedMission4Snapshot(snapshot) {
         node.guardiansSpawned = false;
     }
     if (phase === P.M4_HOLD_LZ && !campaignRun.worldState.extractionInfestationCleared) campaignRun.encounter = { active: true, t: 0, duration: 0, stage: 0, spawnT: 0, pausedWarned: false };
+    // Legacy M4 saves may have northern actors behind the portal to be sealed.
+    // Approved one-time ingress, no teleport or statistic/resource reset.
+    const recover=!!boundary.securityPortalRecovery || boundary.securityPortalSealed!==true&&!securityPortalPartyClear();
+    campaignRun.worldState.securityPortalRecovery=recover;campaignRun.worldState.securityPortalSealed=!recover;
     setFinalMissionWorldState();
+    campaignContent.lab.turret.fireT=clamp(Number(boundary.turretFireT)||0,0,.72);campaignContent.lab.turret.target=null;
+    if(recover)notify('LEGACY CHECKPOINT RECOVERY — rally northern squad into Containment to reseal access', '#ffcc66');
     campaignContent.extraction.cache.used = !!savedExtraction.cacheUsed;
     campaignContent.extraction.cache.group.visible = !campaignContent.extraction.cache.used;
     campaignContent.extraction.cache.lamp.visible = !campaignContent.extraction.cache.used;

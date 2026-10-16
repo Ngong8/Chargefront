@@ -1,0 +1,34 @@
+{
+  "hashes": {
+    "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+    "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+  },
+  "sourceHashes": true,
+  "creditsPreserved": true,
+  "inlineModule": true,
+  "syntax": [
+    "src/world/facility.js",
+    "tests/facility-e0.mjs",
+    "tests/facility-e-integration.mjs",
+    "tests/facility-e2.mjs",
+    "tests/facility-light-eligibility-e.mjs",
+    "tests/sample-lockdown-live.mjs",
+    "tests/m2-progression.mjs",
+    "tests/combat-squad.mjs",
+    "_playtest/m42/cp3e-20261015/probe-e0.mjs",
+    "_playtest/m42/cp3e-20261015/probe-restore-solids.mjs",
+    "_playtest/m42/cp3e-20261015/probe-firefox-boot.mjs",
+    "_playtest/m42/cp3e-20261015/run-suites.mjs",
+    "_playtest/m42/cp3e-20261015/summarize-e2.mjs",
+    "_playtest/m42/cp3e-20261015/compose-review.mjs",
+    "_playtest/m42/cp3e-20261015/summarize-final.mjs",
+    "_playtest/m42/cp3e-20261015/check-final.mjs"
+  ],
+  "links": 122,
+  "selectedPasses": 32,
+  "branch": "milestone-4.2",
+  "head": "b9e446c3f90bd9b53d267ac1e4dcd0096eade710",
+  "indexEmpty": true,
+  "diffCheck": true,
+  "passed": true
+}

@@ -1,0 +1,17 @@
+REGION edge 01-exterior-far quiet-warm {"frames":65,"p95":33.4,"worst":33.5,"links":0,"geometry":0,"materials":0}
+REGION edge 02-exterior-near quiet-warm {"frames":65,"p95":16.8,"worst":16.9,"links":0,"geometry":0,"materials":0}
+REGION edge 03-exterior-approach quiet-warm {"frames":65,"p95":16.8,"worst":33.4,"links":0,"geometry":0,"materials":0}
+REGION edge 04-front-entrance quiet-warm {"frames":65,"p95":33.3,"worst":33.5,"links":0,"geometry":0,"materials":0}
+REGION edge 05-main-hall quiet-warm {"frames":65,"p95":33.3,"worst":33.4,"links":0,"geometry":0,"materials":0}
+REGION edge 06-vault quiet-warm {"frames":64,"p95":16.8,"worst":33.4,"links":0,"geometry":0,"materials":0}
+REGION edge 07-decontamination quiet-warm {"frames":65,"p95":16.9,"worst":16.9,"links":0,"geometry":0,"materials":0}
+REGION edge 08-research-security quiet-warm {"frames":65,"p95":16.8,"worst":33.4,"links":0,"geometry":0,"materials":0}
+REGION edge 09-containment-before quiet-warm {"frames":64,"p95":17,"worst":17.3,"links":0,"geometry":0,"materials":0}
+REGION edge 12-active-drone-defence-30 live-combat {"frames":65,"p95":16.9,"worst":17.2,"links":0,"geometry":2,"materials":2}
+REGION edge 12-active-drone-defence-60 live-combat {"frames":64,"p95":16.9,"worst":17,"links":0,"geometry":2,"materials":2}
+REGION edge 15-sample-transfer live-transfer {"frames":95,"p95":16.9,"worst":17.3,"links":0,"geometry":3,"materials":3}
+REGION edge 16-transfer-release transition {"frames":112,"p95":16.8,"worst":17.1,"links":0,"geometry":20,"materials":14}
+REGION edge 18-M4-native-evacuation live-traversal {"frames":347,"p95":16.8,"worst":17.1,"links":0,"geometry":0,"materials":0}
+REGION edge 19-power-service quiet-warm {"frames":64,"p95":17,"worst":17.2,"links":0,"geometry":0,"materials":0}
+REGION edge 20-emergency-exit quiet-warm {"frames":65,"p95":16.9,"worst":17.2,"links":0,"geometry":0,"materials":0}
+PASS CP3-E2 gameplay edge

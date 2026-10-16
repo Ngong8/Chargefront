@@ -28,7 +28,13 @@ const ready = () => page.waitForFunction(() => window.__cf?.renderer, undefined,
 const quiet = () => page.evaluate(() => { __cf.setNoSpawn(true); __cf.setInvulnerable(true); __cf.clearTestEnemies(); __cf.setNoAggro(true); });
 const snap = () => page.evaluate(() => __cf.combat.snapshot());
 const capture = label => page.screenshot({ path: resolve(out, `${label}-${name}.png`) });
-const select = async index => { await page.keyboard.press(String(index + 1)); await page.waitForFunction(i => __cf.player.weaponIndex === i && __cf.player.swapT === 0, index); };
+const select = async index => {
+    // Keep the real key held until a simulation frame observes it; short press/
+    // release pairs can be lost during a slow headless Firefox render frame.
+    await page.keyboard.down(String(index + 1));
+    try { await page.waitForFunction(i => __cf.player.weaponIndex === i && __cf.player.swapT === 0, index); }
+    finally { await page.keyboard.up(String(index + 1)); }
+};
 try {
     await page.goto(url.href); await ready();
     await campaignClick(page); await page.locator('[data-sound-mode="full"]').click(); await page.locator('#btn-sound-start').click();

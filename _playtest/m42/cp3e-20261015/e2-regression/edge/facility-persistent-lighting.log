@@ -1,0 +1,20 @@
+CAPTURE edge west-near
+CAPTURE edge west-far
+CAPTURE edge west-inside
+CAPTURE edge power-exit-near
+CAPTURE edge power-exit-far
+CAPTURE edge power-exit-inside
+CAPTURE edge front-near
+CAPTURE edge front-far
+CAPTURE edge front-inside
+CAPTURE edge vault-recess-near
+CAPTURE edge vault-recess-far
+CAPTURE edge vault-recess-inside
+CAPTURE edge lab-east-near
+CAPTURE edge lab-east-far
+CAPTURE edge lab-east-inside
+CAPTURE edge rear-corner-near
+CAPTURE edge rear-corner-far
+CAPTURE edge rear-corner-inside
+CAPTURE edge power-exit-emergency
+PASS persistent exterior lighting edge {"fixtures":32,"sources":104,"slots":8,"terrain":{"vertices":1120,"maxError":0.000012693756915982402}}

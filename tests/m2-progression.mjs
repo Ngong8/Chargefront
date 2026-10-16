@@ -128,7 +128,10 @@ try {
     console.log('Canonical return counters', JSON.stringify(traversal));
     for (const name of ['linkProgram', 'buildCampaignWorld', 'buildFacility', 'collisionNavRebuild', 'geometriesCreated', 'materialsCreated', 'geometryDisposes', 'materialDisposes']) assert.equal(traversal[name] || 0, 0, name);
     // Persist at the terminal via the ordinary periodic checkpoint.
-    await page.waitForTimeout(10500);
+    await page.waitForFunction(() => {
+        const saved=JSON.parse(localStorage.cf_campaign_v1)?.operation?.continuedState;
+        return saved?.missionId==='power_through' && saved.phase===18 && Math.hypot(saved.player.position.x-382,saved.player.position.y-648)<4;
+    }, undefined, {timeout:30000});
     current = await resume();
     assert.equal(current.phase, 'M2_CONFIRM');
     assert(Math.hypot(current.pos[0] - 382, current.pos[1] - 648) < 4);

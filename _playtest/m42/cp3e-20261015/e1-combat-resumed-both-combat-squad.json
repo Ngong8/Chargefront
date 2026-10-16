@@ -1,0 +1,26 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "combat-squad",
+    "status": 0,
+    "error": null,
+    "seconds": 170.804,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-combat-resumed/firefox/combat-squad.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "combat-squad",
+    "status": 0,
+    "error": null,
+    "seconds": 100.046,
+    "hashes": {
+      "chargefront.html": "4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3",
+      "src/world/facility.js": "7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b"
+    },
+    "log": "e1-combat-resumed/edge/combat-squad.log"
+  }
+]

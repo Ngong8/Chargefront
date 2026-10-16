@@ -1,0 +1,17 @@
+REGION firefox 01-exterior-far quiet-warm {"frames":65,"p95":33.3,"worst":50,"links":0,"geometry":0,"materials":0}
+REGION firefox 02-exterior-near quiet-warm {"frames":65,"p95":33.3,"worst":33.3,"links":0,"geometry":0,"materials":0}
+REGION firefox 03-exterior-approach quiet-warm {"frames":65,"p95":50,"worst":50,"links":0,"geometry":0,"materials":0}
+REGION firefox 04-front-entrance quiet-warm {"frames":64,"p95":50,"worst":66.7,"links":0,"geometry":0,"materials":0}
+REGION firefox 05-main-hall quiet-warm {"frames":64,"p95":33.3,"worst":33.3,"links":0,"geometry":0,"materials":0}
+REGION firefox 06-vault quiet-warm {"frames":65,"p95":33.3,"worst":33.3,"links":0,"geometry":0,"materials":0}
+REGION firefox 07-decontamination quiet-warm {"frames":65,"p95":33.3,"worst":33.3,"links":0,"geometry":0,"materials":0}
+REGION firefox 08-research-security quiet-warm {"frames":64,"p95":33.3,"worst":35.4,"links":0,"geometry":0,"materials":0}
+REGION firefox 09-containment-before quiet-warm {"frames":64,"p95":16.7,"worst":33.3,"links":0,"geometry":0,"materials":0}
+REGION firefox 12-active-drone-defence-30 live-combat {"frames":64,"p95":33.3,"worst":33.3,"links":0,"geometry":8,"materials":5}
+REGION firefox 12-active-drone-defence-60 live-combat {"frames":64,"p95":33.3,"worst":33.3,"links":0,"geometry":3,"materials":3}
+REGION firefox 15-sample-transfer live-transfer {"frames":72,"p95":33.3,"worst":50,"links":0,"geometry":1,"materials":1}
+REGION firefox 16-transfer-release transition {"frames":90,"p95":33.3,"worst":33.3,"links":0,"geometry":21,"materials":15}
+REGION firefox 18-M4-native-evacuation live-traversal {"frames":278,"p95":33.3,"worst":66.7,"links":0,"geometry":0,"materials":0}
+REGION firefox 19-power-service quiet-warm {"frames":64,"p95":50,"worst":66.7,"links":0,"geometry":0,"materials":0}
+REGION firefox 20-emergency-exit quiet-warm {"frames":64,"p95":33.3,"worst":33.3,"links":0,"geometry":0,"materials":0}
+PASS CP3-E2 gameplay firefox

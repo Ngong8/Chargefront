@@ -1,15 +1,21 @@
 # Charge Front — Milestone 4.2: Environment & Final Prop Pass
 
-**Current checkpoint: CP3-D-R2 — phases A/B/C/D implemented and verified;
-24 final Firefox/Edge suite runs PASS; manual visual acceptance pending.**
-CP3-D was not manually accepted; its remaining obstructions, containment lifecycle
-and proximity-dependent facade coverage are revised in the separate R2 record below.
-Comparative headless timing remains inconclusive, especially Firefox. STOP at R2:
-no CP3-E, staging, commit, merge or push. CP3-C-R is the accepted starting source;
-HEAD is `9267ceb` (`feat: refine facility interiors and correct prop installations`).
-See the separate CP3-D and CP3-D-R2 records below and the
-[indexed R2 handoff](_playtest/m42/cp3dr2-20261014/INDEX.html) and
-[recovery ledger](CP3-D-R2-PROGRESS.md).
+**Current checkpoint: CP3-E — accepted with one known visual qualification.**
+Accepted starting point is CP3-D-R2, manually accepted and committed as `b9e446c`.
+CP3-E was accepted by the user on the basis of the completed E0–E3 automated
+validation report and the user's own review; the user did not report additional
+tests beyond that review. Automated verification shows E0/E1/E2 with32 selected
+successful suite executions across Firefox/Edge batches, and E3 documentation/
+evidence. CP3-E is **not** claimed to be visually defect-free: some facility
+interior models exhibit visible Z-fighting after the CP3 interior overhaul. That is
+an accepted, non-blocking visual defect deferred to CP4-A/CP4-B (see below), not
+resolved here. Safe Staged Seal includes the approved one-time old-save recovery
+exception; normal M4 seals the existing north portal before entry. Current-source
+timings are observations, not comparative FPS certification.
+STOP after CP3-E: no staging, commit, merge, push or Milestone4.3 implementation.
+See the distinct CP3-E record below, the
+[release-candidate index](_playtest/m42/cp3e-20261015/INDEX.html) and
+[CP3-E recovery ledger](CP3-E-PROGRESS.md).
 Earlier checkpoint records are retained as historical baseline evidence.
 
 ## CP0 status and scope
@@ -2475,6 +2481,9 @@ ACCEPTANCE. No CP3-E, staging, commit, merge or push.**
 
 ### Pending Manual Follow-ups
 
+Historical observations recorded at R2 acceptance. Both were investigated in
+CP3-E0; see their explicit disposition in the current CP3-E record below.
+
 Recorded from the latest manual acceptance review. These are observations to
 investigate in a future refinement. They are **not** confirmed defects and are
 outside the accepted CP3-D-R2 scope; they are not implementation requirements for
@@ -2502,3 +2511,240 @@ screenshots, ZIP archives and the private baseline HTML documents under
 `_playtest/m42/` are **retained locally (untracked)** and remain reproducible from the
 committed test suites. They are intentionally not committed to avoid repository
 bloat; no committed document links to a local-only file.
+
+## CP3-E — final facility integration and acceptance handoff
+
+**Accepted with one known visual qualification.** E0→E1→E2 executed sequentially
+with verified checkpoints; E3 provides this record and indexed evidence. CP3-D-R2
+is the accepted baseline, not an outstanding unaccepted checkpoint. Acceptance was
+granted by the user from the completed E0–E3 validation report and the user's own
+review. The accepted qualification is visible **Z-fighting on some facility interior
+models** after the CP3 interior overhaul: a non-blocking visual defect that is
+**not** fixed in CP3-E and is deferred to CP4-A/CP4-B. This section does not claim a
+visually defect-free result. HEAD remains
+`b9e446c3f90bd9b53d267ac1e4dcd0096eade710`; all CP3-E work is uncommitted.
+
+[Index](_playtest/m42/cp3e-20261015/INDEX.html) ·
+[Handoff](_playtest/m42/cp3e-20261015/README.md) ·
+[32-pass joined receipt](_playtest/m42/cp3e-20261015/validation-summary.json) ·
+[Scene measurements](_playtest/m42/cp3e-20261015/e2-metrics-summary.json) ·
+[Recovery ledger](CP3-E-PROGRESS.md).
+
+### E0-A — doorway investigation and disposition
+
+The supplied image was inspected before edits. It showed VISUAL DEBUG LIGHTING: ON;
+final evidence uses normal.78 exposure and40–280 fog. Actual-game baseline probes in
+both browsers identified the red opening as **`lab_security` `(360,735)`**, the
+Research/Security→Containment portal. It is **not** the front entrance `(360,618)`.
+The original panels were present, enabled and deliberately slid open:
+`setFinalMissionWorldState()` set `forceOpen=true` in M4; `updateDoors()` rendered
+the resulting panel/collision state. This was not a missing-mesh defect.
+
+The east Containment→Power `(410,752)`→emergency exit `(450,752)` route does not
+require the north portal once the party is clear. However older saves or lagging
+northern squad members could be cut off by unconditional closure. The user selected
+**Safe Staged Seal** after that conflict was reported:
+
+- New normal runs complete the unchanged3.5s transfer animation, gather any northern/
+  threshold actors clear and close/lock the **original door** before M4 begins.
+  If needed, HUD/notification explains the rally or closure interlock. Defence90s
+  and transfer3.5s are not reset; safety waiting is separate from the animation.
+- Normal M4 keeps this portal and the front entrance shut/locked, with panel,
+  collision, navigation and access-denial state agreeing. No artificial wall or
+  seventh door. East service/emergency release remains the intended evacuation.
+- **Approved legacy exception:** older M4 saves containing northern actors restore
+  in place with a one-time recovery passage. Once all northern actors cross and
+  clear the threshold, it reseals and persists closed. No actor teleport or loss
+  of HP/ammunition/resources/statistics. A legacy recovery can therefore visibly
+  be open temporarily; it is not reported as an always-closed state.
+
+Before acquisition, lockdown, t89/t90, transfer, saved rally wait, normal M4 entry,
+actual blocked W movement, sealed save restore, legacy native W/FOLLOW ingress,
+reseal, death and actual menu Continue PASS in both browsers. Full live runs verify
+90s/3.5s and normal east evacuation with the turret active.
+
+### E0-B — turret investigation and disposition
+
+Baseline controlled target tests showed initial disabled state, real E-key console
+activation and optional completion. After activation, a clear target stayed at
+1000HP before emergency because firing was gated on active **and emergency**.
+During defence damage already worked (1000→888.9HP in the sampled interval).
+Existing weapon was direct hitscan, raw22/.72s/42m horizontal range; existing marks
+boost subsequent damage by1.35. Only the head box rotated, with inverse yaw; its
+separate barrel stayed fixed. Feedback was impact/sound without muzzle-to-hit trace.
+The supplied screenshot alone did not establish a valid hostile, so it also permits
+a valid idle-state explanation; the turret is not labelled wholly nonfunctional.
+
+Narrow correction preserves the same model, optional objective, raw damage, cadence,
+range and hitscan mechanism:
+
+- Activated turret can engage eligible hostiles without waiting for emergency.
+- Common yaw/pitch rig moves head, barrel and indicator together; correct muzzle
+  endpoint follows aim. No new collision/light/architectural mesh.
+- Bounded target scans and actual3D solid/terrain ray tests validate the firing path,
+  including muzzle obstruction. Dead/dying/unemerged/out-of-range targets excluded;
+  friendly squad/escort objects are not in the hostile target loop.
+- A straight prewarmed pooled ribbon, muzzle/hit effects and sound follow a confirmed
+  hit. They neither animate decorative fire nor add a second damage projectile.
+- Activation and cooldown survive relevant saves/transitions. Diagnostic shot events
+  are bounded and record actual HP/shield changes.
+
+Both browsers prove **1000→978→948.3→918.6HP**, raw22 per shot with the original
+marked-target boost, observed fixed-tick intervals about.733s (nominal.72), tracked
+yaw/pitch, saved cooldown, blocked-wall/out-of-range/no-hostile/friendly idle, and
+no friendly damage. Actual live defence captures show the beam hitting a drone under
+normal lighting. Activation carries into M4/Continue and remains compatible with
+drone-only spawning. No turret type/upgrade/ammunition redesign.
+
+### E1 — integration and preserved baseline
+
+Canonical geometry remains **327 records /28 minimap segments /six doors**;32
+persistent luminaires/eight rendered budget slots,90-second drone defence,
+3.5-second transfer and both permanent enclosures/supports retained. Ten-room
+coverage includes perimeter/front, Hall, Vault, Decon, Research/Security, Containment,
+Power and emergency exit. No accepted geometry was rebuilt or decorated further.
+
+Native walking/sprint/FOLLOW/shooting/pursuit and all six door cycles PASS. New
+integration exercises actual ASSIST/FOLLOW/SPREAD/HOLD keys, no hidden collision at
+the two removed partition lines, native east evacuation with squad and campaign
+completion. Carried actor/resources and chapter sentinel statistics7/9/11 kills and
+111/222/333 active seconds survive transitions/restores; per-chapter HUD counters
+retain their accepted resets while archived statistics are preserved. Optional
+turret completion/activation, M4 resources, checkpoint migration and fresh-world
+Endless wave smoke PASS. Full unaccelerated operation is separate from accelerated
+checkpoint/progression boundary tests; evidence does not pretend all setup is native.
+
+**Pre-existing count qualification:** explicit in-memory M1 checkpoint restoration
+retains one additional disabled duplicate ship-hull history record (global328).
+Read-only accepted/current comparison proves identical bounds/flags, no new
+coordinates or facility geometry. Canonical route/cold M3 Continue is327. This is
+documented, not silently changed to satisfy a counter. Unsupported direct debug
+mode-switch from a result screen was replaced with the normal fresh-world smoke
+setup; no product mode/architecture rewrite was made for that fixture.
+
+### E2 — actual measurements, lighting and visual inspection
+
+There are **22 actual player-eye normal-lighting images and16 measured regions per
+browser**. Native W/E legs cover approach, front, Hall/Vault/Decon/Research/Security,
+Containment before/activation, real turret shot, live30/60/89/90 defence, transfer,
+normal M4 north seal and east Power/emergency evacuation. Setup relocations and
+first20-frame/warm64-frame windows are identified explicitly.
+
+| Observed current-source1280×720 result | Firefox | Edge |
+|---|---:|---:|
+| Quiet warm regional p95 |16.7–50ms|16.8–33.4ms|
+| Quiet warm worst |66.7ms|33.5ms|
+| Live/transfer/evacuation p95 |33.3ms|16.8–16.9ms|
+| Live worst |66.7ms|17.3ms|
+| First far-facade20-frame worst |150ms|66.7ms|
+| Resident programs across this16-region path |34|34|
+| Quiet warm links /geometry-material creation-disposal /world-nav rebuilds |0 /0 /0|0 /0 /0|
+
+Live combat/transfer/release windows record normal enemy/effect/drop/contact
+lifetimes and allocations rather than asserting allocation-free combat. No shader
+links or world/facility/navigation rebuilds occurred in these measured windows.
+First-visit spikes above were retained; their counters do not show shader linking
+or generation. No proven new regression was identified, but **these are current-
+source observations, not paired FPS-equivalence or desktop smoothness certification**.
+Program counts are path-dependent, not compared with historical differently primed
+tours. Reported ANGLE/timer/browser differences limit cross-browser interpretation.
+
+Permanent transition/prewarming, native traversal/Campaign-Endless combat/restart,
+and persistent-lighting suites PASS both browsers. Actual near/far player-eye
+facade shots complement fixed-camera actor near/far/inside comparisons. Fixture
+appearance/material/matrices stay unchanged; native entrance transition also tested.
+Live slot checks prove powered Research light excluded behind the sealed portal
+and west wall, then selected inside Research; Containment lights selected south of
+the seal. No obvious new wall/door spill observed in the inspected final views.
+Accepted source eligibility is still **not per-pixel shadow occlusion**; static
+surface pools do not dynamically light moving actors. No exposure/fog/shadow-budget
+increase was used. Final performance/debug overlays are hidden; debug fill OFF.
+
+### Final selected regression results
+
+**32 successful suite executions** in Firefox/Edge batches, all matching current
+product hashes. Pure progression-state is Node-based. Logs and precise elapsed
+values are indexed; elapsed suite seconds are not loading or FPS measurements.
+
+| Suite | Firefox wall seconds | Edge wall seconds |
+|---|---:|---:|
+| E0 controlled doorway/turret/legacy/Continue |53.818|38.503|
+| Unaccelerated turret-enabled90s operation |123.018|112.475|
+| Enclosure/all six doors |120.823|119.498|
+| Native playthrough/sprint/FOLLOW/pursuit |78.060|66.347|
+| Facility/cover regression |54.579|36.414|
+| Exact containment/death/Continue/migration |41.120|35.841|
+| E1 commands/resources/stats/completion/Endless |133.967|55.548|
+| M2 route/return/checkpoint migration |247.083|230.732|
+| Five Campaign seeds/nine Endless cases/archive parity |379.500|129.042|
+| Combat/inventory/persistence/Endless suite |170.804|100.046|
+| Pure progression state |.180|.104|
+| E2 player-eye/live scene profiling |220.175|212.923|
+| Transitions/prewarming |40.951|33.005|
+| Native traversal/Campaign-Endless combat/restart |154.220|149.855|
+| Persistent exterior lighting |38.858|38.226|
+| Live wall/closed-door slot eligibility |20.415|8.704|
+
+Earlier bootstrap timeouts, fixed-wall-time checkpoint sampling, short-key input,
+outside-interaction-radius test arrival, and interrupted partial outputs remain
+historical. Assertions were preserved; helpers now observe actual persisted state/
+processed input. Final bounded retries passed; no continuing environmental blocker.
+No repeated retry is counted as a new independent passing suite.
+
+### E3 — candidate criteria, changes and stop
+
+- [x] Correct red doorway identified from actual geometry; existing panels seal.
+- [x] Approved staged gather and one-time legacy recovery preserve safe passage.
+- [x] Activated turret demonstrably aims/fires/damages; obstruction/friendly/idle rules.
+- [x] Accepted counts, durations, glass,32 luminaires/eight slots retained.
+- [x] Integration, persistence, stats, squad modes and Endless verified both browsers.
+- [x] Current-source first/warm/live measurements and normal gameplay evidence indexed.
+- [x] User CP3-E acceptance granted (from the E0–E3 validation report and user review),
+  with one known visual qualification recorded below and deferred to CP4.
+
+Exact product changes: `chargefront.html` (portal flags/interlock/recovery and HUD,
+turret3D hitscan/pooled feedback/cooldown persistence) and `src/world/facility.js`
+(existing turret parts reparented into yaw/pitch/muzzle, one-time isolated RNG finalizer).
+Tests changed: native key-hold helper in `tests/combat-squad.mjs`, real checkpoint
+predicate in `tests/m2-progression.mjs`, optional turret-enabled capture/assertions
+in `tests/sample-lockdown-live.mjs`. New tests: `tests/facility-e0.mjs`,
+`tests/facility-e-integration.mjs`, `tests/facility-e2.mjs`,
+`tests/facility-light-eligibility-e.mjs`. Documentation/evidence: this distinct
+record, `CP3-E-PROGRESS.md`, `_playtest/m42/cp3e-20261015/`.
+
+Current HTML SHA256 `4ed81746f846744f4f70b8706df0794fac3117a465eeba1c5d993aab5b531be3`;
+facility `7cbf00aa9691aa2a0c361f58a7f112ab6c3f84b08a6f14338b953662f234996b`.
+Earlier checkpoints, partial/failure outputs and accepted source snapshots preserved.
+New evidence is local/untracked pending a later authorized checkpoint; its helpers
+need Playwright/browser provisioning and the app's existing external runtime CDNs.
+
+**Accepted with the stated legacy/timing qualifications and the deferred Z-fighting
+qualification. Remain on `milestone-4.2`, HEAD `b9e446c`. Credits.txt and unrelated
+work preserved. No push, merge, rebase, new branch or Milestone4.3 implementation.
+STOP HERE.**
+
+Final handoff check PASS: HTML module syntax,16 JS/test/helper files,122 links,
+32 selected pass receipts/product hashes, original Credits bytes, conflict-marker
+check, clean diff, unchanged branch/HEAD and empty staging index. Receipt is
+`_playtest/m42/cp3e-20261015/final-checks.json`.
+
+### CP3-E acceptance decision
+
+- CP3-E accepted with one known visual qualification (facility interior Z-fighting).
+- Safe Staged Seal and the approved legacy one-time recovery are retained.
+- Turret corrections are retained.
+- Existing E0–E3 validation evidence is preserved; nothing is described as
+  visually defect-free and no unreported user testing is claimed.
+- No further CP3-E implementation changes are requested.
+- The Z-fighting defect is deferred to CP4-A/CP4-B; it is not resolved in CP3-E.
+
+### Deferred work (CP4)
+
+**CP4-A** — Inspect the facility interior for visible Z-fighting, identifying the
+affected models, geometry and overlapping surfaces.
+
+**CP4-B** — Apply targeted geometry corrections without redesigning accepted
+interiors, affecting functional collision, or globally changing material depth
+settings.
+
+These entries are recorded only; CP4 implementation has not started.

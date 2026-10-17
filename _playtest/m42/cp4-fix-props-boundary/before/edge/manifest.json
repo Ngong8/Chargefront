@@ -1,0 +1,8702 @@
+{
+  "stage": "before",
+  "browser": "edge",
+  "hashes": {
+    "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+    "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30",
+    "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+    "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+  },
+  "coverage": [
+    {
+      "id": "m1-checkpoint",
+      "requested": [
+        430,
+        205
+      ],
+      "target": [
+        437,
+        229,
+        5
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        430,
+        205
+      ],
+      "camera": [
+        430,
+        205,
+        3.8815718841552735
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m1-depot",
+      "requested": [
+        430,
+        265
+      ],
+      "target": [
+        425,
+        269,
+        4
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        430,
+        265
+      ],
+      "camera": [
+        430,
+        265,
+        4.829043502807617
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m1-mid-approach",
+      "requested": [
+        420,
+        390
+      ],
+      "target": [
+        420,
+        440,
+        4
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        420,
+        390
+      ],
+      "camera": [
+        420,
+        390,
+        6.281202430725098
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m1-roadblock",
+      "requested": [
+        407,
+        423
+      ],
+      "target": [
+        414,
+        433,
+        3
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        407,
+        423
+      ],
+      "camera": [
+        407,
+        423,
+        5.8942341995239245
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "front-west",
+      "requested": [
+        314,
+        570
+      ],
+      "target": [
+        335,
+        601,
+        3
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        314,
+        570
+      ],
+      "camera": [
+        314,
+        570,
+        4.231597633361814
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "front-east",
+      "requested": [
+        421,
+        583
+      ],
+      "target": [
+        400,
+        606,
+        3
+      ],
+      "mission": "dead_signal",
+      "phase": "DEPLOY",
+      "player": [
+        421,
+        583
+      ],
+      "camera": [
+        421,
+        583,
+        2.984821743965149
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "alpha-south",
+      "requested": [
+        205,
+        550
+      ],
+      "target": [
+        205,
+        580,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        205,
+        550
+      ],
+      "camera": [
+        205,
+        550,
+        4.619324083328247
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "alpha-east",
+      "requested": [
+        230,
+        574
+      ],
+      "target": [
+        199,
+        580,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        230,
+        574
+      ],
+      "camera": [
+        230,
+        574,
+        4.8448449325561525
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "alpha-dock",
+      "requested": [
+        219,
+        603
+      ],
+      "target": [
+        205,
+        600,
+        2
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        219,
+        603
+      ],
+      "camera": [
+        219,
+        603,
+        5.959109706878667
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "alpha-west",
+      "requested": [
+        181,
+        565
+      ],
+      "target": [
+        200,
+        580,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        181,
+        565
+      ],
+      "camera": [
+        181,
+        565,
+        4.763497657775877
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "alpha-beta-route",
+      "requested": [
+        199,
+        637
+      ],
+      "target": [
+        215,
+        658,
+        15
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        199,
+        637
+      ],
+      "camera": [
+        199,
+        637,
+        13.285376091003425
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-south",
+      "requested": [
+        245,
+        716
+      ],
+      "target": [
+        245,
+        748,
+        22
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        245,
+        716
+      ],
+      "camera": [
+        245,
+        716,
+        19.01978446960449
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-platform",
+      "requested": [
+        249,
+        752
+      ],
+      "target": [
+        260,
+        761,
+        17
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        249,
+        752
+      ],
+      "camera": [
+        249,
+        752,
+        18.60158836364746
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-east",
+      "requested": [
+        274,
+        753
+      ],
+      "target": [
+        258,
+        761,
+        19
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        274,
+        753
+      ],
+      "camera": [
+        274,
+        753,
+        13.904029388427734
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-north",
+      "requested": [
+        245,
+        777
+      ],
+      "target": [
+        245,
+        752,
+        20
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        245,
+        777
+      ],
+      "camera": [
+        245,
+        777,
+        21.485396499633787
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-west",
+      "requested": [
+        221,
+        747
+      ],
+      "target": [
+        240,
+        749,
+        22
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        221,
+        747
+      ],
+      "camera": [
+        221,
+        747,
+        22.18442451477051
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "beta-route-tower",
+      "requested": [
+        225,
+        686
+      ],
+      "target": [
+        222,
+        704,
+        31
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        225,
+        686
+      ],
+      "camera": [
+        225,
+        686,
+        21.279930801391604
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "west-bypass",
+      "requested": [
+        285,
+        665
+      ],
+      "target": [
+        294,
+        620,
+        7
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        285,
+        665
+      ],
+      "camera": [
+        285,
+        665,
+        9.105214710235597
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "south-bypass",
+      "requested": [
+        358,
+        575
+      ],
+      "target": [
+        450,
+        570,
+        2
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        358,
+        575
+      ],
+      "camera": [
+        358,
+        575,
+        1.6409143113344908
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "east-bypass",
+      "requested": [
+        477,
+        577
+      ],
+      "target": [
+        505,
+        590,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        477,
+        577
+      ],
+      "camera": [
+        477,
+        577,
+        3.340115089416505
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "gamma-west",
+      "requested": [
+        544,
+        581
+      ],
+      "target": [
+        568,
+        595,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        544,
+        581
+      ],
+      "camera": [
+        544,
+        581,
+        2.9275694799423206
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "gamma-south",
+      "requested": [
+        578,
+        558
+      ],
+      "target": [
+        579,
+        575,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        578,
+        558
+      ],
+      "camera": [
+        578,
+        558,
+        1.62
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "gamma-north",
+      "requested": [
+        576,
+        611
+      ],
+      "target": [
+        573,
+        602,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        576,
+        611
+      ],
+      "camera": [
+        576,
+        611,
+        3.1282598209381134
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "gamma-east",
+      "requested": [
+        604,
+        590
+      ],
+      "target": [
+        593,
+        594,
+        4
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        604,
+        590
+      ],
+      "camera": [
+        604,
+        590,
+        1.62
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "gamma-return",
+      "requested": [
+        526,
+        608
+      ],
+      "target": [
+        455,
+        600,
+        3
+      ],
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        526,
+        608
+      ],
+      "camera": [
+        526,
+        608,
+        4.287800045013428
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "service-approach",
+      "requested": [
+        464,
+        717
+      ],
+      "target": [
+        446,
+        743,
+        3
+      ],
+      "mission": "sample_zero",
+      "phase": "M3_ENTER_LAB",
+      "player": [
+        464,
+        717
+      ],
+      "camera": [
+        464,
+        717,
+        6.0446003150939935
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "west-yard",
+      "requested": [
+        306,
+        735
+      ],
+      "target": [
+        303,
+        780,
+        3
+      ],
+      "mission": "sample_zero",
+      "phase": "M3_ENTER_LAB",
+      "player": [
+        306,
+        735
+      ],
+      "camera": [
+        306,
+        735,
+        5.474255008697506
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "backyard-west",
+      "requested": [
+        322,
+        795
+      ],
+      "target": [
+        355,
+        800,
+        2
+      ],
+      "mission": "sample_zero",
+      "phase": "M3_ENTER_LAB",
+      "player": [
+        322,
+        795
+      ],
+      "camera": [
+        322,
+        795,
+        3.7578581523895136
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "backyard-center",
+      "requested": [
+        370,
+        798
+      ],
+      "target": [
+        370,
+        840,
+        6
+      ],
+      "mission": "sample_zero",
+      "phase": "M3_OVERRIDE",
+      "player": [
+        370,
+        798
+      ],
+      "camera": [
+        370,
+        798,
+        1.7163103115558658
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "backyard-east",
+      "requested": [
+        422,
+        794
+      ],
+      "target": [
+        388,
+        815,
+        3
+      ],
+      "mission": "sample_zero",
+      "phase": "M3_OVERRIDE",
+      "player": [
+        422,
+        794
+      ],
+      "camera": [
+        422,
+        794,
+        4.3742690753936655
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-yard-debris",
+      "requested": [
+        438,
+        689
+      ],
+      "target": [
+        414,
+        686,
+        3
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        438,
+        689
+      ],
+      "camera": [
+        438,
+        689,
+        4.410127897262572
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-front-debris",
+      "requested": [
+        404,
+        593
+      ],
+      "target": [
+        400,
+        606,
+        3
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        404,
+        593
+      ],
+      "camera": [
+        404,
+        593,
+        2.5522634577751155
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    }
+  ],
+  "errors": [],
+  "world": {
+    "objects": [
+      {
+        "owner": "route",
+        "index": 0,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.3,
+          "height": 4.6,
+          "depth": 1.3,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          437.4458940209751,
+          221.04828664143955,
+          4.873424518631046
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          436.795894044817,
+          220.3982866652814,
+          2.5734245663147615
+        ],
+        "max": [
+          438.09589399713326,
+          221.6982866175977,
+          7.17342447094733
+        ],
+        "bottomGap": [
+          -0.019820880162865873,
+          0.021240782148299164
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 1,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.3,
+          "height": 4.6,
+          "depth": 1.3,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          436.82041291716257,
+          228.03175092421304,
+          5.014790686312209
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          436.17041294100443,
+          227.3817509480549,
+          2.714790733995925
+        ],
+        "max": [
+          437.4704128933207,
+          228.68175090037118,
+          7.3147906386284935
+        ],
+        "bottomGap": [
+          -0.0060292925028861966,
+          0.008145117697420101
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 2,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 7.4,
+          "height": 3,
+          "depth": 0.35,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          437.1331534690688,
+          224.54001878282628,
+          7.20184382883876
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          433.4331534213851,
+          224.3650187858065,
+          5.70184382883876
+        ],
+        "max": [
+          440.83315351675253,
+          224.71501877984605,
+          8.70184382883876
+        ],
+        "bottomGap": [
+          3.023471756532111,
+          3.089803332486196
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 3,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5.6,
+          "height": 0.5,
+          "depth": 0.18,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          437.1331534690688,
+          224.54001878282628,
+          8.401843828838759
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          434.33315351675253,
+          224.45001877925,
+          8.151843828838759
+        ],
+        "max": [
+          439.9331534213851,
+          224.63001878640256,
+          8.651843828838759
+        ],
+        "bottomGap": [
+          5.479715863638935,
+          5.528258500881638
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 4,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2,
+          "height": 1.05,
+          "depth": 1.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          435.1374173697905,
+          224.37558818337044,
+          3.1874562932520605
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          434.1374173697905,
+          223.4755882072123,
+          2.662456317093918
+        ],
+        "max": [
+          436.1374173697905,
+          225.27558815952858,
+          3.712456269410203
+        ],
+        "bottomGap": [
+          -0.023861485879414168,
+          0.025958198918351716
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 5,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6.5,
+          "height": 1.15,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          417.77829420167194,
+          448.53700117885353,
+          4.281240627382401
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.017556570516899225,
+          "XYZ"
+        ],
+        "min": [
+          414.5187005584628,
+          448.28700117885353,
+          3.6492733310746504
+        ],
+        "max": [
+          421.0378878448811,
+          448.78700117885353,
+          4.913207923690151
+        ],
+        "bottomGap": [
+          -0.02341938575936453,
+          -0.022582013487128183
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 6,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6.05,
+          "height": 0.16,
+          "depth": 0.14,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          417.77829420167194,
+          448.53700117885353,
+          4.366240627382401
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.017556570516899225,
+          "XYZ"
+        ],
+        "min": [
+          414.75235584355397,
+          448.4670011785555,
+          4.233147058957067
+        ],
+        "max": [
+          420.8042325597899,
+          448.60700117915155,
+          4.499334195807734
+        ],
+        "bottomGap": [
+          0.5586606884736591,
+          0.5587945366645366
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 7,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 1.05,
+          "depth": 1.9,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          418.50175035434546,
+          453.2355766220234,
+          4.2220976013859755
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          417.4017503305036,
+          452.28557663394434,
+          3.6970976252278334
+        ],
+        "max": [
+          419.6017503781873,
+          454.1855766101025,
+          4.7470975775441175
+        ],
+        "bottomGap": [
+          -0.012484810722780182,
+          0.012704410762598428
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 8,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2,
+          "height": 1.5,
+          "depth": 1.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          420.3142802852371,
+          444.82637123449587,
+          4.427792599388814
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          419.3142802852371,
+          443.9263712583377,
+          3.6777925993888143
+        ],
+        "max": [
+          421.3142802852371,
+          445.726371210654,
+          5.177792599388814
+        ],
+        "bottomGap": [
+          -0.014998133097578581,
+          0.011637755222196677
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 9,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3.4,
+          "height": 2.5,
+          "depth": 2.3,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          210.0708085879523,
+          693.9490816968209,
+          22.912979056344533
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          208.3708085402686,
+          692.7990817206628,
+          21.662979056344533
+        ],
+        "max": [
+          211.77080863563603,
+          695.0990816729791,
+          24.162979056344533
+        ],
+        "bottomGap": [
+          -0.31853889302720617,
+          0.3353723307724259
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 10,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.8,
+          "height": 0.2,
+          "depth": 0.12,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          210.0708085879523,
+          692.749081696821,
+          21.667241446481256
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          208.67080861179417,
+          692.6890816981621,
+          21.56724144499114
+        ],
+        "max": [
+          211.47080856411046,
+          692.8090816954799,
+          21.767241447971372
+        ],
+        "bottomGap": [
+          -0.19290607630616918,
+          0.20449496317356264
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 11,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.8,
+          "height": 1.05,
+          "depth": 1.6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          210.37253722370187,
+          697.7999205444447,
+          22.21442293687775
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          209.47253724754373,
+          696.9999205325238,
+          21.689422960719607
+        ],
+        "max": [
+          211.27253719986,
+          698.5999205563656,
+          22.73942291303589
+        ],
+        "bottomGap": [
+          -0.2804523141264852,
+          0.0743590148581248
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 12,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6.5,
+          "height": 1.15,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          365.018398985275,
+          554.630754329038,
+          1.0388784608065238
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.07098828181624413,
+          "XYZ"
+        ],
+        "min": [
+          361.73580048119896,
+          554.380754329038,
+          0.23480848128659337
+        ],
+        "max": [
+          368.300997489351,
+          554.880754329038,
+          1.8429484403264542
+        ],
+        "bottomGap": [
+          -0.23311775640185983,
+          -0.21618873790439397
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 13,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6.05,
+          "height": 0.16,
+          "depth": 0.14,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          365.018398985275,
+          554.630754329038,
+          1.1238784608065238
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.07098828181624413,
+          "XYZ"
+        ],
+        "min": [
+          361.99534339196754,
+          554.56075432874,
+          0.8295207041689636
+        ],
+        "max": [
+          368.04145457858243,
+          554.7007543293361,
+          1.418236217444084
+        ],
+        "bottomGap": [
+          0.36790741157846646,
+          0.3726475367779377
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 14,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 1.05,
+          "depth": 1.9,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          369.23736475085633,
+          552.4397892748091,
+          1.0883218364136482
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          368.13736472701447,
+          551.48978928673,
+          0.5633218602555059
+        ],
+        "max": [
+          370.3373647746982,
+          553.3897892628881,
+          1.6133218125717905
+        ],
+        "bottomGap": [
+          -0.042810880625909986,
+          0.040261682754818784
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 15,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2,
+          "height": 1.5,
+          "depth": 1.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          360.6907903244426,
+          553.4175753320683,
+          1.2518377726295418
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          359.6907903244426,
+          552.5175753559101,
+          0.5018377726295415
+        ],
+        "max": [
+          361.6907903244426,
+          554.3175753082264,
+          2.0018377726295418
+        ],
+        "bottomGap": [
+          -0.03286354319854157,
+          0.03162633338312948
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 16,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 1.5,
+          "radiusBottom": 1.5,
+          "height": 3.8,
+          "radialSegments": 12,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          426.98483085590806,
+          251.8323807371393,
+          4.965690268449544
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          425.48483085590806,
+          250.3323807371393,
+          3.0656902922914013
+        ],
+        "max": [
+          428.48483085590806,
+          253.3323807371393,
+          6.865690244607686
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "route",
+        "index": 17,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 1.5,
+          "radiusBottom": 1.5,
+          "height": 3.8,
+          "radialSegments": 12,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          431.784830855908,
+          251.8323807371393,
+          4.9430250372434585
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          430.284830855908,
+          250.3323807371393,
+          3.043025061085316
+        ],
+        "max": [
+          433.284830855908,
+          253.3323807371393,
+          6.843025013401601
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "route",
+        "index": 18,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6,
+          "height": 1.1,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          429.38483085590804,
+          255.03238073713928,
+          3.614004576347856
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          426.38483085590804,
+          254.78238073713928,
+          3.064004564426927
+        ],
+        "max": [
+          432.38483085590804,
+          255.28238073713928,
+          4.164004588268785
+        ],
+        "bottomGap": [
+          -0.014475462209486256,
+          0.01670405860985058
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 19,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5,
+          "height": 0.16,
+          "depth": 0.14,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          429.38483085590804,
+          255.03238073713928,
+          3.744004576347856
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          426.88483085590804,
+          254.96238073684125,
+          3.6640045781359953
+        ],
+        "max": [
+          431.88483085590804,
+          255.1023807374373,
+          3.8240045745597167
+        ],
+        "bottomGap": [
+          0.5884406262509088,
+          0.6134741127099441
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 20,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.1,
+          "height": 4.2,
+          "depth": 1.1,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          429.38483085590804,
+          248.43238073713928,
+          5.145603638550909
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          428.8348308439871,
+          247.88238072521835,
+          3.045603733918341
+        ],
+        "max": [
+          429.93483086782896,
+          248.9823807490602,
+          7.245603543183478
+        ],
+        "bottomGap": [
+          -0.00426684997979665,
+          0.004249029251639502
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 21,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.7,
+          "height": 0.6,
+          "depth": 0.7,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          429.38483085590804,
+          248.43238073713928,
+          7.6456036385509085
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          429.0348308618685,
+          248.08238074309975,
+          7.34560362662998
+        ],
+        "max": [
+          429.73483084994757,
+          248.78238073117882,
+          7.9456036504718375
+        ],
+        "bottomGap": [
+          4.297296121166499,
+          4.302703854991643
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 22,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.7,
+          "radiusBottom": 1.5,
+          "height": 11,
+          "radialSegments": 6,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          224.7177133693637,
+          740.4651687604671,
+          25.66758253729139
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          223.4186753168048,
+          738.9651687604671,
+          20.16758253729139
+        ],
+        "max": [
+          226.0167514219226,
+          741.9651687604671,
+          31.16758253729139
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "route",
+        "index": 23,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3.2,
+          "height": 2.2,
+          "depth": 3.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          224.7177133693637,
+          740.4651687604671,
+          30.36758253729139
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          223.11771334552185,
+          738.8651687366253,
+          29.267582513449533
+        ],
+        "max": [
+          226.31771339320557,
+          742.065168784309,
+          31.46758256113325
+        ],
+        "bottomGap": [
+          8.855784822969326,
+          9.300050217691734
+        ]
+      },
+      {
+        "owner": "route",
+        "index": 24,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 0.3,
+          "depth": 2.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          224.7177133693637,
+          740.4651687604671,
+          31.66758253729139
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          223.61771334552185,
+          739.3651687366253,
+          31.517582531330927
+        ],
+        "max": [
+          225.81771339320557,
+          741.565168784309,
+          31.817582543251856
+        ],
+        "bottomGap": [
+          11.183307500152473,
+          11.489861179176643
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 1,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 3.2,
+          "radiusBottom": 3.6,
+          "height": 0.25,
+          "radialSegments": 10,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          205,
+          575,
+          2.1
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          201.57619643211365,
+          571.4000000953674,
+          1.9749999999999992
+        ],
+        "max": [
+          208.42380356788635,
+          578.5999999046326,
+          2.225000000000001
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 3,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 38,
+          "height": 0.08,
+          "depth": 0.35,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          205,
+          566,
+          2.208040609359741
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          186,
+          565.8250000029802,
+          2.1680406102538106
+        ],
+        "max": [
+          224,
+          566.1749999970198,
+          2.248040608465671
+        ],
+        "bottomGap": [
+          -0.6781429734234314,
+          -0.6355073181334587
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 4,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.35,
+          "height": 0.08,
+          "depth": 20,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          215,
+          582,
+          2.3987777614593515
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          214.82500000298023,
+          572,
+          2.358777762353419
+        ],
+        "max": [
+          215.17499999701977,
+          592,
+          2.438777760565284
+        ],
+        "bottomGap": [
+          -0.5691444672728716,
+          0.12810876924923376
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 5,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 10,
+          "height": 3.4,
+          "depth": 6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          190,
+          588,
+          4.637110424041746
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          185,
+          585,
+          2.937110376358029
+        ],
+        "max": [
+          195,
+          591,
+          6.337110471725462
+        ],
+        "bottomGap": [
+          -0.5778957843780561,
+          0.4674582004547121
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 6,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4.2,
+          "height": 1.5,
+          "depth": 2.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          195,
+          567,
+          3.077203941345215
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          192.90000009536743,
+          565.7999999523163,
+          2.327203941345215
+        ],
+        "max": [
+          197.09999990463257,
+          568.2000000476837,
+          3.827203941345215
+        ],
+        "bottomGap": [
+          -0.12056004260584707,
+          0.10229926856725235
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 7,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4.2,
+          "height": 1.5,
+          "depth": 2.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          218,
+          585,
+          3.376891565322875
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          215.90000009536743,
+          583.7999999523163,
+          2.6268915653228744
+        ],
+        "max": [
+          220.09999990463257,
+          586.2000000476837,
+          4.126891565322875
+        ],
+        "bottomGap": [
+          -0.1987019720606229,
+          0.15356228647994952
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 8,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3.2,
+          "height": 1.15,
+          "depth": 3.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          221,
+          569,
+          3.1681652545928953
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          219.39999997615814,
+          567.3999999761581,
+          2.593165266513824
+        ],
+        "max": [
+          222.60000002384186,
+          570.6000000238419,
+          3.743165242671967
+        ],
+        "bottomGap": [
+          -0.12334815004110133,
+          0.11827159317106117
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 12,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 2.2,
+          "radiusBottom": 2.5,
+          "height": 0.28,
+          "radialSegments": 8,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          205,
+          600,
+          3.8397220516204835
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          202.5,
+          597.5,
+          3.6997220510244366
+        ],
+        "max": [
+          207.5,
+          602.5,
+          3.9797220522165304
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 13,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.35,
+          "height": 1.4,
+          "depth": 2.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          203.35,
+          600,
+          4.4044446277618405
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          203.17500000298023,
+          598.6000000238419,
+          3.704444639682769
+        ],
+        "max": [
+          203.52499999701976,
+          601.3999999761581,
+          5.104444615840912
+        ],
+        "bottomGap": [
+          -0.18157708289812247,
+          0.1865796462709568
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 14,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.35,
+          "height": 1.4,
+          "depth": 2.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          206.65,
+          600,
+          4.359415717124939
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          206.47500000298024,
+          598.6000000238419,
+          3.6594157290458678
+        ],
+        "max": [
+          206.82499999701977,
+          601.3999999761581,
+          5.05941570520401
+        ],
+        "bottomGap": [
+          -0.2002732433544976,
+          0.1703975796281476
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 15,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.8,
+          "height": 0.2,
+          "depth": 0.16,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          205,
+          601.8,
+          4.003021993637084
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          204.10000002384186,
+          601.7200000017881,
+          3.903021992146968
+        ],
+        "max": [
+          205.89999997615814,
+          601.8799999982118,
+          4.1030219951272
+        ],
+        "bottomGap": [
+          -0.020476513317378764,
+          0.0066718600191086885
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 16,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.16,
+          "radiusBottom": 0.16,
+          "height": 20.04561551094725,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          205,
+          587.5,
+          2.970015435218809
+        ],
+        "rotation": [
+          0.0674751660984458,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          204.8440115302801,
+          577.4892118452515,
+          2.1504108707623657
+        ],
+        "max": [
+          205.1559884697199,
+          597.5097198238002,
+          3.805428914031502
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 17,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.12,
+          "radiusBottom": 0.12,
+          "height": 13.617319816948683,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          196.5,
+          581,
+          2.6819442939758296
+        ],
+        "rotation": [
+          0.04826667867401325,
+          0.024546093125517383,
+          0.940814480714732,
+          "XYZ"
+        ],
+        "min": [
+          190.9284439750231,
+          576.8997069180053,
+          2.2427102228486278
+        ],
+        "max": [
+          202.07184769496791,
+          585.0997198889513,
+          3.133044685152258
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 18,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.32,
+          "height": 3.8,
+          "depth": 0.32,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          198,
+          590,
+          4.5867243289947535
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          197.84000000357628,
+          589.8400000035763,
+          2.6867243528366114
+        ],
+        "max": [
+          198.15999999642372,
+          590.1599999964237,
+          6.4867243051528956
+        ],
+        "bottomGap": [
+          -0.0188102784720674,
+          0.016286644571573028
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 19,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.55,
+          "height": 0.16,
+          "depth": 0.55,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          198,
+          590,
+          6.516724328994754
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          197.72499999403954,
+          589.7249999940395,
+          6.436724330782893
+        ],
+        "max": [
+          198.27500000596046,
+          590.2750000059605,
+          6.596724327206615
+        ],
+        "bottomGap": [
+          3.7176952420678955,
+          3.777992632399746
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 20,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.32,
+          "height": 3.8,
+          "depth": 0.32,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          212,
+          590,
+          4.608293247222904
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          211.84000000357628,
+          589.8400000035763,
+          2.708293271064762
+        ],
+        "max": [
+          212.15999999642372,
+          590.1599999964237,
+          6.508293223381046
+        ],
+        "bottomGap": [
+          -0.01963553480127711,
+          0.017093117331868246
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 21,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.55,
+          "height": 0.16,
+          "depth": 0.55,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          212,
+          590,
+          6.538293247222905
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          211.72499999403954,
+          589.7249999940395,
+          6.458293249011044
+        ],
+        "max": [
+          212.27500000596046,
+          590.2750000059605,
+          6.618293245434765
+        ],
+        "bottomGap": [
+          3.7162513838844187,
+          3.7793787575175286
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 22,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 1.5,
+          "depth": 1.7,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          197,
+          580,
+          2.9530363082885747
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          195.89999997615814,
+          579.1499999761581,
+          2.203036308288574
+        ],
+        "max": [
+          198.10000002384186,
+          580.8500000238419,
+          3.703036308288575
+        ],
+        "bottomGap": [
+          -0.06849349663823423,
+          0.05141373743969302
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 23,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.2,
+          "height": 0.18,
+          "depth": 0.12,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          197,
+          579.05,
+          2.275429821014404
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          196.39999997615814,
+          578.9900000013411,
+          2.1854298174381253
+        ],
+        "max": [
+          197.60000002384186,
+          579.1099999986589,
+          2.3654298245906826
+        ],
+        "bottomGap": [
+          -0.02395568150295846,
+          0.022803543968149764
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 24,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 1.5,
+          "depth": 1.7,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          201.4,
+          580,
+          2.840630359649658
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          200.29999997615815,
+          579.1499999761581,
+          2.0906303596496576
+        ],
+        "max": [
+          202.50000002384186,
+          580.8500000238419,
+          3.5906303596496585
+        ],
+        "bottomGap": [
+          -0.044254676038238294,
+          0.033439503267178594
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 25,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.2,
+          "height": 0.18,
+          "depth": 0.12,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          201.4,
+          579.05,
+          2.1637843704223627
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          200.79999997615815,
+          578.9900000013411,
+          2.073784366846084
+        ],
+        "max": [
+          202.00000002384186,
+          579.1099999986589,
+          2.2537843739986414
+        ],
+        "bottomGap": [
+          -0.011166919847507284,
+          0.011073723451336726
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 26,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.2,
+          "height": 1.5,
+          "depth": 1.7,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          205.8,
+          580,
+          2.813007106781006
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          204.69999997615815,
+          579.1499999761581,
+          2.063007106781006
+        ],
+        "max": [
+          206.90000002384187,
+          580.8500000238419,
+          3.563007106781006
+        ],
+        "bottomGap": [
+          -0.03266490070009187,
+          0.018078289317715157
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 27,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.2,
+          "height": 0.18,
+          "depth": 0.12,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          205.8,
+          579.05,
+          2.1363035392761227
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          205.19999997615815,
+          578.9900000013411,
+          2.046303535699844
+        ],
+        "max": [
+          206.40000002384187,
+          579.1099999986589,
+          2.2263035428524014
+        ],
+        "bottomGap": [
+          -0.00466431796614053,
+          0.004664310813583761
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 28,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3.6,
+          "height": 2.6,
+          "depth": 2.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          211.5,
+          580,
+          3.461870098114014
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          209.70000004768372,
+          578.7999999523163,
+          2.16187014579773
+        ],
+        "max": [
+          213.29999995231628,
+          581.2000000476837,
+          4.761870050430298
+        ],
+        "bottomGap": [
+          -0.1010055441927995,
+          0.07136497502315242
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 29,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.13,
+          "radiusBottom": 0.13,
+          "height": 12.871092364957333,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          200.4,
+          576.5,
+          2.4620935583114623
+        ],
+        "rotation": [
+          0.0122924545823244,
+          0.0226078111970821,
+          2.145590720717775,
+          "XYZ"
+        ],
+        "min": [
+          194.92846559461532,
+          572.8920555614858,
+          2.263054846903999
+        ],
+        "max": [
+          205.87182543455864,
+          580.1077862293326,
+          2.674002051888595
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 30,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.11,
+          "radiusBottom": 0.11,
+          "height": 6.184670249564084,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          212.25,
+          577,
+          2.495826592445373
+        ],
+        "rotation": [
+          -0.001954597702556137,
+          0.015875044269216203,
+          -2.8965829624016735,
+          "XYZ"
+        ],
+        "min": [
+          211.39440054736164,
+          573.9737962418121,
+          2.3889867902127624
+        ],
+        "max": [
+          213.105772379008,
+          580.0262250477584,
+          2.6135584280715265
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-1",
+        "index": 31,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6,
+          "height": 1.15,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          200,
+          567,
+          2.758508110046387
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          197,
+          566.75,
+          2.183508121967316
+        ],
+        "max": [
+          203,
+          567.25,
+          3.333508098125458
+        ],
+        "bottomGap": [
+          -0.08472036123275606,
+          0.0481269717216497
+        ]
+      },
+      {
+        "owner": "relay-1",
+        "index": 32,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5,
+          "height": 0.16,
+          "depth": 0.12,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          200,
+          567,
+          2.913508110046387
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          197.5,
+          566.9400000013411,
+          2.833508111834526
+        ],
+        "max": [
+          202.5,
+          567.0599999986589,
+          2.9935081082582475
+        ],
+        "bottomGap": [
+          0.5873233145907517,
+          0.689167886569241
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 1,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 3.2,
+          "radiusBottom": 3.6,
+          "height": 0.25,
+          "radialSegments": 10,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          245,
+          748,
+          17.515580368041995
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          241.57619643211365,
+          744.4000000953674,
+          17.390580368041995
+        ],
+        "max": [
+          248.42380356788635,
+          751.5999999046326,
+          17.640580368041995
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 3,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 42,
+          "height": 0.08,
+          "depth": 0.32,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          245,
+          748,
+          17.455580368041993
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          224,
+          747.8400000035763,
+          17.415580368936062
+        ],
+        "max": [
+          266,
+          748.1599999964237,
+          17.495580367147923
+        ],
+        "bottomGap": [
+          -2.831125456838464,
+          3.741629135795133
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 4,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.32,
+          "height": 0.08,
+          "depth": 24,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          245,
+          736,
+          17.197977676391602
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          244.84000000357628,
+          724,
+          17.15797767728567
+        ],
+        "max": [
+          245.15999999642372,
+          748,
+          17.237977675497536
+        ],
+        "bottomGap": [
+          -0.28134585428812287,
+          -0.08834269685651819
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 5,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.45,
+          "radiusBottom": 1.1,
+          "height": 22,
+          "radialSegments": 6,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          232,
+          756,
+          30.624320220947265
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          231.04737204313278,
+          754.8999999761581,
+          19.624320220947265
+        ],
+        "max": [
+          232.95262795686722,
+          757.1000000238419,
+          41.62432022094727
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 6,
+        "name": "",
+        "type": "SphereGeometry",
+        "parameters": {
+          "radius": 3.2,
+          "widthSegments": 14,
+          "heightSegments": 7,
+          "phiStart": 0,
+          "phiLength": 6.283185307179586,
+          "thetaStart": 0,
+          "thetaLength": 1.5707963267948966
+        },
+        "position": [
+          232,
+          756,
+          40.62432022094727
+        ],
+        "rotation": [
+          0.7,
+          0.25,
+          -0.45,
+          "XYZ"
+        ],
+        "min": [
+          228.97659294858036,
+          754.8104730996595,
+          38.48881589457643
+        ],
+        "max": [
+          236.37202630036802,
+          759.6152088912323,
+          44.35271290046942
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 7,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5,
+          "height": 1.35,
+          "depth": 2.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          258,
+          758,
+          16.647891998291016
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          255.5,
+          756.8999999761581,
+          15.972891986370087
+        ],
+        "max": [
+          260.5,
+          759.1000000238419,
+          17.322892010211945
+        ],
+        "bottomGap": [
+          -0.5103012225353218,
+          0.5377935311216309
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 8,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4,
+          "height": 1.35,
+          "depth": 2.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          259,
+          739,
+          15.374746322631838
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          257,
+          737.8999999761581,
+          14.699746310710909
+        ],
+        "max": [
+          261,
+          740.1000000238419,
+          16.04974633455277
+        ],
+        "bottomGap": [
+          -0.4473855335153534,
+          0.4742984287097425
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 9,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6,
+          "height": 1.35,
+          "depth": 2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          241,
+          733,
+          18.486888885498043
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          238,
+          732,
+          17.811888873577114
+        ],
+        "max": [
+          244,
+          734,
+          19.161888897418972
+        ],
+        "bottomGap": [
+          -0.464662182331093,
+          0.4832363009452756
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 10,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4,
+          "height": 1.35,
+          "depth": 2.2,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          225,
+          741,
+          20.800085830688477
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          223,
+          739.8999999761581,
+          20.12508581876755
+        ],
+        "max": [
+          227,
+          742.1000000238419,
+          21.475085842609406
+        ],
+        "bottomGap": [
+          -0.29052079469038006,
+          0.23694189797015497
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 12,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 15,
+          "height": 0.24,
+          "depth": 6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          248,
+          761,
+          17.89326698303223
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          240.5,
+          758,
+          17.77326698571444
+        ],
+        "max": [
+          255.5,
+          764,
+          18.01326698035002
+        ],
+        "bottomGap": [
+          -1.3649250003695492,
+          1.3878067043423705
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 13,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.13,
+          "radiusBottom": 0.13,
+          "height": 13.146296430642876,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          239,
+          753.5,
+          18.86036777496338
+        ],
+        "rotation": [
+          0.15005885011174389,
+          0.09854052176426778,
+          1.1611315293518631,
+          "XYZ"
+        ],
+        "min": [
+          232.93824084469418,
+          750.8649703105334,
+          17.754756574726688
+        ],
+        "max": [
+          245.06302571827086,
+          756.1331144038822,
+          19.97864659220589
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 14,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.11,
+          "radiusBottom": 0.11,
+          "height": 16.417113233753753,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          254.5,
+          742,
+          15.902152442932124
+        ],
+        "rotation": [
+          -0.18499819887800537,
+          0.25892341940871727,
+          -1.9034245127995497,
+          "XYZ"
+        ],
+        "min": [
+          246.9407748562929,
+          738.8843926934172,
+          14.3209364380761
+        ],
+        "max": [
+          262.06201429678396,
+          745.1175443014779,
+          17.4937190721225
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 15,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.28,
+          "radiusBottom": 0.28,
+          "height": 6.092503996752019,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          261,
+          761,
+          20.935466957092284
+        ],
+        "rotation": [
+          0.17711563032540922,
+          0.1718053153260175,
+          1.5402052924448895,
+          "XYZ"
+        ],
+        "min": [
+          257.9486448315312,
+          760.6825576974052,
+          20.11530848548184
+        ],
+        "max": [
+          264.05609570596215,
+          761.3126286786573,
+          21.78251850399128
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 16,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.24,
+          "height": 0.7,
+          "depth": 4.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          266,
+          760,
+          15.053521347045892
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          265.8800000026822,
+          757.5999999046326,
+          14.703521353006357
+        ],
+        "max": [
+          266.1199999973178,
+          762.4000000953674,
+          15.403521341085428
+        ],
+        "bottomGap": [
+          -0.2995801740522275,
+          0.2761914981061313
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 17,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.8,
+          "height": 2.4,
+          "depth": 10,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          235,
+          732,
+          19.912408447265623
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          234.59999999403954,
+          727,
+          18.712408399581907
+        ],
+        "max": [
+          235.40000000596046,
+          737,
+          21.11240849494934
+        ],
+        "bottomGap": [
+          -0.12426045518686735,
+          0.0919487294168242
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 18,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.8,
+          "height": 2.4,
+          "depth": 10,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          261,
+          732,
+          15.378778648376468
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          260.59999999403954,
+          727,
+          14.17877860069275
+        ],
+        "max": [
+          261.40000000596046,
+          737,
+          16.578778696060184
+        ],
+        "bottomGap": [
+          -0.10537102827521672,
+          0.06675360807869701
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 19,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.8,
+          "height": 2.4,
+          "depth": 10,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          235,
+          764,
+          20.979329299926754
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          234.59999999403954,
+          759,
+          19.779329252243038
+        ],
+        "max": [
+          235.40000000596046,
+          769,
+          22.17932934761047
+        ],
+        "bottomGap": [
+          -0.4391637904140495,
+          0.3733673388938783
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 20,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.8,
+          "height": 2.4,
+          "depth": 10,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          261,
+          764,
+          17.29210968017578
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          260.59999999403954,
+          759,
+          16.092109632492065
+        ],
+        "max": [
+          261.40000000596046,
+          769,
+          18.492109727859496
+        ],
+        "bottomGap": [
+          -0.6867482481123943,
+          0.6169723044539985
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 21,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.28,
+          "radiusBottom": 0.7,
+          "height": 15,
+          "radialSegments": 6,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          254,
+          744,
+          23.310206222534184
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          253.3937821984291,
+          743.3000000119209,
+          15.810206222534184
+        ],
+        "max": [
+          254.6062178015709,
+          744.6999999880791,
+          30.810206222534184
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 22,
+        "name": "",
+        "type": "SphereGeometry",
+        "parameters": {
+          "radius": 0.2,
+          "widthSegments": 8,
+          "heightSegments": 6,
+          "phiStart": 0,
+          "phiLength": 6.283185307179586,
+          "thetaStart": 0,
+          "thetaLength": 3.141592653589793
+        },
+        "position": [
+          254,
+          744,
+          31.010206222534183
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          253.79999999701977,
+          743.7999999970198,
+          30.81020621955395
+        ],
+        "max": [
+          254.20000000298023,
+          744.2000000029802,
+          31.210206225514415
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-2",
+        "index": 23,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.6,
+          "height": 0.2,
+          "depth": 0.14,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          259,
+          760,
+          16.091024780273436
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          258.19999998807907,
+          759.929999999702,
+          15.99102477878332
+        ],
+        "max": [
+          259.80000001192093,
+          760.070000000298,
+          16.191024781763552
+        ],
+        "bottomGap": [
+          -0.1423524663002489,
+          0.14140520532038003
+        ]
+      },
+      {
+        "owner": "relay-2",
+        "index": 24,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.12,
+          "radiusBottom": 0.12,
+          "height": 7.855263451461685,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          234.5,
+          753,
+          19.524450035095214
+        ],
+        "rotation": [
+          0.10718638025732526,
+          0.038587556366805935,
+          0.6905873570965334,
+          "XYZ"
+        ],
+        "min": [
+          231.90571094132028,
+          749.9127050372554,
+          18.992650805046964
+        ],
+        "max": [
+          237.09474750920737,
+          756.0860245721767,
+          20.068056004916905
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 1,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 3.2,
+          "radiusBottom": 3.6,
+          "height": 0.25,
+          "radialSegments": 10,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          575,
+          585,
+          0.8549220323562611
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          571.5761964321136,
+          581.4000000953674,
+          0.7299220323562603
+        ],
+        "max": [
+          578.4238035678864,
+          588.5999999046326,
+          0.9799220323562619
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 3,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 42,
+          "height": 0.08,
+          "depth": 0.34,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          575,
+          596,
+          1.1672446870803839
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          554,
+          595.8299999982119,
+          1.1272446879744535
+        ],
+        "max": [
+          596,
+          596.1700000017881,
+          1.2072446861863142
+        ],
+        "bottomGap": [
+          -0.816280199675842,
+          0.712942473593736
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 4,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.34,
+          "height": 0.08,
+          "depth": 25,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          563,
+          585,
+          1.177257099151611
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          562.8299999982119,
+          572.5,
+          1.137257100045678
+        ],
+        "max": [
+          563.1700000017881,
+          597.5,
+          1.217257098257544
+        ],
+        "bottomGap": [
+          -0.491311403393383,
+          0.34106666372823913
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 5,
+        "name": "",
+        "type": "CircleGeometry",
+        "parameters": {
+          "radius": 4.2,
+          "segments": 24,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          557,
+          575,
+          1.0986642313003534
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          552.8000001907349,
+          570.8000001907349,
+          1.0986642313003534
+        ],
+        "max": [
+          561.1999998092651,
+          579.1999998092651,
+          1.0986642313003534
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 6,
+        "name": "",
+        "type": "CircleGeometry",
+        "parameters": {
+          "radius": 5,
+          "segments": 24,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          592,
+          598,
+          0.7206874084472663
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          587,
+          593,
+          0.7206874084472663
+        ],
+        "max": [
+          597,
+          603,
+          0.7206874084472663
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 7,
+        "name": "",
+        "type": "CircleGeometry",
+        "parameters": {
+          "radius": 3.5,
+          "segments": 24,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          595,
+          573,
+          0.12
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          591.5,
+          569.5,
+          0.12
+        ],
+        "max": [
+          598.5,
+          576.5,
+          0.12
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 8,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.5,
+          "height": 5.5,
+          "depth": 1.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          560,
+          597,
+          4.504232096672055
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.3,
+          "XYZ"
+        ],
+        "min": [
+          558.4708170648371,
+          596.25,
+          1.6554165965806344
+        ],
+        "max": [
+          561.5291829351629,
+          597.75,
+          7.353047596763476
+        ],
+        "bottomGap": [
+          -0.15005185650940867,
+          -0.036991643862256396
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 10,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.5,
+          "height": 5.5,
+          "depth": 1.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          589,
+          581,
+          2.75
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.45,
+          "XYZ"
+        ],
+        "min": [
+          587.1285094544296,
+          580.25,
+          -0.05245368205328482
+        ],
+        "max": [
+          590.8714905455704,
+          581.75,
+          5.552453682053285
+        ],
+        "bottomGap": [
+          -0.07917281696567392,
+          -0.05245368205328482
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 12,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.5,
+          "height": 5.5,
+          "depth": 1.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          582,
+          603,
+          3.822137546539307
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.65,
+          "XYZ"
+        ],
+        "min": [
+          579.7386745353141,
+          602.25,
+          1.1790172962273737
+        ],
+        "max": [
+          584.2613254646859,
+          603.75,
+          6.46525779685124
+        ],
+        "bottomGap": [
+          0.12583138610950484,
+          0.16651135338569167
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 14,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5.5,
+          "height": 1.3,
+          "depth": 2.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          555,
+          588,
+          2.06349856853485
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          552.25,
+          586.7999999523163,
+          1.4134985923767076
+        ],
+        "max": [
+          557.75,
+          589.2000000476837,
+          2.7134985446929925
+        ],
+        "bottomGap": [
+          -0.20425429887118707,
+          0.09274098332560654
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 15,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 5.5,
+          "height": 1.3,
+          "depth": 2.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          585,
+          568,
+          0.65
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          582.25,
+          566.7999999523163,
+          2.3841857710316106e-8
+        ],
+        "max": [
+          587.75,
+          569.2000000476837,
+          1.2999999761581424
+        ],
+        "bottomGap": [
+          2.3841857710316106e-8,
+          2.3841858154405315e-8
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 16,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.15,
+          "radiusBottom": 0.15,
+          "height": 15.642338924936217,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          566,
+          592,
+          1.7010835027694697
+        ],
+        "rotation": [
+          0.05286516980133335,
+          0.024723072149086745,
+          0.8747499762806309,
+          "XYZ"
+        ],
+        "min": [
+          559.9029209305149,
+          586.8798891887787,
+          1.1494045090396021
+        ],
+        "max": [
+          572.097446285141,
+          597.1193261221955,
+          2.2675918802982715
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 17,
+        "name": "",
+        "type": "CylinderGeometry",
+        "parameters": {
+          "radiusTop": 0.14,
+          "radiusBottom": 0.14,
+          "height": 10.212187276936772,
+          "radialSegments": 7,
+          "heightSegments": 1,
+          "openEnded": false,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          584,
+          582,
+          0.6086861455440525
+        ],
+        "rotation": [
+          -0.052753508130848566,
+          0.06412026195340512,
+          -1.7648085090064864,
+          "XYZ"
+        ],
+        "min": [
+          578.9656571015469,
+          580.8597087550378,
+          0.2055529126498094
+        ],
+        "max": [
+          589.0352312753797,
+          583.1410207967316,
+          1.0256359928229986
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 21,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 8,
+          "height": 0.5,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          567,
+          601,
+          1.8676812410354595
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.5,
+          "XYZ"
+        ],
+        "min": [
+          563.3698133677874,
+          600.75,
+          -0.2694165538539457
+        ],
+        "max": [
+          570.6301866322126,
+          601.25,
+          4.004779035924865
+        ],
+        "bottomGap": [
+          -2.1061797361289774,
+          -2.0698913088948045
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 22,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1,
+          "height": 0.18,
+          "depth": 0.56,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          569,
+          601,
+          1.6276836776733368
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.5,
+          "XYZ"
+        ],
+        "min": [
+          568.5180604188658,
+          600.7199999988079,
+          1.308988474662622
+        ],
+        "max": [
+          569.4819395811342,
+          601.2800000011921,
+          1.9463788806840516
+        ],
+        "bottomGap": [
+          -0.25436898663181773,
+          -0.23457639201998037
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 23,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 8,
+          "height": 0.5,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          593,
+          567,
+          0.25
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.65,
+          "XYZ"
+        ],
+        "min": [
+          589.6643682043698,
+          566.75,
+          -2.369766572581422
+        ],
+        "max": [
+          596.3356317956302,
+          567.25,
+          2.869766572581422
+        ],
+        "bottomGap": [
+          -2.369766572581422,
+          -2.369766572581422
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 24,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1,
+          "height": 0.18,
+          "depth": 0.56,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          595,
+          567,
+          0.09
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.65,
+          "XYZ"
+        ],
+        "min": [
+          594.547491322045,
+          566.7199999988079,
+          -0.2842407475844524
+        ],
+        "max": [
+          595.452508677955,
+          567.2800000011921,
+          0.46424074758445233
+        ],
+        "bottomGap": [
+          -0.2842407475844524,
+          -0.2842407475844523
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 25,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4.5,
+          "height": 0.7,
+          "depth": 1.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          555,
+          579,
+          1.463605165481567
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.5,
+          "XYZ"
+        ],
+        "min": [
+          552.8576403000928,
+          578.3000000119209,
+          0.07774381219127924
+        ],
+        "max": [
+          557.1423596999072,
+          579.6999999880791,
+          2.8494665187718544
+        ],
+        "bottomGap": [
+          -1.0784690325627555,
+          -1.0398770952011713
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 26,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3,
+          "height": 0.16,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          555,
+          579,
+          1.613605165481567
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.5,
+          "XYZ"
+        ],
+        "min": [
+          553.6452721149334,
+          578.75,
+          0.8242602541932726
+        ],
+        "max": [
+          556.3547278850666,
+          579.25,
+          2.4029500767698613
+        ],
+        "bottomGap": [
+          -0.3126918087261821,
+          -0.2989089737194661
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 27,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4.5,
+          "height": 0.7,
+          "depth": 1.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          593,
+          594,
+          0.7721154034137756
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.35,
+          "XYZ"
+        ],
+        "min": [
+          590.7663971655278,
+          593.3000000119209,
+          -0.32818510725847494
+        ],
+        "max": [
+          595.2336028344722,
+          594.6999999880791,
+          1.8724159140860261
+        ],
+        "bottomGap": [
+          -0.7239647696759363,
+          -0.6654104431851648
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 28,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3,
+          "height": 0.16,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          593,
+          594,
+          0.9221154034137755
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.35,
+          "XYZ"
+        ],
+        "min": [
+          591.5635091067456,
+          593.75,
+          0.33261887688253744
+        ],
+        "max": [
+          594.4364908932544,
+          594.25,
+          1.5116119299450137
+        ],
+        "bottomGap": [
+          -0.06212466840754527,
+          -0.041212408590422855
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 29,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 4.5,
+          "height": 0.7,
+          "depth": 1.4,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          577,
+          565,
+          0.4048970073461558
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.7,
+          "XYZ"
+        ],
+        "min": [
+          575.0536288919166,
+          564.3000000119209,
+          -1.3122875499294056
+        ],
+        "max": [
+          578.9463711080834,
+          565.6999999880791,
+          2.122081564621717
+        ],
+        "bottomGap": [
+          -1.44830819134451,
+          -1.43090684733012
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 30,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3,
+          "height": 0.16,
+          "depth": 0.5,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          577,
+          565,
+          0.5548970073461558
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.7,
+          "XYZ"
+        ],
+        "min": [
+          575.8011993052462,
+          564.75,
+          -0.4726168971254955
+        ],
+        "max": [
+          578.1988006947538,
+          565.25,
+          1.582410911817807
+        ],
+        "bottomGap": [
+          -0.5833892994820735,
+          -0.5770820030271674
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 31,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 6,
+          "height": 0.6,
+          "depth": 0.6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          573,
+          602,
+          1.7072313785552946
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.6,
+          "XYZ"
+        ],
+        "min": [
+          570.3546004065214,
+          601.6999999880791,
+          -0.23429673594148182
+        ],
+        "max": [
+          575.6453995934786,
+          602.3000000119209,
+          3.6487594930520713
+        ],
+        "bottomGap": [
+          -1.74841497376703,
+          -1.7275848375938572
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 32,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.8,
+          "height": 6.5,
+          "depth": 0.8,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          597,
+          601,
+          3.842714357376099
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.28,
+          "XYZ"
+        ],
+        "min": [
+          595.717421961114,
+          600.5999999940395,
+          0.6087419217932397
+        ],
+        "max": [
+          598.282578038886,
+          601.4000000059605,
+          7.076686792958958
+        ],
+        "bottomGap": [
+          -0.008001254799354762,
+          0.019182449981934968
+        ]
+      },
+      {
+        "owner": "relay-3",
+        "index": 35,
+        "name": "",
+        "type": "CircleGeometry",
+        "parameters": {
+          "radius": 3.4,
+          "segments": 20,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          551,
+          571,
+          1.0663636803627023
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          547.5999999046326,
+          567.5999999046326,
+          1.0663636803627023
+        ],
+        "max": [
+          554.4000000953674,
+          574.4000000953674,
+          1.0663636803627023
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "relay-3",
+        "index": 36,
+        "name": "",
+        "type": "CircleGeometry",
+        "parameters": {
+          "radius": 3,
+          "segments": 20,
+          "thetaStart": 0,
+          "thetaLength": 6.283185307179586
+        },
+        "position": [
+          601,
+          587,
+          0.1
+        ],
+        "rotation": [
+          0,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          598,
+          584,
+          0.1
+        ],
+        "max": [
+          604,
+          590,
+          0.1
+        ],
+        "bottomGap": null
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 0,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.26,
+          "height": 3.4,
+          "depth": 0.26,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          430,
+          720,
+          4.0529736995697
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          429.8700000047684,
+          719.8700000047684,
+          2.352973651885984
+        ],
+        "max": [
+          430.1299999952316,
+          720.1299999952316,
+          5.7529737472534155
+        ],
+        "bottomGap": [
+          -0.012443585893067599,
+          0.023578556149602026
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 2,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.26,
+          "height": 3.4,
+          "depth": 0.26,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          424,
+          646,
+          3.4736677646636984
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          423.8700000047684,
+          645.8700000047684,
+          1.7736677169799826
+        ],
+        "max": [
+          424.1299999952316,
+          646.1299999952316,
+          5.173667812347414
+        ],
+        "bottomGap": [
+          -0.007220543596541562,
+          0.007220448229115606
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 4,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.26,
+          "height": 3.4,
+          "depth": 0.26,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          410,
+          600,
+          2.7957674980163576
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0,
+          "XYZ"
+        ],
+        "min": [
+          409.8700000047684,
+          599.8700000047684,
+          1.0957674503326418
+        ],
+        "max": [
+          410.1299999952316,
+          600.1299999952316,
+          4.495767545700073
+        ],
+        "bottomGap": [
+          -0.0033167351459846284,
+          0.0029702028138722802
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 6,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 3.2,
+          "height": 0.3,
+          "depth": 0.6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          350,
+          604,
+          2.6429890036582946
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.4,
+          "XYZ"
+        ],
+        "min": [
+          348.4678896339682,
+          603.6999999880791,
+          1.881760492089613
+        ],
+        "max": [
+          351.5321103660318,
+          604.3000000119209,
+          3.4042175152269762
+        ],
+        "bottomGap": [
+          1.6179224156936245,
+          1.6227313305461215
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 7,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.6,
+          "height": 0.12,
+          "depth": 0.64,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          350,
+          604,
+          2.8429890036582948
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.4,
+          "XYZ"
+        ],
+        "min": [
+          349.2397860938015,
+          603.6800000071526,
+          2.4761906667642117
+        ],
+        "max": [
+          350.7602139061985,
+          604.3199999928474,
+          3.209787340552378
+        ],
+        "bottomGap": [
+          2.2215761804423035,
+          2.2254026558861018
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 8,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 2.6,
+          "height": 0.3,
+          "depth": 0.6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          400,
+          606,
+          3.1870712876319898
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.3,
+          "XYZ"
+        ],
+        "min": [
+          398.71373457693005,
+          605.6999999880791,
+          2.65959455400066
+        ],
+        "max": [
+          401.28626542306995,
+          606.3000000119209,
+          3.7145480212633197
+        ],
+        "bottomGap": [
+          1.8096629377148137,
+          1.8165798926879246
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 9,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 1.3,
+          "height": 0.12,
+          "depth": 0.64,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          400,
+          606,
+          3.38707128763199
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.3,
+          "XYZ"
+        ],
+        "min": [
+          399.361300092842,
+          605.6800000071526,
+          3.1376629722815395
+        ],
+        "max": [
+          400.638699907158,
+          606.3199999928474,
+          3.6364796029824404
+        ],
+        "bottomGap": [
+          2.3106280487779975,
+          2.3266377224924177
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 10,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.6,
+          "height": 0.3,
+          "depth": 3,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          306,
+          660,
+          5.85781202316284
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.55,
+          "XYZ"
+        ],
+        "min": [
+          305.6658395457642,
+          658.5,
+          5.573127164862356
+        ],
+        "max": [
+          306.3341604542358,
+          661.5,
+          6.142496881463323
+        ],
+        "bottomGap": [
+          2.0708577179803336,
+          2.117478018562089
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 11,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.3,
+          "height": 0.12,
+          "depth": 3.04,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          306,
+          660,
+          6.057812023162839
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          0.55,
+          "XYZ"
+        ],
+        "min": [
+          305.84076008357476,
+          658.4800000190735,
+          5.928257465527536
+        ],
+        "max": [
+          306.15923991642524,
+          661.5199999809265,
+          6.187366580798142
+        ],
+        "bottomGap": [
+          2.436630240035538,
+          2.4836154193859787
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 12,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.6,
+          "height": 0.3,
+          "depth": 2.6,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          414,
+          686,
+          3.9660134315490714
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.45,
+          "XYZ"
+        ],
+        "min": [
+          413.66462102585075,
+          684.7000000476837,
+          3.7004566954105242
+        ],
+        "max": [
+          414.33537897414925,
+          687.2999999523163,
+          4.231570167687618
+        ],
+        "bottomGap": [
+          2.1227151203535533,
+          2.12583918975997
+        ]
+      },
+      {
+        "owner": "crisis-exterior",
+        "index": 13,
+        "name": "",
+        "type": "BoxGeometry",
+        "parameters": {
+          "width": 0.3,
+          "height": 0.12,
+          "depth": 2.64,
+          "widthSegments": 1,
+          "heightSegments": 1,
+          "depthSegments": 1
+        },
+        "position": [
+          414,
+          686,
+          4.1660134315490716
+        ],
+        "rotation": [
+          1.5707963267948966,
+          0,
+          -0.45,
+          "XYZ"
+        ],
+        "min": [
+          413.83883499781666,
+          684.6799999475479,
+          4.0467417739062235
+        ],
+        "max": [
+          414.16116500218334,
+          687.3200000524521,
+          4.28528508919192
+        ],
+        "bottomGap": [
+          2.473855408336193,
+          2.477039001519966
+        ]
+      }
+    ],
+    "solids": [
+      {
+        "x0": 202.4,
+        "y0": 572.4,
+        "x1": 207.6,
+        "y1": 577.6,
+        "topY": 10,
+        "bottomY": 2,
+        "disabled": false,
+        "_solidQueryStamp": 160
+      },
+      {
+        "x0": 185,
+        "y0": 585,
+        "x1": 195,
+        "y1": 591,
+        "topY": 6.337110424041746,
+        "bottomY": 2.937110424041746,
+        "_solidQueryStamp": 154,
+        "disabled": false
+      },
+      {
+        "x0": 192.9,
+        "y0": 565.8,
+        "x1": 197.1,
+        "y1": 568.2,
+        "topY": 3.827203941345215,
+        "bottomY": 2.327203941345215,
+        "_solidQueryStamp": 160,
+        "disabled": false
+      },
+      {
+        "x0": 215.9,
+        "y0": 583.8,
+        "x1": 220.1,
+        "y1": 586.2,
+        "topY": 4.126891565322875,
+        "bottomY": 2.626891565322875,
+        "disabled": false
+      },
+      {
+        "x0": 219.4,
+        "y0": 567.4,
+        "x1": 222.6,
+        "y1": 570.6,
+        "topY": 3.7431652545928955,
+        "bottomY": 2.5931652545928956,
+        "_solidQueryStamp": 160,
+        "disabled": false
+      },
+      {
+        "x0": 195.9,
+        "y0": 579.15,
+        "x1": 198.1,
+        "y1": 580.85,
+        "topY": 3.7030363082885747,
+        "bottomY": 2.2030363082885747,
+        "disabled": false
+      },
+      {
+        "x0": 200.3,
+        "y0": 579.15,
+        "x1": 202.5,
+        "y1": 580.85,
+        "topY": 3.590630359649658,
+        "bottomY": 2.090630359649658,
+        "disabled": false
+      },
+      {
+        "x0": 204.70000000000002,
+        "y0": 579.15,
+        "x1": 206.9,
+        "y1": 580.85,
+        "topY": 3.563007106781006,
+        "bottomY": 2.063007106781006,
+        "disabled": false
+      },
+      {
+        "x0": 209.7,
+        "y0": 578.8,
+        "x1": 213.3,
+        "y1": 581.2,
+        "topY": 4.761870098114015,
+        "bottomY": 2.161870098114014,
+        "disabled": false
+      },
+      {
+        "x0": 197,
+        "y0": 566.75,
+        "x1": 203,
+        "y1": 567.25,
+        "topY": 3.333508110046387,
+        "bottomY": 2.183508110046387,
+        "_solidQueryStamp": 160,
+        "disabled": false
+      },
+      {
+        "x0": 242.4,
+        "y0": 745.4,
+        "x1": 247.6,
+        "y1": 750.6,
+        "topY": 25.415580368041994,
+        "bottomY": 17.415580368041994,
+        "disabled": false
+      },
+      {
+        "x0": 230.8,
+        "y0": 754.8,
+        "x1": 233.2,
+        "y1": 757.2,
+        "topY": 41.62432022094727,
+        "bottomY": 19.624320220947265,
+        "disabled": false
+      },
+      {
+        "x0": 255.5,
+        "y0": 756.9,
+        "x1": 260.5,
+        "y1": 759.1,
+        "topY": 17.322891998291016,
+        "bottomY": 15.972891998291015,
+        "_solidQueryStamp": 248,
+        "disabled": false
+      },
+      {
+        "x0": 257,
+        "y0": 737.9,
+        "x1": 261,
+        "y1": 740.1,
+        "topY": 16.049746322631837,
+        "bottomY": 14.699746322631837,
+        "_solidQueryStamp": 248,
+        "disabled": false
+      },
+      {
+        "x0": 238,
+        "y0": 732,
+        "x1": 244,
+        "y1": 734,
+        "topY": 19.161888885498044,
+        "bottomY": 17.811888885498043,
+        "disabled": false
+      },
+      {
+        "x0": 223,
+        "y0": 739.9,
+        "x1": 227,
+        "y1": 742.1,
+        "topY": 21.475085830688478,
+        "bottomY": 20.125085830688477,
+        "_solidQueryStamp": 293,
+        "disabled": false
+      },
+      {
+        "x0": 234.6,
+        "y0": 727,
+        "x1": 235.4,
+        "y1": 737,
+        "topY": 21.112408447265622,
+        "bottomY": 18.712408447265624,
+        "disabled": false
+      },
+      {
+        "x0": 260.6,
+        "y0": 727,
+        "x1": 261.4,
+        "y1": 737,
+        "topY": 16.578778648376467,
+        "bottomY": 14.178778648376468,
+        "_solidQueryStamp": 248,
+        "disabled": false
+      },
+      {
+        "x0": 234.6,
+        "y0": 759,
+        "x1": 235.4,
+        "y1": 769,
+        "topY": 22.179329299926753,
+        "bottomY": 19.779329299926754,
+        "_solidQueryStamp": 238,
+        "disabled": false
+      },
+      {
+        "x0": 260.6,
+        "y0": 759,
+        "x1": 261.4,
+        "y1": 769,
+        "topY": 18.49210968017578,
+        "bottomY": 16.09210968017578,
+        "_solidQueryStamp": 324,
+        "disabled": false
+      },
+      {
+        "x0": 253.3,
+        "y0": 743.3,
+        "x1": 254.7,
+        "y1": 744.7,
+        "topY": 30.810206222534184,
+        "bottomY": 15.810206222534184,
+        "disabled": false
+      },
+      {
+        "x0": 572.4,
+        "y0": 582.4,
+        "x1": 577.6,
+        "y1": 587.6,
+        "topY": 8.75492203235626,
+        "bottomY": 0.7549220323562611,
+        "disabled": false
+      },
+      {
+        "x0": 559.25,
+        "y0": 596.25,
+        "x1": 560.75,
+        "y1": 597.75,
+        "topY": 7.254232096672055,
+        "bottomY": 1.7542320966720548,
+        "disabled": false
+      },
+      {
+        "x0": 588.25,
+        "y0": 580.25,
+        "x1": 589.75,
+        "y1": 581.75,
+        "topY": 5.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 581.25,
+        "y0": 602.25,
+        "x1": 582.75,
+        "y1": 603.75,
+        "topY": 6.572137546539307,
+        "bottomY": 1.0721375465393068,
+        "disabled": false
+      },
+      {
+        "x0": 552.25,
+        "y0": 586.8,
+        "x1": 557.75,
+        "y1": 589.2,
+        "topY": 2.71349856853485,
+        "bottomY": 1.41349856853485,
+        "disabled": false
+      },
+      {
+        "x0": 582.25,
+        "y0": 566.8,
+        "x1": 587.75,
+        "y1": 569.2,
+        "topY": 1.3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 552.9336261571644,
+        "y0": 577.5308616920937,
+        "x1": 554.4336261571644,
+        "y1": 579.0308616920937,
+        "topY": 1.813605165481567,
+        "bottomY": 1.113605165481567,
+        "disabled": false
+      },
+      {
+        "x0": 554.25,
+        "y0": 578.25,
+        "x1": 555.75,
+        "y1": 579.75,
+        "topY": 1.813605165481567,
+        "bottomY": 1.113605165481567,
+        "disabled": false
+      },
+      {
+        "x0": 555.5663738428356,
+        "y0": 578.9691383079063,
+        "x1": 557.0663738428356,
+        "y1": 580.4691383079063,
+        "topY": 1.813605165481567,
+        "bottomY": 1.113605165481567,
+        "disabled": false
+      },
+      {
+        "x0": 590.840940930729,
+        "y0": 593.7643467111832,
+        "x1": 592.340940930729,
+        "y1": 595.2643467111832,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.4221154034137756,
+        "disabled": false
+      },
+      {
+        "x0": 592.25,
+        "y0": 593.25,
+        "x1": 593.75,
+        "y1": 594.75,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.4221154034137756,
+        "disabled": false
+      },
+      {
+        "x0": 593.659059069271,
+        "y0": 592.7356532888168,
+        "x1": 595.159059069271,
+        "y1": 594.2356532888168,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.4221154034137756,
+        "disabled": false
+      },
+      {
+        "x0": 575.1027367190733,
+        "y0": 563.2836734691434,
+        "x1": 576.6027367190733,
+        "y1": 564.7836734691434,
+        "topY": 0.7548970073461557,
+        "bottomY": 0.0548970073461558,
+        "disabled": false
+      },
+      {
+        "x0": 576.25,
+        "y0": 564.25,
+        "x1": 577.75,
+        "y1": 565.75,
+        "topY": 0.7548970073461557,
+        "bottomY": 0.0548970073461558,
+        "disabled": false
+      },
+      {
+        "x0": 577.3972632809267,
+        "y0": 565.2163265308566,
+        "x1": 578.8972632809267,
+        "y1": 566.7163265308566,
+        "topY": 0.7548970073461557,
+        "bottomY": 0.0548970073461558,
+        "disabled": false
+      },
+      {
+        "x0": 570.4584940108621,
+        "y0": 600.142813507338,
+        "x1": 571.2084940108621,
+        "y1": 600.892813507338,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 571.0774957220443,
+        "y0": 600.5662953623843,
+        "x1": 571.8274957220443,
+        "y1": 601.3162953623843,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 571.6964974332266,
+        "y0": 600.9897772174306,
+        "x1": 572.4464974332266,
+        "y1": 601.7397772174306,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 572.3154991444088,
+        "y0": 601.4132590724769,
+        "x1": 573.0654991444088,
+        "y1": 602.1632590724769,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 572.9345008555912,
+        "y0": 601.8367409275231,
+        "x1": 573.6845008555912,
+        "y1": 602.5867409275231,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 573.5535025667734,
+        "y0": 602.2602227825694,
+        "x1": 574.3035025667734,
+        "y1": 603.0102227825694,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 574.1725042779557,
+        "y0": 602.6837046376157,
+        "x1": 574.9225042779557,
+        "y1": 603.4337046376157,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 574.7915059891379,
+        "y0": 603.107186492662,
+        "x1": 575.5415059891379,
+        "y1": 603.857186492662,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.4072313785552946,
+        "disabled": false
+      },
+      {
+        "x0": 596.4077889123379,
+        "y0": 600.6552711297129,
+        "x1": 597.2077889123378,
+        "y1": 601.4552711297129,
+        "topY": 7.0927143573760985,
+        "bottomY": 0.5927143573760988,
+        "disabled": false
+      },
+      {
+        "x0": 596.7922110876622,
+        "y0": 600.5447288702871,
+        "x1": 597.5922110876621,
+        "y1": 601.3447288702871,
+        "topY": 7.0927143573760985,
+        "bottomY": 0.5927143573760988,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 689,
+        "x1": 352,
+        "y1": 691,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 689,
+        "x1": 390,
+        "y1": 691,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 330,
+        "y0": 617,
+        "x1": 352,
+        "y1": 619,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 617,
+        "x1": 390,
+        "y1": 619,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 329,
+        "y0": 617,
+        "x1": 331,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 389,
+        "y0": 617,
+        "x1": 391,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 330,
+        "y0": 659,
+        "x1": 352,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 659,
+        "x1": 390,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 341,
+        "y0": 660,
+        "x1": 343,
+        "y1": 684,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 377,
+        "y0": 660,
+        "x1": 379,
+        "y1": 684,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 342,
+        "y0": 683,
+        "x1": 352,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 683,
+        "x1": 378,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 358.55,
+        "y0": 772.55,
+        "x1": 361.45,
+        "y1": 775.45,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": true
+      },
+      {
+        "x0": 333.1,
+        "y0": 624.7,
+        "x1": 334.9,
+        "y1": 627.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 333.1,
+        "y0": 636.7,
+        "x1": 334.9,
+        "y1": 639.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 333.1,
+        "y0": 648.7,
+        "x1": 334.9,
+        "y1": 651.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 385.3,
+        "y0": 624.7,
+        "x1": 386.7,
+        "y1": 627.3,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 385.3,
+        "y0": 648.7,
+        "x1": 386.7,
+        "y1": 651.3,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 334.5,
+        "y0": 620.4,
+        "x1": 337.5,
+        "y1": 623.6,
+        "topY": 2,
+        "bottomY": 0
+      },
+      {
+        "x0": 341,
+        "y0": 655,
+        "x1": 343,
+        "y1": 657,
+        "topY": 3,
+        "bottomY": 0
+      },
+      {
+        "x0": 377,
+        "y0": 655,
+        "x1": 379,
+        "y1": 657,
+        "topY": 3,
+        "bottomY": 0
+      },
+      {
+        "x0": 337.4,
+        "y0": 638.8,
+        "x1": 340.6,
+        "y1": 641.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.4,
+        "y0": 630.8,
+        "x1": 382.6,
+        "y1": 633.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.4,
+        "y0": 651.8,
+        "x1": 382.6,
+        "y1": 654.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 399,
+        "y0": 671,
+        "x1": 401,
+        "y1": 673,
+        "topY": 26,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 421.4023392980842,
+        "y0": 698.6220467915767,
+        "x1": 424.0023392980842,
+        "y1": 701.2220467915766,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 423.9976607019158,
+        "y0": 698.7779532084234,
+        "x1": 426.5976607019158,
+        "y1": 701.3779532084233,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 415.40103986134073,
+        "y0": 691.7519861344426,
+        "x1": 418.00103986134076,
+        "y1": 694.3519861344425,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 417.99896013865924,
+        "y0": 691.6480138655575,
+        "x1": 420.59896013865927,
+        "y1": 694.2480138655574,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 424.8001999933334,
+        "y0": 704.7800013333066,
+        "x1": 427.2001999933334,
+        "y1": 707.1800013333067,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 426.7998000066666,
+        "y0": 704.8199986666933,
+        "x1": 429.1998000066666,
+        "y1": 707.2199986666934,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 293.87893900599715,
+        "y0": 688.4105816576913,
+        "x1": 296.27893900599713,
+        "y1": 690.8105816576914,
+        "topY": 2.6,
+        "bottomY": 0,
+        "_solidQueryStamp": 180
+      },
+      {
+        "x0": 295.72106099400287,
+        "y0": 689.1894183423086,
+        "x1": 298.12106099400285,
+        "y1": 691.5894183423087,
+        "topY": 2.6,
+        "bottomY": 0,
+        "_solidQueryStamp": 180
+      },
+      {
+        "x0": 295.4,
+        "y0": 659.4,
+        "x1": 296.6,
+        "y1": 660.6,
+        "topY": 6,
+        "bottomY": 0
+      },
+      {
+        "x0": 425.4,
+        "y0": 649.4,
+        "x1": 426.6,
+        "y1": 650.6,
+        "topY": 6,
+        "bottomY": 0
+      },
+      {
+        "x0": 429.46,
+        "y0": 687.46,
+        "x1": 430.54,
+        "y1": 688.54,
+        "topY": 7,
+        "bottomY": 0,
+        "_solidQueryStamp": 193
+      },
+      {
+        "x0": 426.4140213485457,
+        "y0": 594.298378153489,
+        "x1": 427.9140213485457,
+        "y1": 595.798378153489,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 427.25,
+        "y0": 595.25,
+        "x1": 428.75,
+        "y1": 596.75,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 428.0859786514543,
+        "y0": 596.201621846511,
+        "x1": 429.5859786514543,
+        "y1": 597.701621846511,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 617.5,
+        "x1": 368,
+        "y1": 618.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 659.5,
+        "x1": 368,
+        "y1": 660.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 654.5,
+        "x1": 338.5,
+        "y1": 657.5,
+        "topY": 1.4,
+        "bottomY": 0
+      },
+      {
+        "x0": 376.5,
+        "y0": 654.5,
+        "x1": 377.5,
+        "y1": 655.5,
+        "topY": 1.1,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.5,
+        "y0": 655.5,
+        "x1": 380.5,
+        "y1": 656.5,
+        "topY": 1.1,
+        "bottomY": 0
+      },
+      {
+        "x0": 334.5,
+        "y0": 597.5,
+        "x1": 341.5,
+        "y1": 602.5,
+        "topY": 3.6964108884334577,
+        "bottomY": 0.49641088843345726
+      },
+      {
+        "x0": 302.6,
+        "y0": 592.8,
+        "x1": 307.4,
+        "y1": 595.2,
+        "topY": 4.197923946380615,
+        "bottomY": 2.747923946380615
+      },
+      {
+        "x0": 314.6,
+        "y0": 592.8,
+        "x1": 319.4,
+        "y1": 595.2,
+        "topY": 3.1019450187683106,
+        "bottomY": 1.6519450187683107
+      },
+      {
+        "x0": 430,
+        "y0": 617.5,
+        "x1": 438,
+        "y1": 624.5,
+        "topY": 5.393004465103149,
+        "bottomY": 1.993004465103149,
+        "_solidQueryStamp": 224
+      },
+      {
+        "x0": 428.7,
+        "y0": 612.7,
+        "x1": 431.3,
+        "y1": 615.3,
+        "topY": 3.859276986122131,
+        "bottomY": 1.7592769861221311,
+        "_solidQueryStamp": 224
+      },
+      {
+        "x0": 432.7,
+        "y0": 612.7,
+        "x1": 435.3,
+        "y1": 615.3,
+        "topY": 4.008293032646178,
+        "bottomY": 1.9082930326461784,
+        "_solidQueryStamp": 224
+      },
+      {
+        "x0": 436.7,
+        "y0": 612.7,
+        "x1": 439.3,
+        "y1": 615.3,
+        "topY": 4.151796007156371,
+        "bottomY": 2.051796007156371,
+        "_solidQueryStamp": 224
+      },
+      {
+        "x0": 318.6911554702948,
+        "y0": 564.031663107604,
+        "x1": 320.89115547029485,
+        "y1": 566.231663107604,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 318.51534314356263,
+        "y0": 566.2246268614698,
+        "x1": 320.7153431435627,
+        "y1": 568.4246268614698,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 318.3395308168304,
+        "y0": 568.4175906153356,
+        "x1": 320.53953081683045,
+        "y1": 570.6175906153356,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 318.16371849009823,
+        "y0": 570.6105543692013,
+        "x1": 320.3637184900983,
+        "y1": 572.8105543692013,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 317.98790616336606,
+        "y0": 572.8035181230671,
+        "x1": 320.1879061633661,
+        "y1": 575.0035181230671,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 317.8120938366339,
+        "y0": 574.9964818769329,
+        "x1": 320.01209383663394,
+        "y1": 577.1964818769329,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 352
+      },
+      {
+        "x0": 317.6362815099017,
+        "y0": 577.1894456307987,
+        "x1": 319.83628150990177,
+        "y1": 579.3894456307987,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.46046918316955,
+        "y0": 579.3824093846644,
+        "x1": 319.6604691831696,
+        "y1": 581.5824093846644,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.2846568564373,
+        "y0": 581.5753731385302,
+        "x1": 319.48465685643737,
+        "y1": 583.7753731385302,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.10884452970515,
+        "y0": 583.768336892396,
+        "x1": 319.3088445297052,
+        "y1": 585.968336892396,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 421.9116491751964,
+        "y0": 574.0494587637476,
+        "x1": 424.1116491751964,
+        "y1": 576.2494587637476,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.1312826918194,
+        "y0": 576.2384679273591,
+        "x1": 424.33128269181947,
+        "y1": 578.4384679273592,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.3509162084424,
+        "y0": 578.4274770909708,
+        "x1": 424.55091620844246,
+        "y1": 580.6274770909708,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.57054972506546,
+        "y0": 580.6164862545825,
+        "x1": 424.7705497250655,
+        "y1": 582.8164862545825,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.79018324168845,
+        "y0": 582.8054954181941,
+        "x1": 424.9901832416885,
+        "y1": 585.0054954181942,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.0098167583115,
+        "y0": 584.9945045818058,
+        "x1": 425.20981675831155,
+        "y1": 587.1945045818059,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.2294502749345,
+        "y0": 587.1835137454175,
+        "x1": 425.42945027493454,
+        "y1": 589.3835137454175,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.44908379155754,
+        "y0": 589.3725229090292,
+        "x1": 425.6490837915576,
+        "y1": 591.5725229090292,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.66871730818053,
+        "y0": 591.5615320726408,
+        "x1": 425.8687173081806,
+        "y1": 593.7615320726409,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.8883508248036,
+        "y0": 593.7505412362524,
+        "x1": 426.0883508248036,
+        "y1": 595.9505412362524,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 454.6,
+        "y0": 615,
+        "x1": 455.4,
+        "y1": 635,
+        "topY": 6.665611457824707,
+        "bottomY": 2.465611457824707,
+        "disabled": true,
+        "_solidQueryStamp": 224
+      },
+      {
+        "x0": 329.3,
+        "y0": 684,
+        "x1": 330.7,
+        "y1": 736,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 252,
+        "disabled": false
+      },
+      {
+        "x0": 389.3,
+        "y0": 684,
+        "x1": 390.7,
+        "y1": 736,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 193,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 703.3,
+        "x1": 352,
+        "y1": 704.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 368,
+        "y0": 703.3,
+        "x1": 390,
+        "y1": 704.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 193,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 734.3,
+        "x1": 352,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 368,
+        "y0": 734.3,
+        "x1": 390,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 390,
+        "y0": 734.3,
+        "x1": 410.70000000000005,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 329.3,
+        "y0": 735,
+        "x1": 330.7,
+        "y1": 795,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 329.3,
+        "y0": 794.3,
+        "x1": 410.7,
+        "y1": 795.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 735,
+        "x1": 410.7,
+        "y1": 745,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 759,
+        "x1": 410.7,
+        "y1": 769,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 769,
+        "x1": 410.7,
+        "y1": 795,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 410,
+        "y0": 735.3,
+        "x1": 450.70000000000005,
+        "y1": 736.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 161,
+        "disabled": false
+      },
+      {
+        "x0": 410,
+        "y0": 769.3,
+        "x1": 450.70000000000005,
+        "y1": 770.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 183,
+        "disabled": false
+      },
+      {
+        "x0": 449.3,
+        "y0": 736,
+        "x1": 450.7,
+        "y1": 746,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 449.3,
+        "y0": 758,
+        "x1": 450.7,
+        "y1": 770,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 689.5,
+        "x1": 368,
+        "y1": 690.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 734.5,
+        "x1": 368,
+        "y1": 735.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.5,
+        "y0": 745,
+        "x1": 410.5,
+        "y1": 759,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 449.5,
+        "y0": 746,
+        "x1": 450.5,
+        "y1": 758,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 332.7,
+        "y0": 693.5,
+        "x1": 335.3,
+        "y1": 696.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 384.7,
+        "y0": 693.5,
+        "x1": 387.3,
+        "y1": 696.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 193,
+        "disabled": false
+      },
+      {
+        "x0": 332.7,
+        "y0": 699.5,
+        "x1": 335.3,
+        "y1": 702.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 384.7,
+        "y0": 699.5,
+        "x1": 387.3,
+        "y1": 702.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 193,
+        "disabled": false
+      },
+      {
+        "x0": 382,
+        "y0": 710.9,
+        "x1": 386,
+        "y1": 713.1,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 382,
+        "y0": 720.9,
+        "x1": 386,
+        "y1": 723.1,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 708.9,
+        "x1": 388.59999999999997,
+        "y1": 711.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 714.9,
+        "x1": 388.59999999999997,
+        "y1": 717.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 720.9,
+        "x1": 388.59999999999997,
+        "y1": 723.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 726.9,
+        "x1": 388.59999999999997,
+        "y1": 729.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 708.6,
+        "x1": 340.5,
+        "y1": 711.4,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 726.6,
+        "x1": 340.5,
+        "y1": 729.4,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 344.5,
+        "y0": 712.8,
+        "x1": 349.5,
+        "y1": 715.2,
+        "topY": 1.15,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 344.5,
+        "y0": 720.8,
+        "x1": 349.5,
+        "y1": 723.2,
+        "topY": 1.15,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 331.75,
+        "y0": 716.95,
+        "x1": 336.25,
+        "y1": 719.05,
+        "topY": 1.35,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 375.2,
+        "y0": 717.5,
+        "x1": 376.8,
+        "y1": 718.5,
+        "topY": 1.45,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 341.25,
+        "y0": 710.5,
+        "x1": 342.75,
+        "y1": 711.5,
+        "topY": 1.35,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 415.5,
+        "y0": 740,
+        "x1": 420.5,
+        "y1": 744,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 431.5,
+        "y0": 740,
+        "x1": 436.5,
+        "y1": 744,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 415.5,
+        "y0": 762,
+        "x1": 420.5,
+        "y1": 766,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 431.5,
+        "y0": 762,
+        "x1": 436.5,
+        "y1": 766,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 424,
+        "y0": 741,
+        "x1": 426,
+        "y1": 743,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 440,
+        "y0": 741,
+        "x1": 442,
+        "y1": 743,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 424,
+        "y0": 763,
+        "x1": 426,
+        "y1": 765,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 440,
+        "y0": 763,
+        "x1": 442,
+        "y1": 765,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 336.4,
+        "y0": 744.9,
+        "x1": 339.6,
+        "y1": 747.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 252,
+        "disabled": false
+      },
+      {
+        "x0": 400.4,
+        "y0": 744.9,
+        "x1": 403.6,
+        "y1": 747.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 336.4,
+        "y0": 780.9,
+        "x1": 339.6,
+        "y1": 783.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 400.4,
+        "y0": 780.9,
+        "x1": 403.6,
+        "y1": 783.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 333.75,
+        "y0": 757,
+        "x1": 336.25,
+        "y1": 761,
+        "topY": 3.2,
+        "bottomY": 0,
+        "_solidQueryStamp": 252,
+        "disabled": false
+      },
+      {
+        "x0": 333.75,
+        "y0": 772,
+        "x1": 336.25,
+        "y1": 776,
+        "topY": 3.2,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 402.75,
+        "y0": 774,
+        "x1": 405.25,
+        "y1": 778,
+        "topY": 3.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 345.4,
+        "y0": 790,
+        "x1": 350.6,
+        "y1": 792,
+        "topY": 2.3,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 382.4,
+        "y0": 790,
+        "x1": 387.6,
+        "y1": 792,
+        "topY": 2.3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 348.75,
+        "y0": 753.75,
+        "x1": 351.25,
+        "y1": 756.25,
+        "topY": 1.25,
+        "bottomY": 0,
+        "_solidQueryStamp": 252,
+        "disabled": false
+      },
+      {
+        "x0": 375.75,
+        "y0": 775.75,
+        "x1": 378.25,
+        "y1": 778.25,
+        "topY": 1.25,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 342.9,
+        "y0": 752.9,
+        "x1": 345.1,
+        "y1": 755.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "_solidQueryStamp": 252,
+        "disabled": false
+      },
+      {
+        "x0": 342.9,
+        "y0": 780.9,
+        "x1": 345.1,
+        "y1": 783.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "_solidQueryStamp": 291,
+        "disabled": false
+      },
+      {
+        "x0": 374.9,
+        "y0": 752.9,
+        "x1": 377.1,
+        "y1": 755.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 374.9,
+        "y0": 780.9,
+        "x1": 377.1,
+        "y1": 783.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 417.5,
+        "y0": 74.8,
+        "x1": 426.5,
+        "y1": 77.2,
+        "topY": 1.3649650700390341,
+        "bottomY": 0.014965070039033994,
+        "disabled": false,
+        "_solidQueryStamp": 383
+      },
+      {
+        "x0": 478,
+        "y0": 76.8,
+        "x1": 486,
+        "y1": 79.2,
+        "topY": 1.3705316409468653,
+        "bottomY": 0.020531640946865153,
+        "disabled": false,
+        "_solidQueryStamp": 427
+      },
+      {
+        "x0": 429.5,
+        "y0": 104.9,
+        "x1": 436.5,
+        "y1": 107.1,
+        "topY": 1.371623206138611,
+        "bottomY": 0.02162320613861108,
+        "disabled": false
+      },
+      {
+        "x0": 482,
+        "y0": 109.8,
+        "x1": 490,
+        "y1": 112.2,
+        "topY": 1.4325610175728802,
+        "bottomY": 0.08256101757288022,
+        "_solidQueryStamp": 290,
+        "disabled": false
+      },
+      {
+        "x0": 420.5,
+        "y0": 46.9,
+        "x1": 427.5,
+        "y1": 49.1,
+        "topY": 1.4107027359306807,
+        "bottomY": 0.06070273593068056,
+        "disabled": false
+      },
+      {
+        "x0": 466,
+        "y0": 46.8,
+        "x1": 474,
+        "y1": 49.2,
+        "topY": 1.3916239596903321,
+        "bottomY": 0.04162395969033203,
+        "disabled": false
+      },
+      {
+        "x0": 436.5,
+        "y0": 95,
+        "x1": 439.5,
+        "y1": 97,
+        "topY": 1.2539243647363036,
+        "bottomY": 0.0039243647363036635,
+        "disabled": true,
+        "_solidQueryStamp": 383
+      },
+      {
+        "x0": 436.79589402097514,
+        "y0": 220.39828664143954,
+        "x1": 438.0958940209751,
+        "y1": 221.69828664143955,
+        "topY": 7.1734245186310455,
+        "bottomY": 2.573424518631046
+      },
+      {
+        "x0": 436.1704129171626,
+        "y0": 227.38175092421304,
+        "x1": 437.47041291716255,
+        "y1": 228.68175092421305,
+        "topY": 7.314790686312209,
+        "bottomY": 2.7147906863122095
+      },
+      {
+        "x0": 434.1374173697905,
+        "y0": 223.47558818337043,
+        "x1": 436.1374173697905,
+        "y1": 225.27558818337044,
+        "topY": 3.7124562932520604,
+        "bottomY": 2.6624562932520606
+      },
+      {
+        "x0": 414.52873245945085,
+        "y0": 448.18067511146677,
+        "x1": 415.34123245945085,
+        "y1": 448.99317511146677,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401
+      },
+      {
+        "x0": 415.3411072429426,
+        "y0": 448.1664111307201,
+        "x1": 416.1536072429426,
+        "y1": 448.9789111307201,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 416.15348202643435,
+        "y0": 448.1521471499735,
+        "x1": 416.96598202643435,
+        "y1": 448.9646471499735,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 416.9658568099261,
+        "y0": 448.1378831692268,
+        "x1": 417.7783568099261,
+        "y1": 448.9503831692268,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 417.7782315934178,
+        "y0": 448.12361918848023,
+        "x1": 418.5907315934178,
+        "y1": 448.93611918848023,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 418.59060637690953,
+        "y0": 448.1093552077336,
+        "x1": 419.40310637690953,
+        "y1": 448.9218552077336,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 419.4029811604013,
+        "y0": 448.09509122698694,
+        "x1": 420.2154811604013,
+        "y1": 448.90759122698694,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 420.21535594389303,
+        "y0": 448.0808272462403,
+        "x1": 421.02785594389303,
+        "y1": 448.8933272462403,
+        "topY": 4.856240627382401,
+        "bottomY": 3.706240627382401,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 417.40175035434544,
+        "y0": 452.2855766220234,
+        "x1": 419.6017503543455,
+        "y1": 454.1855766220234,
+        "topY": 4.747097601385975,
+        "bottomY": 3.697097601385975,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 419.3142802852371,
+        "y0": 443.9263712344959,
+        "x1": 421.3142802852371,
+        "y1": 445.72637123449584,
+        "topY": 5.177792599388814,
+        "bottomY": 3.6777925993888148,
+        "_solidQueryStamp": 328
+      },
+      {
+        "x0": 208.37080858795233,
+        "y0": 692.799081696821,
+        "x1": 211.7708085879523,
+        "y1": 695.0990816968209,
+        "topY": 24.162979056344533,
+        "bottomY": 21.662979056344533
+      },
+      {
+        "x0": 209.47253722370186,
+        "y0": 696.9999205444448,
+        "x1": 211.27253722370187,
+        "y1": 698.5999205444447,
+        "topY": 22.73942293687775,
+        "bottomY": 21.68942293687775
+      },
+      {
+        "x0": 361.7755612828439,
+        "y0": 554.0228009108298,
+        "x1": 362.5880612828439,
+        "y1": 554.8353009108298,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 362.58601491210993,
+        "y0": 554.0804304588893,
+        "x1": 363.39851491210993,
+        "y1": 554.8929304588893,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 363.39646854137595,
+        "y0": 554.1380600069488,
+        "x1": 364.20896854137595,
+        "y1": 554.9505600069488,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 364.206922170642,
+        "y0": 554.1956895550082,
+        "x1": 365.019422170642,
+        "y1": 555.0081895550082,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 365.017375799908,
+        "y0": 554.2533191030678,
+        "x1": 365.829875799908,
+        "y1": 555.0658191030678,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 365.827829429174,
+        "y0": 554.3109486511273,
+        "x1": 366.640329429174,
+        "y1": 555.1234486511273,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 366.63828305844004,
+        "y0": 554.3685781991868,
+        "x1": 367.45078305844004,
+        "y1": 555.1810781991868,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 367.44873668770606,
+        "y0": 554.4262077472463,
+        "x1": 368.26123668770606,
+        "y1": 555.2387077472463,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4638784608065238
+      },
+      {
+        "x0": 368.1373647508563,
+        "y0": 551.489789274809,
+        "x1": 370.33736475085635,
+        "y1": 553.3897892748091,
+        "topY": 1.6133218364136483,
+        "bottomY": 0.5633218364136483
+      },
+      {
+        "x0": 359.6907903244426,
+        "y0": 552.5175753320683,
+        "x1": 361.6907903244426,
+        "y1": 554.3175753320683,
+        "topY": 2.0018377726295418,
+        "bottomY": 0.5018377726295418
+      },
+      {
+        "x0": 425.48483085590806,
+        "y0": 250.3323807371393,
+        "x1": 428.48483085590806,
+        "y1": 253.3323807371393,
+        "topY": 6.865690268449543,
+        "bottomY": 3.0656902684495435
+      },
+      {
+        "x0": 430.284830855908,
+        "y0": 250.3323807371393,
+        "x1": 433.284830855908,
+        "y1": 253.3323807371393,
+        "topY": 6.843025037243459,
+        "bottomY": 3.043025037243459
+      },
+      {
+        "x0": 426.38483085590804,
+        "y0": 254.78238073713928,
+        "x1": 432.38483085590804,
+        "y1": 255.28238073713928,
+        "topY": 4.164004576347856,
+        "bottomY": 3.064004576347856
+      },
+      {
+        "x0": 428.834830855908,
+        "y0": 247.88238073713927,
+        "x1": 429.93483085590805,
+        "y1": 248.9823807371393,
+        "topY": 7.245603638550909,
+        "bottomY": 3.045603638550909
+      },
+      {
+        "x0": 223.7177133693637,
+        "y0": 739.4651687604671,
+        "x1": 225.7177133693637,
+        "y1": 741.4651687604671,
+        "topY": 31.16758253729139,
+        "bottomY": 20.16758253729139,
+        "_solidQueryStamp": 293
+      },
+      {
+        "x0": 301,
+        "y0": 625.725,
+        "x1": 307,
+        "y1": 626.275,
+        "topY": 4.211554574966432,
+        "bottomY": 3.161554574966432,
+        "_solidQueryStamp": 172
+      },
+      {
+        "x0": 417.4,
+        "y0": 584.725,
+        "x1": 422.6,
+        "y1": 585.275,
+        "topY": 2.3827326774597166,
+        "bottomY": 1.3327326774597168
+      },
+      {
+        "x0": 358.74211593366925,
+        "y0": 449.3515503669507,
+        "x1": 361.55351148151095,
+        "y1": 452.1629459147924,
+        "topY": 7.188163919466595,
+        "bottomY": 3.8893420017688074
+      },
+      {
+        "x0": 210.5651829419832,
+        "y0": 460.5134291602473,
+        "x1": 214.07181694822503,
+        "y1": 464.02006316648914,
+        "topY": 48.726716283668,
+        "bottomY": 44.68630667701008
+      },
+      {
+        "x0": 320.1212941409205,
+        "y0": 105.90252286951291,
+        "x1": 322.6156980990316,
+        "y1": 108.39692682762397,
+        "topY": 41.04937362465657,
+        "bottomY": 38.08867606933809,
+        "_solidQueryStamp": 245
+      },
+      {
+        "x0": 652.9857219031721,
+        "y0": 648.5792587346107,
+        "x1": 655.4092119613022,
+        "y1": 651.0027487927407,
+        "topY": 21.622136498949256,
+        "bottomY": 18.737080436943796
+      },
+      {
+        "x0": 498.41548689727205,
+        "y0": 375.0822728601517,
+        "x1": 500.7728282260476,
+        "y1": 377.43961418892724,
+        "topY": 5.7565947703847264,
+        "bottomY": 2.942097353024182,
+        "_solidQueryStamp": 205
+      },
+      {
+        "x0": 500.9627576627128,
+        "y0": 267.9853876762383,
+        "x1": 503.47281175774407,
+        "y1": 270.49544177126955,
+        "topY": 5.80622473601959,
+        "bottomY": 2.8288337013196143,
+        "_solidQueryStamp": 240
+      },
+      {
+        "x0": 336.0734316647751,
+        "y0": 190.3586198703153,
+        "x1": 339.2370392441051,
+        "y1": 193.5222274496453,
+        "topY": 25.058559085072712,
+        "bottomY": 21.384044333787397,
+        "_solidQueryStamp": 255
+      },
+      {
+        "x0": 351.2910482753825,
+        "y0": 386.00167253062244,
+        "x1": 353.4536397735763,
+        "y1": 388.16426402881626,
+        "topY": 6.919489520000777,
+        "bottomY": 4.312725255260728,
+        "_solidQueryStamp": 339
+      },
+      {
+        "x0": 250.18102152283535,
+        "y0": 472.1888089367305,
+        "x1": 252.61594729487553,
+        "y1": 474.62373470877066,
+        "topY": 26.04896999399798,
+        "bottomY": 23.151715837155148,
+        "_solidQueryStamp": 233
+      },
+      {
+        "x0": 503.46633200384093,
+        "y0": 440.6465450752468,
+        "x1": 505.19791799747037,
+        "y1": 442.37813106887626,
+        "topY": 7.609022631543203,
+        "bottomY": 5.461997571671827,
+        "_solidQueryStamp": 331
+      },
+      {
+        "x0": 594.9637102562003,
+        "y0": 479.3340359481983,
+        "x1": 598.5566874367184,
+        "y1": 482.9270131287165,
+        "topY": 28.169076183268455,
+        "bottomY": 24.036567190715697,
+        "_solidQueryStamp": 247
+      },
+      {
+        "x0": 483.1422003708023,
+        "y0": 200.2794843889016,
+        "x1": 484.8826595791441,
+        "y1": 202.0199435972434,
+        "topY": 4.544109284570969,
+        "bottomY": 2.387619462339736
+      },
+      {
+        "x0": 318.3117117179092,
+        "y0": 493.6461461154278,
+        "x1": 320.34818647378125,
+        "y1": 495.6826208712999,
+        "topY": 6.349172467682944,
+        "bottomY": 3.876932728086101,
+        "_solidQueryStamp": 341
+      },
+      {
+        "x0": 175.93085642946534,
+        "y0": 558.1423503164726,
+        "x1": 178.254449478857,
+        "y1": 560.4659433658642,
+        "topY": 5.991729804159085,
+        "bottomY": 3.2132305514746706,
+        "_solidQueryStamp": 229
+      },
+      {
+        "x0": 534.0708322040621,
+        "y0": 742.3561611361686,
+        "x1": 535.6466331370291,
+        "y1": 743.9319620691356,
+        "topY": 5.871858341770855,
+        "bottomY": 3.891004013272611,
+        "_solidQueryStamp": 340
+      },
+      {
+        "x0": 556.9837934501877,
+        "y0": 132.20598559607168,
+        "x1": 559.6075733027944,
+        "y1": 134.82976544867853,
+        "topY": 9.838311180489377,
+        "bottomY": 6.7396126710421,
+        "_solidQueryStamp": 254
+      },
+      {
+        "x0": 296.5731179918395,
+        "y0": 479.9430661480175,
+        "x1": 298.8907770608319,
+        "y1": 482.2607252170099,
+        "topY": 14.622909648986239,
+        "bottomY": 11.850739975394387,
+        "_solidQueryStamp": 332
+      },
+      {
+        "x0": 355.27058098740525,
+        "y0": 422.2999731478805,
+        "x1": 358.0906632887607,
+        "y1": 425.12005544923596,
+        "topY": 7.910744885706073,
+        "bottomY": 4.602657097593611
+      },
+      {
+        "x0": 455.31554130510193,
+        "y0": 420.5272756670485,
+        "x1": 456.90026821895736,
+        "y1": 422.11200258090395,
+        "topY": 5.276273244862537,
+        "bottomY": 3.2858978700834323
+      },
+      {
+        "x0": 217.7600361370889,
+        "y0": 491.79882574467337,
+        "x1": 219.41631324948395,
+        "y1": 493.4551028570684,
+        "topY": 6.892832997161429,
+        "bottomY": 4.826137410606724,
+        "_solidQueryStamp": 242
+      },
+      {
+        "x0": 355.95414545985403,
+        "y0": 254.32993248703423,
+        "x1": 357.9009713545209,
+        "y1": 256.2767583817011,
+        "topY": 5.0895225236229225,
+        "bottomY": 2.712908235978298
+      },
+      {
+        "x0": 673.5237126143941,
+        "y0": 647.7180926965841,
+        "x1": 675.2930819151632,
+        "y1": 649.4874619973532,
+        "topY": 54.04730987464917,
+        "bottomY": 51.85998262049539
+      },
+      {
+        "x0": 458.03342708821873,
+        "y0": 362.02338156725745,
+        "x1": 460.6273946774425,
+        "y1": 364.6173491564812,
+        "topY": 7.384258494090041,
+        "bottomY": 4.317359732251366
+      },
+      {
+        "x0": 555.1248484059063,
+        "y0": 485.28313215363886,
+        "x1": 556.4838986144575,
+        "y1": 486.6421823621902,
+        "topY": 10.77607963373033,
+        "bottomY": 9.02642607794223,
+        "_solidQueryStamp": 247
+      },
+      {
+        "x0": 514.7657932703617,
+        "y0": 769.7009164829972,
+        "x1": 516.837768816459,
+        "y1": 771.7728920290945,
+        "topY": 7.288017499660698,
+        "bottomY": 4.777910250490156,
+        "_solidQueryStamp": 348
+      },
+      {
+        "x0": 524.9943739889015,
+        "y0": 681.6637427700509,
+        "x1": 528.4944859178911,
+        "y1": 685.1638546990405,
+        "topY": 7.0166669113484526,
+        "bottomY": 2.9832141870928313,
+        "_solidQueryStamp": 241
+      },
+      {
+        "x0": 550.3940935946769,
+        "y0": 716.0890294007725,
+        "x1": 551.9688096128637,
+        "y1": 717.6637454189593,
+        "topY": 9.855991290003935,
+        "bottomY": 7.8762942039379285
+      },
+      {
+        "x0": 101.12945427852101,
+        "y0": 567.3136153231783,
+        "x1": 104.05287416917854,
+        "y1": 570.2370352138357,
+        "topY": 34.698288962896605,
+        "bottomY": 31.2799744128619,
+        "_solidQueryStamp": 214
+      },
+      {
+        "x0": 566.0682005097508,
+        "y0": 218.51124309351434,
+        "x1": 569.03665985564,
+        "y1": 221.47970243940364,
+        "topY": 52.336081848699976,
+        "bottomY": 48.86972521308475,
+        "_solidQueryStamp": 296
+      },
+      {
+        "x0": 516.4500503953489,
+        "y0": 367.38024439326836,
+        "x1": 518.7836137447564,
+        "y1": 369.713807742676,
+        "topY": 8.522046830604602,
+        "bottomY": 5.7329125912364605,
+        "_solidQueryStamp": 152
+      },
+      {
+        "x0": 488.1620916954591,
+        "y0": 429.8356955356314,
+        "x1": 490.31743822178106,
+        "y1": 431.99104206195335,
+        "topY": 5.746318353346664,
+        "bottomY": 3.1472820586032464,
+        "_solidQueryStamp": 331
+      },
+      {
+        "x0": 541.9145262366103,
+        "y0": 797.2494796415733,
+        "x1": 543.8594778502418,
+        "y1": 799.1944312552048,
+        "topY": 19.812413795111343,
+        "bottomY": 17.437798740571008,
+        "_solidQueryStamp": 348
+      },
+      {
+        "x0": 608.8801137262374,
+        "y0": 637.4435805806309,
+        "x1": 611.4771985358209,
+        "y1": 640.0406653902144,
+        "topY": 5.0893010906114515,
+        "bottomY": 2.0190772937222663,
+        "_solidQueryStamp": 295
+      },
+      {
+        "x0": 393.1220856097818,
+        "y0": 179.60955412809852,
+        "x1": 394.56733832384344,
+        "y1": 181.0548068421602,
+        "topY": 4.877284666715336,
+        "bottomY": 3.0356817717162494,
+        "_solidQueryStamp": 304
+      },
+      {
+        "x0": 107.42107059805421,
+        "y0": 527.552465051401,
+        "x1": 110.28514329345198,
+        "y1": 530.4165377467987,
+        "topY": 37.22740748815626,
+        "bottomY": 33.872396613065305,
+        "_solidQueryStamp": 344
+      },
+      {
+        "x0": 541.2218068896502,
+        "y0": 146.55436120766097,
+        "x1": 544.5917880923778,
+        "y1": 149.92434241038865,
+        "topY": 6.7663921282085155,
+        "bottomY": 2.871745511965689,
+        "_solidQueryStamp": 354
+      },
+      {
+        "x0": 214.12636844911611,
+        "y0": 776.765168481553,
+        "x1": 217.52129958472216,
+        "y1": 780.160099617159,
+        "topY": 26.424579655490792,
+        "bottomY": 22.503319777511035,
+        "_solidQueryStamp": 208
+      },
+      {
+        "x0": 173.71470412246998,
+        "y0": 730.3301307000977,
+        "x1": 175.69539206094925,
+        "y1": 732.3108186385768,
+        "topY": 28.279896779693555,
+        "bottomY": 25.86716297864903,
+        "_solidQueryStamp": 353
+      },
+      {
+        "x0": 569.0170893834322,
+        "y0": 487.63859685672213,
+        "x1": 572.4879985286505,
+        "y1": 491.1095060019405,
+        "topY": 10.807931511191342,
+        "bottomY": 6.805628422958468,
+        "_solidQueryStamp": 247
+      },
+      {
+        "x0": 148.99735713501576,
+        "y0": 565.1001325075806,
+        "x1": 151.58083213369247,
+        "y1": 567.6836075062572,
+        "topY": 8.877027670175092,
+        "bottomY": 5.821321004919963
+      },
+      {
+        "x0": 357.91939023281446,
+        "y0": 408.66144887502304,
+        "x1": 359.9298442587722,
+        "y1": 410.6719029009808,
+        "topY": 6.92857239293839,
+        "bottomY": 4.484088098583475
+      },
+      {
+        "x0": 124.51654700727086,
+        "y0": 614.665879031428,
+        "x1": 125.95731699674506,
+        "y1": 616.1066490209021,
+        "topY": 11.836981963226224,
+        "bottomY": 10.000160641120399,
+        "_solidQueryStamp": 366
+      },
+      {
+        "x0": 576.7928978141165,
+        "y0": 31.25874769797083,
+        "x1": 578.144902205863,
+        "y1": 32.61075208971742,
+        "topY": 43.45891512917927,
+        "bottomY": 41.71677711131623
+      },
+      {
+        "x0": 533.9893305086473,
+        "y0": 356.86591895007876,
+        "x1": 536.4966603583714,
+        "y1": 359.373248799803,
+        "topY": 32.138222595918116,
+        "bottomY": 29.163737422878977
+      },
+      {
+        "x0": 551.6249803309213,
+        "y0": 302.67331595019203,
+        "x1": 554.1978734131087,
+        "y1": 305.24620903237957,
+        "topY": 51.177411199046155,
+        "bottomY": 48.13299191137948
+      },
+      {
+        "x0": 165.45605618875123,
+        "y0": 606.7663063890825,
+        "x1": 168.3597736396303,
+        "y1": 609.6700238399615,
+        "topY": 10.031672245381523,
+        "bottomY": 6.634373631110539
+      },
+      {
+        "x0": 203.100613638747,
+        "y0": 746.3839780017618,
+        "x1": 206.39150799812052,
+        "y1": 749.6748723611352,
+        "topY": 25.575986045372044,
+        "bottomY": 21.76569872870699,
+        "_solidQueryStamp": 293
+      },
+      {
+        "x0": 558.2684958017373,
+        "y0": 53.32599912201404,
+        "x1": 560.307726483891,
+        "y1": 55.365229804167754,
+        "topY": 9.377699448559731,
+        "bottomY": 6.902520054262429,
+        "_solidQueryStamp": 351
+      },
+      {
+        "x0": 133.25900107789784,
+        "y0": 627.5203480215744,
+        "x1": 136.28963038157673,
+        "y1": 630.5509773252531,
+        "topY": 14.05003562430711,
+        "bottomY": 10.517364367049648,
+        "_solidQueryStamp": 363
+      },
+      {
+        "x0": 110.62951141725644,
+        "y0": 680.6412264494168,
+        "x1": 112.63090281058685,
+        "y1": 682.6426178427471,
+        "topY": 48.73561764555444,
+        "bottomY": 46.30080015933534
+      },
+      {
+        "x0": 491.2026089673677,
+        "y0": 676.4193778736939,
+        "x1": 492.1147656947795,
+        "y1": 677.3315346011055,
+        "topY": 8.192127871603054,
+        "bottomY": 4.2118076065334495,
+        "_solidQueryStamp": 261
+      },
+      {
+        "x0": 221.5077266547887,
+        "y0": 557.979350987212,
+        "x1": 222.9681018573989,
+        "y1": 559.4397261898221,
+        "topY": 9.338213765965675,
+        "bottomY": 2.9656674273031696
+      },
+      {
+        "x0": 468.6418860437015,
+        "y0": 714.7124890637906,
+        "x1": 469.62777375512684,
+        "y1": 715.6983767752158,
+        "topY": 8.816464532232125,
+        "bottomY": 4.5144090641944015
+      },
+      {
+        "x0": 481.9041523011468,
+        "y0": 619.3580797651655,
+        "x1": 482.8587297885512,
+        "y1": 620.31265725257,
+        "topY": 7.014324651930625,
+        "bottomY": 2.848895615983898,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 357.4754429349093,
+        "y0": 379.58867500882803,
+        "x1": 358.5029205830883,
+        "y1": 380.61615265700704,
+        "topY": 9.189019213362162,
+        "bottomY": 4.705480384944503,
+        "_solidQueryStamp": 298
+      },
+      {
+        "x0": 494.9854942817767,
+        "y0": 624.1455064923546,
+        "x1": 496.269754918722,
+        "y1": 625.4297671292998,
+        "topY": 9.075313896951963,
+        "bottomY": 3.4712674811908495
+      },
+      {
+        "x0": 404.82961837355856,
+        "y0": 181.19772572834765,
+        "x1": 405.9650335196068,
+        "y1": 182.3331408743958,
+        "topY": 7.895195740338034,
+        "bottomY": 2.9406569212186997,
+        "_solidQueryStamp": 304
+      },
+      {
+        "x0": 242.8918127079577,
+        "y0": 623.5157026803876,
+        "x1": 244.27250151941914,
+        "y1": 624.8963914918489,
+        "topY": 14.17353959546659,
+        "bottomY": 8.148715690907572
+      },
+      {
+        "x0": 413.8939177540394,
+        "y0": 180.93442055132468,
+        "x1": 414.94168335248094,
+        "y1": 181.98218614976614,
+        "topY": 6.728264254964011,
+        "bottomY": 2.156196189037578,
+        "_solidQueryStamp": 304
+      },
+      {
+        "x0": 310.35277726299296,
+        "y0": 503.4540621708718,
+        "x1": 312.00000260396564,
+        "y1": 505.1012875118445,
+        "topY": 11.689997798193364,
+        "bottomY": 4.50210540122178,
+        "_solidQueryStamp": 235
+      },
+      {
+        "x0": 299.84862745566005,
+        "y0": 750.1646232306215,
+        "x1": 301.30186907869944,
+        "y1": 751.6178648536608,
+        "topY": 11.891929335753312,
+        "bottomY": 5.550511344308845,
+        "_solidQueryStamp": 317
+      },
+      {
+        "x0": 433.8466231154577,
+        "y0": 434.3457918486542,
+        "x1": 434.74020489408366,
+        "y1": 435.23937362728014,
+        "topY": 7.461660262968159,
+        "bottomY": 3.562394319873071,
+        "_solidQueryStamp": 328
+      },
+      {
+        "x0": 424.3133663509961,
+        "y0": 450.61407080871817,
+        "x1": 425.322973242713,
+        "y1": 451.62367770043505,
+        "topY": 8.055473227304587,
+        "bottomY": 3.6499158816311446,
+        "_solidQueryStamp": 262
+      },
+      {
+        "x0": 343.8793580060398,
+        "y0": 445.53246554459594,
+        "x1": 345.41468959595005,
+        "y1": 447.0677971345062,
+        "topY": 11.191114284301065,
+        "bottomY": 4.4914855283292745
+      },
+      {
+        "x0": 469.0714513082279,
+        "y0": 314.44638919655034,
+        "x1": 470.1232997972321,
+        "y1": 315.49823768555456,
+        "topY": 9.605380037065448,
+        "bottomY": 5.015495721410813,
+        "_solidQueryStamp": 367
+      },
+      {
+        "x0": 329.29296027430087,
+        "y0": 381.7209475155117,
+        "x1": 330.7192182615049,
+        "y1": 383.14720550271574,
+        "topY": 15.156482846884108,
+        "bottomY": 8.932811629993893
+      },
+      {
+        "x0": 442.81662558628676,
+        "y0": 345.17428833086274,
+        "x1": 443.91178112978076,
+        "y1": 346.26944387435674,
+        "topY": 10.176782128969823,
+        "bottomY": 5.397921575541293
+      },
+      {
+        "x0": 164.17318813810462,
+        "y0": 711.5539775480046,
+        "x1": 165.1407465460604,
+        "y1": 712.5215359559603,
+        "topY": 26.373996632799315,
+        "bottomY": 22.151923579901265,
+        "_solidQueryStamp": 353
+      },
+      {
+        "x0": 313.3139759387317,
+        "y0": 718.5857999973608,
+        "x1": 314.3599176942938,
+        "y1": 719.631741752923,
+        "topY": 6.876115526401696,
+        "bottomY": 2.3120060475853053
+      },
+      {
+        "x0": 613.6374826959815,
+        "y0": 646.3988086615216,
+        "x1": 614.6633385802214,
+        "y1": 647.4246645457615,
+        "topY": 7.851702191770642,
+        "bottomY": 3.375240151450604,
+        "_solidQueryStamp": 283
+      },
+      {
+        "x0": 424.31737917787467,
+        "y0": 526.9459931914553,
+        "x1": 425.6034591204913,
+        "y1": 528.2320731340719,
+        "topY": 7.71455136837111,
+        "bottomY": 2.1025661642257982,
+        "_solidQueryStamp": 320
+      },
+      {
+        "x0": 236.60616296110365,
+        "y0": 588.4825432362553,
+        "x1": 237.69442144788027,
+        "y1": 589.5708017230319,
+        "topY": 9.07600483100029,
+        "bottomY": 4.32724052506598,
+        "_solidQueryStamp": 197
+      },
+      {
+        "x0": 440.49333048307125,
+        "y0": 787.7409117047002,
+        "x1": 441.59284603246743,
+        "y1": 788.8404272540963,
+        "topY": 9.766936373523839,
+        "bottomY": 4.96905033979512
+      },
+      {
+        "x0": 379.6802519435179,
+        "y0": 157.7580314547986,
+        "x1": 380.5812148703425,
+        "y1": 158.65899438162322,
+        "topY": 5.6589872306203395,
+        "bottomY": 1.7275126408403667
+      },
+      {
+        "x0": 387.75829495134724,
+        "y0": 343.4635043911213,
+        "x1": 388.8764386862466,
+        "y1": 344.5816481260207,
+        "topY": 11.086003574871038,
+        "bottomY": 6.206830913492058,
+        "_solidQueryStamp": 302
+      },
+      {
+        "x0": 396.6445813543077,
+        "y0": 212.3139350991061,
+        "x1": 398.2191506064643,
+        "y1": 213.88850435126275,
+        "topY": 9.57825197762217,
+        "bottomY": 2.707404331847687,
+        "_solidQueryStamp": 257
+      },
+      {
+        "x0": 496.19492571423336,
+        "y0": 771.2678872274614,
+        "x1": 497.4022636589784,
+        "y1": 772.4752251722066,
+        "topY": 10.658908882166365,
+        "bottomY": 5.390525123278716,
+        "_solidQueryStamp": 223
+      },
+      {
+        "x0": 487.63029944848563,
+        "y0": 705.2090963815797,
+        "x1": 488.7413490187919,
+        "y1": 706.3201459518859,
+        "topY": 8.458916615360547,
+        "bottomY": 3.610700308569838,
+        "_solidQueryStamp": 278
+      },
+      {
+        "x0": 495.7278925132373,
+        "y0": 411.7600454738651,
+        "x1": 496.6639651924878,
+        "y1": 412.6961181531156,
+        "topY": 7.439731295266194,
+        "bottomY": 3.355050513082188,
+        "_solidQueryStamp": 250
+      },
+      {
+        "x0": 380.8560647960877,
+        "y0": 493.43626223624796,
+        "x1": 382.15430056937817,
+        "y1": 494.7344980095384,
+        "topY": 8.233117025653009,
+        "bottomY": 2.5680881967489753,
+        "_solidQueryStamp": 281
+      },
+      {
+        "x0": 249.657950415447,
+        "y0": 591.768818657294,
+        "x1": 251.21826865007975,
+        "y1": 593.3291368919266,
+        "topY": 12.169154850674982,
+        "bottomY": 5.360493463186736,
+        "_solidQueryStamp": 197
+      },
+      {
+        "x0": 426.2235786988937,
+        "y0": 174.9553976408308,
+        "x1": 427.4184906257061,
+        "y1": 176.1503095676433,
+        "topY": 6.804029446320417,
+        "bottomY": 1.5898683111386318
+      },
+      {
+        "x0": 508.2764530855113,
+        "y0": 659.5982726445372,
+        "x1": 509.16739397673155,
+        "y1": 660.4892135357575,
+        "topY": 8.387860563305578,
+        "bottomY": 4.500118492526374,
+        "_solidQueryStamp": 265
+      },
+      {
+        "x0": 307.08387567085305,
+        "y0": 779.6201209665718,
+        "x1": 308.0698422459382,
+        "y1": 780.6060875416571,
+        "topY": 10.847761748508901,
+        "bottomY": 6.545362148137184
+      },
+      {
+        "x0": 347.78223222903966,
+        "y0": 326.477462682505,
+        "x1": 349.15087722085013,
+        "y1": 327.8461076743155,
+        "topY": 9.524774042344507,
+        "bottomY": 3.5525049871717056,
+        "_solidQueryStamp": 221
+      },
+      {
+        "x0": 232.7764082817446,
+        "y0": 598.1084599513691,
+        "x1": 234.38271393492275,
+        "y1": 599.7147656045473,
+        "topY": 11.735472425033729,
+        "bottomY": 4.726138665710966
+      },
+      {
+        "x0": 329.29999999999995,
+        "y0": 683,
+        "x1": 342,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 378,
+        "y0": 683,
+        "x1": 390.70000000000005,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 351.4,
+        "y0": 616.75,
+        "x1": 352,
+        "y1": 619.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 616.75,
+        "x1": 368.6,
+        "y1": 619.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 616.75,
+        "x1": 368,
+        "y1": 619.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "front"
+      },
+      {
+        "x0": 351.4,
+        "y0": 658.75,
+        "x1": 352,
+        "y1": 661.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 658.75,
+        "x1": 368.6,
+        "y1": 661.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 658.75,
+        "x1": 368,
+        "y1": 661.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "bio_lab"
+      },
+      {
+        "x0": 351.4,
+        "y0": 682.75,
+        "x1": 352,
+        "y1": 685.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 682.75,
+        "x1": 368.6,
+        "y1": 685.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 682.75,
+        "x1": 368,
+        "y1": 685.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "vault_north"
+      },
+      {
+        "x0": 351.4,
+        "y0": 688.75,
+        "x1": 352,
+        "y1": 691.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 688.75,
+        "x1": 368.6,
+        "y1": 691.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 688.75,
+        "x1": 368,
+        "y1": 691.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_access"
+      },
+      {
+        "x0": 351.4,
+        "y0": 734.05,
+        "x1": 352,
+        "y1": 735.95,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 734.05,
+        "x1": 368.6,
+        "y1": 735.95,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 734.05,
+        "x1": 368,
+        "y1": 735.95,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_security"
+      },
+      {
+        "x0": 409.05,
+        "y0": 744.4,
+        "x1": 410.95,
+        "y1": 745,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 409.05,
+        "y0": 759,
+        "x1": 410.95,
+        "y1": 759.6,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 409.05,
+        "y0": 745,
+        "x1": 410.95,
+        "y1": 759,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_emergency"
+      },
+      {
+        "x0": 449.05,
+        "y0": 745.4,
+        "x1": 450.95,
+        "y1": 746,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 449.05,
+        "y0": 758,
+        "x1": 450.95,
+        "y1": 758.6,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 449.05,
+        "y0": 746,
+        "x1": 450.95,
+        "y1": 758,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_emergency_exit"
+      },
+      {
+        "x0": 443.5,
+        "y0": 71.75,
+        "x1": 458.5,
+        "y1": 76.25,
+        "topY": 14.300037914327367,
+        "bottomY": 0.30003791432736726,
+        "_solidQueryStamp": 427
+      }
+    ],
+    "sections": [
+      {
+        "name": "shell",
+        "objects": 23,
+        "solids": 12
+      },
+      {
+        "name": "hall",
+        "objects": 219,
+        "solids": 44
+      },
+      {
+        "name": "staging",
+        "objects": 3,
+        "solids": 28
+      },
+      {
+        "name": "laboratory",
+        "objects": 10,
+        "solids": 60
+      },
+      {
+        "name": "exterior",
+        "objects": 1,
+        "solids": 2
+      },
+      {
+        "name": "interior",
+        "objects": 1,
+        "solids": 0
+      }
+    ],
+    "trees": [
+      {
+        "position": [
+          491.6586873310736,
+          676.8754562373997,
+          4.2118076065334495
+        ],
+        "rotation": [
+          0,
+          0,
+          4.510946060564221,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          222.2379142560938,
+          558.709538588517,
+          2.9656674273031696
+        ],
+        "rotation": [
+          0,
+          0,
+          4.0361815404877275,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          469.13482989941417,
+          715.2054329195032,
+          4.5144090641944015
+        ],
+        "rotation": [
+          0,
+          0,
+          4.898384734620137,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          482.381441044849,
+          619.8353685088678,
+          2.848895615983898
+        ],
+        "rotation": [
+          0,
+          0,
+          1.9843917113199379,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          357.9891817589988,
+          380.10241383291753,
+          4.705480384944503
+        ],
+        "rotation": [
+          0,
+          0,
+          0.4811169887508826,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          495.62762460024936,
+          624.7876368108272,
+          3.4712674811908495
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7320813582895556,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          405.39732594658267,
+          181.76543330137173,
+          2.9406569212186997
+        ],
+        "rotation": [
+          0,
+          0,
+          0.8053724299201095,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          243.58215711368842,
+          624.2060470861182,
+          8.148715690907572
+        ],
+        "rotation": [
+          0,
+          0,
+          6.147199351893,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          414.4178005532602,
+          181.4583033505454,
+          2.156196189037578
+        ],
+        "rotation": [
+          0,
+          0,
+          0.5329100468025,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          311.1763899334793,
+          504.27767484135813,
+          4.50210540122178
+        ],
+        "rotation": [
+          0,
+          0,
+          1.054885443664368,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          300.57524826717975,
+          750.8912440421411,
+          5.550511344308845
+        ],
+        "rotation": [
+          0,
+          0,
+          4.483328993585386,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          434.2934140047707,
+          434.79258273796717,
+          3.562394319873071
+        ],
+        "rotation": [
+          0,
+          0,
+          6.115822591302121,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          424.81816979685453,
+          451.1188742545766,
+          3.6499158816311446
+        ],
+        "rotation": [
+          0,
+          0,
+          6.060511882360509,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          344.64702380099493,
+          446.30013133955106,
+          4.4914855283292745
+        ],
+        "rotation": [
+          0,
+          0,
+          5.099612118331234,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          469.59737555273,
+          314.97231344105245,
+          5.015495721410813
+        ],
+        "rotation": [
+          0,
+          0,
+          2.082882589083187,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          330.0060892679029,
+          382.4340765091137,
+          8.932811629993893
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7068590413931024,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          443.36420335803376,
+          345.72186610260974,
+          5.397921575541293
+        ],
+        "rotation": [
+          0,
+          0,
+          2.754327720073724,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          164.6569673420825,
+          712.0377567519824,
+          22.151923579901265
+        ],
+        "rotation": [
+          0,
+          0,
+          2.5157474617911855,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          313.83694681651275,
+          719.1087708751419,
+          2.3120060475853053
+        ],
+        "rotation": [
+          0,
+          0,
+          4.352110005136388,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          614.1504106381014,
+          646.9117366036415,
+          3.375240151450604
+        ],
+        "rotation": [
+          0,
+          0,
+          4.130482193699876,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          424.960419149183,
+          527.5890331627636,
+          2.1025661642257982
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7069007053,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          237.15029220449196,
+          589.0266724796436,
+          4.32724052506598
+        ],
+        "rotation": [
+          0,
+          0,
+          0.2839098151033863,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          441.04308825776934,
+          788.2906694793983,
+          4.96905033979512
+        ],
+        "rotation": [
+          0,
+          0,
+          3.1919572701525176,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          380.1307334069302,
+          158.20851291821091,
+          1.7275126408403667
+        ],
+        "rotation": [
+          0,
+          0,
+          5.1762979739077855,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          388.3173668187969,
+          344.022576258571,
+          6.206830913492058
+        ],
+        "rotation": [
+          0,
+          0,
+          4.442129633398092,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          397.431865980386,
+          213.10121972518442,
+          2.707404331847687
+        ],
+        "rotation": [
+          0,
+          0,
+          0.35005617685628715,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          496.7985946866059,
+          771.871556199834,
+          5.390525123278716
+        ],
+        "rotation": [
+          0,
+          0,
+          4.664260583323769,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          488.18582423363875,
+          705.7646211667328,
+          3.610700308569838
+        ],
+        "rotation": [
+          0,
+          0,
+          0.8437985246011916,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          496.19592885286255,
+          412.22808181349035,
+          3.355050513082188
+        ],
+        "rotation": [
+          0,
+          0,
+          5.1566524060596,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          381.50518268273294,
+          494.0853801228932,
+          2.5680881967489753
+        ],
+        "rotation": [
+          0,
+          0,
+          1.0886985129144247,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          250.43810953276338,
+          592.5489777746103,
+          5.360493463186736
+        ],
+        "rotation": [
+          0,
+          0,
+          4.200968249269873,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          426.8210346622999,
+          175.55285360423704,
+          1.5898683111386318
+        ],
+        "rotation": [
+          0,
+          0,
+          5.005823047571405,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          508.72192353112143,
+          660.0437430901474,
+          4.500118492526374
+        ],
+        "rotation": [
+          0,
+          0,
+          3.4810078276627454,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          307.57685895839563,
+          780.1131042541144,
+          6.545362148137184
+        ],
+        "rotation": [
+          0,
+          0,
+          5.787426822791641,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          348.4665547249449,
+          327.16178517841024,
+          3.5525049871717056
+        ],
+        "rotation": [
+          0,
+          0,
+          5.038530981691005,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          233.57956110833368,
+          598.9116127779582,
+          4.726138665710966
+        ],
+        "rotation": [
+          0,
+          0,
+          1.0436815802241988,
+          "XYZ"
+        ]
+      }
+    ],
+    "terrain": [
+      {
+        "x": 330,
+        "y": 795,
+        "h": 1.4710455076283324e-15
+      },
+      {
+        "x": 370,
+        "y": 798,
+        "h": 0.09631031155586572
+      },
+      {
+        "x": 370,
+        "y": 800,
+        "h": 0.25131869316101074
+      },
+      {
+        "x": 370,
+        "y": 820,
+        "h": 0.25131869316101074
+      },
+      {
+        "x": 370,
+        "y": 850,
+        "h": 0.25131869316101074
+      },
+      {
+        "x": 370,
+        "y": 870,
+        "h": 0.25131869316101074
+      },
+      {
+        "x": 370,
+        "y": 900,
+        "h": 0.25131869316101074
+      }
+    ],
+    "cleanup": null
+  },
+  "passed": true
+}

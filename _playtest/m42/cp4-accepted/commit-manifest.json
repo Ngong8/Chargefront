@@ -1,0 +1,1413 @@
+{
+  "branch": "milestone-4.2-cp4",
+  "startingHead": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "commitMessage": "feat: finalize milestone 4.2 CP4 campaign terrain and exterior refinements",
+  "selfHashOmitted": true,
+  "files": [
+    {
+      "path": "_playtest/m42/cp4-accepted/commit-manifest.json",
+      "reasons": [
+        "acceptance/curation ledger",
+        "direct accepted gallery link"
+      ],
+      "bytes": null,
+      "sha256": null
+    },
+    {
+      "path": "_playtest/m42/cp4-accepted/finalization.json",
+      "reasons": [
+        "acceptance/curation ledger",
+        "direct accepted gallery link"
+      ],
+      "bytes": 4772,
+      "sha256": "4818964cac7be2a9863b938d6fb7e6322045ef0fd41899cf9d4f796b8e91fc08"
+    },
+    {
+      "path": "_playtest/m42/cp4-accepted/INDEX.html",
+      "reasons": [
+        "acceptance/curation ledger",
+        "accepted review gallery"
+      ],
+      "bytes": 4830,
+      "sha256": "cc45002f38e0bb88bf3bf295837e121156ef68bedb99bfa1ce89d2f9f0e876d5"
+    },
+    {
+      "path": "_playtest/m42/cp4-accepted/README.md",
+      "reasons": [
+        "acceptance/curation ledger",
+        "direct accepted gallery link"
+      ],
+      "bytes": 3140,
+      "sha256": "ae86800f224c08daedac926eb0283436bc1e9a8706c7e994063b58b2597235cc"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/after/edge/minimap-crop.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 19663,
+      "sha256": "a6e085525af89155188628aabb9768f1782c9023e4e11d461fae4b12ffdcb916"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/baseline-canonical/edge/manifest.json",
+      "reasons": [
+        "required historical test baseline fixture"
+      ],
+      "bytes": 551952,
+      "sha256": "32f99f80218cf139895ad07812417d1ab597e73f5896be4f957533ee5a911439"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/baseline-canonical/firefox/manifest.json",
+      "reasons": [
+        "required historical test baseline fixture"
+      ],
+      "bytes": 551959,
+      "sha256": "ee025c1f38a3495f4b48c190c1218e6b16a53e3f70f1793dae3722a6f325b3bf"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/before-gameplay/edge/minimap-crop.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 18579,
+      "sha256": "103f3859d73e33ca4b73e1753cd4a35c4fdb7e714c6ddfaa5762cf4d72f1cbf9"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/before/edge/src-world-campaign-terrain.js",
+      "reasons": [
+        "required historical test baseline fixture"
+      ],
+      "bytes": 4878,
+      "sha256": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/final-checks.json",
+      "reasons": [
+        "historical immutable checkpoint receipt"
+      ],
+      "bytes": 17512,
+      "sha256": "fdf85b297ec6197a0c1894dd7666901c06febaad18152dc563df0d78067f5980"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native-edge.json",
+      "reasons": [
+        "source receipt for successful selected run",
+        "direct accepted gallery link"
+      ],
+      "bytes": 2117,
+      "sha256": "dfd0b542d576ba2c219d57221a22d992151dd33ae4c398795115d95e4e756e4e"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/campaign-edge/m1-approach-native.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 358983,
+      "sha256": "d1b09205ef806469de78237cc3ec01173deb7bb8a5c1ed76cdd1d0ea76e74c5e"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/campaign-edge/m2-gamma-native.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 713855,
+      "sha256": "7b8aa98665258a11ffdb2d8595eecfedd5d3183605985ced7bc51a34aacc5a72"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/campaign-edge/m3-front-interior.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 376312,
+      "sha256": "e592a92a9a76beb8cd040c881d44b9ba53d9fdf585e5f33cd1d7264abbdb0eee"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/campaign-edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 74158,
+      "sha256": "8bcf625a4818bea56a4cb567a5156bf0214fa3cadc04a1dfb5e8e1ec0d7f2ce3"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/cp4-traversal-evacuation.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1559,
+      "sha256": "5b41f44143d94537985fa2afc22d45a47c1365e4c0dfcb89709345ae6653ba9a"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/cp4-traversal.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3124,
+      "sha256": "f4a32d70fee09581258ad45429f9ec8bac991631f2f220e09701027dd35a3c9f"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/environment-placement-edge.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 840354,
+      "sha256": "0180bdd81657e573b29d54e55de40acb0b4124319a1ee3c9862c27531b2d3f41"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/environment-placement-endless-only.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1241,
+      "sha256": "0a7d0dbcfc95ffea5bdcbd2d948206162acf302f9e2e5f32484430d3fd2ee6b6"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/evacuation-edge/m4-boarding-native.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 572095,
+      "sha256": "43bcaa81ccabf5d0c688bc57a6cfc7fb44a92f4a517e2a0e3370ca9d12fa77e3"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/evacuation-edge/m4-evacuation-405.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 609768,
+      "sha256": "a3a75910459d49c49886c2de86b752f9cf497974f5e1afdcbf4b16fb6de8d29a"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/native/edge/evacuation-edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 35326,
+      "sha256": "cf4dfbf8b0e4e27b7ba0114f187e2f9ebda5970d7a38595c5bce99addf77337a"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/review/alpha-gamma.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 1061618,
+      "sha256": "3bc7d8a2ce5e6b61796b78a6ef4d20a66d230142eb56e9c77be92ad8dfa37a34"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/review/backyard.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 1459056,
+      "sha256": "93a1b791f561683c5a5de582a886128eec7b8bf0cb7f176e26fd9464d39c2cb7"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/review/minimap-comparison.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 52914,
+      "sha256": "f11bb1446e59ab63dc71b8d373736904a8a47d30863955d7e8ac24d7eb3c8995"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/review/removed-props.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 646437,
+      "sha256": "370fbfa37359f30db429fde72a818356640be04fc8cd458d61de2c09a0eb08ab"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified-edge.json",
+      "reasons": [
+        "source receipt for successful selected run",
+        "direct accepted gallery link"
+      ],
+      "bytes": 4173,
+      "sha256": "16a2b8f6a4758f8ccb1d3b8bdcb1b6c44c956517a6361b9b43c4e254ff7fd437"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified-firefox.json",
+      "reasons": [
+        "source receipt for successful selected run",
+        "direct accepted gallery link"
+      ],
+      "bytes": 3500,
+      "sha256": "ab7babe68ef34b3425ce79ed14d2ba8ce38857fe3e9227ab18df211f1c2b813e"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2361,
+      "sha256": "73f890b234c5fc2a5910babf443481601d03b8dc972253f4fd518dfbc8479671"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/facility-e-integration.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3926,
+      "sha256": "34d02e82a1ce31e966002a08ad4400a31eb0e3c51197cebfb99c187ab9007167"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3952,
+      "sha256": "a83c4adebde32cae9f0a84a547f35b026a8f4d677d4edb99ebf9e783e49d7c36"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8308,
+      "sha256": "62359289a0389881a0433384dd3511fa05a52e2574a29c7b8f41f14d1644789e"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/final-exterior-refine.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 138,
+      "sha256": "8ff1587629bd49da49bf486c4ccb5410be7fa94f4312fde6f61136f8ef203035"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/route-hitscan-correction.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 340,
+      "sha256": "f9ba61e619f5f7b4722bca8b297441e1be6a824e3f4369642881cb14ef3a785e"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/edge/validation-edge/manifest.json",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 497036,
+      "sha256": "30f5edcd18b6bb768b8024030cd0a2481dd239100bda3b380e3c1d63106a3fa4"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2364,
+      "sha256": "00c4c6ad0199f45e587a66ad9894b90458be983858c0dfce5027bcfa5c007361"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 4019,
+      "sha256": "433c8a35d6d1512d96a079e0311cfd75586360a15c6cd2b705b23551be9f151b"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8307,
+      "sha256": "0d74344fd49187c634c3e44ae51fdad1dca3ff9e1df192d3a7560cd0a3c9c4c0"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/final-exterior-refine.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 141,
+      "sha256": "f9ce1c40403d13cc16ee230e035a67286959cc3ddd067c5b0fb72bac1ca29478"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/route-hitscan-correction.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 342,
+      "sha256": "c0ca83241db88bb235bfe787d1a76de987c56d39625bc5bb6640ce7651599f62"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/verified/firefox/validation-firefox/manifest.json",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 496945,
+      "sha256": "7693bcfe6fab02049f9d5a060e6e65d3710803aadff4e9fd4c81a55c2b146fbe"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/before/edge/manifest.json",
+      "reasons": [
+        "required historical test baseline fixture"
+      ],
+      "bytes": 186925,
+      "sha256": "6db5017f04c682bbafe2bfadb17e29290e96aca1838b0b5cf9b023fe8aad3d96"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/final-checks.json",
+      "reasons": [
+        "historical immutable checkpoint receipt"
+      ],
+      "bytes": 24733,
+      "sha256": "072a687fe04933d2412d41379b198e22d96d90f6c506f9848270d383e8eb7f5f"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1391,
+      "sha256": "cec3e90337815e4d87b21f7f6d3fc462319c14970aa991c951659fe242175dc3"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native-firefox.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1393,
+      "sha256": "6937433a2f82bdb7c540c54341b5d1f8e00eef237432e46d280db86beeee8ef1"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native/edge/cp4-traversal-evacuation.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1556,
+      "sha256": "f1e73372adb4fd6f4eb457bbce5de192a4afa313d5f6bac71913668f819ec2d8"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native/edge/cp4-traversal.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3121,
+      "sha256": "e6487f3f3eddc293d19f9822d6bd0f3b69baf0989bb270bcd55294b0577d7faf"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native/firefox/cp4-traversal.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3218,
+      "sha256": "1779ea83f13169694005587e82523de4062be7c3ff89eeedc633a1b8e8b7329c"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/native/firefox/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8350,
+      "sha256": "eb24a165de82e6c56df4d112937b6e5d9acb72d55775b81d832bdabf862ba597"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/review/beta.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 928084,
+      "sha256": "3fef5465f2bcdc51823bb792240bc01a8069e229aec3e2d409b62e005dc4b58c"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/review/gamma.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 704963,
+      "sha256": "e4b94bec7d8373ee66ae6031ce51800fa4c85726afe8f3400c131de8ef604aaf"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/review/m4-debris.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 610021,
+      "sha256": "f9d9ab905b312076978869fa6d029d777fef36d2badc22ba377b1d1411f7a883"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/review/rear-boundary.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 951485,
+      "sha256": "1f419943540ec2f2c646cf43f5dd8ddec0c3baf2803dd4e93a9425ece902e2ee"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/review/route-alpha.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 1487563,
+      "sha256": "7545fbc5714ddceace60b79d21a26c16b1cf7c6443ce8f2992b48b925e3b281b"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/safety-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 2122,
+      "sha256": "28ee95043cfcd8426b121f444937c5065e1332450d865ff81efbf20876fb5003"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/safety/edge/cp4-traversal-endless.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 639,
+      "sha256": "afe50190ed4963c9dc58d42325f1f046f0565bdbaa75e5a4e81ef6e705328d5e"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/safety/edge/environment-placement-endless-only.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1255,
+      "sha256": "95355881bd1d2cab482f961726cdcf764c91f73ed91ac33a093a543a56467670"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/safety/edge/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8348,
+      "sha256": "157f8afb9080d1825fbe19884aaf9e34f8b4d7374d2d6b399000e5258659e508"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 5550,
+      "sha256": "38372a5640775e62321a30a1c5afb5094392631d4fccba4383343fb67fc3f859"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/checks-edge/expanded-backyard-native.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 908956,
+      "sha256": "7e0cc6c5fe5c058f55a83daaf40c25f7176ca32038a21e1c73abc2985de5d52b"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/checks-edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 132222,
+      "sha256": "0e5ae50d9acf75542e33f6c12df3cec9ac1426452d3b56b16270ca59e8cf6943"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2361,
+      "sha256": "73f890b234c5fc2a5910babf443481601d03b8dc972253f4fd518dfbc8479671"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3954,
+      "sha256": "929081b3293180fa15745c346ab3b121f79e632e901c3cd53635bd555e3c31f6"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/prop-boundary-fix.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 357,
+      "sha256": "7bfe4d3506ebddcaa1c5c7f9d0c82388588301907d3fee8a251f2a1634122d24"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/edge/route-hitscan-correction.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 340,
+      "sha256": "f9ba61e619f5f7b4722bca8b297441e1be6a824e3f4369642881cb14ef3a785e"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/checks-firefox/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 132230,
+      "sha256": "7095b3e8f83edfc021e5a3c091a3f40d05150965f7d6a30661ef3850cfdaf726"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/checks-firefox/raised-end-native.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 564161,
+      "sha256": "e3f3b76ac05afcb8f3f4184e2d2b1dfe0e3606c4e4fce7a3189f143954302475"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2364,
+      "sha256": "00c4c6ad0199f45e587a66ad9894b90458be983858c0dfce5027bcfa5c007361"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 4011,
+      "sha256": "af9a830ac003fca477baa8a342f63c40dfc0cd04bb10580a6c34523b023043b7"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/prop-boundary-fix.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 360,
+      "sha256": "b8278a31fee552c011400271a563bbb88c163ec6b8bf42fb1e282c18b8ce4661"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/targeted/firefox/route-hitscan-correction.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 343,
+      "sha256": "42516626d4b377b9d9419e7b92783fc2bea67bbbd113753d2cdd275731da2afc"
+    },
+    {
+      "path": "_playtest/m42/cp4/comparison-final/metrics.json",
+      "reasons": [
+        "documented terrain cost and source-count comparison"
+      ],
+      "bytes": 451145,
+      "sha256": "e06694580edb9444fc7a389569a57b753e221d7f4866602da1f7beea0901e128"
+    },
+    {
+      "path": "_playtest/m42/cp4/comparison/metrics.json",
+      "reasons": [
+        "documented terrain cost and source-count comparison"
+      ],
+      "bytes": 383091,
+      "sha256": "b76fdc089d5c2850fbf955679ccc5582df034cf7ead870b898a3541412a569e1"
+    },
+    {
+      "path": "_playtest/m42/cp4/core-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 3971,
+      "sha256": "d760d4e64241efa131638bc2ad4839bc19c756ad037e4a9e61843a612e816370"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/edge/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3950,
+      "sha256": "bc71b1626d3d1b535e33d150673c43e6a5b64594a9dc2d93da0bb0d63155a4e8"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/edge/facility-enclosure.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2839,
+      "sha256": "3c2c350ac9f586a6ee8d95ed66d7c48d8bdf5729a731a44db8199c0ed917f8c5"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/edge/facility-playthrough.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3299,
+      "sha256": "1238cb9604db4052525dba8061464383bd89ec2d08a7997e3635218dd6b9e467"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/edge/sample-containment-r2.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 4905,
+      "sha256": "bb34476d3ca6adbd15ae9a5237cbde9a7b01c099be01227d843a17f354d224e0"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/firefox/facility-e0.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 4019,
+      "sha256": "d1f53701f97c4c1dc94facba532b5db2b437e7bb84e87abe3a9d32a2ab4570d5"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/firefox/facility-playthrough.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3243,
+      "sha256": "c0f67c28d001206f36b4812fd817c58084d1b57cb3fe5d5c7ccaf1fe123feb1c"
+    },
+    {
+      "path": "_playtest/m42/cp4/core/firefox/sample-containment-r2.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 4970,
+      "sha256": "8c274e93c0c9cab22aa256bcdb33a9629140c5aca94db37fabd8d1d0a2b568a8"
+    },
+    {
+      "path": "_playtest/m42/cp4/cp3-compatibility-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 2030,
+      "sha256": "8cf03759e9a59bb05b8a5d42bce6a44de42af11853d932b45b775965fc23a6c4"
+    },
+    {
+      "path": "_playtest/m42/cp4/cp3-compatibility/edge/combat-squad.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 65,
+      "sha256": "8a3c9087946b5419c331ce7236de33eab3ecd4ae7f592ad4de18d4d2a656fc05"
+    },
+    {
+      "path": "_playtest/m42/cp4/cp3-compatibility/edge/sample-lockdown-live.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 812,
+      "sha256": "40443e5cd77ff968666a7a6c7884bde7874fe66e656c9d34b7c12bb4efec3882"
+    },
+    {
+      "path": "_playtest/m42/cp4/cp3-compatibility/firefox/combat-squad.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 68,
+      "sha256": "e46f7de58be5489ca5b7d243c757774da8f80946daa4d18275775604af44063f"
+    },
+    {
+      "path": "_playtest/m42/cp4/cp3-compatibility/firefox/sample-lockdown-live.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 835,
+      "sha256": "fa6b192cfc320a473e53bb5f783f8690a9b1f45802c96dc86d937672a47ae4b0"
+    },
+    {
+      "path": "_playtest/m42/cp4/endless-parity-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1029,
+      "sha256": "a1944d12e8abaffbda5b8ba6a70824d5bc41e6f094833934840e828e2766be81"
+    },
+    {
+      "path": "_playtest/m42/cp4/endless-parity/edge/environment-placement.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1252,
+      "sha256": "6b0dfc9b45f0b4480aabfd74d8e49309e5187a1d80e5621b1862927eb49f8708"
+    },
+    {
+      "path": "_playtest/m42/cp4/endless-parity/firefox/environment-placement.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1128,
+      "sha256": "2786aa80f5e3dda554c715d16662d17ec6ef5d22302cbb820c3ac664f4afbb9d"
+    },
+    {
+      "path": "_playtest/m42/cp4/evacuation-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 515,
+      "sha256": "3725c1c667fa60579ac3a5aff719ae0881033d0991925b283c042de09d9c63cb"
+    },
+    {
+      "path": "_playtest/m42/cp4/evacuation/edge/cp4-traversal-evacuation.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1563,
+      "sha256": "9f814b5f3f79f9959414de514d3dd3484071d901141bb231638a39d416f52cc0"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-checks.json",
+      "reasons": [
+        "historical immutable checkpoint receipt"
+      ],
+      "bytes": 5057,
+      "sha256": "654847d8ba7e86ae9365b463e1f49b79bf0d4c9575f318f75cdf912e71a9d33d"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-endless-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 512,
+      "sha256": "65d6f145e65b22d7c2c5074a02a83a887b739181e716d6de95b9a89e68eaaf01"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-endless/edge/cp4-traversal-endless.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 636,
+      "sha256": "5adcd9adaf14fbd6f95837008679d16b2f8fa3538489e8f468cb9a4a9a03424a"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-endless/edge/endless-edge/endless-ridges-flank.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 562878,
+      "sha256": "2da67d643cbd8d1914876c084f3d4fe6f09e58c3930bfeafc126a34d5022c072"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-endless/edge/endless-edge/endless-valley-flank.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 565703,
+      "sha256": "874ed3216a60b7339395889d15931af2ee94f703900b2a96ff433b82d243587e"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-endless/edge/endless-edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 16548,
+      "sha256": "3da79813190e9a60ed69d6217fe7534dd8f84eea50cfc331507de53ac7965803"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-gameplay/edge/closed-seal-oblique.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 250111,
+      "sha256": "d956f7ee635f88f92f721e032f15b7a9d20bdcf9bf8a1483a48d470c01178691"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-gameplay/edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 488418,
+      "sha256": "416329d794b46b83c072d87d54d2625552e05deb17b8d006e35a2723d3888f54"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-gameplay/edge/research-bench.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 312961,
+      "sha256": "ea10d4e44ad3f658ec1ea1ef92ed2f9629338f727b9052f496bdc2ecc5bdfa3a"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-native-firefox.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1547,
+      "sha256": "b9bdc5a46574e1ffcef7dd9be7022848cc692e1ccb14103f71ab6ae198acf6db"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-native/firefox/cp4-traversal-endless.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 630,
+      "sha256": "d42ae7ce61d14d4f310377c8aebaca2e02e83c1fa7033902cef1779f4fc9659d"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-native/firefox/cp4-traversal-evacuation.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1606,
+      "sha256": "a5b72252b58552a7afa7d1d4b7badf3f00b49e64fa797d5cefcd8470d7493c42"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-native/firefox/facility-enclosure.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2847,
+      "sha256": "150b6dad570ec275f33787df91fda1adddb13f0fe34663652dbd5a954825bc6d"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-stability-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 2052,
+      "sha256": "d3707006fc051d3f8e9af2c44cefa3d6ae77eaf70fca9c35cbb93cff457e5be0"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-stability/edge/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8346,
+      "sha256": "0e68d7f5a28a0e538d6ae3894614807b0da61ba6be6a583d8fd146f5879b31fb"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-stability/edge/traversal-performance.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8745,
+      "sha256": "872232d6db6c4309a95eb885d11e97ee351c8dc0088eb64f69bf1474f35679e9"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-stability/firefox/facility-regression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 8350,
+      "sha256": "3406b21fb04f32a774eb881b5e9abd1c0eadd0059c0f7aae69987a16eaf515e4"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-stability/firefox/traversal-performance.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 7895,
+      "sha256": "217cc9b1ddce6584ce1d835bb66f88afa5403c9b2a3540203c3ef4a06bf448ec"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-terrain-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 986,
+      "sha256": "b100aea4163c4d117a0dfaa1d0c5162400cac8e6e105f135501b88938a445588"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-terrain/edge/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2361,
+      "sha256": "73f890b234c5fc2a5910babf443481601d03b8dc972253f4fd518dfbc8479671"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-terrain/edge/terrain-edge/manifest.json",
+      "reasons": [
+        "required historical test baseline fixture"
+      ],
+      "bytes": 148995,
+      "sha256": "87f756ac89339f42b8f0fab757f6b76bb5faab5b4f1b918ec9301b3730170878"
+    },
+    {
+      "path": "_playtest/m42/cp4/final-terrain/firefox/cp4-terrain.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2364,
+      "sha256": "00c4c6ad0199f45e587a66ad9894b90458be983858c0dfce5027bcfa5c007361"
+    },
+    {
+      "path": "_playtest/m42/cp4/integration-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 5114,
+      "sha256": "3ccf87d6f18a3d409ed09ff9456da4adbff2310dce46d8f561ae6a4c68340934"
+    },
+    {
+      "path": "_playtest/m42/cp4/integration/edge/facility-e-integration.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3926,
+      "sha256": "34d02e82a1ce31e966002a08ad4400a31eb0e3c51197cebfb99c187ab9007167"
+    },
+    {
+      "path": "_playtest/m42/cp4/integration/edge/facility-light-eligibility-e.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 643,
+      "sha256": "f94b59a59bf48c5b0f3b5cc792849f4a65e98e18a4997f14f30e953f9e613616"
+    },
+    {
+      "path": "_playtest/m42/cp4/integration/firefox/facility-e-integration.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3965,
+      "sha256": "a1aaee7a27c67798f821b3fc4a1c4090bf3ea0cfc59ab7e328f8004e245382aa"
+    },
+    {
+      "path": "_playtest/m42/cp4/integration/firefox/facility-light-eligibility-e.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 652,
+      "sha256": "1bc7e5791170fa6f6f1324ae8dc9e51c144b2079c91bf0d793480e2259490cc4"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1008,
+      "sha256": "463c3111504f136759b44f9c700458fcc7b52b719c5cdc71daf1db8c51b83e49"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance-firefox.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1020,
+      "sha256": "415e1964e5c1791ded55decef7e2a933785de7139cc392f0aaca54ba4422a277"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/edge/facility-e2.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1912,
+      "sha256": "692fcaa5bfb55dd9dbd6372e17b2a1885d4985dde183d7e985d1b3211bff4920"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/edge/gameplay-edge/11-turret-live-drone-hit.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 336334,
+      "sha256": "2830b715afac18723583176d492fddb26e8d90279d6042740fe8d3fe6ac86005"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/edge/gameplay-edge/16-transfer-complete.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 370257,
+      "sha256": "8df0a30c2f9870a9cd9f8d0cb2798bab2cb106a9d7d764427af521ab2505e16b"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/edge/gameplay-edge/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 137191,
+      "sha256": "51d19ce061805016d67afdb4ce3ac099ef47e2a1641a1d1a7cce429578d061ed"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/firefox/facility-e2.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1931,
+      "sha256": "9eb0595525e338df33c5b25cd97fb83f50bf725dba8cd44d3ca8a2093f1538a8"
+    },
+    {
+      "path": "_playtest/m42/cp4/live-performance/firefox/gameplay-firefox/manifest.json",
+      "reasons": [
+        "curated capture/native/compatibility manifest"
+      ],
+      "bytes": 135941,
+      "sha256": "cf70bdd7ccb5a07050f0c77e5f0443b7f631428066848e5ea20a83d6ed8a5fb5"
+    },
+    {
+      "path": "_playtest/m42/cp4/loading-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1977,
+      "sha256": "9f1c40a8a24682906e395d6cd215d9122541f3830a2e7bfb1cc5c3758161c6bf"
+    },
+    {
+      "path": "_playtest/m42/cp4/loading/edge/intro-smoke.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 582,
+      "sha256": "2a1762e426bdc88e75c1a8edf3bf1aca29ea5a7c48664d9316914e1413c74644"
+    },
+    {
+      "path": "_playtest/m42/cp4/loading/edge/transition-diagnose.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 18009,
+      "sha256": "163d30d4ce72733617fc4f7b455c81e97a920fb51810804d4b02715f0754f478"
+    },
+    {
+      "path": "_playtest/m42/cp4/loading/firefox/intro-smoke.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 582,
+      "sha256": "2382905c2c0de38712df06e920487983c89d9a6212bea23fc6c9d5864bdb38e1"
+    },
+    {
+      "path": "_playtest/m42/cp4/loading/firefox/transition-diagnose.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 17071,
+      "sha256": "31ae3fdbe1bf68ce152ee1fce1b93b72659ce0421e1a38a06bc49c5dbb982349"
+    },
+    {
+      "path": "_playtest/m42/cp4/native-complete-edge.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 498,
+      "sha256": "ccfa0195ffb6c5622a779c2424ec9444d15ba1224a48cb1709a94570b40cdaee"
+    },
+    {
+      "path": "_playtest/m42/cp4/native-complete-firefox.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 504,
+      "sha256": "5b49d046de0b6bff9e9d59e5905c4ede77f4da451a486350b602533d894e8796"
+    },
+    {
+      "path": "_playtest/m42/cp4/native-complete/edge/cp4-traversal.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3119,
+      "sha256": "bcf6ab3ee88d0e404b8e1b6c9929259bd1bb5de3dc6f79833b5237f9d04fa594"
+    },
+    {
+      "path": "_playtest/m42/cp4/native-complete/firefox/cp4-traversal.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 3211,
+      "sha256": "cb886b9db4ea364dc7658214e3d92b95342cfecc8a37f5d2fd3df66bd7ef8b8b"
+    },
+    {
+      "path": "_playtest/m42/cp4/navigation-save-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 1994,
+      "sha256": "7fd73649018c1d7171bd6622f3a98d2ddfd6320a6ccc330052be500322d7a6bf"
+    },
+    {
+      "path": "_playtest/m42/cp4/navigation-save/edge/endless-hud.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1788,
+      "sha256": "04d2a472bf48cfda182f27d7b5f37c697021cee69c12a3bc31356017e3f71f5d"
+    },
+    {
+      "path": "_playtest/m42/cp4/navigation-save/edge/m2-progression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2135,
+      "sha256": "cd883c684dfbcbf0f0db77860e3090434c5fedec9e26eb3c515f3d9ba8db76e4"
+    },
+    {
+      "path": "_playtest/m42/cp4/navigation-save/firefox/endless-hud.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 1809,
+      "sha256": "b37c97c0c5ed90a40fda17f330bc4786c82d114202c5532143371f0ebf8a0dba"
+    },
+    {
+      "path": "_playtest/m42/cp4/navigation-save/firefox/m2-progression.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 2135,
+      "sha256": "7753123d21949769dc83e95eae2a1e9c3b4ed2c464d72d0ff12b3d8c8a850d90"
+    },
+    {
+      "path": "_playtest/m42/cp4/review/campaign-comparison.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 1589529,
+      "sha256": "fc8fa3bad930174adb3ac1ab0617df4dd14b97abedac4b893c1cb69315aef570"
+    },
+    {
+      "path": "_playtest/m42/cp4/review/evacuation-and-endless.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 669649,
+      "sha256": "98c19b15b6d8677a294867e8ed3d5f832e43c0fea9c2464726cb8b8b9e7d4d15"
+    },
+    {
+      "path": "_playtest/m42/cp4/review/facility-comparison.png",
+      "reasons": [
+        "direct accepted gallery link"
+      ],
+      "bytes": 866963,
+      "sha256": "7954a6626229f9353e5d496b76f61c059aaea2937c6785c0ad9cb833769a0e00"
+    },
+    {
+      "path": "_playtest/m42/cp4/stability-corrected-both.json",
+      "reasons": [
+        "source receipt for successful selected run"
+      ],
+      "bytes": 2093,
+      "sha256": "c3ec2ff6f7b878a042a25e6c17c0c3dd04a42b15d052fd13c5b5635d38a8c852"
+    },
+    {
+      "path": "_playtest/m42/cp4/stability-corrected/edge/facility-persistent-lighting.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 673,
+      "sha256": "61b96279150eacfa6b9a2cd7c83c93d949c103eeb2b23afabcb4f5cbf32baa62"
+    },
+    {
+      "path": "_playtest/m42/cp4/stability-corrected/firefox/facility-persistent-lighting.log",
+      "reasons": [
+        "successful selected browser log"
+      ],
+      "bytes": 733,
+      "sha256": "310f0bd922c160619ec42fb87e682d7f2343ce50b597dca0dcceccfbe841fa5c"
+    },
+    {
+      "path": "_playtest/m42/cp4/validation-summary.json",
+      "reasons": [
+        "selected stage-one validation and performance summary"
+      ],
+      "bytes": 46994,
+      "sha256": "1c17eeea13528123742316ff9844be03b9fb31ff3d5648f65a7ba65816bcadd8"
+    },
+    {
+      "path": "chargefront.html",
+      "reasons": [
+        "accepted product"
+      ],
+      "bytes": 870677,
+      "sha256": "6eb14fa75ed707805a134b7c77b6e4a1b2bdb40b46dbec56169ebd6f25b8123e"
+    },
+    {
+      "path": "MILESTONE-4.2-CP4-FINAL-EXTERIOR-REFINE.md",
+      "reasons": [
+        "milestone and user acceptance report",
+        "direct accepted gallery link"
+      ],
+      "bytes": 10651,
+      "sha256": "7cea7a295d025a26c7206d780ac5c2c0fa772f3f1a10cefb4f159fe60e67be16"
+    },
+    {
+      "path": "MILESTONE-4.2-CP4-PROP-BOUNDARY-FIX.md",
+      "reasons": [
+        "milestone and user acceptance report",
+        "direct accepted gallery link"
+      ],
+      "bytes": 12129,
+      "sha256": "e538ff8d6b3bba1a1f18c33b0adbe8d7da117ad1f1bd0f7ad25fbc5fd626687c"
+    },
+    {
+      "path": "MILESTONE-4.2-CP4.md",
+      "reasons": [
+        "milestone and user acceptance report",
+        "direct accepted gallery link"
+      ],
+      "bytes": 30352,
+      "sha256": "3757c4e1ddb6a510a2a486316cd62ffd016df902a98a5ea8f78bf769c7454f59"
+    },
+    {
+      "path": "MILESTONE-4.2-ENVIRONMENT.md",
+      "reasons": [
+        "milestone and user acceptance report"
+      ],
+      "bytes": 201063,
+      "sha256": "f12f4a6c47aace80abbae2c5dd2e32c3fbf91a02fbb7c0a5b3ff9c830bcf6ea7"
+    },
+    {
+      "path": "src/world/campaign-exterior.js",
+      "reasons": [
+        "accepted product"
+      ],
+      "bytes": 6987,
+      "sha256": "7f32fce45072801cc2ce179dbcc33d9e1e55cc958f7082456c71127a1daa6e56"
+    },
+    {
+      "path": "src/world/campaign-terrain.js",
+      "reasons": [
+        "accepted product"
+      ],
+      "bytes": 5189,
+      "sha256": "924cc40bf9c5f9a845492a877777b1fba8eb21f7f5913a57fdb54e276a327c13"
+    },
+    {
+      "path": "src/world/facility.js",
+      "reasons": [
+        "accepted product"
+      ],
+      "bytes": 176694,
+      "sha256": "bf3cbedc2f41b7806385a4fa9dd64f802ffd7163b6005f67c00e6caef4af8a12"
+    },
+    {
+      "path": "tests/campaign-terrain-state.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 1819,
+      "sha256": "49d8966558c6c7ada76666f7fc3660562581943875fc6240f0f0ed13d9806de6"
+    },
+    {
+      "path": "tests/cp4-terrain.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 8286,
+      "sha256": "4e6b3cfc98e9ddea459dc753e28bd1f23ba32f56e4fc916325fffe22c7c08a3b"
+    },
+    {
+      "path": "tests/cp4-traversal.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 11829,
+      "sha256": "5f2c4a7818fdb2510d06b24566c50ff14f04b3b1f59e2b3d0a30613579cc1aea"
+    },
+    {
+      "path": "tests/environment-placement.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 19039,
+      "sha256": "4605ac3f2a504d3d0215199a5f15949f8f34a0ccf1c471c5263e19776521d49d"
+    },
+    {
+      "path": "tests/facility-e-integration.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 9921,
+      "sha256": "5fb7b7d98551eeadff7e08d5577f0f22d4f3125afc6c7ffb2114f32d9caf7c87"
+    },
+    {
+      "path": "tests/facility-e0.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 12728,
+      "sha256": "b466a25f186191c3a30ca31f29aafd3037f91849c73985d78269c4acc2eb0b51"
+    },
+    {
+      "path": "tests/facility-e2.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 11130,
+      "sha256": "a8d93c8a47aacb05af3b1efb5b08c3346d83e51e5d2031fa01c813d474e9ae7b"
+    },
+    {
+      "path": "tests/facility-enclosure.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 17093,
+      "sha256": "f861a4b92fda43eb2aaed33c3b634da1235e5c78e96364ffec9ea7503759c3ce"
+    },
+    {
+      "path": "tests/facility-persistent-lighting.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 6773,
+      "sha256": "e0582ac6f9c43b8c39d0587529ba5aef6893183ed02f0a6f04fa52a27571dd36"
+    },
+    {
+      "path": "tests/final-exterior-refine.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 10173,
+      "sha256": "9f92af0ad5363a29971b386c865c911cebe52d25630d15ced1cecaee41264066"
+    },
+    {
+      "path": "tests/prop-boundary-fix.mjs",
+      "reasons": [
+        "CP4 source test"
+      ],
+      "bytes": 10026,
+      "sha256": "746907e39c20f0237fe157bf6cb2d18f14c5f47e59d1db9b2d8a2c8b64306831"
+    }
+  ],
+  "preserved": [
+    {
+      "path": "Credits.txt",
+      "bytes": 2723,
+      "sha256": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine.zip",
+      "bytes": 119737326,
+      "sha256": "a065e39194109c9aa8a269a4bdfdeffb133cd5e31842a5d9f7a6ae25a3a75e8a"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/before/edge/chargefront.html",
+      "bytes": 869684,
+      "sha256": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/before/edge/src-world-campaign-exterior.js",
+      "bytes": 6846,
+      "sha256": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c"
+    },
+    {
+      "path": "_playtest/m42/cp4-final-exterior-refine/before/edge/src-world-facility.js",
+      "bytes": 174795,
+      "sha256": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary.zip",
+      "bytes": 132537891,
+      "sha256": "f6db0437050e3778fc90ab380e19e38ba0a2d249fbab6c8d8fffe2c3e3f80b99"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/before/edge/chargefront.html",
+      "bytes": 863770,
+      "sha256": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/before/edge/src-world-campaign-terrain.js",
+      "bytes": 4229,
+      "sha256": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+    },
+    {
+      "path": "_playtest/m42/cp4-fix-props-boundary/before/edge/src-world-facility.js",
+      "bytes": 174795,
+      "sha256": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670"
+    },
+    {
+      "path": "_playtest/m42/cp4.zip",
+      "bytes": 166333420,
+      "sha256": "06c9ac39c6b7ae9ffdaabaad73b1beff08696f7a34c2ebec7879ef40d1caf561"
+    },
+    {
+      "path": "facility-captures-ChargeFront-20260922.zip",
+      "bytes": 11505724,
+      "sha256": "fbe6726e155a638f4827bce90b37c29dde1923ad0f85a730317039c14fe3fa5e"
+    },
+    {
+      "path": "facility-captures-ChargeFront-20260923-0730AM.zip",
+      "bytes": 14211935,
+      "sha256": "deab67a417a0ff361ed66ec630b34bce02a258da44fbe8d7d35717d5a59ee80d"
+    },
+    {
+      "path": "facility-captures-cutaway-ChargeFront.zip",
+      "bytes": 3397128,
+      "sha256": "df54445a618821a73820d21632ef23abf7de4d7f6e5727d2a3abcc950067766c"
+    }
+  ]
+}

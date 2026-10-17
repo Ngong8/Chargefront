@@ -1,0 +1,3 @@
+ELIGIBILITY firefox sealed-portal-south {"player":[360,742],"exposure":0.78,"fog":[40,280],"slots":8,"selected":["ContainmentPeripheralLight","SampleZeroFocalLight"],"portal":{"locked":true,"disabled":false},"research":104}
+ELIGIBILITY firefox west-exterior {"player":[324,710],"exposure":0.78,"fog":[40,280],"slots":8,"selected":["(unnamed retained source)"],"portal":{"locked":true,"disabled":false},"research":104}
+ELIGIBILITY firefox research-interior {"player":[354,720],"exposure":0.78,"fog":[40,280],"slots":8,"selected":["ResearchTaskLight","DeconTaskLight","SecurityOperationalLight"],"portal":{"locked":true,"disabled":false},"research":104}

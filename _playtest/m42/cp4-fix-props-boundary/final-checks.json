@@ -1,0 +1,844 @@
+{
+  "branch": "milestone-4.2-cp4",
+  "head": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "syntax": [
+    "src/world/campaign-terrain.js",
+    "src/world/campaign-exterior.js",
+    "tests/prop-boundary-fix.mjs",
+    "_playtest/m42/cp4-fix-props-boundary/final-checks.mjs",
+    "_playtest/m42/cp4-fix-props-boundary/inspect.mjs",
+    "_playtest/m42/cp4-fix-props-boundary/review.mjs",
+    "_playtest/m42/cp4-fix-props-boundary/run.mjs",
+    "chargefront.html inline module"
+  ],
+  "pure": [
+    {
+      "name": "campaign-terrain-state",
+      "status": 0,
+      "output": "PASS Campaign terrain compact shaping, critical exclusions, determinism and slope { maxDelta: 2.1965926696817895, maxSlope: 0.23292681343918042 }"
+    },
+    {
+      "name": "environment-placement-state",
+      "status": 0,
+      "output": "PASS environment placement state: purposes, full footprint/clearance, support/slope, transforms, obstacles, budgets, safe fallback and five repeatable terrain seeds [{\"seed\":0,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":1,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":420042,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":2147483647,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":4294967295,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}}]"
+    },
+    {
+      "name": "progression-state",
+      "status": 0,
+      "output": "PASS progression state: reserves, bounded difficulty drops, atomic replacement/backup, legacy validation, quota failure, durable actor ownership"
+    },
+    {
+      "name": "relay-routing-state",
+      "status": 0,
+      "output": "PASS relay routing: obstacle traversal, skipped corridors, rejoin, reverse, deterministic ties, no-path fallback"
+    },
+    {
+      "name": "combat-state",
+      "status": 0,
+      "output": "PASS combat state: ordered pairs, four universal abilities/defaults, 15-shot PX accounting, unchanged PX tuning, shared ammo, migration, mutators and cadence"
+    },
+    {
+      "name": "objective-hud-state",
+      "status": 0,
+      "output": "PASS objective HUD: independent optionals, progress-in-place, hold/fade/removal, retire, bounded churn, clear"
+    }
+  ],
+  "preserved": {
+    "facility": true,
+    "credits": true,
+    "userZipPresent": true
+  },
+  "suites": [
+    {
+      "browser": "firefox",
+      "suite": "prop-boundary-fix",
+      "status": 0,
+      "error": null,
+      "seconds": 115.098,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/firefox/prop-boundary-fix.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-terrain",
+      "status": 0,
+      "error": null,
+      "seconds": 54.42,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/firefox/cp4-terrain.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-e0",
+      "status": 0,
+      "error": null,
+      "seconds": 54.587,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/firefox/facility-e0.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "route-hitscan-correction",
+      "status": 0,
+      "error": null,
+      "seconds": 67.168,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/firefox/route-hitscan-correction.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "prop-boundary-fix",
+      "status": 0,
+      "error": null,
+      "seconds": 65.076,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/edge/prop-boundary-fix.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-terrain",
+      "status": 0,
+      "error": null,
+      "seconds": 19.588,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/edge/cp4-terrain.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-e0",
+      "status": 0,
+      "error": null,
+      "seconds": 36.953,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/edge/facility-e0.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "route-hitscan-correction",
+      "status": 0,
+      "error": null,
+      "seconds": 48.974,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "targeted/edge/route-hitscan-correction.log",
+      "receipt": "targeted-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal",
+      "status": 0,
+      "error": null,
+      "seconds": 304.183,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "native/edge/cp4-traversal.log",
+      "receipt": "native-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal:evacuation",
+      "status": 0,
+      "error": null,
+      "seconds": 146.09,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "native/edge/cp4-traversal-evacuation.log",
+      "receipt": "native-edge.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-traversal",
+      "status": 0,
+      "error": null,
+      "seconds": 309.725,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "native/firefox/cp4-traversal.log",
+      "receipt": "native-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 66.827,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "native/firefox/facility-regression.log",
+      "receipt": "native-firefox.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 28.689,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "safety/edge/facility-regression.log",
+      "receipt": "safety-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal:endless",
+      "status": 0,
+      "error": null,
+      "seconds": 100.224,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "safety/edge/cp4-traversal-endless.log",
+      "receipt": "safety-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement:endless-only",
+      "status": 0,
+      "error": null,
+      "seconds": 84.863,
+      "hashes": {
+        "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+        "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+        "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+      },
+      "log": "safety/edge/environment-placement-endless-only.log",
+      "receipt": "safety-edge.json"
+    }
+  ],
+  "coverage": {
+    "edge": [
+      {
+        "id": "m1-checkpoint",
+        "requested": [
+          430,
+          205
+        ]
+      },
+      {
+        "id": "m1-depot",
+        "requested": [
+          430,
+          265
+        ]
+      },
+      {
+        "id": "m1-mid-approach",
+        "requested": [
+          420,
+          390
+        ]
+      },
+      {
+        "id": "m1-roadblock",
+        "requested": [
+          407,
+          423
+        ]
+      },
+      {
+        "id": "front-west",
+        "requested": [
+          314,
+          570
+        ]
+      },
+      {
+        "id": "front-east",
+        "requested": [
+          421,
+          583
+        ]
+      },
+      {
+        "id": "alpha-south",
+        "requested": [
+          205,
+          550
+        ]
+      },
+      {
+        "id": "alpha-east",
+        "requested": [
+          230,
+          574
+        ]
+      },
+      {
+        "id": "alpha-dock",
+        "requested": [
+          219,
+          603
+        ]
+      },
+      {
+        "id": "alpha-west",
+        "requested": [
+          181,
+          565
+        ]
+      },
+      {
+        "id": "alpha-beta-route",
+        "requested": [
+          199,
+          637
+        ]
+      },
+      {
+        "id": "beta-south",
+        "requested": [
+          245,
+          716
+        ]
+      },
+      {
+        "id": "beta-platform",
+        "requested": [
+          249,
+          752
+        ]
+      },
+      {
+        "id": "beta-east",
+        "requested": [
+          274,
+          753
+        ]
+      },
+      {
+        "id": "beta-north",
+        "requested": [
+          245,
+          777
+        ]
+      },
+      {
+        "id": "beta-west",
+        "requested": [
+          221,
+          747
+        ]
+      },
+      {
+        "id": "beta-route-tower",
+        "requested": [
+          225,
+          686
+        ]
+      },
+      {
+        "id": "west-bypass",
+        "requested": [
+          285,
+          665
+        ]
+      },
+      {
+        "id": "south-bypass",
+        "requested": [
+          358,
+          575
+        ]
+      },
+      {
+        "id": "east-bypass",
+        "requested": [
+          477,
+          577
+        ]
+      },
+      {
+        "id": "gamma-west",
+        "requested": [
+          544,
+          581
+        ]
+      },
+      {
+        "id": "gamma-south",
+        "requested": [
+          578,
+          558
+        ]
+      },
+      {
+        "id": "gamma-north",
+        "requested": [
+          576,
+          611
+        ]
+      },
+      {
+        "id": "gamma-east",
+        "requested": [
+          604,
+          590
+        ]
+      },
+      {
+        "id": "gamma-return",
+        "requested": [
+          526,
+          608
+        ]
+      },
+      {
+        "id": "service-approach",
+        "requested": [
+          464,
+          717
+        ]
+      },
+      {
+        "id": "west-yard",
+        "requested": [
+          306,
+          735
+        ]
+      },
+      {
+        "id": "backyard-west",
+        "requested": [
+          322,
+          795
+        ]
+      },
+      {
+        "id": "backyard-center",
+        "requested": [
+          370,
+          798
+        ]
+      },
+      {
+        "id": "backyard-east",
+        "requested": [
+          422,
+          794
+        ]
+      },
+      {
+        "id": "m4-yard-debris",
+        "requested": [
+          438,
+          689
+        ]
+      },
+      {
+        "id": "m4-front-debris",
+        "requested": [
+          404,
+          593
+        ]
+      }
+    ],
+    "firefox": [
+      {
+        "id": "m1-checkpoint",
+        "requested": [
+          430,
+          205
+        ]
+      },
+      {
+        "id": "m1-depot",
+        "requested": [
+          430,
+          265
+        ]
+      },
+      {
+        "id": "m1-mid-approach",
+        "requested": [
+          420,
+          390
+        ]
+      },
+      {
+        "id": "m1-roadblock",
+        "requested": [
+          407,
+          423
+        ]
+      },
+      {
+        "id": "front-west",
+        "requested": [
+          314,
+          570
+        ]
+      },
+      {
+        "id": "front-east",
+        "requested": [
+          421,
+          583
+        ]
+      },
+      {
+        "id": "alpha-south",
+        "requested": [
+          205,
+          550
+        ]
+      },
+      {
+        "id": "alpha-east",
+        "requested": [
+          230,
+          574
+        ]
+      },
+      {
+        "id": "alpha-dock",
+        "requested": [
+          219,
+          603
+        ]
+      },
+      {
+        "id": "alpha-west",
+        "requested": [
+          181,
+          565
+        ]
+      },
+      {
+        "id": "alpha-beta-route",
+        "requested": [
+          199,
+          637
+        ]
+      },
+      {
+        "id": "beta-south",
+        "requested": [
+          245,
+          716
+        ]
+      },
+      {
+        "id": "beta-platform",
+        "requested": [
+          249,
+          752
+        ]
+      },
+      {
+        "id": "beta-east",
+        "requested": [
+          274,
+          753
+        ]
+      },
+      {
+        "id": "beta-north",
+        "requested": [
+          245,
+          777
+        ]
+      },
+      {
+        "id": "beta-west",
+        "requested": [
+          221,
+          747
+        ]
+      },
+      {
+        "id": "beta-route-tower",
+        "requested": [
+          225,
+          686
+        ]
+      },
+      {
+        "id": "west-bypass",
+        "requested": [
+          285,
+          665
+        ]
+      },
+      {
+        "id": "south-bypass",
+        "requested": [
+          358,
+          575
+        ]
+      },
+      {
+        "id": "east-bypass",
+        "requested": [
+          477,
+          577
+        ]
+      },
+      {
+        "id": "gamma-west",
+        "requested": [
+          544,
+          581
+        ]
+      },
+      {
+        "id": "gamma-south",
+        "requested": [
+          578,
+          558
+        ]
+      },
+      {
+        "id": "gamma-north",
+        "requested": [
+          576,
+          611
+        ]
+      },
+      {
+        "id": "gamma-east",
+        "requested": [
+          604,
+          590
+        ]
+      },
+      {
+        "id": "gamma-return",
+        "requested": [
+          526,
+          608
+        ]
+      },
+      {
+        "id": "service-approach",
+        "requested": [
+          464,
+          717
+        ]
+      },
+      {
+        "id": "west-yard",
+        "requested": [
+          306,
+          735
+        ]
+      },
+      {
+        "id": "backyard-west",
+        "requested": [
+          322,
+          795
+        ]
+      },
+      {
+        "id": "backyard-center",
+        "requested": [
+          370,
+          798
+        ]
+      },
+      {
+        "id": "backyard-east",
+        "requested": [
+          422,
+          794
+        ]
+      },
+      {
+        "id": "m4-yard-debris",
+        "requested": [
+          438,
+          689
+        ]
+      },
+      {
+        "id": "m4-front-debris",
+        "requested": [
+          404,
+          593
+        ]
+      }
+    ]
+  },
+  "rearTests": [
+    {
+      "browser": "edge",
+      "counts": {
+        "skin-cylinder": 4,
+        "surface": 34,
+        "ground": 47,
+        "cable": 9,
+        "cap": 4,
+        "face": 13,
+        "cylinder": 5,
+        "remove": 12,
+        "circle": 9,
+        "bridge": 1,
+        "bridge-face": 1,
+        "installed": 1
+      },
+      "seam": 0,
+      "colorSeam": 0,
+      "rearCollisionError": 2.4158453015843406e-13,
+      "changedBottoms": 73,
+      "resumed": {
+        "x": 370.22813237524593,
+        "y": 834.9429981432322
+      },
+      "limit": {
+        "y": 870,
+        "z": 8.555612177337096,
+        "max": 870,
+        "ground": 8.555612177337096,
+        "far": 55.2623291015625
+      },
+      "pursuit": [
+        {
+          "x": 310,
+          "y": 808.2200000000075,
+          "inside": false
+        }
+      ]
+    },
+    {
+      "browser": "firefox",
+      "counts": {
+        "skin-cylinder": 4,
+        "surface": 34,
+        "ground": 47,
+        "cable": 9,
+        "cap": 4,
+        "face": 13,
+        "cylinder": 5,
+        "remove": 12,
+        "circle": 9,
+        "bridge": 1,
+        "bridge-face": 1,
+        "installed": 1
+      },
+      "seam": 0,
+      "colorSeam": 0,
+      "rearCollisionError": 2.4158453015843406e-13,
+      "changedBottoms": 73,
+      "resumed": {
+        "x": 370.08087242578915,
+        "y": 834.9797826047728
+      },
+      "limit": {
+        "y": 870,
+        "z": 8.555625931425668,
+        "max": 870,
+        "ground": 8.555625931425668,
+        "far": 55.2623291015625
+      },
+      "pursuit": [
+        {
+          "x": 310,
+          "y": 807.9350000000074,
+          "inside": false
+        }
+      ]
+    }
+  ],
+  "followupDeltas": [
+    {
+      "path": "chargefront.html",
+      "numstat": "132\t64\t\"C:\\\\Game projects\\\\GenAI projects\\\\Chargefront\\\\_playtest\\\\m42\\\\cp4-fix-props-boundary\\\\before\\\\edge\\\\chargefront.html\" => chargefront.html"
+    },
+    {
+      "path": "src/world/campaign-terrain.js",
+      "numstat": "13\t4\t\"C:\\\\Game projects\\\\GenAI projects\\\\Chargefront\\\\_playtest\\\\m42\\\\cp4-fix-props-boundary\\\\before\\\\edge\\\\src-world-campaign-terrain.js\" => src/world/campaign-terrain.js"
+    }
+  ],
+  "evidenceLinks": 115,
+  "diffCheck": true,
+  "indexEmpty": true,
+  "diffStat": "chargefront.html                       | 243 +++++++++++++++++++++++----------\n src/world/facility.js                  |  52 +++++--\n tests/environment-placement.mjs        |   4 +-\n tests/facility-enclosure.mjs           |   2 +-\n tests/facility-persistent-lighting.mjs |   9 +-\n 5 files changed, 222 insertions(+), 88 deletions(-)",
+  "status": "## milestone-4.2-cp4\n M chargefront.html\n M src/world/facility.js\n M tests/environment-placement.mjs\n M tests/facility-enclosure.mjs\n M tests/facility-persistent-lighting.mjs\n?? MILESTONE-4.2-CP4-PROP-BOUNDARY-FIX.md\n?? MILESTONE-4.2-CP4.md\n?? _playtest/m42/cp4-fix-props-boundary/\n?? _playtest/m42/cp4.zip\n?? _playtest/m42/cp4/\n?? src/world/campaign-exterior.js\n?? src/world/campaign-terrain.js\n?? tests/campaign-terrain-state.mjs\n?? tests/cp4-terrain.mjs\n?? tests/cp4-traversal.mjs\n?? tests/prop-boundary-fix.mjs",
+  "manualVisualAcceptance": "PENDING USER REVIEW",
+  "passed": true
+}

@@ -1,0 +1,10 @@
+PLACEMENT {"mode":"endless","seed":0,"arena":"valley","zones":3,"accepted":99,"ms1000":10.599999994039536,"reasons":{"solid":1}}
+PLACEMENT {"mode":"endless","seed":420042,"arena":"valley","zones":3,"accepted":100,"ms1000":10.199999988079071,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":4294967295,"arena":"valley","zones":3,"accepted":100,"ms1000":12.800000011920929,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":0,"arena":"crater","zones":3,"accepted":100,"ms1000":11.099999994039536,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":420042,"arena":"crater","zones":3,"accepted":100,"ms1000":9.900000005960464,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":4294967295,"arena":"crater","zones":3,"accepted":100,"ms1000":14.599999994039536,"reasons":{}}
+PLACEMENT {"mode":"endless","seed":0,"arena":"ridges","zones":3,"accepted":39,"ms1000":13.900000005960464,"reasons":{"support":43,"slope":18}}
+PLACEMENT {"mode":"endless","seed":420042,"arena":"ridges","zones":3,"accepted":28,"ms1000":12,"reasons":{"support":53,"slope":18,"solid":1}}
+PLACEMENT {"mode":"endless","seed":4294967295,"arena":"ridges","zones":3,"accepted":33,"ms1000":12.600000023841858,"reasons":{"support":52,"slope":15}}
+PASS environmental placement browser integration edge

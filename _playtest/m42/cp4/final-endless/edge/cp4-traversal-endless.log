@@ -1,0 +1,7 @@
+NATIVE edge valley central exit {"seconds":6.409,"position":[469.7059097111495,441.999526654678]}
+NATIVE edge valley outer terrain {"seconds":3.983,"position":[480.0526629906086,404.810716083688]}
+NATIVE edge crater central exit {"seconds":6.44,"position":[469.7053824098937,441.9987598002399]}
+NATIVE edge crater outer terrain {"seconds":3.969,"position":[480.0040398765002,404.9854807214601]}
+NATIVE edge ridges central exit {"seconds":6.369,"position":[469.1599104183729,441.99864785581616]}
+NATIVE edge ridges outer terrain {"seconds":3.902,"position":[479.79644779753085,405.69475037108475]}
+PASS CP4 native traversal edge endless

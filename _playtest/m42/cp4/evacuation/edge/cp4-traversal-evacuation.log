@@ -1,0 +1,16 @@
+NATIVE edge M4 east exit 395,752 {"seconds":4.789,"position":[394.48365707020895,752.3664369179164]}
+NATIVE edge M4 east exit 407,752 {"seconds":2.119,"position":[406.3052585342527,752.0203397208664]}
+NATIVE edge M4 east exit 425,752 {"seconds":2.908,"position":[424.518489835626,752.0003573622241]}
+NATIVE edge M4 east exit 444,752 {"seconds":2.932,"position":[443.1184897954818,752.0000115516449]}
+NATIVE edge M4 east exit 456,752 {"seconds":1.718,"position":[455.63848979547623,752.0000003241884]}
+NATIVE edge M4 evacuation 462,742 {"seconds":1.739,"position":[461.6940863751275,742.4681269455233]}
+NATIVE edge M4 evacuation 442,720 {"seconds":4.893,"position":[442.25975886134904,720.2920064312432]}
+NATIVE edge M4 evacuation 442,690 {"seconds":4.494,"position":[442.0009721236248,690.2028430603264]}
+NATIVE edge M4 evacuation 420,646 {"seconds":7.755,"position":[420.19597732521635,646.3913677720599]}
+NATIVE edge M4 evacuation 390,530 {"seconds":18.452,"position":[390.18352938236734,530.7092835770887]}
+NATIVE edge M4 evacuation 420,405 {"seconds":20.153,"position":[419.84895185974113,405.6359462771819]}
+NATIVE edge M4 evacuation 445,235 {"seconds":26.771,"position":[444.95722011606637,235.29009498364198]}
+NATIVE edge M4 evacuation 450,120 {"seconds":20.903,"position":[449.99736379217285,120.06027006091593]}
+NATIVE edge M4 evacuation 466,99 {"seconds":3.859,"position":[465.53007915886093,99.61589457720518]}
+NATIVE edge M4 boarding approach {"seconds":3.268,"position":[450.560820756574,84.55252055492439]}
+PASS CP4 native traversal edge evacuation

@@ -1,0 +1,93 @@
+{
+  "acceptedBy": "user",
+  "manualVisualPlaytest": "PASS — explicitly confirmed by user",
+  "allThreeCP4StagesAccepted": true,
+  "branch": "milestone-4.2-cp4",
+  "startingHead": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "productUnmodifiedDuringFinalization": true,
+  "productHashes": {
+    "chargefront.html": "6eb14fa75ed707805a134b7c77b6e4a1b2bdb40b46dbec56169ebd6f25b8123e",
+    "src/world/facility.js": "bf3cbedc2f41b7806385a4fa9dd64f802ffd7163b6005f67c00e6caef4af8a12",
+    "src/world/campaign-terrain.js": "924cc40bf9c5f9a845492a877777b1fba8eb21f7f5913a57fdb54e276a327c13",
+    "src/world/campaign-exterior.js": "7f32fce45072801cc2ce179dbcc33d9e1e55cc958f7082456c71127a1daa6e56"
+  },
+  "stages": [
+    {
+      "stage": 1,
+      "root": "_playtest/m42/cp4",
+      "successfulBrowserExecutions": 42,
+      "receipt": "_playtest/m42/cp4/final-checks.json",
+      "sourceHashesAreHistorical": true
+    },
+    {
+      "stage": 2,
+      "root": "_playtest/m42/cp4-fix-props-boundary",
+      "successfulBrowserExecutions": 15,
+      "receipt": "_playtest/m42/cp4-fix-props-boundary/final-checks.json",
+      "sourceHashesAreHistorical": true
+    },
+    {
+      "stage": 3,
+      "root": "_playtest/m42/cp4-final-exterior-refine",
+      "successfulBrowserExecutions": 14,
+      "receipt": "_playtest/m42/cp4-final-exterior-refine/final-checks.json",
+      "sourceHashesAreHistorical": false
+    }
+  ],
+  "latestCanonicalSolids": 301,
+  "latestRemovedExteriorSolids": 26,
+  "latestProtectedMeshRecords": 425,
+  "syntax": [
+    "src/world/facility.js",
+    "src/world/campaign-terrain.js",
+    "src/world/campaign-exterior.js",
+    "tests/environment-placement.mjs",
+    "tests/facility-e-integration.mjs",
+    "tests/facility-e0.mjs",
+    "tests/facility-e2.mjs",
+    "tests/facility-enclosure.mjs",
+    "tests/facility-persistent-lighting.mjs",
+    "tests/campaign-terrain-state.mjs",
+    "tests/cp4-terrain.mjs",
+    "tests/cp4-traversal.mjs",
+    "tests/prop-boundary-fix.mjs",
+    "tests/final-exterior-refine.mjs",
+    "chargefront.html inline module"
+  ],
+  "pure": [
+    {
+      "name": "campaign-terrain-state",
+      "status": 0,
+      "output": "PASS Campaign terrain compact shaping, critical exclusions, determinism and slope { maxDelta: 2.1965926696817895, maxSlope: 0.23292681343918042 }"
+    },
+    {
+      "name": "environment-placement-state",
+      "status": 0,
+      "output": "PASS environment placement state: purposes, full footprint/clearance, support/slope, transforms, obstacles, budgets, safe fallback and five repeatable terrain seeds [{\"seed\":0,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":1,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":420042,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":2147483647,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":4294967295,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}}]"
+    },
+    {
+      "name": "progression-state",
+      "status": 0,
+      "output": "PASS progression state: reserves, bounded difficulty drops, atomic replacement/backup, legacy validation, quota failure, durable actor ownership"
+    },
+    {
+      "name": "relay-routing-state",
+      "status": 0,
+      "output": "PASS relay routing: obstacle traversal, skipped corridors, rejoin, reverse, deterministic ties, no-path fallback"
+    },
+    {
+      "name": "combat-state",
+      "status": 0,
+      "output": "PASS combat state: ordered pairs, four universal abilities/defaults, 15-shot PX accounting, unchanged PX tuning, shared ammo, migration, mutators and cadence"
+    },
+    {
+      "name": "objective-hud-state",
+      "status": 0,
+      "output": "PASS objective HUD: independent optionals, progress-in-place, hold/fade/removal, retire, bounded churn, clear"
+    }
+  ],
+  "diffCheck": true,
+  "creditsPreserved": true,
+  "curationPolicy": "Accepted curated index link closure, successful selected receipts/logs, compact metrics and required test fixtures; complete raw galleries/traces/failures/full source backups/ZIPs remain local",
+  "historicalReceiptManualPendingLabelsSuperseded": true
+}

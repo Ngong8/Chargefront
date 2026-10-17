@@ -1,0 +1,33 @@
+NATIVE firefox M1 445,150 {"seconds":9.881,"position":[444.99703486251326,150.04148373896746]}
+NATIVE firefox M1 445,235 {"seconds":13.13,"position":[444.999988185441,234.6614836874315]}
+NATIVE firefox M1 420,405 {"seconds":26.839,"position":[420.04967875505554,404.66237292597503]}
+NATIVE firefox M1 390,530 {"seconds":19.85,"position":[390.187175603139,529.2192879619513]}
+NATIVE firefox M1 360,580 {"seconds":9.145,"position":[360.3213581962768,579.4610221593357]}
+NATIVE firefox M1 360,614 {"seconds":5.314,"position":[360.00471833219433,613.4928824812935]}
+NATIVE firefox M1 battery approach {"seconds":5.819,"position":[324.5272694992819,603.1536625516933]}
+NATIVE firefox M1 automatic front door {"seconds":5.574,"position":[359.3389857795743,615.2699330018218]}
+NATIVE firefox M1 Hall entrance {"seconds":1.729,"position":[359.9809577441038,627.6332768859347]}
+NATIVE firefox M1 grid console {"seconds":2.28,"position":[346.7927186122039,629.9561858269016]}
+NATIVE firefox M1 command records {"seconds":5.495,"position":[378.74107833671223,647.7444803495458]}
+NATIVE firefox M2 Hall departure {"seconds":4.014,"position":[359.9972328619555,627.9970847086942]}
+NATIVE firefox M2 front-door approach {"seconds":0.969,"position":[359.9997585976959,621.6104185414523]}
+NATIVE firefox M2 front-door exit {"seconds":1.938,"position":[360.00000182627673,609.850418562641]}
+NATIVE firefox M2 Alpha 300,575 {"seconds":10.858,"position":[300.76673006672104,575.3659841622423]}
+NATIVE firefox M2 Alpha 211,575 {"seconds":13.651,"position":[211.827469255709,575.0033736401239]}
+NATIVE firefox M2 Beta 205,630 {"seconds":8.863,"position":[205.14512365119435,629.1426577933566]}
+NATIVE firefox M2 Beta 205,665 {"seconds":5.335,"position":[205.00352500184144,664.1290379185798]}
+NATIVE firefox M2 Beta 224,710 {"seconds":7.556,"position":[223.86141147560159,709.6653490214259]}
+NATIVE firefox M2 Beta 245,742 {"seconds":6.611,"position":[244.75918262741857,741.9453530958881]}
+NATIVE firefox M2 Gamma 285,690 {"seconds":10.023,"position":[284.8353991638542,690.2124770099547]}
+NATIVE firefox M2 Gamma 285,585 {"seconds":16.573,"position":[284.9992919167156,585.4526052117903]}
+NATIVE firefox M2 Gamma 450,570 {"seconds":25.587,"position":[449.5193928183205,570.0450097040596]}
+NATIVE firefox M2 Gamma 535,580 {"seconds":13.391,"position":[534.1871642980698,579.9053379264417]}
+NATIVE firefox M2 Gamma 569,585 {"seconds":5.544,"position":[568.5346417955652,584.9318974525644]}
+NATIVE firefox M2 return 505,605 {"seconds":9.992,"position":[505.7046098539718,604.818952557769]}
+NATIVE firefox M2 return 455,600 {"seconds":7.846,"position":[455.2984130337399,600.0283610949051]}
+NATIVE firefox M2 return 400,600 {"seconds":8.665,"position":[400.56508689891444,600.0002898181391]}
+NATIVE firefox M2 return 360,610 {"seconds":6.587,"position":[360.87328422787806,609.7847264765646]}
+NATIVE firefox M2 return 360,615.5 {"seconds":1.011,"position":[360.0514699198277,615.0857674403072]}
+NATIVE firefox M2 return 360,628 {"seconds":1.814,"position":[360.0029266833881,627.2656707056944]}
+NATIVE firefox M2 return 379.2,648 {"seconds":4.443,"position":[378.85803461645537,647.6306508417856]}
+PASS CP4 native traversal firefox campaign

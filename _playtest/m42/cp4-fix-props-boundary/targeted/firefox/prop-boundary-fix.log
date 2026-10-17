@@ -1,0 +1,1 @@
+PASS prop/boundary cleanup firefox {"counts":{"skin-cylinder":4,"surface":34,"ground":47,"cable":9,"cap":4,"face":13,"cylinder":5,"remove":12,"circle":9,"bridge":1,"bridge-face":1,"installed":1},"changedBottoms":73,"seam":0,"rearError":2.4158453015843406e-13,"limit":{"y":870,"z":8.555625931425668,"max":870,"ground":8.555625931425668,"far":55.2623291015625}}

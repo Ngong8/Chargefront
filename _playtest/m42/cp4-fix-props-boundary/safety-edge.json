@@ -1,0 +1,47 @@
+[
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 0,
+    "error": null,
+    "seconds": 28.689,
+    "hashes": {
+      "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+      "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+      "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+    },
+    "log": "safety/edge/facility-regression.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "cp4-traversal:endless",
+    "status": 0,
+    "error": null,
+    "seconds": 100.224,
+    "hashes": {
+      "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+      "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+      "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+    },
+    "log": "safety/edge/cp4-traversal-endless.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "environment-placement:endless-only",
+    "status": 0,
+    "error": null,
+    "seconds": 84.863,
+    "hashes": {
+      "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+      "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+      "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+    },
+    "log": "safety/edge/environment-placement-endless-only.log"
+  }
+]

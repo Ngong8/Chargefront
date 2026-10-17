@@ -192,6 +192,8 @@
 <!-- Classic script keeps local file:// play working; facility geometry is built on campaign startup. -->
 <script src="src/world/facility.js"></script>
 <script src="src/world/environment-placement.js"></script>
+<script src="src/world/campaign-terrain.js"></script>
+<script src="src/world/campaign-exterior.js"></script>
 <script src="src/combat.js"></script>
 <script src="src/progression.js"></script>
 <script src="src/relay-routing.js"></script>
@@ -562,15 +564,29 @@ const TERRAIN_SHAPES = [
     [250, 640, 24, -1.6], [520, 640, 24, 1.5],
     [270, 792, 22, 2.4], [210, 800, 20, 2.0], [612, 560, 26, -2.0], [548, 620, 22, 1.6],
 ];
-function terrainHeight(x, y) {
+const campaignTerrain = ChargefrontCampaignTerrain.create({
+    relays: RELAYS.map(r => r.pos), foundations: ChargefrontFacility.PLACEMENT_FOOTPRINTS, landing: LZ,
+});
+let campaignGroundGrid = null;
+let campaignRearGrid = null;
+const campaignExterior=ChargefrontCampaignExterior.create({THREE,terrainHeight,removeSolids:solids=>{
+    for(const solid of solids){const i=SOLIDS.indexOf(solid);if(i>=0)SOLIDS.splice(i,1);for(const relay of relays){const j=relay.siteSolids.indexOf(solid);if(j>=0)relay.siteSolids.splice(j,1);}}
+    solidGridCount=-1;
+}});
+function worldMaxY(x, margin=2) { return (mode==='campaign'?ChargefrontCampaignTerrain.maxY(x):WORLD)-margin; }
+function terrainHeight(x, y, routeDistance) {
     if (mode === 'endless') return endlessTerrainHeight(x, y);
+    if (y>WORLD) return campaignRearGrid
+        ? ChargefrontCampaignTerrain.sampleGrid(campaignRearGrid,x,y-WORLD,WORLD,320,100,40)
+        : ChargefrontCampaignTerrain.rearHeight(x,y,terrainHeight(x,WORLD));
+    if (campaignGroundGrid) return ChargefrontCampaignTerrain.sampleGrid(campaignGroundGrid, x, y);
     let h = 0;
     h += LJS.noise2D(x * 0.005, y * 0.005) * 4.4;
     h += LJS.noise2D(x * 0.014 + 7, y * 0.014 + 3) * 1.9;
     h += LJS.noise2D(x * 0.05 + 20, y * 0.05 + 11) * 0.6;
     h += gaussWeight(x, y, RELAYS[1].pos.x, RELAYS[1].pos.y, 125) * 22;
     h -= gaussWeight(x, y, RELAYS[2].pos.x, RELAYS[2].pos.y, 80) * 4;
-    const d = distToRoute(x, y);
+    const d = routeDistance ?? distToRoute(x, y);
     const ridge = gaussWeight(x, y, RELAYS[1].pos.x, RELAYS[1].pos.y, 100);
     const half = lerp(88, 44, ridge);
     if (d > half) {
@@ -592,6 +608,7 @@ function terrainHeight(x, y) {
     /* wide landing-zone apron — pull everything near spawn down to level ground */
     const lzw = gaussWeight(x, y, LZ.x, LZ.y, 110);
     if (lzw > 0.01) h *= (1 - lzw);
+    h += campaignTerrain.delta(x, y, d);
     h = ChargefrontFacility.foundationHeight(x, y, h);
     return clamp(h, 0, 120);
 }
@@ -908,6 +925,8 @@ const CABIN_SET = { x: -104, y: -92 };
 let menuBackdrop = null;
 
 function initWorld() {
+    campaignGroundGrid = null;
+    campaignRearGrid = null;
     threeJS = new LJS.ThreeJSPlugin(THREE, 75);
     scene = threeJS.scene;
     camera = threeJS.camera;
@@ -1017,16 +1036,18 @@ function buildSky() {
    without enlarging the playable area or adding collision/render-heavy props. */
 function buildTerrainBoundary(material) {
     const margin = 80, step = 10, size = WORLD + margin * 2, cells = Math.round(size / step);
-    const vertexCount = (cells + 1) * (cells + 1);
+    const maxY=mode==='campaign'?ChargefrontCampaignTerrain.REAR.end:WORLD, rows=Math.round((maxY+margin*2)/step);
+    const vertexCount = (cells + 1) * (rows + 1);
     const positions = new Float32Array(vertexCount * 3), uvs = new Float32Array(vertexCount * 2);
+    const colors=mode==='campaign'?new Float32Array(vertexCount*3):null;
     let vertex = 0;
-    for (let iy = 0; iy <= cells; iy++) {
+    for (let iy = 0; iy <= rows; iy++) {
         const y = -margin + iy * step;
         for (let ix = 0; ix <= cells; ix++, vertex++) {
             const x = -margin + ix * step;
-            const edgeX = clamp(x, 0, WORLD), edgeY = clamp(y, 0, WORLD);
+            const edgeX = clamp(x, 0, WORLD), edgeY = clamp(y, 0, maxY);
             const outsideX = x < 0 ? -x : x > WORLD ? x - WORLD : 0;
-            const outsideY = y < 0 ? -y : y > WORLD ? y - WORLD : 0;
+            const outsideY = y < 0 ? -y : y > maxY ? y - maxY : 0;
             const outside = Math.hypot(outsideX, outsideY);
             const rise = smooth(outside / margin) * (22 + Math.sin(x * 0.031 + y * 0.017) * 3.5);
             positions[vertex * 3] = x;
@@ -1034,19 +1055,21 @@ function buildTerrainBoundary(material) {
             positions[vertex * 3 + 2] = terrainHeight(edgeX, edgeY) + rise;
             uvs[vertex * 2] = x / TERRAIN_TEXTURE_WORLD_SIZE;
             uvs[vertex * 2 + 1] = y / TERRAIN_TEXTURE_WORLD_SIZE;
+            if(colors)colors.set(campaignTerrain.color(edgeX,edgeY,distToRoute(edgeX,edgeY)),vertex*3);
         }
     }
     const indices = [];
-    for (let iy = 0; iy < cells; iy++) for (let ix = 0; ix < cells; ix++) {
+    for (let iy = 0; iy < rows; iy++) for (let ix = 0; ix < cells; ix++) {
         const x0 = -margin + ix * step, x1 = x0 + step;
         const y0 = -margin + iy * step, y1 = y0 + step;
-        if (x0 >= 0 && x1 <= WORLD && y0 >= 0 && y1 <= WORLD) continue;
+        if (x0 >= 0 && x1 <= WORLD && y0 >= 0 && y1 <= maxY) continue;
         const a = iy * (cells + 1) + ix, b = a + 1, c = a + cells + 1, d = c + 1;
         indices.push(a, b, d, a, d, c);
     }
     const geometry = new THREE.BufferGeometry();
     geometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
     geometry.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
+    if(colors)geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));
     geometry.setIndex(indices); geometry.computeVertexNormals();
     const boundary = new THREE.Mesh(geometry, material);
     boundary.name = 'TerrainBoundaryRim'; boundary.receiveShadow = false;
@@ -1055,14 +1078,19 @@ function buildTerrainBoundary(material) {
 }
 
 function buildTerrain() {
+    campaignGroundGrid = null;
+    campaignRearGrid = null;
     const seg = 320;
     const geo = new THREE.PlaneGeometry(WORLD, WORLD, seg, seg);
     const pos = geo.attributes.position;
     const uvs = new Float32Array(pos.count * 2);
+    const groundColors = mode === 'campaign' ? new Float32Array(pos.count * 3) : null;
     for (let i = 0; i < pos.count; i++) {
         const wx = pos.getX(i) + WORLD / 2, wy = pos.getY(i) + WORLD / 2;
-        const h = terrainHeight(wx, wy);
+        const routeDistance = groundColors ? distToRoute(wx, wy) : null;
+        const h = terrainHeight(wx, wy, routeDistance);
         pos.setZ(i, h);
+        if (groundColors) groundColors.set(campaignTerrain.color(wx, wy, routeDistance), i * 3);
         /* world-space UVs: u/v = world coords / tile size, so the seamless tile
            repeats evenly over the whole map with no per-chunk seams */
         uvs[i * 2] = wx / TERRAIN_TEXTURE_WORLD_SIZE;
@@ -1070,10 +1098,11 @@ function buildTerrain() {
     }
     geo.computeVertexNormals();
     geo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
-    /* The terrain tile is the source of the ground's visual pattern.  Do not
-       multiply it by the low-frequency vertex colors: doing that creates broad
-       dark blobs that read as a broken texture instead of terrain detail. */
-    const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, metalness: 0.0 }));
+    if (groundColors) geo.setAttribute('color', new THREE.BufferAttribute(groundColors, 3));
+    /* Retain the source aggregate pattern. Campaign colors mark worked routes
+       and relay soil identities, not broad low-frequency noise/dark blobs. */
+    const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, metalness: 0.0, vertexColors: !!groundColors }));
+    m.name = mode === 'campaign' ? 'CampaignGround' : 'EndlessGround';
     /* Purple-spot terrain texture.  The fallback is deliberately deterministic
        and uses many small spots, so a failed file:///blob: load never produces
        the old oversized random circles. */
@@ -1101,6 +1130,10 @@ function buildTerrain() {
         cv.width = cv.height = sourceSize * 2;
         const g = cv.getContext('2d');
         g.imageSmoothingEnabled = false;
+        // Campaign's worked industrial soil uses the existing credited artwork
+        // as neutral aggregate; per-vertex zoning supplies restrained earth tones.
+        // Endless retains its original tile and material exactly.
+        if (groundColors) g.filter = 'grayscale(1) brightness(1.8)';
         g.drawImage(image, 0, 0, sourceSize, sourceSize);
         g.save(); g.translate(sourceSize * 2, 0); g.scale(-1, 1);
         g.drawImage(image, 0, 0, sourceSize, sourceSize); g.restore();
@@ -1176,11 +1209,35 @@ function buildTerrain() {
         undefined,
         () => { /* PNG failed to load on file:// — keep the procedural spot texture already applied */ }
     );
+    if(groundColors) {
+        campaignGroundGrid=pos.array;
+        // Typed data only here: additional Three constructors must wait until
+        // legacy scenery/facility population has consumed its accepted stream.
+        campaignRearGrid=new Float32Array(321*41*3);
+        for(let row=0;row<=40;row++)for(let col=0;col<=320;col++) {
+            const x=col*2.5,y=900-row*2.5,i=(row*321+col)*3;
+            campaignRearGrid[i]=x-400;campaignRearGrid[i+1]=y-850;
+            campaignRearGrid[i+2]=ChargefrontCampaignTerrain.rearHeight(x,y,terrainHeight(x,800));
+        }
+    }
     buildTerrainBoundary(m.material);
     m.position.set(WORLD / 2, WORLD / 2, 0);
     m.receiveShadow = true;
     scene.add(m);
     terrain = m;
+    if (groundColors) campaignGroundGrid = pos.array;
+}
+
+function buildCampaignRearGround() {
+    const geometry=new THREE.BufferGeometry(),uvs=new Float32Array(321*41*2),colors=new Float32Array(321*41*3),indices=[];
+    for(let row=0;row<=40;row++)for(let col=0;col<=320;col++) {
+        const x=col*2.5,y=900-row*2.5,i=row*321+col;
+        uvs[i*2]=x/TERRAIN_TEXTURE_WORLD_SIZE;uvs[i*2+1]=y/TERRAIN_TEXTURE_WORLD_SIZE;
+        colors.set(campaignTerrain.color(x,y,distToRoute(x,y)),i*3);
+        if(row<40&&col<320){const a=i,b=a+1,c=a+321,d=c+1;indices.push(a,c,b,b,c,d);}
+    }
+    geometry.setAttribute('position',new THREE.BufferAttribute(campaignRearGrid,3));geometry.setAttribute('uv',new THREE.BufferAttribute(uvs,2));geometry.setAttribute('color',new THREE.BufferAttribute(colors,3));geometry.setIndex(indices);geometry.computeVertexNormals();
+    const rear=new THREE.Mesh(geometry,terrain.material);rear.name='CampaignRearGround';rear.position.set(400,850,0);rear.receiveShadow=true;scene.add(rear);
 }
 
 /* procedural low-poly models */
@@ -1877,6 +1934,7 @@ function buildRelays() {
         pad.position.set(R.pos.x, R.pos.y, terrainHeight(R.pos.x, R.pos.y) + 0.1);
         pad.receiveShadow = true;
         site.add(pad);
+        campaignExterior.remember(pad, 'skin-cylinder');
         const relayLight = new THREE.PointLight(0xaa66ff, 45, 110, 1.8);   // guide beacon light at each relay
         relayLight.position.set(R.pos.x, R.pos.y, terrainHeight(R.pos.x, R.pos.y) + 6.2);
         site.add(relayLight);
@@ -1900,19 +1958,22 @@ function buildRelayArena(relay) {
     const placeBox = (wx, wy, w, d, h, color, opts = {}) => {
         const mesh = box(w, d, h, color, Object.assign({ metalness: 0.48, roughness: 0.55 }, opts));
         mesh.position.set(wx, wy, terrainHeight(wx, wy) + h / 2); mesh.castShadow = true; mesh.receiveShadow = true; g.add(mesh);
+        campaignExterior.remember(mesh);
         return mesh;
     };
     const solidBox = (wx, wy, w, d, h, color, opts) => {
         const mesh = placeBox(wx, wy, w, d, h, color, opts);
-        relay.siteSolids.push(addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy)));
+        const solid=addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy));
+        relay.siteSolids.push(solid);campaignExterior.attachSolids(mesh,[solid]);
         return mesh;
     };
-    const lane = (wx, wy, w, d, color) => { const mesh = placeBox(wx, wy, w, d, 0.08, color, EMISSIVE(color, 0.35)); relay.arenaConduits.push(mesh.material); return mesh; };
+    const lane = (wx, wy, w, d, color) => { const mesh = placeBox(wx, wy, w, d, 0.08, color, EMISSIVE(color, 0.35)); campaignExterior.remember(mesh,'surface');relay.arenaConduits.push(mesh.material); return mesh; };
     const conduit = (ax, ay, bx, by, z, color, radius = 0.13) => {
         const az = terrainHeight(ax, ay) + z, bz = terrainHeight(bx, by) + z;
         const from = new THREE.Vector3(ax, ay, az), to = new THREE.Vector3(bx, by, bz);
         const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, from.distanceTo(to), 7), mat(color, { metalness: 0.65, roughness: 0.42, emissive: color, emissiveIntensity: 0.24 }));
         mesh.position.copy(from).add(to).multiplyScalar(0.5); mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(from).normalize()); g.add(mesh);
+        campaignExterior.remember(mesh,'cable',{ax,ay,bx,by,radius});
         relay.arenaConduits.push(mesh.material); return mesh;
     };
     if (R.id === 1) {
@@ -1928,34 +1989,40 @@ function buildRelayArena(relay) {
         }
         const dockPad = new THREE.Mesh(new THREE.CylinderGeometry(2.2, 2.5, 0.28, 8), mat(0x354252, { metalness: 0.66, roughness: 0.4 }));
         dockPad.rotation.x = Math.PI / 2; dockPad.position.set(SURVEY_DRONE_DOCK.x, SURVEY_DRONE_DOCK.y, terrainHeight(SURVEY_DRONE_DOCK.x, SURVEY_DRONE_DOCK.y) + 0.14); g.add(dockPad);
+        campaignExterior.remember(dockPad,'skin-cylinder');
         for (const side of [-1, 1]) placeBox(SURVEY_DRONE_DOCK.x + side * 1.65, SURVEY_DRONE_DOCK.y, 0.35, 2.8, 1.4, 0x596679);
         const dockStatus = placeBox(SURVEY_DRONE_DOCK.x, SURVEY_DRONE_DOCK.y + 1.8, 1.8, 0.16, 0.2, 0xff5544, EMISSIVE(0xff2211, 1.5));
         relay.surveyDock = { pad: dockPad, status: dockStatus, material: dockStatus.material };
         conduit(x, y + 2.5, SURVEY_DRONE_DOCK.x, SURVEY_DRONE_DOCK.y - 2.5, 0.28, 0xe0a84a, 0.16);
         conduit(x - 3, y + 2, x - 14, y + 10, 0.32, 0xe0a84a, 0.12);
         for (const ox of [-7, 7]) {
-            placeBox(x + ox, y + 15, 0.32, 0.32, 3.8, 0x566273);
+            const post=placeBox(x + ox, y + 15, 0.32, 0.32, 3.8, 0x566273);
             const serviceLamp = placeBox(x + ox, y + 15, 0.55, 0.55, 0.16, 0xffc45b, EMISSIVE(0xff7a22, 1.25));
             serviceLamp.position.z += 3.75;
+            campaignExterior.mounted(serviceLamp,post,true);
         }
     } else if (R.id === 2) {
         /* Beta sits on an exposed communications ridge with a tall dish silhouette. */
         lane(x, y, 42, 0.32, 0x70c8ff); lane(x, y - 12, 0.32, 24, 0x70c8ff);
         const mast = new THREE.Mesh(new THREE.CylinderGeometry(0.45, 1.1, 22, 6), mat(0x596477, { metalness: 0.72, roughness: 0.38 }));
         mast.rotation.x = Math.PI / 2; mast.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 11); mast.castShadow = true; g.add(mast);
-        relay.siteSolids.push(addSolid(x - 14.2, y + 6.8, x - 11.8, y + 9.2, terrainHeight(x - 13, y + 8) + 22, terrainHeight(x - 13, y + 8)));
+        campaignExterior.remember(mast,'cylinder');
+        const mastSolid=addSolid(x - 14.2, y + 6.8, x - 11.8, y + 9.2, terrainHeight(x - 13, y + 8) + 22, terrainHeight(x - 13, y + 8));
+        relay.siteSolids.push(mastSolid);campaignExterior.attachSolids(mast,[mastSolid]);
         const dish = new THREE.Mesh(new THREE.SphereGeometry(3.2, 14, 7, 0, TAU, 0, Math.PI / 2), mat(0x77859d, { metalness: 0.76, roughness: 0.3, side: THREE.DoubleSide }));
         dish.scale.z = 0.3; dish.rotation.set(0.7, 0.25, -0.45); dish.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 21); g.add(dish);
         relay.arenaDish = dish; // persistent first-use material prewarm target
         for (const [ox, oy, w, d] of [[13, 10, 5, 2.2], [14, -9, 4, 2.2], [-4, -15, 6, 2.0], [-20, -7, 4, 2.2]]) solidBox(x + ox, y + oy, w, d, 1.35, 0x586579);
         const ridgeLight = new THREE.PointLight(0x66cfff, 38, 85, 1.8);
         ridgeLight.position.set(x - 13, y + 8, terrainHeight(x - 13, y + 8) + 22); g.add(addBudgetLight(ridgeLight));
-        placeBox(x + 3, y + 13, 15, 6, 0.24, 0x3b4657, { metalness: 0.72, roughness: 0.38 });
+        campaignExterior.remember(placeBox(x + 3, y + 13, 15, 6, 0.24, 0x3b4657, { metalness: 0.72, roughness: 0.38 }),'remove');
         conduit(x, y + 3, x - 12, y + 8, 0.35, 0x70c8ff, 0.13);
         conduit(x + 2, y - 3, x + 17, y - 9, 0.35, 0x70c8ff, 0.11);
         const brokenSupport = conduit(x + 19, y + 13, x + 13, y + 13, 5.2, 0x536174, 0.28);
         brokenSupport.material.emissiveIntensity = 0;
+        campaignExterior.remember(brokenSupport,'remove');
         const ridgeWarning = placeBox(x + 21, y + 12, 0.24, 4.8, 0.7, 0x66cfff, EMISSIVE(0x2288cc, 1.1));
+        campaignExterior.remember(ridgeWarning,'remove');
         relay.arenaWarningMats.push(ridgeWarning.material);
     } else {
         /* Gamma is a damaged utility node in a contaminated crater. */
@@ -1963,14 +2030,16 @@ function buildRelayArena(relay) {
         for (const [ox, oy, radius] of [[-18, -10, 4.2], [17, 13, 5.0], [20, -12, 3.5]]) {
             const pool = new THREE.Mesh(new THREE.CircleGeometry(radius, 24), mat(0x68c94a, { emissive: 0x2da82d, emissiveIntensity: 1.25, transparent: true, opacity: 0.72, side: THREE.DoubleSide }));
             pool.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy) + 0.12); g.add(pool);
+            campaignExterior.remember(pool,'circle');
         }
         for (const [ox, oy, tilt] of [[-15, 12, 0.3], [14, -4, -0.45], [7, 18, 0.65]]) {
             const pylon = solidBox(x + ox, y + oy, 1.5, 1.5, 5.5, 0x4d574f);
             pylon.rotation.z = tilt;
+            campaignExterior.remember(pylon,'ground',{yaw:tilt});
             const warning = new THREE.PointLight(0x70ff55, 16, 36, 1.8);
             warning.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy) + 5.6); g.add(addBudgetLight(warning));
         }
-        solidBox(x - 20, y + 3, 5.5, 2.4, 1.3, 0x5e6557);
+        campaignExterior.remember(solidBox(x - 20, y + 3, 5.5, 2.4, 1.3, 0x5e6557),'remove'); // blocks western FOLLOW lane
         solidBox(x + 10, y - 17, 5.5, 2.4, 1.3, 0x5e6557);
         conduit(x - 3, y + 2, x - 15, y + 12, 0.36, 0x75d957, 0.15);
         conduit(x + 4, y - 2, x + 14, y - 4, 0.34, 0x75d957, 0.14);
@@ -1980,6 +2049,7 @@ function buildRelayArena(relay) {
         for (const [ox, oy, rot] of [[-8, 16, 0.5], [18, -18, -0.65]]) {
             const ruptured = placeBox(x + ox, y + oy, 8, 0.5, 0.5, 0x2d3532); ruptured.rotation.z = rot;
             const warning = placeBox(x + ox + 2, y + oy, 1.0, 0.56, 0.18, 0x8dff5e, EMISSIVE(0x3edb2b, 1.4)); warning.rotation.z = rot;
+            campaignExterior.remember(ruptured,'ground',{yaw:rot});campaignExterior.mounted(warning,ruptured);
             relay.arenaWarningMats.push(warning.material);
         }
     }
@@ -2422,6 +2492,9 @@ function buildDecor() {
         const px = rp.x, py = rp.y;
         const ang = rand(TAU), rad = rand(18, 95);
         const wx = px + Math.cos(ang) * rad, wy = py + Math.sin(ang) * rad;
+        // Keep legacy route scatter inside its original map. Rear smoothing must
+        // not admit new tree candidates and reshuffle the accepted scenery RNG.
+        if(wy>WORLD)continue;
         const d = distToRoute(wx, wy), h = terrainHeight(wx, wy);
         if (d < 14 || d > 105) continue;
         if (h < 0.5 || h > 45) continue;
@@ -2802,22 +2875,24 @@ const environmentPlacement = ChargefrontEnvironmentPlacement.create({
 /* ─── 3.5A combat-space cover clusters + landmarks ─────────────────────── */
 function buildCombatSpaces() {
     const root = new THREE.Group(); root.name = 'CombatSpaces'; scene.add(root);
+    const groundBox=(...args)=>{const start=SOLIDS.length,mesh=envBox(root,...args);campaignExterior.remember(mesh);campaignExterior.attachSolids(mesh,SOLIDS.slice(start));return mesh;};
     /* Tiered cover so visible height matches projectile blocking:
        low (1.05m) is shootable over, medium (1.5m) blocks body shots, the service
        module (2.5m) is reliable full cover. */
-    const lowCover = (x, y, w, d, color) => envBox(root, x, y, w, d, 1.05, color || 0x5a4a3a, { metalness: 0.35, roughness: 0.7 }, true);
-    const midCover = (x, y, w, d, color) => envBox(root, x, y, w, d, 1.5, color || 0x465064, { metalness: 0.42, roughness: 0.62 }, true);
+    const lowCover = (x, y, w, d, color) => groundBox(x, y, w, d, 1.05, color || 0x5a4a3a, { metalness: 0.35, roughness: 0.7 }, true);
+    const midCover = (x, y, w, d, color) => groundBox(x, y, w, d, 1.5, color || 0x465064, { metalness: 0.42, roughness: 0.62 }, true);
     const tallModule = (x, y, w, d, color, accent) => {
-        const m = envBox(root, x, y, w, d, 2.5, color, { metalness: 0.6, roughness: 0.42 }, true);
-        if (accent !== undefined) envBox(root, x, y - d / 2 - 0.05, w - 0.6, 0.12, 0.2, accent, EMISSIVE(accent, 1.3));
+        const m = groundBox(x, y, w, d, 2.5, color, { metalness: 0.6, roughness: 0.42 }, true);
+        if (accent !== undefined) campaignExterior.mounted(groundBox(x, y - d / 2 - 0.05, w - 0.6, 0.12, 0.2, accent, EMISSIVE(accent, 1.3)),m);
         return m;
     };
     const barrier = (x, y, len, rot) => {
-        const m = envBox(root, x, y, len, 0.5, 1.15, 0x5a4d45, { metalness: 0.42, roughness: 0.68, castShadow: true });
+        const m = groundBox(x, y, len, 0.5, 1.15, 0x5a4d45, { metalness: 0.42, roughness: 0.68, castShadow: true });
         m.rotation.z = rot || 0;
-        addRotatedSolid(x, y, len, 0.5, rot || 0, terrainHeight(x, y) + 1.15, terrainHeight(x, y));
-        const stripe = envBox(root, x, y, len - 0.45, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.1));
+        campaignExterior.attachSolids(m,addRotatedSolid(x, y, len, 0.5, rot || 0, terrainHeight(x, y) + 1.15, terrainHeight(x, y)));
+        const stripe = groundBox(x, y, len - 0.45, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.1));
         stripe.rotation.z = rot || 0; stripe.position.z += 0.58;
+        campaignExterior.mounted(stripe,m);
         return m;
     };
     /* author one deliberate cover group to one side of a path, always clear of
@@ -2838,11 +2913,13 @@ function buildCombatSpaces() {
             midCover(x - dx * 4.2 + nx * 1.6, y - dy * 4.2 + ny * 1.6, 2.0, 1.8, 0x4a5361);
         } else if (style === 'checkpoint') {
             /* entry gantry — two full-height posts + overhead span (landmark) */
-            envBox(root, x, y, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
-            const post2 = envBox(root, x + dx * 7 + nx * 0.4, y + dy * 7 + ny * 0.4, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
-            const span = envBox(root, (x + post2.position.x) / 2, (y + post2.position.y) / 2, 7.4, 0.35, 3.0, ENV_COLORS.steel, {});
+            const post1=groundBox(x, y, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
+            const post2 = groundBox(x + dx * 7 + nx * 0.4, y + dy * 7 + ny * 0.4, 1.3, 1.3, 4.6, ENV_COLORS.steelDark, {}, true);
+            const span = groundBox((x + post2.position.x) / 2, (y + post2.position.y) / 2, 7.4, 0.35, 3.0, ENV_COLORS.steel, {});
             span.position.z = terrainHeight(span.position.x, span.position.y) + 4.55;
-            envBox(root, (x + post2.position.x) / 2, (y + post2.position.y) / 2, 5.6, 0.18, 0.5, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 1.2)).position.z += 5.5;
+            campaignExterior.remember(span,'bridge',{a:post1,b:post2});
+            const sign=groundBox((x + post2.position.x) / 2, (y + post2.position.y) / 2, 5.6, 0.18, 0.5, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 1.2));sign.position.z+=5.5;
+            campaignExterior.remember(sign,'bridge-face',{host:span});
             lowCover(x + dx * 3.4 + nx * 2.2, y + dy * 3.4 + ny * 2.2, 2.0, 1.8, 0x4a5361);
         } else if (style === 'service') {
             tallModule(x, y, 3.4, 2.3, ENV_COLORS.steel, ENV_COLORS.service);
@@ -2870,12 +2947,12 @@ function buildCombatSpaces() {
             for (const o of [-2.4, 2.4]) {
                 const tank = new THREE.Mesh(new THREE.CylinderGeometry(1.5, 1.5, 3.8, 12), mat(0x596579, { metalness: 0.6, roughness: 0.4 }));
                 tank.rotation.x = Math.PI / 2; tank.position.set(x + o, y, terrainHeight(x + o, y) + 1.9); tank.castShadow = true; root.add(tank);
-                addSolid(x + o - 1.5, y - 1.5, x + o + 1.5, y + 1.5, terrainHeight(x + o, y) + 3.8, terrainHeight(x + o, y));
+                campaignExterior.remember(tank,'cylinder');campaignExterior.attachSolids(tank,[addSolid(x + o - 1.5, y - 1.5, x + o + 1.5, y + 1.5, terrainHeight(x + o, y) + 3.8, terrainHeight(x + o, y))]);
             }
-            envBox(root, x, y + 3.2, 6, 0.5, 1.1, 0x5a4d45, { metalness: 0.4, roughness: 0.7 }, true);
-            envBox(root, x, y + 3.2, 5.0, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.2)).position.z += 0.6;
-            envBox(root, x, y - 3.4, 1.1, 1.1, 4.2, ENV_COLORS.steelDark, {}, true);
-            envBox(root, x, y - 3.4, 0.7, 0.7, 0.6, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 2.0)).position.z += 4.3;
+            const wall=groundBox(x, y + 3.2, 6, 0.5, 1.1, 0x5a4d45, { metalness: 0.4, roughness: 0.7 }, true);
+            const stripe=groundBox(x, y + 3.2, 5.0, 0.14, 0.16, ENV_COLORS.hazard, EMISSIVE(ENV_COLORS.hazard, 1.2));stripe.position.z+=.6;campaignExterior.mounted(stripe,wall);
+            const post=groundBox(x, y - 3.4, 1.1, 1.1, 4.2, ENV_COLORS.steelDark, {}, true);
+            const cap=groundBox(x, y - 3.4, 0.7, 0.7, 0.6, ENV_COLORS.service, EMISSIVE(ENV_COLORS.service, 2.0));cap.position.z+=4.3;campaignExterior.mounted(cap,post,true);
         }
     }
     /* watchtower landmark on the M2 corridor */
@@ -2886,9 +2963,9 @@ function buildCombatSpaces() {
         if (landmark(x, y)) {
             const tower = new THREE.Mesh(new THREE.CylinderGeometry(0.7, 1.5, 11, 6), mat(0x4a5361, { metalness: 0.6, roughness: 0.42 }));
             tower.rotation.x = Math.PI / 2; tower.position.set(x, y, terrainHeight(x, y) + 5.5); tower.castShadow = true; root.add(tower);
-            addSolid(x - 1, y - 1, x + 1, y + 1, terrainHeight(x, y) + 11, terrainHeight(x, y));
-            envBox(root, x, y, 3.2, 3.2, 2.2, ENV_COLORS.steelDark, { metalness: 0.6, roughness: 0.4 }, false).position.z = terrainHeight(x, y) + 10.2;
-            envBox(root, x, y, 2.2, 2.2, 0.3, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 1.6)).position.z = terrainHeight(x, y) + 11.5;
+            campaignExterior.remember(tower,'cylinder');campaignExterior.attachSolids(tower,[addSolid(x - 1, y - 1, x + 1, y + 1, terrainHeight(x, y) + 11, terrainHeight(x, y))]);
+            const head=envBox(root, x, y, 3.2, 3.2, 2.2, ENV_COLORS.steelDark, { metalness: 0.6, roughness: 0.4 }, false);head.position.z=terrainHeight(x,y)+10.2;campaignExterior.remember(head,'installed');
+            const cap=envBox(root, x, y, 2.2, 2.2, 0.3, ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 1.6));cap.position.z=terrainHeight(x,y)+11.5;campaignExterior.mounted(cap,head,true);
         }
     }
 }
@@ -2902,7 +2979,8 @@ function buildRelayIdentity(relay) {
         const mesh = envBoxMesh(w, d, h, color, Object.assign({ metalness: 0.5, roughness: 0.5 }, matOpts));
         mesh.position.set(wx, wy, terrainHeight(wx, wy) + h / 2);
         mesh.castShadow = castShadow; mesh.receiveShadow = castShadow; g.add(mesh);
-        if (solid) relay.siteSolids.push(addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy)));
+        campaignExterior.remember(mesh);
+        if (solid) {const slab=addSolid(wx - w / 2, wy - d / 2, wx + w / 2, wy + d / 2, terrainHeight(wx, wy) + h, terrainHeight(wx, wy));relay.siteSolids.push(slab);campaignExterior.attachSolids(mesh,[slab]);}
         return mesh;
     };
     const pipe = (ax, ay, bx, by, z, color, radius = 0.12, intensity = 0.28) => {
@@ -2911,7 +2989,7 @@ function buildRelayIdentity(relay) {
         const mesh = new THREE.Mesh(new THREE.CylinderGeometry(radius, radius, from.distanceTo(to), 7), mat(color, { metalness: 0.65, roughness: 0.42, emissive: color, emissiveIntensity: intensity }));
         mesh.position.copy(from).add(to).multiplyScalar(0.5);
         mesh.quaternion.setFromUnitVectors(new THREE.Vector3(0, 1, 0), to.clone().sub(from).normalize());
-        g.add(mesh); relay.arenaConduits.push(mesh.material); return mesh;
+        g.add(mesh);campaignExterior.remember(mesh,'cable',{ax,ay,bx,by,radius});relay.arenaConduits.push(mesh.material); return mesh;
     };
     const status = (wx, wy, color, h = 0.22, w = 1.4, d = 0.16) => {
         const mesh = place(wx, wy, w, d, h, color, EMISSIVE(color, 1.4));
@@ -2923,27 +3001,27 @@ function buildRelayIdentity(relay) {
            a control module and service conduit.  The arena's service shed carries
            the rest of the compound, so there is no prop scatter. */
         for (const [ox, oy] of [[-8, 5], [-3.6, 5], [0.8, 5]]) {
-            place(x + ox, y + oy, 2.2, 1.7, 1.5, ENV_COLORS.utility, { metalness: 0.55, roughness: 0.45 }, true);
-            status(x + ox, y + oy - 0.95, ENV_COLORS.service, 0.18, 1.2, 0.12);
+            const host=place(x + ox, y + oy, 2.2, 1.7, 1.5, ENV_COLORS.utility, { metalness: 0.55, roughness: 0.45 }, true);
+            campaignExterior.mounted(status(x + ox, y + oy - 0.95, ENV_COLORS.service, 0.18, 1.2, 0.12),host);
         }
         place(x + 6.5, y + 5, 3.6, 2.4, 2.6, 0x465064, {}, true);            // control module
         pipe(x + 0.8, y + 5, x - 10, y - 2, 0.32, ENV_COLORS.service, 0.13, 0.30);
         pipe(x + 6.5, y + 5, x + 8, y - 1, 0.34, ENV_COLORS.service, 0.11, 0.24);
-        place(x - 5, y - 8, 6, 0.5, 1.15, 0x5a4d45, { roughness: 0.7 }, true);   // low service barrier
-        status(x - 5, y - 8, ENV_COLORS.service, 0.16, 5.0, 0.12).position.z += 0.65;
+        const barrier=place(x - 5, y - 8, 6, 0.5, 1.15, 0x5a4d45, { roughness: 0.7 }, true);
+        const stripe=status(x - 5, y - 8, ENV_COLORS.service, 0.16, 5.0, 0.12);stripe.position.z+=.65;campaignExterior.mounted(stripe,barrier);
     } else if (R.id === 2) {
-        /* BETA — retaining walls frame the elevated communications platform; a
-           single secondary mast groups the hardware.  No obstacle-field clutter. */
-        place(x - 10, y - 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
-        place(x + 16, y - 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
-        place(x - 10, y + 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
-        place(x + 16, y + 16, 0.8, 10, 2.4, 0x4d574f, { roughness: 0.7 }, true);
+        /* BETA — preserve the communications masts and low cover. The detached
+           retaining slabs are replayed for seed parity, then removed below. */
+        // Detached retaining slabs, including the Gamma departure obstruction.
+        // Retire after legacy population so later seeded scenery stays identical.
+        for(const [ox,oy]of [[-10,-16],[16,-16],[-10,16],[16,16]])
+            campaignExterior.remember(place(x+ox,y+oy,.8,10,2.4,0x4d574f,{roughness:.7},true),'remove');
         const mast2 = new THREE.Mesh(new THREE.CylinderGeometry(0.28, 0.7, 15, 6), mat(0x596477, { metalness: 0.72, roughness: 0.38 }));
         mast2.rotation.x = Math.PI / 2; mast2.position.set(x + 9, y - 4, terrainHeight(x + 9, y - 4) + 7.5); mast2.castShadow = true; g.add(mast2);
-        relay.siteSolids.push(addSolid(x + 8.3, y - 4.7, x + 9.7, y - 3.3, terrainHeight(x + 9, y - 4) + 15, terrainHeight(x + 9, y - 4)));
+        campaignExterior.remember(mast2,'cylinder');const mastSolid=addSolid(x + 8.3, y - 4.7, x + 9.7, y - 3.3, terrainHeight(x + 9, y - 4) + 15, terrainHeight(x + 9, y - 4));relay.siteSolids.push(mastSolid);campaignExterior.attachSolids(mast2,[mastSolid]);
         const beacon = new THREE.Mesh(new THREE.SphereGeometry(0.2, 8, 6), mat(ENV_COLORS.comms, EMISSIVE(ENV_COLORS.comms, 2.0)));
         beacon.position.set(x + 9, y - 4, terrainHeight(x + 9, y - 4) + 15.2); g.add(beacon);
-        status(x + 14, y + 12, ENV_COLORS.comms, 0.2, 1.6, 0.14);
+        campaignExterior.remember(status(x + 14, y + 12, ENV_COLORS.comms, 0.2, 1.6, 0.14),'remove');
         pipe(x - 8, y + 2, x - 13, y + 8, 0.32, ENV_COLORS.comms, 0.12, 0.3);
     } else {
         /* GAMMA — collapsed infrastructure: ruptured slabs, a fallen gantry and a
@@ -2951,21 +3029,23 @@ function buildRelayIdentity(relay) {
         for (const [ox, oy, tilt] of [[-20, -6, 0.5], [18, 9, -0.35], [2, -20, 0.7]]) {
             const slab = place(x + ox, y + oy, 4.5, 1.4, 0.7, 0x3a3f3a, { roughness: 0.8, castShadow: true });
             slab.rotation.z = tilt;
-            relay.siteSolids.push(...addRotatedSolid(x + ox, y + oy, 4.5, 1.4, tilt, terrainHeight(x + ox, y + oy) + 0.7, terrainHeight(x + ox, y + oy)));
+            const solids=addRotatedSolid(x + ox, y + oy, 4.5, 1.4, tilt, terrainHeight(x + ox, y + oy) + 0.7, terrainHeight(x + ox, y + oy));relay.siteSolids.push(...solids);campaignExterior.attachSolids(slab,solids);
             const warn = place(x + ox, y + oy, 3.0, 0.5, 0.16, ENV_COLORS.hostile, EMISSIVE(0x3edb2b, 1.3));
             warn.rotation.z = tilt; warn.position.z += 0.42;
+            campaignExterior.mounted(warn,slab);
             relay.arenaWarningMats.push(warn.material);
         }
         const gantry = place(x - 2, y + 17, 6, 0.6, 0.6, 0x40483f, { castShadow: true }); gantry.rotation.z = 0.6;
-        relay.siteSolids.push(...addRotatedSolid(x - 2, y + 17, 6, 0.6, 0.6, terrainHeight(x - 2, y + 17) + 0.6, terrainHeight(x - 2, y + 17)));
+        const gantrySolids=addRotatedSolid(x - 2, y + 17, 6, 0.6, 0.6, terrainHeight(x - 2, y + 17) + 0.6, terrainHeight(x - 2, y + 17));relay.siteSolids.push(...gantrySolids);campaignExterior.attachSolids(gantry,gantrySolids);
         const frame = place(x + 22, y + 16, 0.8, 0.8, 6.5, 0x3f463d, { castShadow: true }); frame.rotation.z = -0.28;
-        relay.siteSolids.push(...addRotatedSolid(x + 22, y + 16, 0.8, 0.8, -0.28, terrainHeight(x + 22, y + 16) + 6.5, terrainHeight(x + 22, y + 16)));
+        const frameSolids=addRotatedSolid(x + 22, y + 16, .8, .8, -.28, terrainHeight(x + 22, y + 16) + 6.5, terrainHeight(x + 22, y + 16));relay.siteSolids.push(...frameSolids);campaignExterior.attachSolids(frame,frameSolids);
         for (const [ox, oy, s] of [[-26, 4, 0.8], [24, -6, 0.7]]) {
             const growth = makeInfestedTree(s); growth.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy)); growth.rotation.z = rand(TAU); g.add(growth);
         }
         for (const [ox, oy, r] of [[-24, -14, 3.4], [26, 2, 3.0]]) {
             const pool = new THREE.Mesh(new THREE.CircleGeometry(r, 20), mat(0x68c94a, { emissive: 0x2da82d, emissiveIntensity: 1.15, transparent: true, opacity: 0.68, side: THREE.DoubleSide }));
             pool.position.set(x + ox, y + oy, terrainHeight(x + ox, y + oy) + 0.1); g.add(pool);
+            campaignExterior.remember(pool,'circle');
         }
     }
 }
@@ -3017,6 +3097,7 @@ function buildEnvironmentStateLayers() {
     const puck = (group, x, y, color, matArr) => {
         const m = envBoxMesh(1.1, 1.1, 0.06, color, EMISSIVE(color, 0.55));
         m.position.set(x, y, terrainHeight(x, y) + 0.18); group.add(m); matArr.push(m.material);
+        if (!ChargefrontFacility.PLACEMENT_FOOTPRINTS.some(([x0,x1,y0,y1])=>x>=x0&&x<=x1&&y>=y0&&y<=y1)) campaignExterior.remember(m,'surface');
         return m;
     };
     const deadSpots = [[312, 608], [408, 608], [312, 692], [408, 692], [360, 566], [420, 108], [360, 688]];
@@ -3024,16 +3105,18 @@ function buildEnvironmentStateLayers() {
         beacon(env.dead, x, y, 3.2, 0x552233, 0.55, env.deadMats);
         puck(env.dead, x + 1.6, y, 0x2a2230, env.deadMats);
     }
-    /* M1's jammed, partly-raised roller shutter remains on the freestanding
-       south checkpoint.  The obsolete east-perimeter shutter was removed with
-       that wall so no visual-only barrier floats in the new open service yard. */
+    /* Replay the legacy dummy shutter for seed parity, then retire it in the
+       final exterior refinement. The real front sliding door is independent. */
     {
         const drum = envBoxMesh(6.6, 0.5, 0.7, 0x2a2f3a, { metalness: 0.6, roughness: 0.5 });
         drum.position.set(360, 606.5, 4.9); env.dead.add(drum);
+        campaignExterior.remember(drum,'remove');
         const strip = envBoxMesh(3.2, 0.14, 1.9, 0x2a2f3a, { metalness: 0.6, roughness: 0.6 });
         strip.position.set(358, 606.5, 3.7); strip.rotation.z = 0.09; env.dead.add(strip);
+        campaignExterior.remember(strip,'remove');
         const seam = envBoxMesh(6.0, 0.06, 0.16, 0x552233, EMISSIVE(0x33111a, 0.7));
         seam.position.set(360, 606.5, 4.55); env.dead.add(seam); env.deadMats.push(seam.material);
+        campaignExterior.remember(seam,'remove');
     }
     const poweredSpots = [[312, 608], [408, 608], [312, 692], [408, 692], [360, 566], [420, 108], [360, 688]];
     for (const [x, y] of poweredSpots) {
@@ -3074,12 +3157,15 @@ function buildEnvironmentStateLayers() {
     for (const [x, y, w, d, r] of [[350, 604, 3.2, 0.6, 0.4], [400, 606, 2.6, 0.6, -0.3], [306, 660, 0.6, 3.0, 0.55], [414, 686, 0.6, 2.6, -0.45]]) {
         const panel = box(w, d, 0.3, 0x2f3542, { metalness: 0.6, roughness: 0.5 });
         panel.position.set(x, y, terrainHeight(x, y) + 2.4); panel.rotation.z = r; env.crisis.add(panel);
+        campaignExterior.remember(panel,'remove');
         const spark = box(w * 0.5, d + 0.04, 0.12, ENV_COLORS.crisis, EMISSIVE(ENV_COLORS.crisis, 1.8));
         spark.position.set(x, y, terrainHeight(x, y) + 2.6); spark.rotation.z = r; env.crisis.add(spark); env.crisisMats.push(spark.material);
+        campaignExterior.remember(spark,'remove');
     }
     for (const [x, y, r] of [[336, 596, 3.0], [420, 700, 2.6], [470, 250, 3.2], [452, 150, 2.4]]) {
         const patch = new THREE.Mesh(new THREE.CircleGeometry(r, 18), mat(0x5a2a6a, { emissive: 0x3a1050, emissiveIntensity: 1.0, transparent: true, opacity: 0.6, side: THREE.DoubleSide }));
         patch.position.set(x, y, terrainHeight(x, y) + 0.1); env.crisis.add(patch);
+        campaignExterior.remember(patch,'circle');
     }
     for (const [x, y, s] of [[318, 600, 0.7], [415, 700, 0.65], [308, 680, 0.6]]) {
         const growth = makeInfestedTree(s); growth.position.set(x, y, terrainHeight(x, y)); growth.rotation.z = rand(TAU); env.crisis.add(growth);
@@ -3236,7 +3322,8 @@ function relayGuideSegmentClear(a,b, allowDoors=true) {
         if(Math.abs(next-h)>Math.min(MAX_STEP,.8*length/n+.05))return false;h=next;}
     return true;
 }
-const relayRouteSolver=ChargefrontRelayRouting.create({world:WORLD,clear:relayGuideSegmentClear});
+const relayRouteSolver=ChargefrontRelayRouting.create({world:ChargefrontCampaignTerrain.REAR.end,clear:(a,b)=>
+    a.x>=2&&b.x>=2&&a.x<=WORLD-2&&b.x<=WORLD-2&&a.y>=2&&b.y>=2&&a.y<=worldMaxY(a.x)&&b.y<=worldMaxY(b.x)&&relayGuideSegmentClear(a,b)});
 function resetRelayGuide() {
     relayGuide.id=null;relayGuide.solvedPath=[];relayGuide.path=[];relayGuide.timer=relayGuide.connectorT=relayGuide.renderT=0;relayGuide.lastX=relayGuide.lastY=relayGuide.observedX=relayGuide.observedY=relayGuide.connectorX=relayGuide.connectorY=NaN;
     relayGuide.destinationX=relayGuide.destinationY=NaN;
@@ -5297,7 +5384,7 @@ function movePlayer(dt) {
     const moveStartX = player.pos.x, moveStartY = player.pos.y;
     if (ml > 0.01) {
         let nx = clamp(player.pos.x + mx * speed * dt, 2, WORLD - 2);
-        let ny = clamp(player.pos.y + my * speed * dt, 2, WORLD - 2);
+        let ny = clamp(player.pos.y + my * speed * dt, 2, worldMaxY(nx));
         if (mode === 'endless') {   // keep the squad inside the valley arena
             const ex = nx - ENDLESS_CENTER.x, ey = ny - ENDLESS_CENTER.y;
             const ed = Math.hypot(ex, ey) || 1;
@@ -5568,7 +5655,7 @@ function debugTeleportToObjective() {
         const r = a < 6 ? 2.5 : 5 + (a % 12) * 1.2;
         const ang = a * 0.73;
         const sx = tx + Math.cos(ang) * r, sy = ty + Math.sin(ang) * r;
-        if (sx < 4 || sy < 4 || sx > WORLD - 4 || sy > WORLD - 4) continue;
+        if (sx < 4 || sy < 4 || sx > WORLD - 4 || sy > worldMaxY(sx,4)) continue;
         if (!isInsideSolid(sx, sy, 0.6)) { px = sx; py = sy; break; }
     }
     /* teleport the player */
@@ -5945,7 +6032,7 @@ class Infested extends LJS.ThreeJSObject {
             if (this.wanderT <= 0) {
                 this.wanderT = 3 + rand(4);
                 this.wanderPos.x = clamp(this.home.x + rand(-45, 45), 20, WORLD - 20);
-                this.wanderPos.y = clamp(this.home.y + rand(-45, 45), 20, WORLD - 20);
+                this.wanderPos.y = clamp(this.home.y + rand(-45, 45), 20, worldMaxY(this.wanderPos.x,20));
             }
             tx = this.wanderPos.x; ty = this.wanderPos.y;
         } else {
@@ -6059,7 +6146,7 @@ class Infested extends LJS.ThreeJSObject {
             this.pos.x += this.sep.x * dt * 6;
             this.pos.y += this.sep.y * dt * 6;
             resolveCircle(this.pos, 0.4);
-            this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, WORLD - 4);
+            this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, worldMaxY(this.pos.x,4));
             /* wall-slide steering (bug #8): when forward motion is blocked, slide tangentially */
             const moved = Math.hypot(this.pos.x - moveStartX, this.pos.y - moveStartY);
             if (moved < sp * dt * 0.35) {
@@ -6078,7 +6165,7 @@ class Infested extends LJS.ThreeJSObject {
             } else {
                 this.stuckT = 0; this.stuckSide = undefined;
             }
-            this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, WORLD - 4);
+            this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, worldMaxY(this.pos.x,4));
             this.z = terrainHeight(this.pos.x, this.pos.y);
             /* screecher flight: hover high, swoop low when the player gets close (content #19) */
             if (this.type === 'screecher') {
@@ -6523,7 +6610,7 @@ function findSpawnPoint(center, rMin, rMax, minDist, options = {}) {
         const a = lanes ? lanes[tries % lanes.length] + rand(-0.34, 0.34) : rand(TAU);
         const r = rand(rMin, rMax);
         const x = clamp(center.x + Math.cos(a) * r, 10, WORLD - 10);
-        const y = clamp(center.y + Math.sin(a) * r, 10, WORLD - 10);
+        const y = clamp(center.y + Math.sin(a) * r, 10, worldMaxY(x,10));
         if (isInsideSolid(x, y, 0.8)) continue;
         const h = terrainHeight(x, y);
         if (h < 0.2 || h > 55) continue;
@@ -6541,7 +6628,7 @@ function findSpawnPoint(center, rMin, rMax, minDist, options = {}) {
     for (let tries = 0; tries < 40; tries++) {
         const a = rand(TAU), r = rand(rMin, rMax);
         const x = clamp(center.x + Math.cos(a) * r, 10, WORLD - 10);
-        const y = clamp(center.y + Math.sin(a) * r, 10, WORLD - 10);
+        const y = clamp(center.y + Math.sin(a) * r, 10, worldMaxY(x,10));
         if (isInsideSolid(x, y, 0.8)) continue;
         if (!options.allowVisible && isObviousSpawnPopIn(x, y, options.visibleDistance || 36)) continue;
         return LJS.vec2(x, y);
@@ -6897,7 +6984,7 @@ class SquadMember extends LJS.ThreeJSObject {
         const curZ = terrainHeight(this.pos.x, this.pos.y);
         if (terrainHeight(nx, ny) <= curZ + MAX_STEP) { this.pos.x = nx; this.pos.y = ny; }
         resolveCircle(this.pos, 0.4);
-        this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, WORLD - 4);
+        this.pos.x = clamp(this.pos.x, 4, WORLD - 4); this.pos.y = clamp(this.pos.y, 4, worldMaxY(this.pos.x,4));
     }
     incomingThreat() {
         let best = null, bestD = Infinity;
@@ -6931,7 +7018,7 @@ class SquadMember extends LJS.ThreeJSObject {
         const away = Math.atan2(this.pos.y - threat.y, this.pos.x - threat.x) + rand(-0.55, 0.55);
         const distance = 4.5 + rand(2.5);
         const x = clamp(this.pos.x + Math.cos(away) * distance, 2, WORLD - 2);
-        const y = clamp(this.pos.y + Math.sin(away) * distance, 2, WORLD - 2);
+        const y = clamp(this.pos.y + Math.sin(away) * distance, 2, worldMaxY(x));
         this.evadePos = isInsideSolid(x, y) ? LJS.vec2(this.pos.x - Math.cos(away) * distance, this.pos.y - Math.sin(away) * distance) : LJS.vec2(x, y);
         this.evadeT = 0.45 + rand(0.25);
         return true;
@@ -7164,7 +7251,10 @@ function prewarmCampaignTraversalMaterials() {
     // facility corner: Beta's two-sided dish and the local dust PointsMaterial.
     // Compile against the *settled* gameplay light configuration once, at the
     // initial mission handoff; nothing is constructed during ordinary movement.
-    const targets = [relays[1]?.arenaDish, facilityFx.dust, facilityFx.vaultFloorRing,relayGuide.line].filter(Boolean);
+    // CP4's vertex-colored ground no longer implicitly warms the ordinary
+    // mapped, non-instanced material used by the laboratory label atlas.
+    const targets = [relays[1]?.arenaDish, facilityFx.dust, facilityFx.vaultFloorRing,relayGuide.line,
+        scene.getObjectByName('CP3CDeconLabels'),scene.getObjectByName('FacilityNameSign')].filter(Boolean);
     const start = performance.now();
     void Promise.all(targets.map(object => threeJS.renderer.compileAsync(object, camera, scene))).then(() => {
         if (PERF_DIAGNOSTICS) perfDiagnostics.event('traversalShadersReady', { ms: +(performance.now() - start).toFixed(1) });
@@ -8761,6 +8851,11 @@ function drawIntro(W, H) {
 
 /* campaign world — built lazily when a campaign run starts (keeps the menu light) */
 function buildCampaignWorld() {
+    // One geographic layout across M1-M4, fresh starts and v3 Continue. Isolate
+    // Three UUID/random construction from gameplay and Endless's saved seed.
+    const random = Math.random;
+    Math.random = ChargefrontProgression.seedRandom(ChargefrontCampaignTerrain.SEED);
+    try {
     ensureLocalLightSlots();
     buildMapGrid();
     buildTerrain();
@@ -8781,9 +8876,15 @@ function buildCampaignWorld() {
     facilityWorld.finalizeAdditionalCorrections(campaignContent.env, vial);
     facilityWorld.finalizeCoordinatedLighting(campaignContent.lab);
     facilityWorld.finalizeTurretIntegration(campaignContent.lab);
+    facilityWorld.finalizeSurfaceCorrections();
+    const populationRandom=Math.random;
+    try{Math.random=ChargefrontProgression.seedRandom(0xcf07004d);campaignExterior.finalize();buildCampaignRearGround();}
+    finally{Math.random=populationRandom;}
+    facilityWorld.finalizeExteriorRouteRemovals();solidGridCount=-1;
     if (['sample_zero', 'break_contact'].includes(activeMissionId)) setFinalMissionWorldState();
     campaignWorldBuilt = true;
     threeJS.renderer.shadowMap.needsUpdate = true;
+    } finally { Math.random = random; }
 }
 
 function buildCampaignObjectives() {
@@ -10558,7 +10659,7 @@ function restorePersistentHostiles(list) {
         if(!ENEMY_STATS[saved.type]||!Number.isFinite(saved.x)||!Number.isFinite(saved.y)||!(saved.hp>0))continue;
         if(sampleLockdownActive() && (saved.type!=='drone' || !insideFacility({x:saved.x,y:saved.y})))continue;
         const target=squadMembers[saved.focus]||player;
-        const e=new Infested(saved.type,LJS.vec2(clamp(saved.x,2,WORLD-2),clamp(saved.y,2,WORLD-2)),target);
+        const e=new Infested(saved.type,LJS.vec2(clamp(saved.x,2,WORLD-2),clamp(saved.y,2,worldMaxY(clamp(saved.x,2,WORLD-2)))),target);
         e.focus=target;e.hp=ChargefrontProgression.bounded(saved.hp,ENEMY_STATS[saved.type].hp);e.maxHp=Math.max(e.hp,ChargefrontProgression.bounded(saved.maxHp,e.hp));
         e.attackT=ChargefrontProgression.bounded(saved.attackT);
         e.shield=ChargefrontProgression.bounded(saved.shield);e.speed=ChargefrontProgression.bounded(saved.speed,e.speed,100);e.dmg=ChargefrontProgression.bounded(saved.dmg,e.dmg,1000);
@@ -10578,7 +10679,7 @@ function restorePersistentPickups(list) {
     for (const p of pickups) scene.remove(p.group);
     pickups.length=0;
     for (const p of list.slice(0,160)) if (['scrap','power','grenade','dna'].includes(p.kind)&&Number.isFinite(p.x)&&Number.isFinite(p.y))
-        spawnPickup(LJS.vec2(clamp(p.x,2,WORLD-2),clamp(p.y,2,WORLD-2)),p.kind,Math.floor(ChargefrontProgression.bounded(p.quantity,0,100)));
+        spawnPickup(LJS.vec2(clamp(p.x,2,WORLD-2),clamp(p.y,2,worldMaxY(clamp(p.x,2,WORLD-2)))),p.kind,Math.floor(ChargefrontProgression.bounded(p.quantity,0,100)));
 }
 function checkpointPhaseForMission(missionId, currentPhase) {
     const phases = CAMPAIGN_CHECKPOINT_PHASES[missionId] || [];
@@ -10665,7 +10766,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
     player.grenades = clamp(savedPlayer.grenades || 0, 0, grenadeCap());
     playerCombat.restore(savedPlayer, MAX_PLAYER_RESERVE); setViewmodelWeapon(player.weapon);
     if (savedPlayer.position && Number.isFinite(savedPlayer.position.x) && Number.isFinite(savedPlayer.position.y)) {
-        player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, WORLD - 2);
+        player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, worldMaxY(player.pos.x));
         clearRepairedWallOverlap(player.pos, 0.5);
         resolveCircle(player.pos, 0.5); // old saves may sit in a repaired wall
         player.zPos = terrainHeight(player.pos.x, player.pos.y); player.zVel = 0; player.grounded = true;
@@ -10680,7 +10781,7 @@ function applyCampaignCheckpointSnapshot(snapshot) {
         member.mag = Math.max(0, saved.mag || 0); member.reserve = Math.max(0, saved.reserve || 0); member.downed = !!saved.downed; member.mesh.rotation.x = member.downed ? Math.PI / 2 : 0;
         member.reloading = false; member.reloadT = 0;
         if (saved.position && Number.isFinite(saved.position.x) && Number.isFinite(saved.position.y)) {
-            member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, WORLD - 2); member.z = terrainHeight(member.pos.x, member.pos.y);
+            member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, worldMaxY(member.pos.x)); member.z = terrainHeight(member.pos.x, member.pos.y);
             clearRepairedWallOverlap(member.pos, 0.45);
             resolveCircle(member.pos, 0.45);
         }
@@ -10818,7 +10919,7 @@ function applyContinuedMission4Snapshot(snapshot) {
     player.grenades = clamp(savedPlayer.grenades || 0, 0, grenadeCap());
     playerCombat.restore(savedPlayer, MAX_PLAYER_RESERVE); setViewmodelWeapon(player.weapon);
     if (savedPlayer.position && Number.isFinite(savedPlayer.position.x) && Number.isFinite(savedPlayer.position.y)) {
-        player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, WORLD - 2);
+        player.pos.x = clamp(savedPlayer.position.x, 2, WORLD - 2); player.pos.y = clamp(savedPlayer.position.y, 2, worldMaxY(player.pos.x));
         player.zPos = terrainHeight(player.pos.x, player.pos.y);
     }
     if (Number.isFinite(savedPlayer.yaw)) player.yaw = savedPlayer.yaw;
@@ -10831,7 +10932,7 @@ function applyContinuedMission4Snapshot(snapshot) {
         member.mag = Math.max(0, saved.mag || 0); member.reserve = Math.max(0, saved.reserve || 0); member.downed = !!saved.downed; member.mesh.rotation.x = member.downed ? Math.PI / 2 : 0;
         member.reloading = false; member.reloadT = 0;
         if (saved.position && Number.isFinite(saved.position.x) && Number.isFinite(saved.position.y)) {
-            member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, WORLD - 2); member.z = terrainHeight(member.pos.x, member.pos.y);
+            member.pos.x = clamp(saved.position.x, 2, WORLD - 2); member.pos.y = clamp(saved.position.y, 2, worldMaxY(member.pos.x)); member.z = terrainHeight(member.pos.x, member.pos.y);
         }
     }
     if (['assist', 'spread', 'hold'].includes(boundary.squadCommand)) issueCommand(boundary.squadCommand);
@@ -11161,23 +11262,25 @@ function drawSurveyIntel(W,H) {
     }
 }
 const MAP_RES = 200;                 // grid cells per WORLD axis (~4 m per cell)
-const mapH = new Float32Array(MAP_RES * MAP_RES);
-const mapCliff = new Uint8Array(MAP_RES * MAP_RES);
+const mapH = new Float32Array(MAP_RES * 225);
+const mapCliff = new Uint8Array(MAP_RES * 225);
+let mapRows=MAP_RES;
 function buildMapGrid() {
     const step = WORLD / MAP_RES;
-    for (let iy = 0; iy < MAP_RES; iy++) {
+    mapRows=mode==='campaign'?225:MAP_RES;
+    for (let iy = 0; iy < mapRows; iy++) {
         for (let ix = 0; ix < MAP_RES; ix++) {
             mapH[iy * MAP_RES + ix] = terrainHeight((ix + 0.5) * step, (iy + 0.5) * step);
         }
     }
-    for (let iy = 0; iy < MAP_RES; iy++) {
+    for (let iy = 0; iy < mapRows; iy++) {
         for (let ix = 0; ix < MAP_RES; ix++) {
             const h = mapH[iy * MAP_RES + ix];
             let steep = 0;
             if (ix > 0 && Math.abs(h - mapH[iy * MAP_RES + ix - 1]) > 5) steep = 1;
             if (ix < MAP_RES - 1 && Math.abs(h - mapH[iy * MAP_RES + ix + 1]) > 5) steep = 1;
             if (iy > 0 && Math.abs(h - mapH[(iy - 1) * MAP_RES + ix]) > 5) steep = 1;
-            if (iy < MAP_RES - 1 && Math.abs(h - mapH[(iy + 1) * MAP_RES + ix]) > 5) steep = 1;
+            if (iy < mapRows - 1 && Math.abs(h - mapH[(iy + 1) * MAP_RES + ix]) > 5) steep = 1;
             mapCliff[iy * MAP_RES + ix] = steep;
         }
     }
@@ -11211,7 +11314,10 @@ function drawMinimap(W, H) {
         for (let px = 0; px < size; px += cell) {
             const wx = player.pos.x + (px - size / 2) / scale;
             const wy = player.pos.y - (py - size / 2) / scale;   // north-up: top of the minimap = world +y (north)
-            if (wx < 0 || wy < 0 || wx >= WORLD || wy >= WORLD) continue;
+            if (wx < 0 || wy < 0 || wx >= WORLD || wy >= mapRows*wStep) continue;
+            // Show the rounded rear playable edge plus a narrow cliff shoulder,
+            // rather than the rectangular bounds of its render backing mesh.
+            if(mode==='campaign'&&wy>WORLD&&wy>worldMaxY(wx,0)+10)continue;
             const idx = Math.floor(wy / wStep) * MAP_RES + Math.floor(wx / wStep);
             const h = mapH[idx];
             let c;
@@ -12147,6 +12253,12 @@ boot().catch((e) => { console.error(e); document.body.insertAdjacentHTML('before
 /* debug/test hook (harmless — lets you inspect/drive the mission from the console) */
 const CF_NAMES = ['PREVIEW', 'DEPLOY', 'MOVE_R1', 'DEFEND_R1', 'MOVE_R2', 'DEFEND_R2', 'MOVE_R3', 'DEFEND_R3', 'MOVE_FAC', 'SEARCH', 'FINALE', 'DONE', 'DEAD', 'ENDLESS', 'M1_MOVE_FAC', 'M1_INVESTIGATE', 'M1_RESTORE_POWER', 'M1_COMMAND', 'M2_CONFIRM', 'M3_ENTER_LAB', 'M3_REACH_SECURITY', 'M3_OVERRIDE', 'M3_REACH_SAMPLE', 'M3_STABILIZE', 'M4_BREAK_CONTACT', 'M4_REACH_LZ', 'M4_CALL_EXTRACTION', 'M4_HOLD_LZ', 'M4_BOARD', 'M4_DEPART'];
 window.__cf = {
+    exteriorCleanupInfo() {return campaignExterior.info();},
+    exteriorRouteRemovalInfo() {return facilityWorld.exteriorRouteRemovalInfo();},
+    campaignBoundaryInfo(x=370) {return {maxY:worldMaxY(x),rear:ChargefrontCampaignTerrain.REAR};},
+    campaignTerrainInfo() { return { seed: ChargefrontCampaignTerrain.SEED, features: ChargefrontCampaignTerrain.FEATURES,
+        paths: WORLD_PATHS.map(path => path.map(p => [p.x,p.y])) }; },
+    campaignTerrainChangeForTest(x,y) { return campaignTerrain.delta(x,y,distToRoute(x,y)); },
     get player() { return player; },
     get enemies() { return enemies; },
     get squad() { return squadMembers; },
@@ -12392,7 +12504,7 @@ window.__cf = {
     get medkits() { return craft.medkits; },
     weapon() { return player.weapon; },
     jump() { player.zVel = 7.2 * (player.jumpMult || 1); player.grounded = false; },
-    move(x, y) { player.pos.x = clamp(player.pos.x + x, 2, WORLD - 2); player.pos.y = clamp(player.pos.y + y, 2, WORLD - 2); player.zPos = terrainHeight(player.pos.x, player.pos.y);relayGuide.timer=relayGuide.renderT=0; },
+    move(x, y) { player.pos.x = clamp(player.pos.x + x, 2, WORLD - 2); player.pos.y = clamp(player.pos.y + y, 2, worldMaxY(player.pos.x)); player.zPos = terrainHeight(player.pos.x, player.pos.y);relayGuide.timer=relayGuide.renderT=0; },
     insideSolid(x, y) { return isInsideSolid(x, y, 0.4); },
     /* Milestone 3.5.1 collision probes */
     probeBlocked(ax, ay, az, bx, by, bz, pad = 0) { return solidBlocksSegment(ax, ay, az, bx, by, bz, pad, null); },

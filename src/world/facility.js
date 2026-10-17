@@ -90,6 +90,10 @@
         // dressing. References are corrected only after all seeded population.
         const pendingPlacement = { debris: [], pipes: [], warnings: [], deconBars: [], researchPanels: [],
             archivePanels: [], glass: [], glassRails: [], rearVents: [] };
+        // Final CP4 refinement: only the explicitly retired freestanding approach
+        // dressing. Keep original constructors until legacy population completes.
+        const exteriorRouteRemovals={meshes:[],solids:[],finished:false};
+        const retireApproach=(mesh,name)=>{mesh.name=name;exteriorRouteRemovals.meshes.push(mesh);return mesh;};
 
         function buildSection(name, builder) {
             if (sections.has(name)) return sections.get(name);
@@ -692,23 +696,26 @@
 
             for (const [x, y, w, d, r] of [[319, 575, 2.2, 22, 0.08], [424, 585, 2.2, 22, -0.1]]) {
                 const barrier = placedBox(deadSignal, x, y, w, d, 1.5, 0x5a4d45);
+                retireApproach(barrier,'RetiredStagingBarrier-'+x);
                 barrier.rotation.z = r;
-                deadSignalSolids.push(...addRotatedSolid(x, y, d, w, r + Math.PI / 2, terrainHeight(x, y) + 1.5, terrainHeight(x, y)));
-                for (let j = -1; j <= 1; j++) placedBox(deadSignal, x, y + j * 6, w + 0.12, 1.1, 0.22, 0xff9b35, makeSeam(0xff5b1f, 1.2));
+                const solids=addRotatedSolid(x, y, d, w, r + Math.PI / 2, terrainHeight(x, y) + 1.5, terrainHeight(x, y));deadSignalSolids.push(...solids);exteriorRouteRemovals.solids.push(...solids);
+                for (let j = -1; j <= 1; j++) retireApproach(placedBox(deadSignal, x, y + j * 6, w + 0.12, 1.1, 0.22, 0xff9b35, makeSeam(0xff5b1f, 1.2)),'RetiredStagingStripe-'+x+'-'+j);
             }
             for (const solid of deadSignalSolids) solid.disabled = missionId !== 'dead_signal';
             for (const [x, y, rot] of [[326, 566, 0.45], [416, 596, -0.55], [322, 585, -0.3]]) {
                 const beam = placedBox(deadSignal, x, y, 7, 0.7, 0.7, 0x363d48);
+                retireApproach(beam,'RetiredStagingBeam-'+x+'-'+y);
                 beam.rotation.z = rot;
             }
 
-            placedBox(powerThrough, 333, 579, 12, 8, 3.3, 0x42566a, {}, null);
-            placedBox(powerThrough, 333, 574.9, 8, 0.16, 1.0, 0xffbf55, makeSeam(0xff7d22, 1.4));
-            placedBox(powerThrough, 390, 578, 8, 6, 2.5, 0x566172, {}, null);
+            retireApproach(placedBox(powerThrough, 333, 579, 12, 8, 3.3, 0x42566a, {}, null),'RetiredAlphaStagingBlock');
+            retireApproach(placedBox(powerThrough, 333, 574.9, 8, 0.16, 1.0, 0xffbf55, makeSeam(0xff7d22, 1.4)),'RetiredAlphaStagingFace');
+            retireApproach(placedBox(powerThrough, 390, 578, 8, 6, 2.5, 0x566172, {}, null),'RetiredGammaStagingBlock');
             for (const [x, y] of [[345, 573], [375, 573], [345, 589], [375, 589]]) floodlight(powerThrough, x, y, 0xffbd55);
             const routeBoard = placedBox(powerThrough, 382, 589, 5.8, 0.35, 3.2, 0x303a49);
             const routeGlow = placedBox(powerThrough, 382, 588.78, 4.8, 0.08, 2.2, 0x70c8ff, makeSeam(0x258fdd, 1.35));
-            for (const [x, y] of [[346, 585], [393, 588], [325, 586]]) placedBox(powerThrough, x, y, 3.2, 2.1, 1.2, 0x75633d, {}, null);
+            retireApproach(routeBoard,'RetiredStagingBoard');retireApproach(routeGlow,'RetiredStagingBoardFace');
+            for (const [x, y] of [[346, 585], [393, 588], [325, 586]]) retireApproach(placedBox(powerThrough, x, y, 3.2, 2.1, 1.2, 0x75633d, {}, null),'RetiredStagingCrate-'+x);
 
             const shortcutField = placedBox(powerThrough, 455, 625, 0.35, 20, 4.2, 0xff754f, { emissive: 0xff321c, emissiveIntensity: 1.15, transparent: true, opacity: 0.62 });
             const shortcutSolid = addSolid(454.6, 615, 455.4, 635, terrainHeight(455, 625) + 4.2, terrainHeight(455, 625));
@@ -861,9 +868,9 @@
             // Correct the audited floating/vertical yard banner by mounting the
             // same utility label horizontally on the continuous east wall.
             sign('LOADING // SERVICE YARD', 391.13, 650, 4.8, 9, '#ffb24d', 'x').name = 'FacilityLoadingSign';
-            // Keep the staging board at the edge of the approach, not in front
-            // of the primary CF-07 entrance sign from the south-facing view.
-            sign('STAGING // FORWARD DEPLOYMENT', 316, 576.8, 6.4, 12, '#ffbf55', 'y');
+            // Replay this freestanding staging billboard; final CP4 removes it,
+            // preserving the primary CF-07 architectural entrance identifier.
+            retireApproach(sign('STAGING // FORWARD DEPLOYMENT', 316, 576.8, 6.4, 12, '#ffbf55', 'y'),'RetiredForwardDeploymentSign');
             sign('POWER // EGRESS E-04', 430, 770.85, 6.0, 10, '#ffb24d', 'back_y').name = 'FacilityPowerSign';
             const marking = (x, y, w, d) => {
                 const m = envBoxMesh(w, d, 0.06, colors.service, makeSeam(colors.service, 0.5));
@@ -883,10 +890,13 @@
                     const x = a.x + (b.x - a.x) * t, y = a.y + (b.y - a.y) * t;
                     const dash = envBoxMesh(4.2, 0.28, 0.06, colors.comms, makeSeam(colors.comms, 0.55));
                     dash.position.set(x, y, terrainHeight(x, y) + 0.17); dash.rotation.z = angle; root.add(dash);
+                    retireApproach(dash,'RetiredBypassDash-'+i+'-'+t);
                 }
             }
             envBox(root, 304, 626, 6.0, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
-            envBox(root, 420, 585, 5.2, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true);
+            const solidStart=SOLIDS.length;
+            retireApproach(envBox(root, 420, 585, 5.2, 0.55, 1.05, 0x5a4d45, { metalness: 0.42, roughness: 0.68 }, true),'RetiredGammaApproachBar');
+            exteriorRouteRemovals.solids.push(...SOLIDS.slice(solidStart));
             pendingExteriorIdentity = { root, sign, equipment };
         }
 
@@ -1043,7 +1053,7 @@
             }
             // Bezel and divided information fields over the existing live screen.
             for (const y of [626, 650]) {
-                piece('Hall', 'dark', 385.089, y, 1.35, .022, .045, .84);
+                piece('Hall', 'dark', 385.089, y, 1.35, .022, .045, .80);
                 for (const z of [.93, 1.77]) piece('Hall', 'steel', 385.09, y, z, .02, 1.72, .04);
             }
             plate('Hall', 'INTAKE / ID CHECK', 385.085, 650, 1.15, 1.5, .24, '-x');
@@ -1055,11 +1065,11 @@
             for (const [i, x] of [350, 360, 370].entries()) {
                 piece('Vault', 'steel', x, 682.79, 6.8, 1.8, .08, 1.35);
                 for (const dx of [-.42, .42]) {
-                    piece('Vault', 'dark', x + dx, 682.85, 7.35, .08, .08, .75);
+                    piece('Vault', 'dark', x + dx, 682.85, 7.3225, .08, .08, .695);
                     piece('Vault', 'steel', x + dx, 682.66, 7.72, .16, .46, .10);
                 }
-                for (const dx of [-.97,.97]) piece('Vault','steel',x+dx,682.239,6.8,.025,.022,1.55);
-                for (const z of [6.08,7.52]) piece('Vault','steel',x,682.239,z,1.95,.022,.025);
+                for (const dx of [-.97,.97]) piece('Vault','steel',x+dx,682.239,6.8,.025,.022,1.415);
+                for (const z of [6.08,7.52]) piece('Vault','steel',x,682.239,z,1.915,.022,.025);
                 piece('Vault','dark',x,682.235,6.37,1.7,.028,.3);
                 plate('Vault', 'R' + (i + 1) + ' / ISOLATE BEFORE SERVICE', x, 682.217, 6.37, 1.6, .22);
             }
@@ -1096,12 +1106,12 @@
             // within the seated CP3-B display/base footprint.
             for (const y of [712,722]) {
                 for (const dy of [-.65,.65]) piece('Security','dark',383.7,y+dy,1.476,.7,.055,.002);
-                for (const x of [383.38,384.02]) piece('Security','dark',x,y,1.476,.055,1.3,.002);
-                piece('Security','dark',383.7,y,1.476,.03,1.3,.002);
+                for (const x of [383.38,384.02]) piece('Security','dark',x,y,1.476,.055,1.245,.002);
+                piece('Security','dark',383.7,y,1.476,.03,1.245,.002);
                 plate('Security','CCTV / LOCAL RECORD',383.7,y-.5,1.478,.52,.11,'top');
             }
             for (const y of [710,716,722,728]) {
-                piece('Security','dark',386.648,y,2.5,.02,.055,1.22);
+                for (const z of [2.1825,2.8175]) piece('Security','dark',386.648,y,z,.02,.055,.585);
                 piece('Security','dark',386.648,y,2.5,.02,1.52,.05);
                 // Cabinet hinge line and existing wall-monitor bezel.
                 piece('Security','steel',386.79,y+.96,1.7,.025,.025,3.05);
@@ -1132,7 +1142,7 @@
             piece('Power','steel',429,769.10,7.75,28,.20,.20);
             for (const x of [415,429,443]) piece('Power','steel',x,769.23,7.75,.36,.14,.32);
             for (const x of [419,439]) {
-                piece('Power','steel',x,769.10,6.72,.18,.20,2.26);
+                piece('Power','steel',x,769.10,6.62,.18,.20,2.06);
                 for (const dx of [-2.2,-.7,.7,2.2]) {
                     piece('Power','dark',x+dx,768.977,4.0,.9,.025,1.25);
                     piece('Power','pale',x+dx,768.958,4.0,.28,.012,.18);
@@ -1323,7 +1333,7 @@
             for (const pipe of pendingPlacement.pipes) {
                 pipe.name = 'CP3CRHallUtilityRun'; pipe.scale.y = 58 / 56;
                 for (const x of [340, 380]) {
-                    for (const side of [-1, 1]) at(x, pipe.position.y + side * .19, 7.55, .14, .06, .70);
+                    for (const side of [-1, 1]) at(x, pipe.position.y + side * .19, 7.57, .14, .06, .66);
                     at(x, pipe.position.y, 7.21, .14, .44, .06);
                 }
             }
@@ -1774,7 +1784,7 @@
                 if (axis === 'y') mesh.rotation.x = Math.PI / 2; else mesh.rotation.y = Math.PI / 2;
                 mesh.position.set(x, y, z); root.add(mesh); return mesh;
             };
-            placed(root, 360, 710, 60, 52, 0.35, 0x344354, { emissive: 0x28415a, emissiveIntensity: 0.33 });
+            pendingInterior.researchFloor = placed(root, 360, 710, 60, 52, 0.35, 0x344354, { emissive: 0x28415a, emissiveIntensity: 0.33 });
             placed(root, 360, 696, 60, 17, 0.08, 0x344b57, { emissive: 0x204c62, emissiveIntensity: 0.25 }).position.z = 0.26;
             placed(root, 378.5, 719, 22, 30, 0.08, 0x303e50, { emissive: 0x244b65, emissiveIntensity: 0.32 }).position.z = 0.27;
             placed(root, 370, 765, 80, 60, 0.35, 0x38334b, { emissive: 0x43314e, emissiveIntensity: 0.33 });
@@ -2127,6 +2137,33 @@
             }finally{Math.random=random;}
         }
 
+        // CP4-B: confirmed coincident faces only, after legacy seeded population.
+        // Leave collider/door travel/mission/lighting ownership untouched.
+        function finalizeSurfaceCorrections() {
+            const random = Math.random;
+            try {
+                Math.random = global.ChargefrontProgression.seedRandom(0xcf07004c);
+                const floor = pendingInterior.researchFloor;
+                floor.name = 'ResearchFloor'; floor.geometry = envBoxGeometry(60, 51, .35);
+                floor.position.y = 709.5; // y684..735, abuts Containment instead of overlapping
+                const readout = pendingInterior.labRoot.getObjectByName('ResearchReadout');
+                readout.geometry = envBoxGeometry(.65, .07, .01);
+                editPlacementBatch(readout, m => { m.elements[14] = 1.275; });
+                for (const door of doors) for (const leaf of door.panels) {
+                    const panel = leaf.g.children[0], p = panel.geometry.parameters;
+                    const alongX = door.axis === 'x', width = alongX ? p.width : p.depth;
+                    const overlap = width / 2 - Math.abs(leaf.offC);
+                    panel.geometry = envBoxGeometry(alongX ? width - overlap : p.width,
+                        alongX ? p.depth : width - overlap, p.height);
+                    panel.position[alongX ? 'x' : 'y'] = leaf.s * overlap / 2;
+                    // Two physical edge inlays meet without sharing any face area.
+                    leaf.seam.geometry = envBoxGeometry(alongX ? .10 : .38, alongX ? .38 : .10, p.height - .9);
+                    leaf.seam.position[alongX ? 'x' : 'y'] = -leaf.offC + leaf.s * .05;
+                    panel.name = 'DoorLeaf/' + (door.id || 'front');
+                }
+            } finally { Math.random = random; }
+        }
+
         function addDoor(x, y, axis, gapHalf, panelW, panelH, id = '') {
             const scene = getScene();
             const door = { id, base: [x, y], axis, openT: 0, lastTarget: 0, denied: false, enabled: true, locked: false, forceOpen: false, panels: [] };
@@ -2160,7 +2197,8 @@
                 for (const panel of door.panels) {
                     const size = panel.g.children[0].geometry.parameters;
                     const half = (door.axis === 'x' ? size.width : size.depth) / 2;
-                    span = Math.max(span, Math.abs(panel.offC) + half, Math.abs(panel.offO) + half);
+                    const offset = panel.g.children[0].position[door.axis === 'x' ? 'x' : 'y'];
+                    span = Math.max(span, Math.abs(panel.offC + offset) + half, Math.abs(panel.offO + offset) + half);
                 }
                 const [x, y] = door.base, approach = 5, shoulder = 0.5;
                 return { id: 'door:' + (door.id || index), type: 'rect',
@@ -2283,10 +2321,19 @@
             return { elapsed, nearFacility, boundary, distance };
         }
 
+        function finalizeExteriorRouteRemovals() {
+            if(exteriorRouteRemovals.finished)return;
+            for(const mesh of exteriorRouteRemovals.meshes)mesh.removeFromParent();
+            const removeFrom=array=>{for(let i=array.length-1;i>=0;i--)if(exteriorRouteRemovals.solids.includes(array[i]))array.splice(i,1);};
+            removeFrom(SOLIDS);for(const section of sections.values())removeFrom(section.solids);if(zones)removeFrom(zones.deadSignalSolids);
+            exteriorRouteRemovals.finished=true;
+        }
+
         return {
             buildSection, buildShell, buildHall, buildInteriorIdentity, buildExpansion, buildExteriorDetail, buildLaboratory, addDoor, updateDoors, setShortcutState, applySnapshot, updateFx,guidanceHeight,
             set zones(value) { zones = value; }, get zones() { return zones; },
-            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity, finalizeAdditionalCorrections, finalizeCoordinatedLighting, finalizeTurretIntegration, lightReachable,
+            doors, cutawayMeshes, referenceLights, fx, doorPlacementZones, finalizeExteriorIdentity, finalizeAdditionalCorrections, finalizeCoordinatedLighting, finalizeTurretIntegration, finalizeSurfaceCorrections, lightReachable, finalizeExteriorRouteRemovals,
+            exteriorRouteRemovalInfo(){return {finished:exteriorRouteRemovals.finished,meshes:exteriorRouteRemovals.meshes.map(m=>m.name),solids:exteriorRouteRemovals.solids.length};},
             sectionSummary() { return [...sections].map(([name, section]) => ({ name, objects: section.objects.length, solids: section.solids.length })); },
         };
     }

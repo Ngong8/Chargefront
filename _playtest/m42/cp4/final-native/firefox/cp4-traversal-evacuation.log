@@ -1,0 +1,16 @@
+NATIVE firefox M4 east exit 395,752 {"seconds":5.042,"position":[394.94034107126055,752.0423385945892]}
+NATIVE firefox M4 east exit 407,752 {"seconds":2.205,"position":[407.18693226577875,751.9993437252689]}
+NATIVE firefox M4 east exit 425,752 {"seconds":2.829,"position":[424.646930248454,751.9999645652493]}
+NATIVE firefox M4 east exit 444,752 {"seconds":2.886,"position":[443.3202635817566,751.9999987554279]}
+NATIVE firefox M4 east exit 456,752 {"seconds":1.631,"position":[455.35359691508836,751.999999936553]}
+NATIVE firefox M4 evacuation 462,742 {"seconds":1.725,"position":[461.5346965144772,742.7000831526867]}
+NATIVE firefox M4 evacuation 442,720 {"seconds":4.731,"position":[442.2097679445124,720.243758574886]}
+NATIVE firefox M4 evacuation 442,690 {"seconds":4.511,"position":[442.0011870709164,690.1711485817793]}
+NATIVE firefox M4 evacuation 420,646 {"seconds":8.16,"position":[419.74163164649883,645.4812813102044]}
+NATIVE firefox M4 evacuation 390,530 {"seconds":18.515,"position":[389.99959903849617,529.9984317753424]}
+NATIVE firefox M4 evacuation 420,405 {"seconds":20.029,"position":[419.817613796963,405.75992282190964]}
+NATIVE firefox M4 evacuation 445,235 {"seconds":26.695,"position":[444.8908604562364,235.73939247728856]}
+NATIVE firefox M4 evacuation 450,120 {"seconds":18.02,"position":[449.9941740905817,120.13197666865875]}
+NATIVE firefox M4 evacuation 466,99 {"seconds":3.803,"position":[465.67232434594774,99.43261961710083]}
+NATIVE firefox M4 boarding approach {"seconds":3.218,"position":[450.33382486091216,84.32871908361949]}
+PASS CP4 native traversal firefox evacuation

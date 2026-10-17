@@ -1,0 +1,5619 @@
+{
+  "browser": "edge",
+  "viewport": [
+    1280,
+    720
+  ],
+  "method": "Normal player-eye camera, first20-frame/warm64-frame regions plus unaccelerated combat and transfer; quiet setup relocations separated from native W/E legs",
+  "hashes": {
+    "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+    "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670"
+  },
+  "regions": [
+    {
+      "label": "01-exterior-far",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 21,
+        "p95": 50,
+        "worst": 50.2,
+        "counters": {
+          "shadowRefresh": 5
+        }
+      },
+      "frames": 65,
+      "p95": 33.4,
+      "p99": 33.4,
+      "worst": 33.4,
+      "renderMedian": 12.4,
+      "renderP95": 15.8,
+      "counters": {
+        "shadowRefresh": 12
+      },
+      "labTotalMs": 1.5000000298023224,
+      "labMaxMs": 0.20000001788139343,
+      "programs": 35,
+      "render": {
+        "calls": 780,
+        "triangles": 285192,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1503,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "player": [
+          300,
+          702
+        ],
+        "camera": [
+          300,
+          702,
+          6.238698501586915
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "02-exterior-near",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 16.8,
+        "worst": 17.2,
+        "counters": {
+          "shadowRefresh": 3
+        }
+      },
+      "frames": 65,
+      "p95": 16.8,
+      "p99": 16.8,
+      "worst": 16.8,
+      "renderMedian": 8.9,
+      "renderP95": 11.1,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 0.7999999821186066,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 467,
+        "triangles": 273868,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1503,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "player": [
+          323.3502582426777,
+          709.7834194142151
+        ],
+        "camera": [
+          323.3502582426777,
+          709.7834194142151,
+          2.0492118379741555
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "03-exterior-approach",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 21,
+        "p95": 33.4,
+        "worst": 33.4,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 65,
+      "p95": 16.8,
+      "p99": 16.8,
+      "worst": 16.8,
+      "renderMedian": 10.9,
+      "renderP95": 12.4,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 0.9999999701976776,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 902,
+        "triangles": 284891,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1503,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "player": [
+          360,
+          574
+        ],
+        "camera": [
+          360,
+          574,
+          1.6460645664825597
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "04-front-entrance",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 21,
+        "p95": 33.4,
+        "worst": 33.4,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 65,
+      "p95": 33.3,
+      "p99": 33.4,
+      "worst": 33.4,
+      "renderMedian": 10.9,
+      "renderP95": 18.9,
+      "counters": {
+        "shadowRefresh": 12
+      },
+      "labTotalMs": 1.300000011920929,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 791,
+        "triangles": 281802,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1503,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "player": [
+          360,
+          611.2666666666817
+        ],
+        "camera": [
+          360,
+          611.2666666666817,
+          1.7056907974261066
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "05-main-hall",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 21,
+        "p95": 16.8,
+        "worst": 16.8,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 65,
+      "p95": 16.8,
+      "p99": 33.3,
+      "worst": 33.3,
+      "renderMedian": 10.4,
+      "renderP95": 13.4,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 1.0000000298023224,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 674,
+        "triangles": 280858,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1503,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "power_through",
+        "phase": "MOVE_R1",
+        "player": [
+          360,
+          632.2400000000234
+        ],
+        "camera": [
+          360,
+          632.2400000000234,
+          1.6199952132407112
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 0.004910349618591742,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "06-vault",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 16.7,
+        "worst": 16.8,
+        "counters": {
+          "shadowRefresh": 3
+        }
+      },
+      "frames": 64,
+      "p95": 16.8,
+      "p99": 17.2,
+      "worst": 17.2,
+      "renderMedian": 9.2,
+      "renderP95": 11.7,
+      "counters": {
+        "shadowRefresh": 10
+      },
+      "labTotalMs": 2.399999976158142,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 510,
+        "triangles": 276389,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1525,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_REACH_SECURITY",
+        "player": [
+          360,
+          673.2333333333733
+        ],
+        "camera": [
+          360,
+          673.2333333333733,
+          1.6199960789706471
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 1.5662453540701453e-16,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 0.024065770985600074,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "07-decontamination",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 16.8,
+        "worst": 17.2,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 64,
+      "p95": 16.8,
+      "p99": 16.8,
+      "worst": 16.8,
+      "renderMedian": 8.5,
+      "renderP95": 12.1,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 1.3999999165534973,
+      "labMaxMs": 0.09999999403953552,
+      "programs": 35,
+      "render": {
+        "calls": 399,
+        "triangles": 274185,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1525,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_REACH_SECURITY",
+        "player": [
+          360,
+          696.2000000000492
+        ],
+        "camera": [
+          360,
+          696.2000000000492,
+          1.6199979341373358
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": false,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 5.260441221656482e-25,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 8.082806017244552e-11,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 0.9999894028072566,
+            "disabled": true,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "08-research-security",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 21,
+        "p95": 16.8,
+        "worst": 16.8,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 65,
+      "p95": 16.8,
+      "p99": 16.9,
+      "worst": 16.9,
+      "renderMedian": 10.4,
+      "renderP95": 14,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 1.9000000655651093,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 606,
+        "triangles": 279395,
+        "points": 1060,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1525,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_REACH_SAMPLE",
+        "player": [
+          359.7408332838682,
+          719.8790688940796
+        ],
+        "camera": [
+          359.7408332838682,
+          719.8790688940796,
+          1.6199972031093555
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": true,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 1.0331227132252875e-51,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 1.5874201670824526e-37,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 1.757796879042701e-25,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": false,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "09-containment-before",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 16.8,
+        "worst": 16.8,
+        "counters": {
+          "shadowRefresh": 3
+        }
+      },
+      "frames": 64,
+      "p95": 16.9,
+      "p99": 17.2,
+      "worst": 17.2,
+      "renderMedian": 6.7,
+      "renderP95": 8.1,
+      "counters": {
+        "shadowRefresh": 10
+      },
+      "labTotalMs": 2.1999999582767487,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 141,
+        "triangles": 266427,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1525,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_REACH_SAMPLE",
+        "player": [
+          366.7514706154515,
+          766.2254984883942
+        ],
+        "camera": [
+          366.7514706154515,
+          766.2254984883942,
+          1.620004133024264
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": true,
+          "shots": 0,
+          "events": []
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": false,
+            "openT": 6.02957246708498e-67,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 9.264596364603038e-53,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 1.0258959104205248e-40,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": false,
+            "openT": 1.0610671397791323e-7,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "12-active-drone-defence-30",
+      "kind": "live-combat",
+      "first": null,
+      "frames": 64,
+      "p95": 16.8,
+      "p99": 16.9,
+      "worst": 16.9,
+      "renderMedian": 7.1,
+      "renderP95": 9.3,
+      "counters": {
+        "meshesCreated": 4,
+        "geometriesCreated": 4,
+        "materialsCreated": 4,
+        "groupsObjectsCreated": 4,
+        "sceneObjectsAdded": 67,
+        "shadowRefresh": 10,
+        "sceneObjectsRemoved": 48,
+        "materialDisposes": 2
+      },
+      "labTotalMs": 2.3000000417232513,
+      "labMaxMs": 0.30000001192092896,
+      "programs": 35,
+      "render": {
+        "calls": 223,
+        "triangles": 267863,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1721,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_STABILIZE",
+        "player": [
+          366.803576198752,
+          766.2100577916245
+        ],
+        "camera": [
+          366.803576198752,
+          766.2100577916245,
+          1.62
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": true,
+          "state": "defence",
+          "t": 31.099999999999515,
+          "duration": 90,
+          "transferT": 0,
+          "transferDuration": 3.5,
+          "stage": 1,
+          "spawnT": 3.0333333333333377,
+          "pausedWarned": false
+        },
+        "enemyTypes": [
+          "drone",
+          "drone"
+        ],
+        "turret": {
+          "active": true,
+          "shots": 17,
+          "events": [
+            {
+              "shot": 14,
+              "time": 93.86666666666666,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                342.95094076254713,
+                746.0568295691246,
+                1.8726265250541432
+              ],
+              "to": [
+                347.1160330257069,
+                755.0656819208236,
+                4.599712190616359
+              ],
+              "beam": true
+            },
+            {
+              "shot": 15,
+              "time": 94.6,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 67.58974029024351,
+              "hpAfter": 37.88974029024351,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 9.66666666666665,
+              "from": [
+                343.0342901352657,
+                746.0688880803394,
+                1.6652662123522783
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                3.537016526278899
+              ],
+              "beam": true
+            },
+            {
+              "shot": 16,
+              "time": 102.4,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                343.0248583139758,
+                746.0500216308035,
+                1.7692078095640142
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                4.13577506390413
+              ],
+              "beam": true
+            },
+            {
+              "shot": 17,
+              "time": 103.13333333333334,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                343.02023910613923,
+                746.0407818404316,
+                1.8128691198396591
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                4.392610415751426
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 1.762558343169461e-115,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 2.708217159287763e-101,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 2.9988882395990312e-89,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": false,
+            "openT": 3.1017004109162377e-56,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "12-active-drone-defence-60",
+      "kind": "live-combat",
+      "first": null,
+      "frames": 65,
+      "p95": 16.8,
+      "p99": 16.9,
+      "worst": 16.9,
+      "renderMedian": 7.3,
+      "renderP95": 9.4,
+      "counters": {
+        "sceneObjectsRemoved": 36,
+        "shadowRefresh": 11,
+        "meshesCreated": 3,
+        "geometriesCreated": 3,
+        "materialsCreated": 3,
+        "groupsObjectsCreated": 3,
+        "sceneObjectsAdded": 41,
+        "materialDisposes": 2
+      },
+      "labTotalMs": 2.400000035762787,
+      "labMaxMs": 0.20000001788139343,
+      "programs": 35,
+      "render": {
+        "calls": 220,
+        "triangles": 267671,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1743,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_STABILIZE",
+        "player": [
+          366.803576198752,
+          766.2100577916245
+        ],
+        "camera": [
+          366.803576198752,
+          766.2100577916245,
+          1.62
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": true,
+          "state": "defence",
+          "t": 61.133333333331144,
+          "duration": 90,
+          "transferT": 0,
+          "transferDuration": 3.5,
+          "stage": 2,
+          "spawnT": 1.9333333333333393,
+          "pausedWarned": false
+        },
+        "enemyTypes": [
+          "drone",
+          "drone"
+        ],
+        "turret": {
+          "active": true,
+          "shots": 27,
+          "events": [
+            {
+              "shot": 24,
+              "time": 128.95,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                342.1117124120324,
+                746.3219627582295,
+                1.594251777618043
+              ],
+              "to": [
+                342.9835712254119,
+                764.4437064236936,
+                4.280962599427845
+              ],
+              "beam": true
+            },
+            {
+              "shot": 25,
+              "time": 131.95,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                344.34320043415414,
+                743.9289917680273,
+                1.4139193593566852
+              ],
+              "to": [
+                374.65794648762585,
+                743.01033517827,
+                3.5345974198912105
+              ],
+              "beam": true
+            },
+            {
+              "shot": 26,
+              "time": 132.68333333333334,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.3376255423436,
+                744.1034923987748,
+                1.4674767738833367
+              ],
+              "to": [
+                373.8455693957371,
+                745.4098812266612,
+                4.212695080632759
+              ],
+              "beam": true
+            },
+            {
+              "shot": 27,
+              "time": 133.41666666666666,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 53.3,
+              "hpAfter": 23.599999999999994,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.3368286534857,
+                744.1034571185564,
+                1.4758948181520655
+              ],
+              "to": [
+                373.8455693957371,
+                745.4098812266612,
+                4.328423870260398
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 2.2557515351159234e-158,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 3.4660214444335686e-144,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 3.8380271361412695e-132,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": false,
+            "openT": 3.969607866036628e-99,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "15-sample-transfer",
+      "kind": "live-transfer",
+      "first": null,
+      "frames": 91,
+      "p95": 17,
+      "p99": 33.4,
+      "worst": 33.4,
+      "renderMedian": 7.7,
+      "renderP95": 10.4,
+      "counters": {
+        "shadowRefresh": 16,
+        "sceneObjectsAdded": 178,
+        "sceneObjectsRemoved": 224,
+        "meshesCreated": 10,
+        "geometriesCreated": 10,
+        "materialsCreated": 7,
+        "groupsObjectsCreated": 5,
+        "materialDisposes": 4
+      },
+      "labTotalMs": 3.9000000059604645,
+      "labMaxMs": 0.20000001788139343,
+      "programs": 35,
+      "render": {
+        "calls": 194,
+        "triangles": 267299,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1743,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "sample_zero",
+        "phase": "M3_STABILIZE",
+        "player": [
+          366.803576198752,
+          766.2100577916245
+        ],
+        "camera": [
+          366.803576198752,
+          766.2100577916245,
+          1.62
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": true,
+          "state": "transfer",
+          "t": 90,
+          "duration": 90,
+          "transferT": 1.6333333333333324,
+          "transferDuration": 3.5,
+          "stage": 2,
+          "spawnT": 3.5,
+          "pausedWarned": false
+        },
+        "enemyTypes": [
+          "drone"
+        ],
+        "turret": {
+          "active": true,
+          "shots": 34,
+          "events": [
+            {
+              "shot": 31,
+              "time": 144.48333333333332,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                342.9702526899789,
+                746.0986001451089,
+                1.6706984056752365
+              ],
+              "to": [
+                347.1160330257069,
+                755.0656819208236,
+                3.468295253933798
+              ],
+              "beam": true
+            },
+            {
+              "shot": 32,
+              "time": 145.21666666666667,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                343.01645531746755,
+                746.0332131370141,
+                1.8461232482174816
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                4.590664452085212
+              ],
+              "beam": true
+            },
+            {
+              "shot": 33,
+              "time": 153.55,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                342.98036627977285,
+                746.0525435187918,
+                1.8402940461754165
+              ],
+              "to": [
+                347.34809907712065,
+                755.1970457624709,
+                4.470175059786764
+              ],
+              "beam": true
+            },
+            {
+              "shot": 34,
+              "time": 154.28333333333333,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                343.0349894574912,
+                746.0702869329123,
+                1.6564589011140862
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                3.486999058824411
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 5.890531679930087e-202,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 9.050956545488355e-188,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 1.0022389470615865e-175,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": false,
+            "openT": 1.0365991346022404e-142,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": true,
+            "openT": 0,
+            "disabled": false,
+            "forceOpen": false
+          }
+        ]
+      }
+    },
+    {
+      "label": "16-transfer-release",
+      "kind": "transition",
+      "first": null,
+      "frames": 109,
+      "p95": 17,
+      "p99": 17.4,
+      "worst": 33.4,
+      "renderMedian": 7.6,
+      "renderP95": 10.3,
+      "counters": {
+        "sceneObjectsRemoved": 30,
+        "shadowRefresh": 19,
+        "sceneObjectsAdded": 30,
+        "materialDisposes": 5,
+        "meshesCreated": 78,
+        "geometriesCreated": 21,
+        "materialsCreated": 15,
+        "groupsObjectsCreated": 30,
+        "applyCampaignWorldSnapshot": 1
+      },
+      "labTotalMs": 2.4000000059604645,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 211,
+        "triangles": 267043,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 1743,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "break_contact",
+        "phase": "M4_BREAK_CONTACT",
+        "player": [
+          366.803576198752,
+          766.2100577916245
+        ],
+        "camera": [
+          366.803576198752,
+          766.2100577916245,
+          1.62
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [
+          "shielded",
+          "runner",
+          "drone"
+        ],
+        "turret": {
+          "active": true,
+          "shots": 34,
+          "events": [
+            {
+              "shot": 31,
+              "time": 144.48333333333332,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                342.9702526899789,
+                746.0986001451089,
+                1.6706984056752365
+              ],
+              "to": [
+                347.1160330257069,
+                755.0656819208236,
+                3.468295253933798
+              ],
+              "beam": true
+            },
+            {
+              "shot": 32,
+              "time": 145.21666666666667,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                343.01645531746755,
+                746.0332131370141,
+                1.8461232482174816
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                4.590664452085212
+              ],
+              "beam": true
+            },
+            {
+              "shot": 33,
+              "time": 153.55,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                342.98036627977285,
+                746.0525435187918,
+                1.8402940461754165
+              ],
+              "to": [
+                347.34809907712065,
+                755.1970457624709,
+                4.470175059786764
+              ],
+              "beam": true
+            },
+            {
+              "shot": 34,
+              "time": 154.28333333333333,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 83,
+              "hpAfter": 53.3,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                343.0349894574912,
+                746.0702869329123,
+                1.6564589011140862
+              ],
+              "to": [
+                347.6961981542413,
+                755.3940915249418,
+                3.486999058824411
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 1.139258357825866e-204,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 1.7505003709425305e-190,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 1.9383803687344908e-178,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 2.004834694013019e-145,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": false,
+            "openT": 0.05333333333333334,
+            "disabled": false,
+            "forceOpen": true
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": false,
+            "openT": 0.05333333333333334,
+            "disabled": false,
+            "forceOpen": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "18-M4-native-evacuation",
+      "kind": "live-traversal",
+      "first": null,
+      "frames": 347,
+      "p95": 16.8,
+      "p99": 17,
+      "worst": 17.3,
+      "renderMedian": 8.7,
+      "renderP95": 11.4,
+      "counters": {
+        "shadowRefresh": 58
+      },
+      "labTotalMs": 10.199999868869781,
+      "labMaxMs": 0.19999998807907104,
+      "programs": 35,
+      "render": {
+        "calls": 323,
+        "triangles": 272398,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 2167,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "break_contact",
+        "phase": "M4_BREAK_CONTACT",
+        "player": [
+          424.1671739450818,
+          751.9940769622607
+        ],
+        "camera": [
+          424.1671739450818,
+          751.9940769622607,
+          1.6297859071605405
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": true,
+          "shots": 42,
+          "events": [
+            {
+              "shot": 39,
+              "time": 169.68333333333334,
+              "target": "shielded",
+              "rawDamage": 22,
+              "hpBefore": 65.14252810542064,
+              "hpAfter": 35.442528105420635,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.243672837482,
+                744.6972090214463,
+                1.2017115048957128
+              ],
+              "to": [
+                362.90876459675087,
+                750.4972838555693,
+                0.8
+              ],
+              "beam": true
+            },
+            {
+              "shot": 40,
+              "time": 170.41666666666666,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                344.276968549222,
+                744.5509873427699,
+                1.4352759400494137
+              ],
+              "to": [
+                380.2625593302011,
+                753.2588832200282,
+                4.363407803116865
+              ],
+              "beam": true
+            },
+            {
+              "shot": 41,
+              "time": 171.15,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 55.32900549859031,
+              "hpAfter": 25.62900549859031,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.2831484977683,
+                744.5409646718397,
+                1.3807293423825928
+              ],
+              "to": [
+                379.5492265860012,
+                752.8968391928013,
+                3.4000071954851414
+              ],
+              "beam": true
+            },
+            {
+              "shot": 42,
+              "time": 171.88333333333333,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 25.62900549859031,
+              "hpAfter": -4.070994501409693,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.27494175605386,
+                744.55729064318,
+                1.4412253790341716
+              ],
+              "to": [
+                380.34025611417104,
+                753.3921815504468,
+                4.472777017560732
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 1.5225669219945868e-229,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 2.3394640411703094e-215,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 2.590557103580109e-203,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 2.6793702834857128e-170,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "19-power-service",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 17.1,
+        "worst": 17.3,
+        "counters": {
+          "shadowRefresh": 4
+        }
+      },
+      "frames": 64,
+      "p95": 16.9,
+      "p99": 17.2,
+      "worst": 17.2,
+      "renderMedian": 6,
+      "renderP95": 8.7,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 1.9000000357627869,
+      "labMaxMs": 0.10000002384185791,
+      "programs": 35,
+      "render": {
+        "calls": 138,
+        "triangles": 264278,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 2167,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "break_contact",
+        "phase": "M4_BREAK_CONTACT",
+        "player": [
+          424.1671739450818,
+          751.9940769622607
+        ],
+        "camera": [
+          424.1671739450818,
+          751.9940769622607,
+          1.620001475059879
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": true,
+          "shots": 42,
+          "events": [
+            {
+              "shot": 39,
+              "time": 169.68333333333334,
+              "target": "shielded",
+              "rawDamage": 22,
+              "hpBefore": 65.14252810542064,
+              "hpAfter": 35.442528105420635,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.243672837482,
+                744.6972090214463,
+                1.2017115048957128
+              ],
+              "to": [
+                362.90876459675087,
+                750.4972838555693,
+                0.8
+              ],
+              "beam": true
+            },
+            {
+              "shot": 40,
+              "time": 170.41666666666666,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                344.276968549222,
+                744.5509873427699,
+                1.4352759400494137
+              ],
+              "to": [
+                380.2625593302011,
+                753.2588832200282,
+                4.363407803116865
+              ],
+              "beam": true
+            },
+            {
+              "shot": 41,
+              "time": 171.15,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 55.32900549859031,
+              "hpAfter": 25.62900549859031,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.2831484977683,
+                744.5409646718397,
+                1.3807293423825928
+              ],
+              "to": [
+                379.5492265860012,
+                752.8968391928013,
+                3.4000071954851414
+              ],
+              "beam": true
+            },
+            {
+              "shot": 42,
+              "time": 171.88333333333333,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 25.62900549859031,
+              "hpAfter": -4.070994501409693,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.27494175605386,
+                744.55729064318,
+                1.4412253790341716
+              ],
+              "to": [
+                380.34025611417104,
+                753.3921815504468,
+                4.472777017560732
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 1.2243903533679801e-231,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 1.8813079167040925e-217,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 2.0832273981870075e-205,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 2.1546475762806564e-172,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          }
+        ]
+      }
+    },
+    {
+      "label": "20-emergency-exit",
+      "kind": "quiet-warm",
+      "first": {
+        "frames": 20,
+        "p95": 16.9,
+        "worst": 17,
+        "counters": {
+          "shadowRefresh": 3
+        }
+      },
+      "frames": 64,
+      "p95": 16.8,
+      "p99": 16.8,
+      "worst": 16.8,
+      "renderMedian": 6.4,
+      "renderP95": 8,
+      "counters": {
+        "shadowRefresh": 11
+      },
+      "labTotalMs": 2,
+      "labMaxMs": 0.20000001788139343,
+      "programs": 35,
+      "render": {
+        "calls": 209,
+        "triangles": 268038,
+        "points": 900,
+        "lines": 0
+      },
+      "memory": {
+        "geometries": 2167,
+        "textures": 21
+      },
+      "hitches": [],
+      "renderer": "ANGLE (AMD, AMD Radeon(TM) Graphics (0x0000164C) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+      "state": {
+        "mission": "break_contact",
+        "phase": "M4_BREAK_CONTACT",
+        "player": [
+          443.23383976146613,
+          751.999771187628
+        ],
+        "camera": [
+          443.23383976146613,
+          751.999771187628,
+          1.6200067634986453
+        ],
+        "eye": 1.62,
+        "exposure": 0.78,
+        "fog": [
+          40,
+          280
+        ],
+        "solids": 327,
+        "map": 28,
+        "slots": 8,
+        "fixtures": 32,
+        "encounter": {
+          "active": false,
+          "t": 0,
+          "duration": 0,
+          "stage": -1,
+          "spawnT": 0,
+          "pausedWarned": false
+        },
+        "enemyTypes": [],
+        "turret": {
+          "active": true,
+          "shots": 42,
+          "events": [
+            {
+              "shot": 39,
+              "time": 169.68333333333334,
+              "target": "shielded",
+              "rawDamage": 22,
+              "hpBefore": 65.14252810542064,
+              "hpAfter": 35.442528105420635,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.243672837482,
+                744.6972090214463,
+                1.2017115048957128
+              ],
+              "to": [
+                362.90876459675087,
+                750.4972838555693,
+                0.8
+              ],
+              "beam": true
+            },
+            {
+              "shot": 40,
+              "time": 170.41666666666666,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 105,
+              "hpAfter": 83,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0,
+              "from": [
+                344.276968549222,
+                744.5509873427699,
+                1.4352759400494137
+              ],
+              "to": [
+                380.2625593302011,
+                753.2588832200282,
+                4.363407803116865
+              ],
+              "beam": true
+            },
+            {
+              "shot": 41,
+              "time": 171.15,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 55.32900549859031,
+              "hpAfter": 25.62900549859031,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.2831484977683,
+                744.5409646718397,
+                1.3807293423825928
+              ],
+              "to": [
+                379.5492265860012,
+                752.8968391928013,
+                3.4000071954851414
+              ],
+              "beam": true
+            },
+            {
+              "shot": 42,
+              "time": 171.88333333333333,
+              "target": "drone",
+              "rawDamage": 22,
+              "hpBefore": 25.62900549859031,
+              "hpAfter": -4.070994501409693,
+              "shieldBefore": 0,
+              "shieldAfter": 0,
+              "markedBefore": 0.06666666666666593,
+              "from": [
+                344.27494175605386,
+                744.55729064318,
+                1.4412253790341716
+              ],
+              "to": [
+                380.34025611417104,
+                753.3921815504468,
+                4.472777017560732
+              ],
+              "beam": true
+            }
+          ]
+        },
+        "doors": [
+          {
+            "id": "front",
+            "locked": true,
+            "openT": 6.031496702960376e-239,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "bio_lab",
+            "locked": false,
+            "openT": 9.267553003534427e-225,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_access",
+            "locked": false,
+            "openT": 1.0262233077154423e-212,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_security",
+            "locked": true,
+            "openT": 1.0614057613758883e-179,
+            "disabled": false,
+            "forceOpen": false
+          },
+          {
+            "id": "lab_emergency",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          },
+          {
+            "id": "lab_emergency_exit",
+            "locked": false,
+            "openT": 0.999999999999999,
+            "disabled": true,
+            "forceOpen": true
+          }
+        ]
+      }
+    }
+  ],
+  "captures": [
+    {
+      "id": "01-exterior-far",
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        300,
+        702
+      ],
+      "camera": [
+        300,
+        702,
+        6.238698501586915
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "02-exterior-near",
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        323.3502582426777,
+        709.7834194142151
+      ],
+      "camera": [
+        323.3502582426777,
+        709.7834194142151,
+        2.049210855211582
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "03-exterior-approach",
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        360,
+        574
+      ],
+      "camera": [
+        360,
+        574,
+        1.646064566450942
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "04-front-entrance",
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        360,
+        611.2666666666817
+      ],
+      "camera": [
+        360,
+        611.2666666666817,
+        1.7056906277387889
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "05-main-hall",
+      "mission": "power_through",
+      "phase": "MOVE_R1",
+      "player": [
+        360,
+        632.2400000000234
+      ],
+      "camera": [
+        360,
+        632.2400000000234,
+        1.6199956687610844
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 0.004648464305600182,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "06-vault",
+      "mission": "sample_zero",
+      "phase": "M3_REACH_SECURITY",
+      "player": [
+        360,
+        673.2333333333733
+      ],
+      "camera": [
+        360,
+        673.2333333333733,
+        1.6199964521059245
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 1.4827122685197376e-16,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 0.022782263199701402,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "07-decontamination",
+      "mission": "sample_zero",
+      "phase": "M3_REACH_SECURITY",
+      "player": [
+        360,
+        696.2000000000492
+      ],
+      "camera": [
+        360,
+        696.2000000000492,
+        1.619998130730161
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": false,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 4.97988435650147e-25,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 7.651723029658176e-11,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 0.9999899679908696,
+          "disabled": true,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "08-research-security",
+      "mission": "sample_zero",
+      "phase": "M3_REACH_SAMPLE",
+      "player": [
+        359.7408332838682,
+        719.8790688940796
+      ],
+      "camera": [
+        359.7408332838682,
+        719.8790688940796,
+        1.6199974692686907
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 9.780228351866055e-52,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 1.5027577581713885e-37,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 1.6640477121604237e-25,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "09-containment-before",
+      "mission": "sample_zero",
+      "phase": "M3_REACH_SAMPLE",
+      "player": [
+        366.7514706154515,
+        766.2254984883942
+      ],
+      "camera": [
+        366.7514706154515,
+        766.2254984883942,
+        1.6200037397150038
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": false,
+          "openT": 5.707995268840447e-67,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 8.770484558490876e-53,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 9.711814618647635e-41,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 1.0044768923242451e-7,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "10-lockdown-activation",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        363.6217149359823,
+        773.2753311458406
+      ],
+      "camera": [
+        363.6217149359823,
+        773.2753311458406,
+        1.6199887566635218
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "defence",
+        "t": 0.03333333333333333,
+        "duration": 90,
+        "transferT": 0,
+        "transferDuration": 3.5,
+        "stage": 0,
+        "spawnT": 0.3666666666666667,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 0,
+        "events": []
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 4.1188545077203126e-71,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 6.328728066022033e-57,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 7.007986085504753e-45,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 7.248243877208188e-12,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "11-turret-live-drone-hit",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        341.70421958115946,
+        740.1702384707456
+      ],
+      "camera": [
+        341.70421958115946,
+        740.1702384707456,
+        1.6198990161149724
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "defence",
+        "t": 9.850000000000069,
+        "duration": 90,
+        "transferT": 0,
+        "transferDuration": 3.5,
+        "stage": 0,
+        "spawnT": 3.2000000000000037,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 8,
+        "events": [
+          {
+            "shot": 5,
+            "time": 79.06666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 53.3,
+            "hpAfter": 23.599999999999994,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.3084717121606,
+              744.4127872055005,
+              1.401871910271145
+            ],
+            "to": [
+              375.4837497279862,
+              749.9873653235964,
+              3.45286044981279
+            ],
+            "beam": true
+          },
+          {
+            "shot": 6,
+            "time": 79.8,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 23.599999999999994,
+            "hpAfter": -6.1000000000000085,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.3055054393524,
+              744.381326327647,
+              1.4984650900226322
+            ],
+            "to": [
+              371.8990006514932,
+              748.9452393059424,
+              4.472225270718451
+            ],
+            "beam": true
+          },
+          {
+            "shot": 7,
+            "time": 81.46666666666667,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.3054751935293,
+              744.418682678119,
+              1.428854541637396
+            ],
+            "to": [
+              382.94274858612357,
+              751.4353520158023,
+              4.426263423826475
+            ],
+            "beam": true
+          },
+          {
+            "shot": 8,
+            "time": 82.2,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.30843000627306,
+              744.385284704963,
+              1.4626184428967903
+            ],
+            "to": [
+              377.28356129784487,
+              749.8889446367195,
+              4.4998000123959265
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 3.9342296696675496e-85,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 6.0450471561770366e-71,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 6.69385789921239e-59,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 6.923346299620024e-26,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "12-active-drone-defence-30",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "defence",
+        "t": 31.11666666666618,
+        "duration": 90,
+        "transferT": 0,
+        "transferDuration": 3.5,
+        "stage": 1,
+        "spawnT": 3.016666666666671,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone",
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 17,
+        "events": [
+          {
+            "shot": 14,
+            "time": 93.86666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.95094076254713,
+              746.0568295691246,
+              1.8726265250541432
+            ],
+            "to": [
+              347.1160330257069,
+              755.0656819208236,
+              4.599712190616359
+            ],
+            "beam": true
+          },
+          {
+            "shot": 15,
+            "time": 94.6,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 67.58974029024351,
+            "hpAfter": 37.88974029024351,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 9.66666666666665,
+            "from": [
+              343.0342901352657,
+              746.0688880803394,
+              1.6652662123522783
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              3.537016526278899
+            ],
+            "beam": true
+          },
+          {
+            "shot": 16,
+            "time": 102.4,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              343.0248583139758,
+              746.0500216308035,
+              1.7692078095640142
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.13577506390413
+            ],
+            "beam": true
+          },
+          {
+            "shot": 17,
+            "time": 103.13333333333334,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.02023910613923,
+              746.0407818404316,
+              1.8128691198396591
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.392610415751426
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.6685552315337563e-115,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 2.5637789107924156e-101,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 2.838947533487083e-89,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 2.936276389000705e-56,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "12-active-drone-defence-60",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "defence",
+        "t": 61.14999999999781,
+        "duration": 90,
+        "transferT": 0,
+        "transferDuration": 3.5,
+        "stage": 2,
+        "spawnT": 1.9166666666666727,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone",
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 27,
+        "events": [
+          {
+            "shot": 24,
+            "time": 128.95,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              342.1117124120324,
+              746.3219627582295,
+              1.594251777618043
+            ],
+            "to": [
+              342.9835712254119,
+              764.4437064236936,
+              4.280962599427845
+            ],
+            "beam": true
+          },
+          {
+            "shot": 25,
+            "time": 131.95,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.34320043415414,
+              743.9289917680273,
+              1.4139193593566852
+            ],
+            "to": [
+              374.65794648762585,
+              743.01033517827,
+              3.5345974198912105
+            ],
+            "beam": true
+          },
+          {
+            "shot": 26,
+            "time": 132.68333333333334,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.3376255423436,
+              744.1034923987748,
+              1.4674767738833367
+            ],
+            "to": [
+              373.8455693957371,
+              745.4098812266612,
+              4.212695080632759
+            ],
+            "beam": true
+          },
+          {
+            "shot": 27,
+            "time": 133.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 53.3,
+            "hpAfter": 23.599999999999994,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.3368286534857,
+              744.1034571185564,
+              1.4758948181520655
+            ],
+            "to": [
+              373.8455693957371,
+              745.4098812266612,
+              4.328423870260398
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 2.1354447865764075e-158,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 3.2811669673971114e-144,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 3.6333323555470684e-132,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 3.757895446514675e-99,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "13-defence-89",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "defence",
+        "t": 89.0166666666629,
+        "duration": 90,
+        "transferT": 0,
+        "transferDuration": 3.5,
+        "stage": 2,
+        "spawnT": 1.150000000000012,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone",
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 34,
+        "events": [
+          {
+            "shot": 31,
+            "time": 144.48333333333332,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.9702526899789,
+              746.0986001451089,
+              1.6706984056752365
+            ],
+            "to": [
+              347.1160330257069,
+              755.0656819208236,
+              3.468295253933798
+            ],
+            "beam": true
+          },
+          {
+            "shot": 32,
+            "time": 145.21666666666667,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.01645531746755,
+              746.0332131370141,
+              1.8461232482174816
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.590664452085212
+            ],
+            "beam": true
+          },
+          {
+            "shot": 33,
+            "time": 153.55,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.98036627977285,
+              746.0525435187918,
+              1.8402940461754165
+            ],
+            "to": [
+              347.34809907712065,
+              755.1970457624709,
+              4.470175059786764
+            ],
+            "beam": true
+          },
+          {
+            "shot": 34,
+            "time": 154.28333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.0349894574912,
+              746.0702869329123,
+              1.6564589011140862
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              3.486999058824411
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 3.396370142103481e-198,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 5.218611873917905e-184,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 5.778721887959706e-172,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 5.976836288121183e-139,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "14-transfer-start",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "transfer",
+        "t": 90,
+        "duration": 90,
+        "transferT": 0.03333333333333333,
+        "transferDuration": 3.5,
+        "stage": 2,
+        "spawnT": 3.5,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone",
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 34,
+        "events": [
+          {
+            "shot": 31,
+            "time": 144.48333333333332,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.9702526899789,
+              746.0986001451089,
+              1.6706984056752365
+            ],
+            "to": [
+              347.1160330257069,
+              755.0656819208236,
+              3.468295253933798
+            ],
+            "beam": true
+          },
+          {
+            "shot": 32,
+            "time": 145.21666666666667,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.01645531746755,
+              746.0332131370141,
+              1.8461232482174816
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.590664452085212
+            ],
+            "beam": true
+          },
+          {
+            "shot": 33,
+            "time": 153.55,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.98036627977285,
+              746.0525435187918,
+              1.8402940461754165
+            ],
+            "to": [
+              347.34809907712065,
+              755.1970457624709,
+              4.470175059786764
+            ],
+            "beam": true
+          },
+          {
+            "shot": 34,
+            "time": 154.28333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.0349894574912,
+              746.0702869329123,
+              1.6564589011140862
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              3.486999058824411
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.1356233263148976e-199,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 1.7449150496107806e-185,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 1.9321955787154483e-173,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 1.9984378681859694e-140,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "15-transfer-mid",
+      "mission": "sample_zero",
+      "phase": "M3_STABILIZE",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": true,
+        "state": "transfer",
+        "t": 90,
+        "duration": 90,
+        "transferT": 1.649999999999999,
+        "transferDuration": 3.5,
+        "stage": 2,
+        "spawnT": 3.5,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 34,
+        "events": [
+          {
+            "shot": 31,
+            "time": 144.48333333333332,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.9702526899789,
+              746.0986001451089,
+              1.6706984056752365
+            ],
+            "to": [
+              347.1160330257069,
+              755.0656819208236,
+              3.468295253933798
+            ],
+            "beam": true
+          },
+          {
+            "shot": 32,
+            "time": 145.21666666666667,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.01645531746755,
+              746.0332131370141,
+              1.8461232482174816
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.590664452085212
+            ],
+            "beam": true
+          },
+          {
+            "shot": 33,
+            "time": 153.55,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.98036627977285,
+              746.0525435187918,
+              1.8402940461754165
+            ],
+            "to": [
+              347.34809907712065,
+              755.1970457624709,
+              4.470175059786764
+            ],
+            "beam": true
+          },
+          {
+            "shot": 34,
+            "time": 154.28333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.0349894574912,
+              746.0702869329123,
+              1.6564589011140862
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              3.486999058824411
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 5.576369990333815e-202,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 8.56823886306231e-188,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 9.487862032183019e-176,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": false,
+          "openT": 9.813138474234543e-143,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": true,
+          "openT": 0,
+          "disabled": false,
+          "forceOpen": false
+        }
+      ]
+    },
+    {
+      "id": "16-transfer-complete",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        366.803576198752,
+        766.2100577916245
+      ],
+      "camera": [
+        366.803576198752,
+        766.2100577916245,
+        1.62
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "shielded",
+        "runner",
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 34,
+        "events": [
+          {
+            "shot": 31,
+            "time": 144.48333333333332,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.9702526899789,
+              746.0986001451089,
+              1.6706984056752365
+            ],
+            "to": [
+              347.1160330257069,
+              755.0656819208236,
+              3.468295253933798
+            ],
+            "beam": true
+          },
+          {
+            "shot": 32,
+            "time": 145.21666666666667,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.01645531746755,
+              746.0332131370141,
+              1.8461232482174816
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              4.590664452085212
+            ],
+            "beam": true
+          },
+          {
+            "shot": 33,
+            "time": 153.55,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              342.98036627977285,
+              746.0525435187918,
+              1.8402940461754165
+            ],
+            "to": [
+              347.34809907712065,
+              755.1970457624709,
+              4.470175059786764
+            ],
+            "beam": true
+          },
+          {
+            "shot": 34,
+            "time": 154.28333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 83,
+            "hpAfter": 53.3,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              343.0349894574912,
+              746.0702869329123,
+              1.6564589011140862
+            ],
+            "to": [
+              347.6961981542413,
+              755.3940915249418,
+              3.486999058824411
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.0784979120751532e-204,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 1.657140351158929e-190,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 1.8350000824019847e-178,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 1.8979101769989913e-145,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.10382222222222223,
+          "disabled": false,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.10382222222222223,
+          "disabled": false,
+          "forceOpen": true
+        }
+      ]
+    },
+    {
+      "id": "17-M4-north-access-sealed",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        360.1915101115029,
+        742.681475555179
+      ],
+      "camera": [
+        360.1915101115029,
+        742.681475555179,
+        1.6266132490083476
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [
+        "drone"
+      ],
+      "turret": {
+        "active": true,
+        "shots": 40,
+        "events": [
+          {
+            "shot": 37,
+            "time": 168.21666666666667,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 95,
+            "hpAfter": 95,
+            "shieldBefore": 86.30003672459387,
+            "shieldAfter": 64.30003672459387,
+            "markedBefore": 0,
+            "from": [
+              344.08069427685956,
+              745.0918038016232,
+              1.2157102784319391
+            ],
+            "to": [
+              369.30592089318446,
+              758.3282502237653,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 38,
+            "time": 168.95,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 95,
+            "hpAfter": 95,
+            "shieldBefore": 40.40249241159362,
+            "shieldAfter": 10.702492411593617,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.1316959207879,
+              744.9882858162078,
+              1.2092121736452177
+            ],
+            "to": [
+              365.518369329384,
+              754.9034645147589,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 39,
+            "time": 169.68333333333334,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 65.14252810542064,
+            "hpAfter": 35.442528105420635,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.243672837482,
+              744.6972090214463,
+              1.2017115048957128
+            ],
+            "to": [
+              362.90876459675087,
+              750.4972838555693,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 40,
+            "time": 170.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.276968549222,
+              744.5509873427699,
+              1.4352759400494137
+            ],
+            "to": [
+              380.2625593302011,
+              753.2588832200282,
+              4.363407803116865
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.5899475492379687e-211,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 2.4429961435890916e-197,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 2.7052012351630765e-185,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 2.7979448089864012e-152,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.9999998678833175,
+          "disabled": true,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.9999998678833175,
+          "disabled": true,
+          "forceOpen": true
+        }
+      ]
+    },
+    {
+      "id": "18-M4-native-evacuation",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        424.1671739450818,
+        751.9940769622607
+      ],
+      "camera": [
+        424.1671739450818,
+        751.9940769622607,
+        1.628854654968283
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 42,
+        "events": [
+          {
+            "shot": 39,
+            "time": 169.68333333333334,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 65.14252810542064,
+            "hpAfter": 35.442528105420635,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.243672837482,
+              744.6972090214463,
+              1.2017115048957128
+            ],
+            "to": [
+              362.90876459675087,
+              750.4972838555693,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 40,
+            "time": 170.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.276968549222,
+              744.5509873427699,
+              1.4352759400494137
+            ],
+            "to": [
+              380.2625593302011,
+              753.2588832200282,
+              4.363407803116865
+            ],
+            "beam": true
+          },
+          {
+            "shot": 41,
+            "time": 171.15,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 55.32900549859031,
+            "hpAfter": 25.62900549859031,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.2831484977683,
+              744.5409646718397,
+              1.3807293423825928
+            ],
+            "to": [
+              379.5492265860012,
+              752.8968391928013,
+              3.4000071954851414
+            ],
+            "beam": true
+          },
+          {
+            "shot": 42,
+            "time": 171.88333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 25.62900549859031,
+            "hpAfter": -4.070994501409693,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.27494175605386,
+              744.55729064318,
+              1.4412253790341716
+            ],
+            "to": [
+              380.34025611417104,
+              753.3921815504468,
+              4.472777017560732
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.4413633528215422e-229,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 2.2146926256412263e-215,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 2.4523940580558364e-203,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 2.5364705350331413e-170,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        }
+      ]
+    },
+    {
+      "id": "19-power-service",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        424.1671739450818,
+        751.9940769622607
+      ],
+      "camera": [
+        424.1671739450818,
+        751.9940769622607,
+        1.6200013346893725
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 42,
+        "events": [
+          {
+            "shot": 39,
+            "time": 169.68333333333334,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 65.14252810542064,
+            "hpAfter": 35.442528105420635,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.243672837482,
+              744.6972090214463,
+              1.2017115048957128
+            ],
+            "to": [
+              362.90876459675087,
+              750.4972838555693,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 40,
+            "time": 170.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.276968549222,
+              744.5509873427699,
+              1.4352759400494137
+            ],
+            "to": [
+              380.2625593302011,
+              753.2588832200282,
+              4.363407803116865
+            ],
+            "beam": true
+          },
+          {
+            "shot": 41,
+            "time": 171.15,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 55.32900549859031,
+            "hpAfter": 25.62900549859031,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.2831484977683,
+              744.5409646718397,
+              1.3807293423825928
+            ],
+            "to": [
+              379.5492265860012,
+              752.8968391928013,
+              3.4000071954851414
+            ],
+            "beam": true
+          },
+          {
+            "shot": 42,
+            "time": 171.88333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 25.62900549859031,
+            "hpAfter": -4.070994501409693,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.27494175605386,
+              744.55729064318,
+              1.4412253790341716
+            ],
+            "to": [
+              380.34025611417104,
+              753.3921815504468,
+              4.472777017560732
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 1.1590895345216878e-231,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 1.7809714944798742e-217,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 1.972121936950367e-205,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 2.0397330388790215e-172,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        }
+      ]
+    },
+    {
+      "id": "20-emergency-exit",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "player": [
+        443.23383976146613,
+        751.999771187628
+      ],
+      "camera": [
+        443.23383976146613,
+        751.999771187628,
+        1.620006119866651
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 0,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 42,
+        "events": [
+          {
+            "shot": 39,
+            "time": 169.68333333333334,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 65.14252810542064,
+            "hpAfter": 35.442528105420635,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.243672837482,
+              744.6972090214463,
+              1.2017115048957128
+            ],
+            "to": [
+              362.90876459675087,
+              750.4972838555693,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 40,
+            "time": 170.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.276968549222,
+              744.5509873427699,
+              1.4352759400494137
+            ],
+            "to": [
+              380.2625593302011,
+              753.2588832200282,
+              4.363407803116865
+            ],
+            "beam": true
+          },
+          {
+            "shot": 41,
+            "time": 171.15,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 55.32900549859031,
+            "hpAfter": 25.62900549859031,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.2831484977683,
+              744.5409646718397,
+              1.3807293423825928
+            ],
+            "to": [
+              379.5492265860012,
+              752.8968391928013,
+              3.4000071954851414
+            ],
+            "beam": true
+          },
+          {
+            "shot": 42,
+            "time": 171.88333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 25.62900549859031,
+            "hpAfter": -4.070994501409693,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.27494175605386,
+              744.55729064318,
+              1.4412253790341716
+            ],
+            "to": [
+              380.34025611417104,
+              753.3921815504468,
+              4.472777017560732
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 5.709816878802489e-239,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 8.773283510012591e-225,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 9.714913979706187e-213,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 1.0047974541025076e-179,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        }
+      ]
+    },
+    {
+      "id": "21-emergency-evacuated",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "player": [
+        455.1938397595412,
+        751.9999855508992
+      ],
+      "camera": [
+        455.1938397595412,
+        751.9999855508992,
+        2.5252207317886097
+      ],
+      "eye": 1.62,
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ],
+      "solids": 327,
+      "map": 28,
+      "slots": 8,
+      "fixtures": 32,
+      "encounter": {
+        "active": false,
+        "t": 0,
+        "duration": 0,
+        "stage": -1,
+        "spawnT": 4.7666666666666675,
+        "pausedWarned": false
+      },
+      "enemyTypes": [],
+      "turret": {
+        "active": true,
+        "shots": 42,
+        "events": [
+          {
+            "shot": 39,
+            "time": 169.68333333333334,
+            "target": "shielded",
+            "rawDamage": 22,
+            "hpBefore": 65.14252810542064,
+            "hpAfter": 35.442528105420635,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.243672837482,
+              744.6972090214463,
+              1.2017115048957128
+            ],
+            "to": [
+              362.90876459675087,
+              750.4972838555693,
+              0.8
+            ],
+            "beam": true
+          },
+          {
+            "shot": 40,
+            "time": 170.41666666666666,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 105,
+            "hpAfter": 83,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0,
+            "from": [
+              344.276968549222,
+              744.5509873427699,
+              1.4352759400494137
+            ],
+            "to": [
+              380.2625593302011,
+              753.2588832200282,
+              4.363407803116865
+            ],
+            "beam": true
+          },
+          {
+            "shot": 41,
+            "time": 171.15,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 55.32900549859031,
+            "hpAfter": 25.62900549859031,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.2831484977683,
+              744.5409646718397,
+              1.3807293423825928
+            ],
+            "to": [
+              379.5492265860012,
+              752.8968391928013,
+              3.4000071954851414
+            ],
+            "beam": true
+          },
+          {
+            "shot": 42,
+            "time": 171.88333333333333,
+            "target": "drone",
+            "rawDamage": 22,
+            "hpBefore": 25.62900549859031,
+            "hpAfter": -4.070994501409693,
+            "shieldBefore": 0,
+            "shieldAfter": 0,
+            "markedBefore": 0.06666666666666593,
+            "from": [
+              344.27494175605386,
+              744.55729064318,
+              1.4412253790341716
+            ],
+            "to": [
+              380.34025611417104,
+              753.3921815504468,
+              4.472777017560732
+            ],
+            "beam": true
+          }
+        ]
+      },
+      "doors": [
+        {
+          "id": "front",
+          "locked": true,
+          "openT": 2.9636025190724955e-242,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "bio_lab",
+          "locked": false,
+          "openT": 4.55365306150826e-228,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_access",
+          "locked": false,
+          "openT": 5.0423935047227206e-216,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_security",
+          "locked": true,
+          "openT": 5.215264043214563e-183,
+          "disabled": false,
+          "forceOpen": false
+        },
+        {
+          "id": "lab_emergency",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        },
+        {
+          "id": "lab_emergency_exit",
+          "locked": false,
+          "openT": 0.999999999999999,
+          "disabled": true,
+          "forceOpen": true
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "transferStart": {
+    "mission": "sample_zero",
+    "phase": "M3_STABILIZE",
+    "player": [
+      366.803576198752,
+      766.2100577916245
+    ],
+    "camera": [
+      366.803576198752,
+      766.2100577916245,
+      1.62
+    ],
+    "eye": 1.62,
+    "exposure": 0.78,
+    "fog": [
+      40,
+      280
+    ],
+    "solids": 327,
+    "map": 28,
+    "slots": 8,
+    "fixtures": 32,
+    "encounter": {
+      "active": true,
+      "state": "transfer",
+      "t": 90,
+      "duration": 90,
+      "transferT": 0.016666666666666666,
+      "transferDuration": 3.5,
+      "stage": 2,
+      "spawnT": 3.5,
+      "pausedWarned": false
+    },
+    "enemyTypes": [
+      "drone",
+      "drone"
+    ],
+    "turret": {
+      "active": true,
+      "shots": 34,
+      "events": [
+        {
+          "shot": 31,
+          "time": 144.48333333333332,
+          "target": "drone",
+          "rawDamage": 22,
+          "hpBefore": 105,
+          "hpAfter": 83,
+          "shieldBefore": 0,
+          "shieldAfter": 0,
+          "markedBefore": 0,
+          "from": [
+            342.9702526899789,
+            746.0986001451089,
+            1.6706984056752365
+          ],
+          "to": [
+            347.1160330257069,
+            755.0656819208236,
+            3.468295253933798
+          ],
+          "beam": true
+        },
+        {
+          "shot": 32,
+          "time": 145.21666666666667,
+          "target": "drone",
+          "rawDamage": 22,
+          "hpBefore": 83,
+          "hpAfter": 53.3,
+          "shieldBefore": 0,
+          "shieldAfter": 0,
+          "markedBefore": 0.06666666666666593,
+          "from": [
+            343.01645531746755,
+            746.0332131370141,
+            1.8461232482174816
+          ],
+          "to": [
+            347.6961981542413,
+            755.3940915249418,
+            4.590664452085212
+          ],
+          "beam": true
+        },
+        {
+          "shot": 33,
+          "time": 153.55,
+          "target": "drone",
+          "rawDamage": 22,
+          "hpBefore": 105,
+          "hpAfter": 83,
+          "shieldBefore": 0,
+          "shieldAfter": 0,
+          "markedBefore": 0,
+          "from": [
+            342.98036627977285,
+            746.0525435187918,
+            1.8402940461754165
+          ],
+          "to": [
+            347.34809907712065,
+            755.1970457624709,
+            4.470175059786764
+          ],
+          "beam": true
+        },
+        {
+          "shot": 34,
+          "time": 154.28333333333333,
+          "target": "drone",
+          "rawDamage": 22,
+          "hpBefore": 83,
+          "hpAfter": 53.3,
+          "shieldBefore": 0,
+          "shieldAfter": 0,
+          "markedBefore": 0.06666666666666593,
+          "from": [
+            343.0349894574912,
+            746.0702869329123,
+            1.6564589011140862
+          ],
+          "to": [
+            347.6961981542413,
+            755.3940915249418,
+            3.486999058824411
+          ],
+          "beam": true
+        }
+      ]
+    },
+    "doors": [
+      {
+        "id": "front",
+        "locked": true,
+        "openT": 1.1996021052622157e-199,
+        "disabled": false,
+        "forceOpen": false
+      },
+      {
+        "id": "bio_lab",
+        "locked": false,
+        "openT": 1.8432201228282893e-185,
+        "disabled": false,
+        "forceOpen": false
+      },
+      {
+        "id": "lab_access",
+        "locked": false,
+        "openT": 2.041051667657164e-173,
+        "disabled": false,
+        "forceOpen": false
+      },
+      {
+        "id": "lab_security",
+        "locked": false,
+        "openT": 2.111025917097855e-140,
+        "disabled": false,
+        "forceOpen": false
+      },
+      {
+        "id": "lab_emergency",
+        "locked": true,
+        "openT": 0,
+        "disabled": false,
+        "forceOpen": false
+      },
+      {
+        "id": "lab_emergency_exit",
+        "locked": true,
+        "openT": 0,
+        "disabled": false,
+        "forceOpen": false
+      }
+    ]
+  },
+  "passed": true
+}

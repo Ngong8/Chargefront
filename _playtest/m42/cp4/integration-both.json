@@ -1,0 +1,132 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-e-integration",
+    "status": 0,
+    "error": null,
+    "seconds": 64.493,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/firefox/facility-e-integration.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-regression",
+    "status": 1,
+    "error": null,
+    "seconds": 62.066,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/firefox/facility-regression.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-persistent-lighting",
+    "status": 1,
+    "error": null,
+    "seconds": 36.492,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/firefox/facility-persistent-lighting.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-light-eligibility-e",
+    "status": 0,
+    "error": null,
+    "seconds": 22.211,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/firefox/facility-light-eligibility-e.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "cp4-terrain",
+    "status": 0,
+    "error": null,
+    "seconds": 53.339,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/firefox/cp4-terrain.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-e-integration",
+    "status": 0,
+    "error": null,
+    "seconds": 37.904,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/edge/facility-e-integration.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-regression",
+    "status": 1,
+    "error": null,
+    "seconds": 32.051,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/edge/facility-regression.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-persistent-lighting",
+    "status": 1,
+    "error": null,
+    "seconds": 32.305,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/edge/facility-persistent-lighting.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-light-eligibility-e",
+    "status": 0,
+    "error": null,
+    "seconds": 13.324,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/edge/facility-light-eligibility-e.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "cp4-terrain",
+    "status": 0,
+    "error": null,
+    "seconds": 31.772,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "integration/edge/cp4-terrain.log"
+  }
+]

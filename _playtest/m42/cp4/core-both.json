@@ -1,0 +1,106 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "facility-e0",
+    "status": 0,
+    "error": null,
+    "seconds": 59.658,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/firefox/facility-e0.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-enclosure",
+    "status": 1,
+    "error": null,
+    "seconds": 85.934,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/firefox/facility-enclosure.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "error": null,
+    "seconds": 98.565,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/firefox/facility-playthrough.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "sample-containment-r2",
+    "status": 0,
+    "error": null,
+    "seconds": 40.952,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/firefox/sample-containment-r2.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-e0",
+    "status": 0,
+    "error": null,
+    "seconds": 42.211,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/edge/facility-e0.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-enclosure",
+    "status": 0,
+    "error": null,
+    "seconds": 119.822,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/edge/facility-enclosure.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "facility-playthrough",
+    "status": 0,
+    "error": null,
+    "seconds": 69.564,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/edge/facility-playthrough.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "sample-containment-r2",
+    "status": 0,
+    "error": null,
+    "seconds": 36.123,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "core/edge/sample-containment-r2.log"
+  }
+]

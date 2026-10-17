@@ -1,0 +1,1440 @@
+{
+  "name": "edge",
+  "mode": "evacuation",
+  "legs": [
+    {
+      "label": "M4 east exit 395,752",
+      "route": [
+        {
+          "x": 364,
+          "y": 774
+        },
+        {
+          "x": 395,
+          "y": 752
+        }
+      ],
+      "seconds": 4.883,
+      "position": [
+        394.5978280704719,
+        752.2854123370844
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 382.3748311928881,
+            "y": 757.1044624934838
+          },
+          "formation": {
+            "x": 390.20461216173703,
+            "y": 751.9697321520256
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 388.78777655126174,
+            "y": 759.7620783915489
+          },
+          "formation": {
+            "x": 393.4455953950073,
+            "y": 756.5365721625428
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 385.7088068939475,
+            "y": 758.5939659560871
+          },
+          "formation": {
+            "x": 388.8892780573253,
+            "y": 756.3366413786722
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT"
+    },
+    {
+      "label": "M4 east exit 407,752",
+      "route": [
+        {
+          "x": 394.5978280704719,
+          "y": 752.2854123370844
+        },
+        {
+          "x": 407,
+          "y": 752
+        }
+      ],
+      "seconds": 2.234,
+      "position": [
+        406.9776824785333,
+        751.9999854440184
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 393.0650808852729,
+            "y": 751.8948296173161
+          },
+          "formation": {
+            "x": 403.579509423307,
+            "y": 749.1977684847639
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 399.363027622665,
+            "y": 755.1287351636432
+          },
+          "formation": {
+            "x": 403.57585698009785,
+            "y": 754.7977672936619
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 395.54071871896156,
+            "y": 752.6084265137961
+          },
+          "formation": {
+            "x": 399.9776839674109,
+            "y": 751.9954198900069
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT"
+    },
+    {
+      "label": "M4 east exit 425,752",
+      "route": [
+        {
+          "x": 406.9776824785333,
+          "y": 751.9999854440184
+        },
+        {
+          "x": 425,
+          "y": 752
+        }
+      ],
+      "seconds": 2.784,
+      "position": [
+        424.37101576317565,
+        752.0000047107944
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 409.4191990380914,
+            "y": 749.8118561654557
+          },
+          "formation": {
+            "x": 420.97099479259646,
+            "y": 749.2000301752635
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 415.8693362007112,
+            "y": 754.8092238784126
+          },
+          "formation": {
+            "x": 420.97103673394554,
+            "y": 754.8000301751064
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 412.0327911413232,
+            "y": 752.0203264773835
+          },
+          "formation": {
+            "x": 417.371015763372,
+            "y": 752.0000571374808
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT"
+    },
+    {
+      "label": "M4 east exit 444,752",
+      "route": [
+        {
+          "x": 424.37101576317565,
+          "y": 752.0000047107944
+        },
+        {
+          "x": 444,
+          "y": 752
+        }
+      ],
+      "seconds": 2.994,
+      "position": [
+        443.3376824298327,
+        752.0000001028579
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 427.48470149695055,
+            "y": 749.3359300896404
+          },
+          "formation": {
+            "x": 439.9376819949936,
+            "y": 749.2000006308768
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 433.9423987525231,
+            "y": 754.8003553610974
+          },
+          "formation": {
+            "x": 439.9376828646718,
+            "y": 754.8000006308768
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 430.10583872888895,
+            "y": 752.0008936851622
+          },
+          "formation": {
+            "x": 436.33768242983274,
+            "y": 752.0000011899557
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT"
+    },
+    {
+      "label": "M4 east exit 456,752",
+      "route": [
+        {
+          "x": 443.3376824298327,
+          "y": 752.0000001028579
+        },
+        {
+          "x": 456,
+          "y": 752
+        }
+      ],
+      "seconds": 1.632,
+      "position": [
+        455.51101576316444,
+        752.0000000034764
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 438.92733446120695,
+            "y": 749.2559079382002
+          },
+          "formation": {
+            "x": 452.1110157432595,
+            "y": 749.2000000276468
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 445.385332080941,
+            "y": 754.800059806213
+          },
+          "formation": {
+            "x": 452.1110157830694,
+            "y": 754.8000000276467
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 441.54877203240255,
+            "y": 752.0001601924997
+          },
+          "formation": {
+            "x": 448.51101576316444,
+            "y": 752.0000000532388
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 462,742",
+      "route": [
+        {
+          "x": 455.51101576316444,
+          "y": 752.0000000034764
+        },
+        {
+          "x": 462,
+          "y": 742
+        }
+      ],
+      "seconds": 1.778,
+      "position": [
+        461.52988912214846,
+        742.6877338890491
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 451.4727209106023,
+            "y": 747.7699125480799
+          },
+          "formation": {
+            "x": 457.2996425612446,
+            "y": 743.9145240234899
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 457.4297178253194,
+            "y": 751.1171472118968
+          },
+          "formation": {
+            "x": 461.922753398086,
+            "y": 747.0747211993445
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 453.7693187530805,
+            "y": 751.4086292206949
+          },
+          "formation": {
+            "x": 457.5796426523302,
+            "y": 748.4666224351009
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 442,720",
+      "route": [
+        {
+          "x": 461.52988912214846,
+          "y": 742.6877338890491
+        },
+        {
+          "x": 442,
+          "y": 720
+        }
+      ],
+      "seconds": 4.821,
+      "position": [
+        442.44596504565374,
+        720.5133585100348
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "ENGAGE",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 444.0350194253783,
+            "y": 730.5462060197685
+          },
+          "formation": {
+            "x": 441.11769752346777,
+            "y": 726.3034971430475
+          },
+          "target": "spitter",
+          "targetPosition": {
+            "x": 412.0257674314936,
+            "y": 717.5598365892245
+          },
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "ENGAGE",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 456.3341623051182,
+            "y": 726.8961514251931
+          },
+          "formation": {
+            "x": 448.3649410908114,
+            "y": 720.0076683115435
+          },
+          "target": "shielded",
+          "targetPosition": {
+            "x": 457.710340014344,
+            "y": 690.936027918758
+          },
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "ENGAGE",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 449.23247927438507,
+            "y": 734.1343432850247
+          },
+          "formation": {
+            "x": 446.70876581698457,
+            "y": 725.4203463420903
+          },
+          "target": "spitter",
+          "targetPosition": {
+            "x": 412.0257674314936,
+            "y": 717.5598365892245
+          },
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 442,690",
+      "route": [
+        {
+          "x": 442.44596504565374,
+          "y": 720.5133585100348
+        },
+        {
+          "x": 442,
+          "y": 690
+        }
+      ],
+      "seconds": 4.545,
+      "position": [
+        442.00089336656083,
+        690.0983262594327
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 439.1696895609956,
+            "y": 710.559082629091
+          },
+          "formation": {
+            "x": 439.23189916204603,
+            "y": 693.5236249464618
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 452.9068061810194,
+            "y": 706.6144666746217
+          },
+          "formation": {
+            "x": 444.83166803461444,
+            "y": 693.4727469176652
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 442.4661483767117,
+            "y": 711.4788279122225
+          },
+          "formation": {
+            "x": 442.06449090255666,
+            "y": 697.0980373501432
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 420,646",
+      "route": [
+        {
+          "x": 442.00089336656083,
+          "y": 690.0983262594327
+        },
+        {
+          "x": 420,
+          "y": 646
+        }
+      ],
+      "seconds": 7.782,
+      "position": [
+        420.11100583702074,
+        646.2216013963312
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 425.82652124473066,
+            "y": 664.6215967001184
+          },
+          "formation": {
+            "x": 419.13031446624433,
+            "y": 650.5155790901815
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 431.6417324217196,
+            "y": 663.072678036275
+          },
+          "formation": {
+            "x": 424.1372513726714,
+            "y": 648.0074756602851
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 429.50137651897523,
+            "y": 665.5613340647426
+          },
+          "formation": {
+            "x": 423.24613512439134,
+            "y": 652.480272529365
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 390,530",
+      "route": [
+        {
+          "x": 420.11100583702074,
+          "y": 646.2216013963312
+        },
+        {
+          "x": 390,
+          "y": 530
+        }
+      ],
+      "seconds": 18.479,
+      "position": [
+        390.0851504248691,
+        530.3295313172342
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 394.4718673904045,
+            "y": 557.8683265264882
+          },
+          "formation": {
+            "x": 388.2248094313678,
+            "y": 534.3219154906196
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 399.9954847371705,
+            "y": 556.3780320944051
+          },
+          "formation": {
+            "x": 393.64672393855125,
+            "y": 532.9209004740001
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 397.0655372129644,
+            "y": 557.3069403828935
+          },
+          "formation": {
+            "x": 391.83641919564354,
+            "y": 537.1069244512136
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 420,405",
+      "route": [
+        {
+          "x": 390.0851504248691,
+          "y": 530.3295313172342
+        },
+        {
+          "x": 420,
+          "y": 405
+        }
+      ],
+      "seconds": 20.097,
+      "position": [
+        419.855784814822,
+        405.60335380254
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 410.7608566093574,
+            "y": 431.8301723611938
+          },
+          "formation": {
+            "x": 416.34208593004155,
+            "y": 408.2592755158239
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 416.257421092546,
+            "y": 433.13160929640725
+          },
+          "formation": {
+            "x": 421.78866056582933,
+            "y": 409.56112986128414
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 413.41164286689593,
+            "y": 432.62102803138123
+          },
+          "formation": {
+            "x": 418.2284668829967,
+            "y": 412.4115720972747
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 445,235",
+      "route": [
+        {
+          "x": 419.855784814822,
+          "y": 405.60335380254
+        },
+        {
+          "x": 445,
+          "y": 235
+        }
+      ],
+      "seconds": 26.753,
+      "position": [
+        444.96207258284073,
+        235.25721060492424
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 436.9605084787595,
+            "y": 261.94371758475467
+          },
+          "formation": {
+            "x": 441.69603646384496,
+            "y": 238.21237694024535
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 443.23413287175157,
+            "y": 263.0602476489442
+          },
+          "formation": {
+            "x": 447.23612993654433,
+            "y": 239.0293006293095
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 440.64452162140867,
+            "y": 262.7497485950021
+          },
+          "formation": {
+            "x": 443.94091797151054,
+            "y": 242.18232744579842
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 450,120",
+      "route": [
+        {
+          "x": 444.96207258284073,
+          "y": 235.25721060492424
+        },
+        {
+          "x": 450,
+          "y": 120
+        }
+      ],
+      "seconds": 17.912,
+      "position": [
+        450.00492307944086,
+        119.88737027016225
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 445.9616236323104,
+            "y": 147.4542451581263
+          },
+          "formation": {
+            "x": 447.0591208225497,
+            "y": 123.16185481941498
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 451.5623174277574,
+            "y": 147.70706673038714
+          },
+          "formation": {
+            "x": 452.65377882285,
+            "y": 123.40639900698844
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 448.7767638878083,
+            "y": 147.69708446344455
+          },
+          "formation": {
+            "x": 449.69924284497404,
+            "y": 126.8806927705376
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ"
+    },
+    {
+      "label": "M4 evacuation 466,99",
+      "route": [
+        {
+          "x": 450.00492307944086,
+          "y": 119.88737027016225
+        },
+        {
+          "x": 466,
+          "y": 99
+        }
+      ],
+      "seconds": 3.86,
+      "position": [
+        465.639405416006,
+        99.46773024643561
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "FOLLOW",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 451.38823770380026,
+            "y": 122.08487852590656
+          },
+          "formation": {
+            "x": 461.34598088734907,
+            "y": 100.45084052342742
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "FOLLOW",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 457.0993826112758,
+            "y": 122.35864236925676
+          },
+          "formation": {
+            "x": 465.78099719061015,
+            "y": 103.86999690911796
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "FOLLOW",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 453.76461746738755,
+            "y": 122.25796376767953
+          },
+          "formation": {
+            "x": 461.36545993389285,
+            "y": 105.01150062551196
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_CALL_EXTRACTION"
+    },
+    {
+      "label": "M4 boarding approach",
+      "route": [
+        {
+          "x": 465.639405416006,
+          "y": 99.46773024643561
+        },
+        {
+          "x": 450,
+          "y": 84
+        }
+      ],
+      "seconds": 3.283,
+      "position": [
+        450.2628808890289,
+        84.25999522170324
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 454.29582465644137,
+            "y": 93.45071283161269
+          },
+          "formation": {
+            "x": 456.7533532676451,
+            "y": 83.26224150583423
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 451.4739887813863,
+            "y": 97.68608122863554
+          },
+          "formation": {
+            "x": 443.77459848573585,
+            "y": 84.18262788043563
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "DEFEND_OBJECTIVE",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 455.1277943466161,
+            "y": 95.0970013099824
+          },
+          "formation": {
+            "x": 449.53238614044756,
+            "y": 72.5145917093084
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "break_contact",
+      "phase": "M4_BOARD"
+    }
+  ],
+  "captures": [
+    {
+      "id": "m4-emergency-side-native",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "mode": "campaign",
+      "position": [
+        455.51101576316444,
+        752.0000000034764
+      ],
+      "camera": [
+        455.51101576316444,
+        752.0000000034764,
+        2.69634911444256
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-evacuation-690",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "mode": "campaign",
+      "position": [
+        442.00089336656083,
+        690.0983262594327
+      ],
+      "camera": [
+        442.00089336656083,
+        690.0983262594327,
+        4.616692601292414
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-evacuation-405",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "mode": "campaign",
+      "position": [
+        419.855784814822,
+        405.60335380254
+      ],
+      "camera": [
+        419.855784814822,
+        405.60335380254,
+        5.755689985110273
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-evacuation-120",
+      "mission": "break_contact",
+      "phase": "M4_REACH_LZ",
+      "mode": "campaign",
+      "position": [
+        450.00492307944086,
+        119.88737027016225
+      ],
+      "camera": [
+        450.00492307944086,
+        119.88737027016225,
+        1.6762883339449641
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "m4-boarding-native",
+      "mission": "break_contact",
+      "phase": "M4_BOARD",
+      "mode": "campaign",
+      "position": [
+        450.2628808890289,
+        84.25999522170324
+      ],
+      "camera": [
+        450.2628808890289,
+        84.25999522170324,
+        1.6248909937497102
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    }
+  ],
+  "waves": [],
+  "errors": [],
+  "passed": true
+}

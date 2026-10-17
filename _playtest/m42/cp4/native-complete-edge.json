@@ -1,0 +1,15 @@
+[
+  {
+    "browser": "edge",
+    "suite": "cp4-traversal",
+    "status": 0,
+    "error": null,
+    "seconds": 306.131,
+    "hashes": {
+      "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+    },
+    "log": "native-complete/edge/cp4-traversal.log"
+  }
+]

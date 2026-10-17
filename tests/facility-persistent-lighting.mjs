@@ -15,11 +15,16 @@ try{
     await page.evaluate(()=>{const c=__cf,r=Math.random;Math.random=ChargefrontProgression.seedRandom(420042);try{c.resetCampaignProgress();c.startMission('dead_signal','new_campaign');}finally{Math.random=r;}c.skipIntro();c.setNoSpawn(true);c.setNoAggro(true);c.setInvulnerable(true);c.clearTestEnemies();});await page.evaluate(()=>__cf.waitCombatPreparation());
     const views=[['west',[310,706,7],[329.3,724,3]],['power-exit',[467,727,8],[432,752,3]],['front',[360,574,8],[360,618,4]],['vault-recess',[320,674,3],[341,674,4]],['lab-east',[402,686,4],[390.7,711,3]],['rear-corner',[413,798,3],[374,795.7,3]]];
     for(const [zone,cam,target]of views){for(const [condition,actor]of [['near',[324,710]],['far',[255,620]],['inside',[360,724]]])await capture(zone+'-'+condition,actor,cam,target);}
-    const base=report.views[0];assert.equal(base.fixtures.length,32);assert.equal(base.sources,104);assert.equal(base.slots,8);assert(base.persistent);assert(base.nodes.every(n=>n.visible&&!n.shadow));assert.equal(base.nodes.find(n=>n.name==='PersistentLuminaireDiffusers').count,32);assert.equal(base.nodes.find(n=>n.name==='PersistentWallIllumination').count,32);
+    // CP4's deterministic, mesh-aligned Campaign profile admits four existing
+    // procedural spore vents instead of the CP3 seeded fixture's two. These are
+    // registered sources, not extra render lights; fixtures32/slots8 stay exact.
+    // Full accepted/current source inventories: cp4/comparison/metrics.json.
+    const expectedSources=106;
+    const base=report.views[0];assert.equal(base.fixtures.length,32);assert.equal(base.sources,expectedSources);assert.equal(base.slots,8);assert(base.persistent);assert(base.nodes.every(n=>n.visible&&!n.shadow));assert.equal(base.nodes.find(n=>n.name==='PersistentLuminaireDiffusers').count,32);assert.equal(base.nodes.find(n=>n.name==='PersistentWallIllumination').count,32);
     for(const v of report.views){assert.deepEqual(v.fixtures,base.fixtures);assert.deepEqual(v.nodes,base.nodes);assert.equal(v.exposure,.78);assert.deepEqual(v.fog,[40,280]);}
     report.terrain=await page.evaluate(()=>{const c=__cf,a=c.scene.getObjectByName('PersistentGroundIllumination').geometry.getAttribute('position');let maxError=0;for(let i=0;i<a.count;i++)maxError=Math.max(maxError,Math.abs(a.getZ(i)-c.terrainHeight(a.getX(i),a.getY(i))-.07));return {vertices:a.count,maxError};});assert(report.terrain.maxError<.001);
     // Existing dynamic slots may change; the persistent root is never rewritten.
     await page.evaluate(()=>{const c=__cf;c.pause(false);c.setCoverPose(null);c.move(360-c.player.pos.x,604-c.player.pos.y);c.player.yaw=Math.PI/2;c.player.pitch=0;for(const m of c.squad){m.pos.x=360;m.pos.y=625;}});await page.keyboard.down('w');await page.waitForFunction(()=>__cf.player.pos.y>627,undefined,{timeout:15000});await page.keyboard.up('w');report.transition=await inspect();assert.deepEqual(report.transition.nodes,base.nodes);
     for(let i=0;i<3;i++)await page.evaluate(()=>__cf.completeMission());await capture('power-exit-emergency',[456,752],[467,727,8],[432,752,3]);assert.deepEqual(report.views.at(-1).nodes,base.nodes);
-    assert.deepEqual(report.errors,[]);report.passed=true;console.log('PASS persistent exterior lighting',name,JSON.stringify({fixtures:32,sources:104,slots:8,terrain:report.terrain}));
+    assert.deepEqual(report.errors,[]);report.passed=true;console.log('PASS persistent exterior lighting',name,JSON.stringify({fixtures:32,sources:expectedSources,slots:8,terrain:report.terrain}));
 }finally{await page.keyboard.up('w').catch(()=>{});writeFileSync(resolve(out,'manifest.json'),JSON.stringify(report,null,2));await browser.close();}

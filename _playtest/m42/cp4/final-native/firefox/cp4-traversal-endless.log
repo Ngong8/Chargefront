@@ -1,0 +1,7 @@
+NATIVE firefox valley central exit {"seconds":6.41,"position":[469.70600000000627,442]}
+NATIVE firefox valley outer terrain {"seconds":3.915,"position":[479.8438439199254,405.5674870641783]}
+NATIVE firefox crater central exit {"seconds":6.458,"position":[470.2520000000063,442]}
+NATIVE firefox crater outer terrain {"seconds":3.896,"position":[479.85447083701524,405.552377824215]}
+NATIVE firefox ridges central exit {"seconds":6.459,"position":[469.88655164872034,441.9992696087098]}
+NATIVE firefox ridges outer terrain {"seconds":3.952,"position":[479.9685564098612,405.1150339457521]}
+PASS CP4 native traversal firefox endless

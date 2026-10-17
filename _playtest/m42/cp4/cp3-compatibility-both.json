@@ -1,0 +1,54 @@
+[
+  {
+    "browser": "firefox",
+    "suite": "combat-squad",
+    "status": 0,
+    "error": null,
+    "seconds": 157.809,
+    "hashes": {
+      "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+    },
+    "log": "cp3-compatibility/firefox/combat-squad.log"
+  },
+  {
+    "browser": "firefox",
+    "suite": "sample-lockdown-live",
+    "status": 0,
+    "error": null,
+    "seconds": 123.758,
+    "hashes": {
+      "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+    },
+    "log": "cp3-compatibility/firefox/sample-lockdown-live.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "combat-squad",
+    "status": 0,
+    "error": null,
+    "seconds": 106.522,
+    "hashes": {
+      "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+    },
+    "log": "cp3-compatibility/edge/combat-squad.log"
+  },
+  {
+    "browser": "edge",
+    "suite": "sample-lockdown-live",
+    "status": 0,
+    "error": null,
+    "seconds": 114.559,
+    "hashes": {
+      "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+      "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+      "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+    },
+    "log": "cp3-compatibility/edge/sample-lockdown-live.log"
+  }
+]

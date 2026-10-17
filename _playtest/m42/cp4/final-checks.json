@@ -1,0 +1,98 @@
+{
+  "branch": "milestone-4.2-cp4",
+  "head": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "main": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "originMain": "3ad1938a90d3a432961373d3f5ea6757d1133522",
+  "syntax": [
+    "src/world/campaign-terrain.js",
+    "src/world/facility.js",
+    "tests/campaign-terrain-state.mjs",
+    "tests/cp4-terrain.mjs",
+    "tests/cp4-traversal.mjs",
+    "tests/environment-placement.mjs",
+    "tests/facility-enclosure.mjs",
+    "tests/facility-persistent-lighting.mjs",
+    "_playtest/m42/cp4/audit.mjs",
+    "_playtest/m42/cp4/compare-baseline.mjs",
+    "_playtest/m42/cp4/final-checks.mjs",
+    "_playtest/m42/cp4/review.mjs",
+    "_playtest/m42/cp4/run-suites.mjs",
+    "_playtest/m42/cp4/summarize.mjs",
+    "chargefront.html inline module"
+  ],
+  "pure": [
+    {
+      "name": "campaign-terrain-state",
+      "status": 0,
+      "output": "PASS Campaign terrain compact shaping, critical exclusions, determinism and slope { maxDelta: 2.1965926696817895, maxSlope: 0.23292681343918042 }"
+    },
+    {
+      "name": "environment-placement-state",
+      "status": 0,
+      "output": "PASS environment placement state: purposes, full footprint/clearance, support/slope, transforms, obstacles, budgets, safe fallback and five repeatable terrain seeds [{\"seed\":0,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":1,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":420042,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}},{\"seed\":2147483647,\"accepted\":32,\"stats\":{\"validations\":33,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":33,\"fallbackChecks\":0,\"rejections\":{\"exclusion\":1}}},{\"seed\":4294967295,\"accepted\":32,\"stats\":{\"validations\":32,\"accepted\":32,\"terrainSamples\":800,\"solidQueries\":32,\"searches\":32,\"attempts\":32,\"fallbackChecks\":0,\"rejections\":{}}}]"
+    },
+    {
+      "name": "combat-state",
+      "status": 0,
+      "output": "PASS combat state: ordered pairs, four universal abilities/defaults, 15-shot PX accounting, unchanged PX tuning, shared ammo, migration, mutators and cadence"
+    },
+    {
+      "name": "progression-state",
+      "status": 0,
+      "output": "PASS progression state: reserves, bounded difficulty drops, atomic replacement/backup, legacy validation, quota failure, durable actor ownership"
+    },
+    {
+      "name": "relay-routing-state",
+      "status": 0,
+      "output": "PASS relay routing: obstacle traversal, skipped corridors, rejoin, reverse, deterministic ties, no-path fallback"
+    },
+    {
+      "name": "objective-hud-state",
+      "status": 0,
+      "output": "PASS objective HUD: independent optionals, progress-in-place, hold/fade/removal, retire, bounded churn, clear"
+    }
+  ],
+  "credits": {
+    "sha256": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec",
+    "normalizedBlob": "0ef317e9e6782925560d3d42520c3e22d71769c8",
+    "headBlob": "0ef317e9e6782925560d3d42520c3e22d71769c8",
+    "locallyModified": false
+  },
+  "evidenceLinks": 60,
+  "selectedBrowserExecutions": 42,
+  "manualAcceptance": "PENDING USER REVIEW",
+  "captureImages": 341,
+  "diffStat": "chargefront.html                       | 47 ++++++++++++++++++++++++------\n src/world/facility.js                  | 52 ++++++++++++++++++++++++++--------\n tests/environment-placement.mjs        |  4 ++-\n tests/facility-enclosure.mjs           |  2 +-\n tests/facility-persistent-lighting.mjs |  9 ++++--\n 5 files changed, 90 insertions(+), 24 deletions(-)",
+  "diffNumstat": "39\t8\tchargefront.html\n40\t12\tsrc/world/facility.js\n3\t1\ttests/environment-placement.mjs\n1\t1\ttests/facility-enclosure.mjs\n7\t2\ttests/facility-persistent-lighting.mjs",
+  "status": "## milestone-4.2-cp4\n M chargefront.html\n M src/world/facility.js\n M tests/environment-placement.mjs\n M tests/facility-enclosure.mjs\n M tests/facility-persistent-lighting.mjs\n?? MILESTONE-4.2-CP4.md\n?? _playtest/m42/cp4/\n?? src/world/campaign-terrain.js\n?? tests/campaign-terrain-state.mjs\n?? tests/cp4-terrain.mjs\n?? tests/cp4-traversal.mjs",
+  "indexEmpty": true,
+  "diffCheck": true,
+  "newSourceFiles": [
+    {
+      "path": "src/world/campaign-terrain.js",
+      "lines": 76,
+      "bytes": 4229
+    },
+    {
+      "path": "tests/campaign-terrain-state.mjs",
+      "lines": 27,
+      "bytes": 1819
+    },
+    {
+      "path": "tests/cp4-terrain.mjs",
+      "lines": 66,
+      "bytes": 8189
+    },
+    {
+      "path": "tests/cp4-traversal.mjs",
+      "lines": 86,
+      "bytes": 11829
+    },
+    {
+      "path": "MILESTONE-4.2-CP4.md",
+      "lines": 375,
+      "bytes": 29796
+    }
+  ],
+  "passed": true
+}

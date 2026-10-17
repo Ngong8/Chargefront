@@ -95,7 +95,9 @@ try {
     await page.goto(url.href);await page.waitForFunction(()=>window.__cf?.renderer,undefined,{timeout:120000});
     template = await page.evaluate(()=>{__cf.startEndlessMode();__cf.saveEndless();return __cf.endlessSaveInfo();});assert(template);
     for (const [mode, seed, arena] of [
-        ...[0,1,420042,0x7fffffff,0xffffffff].map(seed=>['campaign',seed,'valley']),
+        // CP4 intentionally authors Campaign terrain; retain the exact archived
+        // pre-Campaign-change parity gate for independent Endless generation.
+        ...(process.argv.includes('--endless-only')?[]:[0,1,420042,0x7fffffff,0xffffffff].map(seed=>['campaign',seed,'valley'])),
         ...['valley','crater','ridges'].flatMap(arena=>[0,420042,0xffffffff].map(seed=>['endless',seed,arena])),
     ]) {
         baseline = false; await load(mode, seed, arena);

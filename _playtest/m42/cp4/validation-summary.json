@@ -1,0 +1,1393 @@
+{
+  "automatedPass": true,
+  "manualVisualAcceptance": "PENDING USER REVIEW",
+  "hashes": {
+    "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+    "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+    "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+  },
+  "selectedExecutions": [
+    {
+      "browser": "firefox",
+      "suite": "environment-placement",
+      "status": 0,
+      "error": null,
+      "seconds": 184.219,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "endless-parity/firefox/environment-placement.log",
+      "receipt": "endless-parity-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "environment-placement",
+      "status": 0,
+      "error": null,
+      "seconds": 89.691,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "endless-parity/edge/environment-placement.log",
+      "receipt": "endless-parity-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-traversal",
+      "status": 0,
+      "error": null,
+      "seconds": 308.937,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-complete/firefox/cp4-traversal.log",
+      "receipt": "native-complete-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-terrain",
+      "status": 0,
+      "error": null,
+      "seconds": 54.522,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-terrain/firefox/cp4-terrain.log",
+      "receipt": "final-terrain-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal",
+      "status": 0,
+      "error": null,
+      "seconds": 306.131,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-complete/edge/cp4-traversal.log",
+      "receipt": "native-complete-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-terrain",
+      "status": 0,
+      "error": null,
+      "seconds": 33.701,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-terrain/edge/cp4-terrain.log",
+      "receipt": "final-terrain-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-e0",
+      "status": 0,
+      "error": null,
+      "seconds": 59.658,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/firefox/facility-e0.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "error": null,
+      "seconds": 127.141,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "final-native/firefox/facility-enclosure.log",
+      "receipt": "final-native-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "error": null,
+      "seconds": 98.565,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/firefox/facility-playthrough.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-containment-r2",
+      "status": 0,
+      "error": null,
+      "seconds": 40.952,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/firefox/sample-containment-r2.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-e0",
+      "status": 0,
+      "error": null,
+      "seconds": 42.211,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/edge/facility-e0.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-enclosure",
+      "status": 0,
+      "error": null,
+      "seconds": 119.822,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/edge/facility-enclosure.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-playthrough",
+      "status": 0,
+      "error": null,
+      "seconds": 69.564,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/edge/facility-playthrough.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-containment-r2",
+      "status": 0,
+      "error": null,
+      "seconds": 36.123,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/edge/sample-containment-r2.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-e2",
+      "status": 0,
+      "error": null,
+      "seconds": 230.384,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "live-performance/firefox/facility-e2.log",
+      "receipt": "live-performance-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "traversal-performance",
+      "status": 0,
+      "error": null,
+      "seconds": 161.206,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-stability/firefox/traversal-performance.log",
+      "receipt": "final-stability-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-e2",
+      "status": 0,
+      "error": null,
+      "seconds": 207.601,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "live-performance/edge/facility-e2.log",
+      "receipt": "live-performance-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "traversal-performance",
+      "status": 0,
+      "error": null,
+      "seconds": 152.989,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-stability/edge/traversal-performance.log",
+      "receipt": "final-stability-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-e-integration",
+      "status": 0,
+      "error": null,
+      "seconds": 64.493,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/firefox/facility-e-integration.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 62.492,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-stability/firefox/facility-regression.log",
+      "receipt": "final-stability-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-persistent-lighting",
+      "status": 0,
+      "error": null,
+      "seconds": 41.137,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "stability-corrected/firefox/facility-persistent-lighting.log",
+      "receipt": "stability-corrected-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-light-eligibility-e",
+      "status": 0,
+      "error": null,
+      "seconds": 22.211,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/firefox/facility-light-eligibility-e.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-e-integration",
+      "status": 0,
+      "error": null,
+      "seconds": 37.904,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/edge/facility-e-integration.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 0,
+      "error": null,
+      "seconds": 31.349,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-stability/edge/facility-regression.log",
+      "receipt": "final-stability-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-persistent-lighting",
+      "status": 0,
+      "error": null,
+      "seconds": 37.82,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "stability-corrected/edge/facility-persistent-lighting.log",
+      "receipt": "stability-corrected-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-light-eligibility-e",
+      "status": 0,
+      "error": null,
+      "seconds": 13.324,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/edge/facility-light-eligibility-e.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "intro-smoke",
+      "status": 0,
+      "error": null,
+      "seconds": 35.071,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "loading/firefox/intro-smoke.log",
+      "receipt": "loading-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "error": null,
+      "seconds": 41.868,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "loading/firefox/transition-diagnose.log",
+      "receipt": "loading-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "intro-smoke",
+      "status": 0,
+      "error": null,
+      "seconds": 26.68,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "loading/edge/intro-smoke.log",
+      "receipt": "loading-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "transition-diagnose",
+      "status": 0,
+      "error": null,
+      "seconds": 34.127,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "loading/edge/transition-diagnose.log",
+      "receipt": "loading-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal:evacuation",
+      "status": 0,
+      "error": null,
+      "seconds": 155.437,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "evacuation/edge/cp4-traversal-evacuation.log",
+      "receipt": "evacuation-edge.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-traversal:evacuation",
+      "status": 0,
+      "error": null,
+      "seconds": 168.232,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "final-native/firefox/cp4-traversal-evacuation.log",
+      "receipt": "final-native-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "cp4-traversal:endless",
+      "status": 0,
+      "error": null,
+      "seconds": 123.774,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "final-native/firefox/cp4-traversal-endless.log",
+      "receipt": "final-native-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": 0,
+      "error": null,
+      "seconds": 163.047,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "navigation-save/firefox/m2-progression.log",
+      "receipt": "navigation-save-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-hud",
+      "status": 0,
+      "error": null,
+      "seconds": 130.102,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "navigation-save/firefox/endless-hud.log",
+      "receipt": "navigation-save-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": 0,
+      "error": null,
+      "seconds": 112.017,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "navigation-save/edge/m2-progression.log",
+      "receipt": "navigation-save-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-hud",
+      "status": 0,
+      "error": null,
+      "seconds": 115.083,
+      "hashes": {
+        "chargefront.html": "4687463e4ba163edc38ae475abd8c78136141bd1b7866f48f51cb61c5e4f5f2b",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "navigation-save/edge/endless-hud.log",
+      "receipt": "navigation-save-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal:endless",
+      "status": 0,
+      "error": null,
+      "seconds": 108.401,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "final-endless/edge/cp4-traversal-endless.log",
+      "receipt": "final-endless-edge.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "combat-squad",
+      "status": 0,
+      "error": null,
+      "seconds": 157.809,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "cp3-compatibility/firefox/combat-squad.log",
+      "receipt": "cp3-compatibility-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-lockdown-live",
+      "status": 0,
+      "error": null,
+      "seconds": 123.758,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "cp3-compatibility/firefox/sample-lockdown-live.log",
+      "receipt": "cp3-compatibility-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "combat-squad",
+      "status": 0,
+      "error": null,
+      "seconds": 106.522,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "cp3-compatibility/edge/combat-squad.log",
+      "receipt": "cp3-compatibility-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-lockdown-live",
+      "status": 0,
+      "error": null,
+      "seconds": 114.559,
+      "hashes": {
+        "chargefront.html": "43895e9df6b101fa49538112abdfc8c1e36ee8d8b4255480ae6809314639cea8",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "afb79c7a828318b41cf0fb187c224e87351df013104b83f9014e04f1241e1b30"
+      },
+      "log": "cp3-compatibility/edge/sample-lockdown-live.log",
+      "receipt": "cp3-compatibility-both.json"
+    }
+  ],
+  "historicalFailedExecutions": [
+    {
+      "browser": "firefox",
+      "suite": "cp4-traversal",
+      "status": 1,
+      "error": null,
+      "seconds": 104.411,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-campaign/firefox/cp4-traversal.log",
+      "receipt": "native-campaign-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal",
+      "status": 1,
+      "error": null,
+      "seconds": 97.067,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-campaign/edge/cp4-traversal.log",
+      "receipt": "native-campaign-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-enclosure",
+      "status": 1,
+      "error": null,
+      "seconds": 85.934,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "core/firefox/facility-enclosure.log",
+      "receipt": "core-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal",
+      "status": 1,
+      "error": null,
+      "seconds": 267.118,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-campaign-corrected/edge/cp4-traversal.log",
+      "receipt": "native-campaign-corrected-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "cp4-traversal",
+      "status": 1,
+      "error": null,
+      "seconds": 129.178,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "native-objectives/edge/cp4-traversal.log",
+      "receipt": "native-objectives-edge.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-regression",
+      "status": 1,
+      "error": null,
+      "seconds": 62.066,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/firefox/facility-regression.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-persistent-lighting",
+      "status": 1,
+      "error": null,
+      "seconds": 36.492,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/firefox/facility-persistent-lighting.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-regression",
+      "status": 1,
+      "error": null,
+      "seconds": 32.051,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/edge/facility-regression.log",
+      "receipt": "integration-both.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-persistent-lighting",
+      "status": 1,
+      "error": null,
+      "seconds": 32.305,
+      "hashes": {
+        "chargefront.html": "a1dc9bea11c51afe50098d83abf299f74fa366dcb9e585ba0d492e7df5a1235e",
+        "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+        "src/world/campaign-terrain.js": "0f8595b5c1b2610ddf1c747db788869403fddfc5b76c05762a808b53c4464658"
+      },
+      "log": "integration/edge/facility-persistent-lighting.log",
+      "receipt": "integration-both.json"
+    }
+  ],
+  "performance": [
+    {
+      "browser": "firefox",
+      "constructionMs": {
+        "cp3": 970,
+        "cp4": 1126
+      },
+      "comparison": [
+        {
+          "label": "m1",
+          "cp3P95": 50,
+          "cp4P95": 50,
+          "cp3Worst": 66.7,
+          "cp4Worst": 66.7,
+          "cp3Calls": 1499,
+          "cp4Calls": 1515
+        },
+        {
+          "label": "alpha",
+          "cp3P95": 50,
+          "cp4P95": 50,
+          "cp3Worst": 66.7,
+          "cp4Worst": 50,
+          "cp3Calls": 722,
+          "cp4Calls": 800
+        },
+        {
+          "label": "beta",
+          "cp3P95": 33.3,
+          "cp4P95": 33.3,
+          "cp3Worst": 33.3,
+          "cp4Worst": 50,
+          "cp3Calls": 102,
+          "cp4Calls": 117
+        },
+        {
+          "label": "gamma",
+          "cp3P95": 50,
+          "cp4P95": 50,
+          "cp3Worst": 50,
+          "cp4Worst": 66.7,
+          "cp3Calls": 532,
+          "cp4Calls": 599
+        },
+        {
+          "label": "facility",
+          "cp3P95": 50,
+          "cp4P95": 50,
+          "cp3Worst": 66.7,
+          "cp4Worst": 50,
+          "cp3Calls": 729,
+          "cp4Calls": 821
+        }
+      ],
+      "quietE2": [
+        {
+          "label": "01-exterior-far",
+          "p95": 50,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 19
+          }
+        },
+        {
+          "label": "02-exterior-near",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 16
+          }
+        },
+        {
+          "label": "03-exterior-approach",
+          "p95": 50,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 18
+          }
+        },
+        {
+          "label": "04-front-entrance",
+          "p95": 50,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 18
+          }
+        },
+        {
+          "label": "05-main-hall",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 17
+          }
+        },
+        {
+          "label": "06-vault",
+          "p95": 50,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 17
+          }
+        },
+        {
+          "label": "07-decontamination",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 17
+          }
+        },
+        {
+          "label": "08-research-security",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 17
+          }
+        },
+        {
+          "label": "09-containment-before",
+          "p95": 33.3,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 13
+          }
+        },
+        {
+          "label": "19-power-service",
+          "p95": 33.3,
+          "worst": 33.3,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 12
+          }
+        },
+        {
+          "label": "20-emergency-exit",
+          "p95": 50,
+          "worst": 66.7,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 15
+          }
+        }
+      ],
+      "liveE2": [
+        {
+          "label": "12-active-drone-defence-30",
+          "p95": 50,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "sceneObjectsRemoved": 148,
+            "shadowRefresh": 17,
+            "sceneObjectsAdded": 143,
+            "materialDisposes": 5,
+            "meshesCreated": 2,
+            "geometriesCreated": 2,
+            "materialsCreated": 2,
+            "groupsObjectsCreated": 2
+          }
+        },
+        {
+          "label": "12-active-drone-defence-60",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "sceneObjectsAdded": 106,
+            "shadowRefresh": 16,
+            "sceneObjectsRemoved": 94,
+            "meshesCreated": 3,
+            "geometriesCreated": 3,
+            "materialsCreated": 3,
+            "groupsObjectsCreated": 3,
+            "materialDisposes": 3
+          }
+        },
+        {
+          "label": "15-sample-transfer",
+          "p95": 33.3,
+          "worst": 50,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 16,
+            "sceneObjectsAdded": 18,
+            "sceneObjectsRemoved": 17,
+            "materialDisposes": 2,
+            "meshesCreated": 2,
+            "geometriesCreated": 2,
+            "materialsCreated": 2,
+            "groupsObjectsCreated": 2
+          }
+        },
+        {
+          "label": "16-transfer-release",
+          "p95": 33.3,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 19,
+            "sceneObjectsAdded": 34,
+            "sceneObjectsRemoved": 33,
+            "materialDisposes": 4,
+            "meshesCreated": 77,
+            "geometriesCreated": 20,
+            "materialsCreated": 14,
+            "groupsObjectsCreated": 29,
+            "applyCampaignWorldSnapshot": 1
+          }
+        },
+        {
+          "label": "18-M4-native-evacuation",
+          "p95": 33.3,
+          "worst": 66.7,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 58
+          }
+        }
+      ],
+      "nativeTraversal": [
+        {
+          "label": "M1 exterior",
+          "p95": 50,
+          "worst": 83.4,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 50,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 33.3,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 33.4,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 50,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 50,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 33.3,
+          "worst": 33.4,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 50,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 101,
+            "sceneObjectsAdded": 519,
+            "sceneObjectsRemoved": 484
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 33.3,
+          "worst": 66.7,
+          "counters": {
+            "shadowRefresh": 151,
+            "sceneObjectsAdded": 687,
+            "sceneObjectsRemoved": 655,
+            "meshesCreated": 191,
+            "geometriesCreated": 22,
+            "materialsCreated": 13,
+            "groupsObjectsCreated": 87,
+            "materialDisposes": 1
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 16.7,
+          "worst": 33.4,
+          "counters": {
+            "sceneObjectsAdded": 916,
+            "shadowRefresh": 150,
+            "sceneObjectsRemoved": 903,
+            "materialDisposes": 6,
+            "meshesCreated": 15,
+            "geometriesCreated": 15,
+            "materialsCreated": 6,
+            "groupsObjectsCreated": 3
+          }
+        }
+      ],
+      "caveat": "E2 live captures precede the explicit atlas prewarm fix. Final stress/native traversal repeat on final hashes; full terrain/color/solid/scenery fingerprint verified unchanged after the hot-path optimization."
+    },
+    {
+      "browser": "edge",
+      "constructionMs": {
+        "cp3": 656.0999999940395,
+        "cp4": 878.4000000059605
+      },
+      "comparison": [
+        {
+          "label": "m1",
+          "cp3P95": 33.5,
+          "cp4P95": 33.5,
+          "cp3Worst": 33.5,
+          "cp4Worst": 50,
+          "cp3Calls": 1498,
+          "cp4Calls": 1515
+        },
+        {
+          "label": "alpha",
+          "cp3P95": 16.8,
+          "cp4P95": 16.8,
+          "cp3Worst": 33.3,
+          "cp4Worst": 16.9,
+          "cp3Calls": 722,
+          "cp4Calls": 800
+        },
+        {
+          "label": "beta",
+          "cp3P95": 17,
+          "cp4P95": 17,
+          "cp3Worst": 17.2,
+          "cp4Worst": 17.2,
+          "cp3Calls": 103,
+          "cp4Calls": 118
+        },
+        {
+          "label": "gamma",
+          "cp3P95": 16.8,
+          "cp4P95": 17,
+          "cp3Worst": 17.3,
+          "cp4Worst": 17.3,
+          "cp3Calls": 532,
+          "cp4Calls": 599
+        },
+        {
+          "label": "facility",
+          "cp3P95": 16.8,
+          "cp4P95": 33.3,
+          "cp3Worst": 33.4,
+          "cp4Worst": 33.6,
+          "cp3Calls": 729,
+          "cp4Calls": 822
+        }
+      ],
+      "quietE2": [
+        {
+          "label": "01-exterior-far",
+          "p95": 33.4,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 12
+          }
+        },
+        {
+          "label": "02-exterior-near",
+          "p95": 16.8,
+          "worst": 16.8,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "03-exterior-approach",
+          "p95": 16.8,
+          "worst": 16.8,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "04-front-entrance",
+          "p95": 33.3,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 12
+          }
+        },
+        {
+          "label": "05-main-hall",
+          "p95": 16.8,
+          "worst": 33.3,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "06-vault",
+          "p95": 16.8,
+          "worst": 17.2,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 10
+          }
+        },
+        {
+          "label": "07-decontamination",
+          "p95": 16.8,
+          "worst": 16.8,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "08-research-security",
+          "p95": 16.8,
+          "worst": 16.9,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "09-containment-before",
+          "p95": 16.9,
+          "worst": 17.2,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 10
+          }
+        },
+        {
+          "label": "19-power-service",
+          "p95": 16.9,
+          "worst": 17.2,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        },
+        {
+          "label": "20-emergency-exit",
+          "p95": 16.8,
+          "worst": 16.8,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 11
+          }
+        }
+      ],
+      "liveE2": [
+        {
+          "label": "12-active-drone-defence-30",
+          "p95": 16.8,
+          "worst": 16.9,
+          "programs": 35,
+          "counters": {
+            "meshesCreated": 4,
+            "geometriesCreated": 4,
+            "materialsCreated": 4,
+            "groupsObjectsCreated": 4,
+            "sceneObjectsAdded": 67,
+            "shadowRefresh": 10,
+            "sceneObjectsRemoved": 48,
+            "materialDisposes": 2
+          }
+        },
+        {
+          "label": "12-active-drone-defence-60",
+          "p95": 16.8,
+          "worst": 16.9,
+          "programs": 35,
+          "counters": {
+            "sceneObjectsRemoved": 36,
+            "shadowRefresh": 11,
+            "meshesCreated": 3,
+            "geometriesCreated": 3,
+            "materialsCreated": 3,
+            "groupsObjectsCreated": 3,
+            "sceneObjectsAdded": 41,
+            "materialDisposes": 2
+          }
+        },
+        {
+          "label": "15-sample-transfer",
+          "p95": 17,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 16,
+            "sceneObjectsAdded": 178,
+            "sceneObjectsRemoved": 224,
+            "meshesCreated": 10,
+            "geometriesCreated": 10,
+            "materialsCreated": 7,
+            "groupsObjectsCreated": 5,
+            "materialDisposes": 4
+          }
+        },
+        {
+          "label": "16-transfer-release",
+          "p95": 17,
+          "worst": 33.4,
+          "programs": 35,
+          "counters": {
+            "sceneObjectsRemoved": 30,
+            "shadowRefresh": 19,
+            "sceneObjectsAdded": 30,
+            "materialDisposes": 5,
+            "meshesCreated": 78,
+            "geometriesCreated": 21,
+            "materialsCreated": 15,
+            "groupsObjectsCreated": 30,
+            "applyCampaignWorldSnapshot": 1
+          }
+        },
+        {
+          "label": "18-M4-native-evacuation",
+          "p95": 16.8,
+          "worst": 17.3,
+          "programs": 35,
+          "counters": {
+            "shadowRefresh": 58
+          }
+        }
+      ],
+      "nativeTraversal": [
+        {
+          "label": "M1 exterior",
+          "p95": 33.4,
+          "worst": 33.6,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M2 Alpha",
+          "p95": 16.8,
+          "worst": 33.5,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Beta",
+          "p95": 17,
+          "worst": 17.3,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 Gamma",
+          "p95": 16.8,
+          "worst": 33.4,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "M2 return/front",
+          "p95": 17,
+          "worst": 50,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "Facility interior",
+          "p95": 16.8,
+          "worst": 33.8,
+          "counters": {
+            "shadowRefresh": 61
+          }
+        },
+        {
+          "label": "M4 service/exit",
+          "p95": 16.9,
+          "worst": 33.6,
+          "counters": {
+            "shadowRefresh": 60
+          }
+        },
+        {
+          "label": "Campaign combat",
+          "p95": 33.4,
+          "worst": 33.6,
+          "counters": {
+            "sceneObjectsAdded": 184,
+            "shadowRefresh": 100,
+            "sceneObjectsRemoved": 148
+          }
+        },
+        {
+          "label": "Endless early combat",
+          "p95": 17,
+          "worst": 50,
+          "counters": {
+            "sceneObjectsAdded": 1194,
+            "shadowRefresh": 150,
+            "meshesCreated": 208,
+            "geometriesCreated": 22,
+            "materialsCreated": 13,
+            "groupsObjectsCreated": 95,
+            "sceneObjectsRemoved": 1160,
+            "materialDisposes": 4
+          }
+        },
+        {
+          "label": "Endless later combat",
+          "p95": 17,
+          "worst": 17.4,
+          "counters": {
+            "sceneObjectsAdded": 1528,
+            "shadowRefresh": 150,
+            "meshesCreated": 255,
+            "groupsObjectsCreated": 78,
+            "sceneObjectsRemoved": 1441,
+            "geometriesCreated": 18,
+            "materialsCreated": 9,
+            "materialDisposes": 2
+          }
+        }
+      ],
+      "caveat": "E2 live captures precede the explicit atlas prewarm fix. Final stress/native traversal repeat on final hashes; full terrain/color/solid/scenery fingerprint verified unchanged after the hot-path optimization."
+    }
+  ],
+  "terrain": "Two ambient seeds + cold v3 Continue / both browsers; 12542 triangle centroids agree with collision to floating point precision; final world equals previously measured geometry.",
+  "endless": "Nine arena/seed cases per browser, archived exact scenery/height parity, three native arena variants and real wave1 budget -> intermission -> wave2 / restart; clearing enemies at wave boundary is explicit.",
+  "evidence": "INDEX.html; final-gameplay/{browser}; native-complete/{browser}; evacuation/edge; final-native/firefox; final-endless/edge; live-performance/{browser}",
+  "legacyNotes": "Profile/checkpoint version4 already exists at accepted HEAD; v3 remains accepted. No persistence source/schema edit. 327 canonical solids / 28 map segments / 6 doors / 32 permanent fixtures / 8 light slots. Two additional old vent sources in the deterministic Campaign are not new rendering slots."
+}

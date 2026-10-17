@@ -1,0 +1,708 @@
+{
+  "name": "edge",
+  "mode": "endless",
+  "legs": [
+    {
+      "label": "valley central exit",
+      "route": [
+        {
+          "x": 400,
+          "y": 442
+        },
+        {
+          "x": 470,
+          "y": 442
+        }
+      ],
+      "seconds": 6.409,
+      "position": [
+        469.7059097111495,
+        441.999526654678
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 464.5214573788615,
+            "y": 439.7911793055872
+          },
+          "formation": {
+            "x": 466.9094542857307,
+            "y": 439.79502284346654
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 464.5143754832726,
+            "y": 444.19117360634885
+          },
+          "formation": {
+            "x": 466.9023723901415,
+            "y": 444.19501714423046
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 461.8179199283257,
+            "y": 441.9868307473097
+          },
+          "formation": {
+            "x": 464.2059168351946,
+            "y": 441.9906742851915
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    },
+    {
+      "label": "valley outer terrain",
+      "route": [
+        {
+          "x": 469.7059097111495,
+          "y": 441.999526654678
+        },
+        {
+          "x": 480,
+          "y": 405
+        }
+      ],
+      "seconds": 3.983,
+      "position": [
+        480.0526629906086,
+        404.810716083688
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 476.63135351858745,
+            "y": 408.90006509783814
+          },
+          "formation": {
+            "x": 477.1826509243933,
+            "y": 406.9185658742989
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 480.87034587099396,
+            "y": 410.07944694316006
+          },
+          "formation": {
+            "x": 481.421643528596,
+            "y": 408.09794778933514
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 478.0271377429682,
+            "y": 412.0909559372397
+          },
+          "formation": {
+            "x": 478.5784355968133,
+            "y": 410.1094568389414
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    },
+    {
+      "label": "crater central exit",
+      "route": [
+        {
+          "x": 400,
+          "y": 442
+        },
+        {
+          "x": 470,
+          "y": 442
+        }
+      ],
+      "seconds": 6.44,
+      "position": [
+        469.7053824098937,
+        441.9987598002399
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 464.6696619787884,
+            "y": 439.777542323173
+          },
+          "formation": {
+            "x": 466.91466808802085,
+            "y": 439.7869927298426
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 464.6511402381289,
+            "y": 444.1775033394899
+          },
+          "formation": {
+            "x": 466.8961463473611,
+            "y": 444.1869537461611
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 461.9604250302634,
+            "y": 441.9661572177441
+          },
+          "formation": {
+            "x": 464.2054311394955,
+            "y": 441.9756076244152
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    },
+    {
+      "label": "crater outer terrain",
+      "route": [
+        {
+          "x": 469.7053824098937,
+          "y": 441.9987598002399
+        },
+        {
+          "x": 480,
+          "y": 405
+        }
+      ],
+      "seconds": 3.969,
+      "position": [
+        480.0040398765002,
+        404.9854807214601
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 476.6034820568854,
+            "y": 408.9999118063181
+          },
+          "formation": {
+            "x": 477.1339886467419,
+            "y": 407.0932771866253
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 480.8424525021068,
+            "y": 410.1793724141376
+          },
+          "formation": {
+            "x": 481.3729593371911,
+            "y": 408.2727378623211
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 477.99920698342174,
+            "y": 412.1908285759818
+          },
+          "formation": {
+            "x": 478.5297140318805,
+            "y": 410.2841940845216
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    },
+    {
+      "label": "ridges central exit",
+      "route": [
+        {
+          "x": 400,
+          "y": 442
+        },
+        {
+          "x": 470,
+          "y": 442
+        }
+      ],
+      "seconds": 6.369,
+      "position": [
+        469.1599104183729,
+        441.99864785581616
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 463.9754580860848,
+            "y": 439.7903005067261
+          },
+          "formation": {
+            "x": 466.36345499295373,
+            "y": 439.79414404460516
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 463.96837619049614,
+            "y": 444.19029480748867
+          },
+          "formation": {
+            "x": 466.35637309736524,
+            "y": 444.194138345369
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 461.27192063554907,
+            "y": 441.9859519484498
+          },
+          "formation": {
+            "x": 463.659917542418,
+            "y": 441.9897954863305
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    },
+    {
+      "label": "ridges outer terrain",
+      "route": [
+        {
+          "x": 469.1599104183729,
+          "y": 441.99864785581616
+        },
+        {
+          "x": 480,
+          "y": 405
+        }
+      ],
+      "seconds": 3.902,
+      "position": [
+        479.79644779753085,
+        405.69475037108475
+      ],
+      "squad": [
+        {
+          "name": "ROOK",
+          "role": "heavy",
+          "mode": "RECOVER",
+          "hp": 130,
+          "shield": 104,
+          "downed": false,
+          "position": {
+            "x": 476.401704143359,
+            "y": 409.4569155812125
+          },
+          "formation": {
+            "x": 476.8979312993001,
+            "y": 407.76322858210955
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "bulwark",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "VEX",
+          "role": "medic",
+          "mode": "RECOVER",
+          "hp": 100,
+          "shield": 80,
+          "downed": false,
+          "position": {
+            "x": 480.6242031223059,
+            "y": 410.6940490945808
+          },
+          "formation": {
+            "x": 481.1204306102385,
+            "y": 409.0003621921634
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "medic_pulse",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        },
+        {
+          "name": "KADE",
+          "role": "rifle",
+          "mode": "RECOVER",
+          "hp": 110,
+          "shield": 88,
+          "downed": false,
+          "position": {
+            "x": 477.7538030375589,
+            "y": 412.6665613346102
+          },
+          "formation": {
+            "x": 478.25003078496354,
+            "y": 410.97287450975773
+          },
+          "target": null,
+          "targetPosition": null,
+          "ability": "target_designator",
+          "abilityCooldown": 0,
+          "lastAbilitySource": null,
+          "lastAbilityTime": null
+        }
+      ],
+      "mission": "dead_signal",
+      "phase": "ENDLESS"
+    }
+  ],
+  "captures": [
+    {
+      "id": "endless-valley-center",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        400,
+        442
+      ],
+      "camera": [
+        400,
+        442,
+        1.847585805399614
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "endless-valley-flank",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        480.0526629906086,
+        404.810716083688
+      ],
+      "camera": [
+        480.0526629906086,
+        404.810716083688,
+        2.549687958495171
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "endless-crater-center",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        400,
+        442
+      ],
+      "camera": [
+        400,
+        442,
+        1.62
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "endless-crater-flank",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        480.0040398765002,
+        404.9854807214601
+      ],
+      "camera": [
+        480.0040398765002,
+        404.9854807214601,
+        1.6262577051429203
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "endless-ridges-center",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        400,
+        442
+      ],
+      "camera": [
+        400,
+        442,
+        1.62
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    },
+    {
+      "id": "endless-ridges-flank",
+      "mission": "dead_signal",
+      "phase": "ENDLESS",
+      "mode": "endless",
+      "position": [
+        479.79644779753085,
+        405.69475037108475
+      ],
+      "camera": [
+        479.79644779753085,
+        405.69475037108475,
+        1.6205420861377335
+      ],
+      "exposure": 0.78,
+      "fog": [
+        40,
+        280
+      ]
+    }
+  ],
+  "waves": [
+    {
+      "arena": "valley",
+      "seed": 0,
+      "spawns": [
+        {
+          "type": "skitter",
+          "x": 508.1358731693835,
+          "y": 455.31802144043473,
+          "inside": false
+        },
+        {
+          "type": "skitter",
+          "x": 354.52562730328833,
+          "y": 371.55260645928865,
+          "inside": false
+        }
+      ],
+      "wave": 2,
+      "method": "Real spawn budget/intermission; test-only enemy clearing after wave1 budget exhausted"
+    },
+    {
+      "arena": "crater",
+      "seed": 4294967295,
+      "spawns": [
+        {
+          "type": "skitter",
+          "x": 523.0247565217891,
+          "y": 240.38506629867405,
+          "inside": false
+        }
+      ],
+      "wave": 2,
+      "method": "Real spawn budget/intermission; test-only enemy clearing after wave1 budget exhausted"
+    },
+    {
+      "arena": "ridges",
+      "seed": 420042,
+      "spawns": [
+        {
+          "type": "skitter",
+          "x": 260.0157231569568,
+          "y": 527.4819380436118,
+          "inside": false
+        }
+      ],
+      "wave": 2,
+      "method": "Real spawn budget/intermission; test-only enemy clearing after wave1 budget exhausted"
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

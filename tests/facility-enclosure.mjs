@@ -81,7 +81,7 @@ const inVestibule = p => p.x > 330.5 && p.x < 389.5 && p.y > 684.5 && p.y < 689.
 
 try {
     const url = pathToFileURL(resolve('chargefront.html')); url.searchParams.set('perfDiagnostics', '1');
-    await page.goto(url.href); await page.waitForFunction(() => window.__cf?.renderer, undefined, { timeout: 120000 });
+    await page.goto(url.href, { waitUntil: 'domcontentloaded', timeout: 120000 }); await page.waitForFunction(() => window.__cf?.renderer, undefined, { timeout: 120000 });
     await page.evaluate(() => { const c = __cf; c.resetCampaignProgress(); if (!c.startMission('dead_signal', 'new_campaign')) throw Error('M1 setup failed');
         c.skipIntro(); c.setNoSpawn(true); c.setNoAggro(true); c.setInvulnerable(true); c.clearTestEnemies(); });
     await page.evaluate(() => __cf.waitCombatPreparation());

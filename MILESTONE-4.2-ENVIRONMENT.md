@@ -1,6 +1,19 @@
 # Charge Front — Milestone 4.2: Environment & Final Prop Pass
 
-**Current checkpoint: CP3-E — accepted with one known visual qualification.**
+**Current checkpoint: CP4 — accepted after the user's manual visual playtest.**
+The completed terrain/Z-fighting implementation, exterior prop/boundary follow-up
+and final route/backyard refinement are accepted together for one branch commit
+and push. Final geometry has301 canonical solids,28 map segments,six doors and
+eight light slots; v3 compatibility and accepted Safe Staged Seal remain intact.
+See [CP4 report](MILESTONE-4.2-CP4.md),
+[prop/boundary follow-up](MILESTONE-4.2-CP4-PROP-BOUNDARY-FIX.md),
+[final refinement](MILESTONE-4.2-CP4-FINAL-EXTERIOR-REFINE.md) and
+[curated acceptance evidence](_playtest/m42/cp4-accepted/INDEX.html).
+No further gameplay/visual changes or main merge are part of finalization.
+
+## Historical CP3-E acceptance
+
+**CP3-E — accepted with one known visual qualification at that checkpoint.**
 Accepted starting point is CP3-D-R2, manually accepted and committed as `b9e446c`.
 CP3-E was accepted by the user on the basis of the completed E0–E3 automated
 validation report and the user's own review; the user did not report additional

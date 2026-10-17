@@ -1,0 +1,5739 @@
+{
+  "name": "edge",
+  "errors": [],
+  "legs": [
+    {
+      "label": "backyard 320,810",
+      "d": 0.5308509463501002,
+      "inside": false,
+      "x": 319.9983416595242,
+      "y": 809.4691516439249,
+      "z": 2.7537495334117006,
+      "ground": 2.7537495334117006,
+      "seconds": 2.697
+    },
+    {
+      "label": "backyard 335,830",
+      "d": 0.2076520186979316,
+      "inside": false,
+      "x": 334.8774906689802,
+      "y": 829.8323371696457,
+      "z": 0.660956125275904,
+      "ground": 0.660956125275904,
+      "seconds": 4.848
+    },
+    {
+      "label": "backyard 370,840",
+      "d": 0.2512947809919935,
+      "inside": false,
+      "x": 369.75861635286896,
+      "y": 839.930121520827,
+      "z": 0.42385148249400206,
+      "ground": 0.42385148249400206,
+      "seconds": 7.005
+    },
+    {
+      "label": "backyard 410,840",
+      "d": 0.2881109851462882,
+      "inside": false,
+      "x": 409.7118894492338,
+      "y": 839.9994997009229,
+      "z": 0.49613752012567414,
+      "ground": 0.49613752012567414,
+      "seconds": 7.659
+    },
+    {
+      "label": "backyard 430,820",
+      "d": 0.4950400496392865,
+      "inside": false,
+      "x": 429.64745522255254,
+      "y": 820.347529611172,
+      "z": 0.6947663471320745,
+      "ground": 0.6947663471320745,
+      "seconds": 5.384
+    },
+    {
+      "label": "backyard 410,825",
+      "d": 0.4307894209553717,
+      "inside": false,
+      "x": 410.4191968764622,
+      "y": 824.9007351826103,
+      "z": 0.47499832441201484,
+      "ground": 0.47499832441201484,
+      "seconds": 3.798
+    },
+    {
+      "label": "backyard 370,835",
+      "d": 0.23514589579732556,
+      "inside": false,
+      "x": 370.22813237524593,
+      "y": 834.9429981432322,
+      "z": 0.4162288763490971,
+      "ground": 0.4162288763490971,
+      "seconds": 7.966
+    },
+    {
+      "label": "embankment approach",
+      "d": 0.4606544114731803,
+      "inside": false,
+      "x": 369.9995169316624,
+      "y": 857.5393458418133,
+      "z": 0.8472406909884913,
+      "ground": 0.8472406909884913,
+      "seconds": 4.386
+    },
+    {
+      "label": "rear hostile pursuit",
+      "d": 0.2533333333237806,
+      "inside": false,
+      "x": 310,
+      "y": 821.7466666666762,
+      "z": 0.7633462832762234,
+      "ground": 0.7633462832762234,
+      "seconds": 4.562
+    }
+  ],
+  "captures": [
+    "expanded-backyard-native",
+    "raised-end-native"
+  ],
+  "hashes": {
+    "chargefront.html": "cffd467f8e7e648b0a157cdb9f454e2224f2e537b55e50e0bd4ca1c97f0e83b5",
+    "src/world/campaign-terrain.js": "dd343e5e84d0426c5c0e99a2c157bb65aeee0db0c4ae20fa9f11a3c7329df415",
+    "src/world/campaign-exterior.js": "50873cbf7d4dbecd0cb0a8dbbb6326ecef5728e5c52dfb10b71ca23512139f9c",
+    "src/world/facility.js": "cfb68c7b7abe40ffd691880f356c47dd2f4eaa82339e043f9ffc9087a8439670",
+    "Credits.txt": "f38d2cd318035f1b34fe72030d4b576cfc31917a7d630156666d00cfc80e11ec"
+  },
+  "geometry": {
+    "cleanup": {
+      "finalized": true,
+      "entries": [
+        {
+          "id": "TerrainProp1",
+          "kind": "skin-cylinder",
+          "origin": {
+            "x": 205,
+            "y": 575
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp2",
+          "kind": "surface",
+          "origin": {
+            "x": 205,
+            "y": 566
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp3",
+          "kind": "surface",
+          "origin": {
+            "x": 215,
+            "y": 582
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp4",
+          "kind": "ground",
+          "origin": {
+            "x": 190,
+            "y": 588
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp5",
+          "kind": "ground",
+          "origin": {
+            "x": 195,
+            "y": 567
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp6",
+          "kind": "ground",
+          "origin": {
+            "x": 218,
+            "y": 585
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp7",
+          "kind": "ground",
+          "origin": {
+            "x": 221,
+            "y": 569
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp8",
+          "kind": "skin-cylinder",
+          "origin": {
+            "x": 205,
+            "y": 600
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp9",
+          "kind": "ground",
+          "origin": {
+            "x": 203.35,
+            "y": 600
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp10",
+          "kind": "ground",
+          "origin": {
+            "x": 206.65,
+            "y": 600
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp11",
+          "kind": "ground",
+          "origin": {
+            "x": 205,
+            "y": 601.8
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp12",
+          "kind": "cable",
+          "origin": {
+            "x": 205,
+            "y": 587.5
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp13",
+          "kind": "cable",
+          "origin": {
+            "x": 196.5,
+            "y": 581
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp14",
+          "kind": "ground",
+          "origin": {
+            "x": 198,
+            "y": 590
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp15",
+          "kind": "cap",
+          "origin": {
+            "x": 198,
+            "y": 590
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp16",
+          "kind": "ground",
+          "origin": {
+            "x": 212,
+            "y": 590
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp17",
+          "kind": "cap",
+          "origin": {
+            "x": 212,
+            "y": 590
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp18",
+          "kind": "ground",
+          "origin": {
+            "x": 197,
+            "y": 580
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp19",
+          "kind": "face",
+          "origin": {
+            "x": 197,
+            "y": 579.05
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp20",
+          "kind": "ground",
+          "origin": {
+            "x": 201.4,
+            "y": 580
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp21",
+          "kind": "face",
+          "origin": {
+            "x": 201.4,
+            "y": 579.05
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp22",
+          "kind": "ground",
+          "origin": {
+            "x": 205.8,
+            "y": 580
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp23",
+          "kind": "face",
+          "origin": {
+            "x": 205.8,
+            "y": 579.05
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp24",
+          "kind": "ground",
+          "origin": {
+            "x": 211.5,
+            "y": 580
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp25",
+          "kind": "cable",
+          "origin": {
+            "x": 200.4,
+            "y": 576.5
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp26",
+          "kind": "cable",
+          "origin": {
+            "x": 212.25,
+            "y": 577
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp27",
+          "kind": "ground",
+          "origin": {
+            "x": 200,
+            "y": 567
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp28",
+          "kind": "face",
+          "origin": {
+            "x": 200,
+            "y": 567
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp29",
+          "kind": "skin-cylinder",
+          "origin": {
+            "x": 245,
+            "y": 748
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp30",
+          "kind": "surface",
+          "origin": {
+            "x": 245,
+            "y": 748
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp31",
+          "kind": "surface",
+          "origin": {
+            "x": 245,
+            "y": 736
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp32",
+          "kind": "cylinder",
+          "origin": {
+            "x": 232,
+            "y": 756
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp33",
+          "kind": "ground",
+          "origin": {
+            "x": 258,
+            "y": 758
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp34",
+          "kind": "ground",
+          "origin": {
+            "x": 259,
+            "y": 739
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp35",
+          "kind": "ground",
+          "origin": {
+            "x": 241,
+            "y": 733
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp36",
+          "kind": "ground",
+          "origin": {
+            "x": 225,
+            "y": 741
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp37",
+          "kind": "remove",
+          "origin": {
+            "x": 248,
+            "y": 761
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp38",
+          "kind": "cable",
+          "origin": {
+            "x": 239,
+            "y": 753.5
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp39",
+          "kind": "cable",
+          "origin": {
+            "x": 254.5,
+            "y": 742
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp40",
+          "kind": "remove",
+          "origin": {
+            "x": 261,
+            "y": 761
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp41",
+          "kind": "remove",
+          "origin": {
+            "x": 266,
+            "y": 760
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp42",
+          "kind": "ground",
+          "origin": {
+            "x": 235,
+            "y": 732
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp43",
+          "kind": "ground",
+          "origin": {
+            "x": 261,
+            "y": 732
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp44",
+          "kind": "ground",
+          "origin": {
+            "x": 235,
+            "y": 764
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp45",
+          "kind": "ground",
+          "origin": {
+            "x": 261,
+            "y": 764
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp46",
+          "kind": "cylinder",
+          "origin": {
+            "x": 254,
+            "y": 744
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp47",
+          "kind": "remove",
+          "origin": {
+            "x": 259,
+            "y": 760
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp48",
+          "kind": "cable",
+          "origin": {
+            "x": 234.5,
+            "y": 753
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp49",
+          "kind": "skin-cylinder",
+          "origin": {
+            "x": 575,
+            "y": 585
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp50",
+          "kind": "surface",
+          "origin": {
+            "x": 575,
+            "y": 596
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp51",
+          "kind": "surface",
+          "origin": {
+            "x": 563,
+            "y": 585
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp52",
+          "kind": "circle",
+          "origin": {
+            "x": 557,
+            "y": 575
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp53",
+          "kind": "circle",
+          "origin": {
+            "x": 592,
+            "y": 598
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp54",
+          "kind": "circle",
+          "origin": {
+            "x": 595,
+            "y": 573
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp55",
+          "kind": "ground",
+          "origin": {
+            "x": 560,
+            "y": 597
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp56",
+          "kind": "ground",
+          "origin": {
+            "x": 589,
+            "y": 581
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp57",
+          "kind": "ground",
+          "origin": {
+            "x": 582,
+            "y": 603
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp58",
+          "kind": "ground",
+          "origin": {
+            "x": 555,
+            "y": 588
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp59",
+          "kind": "ground",
+          "origin": {
+            "x": 585,
+            "y": 568
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp60",
+          "kind": "cable",
+          "origin": {
+            "x": 566,
+            "y": 592
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp61",
+          "kind": "cable",
+          "origin": {
+            "x": 584,
+            "y": 582
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp62",
+          "kind": "ground",
+          "origin": {
+            "x": 567,
+            "y": 601
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp63",
+          "kind": "face",
+          "origin": {
+            "x": 569,
+            "y": 601
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp64",
+          "kind": "ground",
+          "origin": {
+            "x": 593,
+            "y": 567
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp65",
+          "kind": "face",
+          "origin": {
+            "x": 595,
+            "y": 567
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp66",
+          "kind": "ground",
+          "origin": {
+            "x": 555,
+            "y": 579
+          },
+          "attached": true,
+          "solids": 3,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp67",
+          "kind": "face",
+          "origin": {
+            "x": 555,
+            "y": 579
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp68",
+          "kind": "ground",
+          "origin": {
+            "x": 593,
+            "y": 594
+          },
+          "attached": true,
+          "solids": 3,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp69",
+          "kind": "face",
+          "origin": {
+            "x": 593,
+            "y": 594
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp70",
+          "kind": "ground",
+          "origin": {
+            "x": 577,
+            "y": 565
+          },
+          "attached": true,
+          "solids": 3,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp71",
+          "kind": "face",
+          "origin": {
+            "x": 577,
+            "y": 565
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp72",
+          "kind": "ground",
+          "origin": {
+            "x": 573,
+            "y": 602
+          },
+          "attached": true,
+          "solids": 8,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp73",
+          "kind": "ground",
+          "origin": {
+            "x": 597,
+            "y": 601
+          },
+          "attached": true,
+          "solids": 2,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp74",
+          "kind": "circle",
+          "origin": {
+            "x": 551,
+            "y": 571
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp75",
+          "kind": "circle",
+          "origin": {
+            "x": 601,
+            "y": 587
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp76",
+          "kind": "ground",
+          "origin": {
+            "x": 437.4458940209751,
+            "y": 221.04828664143955
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp77",
+          "kind": "ground",
+          "origin": {
+            "x": 436.82041291716257,
+            "y": 228.03175092421304
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp78",
+          "kind": "bridge",
+          "origin": {
+            "x": 437.1331534690688,
+            "y": 224.54001878282628
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp79",
+          "kind": "bridge-face",
+          "origin": {
+            "x": 437.1331534690688,
+            "y": 224.54001878282628
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp80",
+          "kind": "ground",
+          "origin": {
+            "x": 435.1374173697905,
+            "y": 224.37558818337044
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp81",
+          "kind": "ground",
+          "origin": {
+            "x": 417.77829420167194,
+            "y": 448.53700117885353
+          },
+          "attached": true,
+          "solids": 8,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp82",
+          "kind": "face",
+          "origin": {
+            "x": 417.77829420167194,
+            "y": 448.53700117885353
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp83",
+          "kind": "ground",
+          "origin": {
+            "x": 418.50175035434546,
+            "y": 453.2355766220234
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp84",
+          "kind": "ground",
+          "origin": {
+            "x": 420.3142802852371,
+            "y": 444.82637123449587
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp85",
+          "kind": "ground",
+          "origin": {
+            "x": 210.0708085879523,
+            "y": 693.9490816968209
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp86",
+          "kind": "face",
+          "origin": {
+            "x": 210.0708085879523,
+            "y": 692.749081696821
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp87",
+          "kind": "ground",
+          "origin": {
+            "x": 210.37253722370187,
+            "y": 697.7999205444447
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp88",
+          "kind": "ground",
+          "origin": {
+            "x": 365.018398985275,
+            "y": 554.630754329038
+          },
+          "attached": true,
+          "solids": 8,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp89",
+          "kind": "face",
+          "origin": {
+            "x": 365.018398985275,
+            "y": 554.630754329038
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp90",
+          "kind": "ground",
+          "origin": {
+            "x": 369.23736475085633,
+            "y": 552.4397892748091
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp91",
+          "kind": "ground",
+          "origin": {
+            "x": 360.6907903244426,
+            "y": 553.4175753320683
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp92",
+          "kind": "cylinder",
+          "origin": {
+            "x": 426.98483085590806,
+            "y": 251.8323807371393
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp93",
+          "kind": "cylinder",
+          "origin": {
+            "x": 431.784830855908,
+            "y": 251.8323807371393
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp94",
+          "kind": "ground",
+          "origin": {
+            "x": 429.38483085590804,
+            "y": 255.03238073713928
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp95",
+          "kind": "face",
+          "origin": {
+            "x": 429.38483085590804,
+            "y": 255.03238073713928
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp96",
+          "kind": "ground",
+          "origin": {
+            "x": 429.38483085590804,
+            "y": 248.43238073713928
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp97",
+          "kind": "cap",
+          "origin": {
+            "x": 429.38483085590804,
+            "y": 248.43238073713928
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp98",
+          "kind": "cylinder",
+          "origin": {
+            "x": 224.7177133693637,
+            "y": 740.4651687604671
+          },
+          "attached": true,
+          "solids": 1,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp99",
+          "kind": "installed",
+          "origin": {
+            "x": 224.7177133693637,
+            "y": 740.4651687604671
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp100",
+          "kind": "cap",
+          "origin": {
+            "x": 224.7177133693637,
+            "y": 740.4651687604671
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp101",
+          "kind": "surface",
+          "origin": {
+            "x": 313.6,
+            "y": 608
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp102",
+          "kind": "surface",
+          "origin": {
+            "x": 409.6,
+            "y": 608
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp103",
+          "kind": "surface",
+          "origin": {
+            "x": 313.6,
+            "y": 692
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp104",
+          "kind": "surface",
+          "origin": {
+            "x": 409.6,
+            "y": 692
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp105",
+          "kind": "surface",
+          "origin": {
+            "x": 361.6,
+            "y": 566
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp106",
+          "kind": "surface",
+          "origin": {
+            "x": 421.6,
+            "y": 108
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp107",
+          "kind": "surface",
+          "origin": {
+            "x": 310.4,
+            "y": 608
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp108",
+          "kind": "surface",
+          "origin": {
+            "x": 406.4,
+            "y": 608
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp109",
+          "kind": "surface",
+          "origin": {
+            "x": 310.4,
+            "y": 692
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp110",
+          "kind": "surface",
+          "origin": {
+            "x": 406.4,
+            "y": 692
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp111",
+          "kind": "surface",
+          "origin": {
+            "x": 358.4,
+            "y": 566
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp112",
+          "kind": "surface",
+          "origin": {
+            "x": 418.4,
+            "y": 108
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp113",
+          "kind": "surface",
+          "origin": {
+            "x": 441.5554027335837,
+            "y": 140.17770380838485
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp114",
+          "kind": "surface",
+          "origin": {
+            "x": 439.6074262103754,
+            "y": 200.5649760278409
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp115",
+          "kind": "surface",
+          "origin": {
+            "x": 434.7607986005056,
+            "y": 259.9511847952187
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp116",
+          "kind": "surface",
+          "origin": {
+            "x": 425.9702433065559,
+            "y": 319.72696079407694
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp117",
+          "kind": "surface",
+          "origin": {
+            "x": 417.17968801260616,
+            "y": 379.50273679293514
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp118",
+          "kind": "surface",
+          "origin": {
+            "x": 405.3706886960588,
+            "y": 438.10305014669325
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp119",
+          "kind": "surface",
+          "origin": {
+            "x": 391.2706022535227,
+            "y": 496.8534103239268
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp120",
+          "kind": "surface",
+          "origin": {
+            "x": 370.07657928563407,
+            "y": 550.5719720851117
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp121",
+          "kind": "surface",
+          "origin": {
+            "x": 270.832795063823,
+            "y": 568.5
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp122",
+          "kind": "surface",
+          "origin": {
+            "x": 198.5,
+            "y": 598.5423827663153
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp123",
+          "kind": "surface",
+          "origin": {
+            "x": 209.09398463137214,
+            "y": 688.4670806350134
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp124",
+          "kind": "surface",
+          "origin": {
+            "x": 261.79465872298664,
+            "y": 735.096789571645
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp125",
+          "kind": "surface",
+          "origin": {
+            "x": 291.5,
+            "y": 650.9235129426031
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp126",
+          "kind": "surface",
+          "origin": {
+            "x": 308.9438360911299,
+            "y": 589.3500918655079
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp127",
+          "kind": "surface",
+          "origin": {
+            "x": 397.95196851900783,
+            "y": 581.2584434629736
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp128",
+          "kind": "surface",
+          "origin": {
+            "x": 485.4870120627858,
+            "y": 580.8050741697817
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp129",
+          "kind": "remove",
+          "origin": {
+            "x": 350,
+            "y": 604
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp130",
+          "kind": "remove",
+          "origin": {
+            "x": 350,
+            "y": 604
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp131",
+          "kind": "remove",
+          "origin": {
+            "x": 400,
+            "y": 606
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp132",
+          "kind": "remove",
+          "origin": {
+            "x": 400,
+            "y": 606
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp133",
+          "kind": "remove",
+          "origin": {
+            "x": 306,
+            "y": 660
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp134",
+          "kind": "remove",
+          "origin": {
+            "x": 306,
+            "y": 660
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp135",
+          "kind": "remove",
+          "origin": {
+            "x": 414,
+            "y": 686
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp136",
+          "kind": "remove",
+          "origin": {
+            "x": 414,
+            "y": 686
+          },
+          "attached": false,
+          "solids": 0,
+          "maxBottomError": null
+        },
+        {
+          "id": "TerrainProp137",
+          "kind": "circle",
+          "origin": {
+            "x": 336,
+            "y": 596
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp138",
+          "kind": "circle",
+          "origin": {
+            "x": 420,
+            "y": 700
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp139",
+          "kind": "circle",
+          "origin": {
+            "x": 470,
+            "y": 250
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        },
+        {
+          "id": "TerrainProp140",
+          "kind": "circle",
+          "origin": {
+            "x": 452,
+            "y": 150
+          },
+          "attached": true,
+          "solids": 0,
+          "maxBottomError": 0
+        }
+      ],
+      "counts": {
+        "skin-cylinder": 4,
+        "surface": 34,
+        "ground": 47,
+        "cable": 9,
+        "cap": 4,
+        "face": 13,
+        "cylinder": 5,
+        "remove": 12,
+        "circle": 9,
+        "bridge": 1,
+        "bridge-face": 1,
+        "installed": 1
+      }
+    },
+    "solids": [
+      {
+        "x0": 202.4,
+        "y0": 572.4,
+        "x1": 207.6,
+        "y1": 577.6,
+        "topY": 10,
+        "bottomY": 2,
+        "disabled": false,
+        "_solidQueryStamp": 100
+      },
+      {
+        "x0": 185,
+        "y0": 585,
+        "x1": 195,
+        "y1": 591,
+        "topY": 6.337110424041746,
+        "bottomY": 2.4496521759033185,
+        "_solidQueryStamp": 94,
+        "disabled": false
+      },
+      {
+        "x0": 192.9,
+        "y0": 565.8,
+        "x1": 197.1,
+        "y1": 568.2,
+        "topY": 3.827203941345215,
+        "bottomY": 2.2049046727779626,
+        "_solidQueryStamp": 100,
+        "disabled": false
+      },
+      {
+        "x0": 215.9,
+        "y0": 583.8,
+        "x1": 220.1,
+        "y1": 586.2,
+        "topY": 4.126891565322875,
+        "bottomY": 2.4533292788429257,
+        "disabled": false
+      },
+      {
+        "x0": 219.4,
+        "y0": 567.4,
+        "x1": 222.6,
+        "y1": 570.6,
+        "topY": 3.7431652545928955,
+        "bottomY": 2.4548936733427626,
+        "_solidQueryStamp": 100,
+        "disabled": false
+      },
+      {
+        "x0": 195.9,
+        "y0": 579.15,
+        "x1": 198.1,
+        "y1": 580.85,
+        "topY": 3.7030363082885747,
+        "bottomY": 2.131622570848882,
+        "disabled": false
+      },
+      {
+        "x0": 200.3,
+        "y0": 579.15,
+        "x1": 202.5,
+        "y1": 580.85,
+        "topY": 3.590630359649658,
+        "bottomY": 2.03719085638248,
+        "disabled": false
+      },
+      {
+        "x0": 204.70000000000002,
+        "y0": 579.15,
+        "x1": 206.9,
+        "y1": 580.85,
+        "topY": 3.563007106781006,
+        "bottomY": 2.024928817463291,
+        "disabled": false
+      },
+      {
+        "x0": 209.7,
+        "y0": 578.8,
+        "x1": 213.3,
+        "y1": 581.2,
+        "topY": 4.761870098114015,
+        "bottomY": 2.0705051707745774,
+        "disabled": false
+      },
+      {
+        "x0": 197,
+        "y0": 566.75,
+        "x1": 203,
+        "y1": 567.25,
+        "topY": 3.333508110046387,
+        "bottomY": 2.1153811502456663,
+        "_solidQueryStamp": 100,
+        "disabled": false
+      },
+      {
+        "x0": 242.4,
+        "y0": 745.4,
+        "x1": 247.6,
+        "y1": 750.6,
+        "topY": 25.415580368041994,
+        "bottomY": 17.415580368041994,
+        "disabled": false
+      },
+      {
+        "x0": 230.8,
+        "y0": 754.8,
+        "x1": 233.2,
+        "y1": 757.2,
+        "topY": 41.62432022094727,
+        "bottomY": 19.429880481492482,
+        "disabled": false
+      },
+      {
+        "x0": 255.5,
+        "y0": 756.9,
+        "x1": 260.5,
+        "y1": 759.1,
+        "topY": 17.322891998291016,
+        "bottomY": 15.415098455248456,
+        "_solidQueryStamp": 188,
+        "disabled": false
+      },
+      {
+        "x0": 257,
+        "y0": 737.9,
+        "x1": 261,
+        "y1": 740.1,
+        "topY": 16.049746322631837,
+        "bottomY": 14.205447882001167,
+        "_solidQueryStamp": 188,
+        "disabled": false
+      },
+      {
+        "x0": 238,
+        "y0": 732,
+        "x1": 244,
+        "y1": 734,
+        "topY": 19.161888885498044,
+        "bottomY": 17.30865257263184,
+        "disabled": false
+      },
+      {
+        "x0": 223,
+        "y0": 739.9,
+        "x1": 227,
+        "y1": 742.1,
+        "topY": 21.475085830688478,
+        "bottomY": 19.868143920797394,
+        "_solidQueryStamp": 233,
+        "disabled": false
+      },
+      {
+        "x0": 234.6,
+        "y0": 727,
+        "x1": 235.4,
+        "y1": 737,
+        "topY": 21.112408447265622,
+        "bottomY": 18.600459670165083,
+        "disabled": false
+      },
+      {
+        "x0": 260.6,
+        "y0": 727,
+        "x1": 261.4,
+        "y1": 737,
+        "topY": 16.578778648376467,
+        "bottomY": 14.07438472622046,
+        "_solidQueryStamp": 188,
+        "disabled": false
+      },
+      {
+        "x0": 234.6,
+        "y0": 759,
+        "x1": 235.4,
+        "y1": 769,
+        "topY": 22.179329299926753,
+        "bottomY": 19.38596191334916,
+        "_solidQueryStamp": 178,
+        "disabled": false
+      },
+      {
+        "x0": 260.6,
+        "y0": 759,
+        "x1": 261.4,
+        "y1": 769,
+        "topY": 18.49210968017578,
+        "bottomY": 15.455137328038067,
+        "_solidQueryStamp": 264,
+        "disabled": false
+      },
+      {
+        "x0": 253.3,
+        "y0": 743.3,
+        "x1": 254.7,
+        "y1": 744.7,
+        "topY": 30.810206222534184,
+        "bottomY": 15.670547355215138,
+        "disabled": false
+      },
+      {
+        "x0": 572.4,
+        "y0": 582.4,
+        "x1": 577.6,
+        "y1": 587.6,
+        "topY": 8.75492203235626,
+        "bottomY": 0.7549220323562611,
+        "disabled": false
+      },
+      {
+        "x0": 559.25,
+        "y0": 596.25,
+        "x1": 560.75,
+        "y1": 597.75,
+        "topY": 7.254232096672055,
+        "bottomY": 1.640242551560121,
+        "disabled": false
+      },
+      {
+        "x0": 588.25,
+        "y0": 580.25,
+        "x1": 589.75,
+        "y1": 581.75,
+        "topY": 5.5,
+        "bottomY": -0.02,
+        "disabled": false
+      },
+      {
+        "x0": 581.25,
+        "y0": 602.25,
+        "x1": 582.75,
+        "y1": 603.75,
+        "topY": 6.572137546539307,
+        "bottomY": 1.0099149559951988,
+        "disabled": false
+      },
+      {
+        "x0": 552.25,
+        "y0": 586.8,
+        "x1": 557.75,
+        "y1": 589.2,
+        "topY": 2.71349856853485,
+        "bottomY": 1.3007576090511015,
+        "disabled": false
+      },
+      {
+        "x0": 582.25,
+        "y0": 566.8,
+        "x1": 587.75,
+        "y1": 569.2,
+        "topY": 1.3,
+        "bottomY": -0.02,
+        "disabled": false
+      },
+      {
+        "x0": 552.9336261571644,
+        "y0": 577.5308616920937,
+        "x1": 554.4336261571644,
+        "y1": 579.0308616920937,
+        "topY": 1.813605165481567,
+        "bottomY": 1.0686211105022514,
+        "disabled": false
+      },
+      {
+        "x0": 554.25,
+        "y0": 578.25,
+        "x1": 555.75,
+        "y1": 579.75,
+        "topY": 1.813605165481567,
+        "bottomY": 1.0686211105022514,
+        "disabled": false
+      },
+      {
+        "x0": 555.5663738428356,
+        "y0": 578.9691383079063,
+        "x1": 557.0663738428356,
+        "y1": 580.4691383079063,
+        "topY": 1.813605165481567,
+        "bottomY": 1.0686211105022514,
+        "disabled": false
+      },
+      {
+        "x0": 590.840940930729,
+        "y0": 593.7643467111832,
+        "x1": 592.340940930729,
+        "y1": 595.2643467111832,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.2902198280774967,
+        "disabled": false
+      },
+      {
+        "x0": 592.25,
+        "y0": 593.25,
+        "x1": 593.75,
+        "y1": 594.75,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.2902198280774967,
+        "disabled": false
+      },
+      {
+        "x0": 593.659059069271,
+        "y0": 592.7356532888168,
+        "x1": 595.159059069271,
+        "y1": 594.2356532888168,
+        "topY": 1.1221154034137757,
+        "bottomY": 0.2902198280774967,
+        "disabled": false
+      },
+      {
+        "x0": 575.1027367190733,
+        "y0": 563.2836734691434,
+        "x1": 576.6027367190733,
+        "y1": 564.7836734691434,
+        "topY": 0.7548970073461557,
+        "bottomY": -0.009721097209728113,
+        "disabled": false
+      },
+      {
+        "x0": 576.25,
+        "y0": 564.25,
+        "x1": 577.75,
+        "y1": 565.75,
+        "topY": 0.7548970073461557,
+        "bottomY": -0.009721097209728113,
+        "disabled": false
+      },
+      {
+        "x0": 577.3972632809267,
+        "y0": 565.2163265308566,
+        "x1": 578.8972632809267,
+        "y1": 566.7163265308566,
+        "topY": 0.7548970073461557,
+        "bottomY": -0.009721097209728113,
+        "disabled": false
+      },
+      {
+        "x0": 570.4584940108621,
+        "y0": 600.142813507338,
+        "x1": 571.2084940108621,
+        "y1": 600.892813507338,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 571.0774957220443,
+        "y0": 600.5662953623843,
+        "x1": 571.8274957220443,
+        "y1": 601.3162953623843,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 571.6964974332266,
+        "y0": 600.9897772174306,
+        "x1": 572.4464974332266,
+        "y1": 601.7397772174306,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 572.3154991444088,
+        "y0": 601.4132590724769,
+        "x1": 573.0654991444088,
+        "y1": 602.1632590724769,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 572.9345008555912,
+        "y0": 601.8367409275231,
+        "x1": 573.6845008555912,
+        "y1": 602.5867409275231,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 573.5535025667734,
+        "y0": 602.2602227825694,
+        "x1": 574.3035025667734,
+        "y1": 603.0102227825694,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 574.1725042779557,
+        "y0": 602.6837046376157,
+        "x1": 574.9225042779557,
+        "y1": 603.4337046376157,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 574.7915059891379,
+        "y0": 603.107186492662,
+        "x1": 575.5415059891379,
+        "y1": 603.857186492662,
+        "topY": 2.0072313785552947,
+        "bottomY": 1.3190809689963654,
+        "disabled": false
+      },
+      {
+        "x0": 596.4077889123379,
+        "y0": 600.6552711297129,
+        "x1": 597.2077889123378,
+        "y1": 601.4552711297129,
+        "topY": 7.0927143573760985,
+        "bottomY": 0.5503315288998826,
+        "disabled": false
+      },
+      {
+        "x0": 596.7922110876622,
+        "y0": 600.5447288702871,
+        "x1": 597.5922110876621,
+        "y1": 601.3447288702871,
+        "topY": 7.0927143573760985,
+        "bottomY": 0.5503315288998826,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 689,
+        "x1": 352,
+        "y1": 691,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 689,
+        "x1": 390,
+        "y1": 691,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 330,
+        "y0": 617,
+        "x1": 352,
+        "y1": 619,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 617,
+        "x1": 390,
+        "y1": 619,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 329,
+        "y0": 617,
+        "x1": 331,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 389,
+        "y0": 617,
+        "x1": 391,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 330,
+        "y0": 659,
+        "x1": 352,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 659,
+        "x1": 390,
+        "y1": 661,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 341,
+        "y0": 660,
+        "x1": 343,
+        "y1": 684,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 377,
+        "y0": 660,
+        "x1": 379,
+        "y1": 684,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 342,
+        "y0": 683,
+        "x1": 352,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 683,
+        "x1": 378,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 358.55,
+        "y0": 772.55,
+        "x1": 361.45,
+        "y1": 775.45,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": true
+      },
+      {
+        "x0": 333.1,
+        "y0": 624.7,
+        "x1": 334.9,
+        "y1": 627.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 333.1,
+        "y0": 636.7,
+        "x1": 334.9,
+        "y1": 639.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 333.1,
+        "y0": 648.7,
+        "x1": 334.9,
+        "y1": 651.3,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 385.3,
+        "y0": 624.7,
+        "x1": 386.7,
+        "y1": 627.3,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 385.3,
+        "y0": 648.7,
+        "x1": 386.7,
+        "y1": 651.3,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 334.5,
+        "y0": 620.4,
+        "x1": 337.5,
+        "y1": 623.6,
+        "topY": 2,
+        "bottomY": 0
+      },
+      {
+        "x0": 341,
+        "y0": 655,
+        "x1": 343,
+        "y1": 657,
+        "topY": 3,
+        "bottomY": 0
+      },
+      {
+        "x0": 377,
+        "y0": 655,
+        "x1": 379,
+        "y1": 657,
+        "topY": 3,
+        "bottomY": 0
+      },
+      {
+        "x0": 337.4,
+        "y0": 638.8,
+        "x1": 340.6,
+        "y1": 641.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.4,
+        "y0": 630.8,
+        "x1": 382.6,
+        "y1": 633.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.4,
+        "y0": 651.8,
+        "x1": 382.6,
+        "y1": 654.2,
+        "topY": 1.3,
+        "bottomY": 0
+      },
+      {
+        "x0": 399,
+        "y0": 671,
+        "x1": 401,
+        "y1": 673,
+        "topY": 26,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 421.4023392980842,
+        "y0": 698.6220467915767,
+        "x1": 424.0023392980842,
+        "y1": 701.2220467915766,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 423.9976607019158,
+        "y0": 698.7779532084234,
+        "x1": 426.5976607019158,
+        "y1": 701.3779532084233,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 415.40103986134073,
+        "y0": 691.7519861344426,
+        "x1": 418.00103986134076,
+        "y1": 694.3519861344425,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 417.99896013865924,
+        "y0": 691.6480138655575,
+        "x1": 420.59896013865927,
+        "y1": 694.2480138655574,
+        "topY": 2.8,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 424.8001999933334,
+        "y0": 704.7800013333066,
+        "x1": 427.2001999933334,
+        "y1": 707.1800013333067,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 426.7998000066666,
+        "y0": 704.8199986666933,
+        "x1": 429.1998000066666,
+        "y1": 707.2199986666934,
+        "topY": 2.6,
+        "bottomY": 0
+      },
+      {
+        "x0": 293.87893900599715,
+        "y0": 688.4105816576913,
+        "x1": 296.27893900599713,
+        "y1": 690.8105816576914,
+        "topY": 2.6,
+        "bottomY": 0,
+        "_solidQueryStamp": 120
+      },
+      {
+        "x0": 295.72106099400287,
+        "y0": 689.1894183423086,
+        "x1": 298.12106099400285,
+        "y1": 691.5894183423087,
+        "topY": 2.6,
+        "bottomY": 0,
+        "_solidQueryStamp": 120
+      },
+      {
+        "x0": 295.4,
+        "y0": 659.4,
+        "x1": 296.6,
+        "y1": 660.6,
+        "topY": 6,
+        "bottomY": 0
+      },
+      {
+        "x0": 425.4,
+        "y0": 649.4,
+        "x1": 426.6,
+        "y1": 650.6,
+        "topY": 6,
+        "bottomY": 0
+      },
+      {
+        "x0": 429.46,
+        "y0": 687.46,
+        "x1": 430.54,
+        "y1": 688.54,
+        "topY": 7,
+        "bottomY": 0,
+        "_solidQueryStamp": 133
+      },
+      {
+        "x0": 426.4140213485457,
+        "y0": 594.298378153489,
+        "x1": 427.9140213485457,
+        "y1": 595.798378153489,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 427.25,
+        "y0": 595.25,
+        "x1": 428.75,
+        "y1": 596.75,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 428.0859786514543,
+        "y0": 596.201621846511,
+        "x1": 429.5859786514543,
+        "y1": 597.701621846511,
+        "topY": 1.8,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 617.5,
+        "x1": 368,
+        "y1": 618.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 659.5,
+        "x1": 368,
+        "y1": 660.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 654.5,
+        "x1": 338.5,
+        "y1": 657.5,
+        "topY": 1.4,
+        "bottomY": 0
+      },
+      {
+        "x0": 376.5,
+        "y0": 654.5,
+        "x1": 377.5,
+        "y1": 655.5,
+        "topY": 1.1,
+        "bottomY": 0
+      },
+      {
+        "x0": 379.5,
+        "y0": 655.5,
+        "x1": 380.5,
+        "y1": 656.5,
+        "topY": 1.1,
+        "bottomY": 0
+      },
+      {
+        "x0": 334.5,
+        "y0": 597.5,
+        "x1": 341.5,
+        "y1": 602.5,
+        "topY": 3.6964108884334577,
+        "bottomY": 0.49641088843345726
+      },
+      {
+        "x0": 302.6,
+        "y0": 592.8,
+        "x1": 307.4,
+        "y1": 595.2,
+        "topY": 4.197923946380615,
+        "bottomY": 2.747923946380615
+      },
+      {
+        "x0": 314.6,
+        "y0": 592.8,
+        "x1": 319.4,
+        "y1": 595.2,
+        "topY": 3.1019450187683106,
+        "bottomY": 1.6519450187683107
+      },
+      {
+        "x0": 430,
+        "y0": 617.5,
+        "x1": 438,
+        "y1": 624.5,
+        "topY": 5.393004465103149,
+        "bottomY": 1.993004465103149,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 428.7,
+        "y0": 612.7,
+        "x1": 431.3,
+        "y1": 615.3,
+        "topY": 3.859276986122131,
+        "bottomY": 1.7592769861221311,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 432.7,
+        "y0": 612.7,
+        "x1": 435.3,
+        "y1": 615.3,
+        "topY": 4.008293032646178,
+        "bottomY": 1.9082930326461784,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 436.7,
+        "y0": 612.7,
+        "x1": 439.3,
+        "y1": 615.3,
+        "topY": 4.151796007156371,
+        "bottomY": 2.051796007156371,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 318.6911554702948,
+        "y0": 564.031663107604,
+        "x1": 320.89115547029485,
+        "y1": 566.231663107604,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 318.51534314356263,
+        "y0": 566.2246268614698,
+        "x1": 320.7153431435627,
+        "y1": 568.4246268614698,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 318.3395308168304,
+        "y0": 568.4175906153356,
+        "x1": 320.53953081683045,
+        "y1": 570.6175906153356,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 318.16371849009823,
+        "y0": 570.6105543692013,
+        "x1": 320.3637184900983,
+        "y1": 572.8105543692013,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 317.98790616336606,
+        "y0": 572.8035181230671,
+        "x1": 320.1879061633661,
+        "y1": 575.0035181230671,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 317.8120938366339,
+        "y0": 574.9964818769329,
+        "x1": 320.01209383663394,
+        "y1": 577.1964818769329,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false,
+        "_solidQueryStamp": 292
+      },
+      {
+        "x0": 317.6362815099017,
+        "y0": 577.1894456307987,
+        "x1": 319.83628150990177,
+        "y1": 579.3894456307987,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.46046918316955,
+        "y0": 579.3824093846644,
+        "x1": 319.6604691831696,
+        "y1": 581.5824093846644,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.2846568564373,
+        "y0": 581.5753731385302,
+        "x1": 319.48465685643737,
+        "y1": 583.7753731385302,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 317.10884452970515,
+        "y0": 583.768336892396,
+        "x1": 319.3088445297052,
+        "y1": 585.968336892396,
+        "topY": 3.415425872802736,
+        "bottomY": 1.9154258728027356,
+        "disabled": false
+      },
+      {
+        "x0": 421.9116491751964,
+        "y0": 574.0494587637476,
+        "x1": 424.1116491751964,
+        "y1": 576.2494587637476,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.1312826918194,
+        "y0": 576.2384679273591,
+        "x1": 424.33128269181947,
+        "y1": 578.4384679273592,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.3509162084424,
+        "y0": 578.4274770909708,
+        "x1": 424.55091620844246,
+        "y1": 580.6274770909708,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.57054972506546,
+        "y0": 580.6164862545825,
+        "x1": 424.7705497250655,
+        "y1": 582.8164862545825,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 422.79018324168845,
+        "y0": 582.8054954181941,
+        "x1": 424.9901832416885,
+        "y1": 585.0054954181942,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.0098167583115,
+        "y0": 584.9945045818058,
+        "x1": 425.20981675831155,
+        "y1": 587.1945045818059,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.2294502749345,
+        "y0": 587.1835137454175,
+        "x1": 425.42945027493454,
+        "y1": 589.3835137454175,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.44908379155754,
+        "y0": 589.3725229090292,
+        "x1": 425.6490837915576,
+        "y1": 591.5725229090292,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.66871730818053,
+        "y0": 591.5615320726408,
+        "x1": 425.8687173081806,
+        "y1": 593.7615320726409,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 423.8883508248036,
+        "y0": 593.7505412362524,
+        "x1": 426.0883508248036,
+        "y1": 595.9505412362524,
+        "topY": 2.950470709800722,
+        "bottomY": 1.450470709800722,
+        "disabled": false
+      },
+      {
+        "x0": 454.6,
+        "y0": 615,
+        "x1": 455.4,
+        "y1": 635,
+        "topY": 6.665611457824707,
+        "bottomY": 2.465611457824707,
+        "disabled": true,
+        "_solidQueryStamp": 164
+      },
+      {
+        "x0": 329.3,
+        "y0": 684,
+        "x1": 330.7,
+        "y1": 736,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 192,
+        "disabled": false
+      },
+      {
+        "x0": 389.3,
+        "y0": 684,
+        "x1": 390.7,
+        "y1": 736,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 133,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 703.3,
+        "x1": 352,
+        "y1": 704.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 368,
+        "y0": 703.3,
+        "x1": 390,
+        "y1": 704.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 133,
+        "disabled": false
+      },
+      {
+        "x0": 330,
+        "y0": 734.3,
+        "x1": 352,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 368,
+        "y0": 734.3,
+        "x1": 390,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 390,
+        "y0": 734.3,
+        "x1": 410.70000000000005,
+        "y1": 735.7,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 329.3,
+        "y0": 735,
+        "x1": 330.7,
+        "y1": 795,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 329.3,
+        "y0": 794.3,
+        "x1": 410.7,
+        "y1": 795.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 735,
+        "x1": 410.7,
+        "y1": 745,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 759,
+        "x1": 410.7,
+        "y1": 769,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.3,
+        "y0": 769,
+        "x1": 410.7,
+        "y1": 795,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 410,
+        "y0": 735.3,
+        "x1": 450.70000000000005,
+        "y1": 736.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 101,
+        "disabled": false
+      },
+      {
+        "x0": 410,
+        "y0": 769.3,
+        "x1": 450.70000000000005,
+        "y1": 770.7,
+        "topY": 9,
+        "bottomY": 0,
+        "_solidQueryStamp": 123,
+        "disabled": false
+      },
+      {
+        "x0": 449.3,
+        "y0": 736,
+        "x1": 450.7,
+        "y1": 746,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 449.3,
+        "y0": 758,
+        "x1": 450.7,
+        "y1": 770,
+        "topY": 9,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 689.5,
+        "x1": 368,
+        "y1": 690.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 352,
+        "y0": 734.5,
+        "x1": 368,
+        "y1": 735.5,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 409.5,
+        "y0": 745,
+        "x1": 410.5,
+        "y1": 759,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 449.5,
+        "y0": 746,
+        "x1": 450.5,
+        "y1": 758,
+        "topY": 8.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 332.7,
+        "y0": 693.5,
+        "x1": 335.3,
+        "y1": 696.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 384.7,
+        "y0": 693.5,
+        "x1": 387.3,
+        "y1": 696.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 133,
+        "disabled": false
+      },
+      {
+        "x0": 332.7,
+        "y0": 699.5,
+        "x1": 335.3,
+        "y1": 702.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 384.7,
+        "y0": 699.5,
+        "x1": 387.3,
+        "y1": 702.5,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 133,
+        "disabled": false
+      },
+      {
+        "x0": 382,
+        "y0": 710.9,
+        "x1": 386,
+        "y1": 713.1,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 382,
+        "y0": 720.9,
+        "x1": 386,
+        "y1": 723.1,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 708.9,
+        "x1": 388.59999999999997,
+        "y1": 711.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 714.9,
+        "x1": 388.59999999999997,
+        "y1": 717.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 720.9,
+        "x1": 388.59999999999997,
+        "y1": 723.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 386.8,
+        "y0": 726.9,
+        "x1": 388.59999999999997,
+        "y1": 729.1,
+        "topY": 3.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 708.6,
+        "x1": 340.5,
+        "y1": 711.4,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 335.5,
+        "y0": 726.6,
+        "x1": 340.5,
+        "y1": 729.4,
+        "topY": 1.4,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 344.5,
+        "y0": 712.8,
+        "x1": 349.5,
+        "y1": 715.2,
+        "topY": 1.15,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 344.5,
+        "y0": 720.8,
+        "x1": 349.5,
+        "y1": 723.2,
+        "topY": 1.15,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 331.75,
+        "y0": 716.95,
+        "x1": 336.25,
+        "y1": 719.05,
+        "topY": 1.35,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 375.2,
+        "y0": 717.5,
+        "x1": 376.8,
+        "y1": 718.5,
+        "topY": 1.45,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 341.25,
+        "y0": 710.5,
+        "x1": 342.75,
+        "y1": 711.5,
+        "topY": 1.35,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 415.5,
+        "y0": 740,
+        "x1": 420.5,
+        "y1": 744,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 431.5,
+        "y0": 740,
+        "x1": 436.5,
+        "y1": 744,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 415.5,
+        "y0": 762,
+        "x1": 420.5,
+        "y1": 766,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 431.5,
+        "y0": 762,
+        "x1": 436.5,
+        "y1": 766,
+        "topY": 3.6,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 424,
+        "y0": 741,
+        "x1": 426,
+        "y1": 743,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 440,
+        "y0": 741,
+        "x1": 442,
+        "y1": 743,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 424,
+        "y0": 763,
+        "x1": 426,
+        "y1": 765,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 440,
+        "y0": 763,
+        "x1": 442,
+        "y1": 765,
+        "topY": 3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 336.4,
+        "y0": 744.9,
+        "x1": 339.6,
+        "y1": 747.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 192,
+        "disabled": false
+      },
+      {
+        "x0": 400.4,
+        "y0": 744.9,
+        "x1": 403.6,
+        "y1": 747.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 336.4,
+        "y0": 780.9,
+        "x1": 339.6,
+        "y1": 783.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 400.4,
+        "y0": 780.9,
+        "x1": 403.6,
+        "y1": 783.1,
+        "topY": 2.1,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 333.75,
+        "y0": 757,
+        "x1": 336.25,
+        "y1": 761,
+        "topY": 3.2,
+        "bottomY": 0,
+        "_solidQueryStamp": 192,
+        "disabled": false
+      },
+      {
+        "x0": 333.75,
+        "y0": 772,
+        "x1": 336.25,
+        "y1": 776,
+        "topY": 3.2,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 402.75,
+        "y0": 774,
+        "x1": 405.25,
+        "y1": 778,
+        "topY": 3.2,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 345.4,
+        "y0": 790,
+        "x1": 350.6,
+        "y1": 792,
+        "topY": 2.3,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 382.4,
+        "y0": 790,
+        "x1": 387.6,
+        "y1": 792,
+        "topY": 2.3,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 348.75,
+        "y0": 753.75,
+        "x1": 351.25,
+        "y1": 756.25,
+        "topY": 1.25,
+        "bottomY": 0,
+        "_solidQueryStamp": 192,
+        "disabled": false
+      },
+      {
+        "x0": 375.75,
+        "y0": 775.75,
+        "x1": 378.25,
+        "y1": 778.25,
+        "topY": 1.25,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 342.9,
+        "y0": 752.9,
+        "x1": 345.1,
+        "y1": 755.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "_solidQueryStamp": 192,
+        "disabled": false
+      },
+      {
+        "x0": 342.9,
+        "y0": 780.9,
+        "x1": 345.1,
+        "y1": 783.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "_solidQueryStamp": 231,
+        "disabled": false
+      },
+      {
+        "x0": 374.9,
+        "y0": 752.9,
+        "x1": 377.1,
+        "y1": 755.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 374.9,
+        "y0": 780.9,
+        "x1": 377.1,
+        "y1": 783.1,
+        "topY": 4.5,
+        "bottomY": 0,
+        "disabled": false
+      },
+      {
+        "x0": 417.5,
+        "y0": 74.8,
+        "x1": 426.5,
+        "y1": 77.2,
+        "topY": 1.3649650700390341,
+        "bottomY": 0.014965070039033994,
+        "disabled": false
+      },
+      {
+        "x0": 478,
+        "y0": 76.8,
+        "x1": 486,
+        "y1": 79.2,
+        "topY": 1.3705316409468653,
+        "bottomY": 0.020531640946865153,
+        "disabled": false,
+        "_solidQueryStamp": 316
+      },
+      {
+        "x0": 429.5,
+        "y0": 104.9,
+        "x1": 436.5,
+        "y1": 107.1,
+        "topY": 1.371623206138611,
+        "bottomY": 0.02162320613861108,
+        "disabled": false
+      },
+      {
+        "x0": 482,
+        "y0": 109.8,
+        "x1": 490,
+        "y1": 112.2,
+        "topY": 1.4325610175728802,
+        "bottomY": 0.08256101757288022,
+        "_solidQueryStamp": 230,
+        "disabled": false
+      },
+      {
+        "x0": 420.5,
+        "y0": 46.9,
+        "x1": 427.5,
+        "y1": 49.1,
+        "topY": 1.4107027359306807,
+        "bottomY": 0.06070273593068056,
+        "disabled": false
+      },
+      {
+        "x0": 466,
+        "y0": 46.8,
+        "x1": 474,
+        "y1": 49.2,
+        "topY": 1.3916239596903321,
+        "bottomY": 0.04162395969033203,
+        "disabled": false
+      },
+      {
+        "x0": 436.5,
+        "y0": 95,
+        "x1": 439.5,
+        "y1": 97,
+        "topY": 1.2539243647363036,
+        "bottomY": 0.0039243647363036635,
+        "disabled": true
+      },
+      {
+        "x0": 436.79589402097514,
+        "y0": 220.39828664143954,
+        "x1": 438.0958940209751,
+        "y1": 221.69828664143955,
+        "topY": 7.1734245186310455,
+        "bottomY": 2.5321837841664623
+      },
+      {
+        "x0": 436.1704129171626,
+        "y0": 227.38175092421304,
+        "x1": 437.47041291716255,
+        "y1": 228.68175092421305,
+        "topY": 7.314790686312209,
+        "bottomY": 2.686645616298505
+      },
+      {
+        "x0": 434.1374173697905,
+        "y0": 223.47558818337043,
+        "x1": 436.1374173697905,
+        "y1": 225.27558818337044,
+        "topY": 3.7124562932520604,
+        "bottomY": 2.616498118175567
+      },
+      {
+        "x0": 414.52873245945085,
+        "y0": 448.18067511146677,
+        "x1": 415.34123245945085,
+        "y1": 448.99317511146677,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526
+      },
+      {
+        "x0": 415.3411072429426,
+        "y0": 448.1664111307201,
+        "x1": 416.1536072429426,
+        "y1": 448.9789111307201,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 416.15348202643435,
+        "y0": 448.1521471499735,
+        "x1": 416.96598202643435,
+        "y1": 448.9646471499735,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 416.9658568099261,
+        "y0": 448.1378831692268,
+        "x1": 417.7783568099261,
+        "y1": 448.9503831692268,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 417.7782315934178,
+        "y0": 448.12361918848023,
+        "x1": 418.5907315934178,
+        "y1": 448.93611918848023,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 418.59060637690953,
+        "y0": 448.1093552077336,
+        "x1": 419.40310637690953,
+        "y1": 448.9218552077336,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 419.4029811604013,
+        "y0": 448.09509122698694,
+        "x1": 420.2154811604013,
+        "y1": 448.90759122698694,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 420.21535594389303,
+        "y0": 448.0808272462403,
+        "x1": 421.02785594389303,
+        "y1": 448.8933272462403,
+        "topY": 4.856240627382401,
+        "bottomY": 3.6516512743667526,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 417.40175035434544,
+        "y0": 452.2855766220234,
+        "x1": 419.6017503543455,
+        "y1": 454.1855766220234,
+        "topY": 4.747097601385975,
+        "bottomY": 3.664393214465235,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 419.3142802852371,
+        "y0": 443.9263712344959,
+        "x1": 421.3142802852371,
+        "y1": 445.72637123449584,
+        "topY": 5.177792599388814,
+        "bottomY": 3.6457755400626426,
+        "_solidQueryStamp": 268
+      },
+      {
+        "x0": 208.37080858795233,
+        "y0": 692.799081696821,
+        "x1": 211.7708085879523,
+        "y1": 695.0990816968209,
+        "topY": 24.162979056344533,
+        "bottomY": 21.307606725572107
+      },
+      {
+        "x0": 209.47253722370186,
+        "y0": 696.9999205444448,
+        "x1": 211.27253722370187,
+        "y1": 698.5999205444447,
+        "topY": 22.73942293687775,
+        "bottomY": 21.595063945861483
+      },
+      {
+        "x0": 361.7755612828439,
+        "y0": 554.0228009108298,
+        "x1": 362.5880612828439,
+        "y1": 554.8353009108298,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 362.58601491210993,
+        "y0": 554.0804304588893,
+        "x1": 363.39851491210993,
+        "y1": 554.8929304588893,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 363.39646854137595,
+        "y0": 554.1380600069488,
+        "x1": 364.20896854137595,
+        "y1": 554.9505600069488,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 364.206922170642,
+        "y0": 554.1956895550082,
+        "x1": 365.019422170642,
+        "y1": 555.0081895550082,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 365.017375799908,
+        "y0": 554.2533191030678,
+        "x1": 365.829875799908,
+        "y1": 555.0658191030678,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 365.827829429174,
+        "y0": 554.3109486511273,
+        "x1": 366.640329429174,
+        "y1": 555.1234486511273,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 366.63828305844004,
+        "y0": 554.3685781991868,
+        "x1": 367.45078305844004,
+        "y1": 555.1810781991868,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 367.44873668770606,
+        "y0": 554.4262077472463,
+        "x1": 368.26123668770606,
+        "y1": 555.2387077472463,
+        "topY": 1.6138784608065238,
+        "bottomY": 0.4355240413325021
+      },
+      {
+        "x0": 368.1373647508563,
+        "y0": 551.489789274809,
+        "x1": 370.33736475085635,
+        "y1": 553.3897892748091,
+        "topY": 1.6133218364136483,
+        "bottomY": 0.5030601775006871
+      },
+      {
+        "x0": 359.6907903244426,
+        "y0": 552.5175753320683,
+        "x1": 361.6907903244426,
+        "y1": 554.3175753320683,
+        "topY": 2.0018377726295418,
+        "bottomY": 0.45021143924641205
+      },
+      {
+        "x0": 425.48483085590806,
+        "y0": 250.3323807371393,
+        "x1": 428.48483085590806,
+        "y1": 253.3323807371393,
+        "topY": 6.865690268449543,
+        "bottomY": 3.038469382558877
+      },
+      {
+        "x0": 430.284830855908,
+        "y0": 250.3323807371393,
+        "x1": 433.284830855908,
+        "y1": 253.3323807371393,
+        "topY": 6.843025037243459,
+        "bottomY": 3.0139794141453593
+      },
+      {
+        "x0": 426.38483085590804,
+        "y0": 254.78238073713928,
+        "x1": 432.38483085590804,
+        "y1": 255.28238073713928,
+        "topY": 4.164004576347856,
+        "bottomY": 3.0273005058170765
+      },
+      {
+        "x0": 428.834830855908,
+        "y0": 247.88238073713927,
+        "x1": 429.93483085590805,
+        "y1": 248.9823807371393,
+        "topY": 7.245603638550909,
+        "bottomY": 3.0213547046667015
+      },
+      {
+        "x0": 223.7177133693637,
+        "y0": 739.4651687604671,
+        "x1": 225.7177133693637,
+        "y1": 741.4651687604671,
+        "topY": 31.16758253729139,
+        "bottomY": 19.98608842379043,
+        "_solidQueryStamp": 233
+      },
+      {
+        "x0": 301,
+        "y0": 625.725,
+        "x1": 307,
+        "y1": 626.275,
+        "topY": 4.211554574966432,
+        "bottomY": 3.161554574966432,
+        "_solidQueryStamp": 112
+      },
+      {
+        "x0": 417.4,
+        "y0": 584.725,
+        "x1": 422.6,
+        "y1": 585.275,
+        "topY": 2.3827326774597166,
+        "bottomY": 1.3327326774597168
+      },
+      {
+        "x0": 358.74211593366925,
+        "y0": 449.3515503669507,
+        "x1": 361.55351148151095,
+        "y1": 452.1629459147924,
+        "topY": 7.188163919466595,
+        "bottomY": 3.8893420017688074
+      },
+      {
+        "x0": 210.5651829419832,
+        "y0": 460.5134291602473,
+        "x1": 214.07181694822503,
+        "y1": 464.02006316648914,
+        "topY": 48.726716283668,
+        "bottomY": 44.68630667701008
+      },
+      {
+        "x0": 320.1212941409205,
+        "y0": 105.90252286951291,
+        "x1": 322.6156980990316,
+        "y1": 108.39692682762397,
+        "topY": 41.04937362465657,
+        "bottomY": 38.08867606933809,
+        "_solidQueryStamp": 185
+      },
+      {
+        "x0": 652.9857219031721,
+        "y0": 648.5792587346107,
+        "x1": 655.4092119613022,
+        "y1": 651.0027487927407,
+        "topY": 21.622136498949256,
+        "bottomY": 18.737080436943796
+      },
+      {
+        "x0": 498.41548689727205,
+        "y0": 375.0822728601517,
+        "x1": 500.7728282260476,
+        "y1": 377.43961418892724,
+        "topY": 5.7565947703847264,
+        "bottomY": 2.942097353024182,
+        "_solidQueryStamp": 145
+      },
+      {
+        "x0": 500.9627576627128,
+        "y0": 267.9853876762383,
+        "x1": 503.47281175774407,
+        "y1": 270.49544177126955,
+        "topY": 5.80622473601959,
+        "bottomY": 2.8288337013196143,
+        "_solidQueryStamp": 180
+      },
+      {
+        "x0": 336.0734316647751,
+        "y0": 190.3586198703153,
+        "x1": 339.2370392441051,
+        "y1": 193.5222274496453,
+        "topY": 25.058559085072712,
+        "bottomY": 21.384044333787397,
+        "_solidQueryStamp": 195
+      },
+      {
+        "x0": 351.2910482753825,
+        "y0": 386.00167253062244,
+        "x1": 353.4536397735763,
+        "y1": 388.16426402881626,
+        "topY": 6.919489520000777,
+        "bottomY": 4.312725255260728,
+        "_solidQueryStamp": 279
+      },
+      {
+        "x0": 250.18102152283535,
+        "y0": 472.1888089367305,
+        "x1": 252.61594729487553,
+        "y1": 474.62373470877066,
+        "topY": 26.04896999399798,
+        "bottomY": 23.151715837155148,
+        "_solidQueryStamp": 173
+      },
+      {
+        "x0": 503.46633200384093,
+        "y0": 440.6465450752468,
+        "x1": 505.19791799747037,
+        "y1": 442.37813106887626,
+        "topY": 7.609022631543203,
+        "bottomY": 5.461997571671827,
+        "_solidQueryStamp": 271
+      },
+      {
+        "x0": 594.9637102562003,
+        "y0": 479.3340359481983,
+        "x1": 598.5566874367184,
+        "y1": 482.9270131287165,
+        "topY": 28.169076183268455,
+        "bottomY": 24.036567190715697,
+        "_solidQueryStamp": 187
+      },
+      {
+        "x0": 483.1422003708023,
+        "y0": 200.2794843889016,
+        "x1": 484.8826595791441,
+        "y1": 202.0199435972434,
+        "topY": 4.544109284570969,
+        "bottomY": 2.387619462339736
+      },
+      {
+        "x0": 318.3117117179092,
+        "y0": 493.6461461154278,
+        "x1": 320.34818647378125,
+        "y1": 495.6826208712999,
+        "topY": 6.349172467682944,
+        "bottomY": 3.876932728086101,
+        "_solidQueryStamp": 281
+      },
+      {
+        "x0": 175.93085642946534,
+        "y0": 558.1423503164726,
+        "x1": 178.254449478857,
+        "y1": 560.4659433658642,
+        "topY": 5.991729804159085,
+        "bottomY": 3.2132305514746706,
+        "_solidQueryStamp": 169
+      },
+      {
+        "x0": 534.0708322040621,
+        "y0": 742.3561611361686,
+        "x1": 535.6466331370291,
+        "y1": 743.9319620691356,
+        "topY": 5.871858341770855,
+        "bottomY": 3.891004013272611,
+        "_solidQueryStamp": 280
+      },
+      {
+        "x0": 556.9837934501877,
+        "y0": 132.20598559607168,
+        "x1": 559.6075733027944,
+        "y1": 134.82976544867853,
+        "topY": 9.838311180489377,
+        "bottomY": 6.7396126710421,
+        "_solidQueryStamp": 194
+      },
+      {
+        "x0": 296.5731179918395,
+        "y0": 479.9430661480175,
+        "x1": 298.8907770608319,
+        "y1": 482.2607252170099,
+        "topY": 14.622909648986239,
+        "bottomY": 11.850739975394387,
+        "_solidQueryStamp": 272
+      },
+      {
+        "x0": 355.27058098740525,
+        "y0": 422.2999731478805,
+        "x1": 358.0906632887607,
+        "y1": 425.12005544923596,
+        "topY": 7.910744885706073,
+        "bottomY": 4.602657097593611
+      },
+      {
+        "x0": 455.31554130510193,
+        "y0": 420.5272756670485,
+        "x1": 456.90026821895736,
+        "y1": 422.11200258090395,
+        "topY": 5.276273244862537,
+        "bottomY": 3.2858978700834323
+      },
+      {
+        "x0": 217.7600361370889,
+        "y0": 491.79882574467337,
+        "x1": 219.41631324948395,
+        "y1": 493.4551028570684,
+        "topY": 6.892832997161429,
+        "bottomY": 4.826137410606724,
+        "_solidQueryStamp": 182
+      },
+      {
+        "x0": 355.95414545985403,
+        "y0": 254.32993248703423,
+        "x1": 357.9009713545209,
+        "y1": 256.2767583817011,
+        "topY": 5.0895225236229225,
+        "bottomY": 2.712908235978298
+      },
+      {
+        "x0": 673.5237126143941,
+        "y0": 647.7180926965841,
+        "x1": 675.2930819151632,
+        "y1": 649.4874619973532,
+        "topY": 54.04730987464917,
+        "bottomY": 51.85998262049539
+      },
+      {
+        "x0": 458.03342708821873,
+        "y0": 362.02338156725745,
+        "x1": 460.6273946774425,
+        "y1": 364.6173491564812,
+        "topY": 7.384258494090041,
+        "bottomY": 4.317359732251366
+      },
+      {
+        "x0": 555.1248484059063,
+        "y0": 485.28313215363886,
+        "x1": 556.4838986144575,
+        "y1": 486.6421823621902,
+        "topY": 10.77607963373033,
+        "bottomY": 9.02642607794223,
+        "_solidQueryStamp": 187
+      },
+      {
+        "x0": 514.7657932703617,
+        "y0": 769.7009164829972,
+        "x1": 516.837768816459,
+        "y1": 771.7728920290945,
+        "topY": 7.288017499660698,
+        "bottomY": 4.777910250490156,
+        "_solidQueryStamp": 288
+      },
+      {
+        "x0": 524.9943739889015,
+        "y0": 681.6637427700509,
+        "x1": 528.4944859178911,
+        "y1": 685.1638546990405,
+        "topY": 7.0166669113484526,
+        "bottomY": 2.9832141870928313,
+        "_solidQueryStamp": 181
+      },
+      {
+        "x0": 550.3940935946769,
+        "y0": 716.0890294007725,
+        "x1": 551.9688096128637,
+        "y1": 717.6637454189593,
+        "topY": 9.855991290003935,
+        "bottomY": 7.8762942039379285
+      },
+      {
+        "x0": 101.12945427852101,
+        "y0": 567.3136153231783,
+        "x1": 104.05287416917854,
+        "y1": 570.2370352138357,
+        "topY": 34.698288962896605,
+        "bottomY": 31.2799744128619,
+        "_solidQueryStamp": 154
+      },
+      {
+        "x0": 566.0682005097508,
+        "y0": 218.51124309351434,
+        "x1": 569.03665985564,
+        "y1": 221.47970243940364,
+        "topY": 52.336081848699976,
+        "bottomY": 48.86972521308475,
+        "_solidQueryStamp": 236
+      },
+      {
+        "x0": 516.4500503953489,
+        "y0": 367.38024439326836,
+        "x1": 518.7836137447564,
+        "y1": 369.713807742676,
+        "topY": 8.522046830604602,
+        "bottomY": 5.7329125912364605,
+        "_solidQueryStamp": 92
+      },
+      {
+        "x0": 488.1620916954591,
+        "y0": 429.8356955356314,
+        "x1": 490.31743822178106,
+        "y1": 431.99104206195335,
+        "topY": 5.746318353346664,
+        "bottomY": 3.1472820586032464,
+        "_solidQueryStamp": 271
+      },
+      {
+        "x0": 541.9145262366103,
+        "y0": 797.2494796415733,
+        "x1": 543.8594778502418,
+        "y1": 799.1944312552048,
+        "topY": 19.812413795111343,
+        "bottomY": 17.437798740571008,
+        "_solidQueryStamp": 288
+      },
+      {
+        "x0": 608.8801137262374,
+        "y0": 637.4435805806309,
+        "x1": 611.4771985358209,
+        "y1": 640.0406653902144,
+        "topY": 5.0893010906114515,
+        "bottomY": 2.0190772937222663,
+        "_solidQueryStamp": 235
+      },
+      {
+        "x0": 393.1220856097818,
+        "y0": 179.60955412809852,
+        "x1": 394.56733832384344,
+        "y1": 181.0548068421602,
+        "topY": 4.877284666715336,
+        "bottomY": 3.0356817717162494,
+        "_solidQueryStamp": 244
+      },
+      {
+        "x0": 107.42107059805421,
+        "y0": 527.552465051401,
+        "x1": 110.28514329345198,
+        "y1": 530.4165377467987,
+        "topY": 37.22740748815626,
+        "bottomY": 33.872396613065305,
+        "_solidQueryStamp": 284
+      },
+      {
+        "x0": 541.2218068896502,
+        "y0": 146.55436120766097,
+        "x1": 544.5917880923778,
+        "y1": 149.92434241038865,
+        "topY": 6.7663921282085155,
+        "bottomY": 2.871745511965689,
+        "_solidQueryStamp": 294
+      },
+      {
+        "x0": 214.12636844911611,
+        "y0": 776.765168481553,
+        "x1": 217.52129958472216,
+        "y1": 780.160099617159,
+        "topY": 26.424579655490792,
+        "bottomY": 22.503319777511035,
+        "_solidQueryStamp": 148
+      },
+      {
+        "x0": 173.71470412246998,
+        "y0": 730.3301307000977,
+        "x1": 175.69539206094925,
+        "y1": 732.3108186385768,
+        "topY": 28.279896779693555,
+        "bottomY": 25.86716297864903,
+        "_solidQueryStamp": 293
+      },
+      {
+        "x0": 569.0170893834322,
+        "y0": 487.63859685672213,
+        "x1": 572.4879985286505,
+        "y1": 491.1095060019405,
+        "topY": 10.807931511191342,
+        "bottomY": 6.805628422958468,
+        "_solidQueryStamp": 187
+      },
+      {
+        "x0": 148.99735713501576,
+        "y0": 565.1001325075806,
+        "x1": 151.58083213369247,
+        "y1": 567.6836075062572,
+        "topY": 8.877027670175092,
+        "bottomY": 5.821321004919963
+      },
+      {
+        "x0": 357.91939023281446,
+        "y0": 408.66144887502304,
+        "x1": 359.9298442587722,
+        "y1": 410.6719029009808,
+        "topY": 6.92857239293839,
+        "bottomY": 4.484088098583475
+      },
+      {
+        "x0": 124.51654700727086,
+        "y0": 614.665879031428,
+        "x1": 125.95731699674506,
+        "y1": 616.1066490209021,
+        "topY": 11.836981963226224,
+        "bottomY": 10.000160641120399,
+        "_solidQueryStamp": 306
+      },
+      {
+        "x0": 576.7928978141165,
+        "y0": 31.25874769797083,
+        "x1": 578.144902205863,
+        "y1": 32.61075208971742,
+        "topY": 43.45891512917927,
+        "bottomY": 41.71677711131623
+      },
+      {
+        "x0": 533.9893305086473,
+        "y0": 356.86591895007876,
+        "x1": 536.4966603583714,
+        "y1": 359.373248799803,
+        "topY": 32.138222595918116,
+        "bottomY": 29.163737422878977
+      },
+      {
+        "x0": 551.6249803309213,
+        "y0": 302.67331595019203,
+        "x1": 554.1978734131087,
+        "y1": 305.24620903237957,
+        "topY": 51.177411199046155,
+        "bottomY": 48.13299191137948
+      },
+      {
+        "x0": 165.45605618875123,
+        "y0": 606.7663063890825,
+        "x1": 168.3597736396303,
+        "y1": 609.6700238399615,
+        "topY": 10.031672245381523,
+        "bottomY": 6.634373631110539
+      },
+      {
+        "x0": 203.100613638747,
+        "y0": 746.3839780017618,
+        "x1": 206.39150799812052,
+        "y1": 749.6748723611352,
+        "topY": 25.575986045372044,
+        "bottomY": 21.76569872870699,
+        "_solidQueryStamp": 233
+      },
+      {
+        "x0": 558.2684958017373,
+        "y0": 53.32599912201404,
+        "x1": 560.307726483891,
+        "y1": 55.365229804167754,
+        "topY": 9.377699448559731,
+        "bottomY": 6.902520054262429,
+        "_solidQueryStamp": 291
+      },
+      {
+        "x0": 133.25900107789784,
+        "y0": 627.5203480215744,
+        "x1": 136.28963038157673,
+        "y1": 630.5509773252531,
+        "topY": 14.05003562430711,
+        "bottomY": 10.517364367049648,
+        "_solidQueryStamp": 303
+      },
+      {
+        "x0": 110.62951141725644,
+        "y0": 680.6412264494168,
+        "x1": 112.63090281058685,
+        "y1": 682.6426178427471,
+        "topY": 48.73561764555444,
+        "bottomY": 46.30080015933534
+      },
+      {
+        "x0": 491.2026089673677,
+        "y0": 676.4193778736939,
+        "x1": 492.1147656947795,
+        "y1": 677.3315346011055,
+        "topY": 8.192127871603054,
+        "bottomY": 4.2118076065334495,
+        "_solidQueryStamp": 201
+      },
+      {
+        "x0": 221.5077266547887,
+        "y0": 557.979350987212,
+        "x1": 222.9681018573989,
+        "y1": 559.4397261898221,
+        "topY": 9.338213765965675,
+        "bottomY": 2.9656674273031696
+      },
+      {
+        "x0": 468.6418860437015,
+        "y0": 714.7124890637906,
+        "x1": 469.62777375512684,
+        "y1": 715.6983767752158,
+        "topY": 8.816464532232125,
+        "bottomY": 4.5144090641944015
+      },
+      {
+        "x0": 481.9041523011468,
+        "y0": 619.3580797651655,
+        "x1": 482.8587297885512,
+        "y1": 620.31265725257,
+        "topY": 7.014324651930625,
+        "bottomY": 2.848895615983898,
+        "_solidQueryStamp": 104
+      },
+      {
+        "x0": 357.4754429349093,
+        "y0": 379.58867500882803,
+        "x1": 358.5029205830883,
+        "y1": 380.61615265700704,
+        "topY": 9.189019213362162,
+        "bottomY": 4.705480384944503,
+        "_solidQueryStamp": 238
+      },
+      {
+        "x0": 494.9854942817767,
+        "y0": 624.1455064923546,
+        "x1": 496.269754918722,
+        "y1": 625.4297671292998,
+        "topY": 9.075313896951963,
+        "bottomY": 3.4712674811908495
+      },
+      {
+        "x0": 404.82961837355856,
+        "y0": 181.19772572834765,
+        "x1": 405.9650335196068,
+        "y1": 182.3331408743958,
+        "topY": 7.895195740338034,
+        "bottomY": 2.9406569212186997,
+        "_solidQueryStamp": 244
+      },
+      {
+        "x0": 242.8918127079577,
+        "y0": 623.5157026803876,
+        "x1": 244.27250151941914,
+        "y1": 624.8963914918489,
+        "topY": 14.17353959546659,
+        "bottomY": 8.148715690907572
+      },
+      {
+        "x0": 413.8939177540394,
+        "y0": 180.93442055132468,
+        "x1": 414.94168335248094,
+        "y1": 181.98218614976614,
+        "topY": 6.728264254964011,
+        "bottomY": 2.156196189037578,
+        "_solidQueryStamp": 244
+      },
+      {
+        "x0": 310.35277726299296,
+        "y0": 503.4540621708718,
+        "x1": 312.00000260396564,
+        "y1": 505.1012875118445,
+        "topY": 11.689997798193364,
+        "bottomY": 4.50210540122178,
+        "_solidQueryStamp": 175
+      },
+      {
+        "x0": 299.84862745566005,
+        "y0": 750.1646232306215,
+        "x1": 301.30186907869944,
+        "y1": 751.6178648536608,
+        "topY": 11.891929335753312,
+        "bottomY": 5.550511344308845,
+        "_solidQueryStamp": 257
+      },
+      {
+        "x0": 433.8466231154577,
+        "y0": 434.3457918486542,
+        "x1": 434.74020489408366,
+        "y1": 435.23937362728014,
+        "topY": 7.461660262968159,
+        "bottomY": 3.562394319873071,
+        "_solidQueryStamp": 268
+      },
+      {
+        "x0": 424.3133663509961,
+        "y0": 450.61407080871817,
+        "x1": 425.322973242713,
+        "y1": 451.62367770043505,
+        "topY": 8.055473227304587,
+        "bottomY": 3.6499158816311446,
+        "_solidQueryStamp": 202
+      },
+      {
+        "x0": 343.8793580060398,
+        "y0": 445.53246554459594,
+        "x1": 345.41468959595005,
+        "y1": 447.0677971345062,
+        "topY": 11.191114284301065,
+        "bottomY": 4.4914855283292745
+      },
+      {
+        "x0": 469.0714513082279,
+        "y0": 314.44638919655034,
+        "x1": 470.1232997972321,
+        "y1": 315.49823768555456,
+        "topY": 9.605380037065448,
+        "bottomY": 5.015495721410813,
+        "_solidQueryStamp": 307
+      },
+      {
+        "x0": 329.29296027430087,
+        "y0": 381.7209475155117,
+        "x1": 330.7192182615049,
+        "y1": 383.14720550271574,
+        "topY": 15.156482846884108,
+        "bottomY": 8.932811629993893
+      },
+      {
+        "x0": 442.81662558628676,
+        "y0": 345.17428833086274,
+        "x1": 443.91178112978076,
+        "y1": 346.26944387435674,
+        "topY": 10.176782128969823,
+        "bottomY": 5.397921575541293
+      },
+      {
+        "x0": 164.17318813810462,
+        "y0": 711.5539775480046,
+        "x1": 165.1407465460604,
+        "y1": 712.5215359559603,
+        "topY": 26.373996632799315,
+        "bottomY": 22.151923579901265,
+        "_solidQueryStamp": 293
+      },
+      {
+        "x0": 313.3139759387317,
+        "y0": 718.5857999973608,
+        "x1": 314.3599176942938,
+        "y1": 719.631741752923,
+        "topY": 6.876115526401696,
+        "bottomY": 2.3120060475853053
+      },
+      {
+        "x0": 613.6374826959815,
+        "y0": 646.3988086615216,
+        "x1": 614.6633385802214,
+        "y1": 647.4246645457615,
+        "topY": 7.851702191770642,
+        "bottomY": 3.375240151450604,
+        "_solidQueryStamp": 223
+      },
+      {
+        "x0": 424.31737917787467,
+        "y0": 526.9459931914553,
+        "x1": 425.6034591204913,
+        "y1": 528.2320731340719,
+        "topY": 7.71455136837111,
+        "bottomY": 2.1025661642257982,
+        "_solidQueryStamp": 260
+      },
+      {
+        "x0": 236.60616296110365,
+        "y0": 588.4825432362553,
+        "x1": 237.69442144788027,
+        "y1": 589.5708017230319,
+        "topY": 9.07600483100029,
+        "bottomY": 4.32724052506598,
+        "_solidQueryStamp": 137
+      },
+      {
+        "x0": 440.49333048307125,
+        "y0": 787.7409117047002,
+        "x1": 441.59284603246743,
+        "y1": 788.8404272540963,
+        "topY": 9.766936373523839,
+        "bottomY": 4.96905033979512
+      },
+      {
+        "x0": 379.6802519435179,
+        "y0": 157.7580314547986,
+        "x1": 380.5812148703425,
+        "y1": 158.65899438162322,
+        "topY": 5.6589872306203395,
+        "bottomY": 1.7275126408403667
+      },
+      {
+        "x0": 387.75829495134724,
+        "y0": 343.4635043911213,
+        "x1": 388.8764386862466,
+        "y1": 344.5816481260207,
+        "topY": 11.086003574871038,
+        "bottomY": 6.206830913492058,
+        "_solidQueryStamp": 242
+      },
+      {
+        "x0": 396.6445813543077,
+        "y0": 212.3139350991061,
+        "x1": 398.2191506064643,
+        "y1": 213.88850435126275,
+        "topY": 9.57825197762217,
+        "bottomY": 2.707404331847687,
+        "_solidQueryStamp": 197
+      },
+      {
+        "x0": 496.19492571423336,
+        "y0": 771.2678872274614,
+        "x1": 497.4022636589784,
+        "y1": 772.4752251722066,
+        "topY": 10.658908882166365,
+        "bottomY": 5.390525123278716,
+        "_solidQueryStamp": 163
+      },
+      {
+        "x0": 487.63029944848563,
+        "y0": 705.2090963815797,
+        "x1": 488.7413490187919,
+        "y1": 706.3201459518859,
+        "topY": 8.458916615360547,
+        "bottomY": 3.610700308569838,
+        "_solidQueryStamp": 218
+      },
+      {
+        "x0": 495.7278925132373,
+        "y0": 411.7600454738651,
+        "x1": 496.6639651924878,
+        "y1": 412.6961181531156,
+        "topY": 7.439731295266194,
+        "bottomY": 3.355050513082188,
+        "_solidQueryStamp": 190
+      },
+      {
+        "x0": 380.8560647960877,
+        "y0": 493.43626223624796,
+        "x1": 382.15430056937817,
+        "y1": 494.7344980095384,
+        "topY": 8.233117025653009,
+        "bottomY": 2.5680881967489753,
+        "_solidQueryStamp": 221
+      },
+      {
+        "x0": 249.657950415447,
+        "y0": 591.768818657294,
+        "x1": 251.21826865007975,
+        "y1": 593.3291368919266,
+        "topY": 12.169154850674982,
+        "bottomY": 5.360493463186736,
+        "_solidQueryStamp": 137
+      },
+      {
+        "x0": 426.2235786988937,
+        "y0": 174.9553976408308,
+        "x1": 427.4184906257061,
+        "y1": 176.1503095676433,
+        "topY": 6.804029446320417,
+        "bottomY": 1.5898683111386318
+      },
+      {
+        "x0": 508.2764530855113,
+        "y0": 659.5982726445372,
+        "x1": 509.16739397673155,
+        "y1": 660.4892135357575,
+        "topY": 8.387860563305578,
+        "bottomY": 4.500118492526374,
+        "_solidQueryStamp": 205
+      },
+      {
+        "x0": 307.08387567085305,
+        "y0": 779.6201209665718,
+        "x1": 308.0698422459382,
+        "y1": 780.6060875416571,
+        "topY": 10.847761748508901,
+        "bottomY": 6.545362148137184
+      },
+      {
+        "x0": 347.78223222903966,
+        "y0": 326.477462682505,
+        "x1": 349.15087722085013,
+        "y1": 327.8461076743155,
+        "topY": 9.524774042344507,
+        "bottomY": 3.5525049871717056,
+        "_solidQueryStamp": 161
+      },
+      {
+        "x0": 232.7764082817446,
+        "y0": 598.1084599513691,
+        "x1": 234.38271393492275,
+        "y1": 599.7147656045473,
+        "topY": 11.735472425033729,
+        "bottomY": 4.726138665710966
+      },
+      {
+        "x0": 329.29999999999995,
+        "y0": 683,
+        "x1": 342,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 378,
+        "y0": 683,
+        "x1": 390.70000000000005,
+        "y1": 685,
+        "topY": 9,
+        "bottomY": 0
+      },
+      {
+        "x0": 351.4,
+        "y0": 616.75,
+        "x1": 352,
+        "y1": 619.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 616.75,
+        "x1": 368.6,
+        "y1": 619.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 616.75,
+        "x1": 368,
+        "y1": 619.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "front"
+      },
+      {
+        "x0": 351.4,
+        "y0": 658.75,
+        "x1": 352,
+        "y1": 661.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 658.75,
+        "x1": 368.6,
+        "y1": 661.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 658.75,
+        "x1": 368,
+        "y1": 661.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "bio_lab"
+      },
+      {
+        "x0": 351.4,
+        "y0": 682.75,
+        "x1": 352,
+        "y1": 685.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 682.75,
+        "x1": 368.6,
+        "y1": 685.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 682.75,
+        "x1": 368,
+        "y1": 685.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "vault_north"
+      },
+      {
+        "x0": 351.4,
+        "y0": 688.75,
+        "x1": 352,
+        "y1": 691.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 688.75,
+        "x1": 368.6,
+        "y1": 691.25,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 688.75,
+        "x1": 368,
+        "y1": 691.25,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_access"
+      },
+      {
+        "x0": 351.4,
+        "y0": 734.05,
+        "x1": 352,
+        "y1": 735.95,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 368,
+        "y0": 734.05,
+        "x1": 368.6,
+        "y1": 735.95,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 352,
+        "y0": 734.05,
+        "x1": 368,
+        "y1": 735.95,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_security"
+      },
+      {
+        "x0": 409.05,
+        "y0": 744.4,
+        "x1": 410.95,
+        "y1": 745,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 409.05,
+        "y0": 759,
+        "x1": 410.95,
+        "y1": 759.6,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 409.05,
+        "y0": 745,
+        "x1": 410.95,
+        "y1": 759,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_emergency"
+      },
+      {
+        "x0": 449.05,
+        "y0": 745.4,
+        "x1": 450.95,
+        "y1": 746,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 449.05,
+        "y0": 758,
+        "x1": 450.95,
+        "y1": 758.6,
+        "topY": 8.9,
+        "bottomY": 0
+      },
+      {
+        "x0": 449.05,
+        "y0": 746,
+        "x1": 450.95,
+        "y1": 758,
+        "topY": 9,
+        "bottomY": 8.149999999999999,
+        "overhead": true,
+        "portal": "lab_emergency_exit"
+      },
+      {
+        "x0": 443.5,
+        "y0": 71.75,
+        "x1": 458.5,
+        "y1": 76.25,
+        "topY": 14.300037914327367,
+        "bottomY": 0.30003791432736726,
+        "_solidQueryStamp": 316
+      }
+    ],
+    "mainHash": "22c136b3",
+    "colorsHash": "c4baf519",
+    "seamError": 0,
+    "colorError": 0,
+    "rearCollisionError": 2.4158453015843406e-13,
+    "minRimColor": 0.4751191735267639,
+    "rimColorError": 2.9795780287500406e-8,
+    "sameMaterial": true,
+    "slots": 8,
+    "sections": [
+      {
+        "name": "shell",
+        "objects": 23,
+        "solids": 12
+      },
+      {
+        "name": "hall",
+        "objects": 219,
+        "solids": 44
+      },
+      {
+        "name": "staging",
+        "objects": 3,
+        "solids": 28
+      },
+      {
+        "name": "laboratory",
+        "objects": 10,
+        "solids": 60
+      },
+      {
+        "name": "exterior",
+        "objects": 1,
+        "solids": 2
+      },
+      {
+        "name": "interior",
+        "objects": 1,
+        "solids": 0
+      }
+    ],
+    "trees": [
+      {
+        "position": [
+          491.6586873310736,
+          676.8754562373997,
+          4.2118076065334495
+        ],
+        "rotation": [
+          0,
+          0,
+          4.510946060564221,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          222.2379142560938,
+          558.709538588517,
+          2.9656674273031696
+        ],
+        "rotation": [
+          0,
+          0,
+          4.0361815404877275,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          469.13482989941417,
+          715.2054329195032,
+          4.5144090641944015
+        ],
+        "rotation": [
+          0,
+          0,
+          4.898384734620137,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          482.381441044849,
+          619.8353685088678,
+          2.848895615983898
+        ],
+        "rotation": [
+          0,
+          0,
+          1.9843917113199379,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          357.9891817589988,
+          380.10241383291753,
+          4.705480384944503
+        ],
+        "rotation": [
+          0,
+          0,
+          0.4811169887508826,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          495.62762460024936,
+          624.7876368108272,
+          3.4712674811908495
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7320813582895556,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          405.39732594658267,
+          181.76543330137173,
+          2.9406569212186997
+        ],
+        "rotation": [
+          0,
+          0,
+          0.8053724299201095,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          243.58215711368842,
+          624.2060470861182,
+          8.148715690907572
+        ],
+        "rotation": [
+          0,
+          0,
+          6.147199351893,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          414.4178005532602,
+          181.4583033505454,
+          2.156196189037578
+        ],
+        "rotation": [
+          0,
+          0,
+          0.5329100468025,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          311.1763899334793,
+          504.27767484135813,
+          4.50210540122178
+        ],
+        "rotation": [
+          0,
+          0,
+          1.054885443664368,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          300.57524826717975,
+          750.8912440421411,
+          5.550511344308845
+        ],
+        "rotation": [
+          0,
+          0,
+          4.483328993585386,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          434.2934140047707,
+          434.79258273796717,
+          3.562394319873071
+        ],
+        "rotation": [
+          0,
+          0,
+          6.115822591302121,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          424.81816979685453,
+          451.1188742545766,
+          3.6499158816311446
+        ],
+        "rotation": [
+          0,
+          0,
+          6.060511882360509,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          344.64702380099493,
+          446.30013133955106,
+          4.4914855283292745
+        ],
+        "rotation": [
+          0,
+          0,
+          5.099612118331234,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          469.59737555273,
+          314.97231344105245,
+          5.015495721410813
+        ],
+        "rotation": [
+          0,
+          0,
+          2.082882589083187,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          330.0060892679029,
+          382.4340765091137,
+          8.932811629993893
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7068590413931024,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          443.36420335803376,
+          345.72186610260974,
+          5.397921575541293
+        ],
+        "rotation": [
+          0,
+          0,
+          2.754327720073724,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          164.6569673420825,
+          712.0377567519824,
+          22.151923579901265
+        ],
+        "rotation": [
+          0,
+          0,
+          2.5157474617911855,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          313.83694681651275,
+          719.1087708751419,
+          2.3120060475853053
+        ],
+        "rotation": [
+          0,
+          0,
+          4.352110005136388,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          614.1504106381014,
+          646.9117366036415,
+          3.375240151450604
+        ],
+        "rotation": [
+          0,
+          0,
+          4.130482193699876,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          424.960419149183,
+          527.5890331627636,
+          2.1025661642257982
+        ],
+        "rotation": [
+          0,
+          0,
+          1.7069007053,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          237.15029220449196,
+          589.0266724796436,
+          4.32724052506598
+        ],
+        "rotation": [
+          0,
+          0,
+          0.2839098151033863,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          441.04308825776934,
+          788.2906694793983,
+          4.96905033979512
+        ],
+        "rotation": [
+          0,
+          0,
+          3.1919572701525176,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          380.1307334069302,
+          158.20851291821091,
+          1.7275126408403667
+        ],
+        "rotation": [
+          0,
+          0,
+          5.1762979739077855,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          388.3173668187969,
+          344.022576258571,
+          6.206830913492058
+        ],
+        "rotation": [
+          0,
+          0,
+          4.442129633398092,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          397.431865980386,
+          213.10121972518442,
+          2.707404331847687
+        ],
+        "rotation": [
+          0,
+          0,
+          0.35005617685628715,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          496.7985946866059,
+          771.871556199834,
+          5.390525123278716
+        ],
+        "rotation": [
+          0,
+          0,
+          4.664260583323769,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          488.18582423363875,
+          705.7646211667328,
+          3.610700308569838
+        ],
+        "rotation": [
+          0,
+          0,
+          0.8437985246011916,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          496.19592885286255,
+          412.22808181349035,
+          3.355050513082188
+        ],
+        "rotation": [
+          0,
+          0,
+          5.1566524060596,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          381.50518268273294,
+          494.0853801228932,
+          2.5680881967489753
+        ],
+        "rotation": [
+          0,
+          0,
+          1.0886985129144247,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          250.43810953276338,
+          592.5489777746103,
+          5.360493463186736
+        ],
+        "rotation": [
+          0,
+          0,
+          4.200968249269873,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          426.8210346622999,
+          175.55285360423704,
+          1.5898683111386318
+        ],
+        "rotation": [
+          0,
+          0,
+          5.005823047571405,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          508.72192353112143,
+          660.0437430901474,
+          4.500118492526374
+        ],
+        "rotation": [
+          0,
+          0,
+          3.4810078276627454,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          307.57685895839563,
+          780.1131042541144,
+          6.545362148137184
+        ],
+        "rotation": [
+          0,
+          0,
+          5.787426822791641,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          348.4665547249449,
+          327.16178517841024,
+          3.5525049871717056
+        ],
+        "rotation": [
+          0,
+          0,
+          5.038530981691005,
+          "XYZ"
+        ]
+      },
+      {
+        "position": [
+          233.57956110833368,
+          598.9116127779582,
+          4.726138665710966
+        ],
+        "rotation": [
+          0,
+          0,
+          1.0436815802241988,
+          "XYZ"
+        ]
+      }
+    ]
+  },
+  "changedBottoms": [
+    {
+      "x0": 185,
+      "y0": 585,
+      "x1": 195,
+      "y1": 591,
+      "bottomY": 2.4496521759033185,
+      "topY": 6.337110424041746
+    },
+    {
+      "x0": 192.9,
+      "y0": 565.8,
+      "x1": 197.1,
+      "y1": 568.2,
+      "bottomY": 2.2049046727779626,
+      "topY": 3.827203941345215
+    },
+    {
+      "x0": 215.9,
+      "y0": 583.8,
+      "x1": 220.1,
+      "y1": 586.2,
+      "bottomY": 2.4533292788429257,
+      "topY": 4.126891565322875
+    },
+    {
+      "x0": 219.4,
+      "y0": 567.4,
+      "x1": 222.6,
+      "y1": 570.6,
+      "bottomY": 2.4548936733427626,
+      "topY": 3.7431652545928955
+    },
+    {
+      "x0": 195.9,
+      "y0": 579.15,
+      "x1": 198.1,
+      "y1": 580.85,
+      "bottomY": 2.131622570848882,
+      "topY": 3.7030363082885747
+    },
+    {
+      "x0": 200.3,
+      "y0": 579.15,
+      "x1": 202.5,
+      "y1": 580.85,
+      "bottomY": 2.03719085638248,
+      "topY": 3.590630359649658
+    },
+    {
+      "x0": 204.70000000000002,
+      "y0": 579.15,
+      "x1": 206.9,
+      "y1": 580.85,
+      "bottomY": 2.024928817463291,
+      "topY": 3.563007106781006
+    },
+    {
+      "x0": 209.7,
+      "y0": 578.8,
+      "x1": 213.3,
+      "y1": 581.2,
+      "bottomY": 2.0705051707745774,
+      "topY": 4.761870098114015
+    },
+    {
+      "x0": 197,
+      "y0": 566.75,
+      "x1": 203,
+      "y1": 567.25,
+      "bottomY": 2.1153811502456663,
+      "topY": 3.333508110046387
+    },
+    {
+      "x0": 230.8,
+      "y0": 754.8,
+      "x1": 233.2,
+      "y1": 757.2,
+      "bottomY": 19.429880481492482,
+      "topY": 41.62432022094727
+    },
+    {
+      "x0": 255.5,
+      "y0": 756.9,
+      "x1": 260.5,
+      "y1": 759.1,
+      "bottomY": 15.415098455248456,
+      "topY": 17.322891998291016
+    },
+    {
+      "x0": 257,
+      "y0": 737.9,
+      "x1": 261,
+      "y1": 740.1,
+      "bottomY": 14.205447882001167,
+      "topY": 16.049746322631837
+    },
+    {
+      "x0": 238,
+      "y0": 732,
+      "x1": 244,
+      "y1": 734,
+      "bottomY": 17.30865257263184,
+      "topY": 19.161888885498044
+    },
+    {
+      "x0": 223,
+      "y0": 739.9,
+      "x1": 227,
+      "y1": 742.1,
+      "bottomY": 19.868143920797394,
+      "topY": 21.475085830688478
+    },
+    {
+      "x0": 234.6,
+      "y0": 727,
+      "x1": 235.4,
+      "y1": 737,
+      "bottomY": 18.600459670165083,
+      "topY": 21.112408447265622
+    },
+    {
+      "x0": 260.6,
+      "y0": 727,
+      "x1": 261.4,
+      "y1": 737,
+      "bottomY": 14.07438472622046,
+      "topY": 16.578778648376467
+    },
+    {
+      "x0": 234.6,
+      "y0": 759,
+      "x1": 235.4,
+      "y1": 769,
+      "bottomY": 19.38596191334916,
+      "topY": 22.179329299926753
+    },
+    {
+      "x0": 260.6,
+      "y0": 759,
+      "x1": 261.4,
+      "y1": 769,
+      "bottomY": 15.455137328038067,
+      "topY": 18.49210968017578
+    },
+    {
+      "x0": 253.3,
+      "y0": 743.3,
+      "x1": 254.7,
+      "y1": 744.7,
+      "bottomY": 15.670547355215138,
+      "topY": 30.810206222534184
+    },
+    {
+      "x0": 559.25,
+      "y0": 596.25,
+      "x1": 560.75,
+      "y1": 597.75,
+      "bottomY": 1.640242551560121,
+      "topY": 7.254232096672055
+    },
+    {
+      "x0": 588.25,
+      "y0": 580.25,
+      "x1": 589.75,
+      "y1": 581.75,
+      "bottomY": -0.02,
+      "topY": 5.5
+    },
+    {
+      "x0": 581.25,
+      "y0": 602.25,
+      "x1": 582.75,
+      "y1": 603.75,
+      "bottomY": 1.0099149559951988,
+      "topY": 6.572137546539307
+    },
+    {
+      "x0": 552.25,
+      "y0": 586.8,
+      "x1": 557.75,
+      "y1": 589.2,
+      "bottomY": 1.3007576090511015,
+      "topY": 2.71349856853485
+    },
+    {
+      "x0": 582.25,
+      "y0": 566.8,
+      "x1": 587.75,
+      "y1": 569.2,
+      "bottomY": -0.02,
+      "topY": 1.3
+    },
+    {
+      "x0": 552.9336261571644,
+      "y0": 577.5308616920937,
+      "x1": 554.4336261571644,
+      "y1": 579.0308616920937,
+      "bottomY": 1.0686211105022514,
+      "topY": 1.813605165481567
+    },
+    {
+      "x0": 554.25,
+      "y0": 578.25,
+      "x1": 555.75,
+      "y1": 579.75,
+      "bottomY": 1.0686211105022514,
+      "topY": 1.813605165481567
+    },
+    {
+      "x0": 555.5663738428356,
+      "y0": 578.9691383079063,
+      "x1": 557.0663738428356,
+      "y1": 580.4691383079063,
+      "bottomY": 1.0686211105022514,
+      "topY": 1.813605165481567
+    },
+    {
+      "x0": 590.840940930729,
+      "y0": 593.7643467111832,
+      "x1": 592.340940930729,
+      "y1": 595.2643467111832,
+      "bottomY": 0.2902198280774967,
+      "topY": 1.1221154034137757
+    },
+    {
+      "x0": 592.25,
+      "y0": 593.25,
+      "x1": 593.75,
+      "y1": 594.75,
+      "bottomY": 0.2902198280774967,
+      "topY": 1.1221154034137757
+    },
+    {
+      "x0": 593.659059069271,
+      "y0": 592.7356532888168,
+      "x1": 595.159059069271,
+      "y1": 594.2356532888168,
+      "bottomY": 0.2902198280774967,
+      "topY": 1.1221154034137757
+    },
+    {
+      "x0": 575.1027367190733,
+      "y0": 563.2836734691434,
+      "x1": 576.6027367190733,
+      "y1": 564.7836734691434,
+      "bottomY": -0.009721097209728113,
+      "topY": 0.7548970073461557
+    },
+    {
+      "x0": 576.25,
+      "y0": 564.25,
+      "x1": 577.75,
+      "y1": 565.75,
+      "bottomY": -0.009721097209728113,
+      "topY": 0.7548970073461557
+    },
+    {
+      "x0": 577.3972632809267,
+      "y0": 565.2163265308566,
+      "x1": 578.8972632809267,
+      "y1": 566.7163265308566,
+      "bottomY": -0.009721097209728113,
+      "topY": 0.7548970073461557
+    },
+    {
+      "x0": 570.4584940108621,
+      "y0": 600.142813507338,
+      "x1": 571.2084940108621,
+      "y1": 600.892813507338,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 571.0774957220443,
+      "y0": 600.5662953623843,
+      "x1": 571.8274957220443,
+      "y1": 601.3162953623843,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 571.6964974332266,
+      "y0": 600.9897772174306,
+      "x1": 572.4464974332266,
+      "y1": 601.7397772174306,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 572.3154991444088,
+      "y0": 601.4132590724769,
+      "x1": 573.0654991444088,
+      "y1": 602.1632590724769,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 572.9345008555912,
+      "y0": 601.8367409275231,
+      "x1": 573.6845008555912,
+      "y1": 602.5867409275231,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 573.5535025667734,
+      "y0": 602.2602227825694,
+      "x1": 574.3035025667734,
+      "y1": 603.0102227825694,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 574.1725042779557,
+      "y0": 602.6837046376157,
+      "x1": 574.9225042779557,
+      "y1": 603.4337046376157,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 574.7915059891379,
+      "y0": 603.107186492662,
+      "x1": 575.5415059891379,
+      "y1": 603.857186492662,
+      "bottomY": 1.3190809689963654,
+      "topY": 2.0072313785552947
+    },
+    {
+      "x0": 596.4077889123379,
+      "y0": 600.6552711297129,
+      "x1": 597.2077889123378,
+      "y1": 601.4552711297129,
+      "bottomY": 0.5503315288998826,
+      "topY": 7.0927143573760985
+    },
+    {
+      "x0": 596.7922110876622,
+      "y0": 600.5447288702871,
+      "x1": 597.5922110876621,
+      "y1": 601.3447288702871,
+      "bottomY": 0.5503315288998826,
+      "topY": 7.0927143573760985
+    },
+    {
+      "x0": 436.79589402097514,
+      "y0": 220.39828664143954,
+      "x1": 438.0958940209751,
+      "y1": 221.69828664143955,
+      "bottomY": 2.5321837841664623,
+      "topY": 7.1734245186310455
+    },
+    {
+      "x0": 436.1704129171626,
+      "y0": 227.38175092421304,
+      "x1": 437.47041291716255,
+      "y1": 228.68175092421305,
+      "bottomY": 2.686645616298505,
+      "topY": 7.314790686312209
+    },
+    {
+      "x0": 434.1374173697905,
+      "y0": 223.47558818337043,
+      "x1": 436.1374173697905,
+      "y1": 225.27558818337044,
+      "bottomY": 2.616498118175567,
+      "topY": 3.7124562932520604
+    },
+    {
+      "x0": 414.52873245945085,
+      "y0": 448.18067511146677,
+      "x1": 415.34123245945085,
+      "y1": 448.99317511146677,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 415.3411072429426,
+      "y0": 448.1664111307201,
+      "x1": 416.1536072429426,
+      "y1": 448.9789111307201,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 416.15348202643435,
+      "y0": 448.1521471499735,
+      "x1": 416.96598202643435,
+      "y1": 448.9646471499735,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 416.9658568099261,
+      "y0": 448.1378831692268,
+      "x1": 417.7783568099261,
+      "y1": 448.9503831692268,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 417.7782315934178,
+      "y0": 448.12361918848023,
+      "x1": 418.5907315934178,
+      "y1": 448.93611918848023,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 418.59060637690953,
+      "y0": 448.1093552077336,
+      "x1": 419.40310637690953,
+      "y1": 448.9218552077336,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 419.4029811604013,
+      "y0": 448.09509122698694,
+      "x1": 420.2154811604013,
+      "y1": 448.90759122698694,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 420.21535594389303,
+      "y0": 448.0808272462403,
+      "x1": 421.02785594389303,
+      "y1": 448.8933272462403,
+      "bottomY": 3.6516512743667526,
+      "topY": 4.856240627382401
+    },
+    {
+      "x0": 417.40175035434544,
+      "y0": 452.2855766220234,
+      "x1": 419.6017503543455,
+      "y1": 454.1855766220234,
+      "bottomY": 3.664393214465235,
+      "topY": 4.747097601385975
+    },
+    {
+      "x0": 419.3142802852371,
+      "y0": 443.9263712344959,
+      "x1": 421.3142802852371,
+      "y1": 445.72637123449584,
+      "bottomY": 3.6457755400626426,
+      "topY": 5.177792599388814
+    },
+    {
+      "x0": 208.37080858795233,
+      "y0": 692.799081696821,
+      "x1": 211.7708085879523,
+      "y1": 695.0990816968209,
+      "bottomY": 21.307606725572107,
+      "topY": 24.162979056344533
+    },
+    {
+      "x0": 209.47253722370186,
+      "y0": 696.9999205444448,
+      "x1": 211.27253722370187,
+      "y1": 698.5999205444447,
+      "bottomY": 21.595063945861483,
+      "topY": 22.73942293687775
+    },
+    {
+      "x0": 361.7755612828439,
+      "y0": 554.0228009108298,
+      "x1": 362.5880612828439,
+      "y1": 554.8353009108298,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 362.58601491210993,
+      "y0": 554.0804304588893,
+      "x1": 363.39851491210993,
+      "y1": 554.8929304588893,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 363.39646854137595,
+      "y0": 554.1380600069488,
+      "x1": 364.20896854137595,
+      "y1": 554.9505600069488,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 364.206922170642,
+      "y0": 554.1956895550082,
+      "x1": 365.019422170642,
+      "y1": 555.0081895550082,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 365.017375799908,
+      "y0": 554.2533191030678,
+      "x1": 365.829875799908,
+      "y1": 555.0658191030678,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 365.827829429174,
+      "y0": 554.3109486511273,
+      "x1": 366.640329429174,
+      "y1": 555.1234486511273,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 366.63828305844004,
+      "y0": 554.3685781991868,
+      "x1": 367.45078305844004,
+      "y1": 555.1810781991868,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 367.44873668770606,
+      "y0": 554.4262077472463,
+      "x1": 368.26123668770606,
+      "y1": 555.2387077472463,
+      "bottomY": 0.4355240413325021,
+      "topY": 1.6138784608065238
+    },
+    {
+      "x0": 368.1373647508563,
+      "y0": 551.489789274809,
+      "x1": 370.33736475085635,
+      "y1": 553.3897892748091,
+      "bottomY": 0.5030601775006871,
+      "topY": 1.6133218364136483
+    },
+    {
+      "x0": 359.6907903244426,
+      "y0": 552.5175753320683,
+      "x1": 361.6907903244426,
+      "y1": 554.3175753320683,
+      "bottomY": 0.45021143924641205,
+      "topY": 2.0018377726295418
+    },
+    {
+      "x0": 425.48483085590806,
+      "y0": 250.3323807371393,
+      "x1": 428.48483085590806,
+      "y1": 253.3323807371393,
+      "bottomY": 3.038469382558877,
+      "topY": 6.865690268449543
+    },
+    {
+      "x0": 430.284830855908,
+      "y0": 250.3323807371393,
+      "x1": 433.284830855908,
+      "y1": 253.3323807371393,
+      "bottomY": 3.0139794141453593,
+      "topY": 6.843025037243459
+    },
+    {
+      "x0": 426.38483085590804,
+      "y0": 254.78238073713928,
+      "x1": 432.38483085590804,
+      "y1": 255.28238073713928,
+      "bottomY": 3.0273005058170765,
+      "topY": 4.164004576347856
+    },
+    {
+      "x0": 428.834830855908,
+      "y0": 247.88238073713927,
+      "x1": 429.93483085590805,
+      "y1": 248.9823807371393,
+      "bottomY": 3.0213547046667015,
+      "topY": 7.245603638550909
+    },
+    {
+      "x0": 223.7177133693637,
+      "y0": 739.4651687604671,
+      "x1": 225.7177133693637,
+      "y1": 741.4651687604671,
+      "bottomY": 19.98608842379043,
+      "topY": 31.16758253729139
+    }
+  ],
+  "follow": [
+    {
+      "name": "ROOK",
+      "role": "heavy",
+      "mode": "FOLLOW",
+      "hp": 130,
+      "shield": 104,
+      "downed": false,
+      "position": {
+        "x": 379.35872205932446,
+        "y": 835.5476902503128
+      },
+      "formation": {
+        "x": 374.2054727902908,
+        "y": 836.8352886132317
+      },
+      "target": null,
+      "targetPosition": null,
+      "ability": "bulwark",
+      "abilityCooldown": 0,
+      "lastAbilitySource": null,
+      "lastAbilityTime": null
+    },
+    {
+      "name": "VEX",
+      "role": "medic",
+      "mode": "FOLLOW",
+      "hp": 100,
+      "shield": 80,
+      "downed": false,
+      "position": {
+        "x": 377.9656673335813,
+        "y": 830.123614257438
+      },
+      "formation": {
+        "x": 372.84797345219215,
+        "y": 831.4023156198273
+      },
+      "target": null,
+      "targetPosition": null,
+      "ability": "medic_pulse",
+      "abilityCooldown": 0,
+      "lastAbilitySource": null,
+      "lastAbilityTime": null
+    },
+    {
+      "name": "KADE",
+      "role": "rifle",
+      "mode": "FOLLOW",
+      "hp": 110,
+      "shield": 88,
+      "downed": false,
+      "position": {
+        "x": 380.9388418755739,
+        "y": 832.2667874322627
+      },
+      "formation": {
+        "x": 377.01934861700147,
+        "y": 833.2461239706089
+      },
+      "target": null,
+      "targetPosition": null,
+      "ability": "target_designator",
+      "abilityCooldown": 0,
+      "lastAbilitySource": null,
+      "lastAbilityTime": null
+    }
+  ],
+  "resumed": {
+    "x": 370.22813237524593,
+    "y": 834.9429981432322
+  },
+  "limit": {
+    "y": 870,
+    "z": 8.555612177337096,
+    "max": 870,
+    "ground": 8.555612177337096,
+    "far": 55.2623291015625
+  },
+  "pursuit": [
+    {
+      "x": 310,
+      "y": 808.2200000000075,
+      "inside": false
+    }
+  ],
+  "passed": true
+}

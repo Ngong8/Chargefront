@@ -9,6 +9,7 @@ const browser=await(ff?firefox:chromium).launch(ff?{headless:!process.argv.inclu
 const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],consoles=[],results={matrix:[],layouts:[],saves:[]};
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoles.push(m.text());});
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 const abilities=['surge','bulwark','medic_pulse','target_designator'],operators=['player','rook','vex','kade'],keys=['f','z','x','y'];
 const ready=()=>page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
 const quiet=()=>page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.setInvulnerable(true);__cf.clearTestEnemies();__cf.suppressAbilityAutonomy();__cf.pause(true);});

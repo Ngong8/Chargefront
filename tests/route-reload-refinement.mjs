@@ -8,6 +8,7 @@ const browser=await(ff?firefox:chromium).launch(ff?{headless:!process.argv.inclu
 const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],consoles=[],results={};
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoles.push(m.text());});
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 const dist=(a,b)=>Math.hypot(...a.map((v,i)=>v-b[i]));
 const quiet=()=>page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.clearTestEnemies();__cf.setInvulnerable(true);__cf.pause(true);});
 const place=async(x,y)=>page.evaluate(([x,y])=>{__cf.move(x-__cf.player.pos.x,y-__cf.player.pos.y);__cf.advanceRelayGuide(0);return __cf.relayRouteInfo();},[x,y]);

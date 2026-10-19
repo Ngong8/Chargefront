@@ -6,6 +6,50 @@
 
 Built with [LittleJS](https://github.com/KilledByAPixel/LittleJS) + [Three.js](https://github.com/mrdoob/three.js). No build step or game dependencies to install — keep `chargefront.html` and the `src/` folder together and open the HTML file to play.
 
+### Milestone 4.3 debrief review
+
+Campaign debriefs show recorded operation totals across completed chapters and the
+final mission attempt, with per-mission main/optional completion. Retry starts the
+failed mission fresh while retaining earlier completed-chapter statistics. Older
+checkpoints without optional history say **Not recorded**; missing earlier chapter
+statistics are explicitly labelled as recorded totals.
+
+Endless uses a matching **Survival Debrief** with final wave reached, waves cleared,
+survival time (including intermissions), all-hostile eliminations, crafting and
+banked DNA. Play Again keeps the deployment and arena with fresh supplies.
+Eliminations are not player-attributed kills. Neither mode claims unsupported
+accuracy/damage or personal-best records.
+
+Implementation/audit, reproduction commands, verification and manual-review
+handoff: [Milestone 4.3 CP0 / CP0-R](MILESTONE-4.3-CP0-RESULTS.md).
+
+**Endless unlock:** complete the Campaign to unlock new Endless deployments and
+Play Again. ENDLESS HORDE stays visible with its requirement while locked.
+Campaign results return to Mission Select or the main menu; enter Endless from
+the main menu. Earned completion survives reload and starting a new Campaign.
+Previously saved valid Endless runs may continue through **Continue Saved Endless
+Run** without granting the unlock; a fresh run still requires Campaign completion.
+
+**CP1/CP2 tactical review:** enemies now use staggered height-aware sight,
+last-known-position searches, existing-geometry detours and role-specific
+engagement with attack wind-ups. Mortar splash respects intervening cover.
+Campaign objectives, fixed loadouts and the 90-second Drone defence retain their
+accepted configuration. The carried laboratory turret's
+activation/range/LOS and actual firing are independently verified.
+See [CP1/CP2 implementation and evidence](MILESTONE-4.3-CP1-CP2.md).
+
+**CP2-R corrections:** new Campaign starts use modestly lower reserves and
+Campaign-only scrap/power-cell income; Continue preserves stored quantities.
+Existing finite locker/cache supplies remain, with the M4 cache kept single-use
+through legacy portal recovery. Unseen Endless enemies advance toward the relay,
+then engage detected operators, investigate lost contact and resume advancement.
+The relay gains no health/damage or failure mechanic. Full Endless economy tuning
+remains deferred to CP3.
+
+The [consolidated implementation snapshot](_playtest/m43/implementation-snapshot/README.md)
+lists curated text receipts, the portable quick-test baseline, locally retained
+evidence and outstanding manual-review qualifications.
+
 ---
 
 ## ▶ Play it
@@ -91,7 +135,7 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 
 > Scrap drops from downed creatures. Power cells are rare drops from the strongest hostiles. Each equipped weapon keeps its own magazine; both share one universal cartridge pool. Reload replaces the magazine and spends one cartridge on completion; switching cancels an unfinished reload without spending it. BUL-117 holds 50 rounds / 153 m reach; CRW-8 holds 20 eight-pellet bursts / 60 m reach.
 
-Fresh Campaign player reserves are **6 / 5 / 4 / 3** cartridges in Missions 1–4;
+Fresh Campaign player reserves are **4 / 4 / 4 / 3** cartridges in Missions 1–4;
 each operator starts with **3 / 2 / 2 / 2**. Magazines remain full. Continue keeps
 earned ammunition. Stronger hostiles offer better scrap bundles; ordinary enemy
 deaths do not spawn reserve-cartridge objects. Endless still starts with 8 player

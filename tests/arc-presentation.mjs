@@ -10,6 +10,7 @@ const browser=await(ff?firefox:chromium).launch(ff?{headless:true}:{headless:!pr
 const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],consoles=[],results={};
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoles.push(m.text());});
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 const info=()=>page.evaluate(()=>__cf.arcInfo());
 const sampleChannel=async(n=6)=>{let maxC=0,energy=0;for(let i=0;i<n;i++){const a=await info();maxC=Math.max(maxC,...a.channelOpacity);energy=Math.max(energy,a.reloadEnergy);await page.waitForTimeout(60);}return{maxChannel:maxC,energy};};
 const capture=async label=>{if(!ff){await page.locator('#cf-perf-diagnostics').evaluate(el=>el.style.display='none');await page.screenshot({path:resolve(out,label+'.png')});}};

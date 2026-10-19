@@ -7,6 +7,7 @@ const out=resolve(process.env.CF_ARTIFACT_DIR||'_playtest/m42/cp4/native',(endle
 const report={name,mode:endless?'endless':evacuation?'evacuation':'campaign',legs:[],captures:[],waves:[],errors:[]};
 const browser=await(name==='firefox'?firefox.launch({headless:true}):chromium.launch({headless:true,executablePath:'C:/Program Files (x86)/Microsoft/Edge/Application/msedge.exe',args:['--allow-file-access-from-files','--enable-unsafe-swiftshader']})),page=await browser.newPage({viewport:{width:1280,height:720}});page.on('pageerror',e=>report.errors.push(e.message));
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 async function boot(){await page.goto(url.href);await page.waitForFunction(()=>window.__cf?.renderer&&window.__cfPerf,undefined,{timeout:120000});}
 async function walk(x,y,label){
     const start=Date.now(),route=await page.evaluate(({x,y})=>{const c=__cf;c.pause(false);const solver=ChargefrontRelayRouting.create({world:800,clear:(a,b)=>c.relaySegmentClear([a.x,a.y],[b.x,b.y])});return solver.solve({x:c.player.pos.x,y:c.player.pos.y},{x,y},[{x:c.player.pos.x,y:c.player.pos.y},{x,y}]);},{x,y});

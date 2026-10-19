@@ -1,0 +1,1314 @@
+{
+  "htmlHash": "17ba5af44eb96255d819aeff617876c8988e2dbd4bb3c94bd79c8074e25f4de7",
+  "suites": [
+    {
+      "browser": "edge",
+      "suite": "campaign-economy",
+      "status": "PASS",
+      "receipt": "economy-final/edge/economy.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-advancement",
+      "status": "PASS",
+      "receipt": "advancement-01/edge/advancement.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "tactical-ai",
+      "status": "PASS",
+      "receipt": "campaign-ai-compatibility/edge/tactical-ai.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "campaign-tactics",
+      "status": "PASS",
+      "receipt": "later-campaign/edge/campaign-tactics.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-lockdown-live",
+      "status": "PASS",
+      "receipt": "live-defence/live-edge/manifest.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "results-flow",
+      "status": "PASS",
+      "receipt": "results-compatibility/edge/results.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-unlock",
+      "status": "PASS",
+      "receipt": "unlock-compatibility/edge/unlock.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "tactical-performance",
+      "status": "PASS",
+      "receipt": "performance/edge/performance.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "campaign-economy",
+      "status": "PASS",
+      "receipt": "economy-final/firefox/economy.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-advancement",
+      "status": "PASS",
+      "receipt": "advancement-01/firefox/advancement.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "tactical-ai",
+      "status": "PASS",
+      "receipt": "campaign-ai-compatibility/firefox/tactical-ai.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "campaign-tactics",
+      "status": "PASS",
+      "receipt": "later-campaign/firefox/campaign-tactics.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-lockdown-live",
+      "status": "PASS",
+      "receipt": "live-defence/live-firefox/manifest.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "results-flow",
+      "status": "PASS",
+      "receipt": "results-compatibility/firefox/results.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-unlock",
+      "status": "PASS",
+      "receipt": "unlock-compatibility/firefox/unlock.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "tactical-performance",
+      "status": "PASS",
+      "receipt": "performance/firefox/performance.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "runner-kamikaze",
+      "status": "PASS",
+      "receipt": "shared-edge/results-edge.json",
+      "seconds": 24.632
+    },
+    {
+      "browser": "edge",
+      "suite": "combat-squad",
+      "status": "PASS",
+      "receipt": "shared-edge/results-edge.json",
+      "seconds": 112.708
+    },
+    {
+      "browser": "edge",
+      "suite": "combat-playtest",
+      "status": "PASS",
+      "receipt": "shared-edge/results-edge.json",
+      "seconds": 100.735
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-hud",
+      "status": "PASS",
+      "receipt": "shared-edge/results-edge.json",
+      "seconds": 130.206
+    },
+    {
+      "browser": "edge",
+      "suite": "additional-refinement",
+      "status": "PASS",
+      "receipt": "additional-verified/results-edge.json",
+      "seconds": 130.748
+    },
+    {
+      "browser": "firefox",
+      "suite": "runner-kamikaze",
+      "status": "PASS",
+      "receipt": "shared-firefox/results-firefox.json",
+      "seconds": 31.695
+    },
+    {
+      "browser": "firefox",
+      "suite": "combat-squad",
+      "status": "PASS",
+      "receipt": "shared-firefox/results-firefox.json",
+      "seconds": 158.104
+    },
+    {
+      "browser": "firefox",
+      "suite": "combat-playtest",
+      "status": "PASS",
+      "receipt": "shared-firefox/results-firefox.json",
+      "seconds": 99.736
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-hud",
+      "status": "PASS",
+      "receipt": "shared-firefox/results-firefox.json",
+      "seconds": 140.014
+    },
+    {
+      "browser": "firefox",
+      "suite": "additional-refinement",
+      "status": "PASS",
+      "receipt": "additional-verified/results-firefox.json",
+      "seconds": 161.145
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": "PASS",
+      "receipt": "m2-regression/results-edge-firefox.json",
+      "seconds": 111.36
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": "PASS",
+      "receipt": "m2-regression/results-edge-firefox.json",
+      "seconds": 169.344
+    },
+    {
+      "browser": "edge",
+      "suite": "campaign-economy-late",
+      "status": "PASS",
+      "receipt": "late-progression-final-tools/edge/economy.json"
+    }
+  ],
+  "economy": {
+    "edge": [
+      {
+        "label": "play-fresh-start",
+        "reserve": 4,
+        "mags": {
+          "rifle": {
+            "mag": 50
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 0,
+        "crafts": 0,
+        "shots": 0
+      },
+      {
+        "label": "play-M1-completed-carried-into-M2",
+        "reserve": 4,
+        "mags": {
+          "rifle": {
+            "mag": 50
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 4,
+        "crafts": 0,
+        "shots": 0
+      },
+      {
+        "label": "play-Alpha-completed",
+        "reserve": 2,
+        "mags": {
+          "rifle": {
+            "mag": 50
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 2,
+        "crafts": 2,
+        "shots": 170
+      },
+      {
+        "label": "play-Beta-half-defence",
+        "reserve": 1,
+        "mags": {
+          "rifle": {
+            "mag": 21
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 2,
+        "crafts": 2,
+        "shots": 249
+      }
+    ],
+    "firefox": [
+      {
+        "label": "play-fresh-start",
+        "reserve": 4,
+        "mags": {
+          "rifle": {
+            "mag": 50
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 0,
+        "crafts": 0,
+        "shots": 0
+      },
+      {
+        "label": "play-M1-completed-carried-into-M2",
+        "reserve": 4,
+        "mags": {
+          "rifle": {
+            "mag": 18
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 4,
+        "crafts": 0,
+        "shots": 32
+      },
+      {
+        "label": "play-Alpha-completed",
+        "reserve": 3,
+        "mags": {
+          "rifle": {
+            "mag": 36
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 0,
+        "crafts": 1,
+        "shots": 92
+      },
+      {
+        "label": "play-Beta-half-defence",
+        "reserve": 1,
+        "mags": {
+          "rifle": {
+            "mag": 17
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 0,
+        "crafts": 1,
+        "shots": 203
+      }
+    ],
+    "late": [
+      {
+        "label": "late-Beta-complete-and-scavenged",
+        "reserve": 3,
+        "mags": {
+          "rifle": {
+            "mag": 50
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 1,
+        "cells": 0,
+        "grenades": 4,
+        "crafts": 7
+      },
+      {
+        "label": "late-Gamma-complete-and-scavenged",
+        "reserve": 2,
+        "mags": {
+          "rifle": {
+            "mag": 33
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 3,
+        "cells": 1,
+        "grenades": 5,
+        "crafts": 13
+      },
+      {
+        "label": "late-M3-authored-cell-supply",
+        "reserve": 2,
+        "mags": {
+          "rifle": {
+            "mag": 33
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 3,
+        "cells": 2,
+        "grenades": 5,
+        "crafts": 0
+      },
+      {
+        "label": "late-M3-carried-supplies-before-defence",
+        "reserve": 2,
+        "mags": {
+          "rifle": {
+            "mag": 33
+          },
+          "scatter": {
+            "mag": 20
+          }
+        },
+        "scrap": 3,
+        "cells": 2,
+        "grenades": 5,
+        "crafts": 0
+      },
+      {
+        "label": "late-M3-normal-defence-completed",
+        "reserve": 0,
+        "mags": {
+          "rifle": {
+            "mag": 0
+          },
+          "scatter": {
+            "mag": 7
+          }
+        },
+        "scrap": 3,
+        "cells": 2,
+        "grenades": 4,
+        "crafts": 0
+      },
+      {
+        "label": "late-M4-before-cache",
+        "reserve": 0,
+        "mags": {
+          "rifle": {
+            "mag": 0
+          },
+          "scatter": {
+            "mag": 7
+          }
+        },
+        "scrap": 3,
+        "cells": 2,
+        "grenades": 4,
+        "crafts": 0
+      },
+      {
+        "label": "late-M4-cache-collected",
+        "reserve": 4,
+        "mags": {
+          "rifle": {
+            "mag": 0
+          },
+          "scatter": {
+            "mag": 7
+          }
+        },
+        "scrap": 3,
+        "cells": 2,
+        "grenades": 5,
+        "crafts": 0
+      }
+    ],
+    "lateDryCartridgeSamples": {},
+    "beforeReserves": {
+      "dead_signal": {
+        "player": 6,
+        "squad": 3
+      },
+      "power_through": {
+        "player": 5,
+        "squad": 2
+      },
+      "sample_zero": {
+        "player": 4,
+        "squad": 2
+      },
+      "break_contact": {
+        "player": 3,
+        "squad": 2
+      }
+    },
+    "afterReserves": {
+      "dead_signal": {
+        "player": 4,
+        "squad": 3
+      },
+      "power_through": {
+        "player": 4,
+        "squad": 2
+      },
+      "sample_zero": {
+        "player": 4,
+        "squad": 2
+      },
+      "break_contact": {
+        "player": 3,
+        "squad": 2
+      }
+    },
+    "tables": {
+      "before": {
+        "skitter": {
+          "chance": 0.32,
+          "min": 2,
+          "max": 3
+        },
+        "runner": {
+          "chance": 0.32,
+          "min": 2,
+          "max": 3
+        },
+        "spitter": {
+          "chance": 0.45,
+          "min": 3,
+          "max": 4
+        },
+        "screecher": {
+          "chance": 0.45,
+          "min": 3,
+          "max": 4
+        },
+        "drone": {
+          "chance": 0.45,
+          "min": 3,
+          "max": 4
+        },
+        "shielded": {
+          "chance": 0.5,
+          "min": 3,
+          "max": 5
+        },
+        "tunneler": {
+          "chance": 0.6,
+          "min": 4,
+          "max": 5
+        },
+        "support": {
+          "chance": 0.55,
+          "min": 4,
+          "max": 5
+        },
+        "brute": {
+          "chance": 0.65,
+          "min": 4,
+          "max": 6
+        },
+        "artillery": {
+          "chance": 0.65,
+          "min": 4,
+          "max": 6
+        },
+        "carrier": {
+          "chance": 0.7,
+          "min": 5,
+          "max": 6
+        },
+        "boss": {
+          "chance": 1,
+          "min": 10,
+          "max": 14
+        }
+      },
+      "campaign": {
+        "skitter": {
+          "chance": 0.26,
+          "min": 1,
+          "max": 2
+        },
+        "runner": {
+          "chance": 0.26,
+          "min": 1,
+          "max": 2
+        },
+        "spitter": {
+          "chance": 0.34,
+          "min": 2,
+          "max": 3
+        },
+        "screecher": {
+          "chance": 0.34,
+          "min": 2,
+          "max": 3
+        },
+        "drone": {
+          "chance": 0.34,
+          "min": 2,
+          "max": 3
+        },
+        "shielded": {
+          "chance": 0.4,
+          "min": 2,
+          "max": 4
+        },
+        "tunneler": {
+          "chance": 0.48,
+          "min": 3,
+          "max": 4
+        },
+        "support": {
+          "chance": 0.44,
+          "min": 3,
+          "max": 4
+        },
+        "brute": {
+          "chance": 0.52,
+          "min": 3,
+          "max": 5
+        },
+        "artillery": {
+          "chance": 0.52,
+          "min": 3,
+          "max": 5
+        },
+        "carrier": {
+          "chance": 0.56,
+          "min": 4,
+          "max": 5
+        },
+        "boss": {
+          "chance": 1,
+          "min": 10,
+          "max": 14
+        }
+      }
+    }
+  },
+  "advancement": {
+    "edge": [
+      {
+        "label": "actual-assigned-wave-spawn",
+        "seconds": 13,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 10.747499999996338,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "crater-all-archetypes",
+        "seconds": 24.5,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.289782167101741,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006037,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.64750000000675,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 16.582317500040393,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "valley-all-archetypes",
+        "seconds": 24.5,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.289782167101741,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006037,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.64750000000675,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 16.591643278714834,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "ridges-all-archetypes",
+        "seconds": 24.5,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.289782167101741,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006037,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.64750000000675,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 16.445972500040433,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "engage-investigate-search-resume",
+        "seconds": 7,
+        "actors": [
+          {
+            "type": "drone",
+            "distance": 17.949339334306224,
+            "mode": "ADVANCE",
+            "attacks": 1,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "closed-enclosure-respected",
+        "seconds": 4,
+        "actors": [
+          {
+            "type": "shielded",
+            "distance": 70,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 2
+          }
+        ]
+      },
+      {
+        "label": "opened-waypoint-replans-and-advances",
+        "seconds": 5,
+        "actors": [
+          {
+            "type": "shielded",
+            "distance": 16.809484627840924,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 2
+          }
+        ]
+      }
+    ],
+    "firefox": [
+      {
+        "label": "actual-assigned-wave-spawn",
+        "seconds": 13,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 11.757499999996346,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "crater-all-archetypes",
+        "seconds": 24,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.28978216710174,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006039,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.647500000006747,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 17.809422500039936,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "valley-all-archetypes",
+        "seconds": 24.5,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.28978216710174,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006039,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.647500000006747,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 16.591643278714834,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "ridges-all-archetypes",
+        "seconds": 24.5,
+        "actors": [
+          {
+            "type": "skitter",
+            "distance": 8.28978216710174,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "runner",
+            "distance": 8.344499999994783,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "brute",
+            "distance": 8.60204999999336,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "spitter",
+            "distance": 8.536400000010246,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "screecher",
+            "distance": 8.647500000006039,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "drone",
+            "distance": 8.496000000001898,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "shielded",
+            "distance": 8.647499999983097,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "carrier",
+            "distance": 8.617200000002082,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "tunneler",
+            "distance": 8.496000000000597,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "support",
+            "distance": 8.647500000001003,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "artillery",
+            "distance": 8.647500000006747,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          },
+          {
+            "type": "boss",
+            "distance": 16.923180000040254,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "engage-investigate-search-resume",
+        "seconds": 7.5,
+        "actors": [
+          {
+            "type": "drone",
+            "distance": 12.149339334307019,
+            "mode": "ADVANCE",
+            "attacks": 1,
+            "replans": 0
+          }
+        ]
+      },
+      {
+        "label": "closed-enclosure-respected",
+        "seconds": 4,
+        "actors": [
+          {
+            "type": "shielded",
+            "distance": 70,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 2
+          }
+        ]
+      },
+      {
+        "label": "opened-waypoint-replans-and-advances",
+        "seconds": 5,
+        "actors": [
+          {
+            "type": "shielded",
+            "distance": 17.48505414209627,
+            "mode": "ADVANCE",
+            "attacks": 0,
+            "replans": 2
+          }
+        ]
+      }
+    ]
+  },
+  "performance": {
+    "edge": [
+      {
+        "protocol": "stationary-policy",
+        "p95Before": 18.3,
+        "p95After": 18.4,
+        "worstBefore": 19,
+        "worstAfter": 18.8,
+        "actorUpdateBefore": 0.01201201194316858,
+        "actorUpdateAfter": 0.014027201446480002,
+        "extra18ActorMs": 0.03627341105960563
+      },
+      {
+        "protocol": "live-combat",
+        "p95Before": 18.6,
+        "p95After": 18.7,
+        "worstBefore": 35.8,
+        "worstAfter": 36.6,
+        "actorUpdateBefore": 0.009993084314343237,
+        "actorUpdateAfter": 0.020535920578603466,
+        "extra18ActorMs": 0.18977105275668413
+      }
+    ],
+    "firefox": [
+      {
+        "protocol": "stationary-policy",
+        "p95Before": 32,
+        "p95After": 33.3,
+        "worstBefore": 61.8,
+        "worstAfter": 51.1,
+        "actorUpdateBefore": 0.011598237067965669,
+        "actorUpdateAfter": 0.013485477178423237,
+        "extra18ActorMs": 0.03397032198823624
+      },
+      {
+        "protocol": "live-combat",
+        "p95Before": 62.1,
+        "p95After": 33.6,
+        "worstBefore": 122.5,
+        "worstAfter": 65.4,
+        "actorUpdateBefore": 0.007272293752980448,
+        "actorUpdateAfter": 0.014553014553014554,
+        "extra18ActorMs": 0.13105297440061392
+      }
+    ]
+  },
+  "protected": {
+    "src/world/facility.js": "a3d31339c7972a9a366b5ae823dd0c792568b41ff3c396e8ec73f77fe0c308e1",
+    "src/combat.js": "a950fb7ccea8e227879164ba8f3196549933928971a6ff50c4e1c4a790223dff",
+    "endlessScrapTable": true
+  },
+  "beforeIdle": {
+    "distance": 192.80000000000004,
+    "movement": 0,
+    "cache": {
+      "first": {
+        "cartridges": 4,
+        "used": true
+      },
+      "afterRecovery": {
+        "cartridges": 4,
+        "used": false
+      },
+      "afterSecond": {
+        "cartridges": 8,
+        "used": true
+      }
+    }
+  },
+  "passed": true
+}

@@ -8,6 +8,7 @@ const browser=await(ff?firefox:chromium).launch(ff?{headless:!process.argv.inclu
 const page=await browser.newPage({viewport:{width:1780,height:832}}),errors=[],consoles=[],results={};
 page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoles.push(m.text());});
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Isolated persistence fixture, leaves Campaign bytes intact.
 const ready=()=>page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
 const quiet=()=>page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.clearTestEnemies();__cf.pause(true);});
 const capture=async label=>{await page.locator('#cf-perf-diagnostics').evaluate(el=>el.style.display='none');await page.screenshot({path:resolve(out,`${label}-${name}.png`)});};
@@ -67,7 +68,7 @@ try{
  await page.evaluate(()=>__cfPerf.reset());
  await page.evaluate(()=>{const c=__cf;c.setPhase(17);c.campaignRun.worldState.localPower=true;c.campaignContent.cellCarried=true;
   c.player.pos.set(376,626);c.player.zPos=c.terrainHeight(376,626);c.interact(2);});
- const locker=await page.evaluate(()=>__cf.additionalInfo().locker);assert(locker.every(p=>p.visible));assert.equal(await page.evaluate(()=>__cf.combat.cartridges),6);
+  const locker=await page.evaluate(()=>__cf.additionalInfo().locker);assert(locker.every(p=>p.visible));assert.equal(await page.evaluate(()=>__cf.combat.cartridges),4);
  assert(!await page.evaluate(()=>__cf.campaignRun.rewards.alphaIntel));
  for(const p of locker)assert(!await page.evaluate(([x,y])=>__cf.insideSolid(x,y),p.pos));
  await page.evaluate(()=>{const c=__cf;c.combat.cartridges=12;c.player.grenades=5;c.player.pos.set(373,624);c.player.zPos=c.terrainHeight(373,624);c.interact(1);});
@@ -121,7 +122,7 @@ try{
  assert((await page.evaluate(()=>__cf.additionalInfo().contacts))>0);await capture('04-gamma-survey');
  results.deathDrops=await page.evaluate(()=>{const c=__cf,before=c.additionalInfo().pickups.length,random=Math.random;try{Math.random=()=>.2;const e=c.spawnTestEnemy('tunneler',24,0);e.takeDamage(99999);e.takeDamage(99999);e.die();
   const drops=c.additionalInfo().pickups.slice(before);const checkpoint=c.createCheckpointForTest();c.restoreCheckpointForTest(checkpoint);return {drops,aliveTunnelers:c.enemies.filter(e=>e.type==='tunneler'&&!e.dead).length,restored:c.additionalInfo().pickups.length,expected:checkpoint.pickups.length};}finally{Math.random=random;}});
- assert.equal(results.deathDrops.drops.length,1);assert.equal(results.deathDrops.drops[0].kind,'scrap');assert.equal(results.deathDrops.drops[0].quantity,4);assert.equal(results.deathDrops.aliveTunnelers,0);assert.equal(results.deathDrops.restored,results.deathDrops.expected);
+  assert.equal(results.deathDrops.drops.length,1);assert.equal(results.deathDrops.drops[0].kind,'scrap');assert.equal(results.deathDrops.drops[0].quantity,3);assert.equal(results.deathDrops.aliveTunnelers,0);assert.equal(results.deathDrops.restored,results.deathDrops.expected);
  // Real hovering samples after emergence; z and rendered hitbox origin stay aligned.
  await page.evaluate(()=>{__cf.clearTestEnemies();const e=__cf.spawnTestEnemy('screecher',40,0);e.skySpawnT=0;e.z=__cf.terrainHeight(e.pos.x,e.pos.y)+6;window.__hover=e;__cf.pause(false);window.__hoverSamples=[];
   const sample=()=>{const e=__hover;__hoverSamples.push({offset:e.z-__cf.terrainHeight(e.pos.x,e.pos.y),align:Math.abs(e.mesh.position.z-e.z)});if(__hoverSamples.length<180)requestAnimationFrame(sample);};requestAnimationFrame(sample);});
@@ -139,7 +140,10 @@ try{
   for(const m of c.squad){m.hp=50;m.shield=21;m.mag=6;m.reserve=2;m.abilityCd=9;}c.startWave();return c.endlessSaveInfo();});
  assert.equal(waveStart.run.wave,1);assert(waveStart.run.waveActive);assert.equal(waveStart.configuration.player.ability,'surge');
  const decor=await page.evaluate(()=>__cf.endlessDecorInfo());
- await page.evaluate(()=>{__cf.player.hp=8;__cf.combat.cartridges=1;__cf.craft.scraps=1;__cf.squad[0].hp=9;__cf.pause(false);});await page.waitForTimeout(120);
+  await page.evaluate(()=>{__cf.player.hp=8;__cf.combat.cartridges=1;__cf.craft.scraps=1;__cf.squad[0].hp=9;__cf.pause(false);});
+  // A cold render may take longer than a fixed120ms wait. Prove that the wave
+  // actually advanced before testing the existing mid-wave save prohibition.
+  await page.waitForFunction(()=>__cf.endless.waveT>0,undefined,{timeout:10000});
  const boundaryGuard=await page.evaluate(()=>{const before=localStorage.cf_endless_v1,saved=__cf.saveEndless();return {saved,unchanged:before===localStorage.cf_endless_v1};});assert(!boundaryGuard.saved&&boundaryGuard.unchanged);results.boundaryGuard=boundaryGuard;await returnMenu();
  assert.equal(await page.evaluate(()=>localStorage.cf_campaign_v1),campaignBytes);await capture('06-endless-main-return');await continueEndless();
  const waveResume=await page.evaluate(()=>({saved:__cf.endlessSaveInfo(),hp:__cf.player.hp,maxHp:__cf.player.maxHp,cartridges:__cf.combat.cartridges,scrap:__cf.scrap,slot:__cf.combat.activeId,squad:__cf.squad.map(m=>[m.hp,m.maxHp,m.mag,m.reserve])}));
@@ -170,7 +174,7 @@ try{
  await page.evaluate(saved=>localStorage.cf_endless_v1=JSON.stringify(saved),waveStart);
  await page.locator('#btn-endless-back').click();await page.locator('#btn-campaign').click();await page.locator('#btn-start').click();assert(await page.locator('#confirm-panel').isVisible());await page.locator('#btn-confirm-new').click();
  await page.emulateMedia({reducedMotion:'reduce'});await launch();await page.waitForFunction(()=>__cf.intro&&!__cf.intro.prewarmPending,undefined,{timeout:120000});await page.keyboard.press('Space');await page.waitForFunction(()=>__cf.phaseName==='M1_MOVE_FAC');await quiet();
- assert.equal(await page.evaluate(()=>__cf.combat.cartridges),6);assert((await page.evaluate(()=>__cf.squad.map(m=>m.reserve))).every(n=>n===3));
+  assert.equal(await page.evaluate(()=>__cf.combat.cartridges),4);assert((await page.evaluate(()=>__cf.squad.map(m=>m.reserve))).every(n=>n===3));
  assert.equal(await page.evaluate(()=>__preparing[0].animation),'none');assert.equal(await page.evaluate(()=>JSON.parse(localStorage.cf_endless_v1).run.wave),1);
  const storageFailure=await page.evaluate(()=>{const original=Storage.prototype.setItem;Storage.prototype.setItem=function(){throw Error('fixture quota');};const before=localStorage.cf_campaign_v1;const saved=__cf.checkpoint();Storage.prototype.setItem=original;return {saved,unchanged:before===localStorage.cf_campaign_v1};});
  assert(!storageFailure.saved&&storageFailure.unchanged);results.storageFailure=storageFailure;

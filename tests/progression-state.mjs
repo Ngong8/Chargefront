@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import '../src/progression.js';
 const p=globalThis.ChargefrontProgression;
 const rng1=p.seedRandom(1234),rng2=p.seedRandom(1234);for(let i=0;i<64;i++){const a=rng1();assert.equal(a,rng2());assert(a>=0&&a<1);}
-assert.deepEqual(Object.values(p.reserves).map(v=>[v.player,v.squad]),[[6,3],[5,2],[4,2],[3,2]]);
+assert.deepEqual(Object.values(p.reserves).map(v=>[v.player,v.squad]),[[4,3],[4,2],[4,2],[3,2]]);
 for(const [type,row] of Object.entries(p.scrap)) {
     assert(row.chance>0&&row.chance<=1&&row.min<=row.max);
     let calls=0;assert.equal(p.scrapReward(type,()=>calls++?0:0),row.min);
@@ -26,4 +26,21 @@ const actor={maxHp:130,hp:45,maxShield:104,shield:12,reserve:3,abilityCd:7.5,dow
 const saved=p.actorSnapshot(actor);assert(!('mesh' in saved)&&!('moveBlend' in saved));
 const restored={maxHp:100,hp:100,maxShield:100,shield:100};p.restoreActor(restored,saved);
 assert.equal(restored.maxHp,130);assert.equal(restored.hp,45);assert.equal(restored.abilityCd,7.5);assert(restored.downed);
+const completed={version:4,campaignComplete:true,missions:{dead_signal:{completed:true},power_through:{completed:true},sample_zero:{completed:true},break_contact:{completed:true}}};
+for(const empty of [null,{},undefined]){assert.equal(p.campaignCompleted(empty),false);assert.equal(p.campaignCleared(empty),false);}
+assert(p.campaignCompleted(completed));
+for(const campaignComplete of [false,undefined]) {
+    const derived=JSON.parse(JSON.stringify({...completed,campaignComplete}));assert(p.campaignCompleted(derived),'All four persisted completed records derive the legacy flag');
+}
+assert(!p.campaignCompleted({version:4,missions:Object.fromEntries(Object.keys(completed.missions).map(id=>[id,{unlocked:true,completed:false}]))}));
+assert(!p.campaignCompleted({...completed,missions:{dead_signal:{completed:true},break_contact:{unlocked:true}}}));
+assert(!p.campaignCompleted({...completed,version:99}));
+assert(!p.campaignCompleted({version:2,campaignComplete:true,missions:{dead_signal:{completed:true},power_through:{completed:true}}}),'Old two-mission completion alone does not certify the four-mission Campaign');
+assert(p.campaignCompleted({version:3,campaignComplete:true,missions:{break_contact:{completed:true}}}),'Preserve the canonical historical full-completion record even if earlier detail is absent');
+assert(!p.campaignCompleted({...completed,operation:{continuedState:{missionId:'unknown',player:{hp:5}}}}));
+const freshReplay={version:4,campaignComplete:false,completionRecord:{...p.completionRecord},missions:{dead_signal:{unlocked:true,completed:false}}};
+assert(p.campaignCleared(freshReplay));assert(!p.campaignCompleted(freshReplay),'Earned unlock does not mark the new Campaign complete');
+assert(!p.campaignCleared({...freshReplay,completionRecord:{version:1,finalMission:'sample_zero',completed:true}}));
+assert(!p.campaignCleared({...freshReplay,completionRecord:{...p.completionRecord,completed:false}}));
+console.log('PASS Campaign completion authority: canonical flag/final record, all-four legacy derivation, locked replay entries and invalid/ambiguous saves');
 console.log('PASS progression state: reserves, bounded difficulty drops, atomic replacement/backup, legacy validation, quota failure, durable actor ownership');

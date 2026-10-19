@@ -2,12 +2,23 @@
 (function(root) {
     'use strict';
     const missions = ['dead_signal','power_through','sample_zero','break_contact'];
-    const reserves = Object.freeze({dead_signal:Object.freeze({player:6,squad:3}),power_through:Object.freeze({player:5,squad:2}),sample_zero:Object.freeze({player:4,squad:2}),break_contact:Object.freeze({player:3,squad:2})});
+    const reserves = Object.freeze({dead_signal:Object.freeze({player:4,squad:3}),power_through:Object.freeze({player:4,squad:2}),sample_zero:Object.freeze({player:4,squad:2}),break_contact:Object.freeze({player:3,squad:2})});
     const scrap = Object.freeze(Object.fromEntries(Object.entries({
         skitter:[.32,2,3],runner:[.32,2,3],spitter:[.45,3,4],screecher:[.45,3,4],drone:[.45,3,4],
         shielded:[.50,3,5],tunneler:[.60,4,5],support:[.55,4,5],brute:[.65,4,6],
         artillery:[.65,4,6],carrier:[.70,5,6],boss:[1,10,14],
     }).map(([id,[chance,min,max]])=>[id,Object.freeze({chance,min,max})])));
+    // Existing `scrap` remains the unchanged Endless/default API. Campaign
+    // generation has its own table; saved bundle quantities are never rerolled.
+    const campaignScrap = Object.freeze(Object.fromEntries(Object.entries({
+        skitter:[.26,1,2],runner:[.26,1,2],spitter:[.34,2,3],screecher:[.34,2,3],drone:[.34,2,3],
+        shielded:[.40,2,4],tunneler:[.48,3,4],support:[.44,3,4],brute:[.52,3,5],
+        artillery:[.52,3,5],carrier:[.56,4,5],boss:[1,10,14],
+    }).map(([id,[chance,min,max]])=>[id,Object.freeze({chance,min,max})])));
+    const economy = Object.freeze({
+        campaign:Object.freeze({scrap:campaignScrap,powerChance:.05,worldScrap:2}),
+        endless:Object.freeze({scrap,powerChance:.08,worldScrap:0}),
+    });
     const actorNumbers = Object.freeze(['maxHp','hp','maxShield','shield','mag','magSize','reserve','abilityCd','bulwarkT',
         'stamina','shieldDelayT','hpDelayT','speed','dmgMult','rateMult','dmgTakenMult','staminaDrainMult','staminaRegenMult',
         'critChance','reloadMult','jumpMult','grenadeDmgMult','critMult','speedMult','grenades','grenadeCd']);
@@ -19,6 +30,15 @@
     const checkpointValid = s=>!!s&&missions.includes(s.missionId)&&s.player&&Number.isFinite(s.player.hp)&&s.player.hp>0&&finiteTree(s)&&(!s.version||s.version<=4);
     const campaignValid = s=>!!s&&(!s.version||s.version<=4)&&s.missions&&missions.some(id=>s.missions[id])&&finiteTree(s)&&
         (!s.operation?.continuedState||checkpointValid(s.operation.continuedState));
+    // Mission Select never writes completion records. Preserve the canonical
+    // final-completion flag, or derive an omitted legacy flag from all four
+    // durable completed records. Replay access/unlocked entries are not evidence.
+    const campaignCompleted = s=>!!(campaignValid(s)&&(
+        s.campaignComplete===true&&s.missions.break_contact?.completed===true ||
+        missions.every(id=>s.missions[id]?.completed===true)));
+    const completionRecord = Object.freeze({version:1,finalMission:'break_contact',completed:true});
+    const campaignCleared = s=>!!(campaignValid(s)&&(campaignCompleted(s)||
+        s.completionRecord?.version===1&&s.completionRecord.finalMission==='break_contact'&&s.completionRecord.completed===true));
     const endlessValid = s=>!!s&&s.version===1&&s.mode==='endless'&&['valley','crater','ridges'].includes(s.arena)&&
         s.configuration?.player&&s.run&&Number.isInteger(s.run.wave)&&s.run.wave>=0&&s.run.wave<=10000&&
         typeof s.run.waveActive==='boolean'&&Number.isFinite(s.run.budgetLeft)&&s.run.budgetLeft>=0&&
@@ -61,10 +81,11 @@
         if('mag' in actor)actor.mag=Math.floor(Math.min(actor.mag,actor.magSize));
         actor.downed=!!saved.downed;actor.dead=!!saved.dead;actor.reloading=false;actor.reloadT=0;
     }
-    function scrapReward(type,random=Math.random) {
-        const row=scrap[type]||scrap.skitter;
+    function scrapReward(type,random=Math.random,mode='endless') {
+        const table=(economy[mode]||economy.endless).scrap;
+        const row=table[type]||table.skitter;
         return random()<row.chance?row.min+Math.min(row.max-row.min,Math.floor(random()*(row.max-row.min+1))):0;
     }
     function seedRandom(seed) {let state=seed>>>0;return ()=>{state=(Math.imul(state,1664525)+1013904223)>>>0;return state/4294967296;};}
-    root.ChargefrontProgression=Object.freeze({reserves,scrap,actorNumbers,weaponNumbers,bounded,checkpointValid,campaignValid,endlessValid,read,write,remove,actorSnapshot,restoreActor,scrapReward,seedRandom});
+    root.ChargefrontProgression=Object.freeze({reserves,scrap,economy,actorNumbers,weaponNumbers,bounded,checkpointValid,campaignValid,campaignCompleted,campaignCleared,completionRecord,endlessValid,read,write,remove,actorSnapshot,restoreActor,scrapReward,seedRandom});
 })(globalThis);

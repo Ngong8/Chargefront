@@ -8,6 +8,7 @@ const ff=process.argv.includes('firefox'),name=ff?'firefox':'edge',out=resolve(p
 const browser=await(ff?firefox:chromium).launch(ff?{headless:true}:{headless:true,executablePath:'C:\\Program Files (x86)\\Microsoft\\Edge\\Application\\msedge.exe',args:['--enable-unsafe-swiftshader','--allow-file-access-from-files']});
 const page=await browser.newPage({viewport:{width:1280,height:720}}),errors=[],results={};page.on('pageerror',e=>errors.push(e.message));
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 async function capture(label){await page.locator('#cf-perf-diagnostics').evaluate(el=>el.style.display='none');await page.screenshot({path:resolve(out,`${label}-${name}.png`)});}
 try{
  await page.goto(url.href);await page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});

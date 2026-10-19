@@ -1,0 +1,1415 @@
+{
+  "browser": "firefox",
+  "states": [
+    {
+      "label": "M3-to-M4 seamless",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "payload": null,
+      "current": {
+        "activeSeconds": 0,
+        "kills": 0,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 11,
+          "activeSeconds": 333,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "mainCompleted": 7,
+          "optionalCount": 1
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":false,\"completionRecord\":null,\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"LANDED_INFESTED\",\"continuedState\":{\"version\":4,\"rewards\":{},\"chapterStats\":[{\"missionId\":\"dead_signal\",\"mainCompleted\":8,\"optionalCount\":2,\"activeSeconds\":111,\"kills\":7,\"cartridgesCrafted\":2,\"medkitsCrafted\":1},{\"missionId\":\"power_through\",\"mainCompleted\":6,\"optionalCount\":1,\"activeSeconds\":222,\"kills\":9,\"cartridgesCrafted\":3,\"medkitsCrafted\":2},{\"missionId\":\"sample_zero\",\"kills\":11,\"activeSeconds\":333,\"cartridgesCrafted\":4,\"medkitsCrafted\":3,\"mainCompleted\":7,\"optionalCount\":1}],\"pickups\":[{\"kind\":\"scrap\",\"quantity\":0,\"x\":430,\"y\":165},{\"kind\":\"scrap\",\"quantity\":0,\"x\":372,\"y\":320},{\"kind\":\"scrap\",\"quantity\":0,\"x\":352,\"y\":470},{\"kind\":\"scrap\",\"quantity\":0,\"x\":405,\"y\":600},{\"kind\":\"power\",\"quantity\":0,\"x\":336,\"y\":662},{\"kind\":\"power\",\"quantity\":0,\"x\":384,\"y\":662},{\"kind\":\"scrap\",\"quantity\":0,\"x\":290,\"y\":395},{\"kind\":\"scrap\",\"quantity\":0,\"x\":470,\"y\":270},{\"kind\":\"scrap\",\"quantity\":0,\"x\":418,\"y\":396},{\"kind\":\"grenade\",\"quantity\":0,\"x\":330,\"y\":480},{\"kind\":\"grenade\",\"quantity\":0,\"x\":462,\"y\":208}],\"hostiles\":[{\"type\":\"shielded\",\"x\":380,\"y\":760,\"hp\":95,\"maxHp\":95,\"shield\":110,\"speed\":7,\"dmg\":14,\"ambient\":false,\"scale\":0.92,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"},{\"type\":\"runner\",\"x\":372,\"y\":748,\"hp\":34,\"maxHp\":34,\"shield\":0,\"speed\":16.5,\"dmg\":8,\"ambient\":false,\"scale\":0.92,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"},{\"type\":\"drone\",\"x\":399,\"y\":751,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":false,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"}],\"missionId\":\"break_contact\",\"missionTime\":0,\"kills\":0,\"totalAmmoCrafted\":0,\"totalMedkitsCrafted\":0,\"player\":{\"maxHp\":100,\"hp\":100,\"maxShield\":100,\"shield\":100,\"abilityCd\":0,\"bulwarkT\":0,\"stamina\":100,\"shieldDelayT\":0,\"hpDelayT\":0,\"speed\":5.2,\"dmgTakenMult\":1,\"staminaDrainMult\":1,\"staminaRegenMult\":1,\"critChance\":0,\"reloadMult\":1,\"jumpMult\":1,\"grenadeDmgMult\":1,\"critMult\":2,\"grenades\":3,\"grenadeCd\":0,\"downed\":false,\"dead\":false,\"ability\":\"surge\",\"weaponStats\":{\"rifle\":{\"mag\":50,\"magSize\":50,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.012,\"reloadTime\":1.7,\"range\":153},\"scatter\":{\"mag\":20,\"magSize\":20,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.105,\"reloadTime\":2.05,\"range\":60}},\"position\":{\"x\":364,\"y\":774},\"yaw\":1.7488892650260943,\"combat\":{\"version\":3,\"activeId\":\"rifle\",\"cartridges\":6,\"weapons\":{\"rifle\":{\"mag\":50},\"scatter\":{\"mag\":20}}}},\"craft\":{\"scraps\":0,\"powerCells\":0,\"medkits\":3},\"squadCommand\":\"assist\",\"squad\":[{\"maxHp\":130,\"hp\":130,\"maxShield\":104,\"shield\":104,\"mag\":30,\"magSize\":30,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"heavy\",\"ability\":\"bulwark\",\"position\":{\"x\":350,\"y\":762}},{\"maxHp\":100,\"hp\":100,\"maxShield\":80,\"shield\":80,\"mag\":70,\"magSize\":70,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"medic\",\"ability\":\"medic_pulse\",\"position\":{\"x\":360,\"y\":762}},{\"maxHp\":110,\"hp\":110,\"maxShield\":88,\"shield\":88,\"mag\":50,\"magSize\":50,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"rifle\",\"ability\":\"target_designator\",\"position\":{\"x\":370,\"y\":762}}],\"securityTurret\":true,\"turretFireT\":0,\"securityPortalSealed\":true,\"securityPortalRecovery\":false,\"enemyIntel\":true,\"extraction\":{\"phase\":24,\"mainIndex\":0,\"started\":false,\"cleared\":false,\"clearedNodeIds\":[],\"cacheUsed\":false}}},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":false,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "\n        \n            \n            OPERATION DEBRIEF\n            \n            \n            \n                \n                \n                \n                    Objective completion\n                    MissionMainOptionalStatus\n                    \n                \n                \n            \n            \n                RETRY MISSION\n                SELECT MISSION\n                RETURN TO MAIN MENU\n            \n        "
+    },
+    {
+      "label": "Campaign failure",
+      "mission": "break_contact",
+      "phase": "DEAD",
+      "payload": {
+        "mode": "campaign",
+        "success": false,
+        "missionId": "break_contact",
+        "origin": "new_campaign",
+        "fullCampaign": false,
+        "title": "MISSION FAILED",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "COMMANDER DOWN — OPERATION INTERRUPTED",
+        "scope": "Operation totals · 4 missions",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "11:06"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "27"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "9"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "6"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 666,
+          "kills": 27,
+          "cartridgesCrafted": 9,
+          "medkitsCrafted": 6
+        },
+        "chapters": [
+          {
+            "missionId": "dead_signal",
+            "mainCompleted": 8,
+            "optionalCount": 2,
+            "activeSeconds": 111,
+            "kills": 7,
+            "cartridgesCrafted": 2,
+            "medkitsCrafted": 1,
+            "success": true,
+            "number": 1,
+            "name": "DEAD SIGNAL",
+            "mainTotal": 8,
+            "optionalTotal": 2
+          },
+          {
+            "missionId": "power_through",
+            "mainCompleted": 6,
+            "optionalCount": 1,
+            "activeSeconds": 222,
+            "kills": 9,
+            "cartridgesCrafted": 3,
+            "medkitsCrafted": 2,
+            "success": true,
+            "number": 2,
+            "name": "POWER THROUGH",
+            "mainTotal": 6,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "sample_zero",
+            "mainCompleted": 7,
+            "optionalCount": 1,
+            "activeSeconds": 333,
+            "kills": 11,
+            "cartridgesCrafted": 4,
+            "medkitsCrafted": 3,
+            "success": true,
+            "number": 3,
+            "name": "SAMPLE ZERO",
+            "mainTotal": 7,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "break_contact",
+            "kills": 0,
+            "activeSeconds": 0,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "mainCompleted": 0,
+            "optionalCount": 0,
+            "success": false,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Retry starts this mission fresh. Continue from the menu restores the last saved checkpoint.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": true,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 0,
+        "kills": 0,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 11,
+          "activeSeconds": 333,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "mainCompleted": 7,
+          "optionalCount": 1
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":false,\"completionRecord\":null,\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"LANDED_INFESTED\",\"continuedState\":{\"version\":4,\"rewards\":{},\"chapterStats\":[{\"missionId\":\"dead_signal\",\"mainCompleted\":8,\"optionalCount\":2,\"activeSeconds\":111,\"kills\":7,\"cartridgesCrafted\":2,\"medkitsCrafted\":1},{\"missionId\":\"power_through\",\"mainCompleted\":6,\"optionalCount\":1,\"activeSeconds\":222,\"kills\":9,\"cartridgesCrafted\":3,\"medkitsCrafted\":2},{\"missionId\":\"sample_zero\",\"kills\":11,\"activeSeconds\":333,\"cartridgesCrafted\":4,\"medkitsCrafted\":3,\"mainCompleted\":7,\"optionalCount\":1}],\"pickups\":[{\"kind\":\"scrap\",\"quantity\":0,\"x\":430,\"y\":165},{\"kind\":\"scrap\",\"quantity\":0,\"x\":372,\"y\":320},{\"kind\":\"scrap\",\"quantity\":0,\"x\":352,\"y\":470},{\"kind\":\"scrap\",\"quantity\":0,\"x\":405,\"y\":600},{\"kind\":\"power\",\"quantity\":0,\"x\":336,\"y\":662},{\"kind\":\"power\",\"quantity\":0,\"x\":384,\"y\":662},{\"kind\":\"scrap\",\"quantity\":0,\"x\":290,\"y\":395},{\"kind\":\"scrap\",\"quantity\":0,\"x\":470,\"y\":270},{\"kind\":\"scrap\",\"quantity\":0,\"x\":418,\"y\":396},{\"kind\":\"grenade\",\"quantity\":0,\"x\":330,\"y\":480},{\"kind\":\"grenade\",\"quantity\":0,\"x\":462,\"y\":208}],\"hostiles\":[],\"missionId\":\"break_contact\",\"missionTime\":0,\"kills\":0,\"totalAmmoCrafted\":0,\"totalMedkitsCrafted\":0,\"player\":{\"maxHp\":100,\"hp\":100,\"maxShield\":100,\"shield\":100,\"abilityCd\":0,\"bulwarkT\":0,\"stamina\":100,\"shieldDelayT\":0,\"hpDelayT\":0,\"speed\":5.2,\"dmgTakenMult\":1,\"staminaDrainMult\":1,\"staminaRegenMult\":1,\"critChance\":0,\"reloadMult\":1,\"jumpMult\":1,\"grenadeDmgMult\":1,\"critMult\":2,\"grenades\":3,\"grenadeCd\":0,\"downed\":false,\"dead\":false,\"ability\":\"surge\",\"weaponStats\":{\"rifle\":{\"mag\":50,\"magSize\":50,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.012,\"reloadTime\":1.7,\"range\":153},\"scatter\":{\"mag\":20,\"magSize\":20,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.105,\"reloadTime\":2.05,\"range\":60}},\"position\":{\"x\":364,\"y\":774},\"yaw\":1.7488892650260943,\"combat\":{\"version\":3,\"activeId\":\"rifle\",\"cartridges\":6,\"weapons\":{\"rifle\":{\"mag\":50},\"scatter\":{\"mag\":20}}}},\"craft\":{\"scraps\":0,\"powerCells\":0,\"medkits\":3},\"squadCommand\":\"assist\",\"squad\":[{\"maxHp\":130,\"hp\":130,\"maxShield\":104,\"shield\":104,\"mag\":30,\"magSize\":30,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"heavy\",\"ability\":\"bulwark\",\"position\":{\"x\":350,\"y\":762}},{\"maxHp\":100,\"hp\":100,\"maxShield\":80,\"shield\":80,\"mag\":70,\"magSize\":70,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"medic\",\"ability\":\"medic_pulse\",\"position\":{\"x\":360,\"y\":762}},{\"maxHp\":110,\"hp\":110,\"maxShield\":88,\"shield\":88,\"mag\":50,\"magSize\":50,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"rifle\",\"ability\":\"target_designator\",\"position\":{\"x\":370,\"y\":762}}],\"securityTurret\":true,\"turretFireT\":0,\"securityPortalSealed\":true,\"securityPortalRecovery\":false,\"enemyIntel\":true,\"extraction\":{\"phase\":24,\"mainIndex\":0,\"started\":false,\"cleared\":false,\"clearedNodeIds\":[],\"cacheUsed\":false}}},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":false,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nMISSION FAILED\nMISSION 4 / BREAK CONTACT\nCOMMANDER DOWN — OPERATION INTERRUPTED\nOPERATION TOTALS · 4 MISSIONS\nOperation time\n11:06\nHostile eliminations\n27\nCartridges crafted\n9\nMedkits crafted\n6\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n1 / DEAD SIGNAL\t8 / 8\t2 / 2\tComplete\n2 / POWER THROUGH\t6 / 6\t1 / 1\tComplete\n3 / SAMPLE ZERO\t7 / 7\t1 / 1\tComplete\n4 / BREAK CONTACT\t0 / 5\t0 / 0\tInterrupted\n\nRetry starts this mission fresh. Continue from the menu restores the last saved checkpoint.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nRETRY MISSION\nSELECT MISSION\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Fresh retry retains completed chapters",
+      "mission": "break_contact",
+      "phase": "DEPLOY",
+      "payload": null,
+      "current": {
+        "activeSeconds": 2.716666666666662,
+        "kills": 0,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "mainCompleted": 7,
+          "optionalCount": 1,
+          "activeSeconds": 333,
+          "kills": 11,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":false,\"completionRecord\":null,\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"LANDED_INFESTED\",\"continuedState\":{\"version\":4,\"rewards\":{},\"chapterStats\":[{\"missionId\":\"dead_signal\",\"mainCompleted\":8,\"optionalCount\":2,\"activeSeconds\":111,\"kills\":7,\"cartridgesCrafted\":2,\"medkitsCrafted\":1},{\"missionId\":\"power_through\",\"mainCompleted\":6,\"optionalCount\":1,\"activeSeconds\":222,\"kills\":9,\"cartridgesCrafted\":3,\"medkitsCrafted\":2},{\"missionId\":\"sample_zero\",\"mainCompleted\":7,\"optionalCount\":1,\"activeSeconds\":333,\"kills\":11,\"cartridgesCrafted\":4,\"medkitsCrafted\":3}],\"pickups\":[{\"kind\":\"scrap\",\"quantity\":0,\"x\":430,\"y\":165},{\"kind\":\"scrap\",\"quantity\":0,\"x\":372,\"y\":320},{\"kind\":\"scrap\",\"quantity\":0,\"x\":352,\"y\":470},{\"kind\":\"scrap\",\"quantity\":0,\"x\":405,\"y\":600},{\"kind\":\"power\",\"quantity\":0,\"x\":336,\"y\":662},{\"kind\":\"power\",\"quantity\":0,\"x\":384,\"y\":662},{\"kind\":\"scrap\",\"quantity\":0,\"x\":290,\"y\":395},{\"kind\":\"scrap\",\"quantity\":0,\"x\":470,\"y\":270},{\"kind\":\"scrap\",\"quantity\":0,\"x\":418,\"y\":396},{\"kind\":\"grenade\",\"quantity\":0,\"x\":330,\"y\":480},{\"kind\":\"grenade\",\"quantity\":0,\"x\":462,\"y\":208}],\"hostiles\":[{\"type\":\"drone\",\"x\":360,\"y\":645,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":true,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"facility_garrison\"},{\"type\":\"drone\",\"x\":370,\"y\":638,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":true,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"facility_garrison\"},{\"type\":\"drone\",\"x\":350,\"y\":632,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":true,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"facility_garrison\"},{\"type\":\"drone\",\"x\":398,\"y\":674,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":true,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"facility_garrison\"}],\"missionId\":\"break_contact\",\"missionTime\":0,\"kills\":0,\"totalAmmoCrafted\":0,\"totalMedkitsCrafted\":0,\"player\":{\"maxHp\":100,\"hp\":100,\"maxShield\":100,\"shield\":100,\"abilityCd\":0,\"bulwarkT\":0,\"stamina\":100,\"shieldDelayT\":0,\"hpDelayT\":0,\"speed\":5.2,\"dmgTakenMult\":1,\"staminaDrainMult\":1,\"staminaRegenMult\":1,\"critChance\":0,\"reloadMult\":1,\"jumpMult\":1,\"grenadeDmgMult\":1,\"critMult\":2,\"grenades\":2,\"grenadeCd\":0,\"downed\":false,\"dead\":false,\"ability\":\"surge\",\"weaponStats\":{\"rifle\":{\"mag\":50,\"magSize\":50,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.012,\"reloadTime\":1.7,\"range\":153},\"scatter\":{\"mag\":20,\"magSize\":20,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.105,\"reloadTime\":2.05,\"range\":60}},\"position\":{\"x\":360,\"y\":774},\"yaw\":-0.23974310887045658,\"combat\":{\"version\":3,\"activeId\":\"rifle\",\"cartridges\":3,\"weapons\":{\"rifle\":{\"mag\":50},\"scatter\":{\"mag\":20}}}},\"craft\":{\"scraps\":0,\"powerCells\":0,\"medkits\":2},\"squadCommand\":\"assist\",\"squad\":[{\"maxHp\":130,\"hp\":130,\"maxShield\":104,\"shield\":104,\"mag\":30,\"magSize\":30,\"reserve\":2,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"heavy\",\"ability\":\"bulwark\",\"position\":{\"x\":358,\"y\":772}},{\"maxHp\":100,\"hp\":100,\"maxShield\":80,\"shield\":80,\"mag\":70,\"magSize\":70,\"reserve\":2,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"medic\",\"ability\":\"medic_pulse\",\"position\":{\"x\":362,\"y\":772}},{\"maxHp\":110,\"hp\":110,\"maxShield\":88,\"shield\":88,\"mag\":50,\"magSize\":50,\"reserve\":2,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"rifle\",\"ability\":\"target_designator\",\"position\":{\"x\":360,\"y\":770}}],\"securityTurret\":false,\"turretFireT\":0,\"securityPortalSealed\":true,\"securityPortalRecovery\":false,\"enemyIntel\":false,\"extraction\":{\"phase\":24,\"mainIndex\":0,\"started\":false,\"cleared\":false,\"clearedNodeIds\":[],\"cacheUsed\":false}}},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":false,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "\n        \n            \n            OPERATION DEBRIEF\n            \n            \n            \n                \n                \n                \n                    Objective completion\n                    MissionMainOptionalStatus\n                    \n                \n                \n            \n            \n                RETRY MISSION\n                SELECT MISSION\n                RETURN TO MAIN MENU\n            \n        "
+    },
+    {
+      "label": "Fresh Campaign complete",
+      "mission": "break_contact",
+      "phase": "DONE",
+      "payload": {
+        "mode": "campaign",
+        "success": true,
+        "missionId": "break_contact",
+        "origin": "continue_campaign",
+        "fullCampaign": true,
+        "title": "CAMPAIGN COMPLETE",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+        "scope": "Operation totals · 4 missions",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "18:30"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "48"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "14"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "10"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 1110,
+          "kills": 48,
+          "cartridgesCrafted": 14,
+          "medkitsCrafted": 10
+        },
+        "chapters": [
+          {
+            "missionId": "dead_signal",
+            "mainCompleted": 8,
+            "optionalCount": 2,
+            "activeSeconds": 111,
+            "kills": 7,
+            "cartridgesCrafted": 2,
+            "medkitsCrafted": 1,
+            "success": true,
+            "number": 1,
+            "name": "DEAD SIGNAL",
+            "mainTotal": 8,
+            "optionalTotal": 2
+          },
+          {
+            "missionId": "power_through",
+            "mainCompleted": 6,
+            "optionalCount": 1,
+            "activeSeconds": 222,
+            "kills": 9,
+            "cartridgesCrafted": 3,
+            "medkitsCrafted": 2,
+            "success": true,
+            "number": 2,
+            "name": "POWER THROUGH",
+            "mainTotal": 6,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "sample_zero",
+            "mainCompleted": 7,
+            "optionalCount": 1,
+            "activeSeconds": 333,
+            "kills": 11,
+            "cartridgesCrafted": 4,
+            "medkitsCrafted": 3,
+            "success": true,
+            "number": 3,
+            "name": "SAMPLE ZERO",
+            "mainTotal": 7,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "break_contact",
+            "kills": 21,
+            "activeSeconds": 444,
+            "cartridgesCrafted": 5,
+            "medkitsCrafted": 4,
+            "mainCompleted": 5,
+            "optionalCount": 0,
+            "success": true,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Campaign run — use Mission Select to replay unlocked operations.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": false,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 444,
+        "kills": 21,
+        "cartridgesCrafted": 5,
+        "medkitsCrafted": 4
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "mainCompleted": 7,
+          "optionalCount": 1,
+          "activeSeconds": 333,
+          "kills": 11,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nCAMPAIGN COMPLETE\nMISSION 4 / BREAK CONTACT\nDNA SAMPLE EXTRACTED — SQUAD ABOARD\nOPERATION TOTALS · 4 MISSIONS\nOperation time\n18:30\nHostile eliminations\n48\nCartridges crafted\n14\nMedkits crafted\n10\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n1 / DEAD SIGNAL\t8 / 8\t2 / 2\tComplete\n2 / POWER THROUGH\t6 / 6\t1 / 1\tComplete\n3 / SAMPLE ZERO\t7 / 7\t1 / 1\tComplete\n4 / BREAK CONTACT\t5 / 5\t0 / 0\tComplete\n\nCampaign run — use Mission Select to replay unlocked operations.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nSELECT MISSION\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Standalone M4 complete",
+      "mission": "break_contact",
+      "phase": "DONE",
+      "payload": {
+        "mode": "campaign",
+        "success": true,
+        "missionId": "break_contact",
+        "origin": "mission_select",
+        "fullCampaign": false,
+        "title": "MISSION 4 COMPLETE",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+        "scope": "Mission totals · 1 mission",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "0:03"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "8"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "0"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "0"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 3.5833333333333255,
+          "kills": 8,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        "chapters": [
+          {
+            "missionId": "break_contact",
+            "kills": 8,
+            "activeSeconds": 3.5833333333333255,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "mainCompleted": 5,
+            "optionalCount": 0,
+            "success": true,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Mission Select run — Campaign checkpoint unchanged.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": false,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 3.5833333333333255,
+        "kills": 8,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nMISSION 4 COMPLETE\nMISSION 4 / BREAK CONTACT\nDNA SAMPLE EXTRACTED — SQUAD ABOARD\nMISSION TOTALS · 1 MISSION\nOperation time\n0:03\nHostile eliminations\n8\nCartridges crafted\n0\nMedkits crafted\n0\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n4 / BREAK CONTACT\t5 / 5\t0 / 0\tComplete\n\nMission Select run — Campaign checkpoint unchanged.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nRETURN TO MISSION SELECT\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Mission Select M3-to-M4 complete",
+      "mission": "break_contact",
+      "phase": "DONE",
+      "payload": {
+        "mode": "campaign",
+        "success": true,
+        "missionId": "break_contact",
+        "origin": "mission_select",
+        "fullCampaign": false,
+        "title": "MISSION 4 COMPLETE",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+        "scope": "Operation totals · 2 missions",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "0:00"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "8"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "0"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "0"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 0.09999999999999999,
+          "kills": 8,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        "chapters": [
+          {
+            "missionId": "sample_zero",
+            "mainCompleted": 7,
+            "optionalCount": 0,
+            "activeSeconds": 0.09999999999999999,
+            "kills": 0,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "success": true,
+            "number": 3,
+            "name": "SAMPLE ZERO",
+            "mainTotal": 7,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "break_contact",
+            "kills": 8,
+            "activeSeconds": 0,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "mainCompleted": 5,
+            "optionalCount": 0,
+            "success": true,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Mission Select run — Campaign checkpoint unchanged.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": false,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 0,
+        "kills": 8,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "sample_zero",
+          "kills": 0,
+          "activeSeconds": 0.09999999999999999,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0,
+          "mainCompleted": 7,
+          "optionalCount": 0
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nMISSION 4 COMPLETE\nMISSION 4 / BREAK CONTACT\nDNA SAMPLE EXTRACTED — SQUAD ABOARD\nOPERATION TOTALS · 2 MISSIONS\nOperation time\n0:00\nHostile eliminations\n8\nCartridges crafted\n0\nMedkits crafted\n0\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n3 / SAMPLE ZERO\t7 / 7\t0 / 1\tComplete\n4 / BREAK CONTACT\t5 / 5\t0 / 0\tComplete\n\nMission Select run — Campaign checkpoint unchanged.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nRETURN TO MISSION SELECT\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Endless resumed Game Over",
+      "mission": "dead_signal",
+      "phase": "DEAD",
+      "payload": {
+        "mode": "endless",
+        "success": false,
+        "title": "SURVIVAL DEBRIEF",
+        "identity": "ENDLESS HORDE / IMPACT CRATER",
+        "summary": "GAME OVER — COMMANDER DOWN",
+        "scope": "Final run statistics",
+        "totals": {
+          "activeSeconds": 3675.1000000000013,
+          "kills": 1,
+          "cartridgesCrafted": 1,
+          "medkitsCrafted": 1
+        },
+        "wave": 1,
+        "cleared": 0,
+        "stats": [
+          {
+            "id": "wave",
+            "label": "Final wave reached",
+            "value": "1"
+          },
+          {
+            "id": "cleared",
+            "label": "Waves cleared",
+            "value": "0"
+          },
+          {
+            "id": "time",
+            "label": "Survival time",
+            "value": "1:01:15"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "1"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "1"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "1"
+          },
+          {
+            "id": "dna",
+            "label": "DNA banked",
+            "value": "0"
+          }
+        ],
+        "chapters": [],
+        "notes": [
+          "Survival time includes intermissions and excludes pauses.",
+          "Eliminations include all neutralized hostiles. Replay retains this deployment and arena with fresh supplies."
+        ],
+        "replay": true,
+        "selectMission": false
+      },
+      "current": {
+        "activeSeconds": 3675.1000000000013,
+        "kills": 1,
+        "cartridgesCrafted": 1,
+        "medkitsCrafted": 1
+      },
+      "chapters": [],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / SURVIVAL RECORD\nSURVIVAL DEBRIEF\nENDLESS HORDE / IMPACT CRATER\nGAME OVER — COMMANDER DOWN\nFINAL RUN STATISTICS\nFinal wave reached\n1\nWaves cleared\n0\nSurvival time\n1:01:15\nHostile eliminations\n1\nCartridges crafted\n1\nMedkits crafted\n1\nDNA banked\n0\n\nSurvival time includes intermissions and excludes pauses.\n\nEliminations include all neutralized hostiles. Replay retains this deployment and arena with fresh supplies.\n\nPLAY AGAIN\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Endless successful extraction",
+      "mission": "dead_signal",
+      "phase": "DONE",
+      "payload": {
+        "mode": "endless",
+        "success": true,
+        "title": "SURVIVAL DEBRIEF",
+        "identity": "ENDLESS HORDE / IMPACT CRATER",
+        "summary": "EXTRACTION SECURED",
+        "scope": "Final run statistics",
+        "totals": {
+          "activeSeconds": 0.09999999999999999,
+          "kills": 0,
+          "cartridgesCrafted": 0,
+          "medkitsCrafted": 0
+        },
+        "wave": 6,
+        "cleared": 6,
+        "stats": [
+          {
+            "id": "wave",
+            "label": "Final wave reached",
+            "value": "6"
+          },
+          {
+            "id": "cleared",
+            "label": "Waves cleared",
+            "value": "6"
+          },
+          {
+            "id": "time",
+            "label": "Survival time",
+            "value": "0:00"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "0"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "0"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "0"
+          },
+          {
+            "id": "dna",
+            "label": "DNA banked",
+            "value": "0"
+          }
+        ],
+        "chapters": [],
+        "notes": [
+          "Survival time includes intermissions and excludes pauses.",
+          "Eliminations include all neutralized hostiles. Replay retains this deployment and arena with fresh supplies."
+        ],
+        "replay": true,
+        "selectMission": false
+      },
+      "current": {
+        "activeSeconds": 0.09999999999999999,
+        "kills": 0,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / SURVIVAL RECORD\nSURVIVAL DEBRIEF\nENDLESS HORDE / IMPACT CRATER\nEXTRACTION SECURED\nFINAL RUN STATISTICS\nFinal wave reached\n6\nWaves cleared\n6\nSurvival time\n0:00\nHostile eliminations\n0\nCartridges crafted\n0\nMedkits crafted\n0\nDNA banked\n0\n\nSurvival time includes intermissions and excludes pauses.\n\nEliminations include all neutralized hostiles. Replay retains this deployment and arena with fresh supplies.\n\nPLAY AGAIN\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Valid Campaign Continue",
+      "mission": "break_contact",
+      "phase": "M4_BREAK_CONTACT",
+      "payload": null,
+      "current": {
+        "activeSeconds": 0.09999999999999999,
+        "kills": 0,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 11,
+          "activeSeconds": 333,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "mainCompleted": 7,
+          "optionalCount": 1
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":false,\"completionRecord\":null,\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"LANDED_INFESTED\",\"continuedState\":{\"version\":4,\"rewards\":{},\"chapterStats\":[{\"missionId\":\"dead_signal\",\"mainCompleted\":8,\"optionalCount\":2,\"activeSeconds\":111,\"kills\":7,\"cartridgesCrafted\":2,\"medkitsCrafted\":1},{\"missionId\":\"power_through\",\"mainCompleted\":6,\"optionalCount\":1,\"activeSeconds\":222,\"kills\":9,\"cartridgesCrafted\":3,\"medkitsCrafted\":2},{\"missionId\":\"sample_zero\",\"kills\":11,\"activeSeconds\":333,\"cartridgesCrafted\":4,\"medkitsCrafted\":3,\"mainCompleted\":7,\"optionalCount\":1}],\"pickups\":[{\"kind\":\"scrap\",\"quantity\":0,\"x\":430,\"y\":165},{\"kind\":\"scrap\",\"quantity\":0,\"x\":372,\"y\":320},{\"kind\":\"scrap\",\"quantity\":0,\"x\":352,\"y\":470},{\"kind\":\"scrap\",\"quantity\":0,\"x\":405,\"y\":600},{\"kind\":\"power\",\"quantity\":0,\"x\":336,\"y\":662},{\"kind\":\"power\",\"quantity\":0,\"x\":384,\"y\":662},{\"kind\":\"scrap\",\"quantity\":0,\"x\":290,\"y\":395},{\"kind\":\"scrap\",\"quantity\":0,\"x\":470,\"y\":270},{\"kind\":\"scrap\",\"quantity\":0,\"x\":418,\"y\":396},{\"kind\":\"grenade\",\"quantity\":0,\"x\":330,\"y\":480},{\"kind\":\"grenade\",\"quantity\":0,\"x\":462,\"y\":208}],\"hostiles\":[{\"type\":\"shielded\",\"x\":380,\"y\":760,\"hp\":95,\"maxHp\":95,\"shield\":110,\"speed\":7,\"dmg\":14,\"ambient\":false,\"scale\":0.92,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"},{\"type\":\"runner\",\"x\":372,\"y\":748,\"hp\":34,\"maxHp\":34,\"shield\":0,\"speed\":16.5,\"dmg\":8,\"ambient\":false,\"scale\":0.92,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"},{\"type\":\"drone\",\"x\":399,\"y\":751,\"hp\":105,\"maxHp\":105,\"shield\":0,\"speed\":8,\"dmg\":12,\"ambient\":false,\"scale\":1,\"focus\":-1,\"extractionNode\":null,\"enemyFocus\":-1,\"relayFocus\":-1,\"escortFocus\":false,\"attackT\":0,\"armed\":false,\"armT\":0,\"armBeep\":0,\"source\":\"authored\"}],\"missionId\":\"break_contact\",\"missionTime\":0,\"kills\":0,\"totalAmmoCrafted\":0,\"totalMedkitsCrafted\":0,\"player\":{\"maxHp\":100,\"hp\":100,\"maxShield\":100,\"shield\":100,\"abilityCd\":0,\"bulwarkT\":0,\"stamina\":100,\"shieldDelayT\":0,\"hpDelayT\":0,\"speed\":5.2,\"dmgTakenMult\":1,\"staminaDrainMult\":1,\"staminaRegenMult\":1,\"critChance\":0,\"reloadMult\":1,\"jumpMult\":1,\"grenadeDmgMult\":1,\"critMult\":2,\"grenades\":3,\"grenadeCd\":0,\"downed\":false,\"dead\":false,\"ability\":\"surge\",\"weaponStats\":{\"rifle\":{\"mag\":50,\"magSize\":50,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.012,\"reloadTime\":1.7,\"range\":153},\"scatter\":{\"mag\":20,\"magSize\":20,\"dmgMult\":1,\"rateMult\":1,\"spread\":0.105,\"reloadTime\":2.05,\"range\":60}},\"position\":{\"x\":364,\"y\":774},\"yaw\":1.7488892650260943,\"combat\":{\"version\":3,\"activeId\":\"rifle\",\"cartridges\":6,\"weapons\":{\"rifle\":{\"mag\":50},\"scatter\":{\"mag\":20}}}},\"craft\":{\"scraps\":0,\"powerCells\":0,\"medkits\":3},\"squadCommand\":\"assist\",\"squad\":[{\"maxHp\":130,\"hp\":130,\"maxShield\":104,\"shield\":104,\"mag\":30,\"magSize\":30,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"heavy\",\"ability\":\"bulwark\",\"position\":{\"x\":350,\"y\":762}},{\"maxHp\":100,\"hp\":100,\"maxShield\":80,\"shield\":80,\"mag\":70,\"magSize\":70,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"medic\",\"ability\":\"medic_pulse\",\"position\":{\"x\":360,\"y\":762}},{\"maxHp\":110,\"hp\":110,\"maxShield\":88,\"shield\":88,\"mag\":50,\"magSize\":50,\"reserve\":3,\"abilityCd\":0,\"bulwarkT\":0,\"shieldDelayT\":0,\"hpDelayT\":0,\"dmgMult\":1,\"rateMult\":1,\"dmgTakenMult\":1,\"critChance\":0,\"reloadMult\":1,\"critMult\":2,\"speedMult\":1,\"downed\":false,\"dead\":false,\"weapon\":\"rifle\",\"ability\":\"target_designator\",\"position\":{\"x\":370,\"y\":762}}],\"securityTurret\":true,\"turretFireT\":0,\"securityPortalSealed\":true,\"securityPortalRecovery\":false,\"enemyIntel\":true,\"extraction\":{\"phase\":24,\"mainIndex\":0,\"started\":false,\"cleared\":false,\"clearedNodeIds\":[],\"cacheUsed\":false}}},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":false,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "\n        \n            \n            OPERATION DEBRIEF\n            \n            \n            \n                \n                \n                \n                    Objective completion\n                    MissionMainOptionalStatus\n                    \n                \n                \n            \n            \n                RETRY MISSION\n                SELECT MISSION\n                RETURN TO MAIN MENU\n            \n        "
+    },
+    {
+      "label": "Resumed Campaign complete",
+      "mission": "break_contact",
+      "phase": "DONE",
+      "payload": {
+        "mode": "campaign",
+        "success": true,
+        "missionId": "break_contact",
+        "origin": "continue_campaign",
+        "fullCampaign": true,
+        "title": "CAMPAIGN COMPLETE",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+        "scope": "Operation totals · 4 missions",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "11:06"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "35"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "9"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "6"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 666.1,
+          "kills": 35,
+          "cartridgesCrafted": 9,
+          "medkitsCrafted": 6
+        },
+        "chapters": [
+          {
+            "missionId": "dead_signal",
+            "mainCompleted": 8,
+            "optionalCount": 2,
+            "activeSeconds": 111,
+            "kills": 7,
+            "cartridgesCrafted": 2,
+            "medkitsCrafted": 1,
+            "success": true,
+            "number": 1,
+            "name": "DEAD SIGNAL",
+            "mainTotal": 8,
+            "optionalTotal": 2
+          },
+          {
+            "missionId": "power_through",
+            "mainCompleted": 6,
+            "optionalCount": 1,
+            "activeSeconds": 222,
+            "kills": 9,
+            "cartridgesCrafted": 3,
+            "medkitsCrafted": 2,
+            "success": true,
+            "number": 2,
+            "name": "POWER THROUGH",
+            "mainTotal": 6,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "sample_zero",
+            "mainCompleted": 7,
+            "optionalCount": 1,
+            "activeSeconds": 333,
+            "kills": 11,
+            "cartridgesCrafted": 4,
+            "medkitsCrafted": 3,
+            "success": true,
+            "number": 3,
+            "name": "SAMPLE ZERO",
+            "mainTotal": 7,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "break_contact",
+            "kills": 8,
+            "activeSeconds": 0.09999999999999999,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "mainCompleted": 5,
+            "optionalCount": 0,
+            "success": true,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Campaign run — use Mission Select to replay unlocked operations.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": false,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 0.09999999999999999,
+        "kills": 8,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2
+        },
+        {
+          "missionId": "sample_zero",
+          "kills": 11,
+          "activeSeconds": 333,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "mainCompleted": 7,
+          "optionalCount": 1
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nCAMPAIGN COMPLETE\nMISSION 4 / BREAK CONTACT\nDNA SAMPLE EXTRACTED — SQUAD ABOARD\nOPERATION TOTALS · 4 MISSIONS\nOperation time\n11:06\nHostile eliminations\n35\nCartridges crafted\n9\nMedkits crafted\n6\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n1 / DEAD SIGNAL\t8 / 8\t2 / 2\tComplete\n2 / POWER THROUGH\t6 / 6\t1 / 1\tComplete\n3 / SAMPLE ZERO\t7 / 7\t1 / 1\tComplete\n4 / BREAK CONTACT\t5 / 5\t0 / 0\tComplete\n\nCampaign run — use Mission Select to replay unlocked operations.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nSELECT MISSION\nRETURN TO MAIN MENU"
+    },
+    {
+      "label": "Legacy partial history",
+      "mission": "break_contact",
+      "phase": "DONE",
+      "payload": {
+        "mode": "campaign",
+        "success": true,
+        "missionId": "break_contact",
+        "origin": "continue_campaign",
+        "fullCampaign": true,
+        "title": "CAMPAIGN COMPLETE",
+        "identity": "MISSION 4 / BREAK CONTACT",
+        "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+        "scope": "Recorded operation totals · 2 missions",
+        "stats": [
+          {
+            "id": "time",
+            "label": "Operation time",
+            "value": "5:33"
+          },
+          {
+            "id": "kills",
+            "label": "Hostile eliminations",
+            "value": "19"
+          },
+          {
+            "id": "cartridges",
+            "label": "Cartridges crafted",
+            "value": "4"
+          },
+          {
+            "id": "medkits",
+            "label": "Medkits crafted",
+            "value": "3"
+          }
+        ],
+        "totals": {
+          "activeSeconds": 333.1,
+          "kills": 19,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3
+        },
+        "chapters": [
+          {
+            "missionId": "sample_zero",
+            "mainCompleted": 7,
+            "optionalCount": null,
+            "activeSeconds": 333,
+            "kills": 11,
+            "cartridgesCrafted": 4,
+            "medkitsCrafted": 3,
+            "success": true,
+            "number": 3,
+            "name": "SAMPLE ZERO",
+            "mainTotal": 7,
+            "optionalTotal": 1
+          },
+          {
+            "missionId": "break_contact",
+            "kills": 8,
+            "activeSeconds": 0.09999999999999999,
+            "cartridgesCrafted": 0,
+            "medkitsCrafted": 0,
+            "mainCompleted": 5,
+            "optionalCount": 0,
+            "success": true,
+            "number": 4,
+            "name": "BREAK CONTACT",
+            "mainTotal": 5,
+            "optionalTotal": 0
+          }
+        ],
+        "notes": [
+          "Campaign run — use Mission Select to replay unlocked operations.",
+          "Earlier statistics are unavailable in this checkpoint; totals cover recorded missions only.",
+          "Some earlier optional-objective counts were not recorded by this save.",
+          "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+        ],
+        "replay": false,
+        "selectMission": true
+      },
+      "current": {
+        "activeSeconds": 0.09999999999999999,
+        "kills": 8,
+        "cartridgesCrafted": 0,
+        "medkitsCrafted": 0
+      },
+      "chapters": [
+        {
+          "missionId": "sample_zero",
+          "kills": 11,
+          "activeSeconds": 333,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "mainCompleted": 7
+        }
+      ],
+      "save": "{\"version\":4,\"campaignStarted\":true,\"campaignComplete\":true,\"completionRecord\":{\"version\":1,\"finalMission\":\"break_contact\",\"completed\":true},\"lastMission\":\"break_contact\",\"operation\":{\"worldSnapshot\":\"break_contact\",\"spacecraftState\":\"DEPARTED\",\"continuedState\":null},\"missions\":{\"dead_signal\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lz_deployment\",\"bestOptional\":2},\"power_through\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"facility_staging\",\"bestOptional\":1},\"sample_zero\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"lab_command\",\"bestOptional\":1},\"break_contact\":{\"unlocked\":true,\"completed\":true,\"checkpoint\":\"containment_escape\",\"bestOptional\":0}}}",
+      "endless": null,
+      "dom": "CHARGE FRONT / OPERATION DEBRIEF\nCAMPAIGN COMPLETE\nMISSION 4 / BREAK CONTACT\nDNA SAMPLE EXTRACTED — SQUAD ABOARD\nRECORDED OPERATION TOTALS · 2 MISSIONS\nOperation time\n5:33\nHostile eliminations\n19\nCartridges crafted\n4\nMedkits crafted\n3\nOBJECTIVE COMPLETION\nMission\tMain\tOptional\tStatus\n3 / SAMPLE ZERO\t7 / 7\tNot recorded\tComplete\n4 / BREAK CONTACT\t5 / 5\t0 / 0\tComplete\n\nCampaign run — use Mission Select to replay unlocked operations.\n\nEarlier statistics are unavailable in this checkpoint; totals cover recorded missions only.\n\nSome earlier optional-objective counts were not recorded by this save.\n\nEliminations include all neutralized hostiles, including squad support and hostile detonations.\n\nSELECT MISSION\nRETURN TO MAIN MENU"
+    }
+  ],
+  "layouts": [
+    {
+      "label": "campaign-failure",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "bounds": {
+        "x": 200,
+        "y": 20,
+        "width": 880,
+        "height": 680
+      }
+    },
+    {
+      "label": "campaign-failure",
+      "size": {
+        "width": 768,
+        "height": 600
+      },
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 728,
+        "height": 560
+      }
+    },
+    {
+      "label": "campaign-failure",
+      "size": {
+        "width": 390,
+        "height": 740
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 366,
+        "height": 716
+      }
+    },
+    {
+      "label": "campaign-failure",
+      "size": {
+        "width": 320,
+        "height": 568
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 296,
+        "height": 544
+      }
+    },
+    {
+      "label": "campaign-failure",
+      "size": {
+        "width": 960,
+        "height": 420
+      },
+      "bounds": {
+        "x": 40,
+        "y": 20,
+        "width": 880,
+        "height": 380
+      }
+    },
+    {
+      "label": "campaign-complete",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "bounds": {
+        "x": 200,
+        "y": 38.599998474121094,
+        "width": 880,
+        "height": 642.7999649047852
+      }
+    },
+    {
+      "label": "campaign-complete",
+      "size": {
+        "width": 768,
+        "height": 600
+      },
+      "bounds": {
+        "x": 20,
+        "y": 20,
+        "width": 728,
+        "height": 560
+      }
+    },
+    {
+      "label": "campaign-complete",
+      "size": {
+        "width": 390,
+        "height": 740
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 366,
+        "height": 716
+      }
+    },
+    {
+      "label": "campaign-complete",
+      "size": {
+        "width": 320,
+        "height": 568
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 296,
+        "height": 544
+      }
+    },
+    {
+      "label": "campaign-complete",
+      "size": {
+        "width": 960,
+        "height": 420
+      },
+      "bounds": {
+        "x": 40,
+        "y": 20,
+        "width": 880,
+        "height": 380
+      }
+    },
+    {
+      "label": "endless-game-over",
+      "size": {
+        "width": 1280,
+        "height": 720
+      },
+      "bounds": {
+        "x": 200,
+        "y": 92,
+        "width": 880,
+        "height": 536
+      }
+    },
+    {
+      "label": "endless-game-over",
+      "size": {
+        "width": 768,
+        "height": 600
+      },
+      "bounds": {
+        "x": 20,
+        "y": 45.5,
+        "width": 728,
+        "height": 509
+      }
+    },
+    {
+      "label": "endless-game-over",
+      "size": {
+        "width": 390,
+        "height": 740
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 366,
+        "height": 716
+      }
+    },
+    {
+      "label": "endless-game-over",
+      "size": {
+        "width": 320,
+        "height": 568
+      },
+      "bounds": {
+        "x": 12,
+        "y": 12,
+        "width": 296,
+        "height": 544
+      }
+    },
+    {
+      "label": "endless-game-over",
+      "size": {
+        "width": 960,
+        "height": 420
+      },
+      "bounds": {
+        "x": 40,
+        "y": 20,
+        "width": 880,
+        "height": 380
+      }
+    }
+  ],
+  "errors": [],
+  "immutable": {
+    "before": {
+      "mode": "campaign",
+      "success": true,
+      "missionId": "break_contact",
+      "origin": "continue_campaign",
+      "fullCampaign": true,
+      "title": "CAMPAIGN COMPLETE",
+      "identity": "MISSION 4 / BREAK CONTACT",
+      "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+      "scope": "Operation totals · 4 missions",
+      "stats": [
+        {
+          "id": "time",
+          "label": "Operation time",
+          "value": "18:30"
+        },
+        {
+          "id": "kills",
+          "label": "Hostile eliminations",
+          "value": "48"
+        },
+        {
+          "id": "cartridges",
+          "label": "Cartridges crafted",
+          "value": "14"
+        },
+        {
+          "id": "medkits",
+          "label": "Medkits crafted",
+          "value": "10"
+        }
+      ],
+      "totals": {
+        "activeSeconds": 1110,
+        "kills": 48,
+        "cartridgesCrafted": 14,
+        "medkitsCrafted": 10
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1,
+          "success": true,
+          "number": 1,
+          "name": "DEAD SIGNAL",
+          "mainTotal": 8,
+          "optionalTotal": 2
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2,
+          "success": true,
+          "number": 2,
+          "name": "POWER THROUGH",
+          "mainTotal": 6,
+          "optionalTotal": 1
+        },
+        {
+          "missionId": "sample_zero",
+          "mainCompleted": 7,
+          "optionalCount": 1,
+          "activeSeconds": 333,
+          "kills": 11,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "success": true,
+          "number": 3,
+          "name": "SAMPLE ZERO",
+          "mainTotal": 7,
+          "optionalTotal": 1
+        },
+        {
+          "missionId": "break_contact",
+          "kills": 21,
+          "activeSeconds": 444,
+          "cartridgesCrafted": 5,
+          "medkitsCrafted": 4,
+          "mainCompleted": 5,
+          "optionalCount": 0,
+          "success": true,
+          "number": 4,
+          "name": "BREAK CONTACT",
+          "mainTotal": 5,
+          "optionalTotal": 0
+        }
+      ],
+      "notes": [
+        "Campaign run — use Mission Select to replay unlocked operations.",
+        "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+      ],
+      "replay": false,
+      "selectMission": true
+    },
+    "after": {
+      "mode": "campaign",
+      "success": true,
+      "missionId": "break_contact",
+      "origin": "continue_campaign",
+      "fullCampaign": true,
+      "title": "CAMPAIGN COMPLETE",
+      "identity": "MISSION 4 / BREAK CONTACT",
+      "summary": "DNA SAMPLE EXTRACTED — SQUAD ABOARD",
+      "scope": "Operation totals · 4 missions",
+      "stats": [
+        {
+          "id": "time",
+          "label": "Operation time",
+          "value": "18:30"
+        },
+        {
+          "id": "kills",
+          "label": "Hostile eliminations",
+          "value": "48"
+        },
+        {
+          "id": "cartridges",
+          "label": "Cartridges crafted",
+          "value": "14"
+        },
+        {
+          "id": "medkits",
+          "label": "Medkits crafted",
+          "value": "10"
+        }
+      ],
+      "totals": {
+        "activeSeconds": 1110,
+        "kills": 48,
+        "cartridgesCrafted": 14,
+        "medkitsCrafted": 10
+      },
+      "chapters": [
+        {
+          "missionId": "dead_signal",
+          "mainCompleted": 8,
+          "optionalCount": 2,
+          "activeSeconds": 111,
+          "kills": 7,
+          "cartridgesCrafted": 2,
+          "medkitsCrafted": 1,
+          "success": true,
+          "number": 1,
+          "name": "DEAD SIGNAL",
+          "mainTotal": 8,
+          "optionalTotal": 2
+        },
+        {
+          "missionId": "power_through",
+          "mainCompleted": 6,
+          "optionalCount": 1,
+          "activeSeconds": 222,
+          "kills": 9,
+          "cartridgesCrafted": 3,
+          "medkitsCrafted": 2,
+          "success": true,
+          "number": 2,
+          "name": "POWER THROUGH",
+          "mainTotal": 6,
+          "optionalTotal": 1
+        },
+        {
+          "missionId": "sample_zero",
+          "mainCompleted": 7,
+          "optionalCount": 1,
+          "activeSeconds": 333,
+          "kills": 11,
+          "cartridgesCrafted": 4,
+          "medkitsCrafted": 3,
+          "success": true,
+          "number": 3,
+          "name": "SAMPLE ZERO",
+          "mainTotal": 7,
+          "optionalTotal": 1
+        },
+        {
+          "missionId": "break_contact",
+          "kills": 21,
+          "activeSeconds": 444,
+          "cartridgesCrafted": 5,
+          "medkitsCrafted": 4,
+          "mainCompleted": 5,
+          "optionalCount": 0,
+          "success": true,
+          "number": 4,
+          "name": "BREAK CONTACT",
+          "mainTotal": 5,
+          "optionalTotal": 0
+        }
+      ],
+      "notes": [
+        "Campaign run — use Mission Select to replay unlocked operations.",
+        "Eliminations include all neutralized hostiles, including squad support and hostile detonations."
+      ],
+      "replay": false,
+      "selectMission": true
+    },
+    "current": {
+      "activeSeconds": 444,
+      "kills": 22,
+      "cartridgesCrafted": 5,
+      "medkitsCrafted": 4
+    }
+  },
+  "passed": true
+}

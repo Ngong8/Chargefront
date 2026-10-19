@@ -24,6 +24,7 @@ await page.addInitScript(() => {
     };
 });
 const url = pathToFileURL(resolve('chargefront.html')); url.searchParams.set('perfDiagnostics', '1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 const ready = () => page.waitForFunction(() => window.__cf?.renderer, undefined, { timeout: 120000 });
 const quiet = () => page.evaluate(() => { __cf.setNoSpawn(true); __cf.setInvulnerable(true); __cf.clearTestEnemies(); __cf.setNoAggro(true); });
 const snap = () => page.evaluate(() => __cf.combat.snapshot());
@@ -204,7 +205,7 @@ try {
             squad: __cf.squadInfo().map(m => m.formation), posture: __cf.command };
     });
     assert.equal(results.campaignIsolation.mode, 'campaign'); assert.equal(results.campaignIsolation.combat.activeId, 'rifle');
-    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.campaignIsolation.combat.cartridges, 5);
+    assert.deepEqual(results.campaignIsolation.combat.weapons, { rifle: { mag: 50 }, scatter: { mag: 20 } }); assert.equal(results.campaignIsolation.combat.cartridges, 4);
     assert.equal(results.campaignIsolation.damage, 1); assert.equal(results.campaignIsolation.magSize, 50); assert.equal(results.campaignIsolation.posture, 'assist');
     assert.equal(results.campaignIsolation.speed, 5.2);
     assert.deepEqual(errors, []);

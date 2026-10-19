@@ -1,0 +1,127 @@
+{
+  "browser": "edge",
+  "checks": [
+    {
+      "label": "Fresh game",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Retired result shortcut discarded",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Partial Campaign; all Mission Select entries accessible",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Mission Select M4 completion",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Mission Select M3-to-M4 completion",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Legitimate full Campaign completion",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "Completion retained after reload",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "Earned completion survives fresh Campaign replay",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "Authorized Endless Game Over / Play Again / Main Menu",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "canonical-v3",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "all-four-missing-flag",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "all-four-false-flag",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "Stale setup blocked",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Stale sound confirmation blocked",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Revoked during launch fade blocked",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Valid partial primary overrides completed backup",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Valid completed backup recovery",
+      "unlocked": true,
+      "fixture": false,
+      "canStart": true
+    },
+    {
+      "label": "Two-mission legacy ambiguity remains locked",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Existing Endless boundary does not unlock new runs",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    },
+    {
+      "label": "Legacy run ends without replay bypass",
+      "unlocked": false,
+      "fixture": false,
+      "canStart": false
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

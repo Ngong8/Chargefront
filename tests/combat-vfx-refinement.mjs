@@ -9,6 +9,7 @@ const context=await browser.newContext({viewport:{width:1280,height:720},...(pro
 const page=await context.newPage(),errors=[],consoles=[],results={angles:[],timings:[],balance:[]};page.on('pageerror',e=>errors.push(e.message));page.on('console',m=>{if(m.type()==='error')consoles.push(m.text());});
 const videoStarted=Date.now();
 const url=pathToFileURL(resolve('chargefront.html'));url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 const ready=()=>page.waitForFunction(()=>!!window.__cf?.renderer,undefined,{timeout:120000});
 const quiet=()=>page.evaluate(()=>{__cf.setNoSpawn(true);__cf.setNoAggro(true);__cf.setInvulnerable(true);__cf.setHud(false);__cf.clearTestEnemies();__cf.suppressAbilityAutonomy(1000);__cf.pause(true);for(const m of __cf.squad){m.fireT=m.abilityCd=1000;}__cf.advanceShots(10);__cf.advanceElectricalFx(10);});
 async function continueSaved(saved=null){await page.reload();await ready();if(saved)await page.evaluate(s=>localStorage.cf_endless_v1=JSON.stringify(s),saved);await page.locator('#btn-endless').click();await page.locator('#btn-endless-continue').click();await page.locator('#btn-sound-start').click();await page.waitForFunction(()=>__cf.mode==='endless');await quiet();await page.evaluate(()=>__cf.waitCombatPreparation());}

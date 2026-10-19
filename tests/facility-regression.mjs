@@ -18,6 +18,7 @@ const context = await browser.newContext({ viewport: { width: 1280, height: 720 
 const page = await context.newPage();
 page.on('pageerror', (error) => errors.push(error.message));
 const url = pathToFileURL(resolve('chargefront.html'));
+url.searchParams.set('endlessFixture','1'); // Explicit isolated mode-switch fixture.
 url.searchParams.set('perfDiagnostics', '1');
 const check = async (label, fn) => {
     const result = await page.evaluate(fn);

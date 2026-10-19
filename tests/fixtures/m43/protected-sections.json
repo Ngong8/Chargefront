@@ -1,0 +1,17 @@
+{
+  "description": "Accepted pre-CP2-R HTML section SHA-256 digests, normalized to LF; no embedded assets or player saves.",
+  "html_sha256": "2deba026a72573bc81863704c27b97d2dfe74e9b075768131e93397e21f6b936",
+  "sections": [
+    {"id":"perception","start":"    perceive(dt) {","end":"    knownGoal(dt) {","sha256":"780f52dd77a9133972f2ef8dbc026c4132114173eee6d3281115c12b5f34c26e"},
+    {"id":"campaign_search","start":"    knownGoal(dt) {","end":"    updateAttack(dt,victim,reach) {","sha256":"f500d6500b71feb2f91603416fd8d59ad769842d023664ede8cac5f78a626f02"},
+    {"id":"attack","start":"    updateAttack(dt,victim,reach) {","end":"    setSpawnScale(scale)","sha256":"265b445f2fe2746ac249a05ae54d0dfde52d3659deba1b13e0b1219d9af713ab"},
+    {"id":"pickup","start":"function applyPickup","end":"/* ─── crafting","sha256":"670956aa7c02bb6e7b20bf2c61867cd57499a3e475b98e0b94c924ad0d1ea2e7"},
+    {"id":"crafting","start":"const CRAFT_COSTS","end":"function craftMedkit","sha256":"7f0114c066fdc20b3f154b9d640c3df77b5a81b583c9c72dce9d7a949f295062"},
+    {"id":"results","start":"function currentResultCounters","end":"function colorStr","sha256":"c7106bb1ba8581a3e3f244fb080685f9f6473eeed59fb2b216b5c697cc1b9a8f"},
+    {"id":"profile_gate","start":"function defaultCampaignProfile","end":"/* ─── engine settings","sha256":"00654f7a384f44835ba9da34e668f5eb64f02aeeec986ac352a591bf018ad16c"},
+    {"id":"endless_reset","start":"function resetEndlessRun","end":"function placeEndlessSquad","sha256":"3a935304ec1b669029ea83444278d77c43bdf6886b8aabfc8876d58e8602f9da"},
+    {"id":"endless_spawn","start":"function spawnEndlessGroup","end":"function updateEndlessWaves","sha256":"6a6ca98a5db705003c1f8b3b24977621f8469438743b145bdd67a7e810be588e"},
+    {"id":"endless_wave","start":"function updateEndlessWaves","end":"function updateEndlessInteract","sha256":"d286cbc6b1f3a303dea3359d488c60f8e9151b204dbe5f03f19bb7bfe67cabd2"},
+    {"id":"endless_bank","start":"function bankDna","end":"function updateEndless(dt)","sha256":"0e5d88c042e1bf45f4a132107e2db17ee8c6faa57b62749418d8762d421c6423"}
+  ]
+}

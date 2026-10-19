@@ -15,6 +15,7 @@ const browser = await (ff ? firefox : chromium).launch(ff ? { headless: true } :
 const page = await browser.newPage({ viewport: { width: 1280, height: 720 } }), errors = [], consoles = [], results = {};
 page.on('pageerror', e => errors.push(e.message)); page.on('console', m => { if (m.type() === 'error') consoles.push(m.text()); });
 const url = pathToFileURL(resolve('chargefront.html')); url.searchParams.set('perfDiagnostics','1');
+url.searchParams.set('endlessFixture','1'); // Isolated combat fixture, no persisted unlock.
 const ready = () => page.waitForFunction(() => { try { return !!window.__cf?.renderer; } catch { return false; } }, undefined, { timeout: 120000 });
 const capture = async label => {
     await page.locator('#cf-perf-diagnostics').evaluate(el => { el.style.display = 'none'; });

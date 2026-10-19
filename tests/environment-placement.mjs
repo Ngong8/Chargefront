@@ -18,6 +18,7 @@ const context = await browser.newContext({ viewport: { width: 1280, height: 720 
 const page = await context.newPage(), errors = [], results = { browser: name, cases: [], baselineParity: [], captures: [] };
 page.on('pageerror', e => errors.push(e.message));
 const url = pathToFileURL(resolve('chargefront.html')); url.searchParams.set('perfDiagnostics', '1');
+url.searchParams.set('endlessFixture','1'); // Explicit isolated Endless fixture.
 // Accepted-HEAD baseline: the complete HEAD game (HTML *and* src/ modules) is
 // extracted with `git archive` to a temporary site. (CP2-R1: the former
 // page.route substitution was ignored for file:// in Firefox and, where honoured,

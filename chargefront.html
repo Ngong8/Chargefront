@@ -47,6 +47,9 @@
     .cf-menu-btn:hover { background:rgba(120,60,220,.5); transform:translateY(-1px); box-shadow:0 0 22px rgba(150,70,255,.55); }
     .cf-menu-btn.danger { color:#ffc9c9; border-color:rgba(255,90,110,.5); }
     .cf-menu-btn.danger:hover { background:rgba(150,30,60,.45); box-shadow:0 0 22px rgba(255,70,100,.45); }
+    #btn-endless:disabled { opacity:.55; color:#a698b5; border-color:#5d526b; background:rgba(40,30,55,.4); cursor:not-allowed; transform:none; box-shadow:none; }
+    .cf-endless-requirement { font:12px/1.45 'Segoe UI',Arial,sans-serif; color:#c1b1cf; margin:-7px 0 0; max-width:320px; }
+    #btn-endless-legacy-continue { font-size:12px; letter-spacing:.06em; }
     .cf-menu-btn.back { width:320px; min-width:320px; margin:22px auto 0; display:block; }
 
     .cf-panel-box {
@@ -168,10 +171,40 @@
     .cf-mission-desc { display:block; color:#aa9aba; font-size:12px; line-height:1.4; }
     .cf-mission-status { display:block; margin-top:8px; color:#75e8bd; font-size:11px; letter-spacing:.12em; }
     .cf-mission-entry:disabled .cf-mission-status { color:#8a7d92; }
-    #campaign-result-screen { z-index:40; }
-    #campaign-result-screen .cf-panel-box { text-align:center; }
-    .cf-result-summary { color:#c9b8d8; line-height:1.7; margin:4px 0 18px; }
-    .cf-result-actions { display:flex; flex-direction:column; align-items:center; gap:10px; }
+    #campaign-result-screen { z-index:40; padding:20px; }
+    #campaign-result-screen .cf-debrief { box-sizing:border-box; width:100%; max-width:880px; max-height:100%; overflow-y:auto; padding:22px; border-top:3px solid #76e6c4; }
+    #campaign-result-screen[data-outcome="failure"] .cf-debrief { border-top-color:#ff8396; }
+    .cf-debrief-kicker { font-size:12px; letter-spacing:.2em; color:#9adcff; margin-bottom:8px; }
+    #campaign-result-title { font-size:clamp(23px,4vw,36px); letter-spacing:.08em; margin:0 0 8px; color:#83f2ce; }
+    #campaign-result-screen[data-outcome="failure"] #campaign-result-title { color:#ff9aa9; }
+    #campaign-result-title:focus { outline:none; }
+    #campaign-result-name { font-size:16px; letter-spacing:.08em; color:#dec4f5; margin:0 0 12px; }
+    .cf-result-summary { color:#e6dcf2; line-height:1.5; margin:0 0 16px; font-size:14px; }
+    .cf-result-body { font-family:'Segoe UI',Arial,sans-serif; }
+    .cf-result-scope { color:#c5b4d6; font-size:13px; margin:0 0 10px; text-transform:uppercase; letter-spacing:.1em; }
+    .cf-result-stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:10px; margin:0 0 16px; }
+    .cf-result-stat { background:rgba(96,50,140,.14); border:1px solid #514065; border-radius:6px; padding:10px 12px; min-width:0; }
+    .cf-result-stat dt { color:#c5b4d6; font-size:12px; line-height:1.4; }
+    .cf-result-stat dd { color:#f0eaff; font-size:clamp(24px,3vw,32px); font-weight:600; font-variant-numeric:tabular-nums; margin:5px 0 0; overflow-wrap:anywhere; }
+    .cf-result-objectives { width:100%; border-collapse:collapse; font-size:13px; margin-bottom:12px; }
+    .cf-result-objectives caption { text-align:left; font-size:13px; text-transform:uppercase; letter-spacing:.1em; color:#c5b4d6; padding-bottom:10px; }
+    .cf-result-objectives th,.cf-result-objectives td { text-align:left; border-bottom:1px solid #3a2b4b; padding:7px 6px; line-height:1.4; }
+    .cf-result-objectives thead th { color:#b2a0c4; font-size:12px; font-weight:400; }
+    .cf-result-objectives tbody th { font-weight:500; color:#e5d6f2; }
+    .cf-result-notes { color:#b7a7ca; font-size:12px; line-height:1.6; margin:0 0 14px; }
+    .cf-result-notes p { margin:4px 0; }
+    .cf-result-actions { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; border-top:1px solid #514065; padding-top:18px; }
+    .cf-result-actions .cf-menu-btn { width:100%; min-width:0; height:auto; min-height:48px; padding:12px; font-size:13px; letter-spacing:.08em; line-height:1.4; }
+    .cf-result-actions .cf-result-primary { background:rgba(40,120,110,.22); border-color:#68b9ae; }
+    .cf-result-actions .cf-menu-btn:focus-visible { outline:2px solid #a4e7ff; outline-offset:3px; }
+    #campaign-result-screen[data-mode="campaign"][data-outcome="failure"] #btn-result-menu { grid-column:1/-1; }
+    @media(max-width:620px) {
+        #campaign-result-screen { padding:12px; }
+        #campaign-result-screen .cf-debrief { padding:18px 14px; }
+        .cf-result-stats { grid-template-columns:repeat(2,minmax(0,1fr)); }
+        .cf-result-objectives { font-size:12px; }
+        .cf-result-actions { grid-template-columns:1fr; }
+    }
     @media (max-width: 650px) { .cf-mission-list { grid-template-columns:1fr; } .cf-mission-panel { max-width:92%; } }
 
     /* ── Vignette (cheap post-processing, perf #18) ────────────────── */
@@ -196,6 +229,8 @@
 <script src="src/world/campaign-exterior.js"></script>
 <script src="src/combat.js"></script>
 <script src="src/progression.js"></script>
+<script src="src/results.js"></script>
+<script src="src/enemy-tactics.js"></script>
 <script src="src/relay-routing.js"></script>
 <script src="src/fps-reload.js"></script>
 <script src="src/presentation-ribbons.js"></script>
@@ -221,6 +256,8 @@ import * as LJS from 'https://cdn.jsdelivr.net/npm/littlejsengine@1.18.25/dist/l
 'use strict';
 const QUERY = new URLSearchParams(location.search);
 const PERF_DIAGNOSTICS = QUERY.get('perfDiagnostics') === '1'; // ?perfDiagnostics=1; remove query to disable
+// Explicit, visibly labelled browser-test authorization; never persists an unlock.
+const ENDLESS_TEST_FIXTURE = PERF_DIAGNOSTICS && QUERY.get('endlessFixture') === '1';
 const PERF_GPU_SYNC = PERF_DIAGNOSTICS && QUERY.get('perfGpuSync') === '1'; // optional GPU/driver ablation, never normal play
 const MOVEMENT_DIAGNOSTICS = QUERY.get('movementDiagnostics') === '1';
 const PREVIEW = QUERY.has('preview');                  // ?preview=1 → cinematic flyover, no input
@@ -302,7 +339,7 @@ const CAMPAIGN_RUN_ORIGIN = Object.freeze({
 function defaultCampaignProfile() {
     const missions = {};
     for (const mission of CAMPAIGN_MISSIONS) missions[mission.id] = { unlocked: !!mission.unlockedByDefault, completed: false, checkpoint: mission.checkpoint, bestOptional: 0 };
-    return { version: 4, campaignStarted: false, campaignComplete: false, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
+    return { version: 4, campaignStarted: false, campaignComplete: false, completionRecord:null, lastMission: 'dead_signal', operation: { worldSnapshot: 'dead_signal', spacecraftState: 'INSERTION_APPROACH', continuedState: null }, missions };
 }
 function loadCampaignProfile() {
     const profile = defaultCampaignProfile();
@@ -312,7 +349,8 @@ function loadCampaignProfile() {
         const saved = result.data || {};
         legacyCampaignEntry=!!result.data&&(!saved.version||saved.version<4)&&!saved.operation?.continuedState;
         profile.campaignStarted = !!saved.campaignStarted || !!saved.campaignComplete || CAMPAIGN_MISSIONS.some((mission) => !!(saved.missions && saved.missions[mission.id] && saved.missions[mission.id].completed));
-        profile.campaignComplete = !!saved.campaignComplete;
+        profile.campaignComplete = ChargefrontProgression.campaignCompleted(saved);
+        if (ChargefrontProgression.campaignCleared(saved)) profile.completionRecord = {...ChargefrontProgression.completionRecord};
         profile.lastMission = CAMPAIGN_MISSION_BY_ID[saved.lastMission] ? saved.lastMission : profile.lastMission;
         if (saved.operation && CAMPAIGN_MISSION_BY_ID[saved.operation.worldSnapshot]) {
             profile.operation.worldSnapshot = saved.operation.worldSnapshot;
@@ -327,8 +365,6 @@ function loadCampaignProfile() {
             profile.missions[mission.id].checkpoint = typeof state.checkpoint === 'string' ? state.checkpoint : mission.checkpoint;
             profile.missions[mission.id].bestOptional = Math.max(0, state.bestOptional | 0);
         }
-        const finalMission = CAMPAIGN_MISSIONS[CAMPAIGN_MISSIONS.length - 1];
-        if (profile.campaignComplete && !(saved.missions && saved.missions[finalMission.id] && saved.missions[finalMission.id].completed)) profile.campaignComplete = false;
         /* Legacy two- and four-mission saves did not always contain later mission
            entries. Rebuild unlocks from completed predecessors without wiping progress. */
         for (let i = 1; i < CAMPAIGN_MISSIONS.length; i++) {
@@ -354,9 +390,43 @@ function saveCampaignProfile() {
     campaignProfile.version = 4;
     const ok = ChargefrontProgression.write(browserStorage,CAMPAIGN_SAVE_KEY,campaignProfile,ChargefrontProgression.campaignValid);
     if (!ok) {saveFeedback = 'Progress could not be saved. Check browser storage permissions.';if(gameActive)notify(saveFeedback,'#ffaa44');}
+    refreshEndlessMenu();
     return ok;
 }
-function resetCampaignProfile() { ChargefrontProgression.remove(browserStorage,CAMPAIGN_SAVE_KEY); campaignProfile = defaultCampaignProfile(); saveCampaignProfile(); }
+const ENDLESS_UNLOCK_REQUIREMENT = 'Complete the Campaign to unlock Endless Horde.';
+function endlessCampaignUnlocked() {
+    return ChargefrontProgression.campaignCleared(ChargefrontProgression.read(browserStorage,CAMPAIGN_SAVE_KEY,ChargefrontProgression.campaignValid).data);
+}
+function canStartEndless() { return ENDLESS_TEST_FIXTURE || endlessCampaignUnlocked(); }
+function validEndlessContinuation(saved) {
+    if (!ChargefrontProgression.endlessValid(saved)) return false;
+    const current = ChargefrontProgression.read(browserStorage,ENDLESS_SAVE_KEY,ChargefrontProgression.endlessValid).data;
+    return !!current && JSON.stringify(current) === JSON.stringify(saved);
+}
+function canLaunchEndless(saved = null) {
+    // An old valid run can resume its exact saved boundary without granting new
+    // deployments or replay. Revalidate at launch, not just when opening a menu.
+    return saved ? validEndlessContinuation(saved) : canStartEndless();
+}
+function refreshEndlessMenu() {
+    const button = document.getElementById('btn-endless');
+    if (!button) return;
+    const allowed = canStartEndless();
+    button.disabled = !allowed;
+    button.setAttribute('aria-disabled',String(!allowed));
+    const requirement = document.getElementById('endless-unlock-requirement');
+    requirement.textContent = ENDLESS_TEST_FIXTURE ? 'ENDLESS TEST FIXTURE — no Campaign unlock saved.' : ENDLESS_UNLOCK_REQUIREMENT;
+    requirement.classList.toggle('hidden',allowed&&!ENDLESS_TEST_FIXTURE);
+    const saved = !allowed && ChargefrontProgression.read(browserStorage,ENDLESS_SAVE_KEY,ChargefrontProgression.endlessValid).data;
+    document.getElementById('btn-endless-legacy-continue').classList.toggle('hidden',!saved);
+}
+function resetCampaignProfile() {
+    const earnedCompletion = endlessCampaignUnlocked();
+    ChargefrontProgression.remove(browserStorage,CAMPAIGN_SAVE_KEY);
+    campaignProfile = defaultCampaignProfile();
+    if (earnedCompletion) campaignProfile.completionRecord = {...ChargefrontProgression.completionRecord};
+    saveCampaignProfile();
+}
 function campaignMission(id = activeMissionId) { return CAMPAIGN_MISSION_BY_ID[id] || CAMPAIGN_MISSIONS[0]; }
 let activeMissionId = 'dead_signal';
 let campaignRunOrigin = CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN;
@@ -2257,8 +2327,8 @@ function setFinalMissionWorldState() {
         for (const solid of extraction.solids) solid.disabled = false;
         for (const visual of extraction.activeVisuals) visual.visible = active;
         for (const visual of extraction.crisisVisuals) visual.visible = active;
-        extraction.cache.used = false; extraction.cache.group.visible = active; extraction.cache.lamp.visible = active;
-        extraction.cache.solid.disabled = !active;
+        extraction.cache.group.visible = active && !extraction.cache.used; extraction.cache.lamp.visible = active && !extraction.cache.used;
+        extraction.cache.solid.disabled = !active || extraction.cache.used;
         extraction.beaconLamp.material.color.setHex(0x66dfff); extraction.beaconLamp.material.emissive.setHex(0x2299dd);
         extraction.beaconLight.color.setHex(0x66dfff); extraction.beaconLight.intensity = active ? 20 : 0;
         extraction.beaconBeam.material.color.setHex(0x66dfff); extraction.beaconBeam.material.emissive.setHex(0x2288bb); extraction.beaconBeam.material.opacity = 0.14;
@@ -2315,30 +2385,35 @@ function updateLabSystems(dt) {
 }
 function updateLaboratoryTurret(dt, turret) {
     if (!turret.aimYaw) return; // cold world construction precedes the finalizer
-    if (!turret.active) { turret.target = null; return; }
+    if (!turret.active) { turret.target = null; turret.reason='inactive';return; }
     turret.fireT = Math.max(0, turret.fireT - dt); turret.scanT -= dt;
     if (turret.scanT <= 0) {
         turret.scanT = .12; turret.target = null;
         let best = 42;
+        let inRange=0,outOfRange=0,occluded=0;
         for (const enemy of enemies) {
             if (enemy.dead || enemy.dying || enemy.unburrowing) continue;
             const distance = Math.hypot(enemy.pos.x - turret.pos.x, enemy.pos.y - turret.pos.y);
-            if (distance >= best || arcSurfaceContact(turret.pos.x,turret.pos.y,1.25,enemy.pos.x,enemy.pos.y,enemy.z+.8)) continue;
+            if(distance>=42){outOfRange++;continue;}inRange++;
+            if(distance>=best)continue;
+            if(arcSurfaceContact(turret.pos.x,turret.pos.y,1.25,enemy.pos.x,enemy.pos.y,enemy.z+.8)){occluded++;continue;}
             best = distance; turret.target = enemy;
         }
+        if(PERF_DIAGNOSTICS)turret.scan={inRange,outOfRange,occluded};
+        turret.reason=turret.target?'tracking':inRange?'occluded':outOfRange?'out-of-range':'no-hostile';
     }
     const target = turret.target;
     if (!target || target.dead || target.dying) { turret.target = null; return; }
     const dx=target.pos.x-turret.pos.x,dy=target.pos.y-turret.pos.y,dz=target.z+.8-1.25;
     if (Math.hypot(dx,dy) >= 42) { turret.target=null;turret.scanT=0;return; }
     turret.aimYaw.rotation.z=Math.atan2(dy,dx);turret.aimPitch.rotation.y=-Math.atan2(dz,Math.hypot(dx,dy));
-    if (turret.fireT > 0) return;
+    if (turret.fireT > 0) {turret.reason='cooldown';return;}
     if (arcSurfaceContact(turret.pos.x,turret.pos.y,1.25,target.pos.x,target.pos.y,target.z+.8)) {turret.target=null;turret.scanT=0;return;}
     turret.aimYaw.updateWorldMatrix(true,true);turret.muzzle.getWorldPosition(turret.muzzleWorld);
     const muzzle=turret.muzzleWorld, tx=target.pos.x,ty=target.pos.y,tz=target.z+.8;
-    if (arcSurfaceContact(muzzle.x,muzzle.y,muzzle.z,tx,ty,tz)) {turret.target=null;return;}
+    if (arcSurfaceContact(muzzle.x,muzzle.y,muzzle.z,tx,ty,tz)) {turret.target=null;turret.reason='muzzle-blocked';return;}
     const hpBefore=target.hp,shieldBefore=target.shield,markedBefore=target.markedT;
-    turret.fireT=.72;turret.shots++;
+    turret.fireT=.72;turret.shots++;turret.reason='fired';
     target.takeDamage(22);target.markedT=Math.max(target.markedT,.8);
     const beam=emitLaboratoryTurretBeam(muzzle.x,muzzle.y,muzzle.z,tx,ty,tz);
     spawnImpact(muzzle.x,muzzle.y,muzzle.z,0x66ddff,.45);spawnImpact(tx,ty,tz,0x66ddff,.8);
@@ -2401,7 +2476,7 @@ function spawnPickups() {
         [LJS.vec2(290, 395), 'scrap'], [LJS.vec2(470, 270), 'scrap'], [LJS.vec2(418, 396), 'scrap'],
         [LJS.vec2(330, 480), 'grenade'], [LJS.vec2(462, 208), 'grenade'],
     ];
-    for (const d of defs) spawnPickup(d[0], d[1]);
+    for (const d of defs) spawnPickup(d[0], d[1], d[1]==='scrap'?ChargefrontProgression.economy[mode].worldScrap:0);
 }
 
 /* rocks + glowing spores (instanced decor) */
@@ -4076,6 +4151,7 @@ function updateEndless(dt) {
 }
 /* ── run setup ── */
 function resetEndlessRun() {
+    clearResultState();
     resetRelayGuide();
     objectiveHUD.clear(); clearOptionalMarkerState();
     endlessRun.wave = 0; endlessRun.waveActive = false; endlessRun.waveT = 0;
@@ -4205,6 +4281,7 @@ function applyEndlessBoundary(saved) {
     endlessBoundary=JSON.parse(JSON.stringify(saved));
 }
 function startEndless(configuration = {}, saved = null) {
+    if (!canLaunchEndless(saved)) { refreshEndlessMenu(); return false; }
     stopIntroSfx();
     if (!saved) invalidateEndlessResume();
     clearEndlessCombatEntities();
@@ -4219,6 +4296,7 @@ function startEndless(configuration = {}, saved = null) {
     if (menuBackdrop) menuBackdrop.group.visible = false;
     beginEndless();
     if (!saved) saveEndlessBoundary();
+    return true;
 }
 function beginEndless(waitForLockGesture = true) {
     const startEl = document.getElementById('start-screen');
@@ -5765,11 +5843,106 @@ function squadHasClearedFacility() {
     return squadMembers.every(m => m.downed || m.pos.y < 614);
 }
 
+let enemyTacticalSequence = 0;
+function enemyTargetAlive(target) {
+    return !!target?.pos && !target.dead && !target.dying && !target.downed && !target.destroyed && !(target.hp<=0);
+}
+function enemyTargetHeight(target) {
+    if(target===player)return player.zPos+1.35;
+    return (Number.isFinite(target.z)?target.z:terrainHeight(target.pos.x,target.pos.y))+(target.R?2:target.def?1.1:.8);
+}
+function enemySight(enemy,target,precise=false) {
+    if(!enemyTargetAlive(target))return false;
+    if(target.unburrowing||target.skySpawnT>0)return false;
+    const ax=enemy.pos.x,ay=enemy.pos.y,az=enemy.z+(enemy.type==='drone'?.2:enemy.type==='screecher'?.4:enemy.type==='boss'?1.6:.8);
+    const bx=target.pos.x,by=target.pos.y,bz=enemyTargetHeight(target);
+    let blocked=false;
+    solidQueryBounds(Math.min(ax,bx)-.04,Math.min(ay,by)-.04,Math.max(ax,bx)+.04,Math.max(ay,by)+.04,s=>{
+        if(s.disabled)return false;
+        // A known relay is the objective, not an occluding wall at its endpoint.
+        if(target.R&&bx>=s.x0&&bx<=s.x1&&by>=s.y0&&by<=s.y1)return false;
+        if(arcBoxEntry(ax,ay,az,bx,by,bz,s,.03)>=0){blocked=true;return true;}
+        return false;
+    });
+    if(blocked)return false;
+    const n=Math.max(1,Math.ceil(Math.hypot(bx-ax,by-ay)/(precise?1:3)));
+    for(let i=1;i<n;i++){const q=i/n;if(terrainHeight(lerp(ax,bx,q),lerp(ay,by,q))+.12>lerp(az,bz,q))return false;}
+    return true;
+}
+function enemyWalkClear(a,b) {
+    if(b.x<4||b.x>WORLD-4||b.y<4||b.y>worldMaxY(b.x,4))return false;
+    let blocked=false;
+    solidQueryBounds(Math.min(a.x,b.x)-.45,Math.min(a.y,b.y)-.45,Math.max(a.x,b.x)+.45,Math.max(a.y,b.y)+.45,s=>{
+        if(!s.disabled&&!s.overhead&&segRectEntry(a.x,a.y,b.x,b.y,s.x0-.45,s.y0-.45,s.x1+.45,s.y1+.45)>=0){blocked=true;return true;}return false;
+    });
+    if(blocked)return false;
+    const n=Math.max(1,Math.ceil(Math.hypot(b.x-a.x,b.y-a.y)/2));let h=terrainHeight(a.x,a.y);
+    for(let i=1;i<=n;i++){const q=i/n,z=terrainHeight(lerp(a.x,b.x,q),lerp(a.y,b.y,q));if(z>h+MAX_STEP)return false;h=z;}
+    return true;
+}
+function enemyNavigationGoal(enemy,goal,dt) {
+    enemy.navT-=dt;
+    if(mode==='endless'&&enemy.awareness==='ADVANCE'){
+        enemy.advanceCheckT-=dt;
+        if(enemy.advanceCheckT<=0){
+            const distance=Math.hypot(enemy.pos.x-ENDLESS_RELAY_POS.x,enemy.pos.y-ENDLESS_RELAY_POS.y);
+            const moved=Math.hypot(enemy.pos.x-enemy.advanceLastPos.x,enemy.pos.y-enemy.advanceLastPos.y);
+            if(distance>14&&(moved<.5||enemy.advanceLastDistance-distance<.15)){
+                enemy.navT=0;enemy.tacticalSide=-enemy.tacticalSide;enemy.relayGoalT=0;enemy.advanceReplans++;
+            }
+            enemy.advanceLastPos={x:enemy.pos.x,y:enemy.pos.y};enemy.advanceLastDistance=distance;enemy.advanceCheckT=1.5;
+        }
+    }
+    enemy.navHistoryT=Math.max(0,enemy.navHistoryT-dt);
+    if(!enemy.navHistoryT)enemy.navHistory.length=0;
+    const reached=enemy.navGoal&&Math.hypot(enemy.pos.x-enemy.navGoal.x,enemy.pos.y-enemy.navGoal.y)<.22;
+    if(reached&&enemy.navMode==='detour'){
+        enemy.navPrevious=enemy.navGoal;enemy.navT=0;enemy.navHistoryT=12;
+        enemy.navHistory.push(enemy.navGoal);if(enemy.navHistory.length>8)enemy.navHistory.shift();
+    }
+    if(enemy.navT>0&&enemy.navGoal&&enemy.navRequest&&Math.hypot(goal.x-enemy.navRequest.x,goal.y-enemy.navRequest.y)<5)return enemy.navGoal;
+    if(enemy.navRequest&&Math.hypot(goal.x-enemy.navRequest.x,goal.y-enemy.navRequest.y)>8){enemy.navPrevious=null;enemy.navHistory.length=0;}
+    enemy.navT=.55+(enemy.tacticalId%4)*.05;enemy.navPlans++;
+    enemy.navRequest={x:goal.x,y:goal.y};
+    let waypoint=facilityNavigationWaypoint(enemy.pos.x,enemy.pos.y,goal.x,goal.y);
+    // The accepted Hall has exactly one exterior entrance in every chapter,
+    // not only M2. Reuse those gateway anchors for outdoor hostile pursuit.
+    const hallGoal=goal.x>331&&goal.x<389&&goal.y>619&&goal.y<659;
+    if(mode==='campaign'&&hallGoal&&!insideFacility(enemy.pos)){
+        if(enemy.pos.x>=389&&enemy.pos.y>612)waypoint=FACILITY_FRONT_EAST;
+        else if(enemy.pos.x<=331&&enemy.pos.y>612)waypoint=FACILITY_FRONT_WEST;
+        else if(enemy.pos.x>=352&&enemy.pos.x<=368&&enemy.pos.y>=606&&enemy.pos.y<=620)waypoint=FACILITY_FRONT_THRESHOLD;
+        else waypoint=FACILITY_FRONT_APPROACH;
+    }
+    let destination=waypoint||goal;
+    if(mode==='endless'&&enemy.awareness==='ADVANCE'){
+        const d=Math.hypot(destination.x-enemy.pos.x,destination.y-enemy.pos.y);
+        if(d>32){
+            // Authorize near-term terrain/obstacles; far-away props must not
+            // keep selecting an unreachable distant corner or halt pursuit.
+            for(const step of [32,24,16,8]){
+                const p={x:enemy.pos.x+(destination.x-enemy.pos.x)*step/d,y:enemy.pos.y+(destination.y-enemy.pos.y)*step/d};
+                if(!isInsideSolid(p.x,p.y,.5)){destination=p;break;}
+            }
+        }
+    }
+    if(enemyWalkClear(enemy.pos,destination)){enemy.navMode=waypoint?'gateway':'direct';enemy.navGoal={x:destination.x,y:destination.y};return enemy.navGoal;}
+    const blockers=[];
+    solidQueryBounds(Math.min(enemy.pos.x,destination.x)-1,Math.min(enemy.pos.y,destination.y)-1,Math.max(enemy.pos.x,destination.x)+1,Math.max(enemy.pos.y,destination.y)+1,s=>{
+        if(!s.disabled&&!s.overhead&&segRectEntry(enemy.pos.x,enemy.pos.y,destination.x,destination.y,s.x0-.45,s.y0-.45,s.x1+.45,s.y1+.45)>=0&&blockers.length<12)blockers.push(s);return false;
+    });
+    enemy.navMode='detour';
+    enemy.navGoal=ChargefrontEnemyTactics.detour(enemy.pos,destination,blockers,enemyWalkClear,enemy.navHistory,enemy.tacticalSide);
+    if(Math.hypot(enemy.navGoal.x-enemy.pos.x,enemy.navGoal.y-enemy.pos.y)<.22)enemy.navMode='blocked';
+    return enemy.navGoal;
+}
+
 class Infested extends LJS.ThreeJSObject {
     constructor(type, pos, target) {
         const mesh = makeInfested(type);
         super(pos, LJS.vec2(1), mesh, terrainHeight(pos.x, pos.y));
         this.type = type;
+        this.z = terrainHeight(pos.x,pos.y);
         this.target = target;             // relay object or player
         /* hit radii now match the big 1.8-2.2x models (bug #2) */
         this.hitRadius = type === 'boss' ? 3.0 : type === 'brute' || type === 'carrier' ? 2.4 : type === 'spitter' || type === 'support' || type === 'artillery' ? 1.6 : type === 'runner' || type === 'tunneler' ? 1.1 : type === 'screecher' ? 1.3 : type === 'drone' ? 1.2 : 1.3;
@@ -5817,11 +5990,118 @@ class Infested extends LJS.ThreeJSObject {
         this.moveBlend = 0; this.attackPose = 0; this.attackBlend = 0;
         this.skySpawnT = 0; this.skySpawnDur = 0;
         this.finalScale = this.mesh.scale.x;
-        this.focus = player;              // primary target (the horde may retarget a squadmate)
-        this.canSeeTarget = true;         // last LOS result toward the current chase target
+        this.focus = target || player;   // honour authored relay, escort and faction targets
+        this.canSeeTarget = false;
         this.lastSeen = null;             // where the AI last saw its target (for pathfinding)
-        this.losT = rand(0.3);            // LOS re-check cadence
+        this.tacticalId=enemyTacticalSequence++;this.tacticalSide=this.tacticalId%2?1:-1;
+        this.role=ChargefrontEnemyTactics.roles[type]||ChargefrontEnemyTactics.roles.skitter;
+        this.observedFocus=this.focus;this.spawnGoal={x:this.focus.pos.x,y:this.focus.pos.y};
+        this.losT=(this.tacticalId%5)*.04;this.memoryT=0;this.commitT=1.2;this.reactionT=.3;
+        this.searchT=3;this.searchStep=0;this.searchClock=0;this.awareness='INVESTIGATE';
+        this.navT=0;this.navGoal=null;this.navRequest=null;this.navPrevious=null;this.navMode='direct';
+        this.navHistory=[];this.navHistoryT=0;
+        this.relayGoal=null;this.relayGoalT=0;this.advanceReplans=0;this.advanceCheckT=1.5+(this.tacticalId%4)*.2;
+        this.advanceLastPos={x:pos.x,y:pos.y};this.advanceLastDistance=Math.hypot(pos.x-ENDLESS_RELAY_POS.x,pos.y-ENDLESS_RELAY_POS.y);
+        this.attackWindupT=0;this.attackVictim=null;this.attackKind=null;
+        this.perceptionChecks=0;this.navPlans=0;this.attackCount=0;
         if (type === 'screecher' || type === 'drone') this.beginSkySpawn(1);
+    }
+    perceive(dt) {
+        this.aggroT=Math.max(0,this.aggroT-dt);this.memoryT=Math.max(0,this.memoryT-dt);
+        this.commitT=Math.max(0,this.commitT-dt);this.reactionT=Math.max(0,this.reactionT-dt);this.losT-=dt;
+        if(this.focus!==this.observedFocus){
+            this.observedFocus=this.focus;this.canSeeTarget=false;this.lastSeen=null;this.spawnGoal=null;
+            this.attackWindupT=0;this.attackVictim=null;this.losT=0;this.navT=0;this.reactionT=.3;this.commitT=1.2;
+        }
+        if(this.losT>0)return;
+        this.losT=.3+(this.tacticalId%5)*.025;this.perceptionChecks++;
+        const previous=this.focus,wasVisible=this.canSeeTarget;
+        const scripted=previous&&previous!==player&&!previous.def;
+        const radius=this.ambient&&this.aggroT<=0?26:95;
+        const visible=target=>Math.hypot(target.pos.x-this.pos.x,target.pos.y-this.pos.y)<=radius&&enemySight(this,target);
+        const selected=scripted&&enemyTargetAlive(previous)?(visible(previous)?previous:null):
+            ChargefrontEnemyTactics.chooseVisible(previous,[player,...squadMembers],this.pos,visible,enemyTargetAlive,this.commitT>0);
+        this.canSeeTarget=!!selected;
+        if(selected){
+            if(selected!==previous||!wasVisible){this.reactionT=.3;this.attackWindupT=0;this.attackVictim=null;this.commitT=1.2;this.navT=0;}
+            this.focus=selected;this.target=selected;this.observedFocus=selected;
+            this.lastSeen={x:selected.pos.x,y:selected.pos.y};this.memoryT=5;this.searchT=3;this.searchClock=0;
+            if(this.ambient&&this.aggroT<=0)playFileSfx(this.type==='drone'?'droneAlert':'creature',.35,1,this.pos.x,this.pos.y);
+            this.aggroT=5;this.awareness='ENGAGE';
+        }else{
+            if(!enemyTargetAlive(previous)){this.focus=null;this.target=null;this.observedFocus=null;this.lastSeen=null;this.spawnGoal=null;this.navT=0;}
+            if(this.ambient&&!this.lastSeen)this.spawnGoal=null;
+            this.awareness=this.lastSeen?'INVESTIGATE':this.ambient?'PATROL':'INVESTIGATE';
+        }
+    }
+    knownGoal(dt) {
+        if(mode==='endless')return this.endlessGoal(dt);
+        if(this.canSeeTarget&&this.lastSeen)return this.lastSeen;
+        const known=this.lastSeen||(!this.ambient?this.spawnGoal:null);
+        if(!known)return this.ambient?this.wanderPos:this.home;
+        const arrived=Math.hypot(known.x-this.pos.x,known.y-this.pos.y)<2;
+        if(!arrived&&(!this.lastSeen||this.memoryT>0))return known;
+        this.awareness='SEARCH';this.searchT=Math.max(0,this.searchT-dt);this.searchClock-=dt;
+        if(this.searchT<=0){this.awareness=this.ambient?'PATROL':'GUARD';return this.ambient?this.wanderPos:known;}
+        if(this.searchClock<=0){
+            this.searchClock=.9;this.searchStep++;
+            const a=this.searchStep*Math.PI/2+this.tacticalSide*.5;
+            const p={x:known.x+Math.cos(a)*4,y:known.y+Math.sin(a)*4};
+            this.searchGoal=enemyWalkClear(known,p)?p:known;
+        }
+        return this.searchGoal||known;
+    }
+    endlessGoal(dt) {
+        if(this.canSeeTarget&&this.lastSeen)return this.lastSeen;
+        if(this.lastSeen){
+            const arrived=Math.hypot(this.lastSeen.x-this.pos.x,this.lastSeen.y-this.pos.y)<2;
+            if(this.memoryT>0&&!arrived){this.awareness='INVESTIGATE';return this.lastSeen;}
+            this.searchT=Math.max(0,this.searchT-dt);this.searchClock-=dt;
+            if(this.searchT>0){
+                this.awareness='SEARCH';
+                if(this.searchClock<=0){
+                    this.searchClock=.9;this.searchStep++;
+                    const a=this.searchStep*Math.PI/2+this.tacticalSide*.5;
+                    const p={x:this.lastSeen.x+Math.cos(a)*4,y:this.lastSeen.y+Math.sin(a)*4};
+                    this.searchGoal=enemyWalkClear(this.lastSeen,p)?p:this.lastSeen;
+                }
+                return this.searchGoal||this.lastSeen;
+            }
+            this.lastSeen=null;this.spawnGoal=null;this.navT=0;this.navHistory.length=0;this.relayGoalT=0;
+        }
+        this.awareness='ADVANCE';this.relayGoalT-=dt;
+        if(!this.relayGoal||this.relayGoalT<=0){
+            this.relayGoal=ChargefrontEnemyTactics.relayObjective(this.pos,ENDLESS_RELAY_POS,p=>!isInsideSolid(p.x,p.y,.5));
+            this.relayGoalT=1.5;
+        }
+        return this.relayGoal||this.pos;
+    }
+    updateAttack(dt,victim,reach) {
+        this.attackT=Math.max(0,this.attackT-dt);this.spitT=Math.max(0,this.spitT-dt);
+        if(this.scatter||!this.canSeeTarget||!enemyTargetAlive(victim)||this.reactionT>0||RUNNER_ATTACKS[this.type]||this.type==='support'){
+            this.attackWindupT=0;this.attackVictim=null;return;
+        }
+        const distance=Math.hypot(victim.pos.x-this.pos.x,victim.pos.y-this.pos.y);
+        const kind=this.type==='boss'&&distance>reach+1&&distance<38?'glob':'normal';
+        const inRange=kind==='glob'||distance<(this.rangedRange?this.rangedRange+3:reach+.4);
+        if(!inRange||(kind==='glob'?this.spitT:this.attackT)>0){this.attackWindupT=0;this.attackVictim=null;return;}
+        if(!enemySight(this,victim,true)){this.attackWindupT=0;this.attackVictim=null;this.canSeeTarget=false;this.losT=0;this.navT=0;return;}
+        if(this.attackVictim!==victim||this.attackKind!==kind){this.attackVictim=victim;this.attackKind=kind;this.attackWindupT=this.role.windup;this.attackPose=.45;return;}
+        this.attackWindupT=Math.max(0,this.attackWindupT-dt);this.attackPose=Math.max(this.attackPose,.25);
+        if(this.attackWindupT>0)return;
+        this.attackVictim=null;this.attackCount++;
+        if(kind==='glob'){
+            this.spitT=2.2+rand(.5);const glob=spawnAcid(this.pos.x,this.pos.y,this.z+1.6,victim,{homing:false});glob.dmg=18;glob.scale.setScalar(1.45);playSnd(sfx.spit,.75,rand(.82,.92));
+        }else{
+            this.attackT=this.attackCd+rand(.3);
+            if(this.type==='artillery'){spawnEnemyShot(this.pos.x,this.pos.y,this.z+1.35,victim,{kind:'mortar',color:0xff8844,dmg:this.dmg,speed:17,size:.34,ring:false,homing:false,splash:5.5});playFileSfx('explode',.35,.75,this.pos.x,this.pos.y);}
+            else if(this.type==='spitter'){spawnAcid(this.pos.x,this.pos.y,this.z+.9,victim,{homing:false,poolOnGround:true,poolDamage:8});playSnd(sfx.spit,.5,rand(.9,1.1));}
+            else if(this.type==='screecher'){spawnEnemyShot(this.pos.x,this.pos.y,this.z+.4,victim,{kind:'screechRing',color:0xff3de8,dmg:this.dmg,speed:20,size:.23,ring:true,homing:false});playFileSfx('screech',.55,rand(.95,1.05),this.pos.x,this.pos.y);}
+            else if(this.type==='drone'){spawnEnemyShot(this.pos.x,this.pos.y,this.z+.2,victim,{kind:'droneLaser',color:0x55cfff,dmg:this.dmg,speed:31,size:.12,ring:false,homing:false});playFileSfx('laserShot',.32,rand(1.12,1.25),this.pos.x,this.pos.y);}
+            else if(victim===player){playerTakeDamage(this.dmg,true);noteAttacker(this.pos.x,this.pos.y,this.type);}
+            else if(victim.takeDamage)victim.takeDamage(this.dmg);
+        }
+        this.attackPose=.35;
     }
     setSpawnScale(scale) {                // spawners call this instead of mesh.scale.multiplyScalar
         if (this.type === 'screecher' || this.type === 'drone') { this.beginSkySpawn(scale); return; }
@@ -5861,7 +6141,7 @@ class Infested extends LJS.ThreeJSObject {
         if (this.dead) return;
         this.dead = true; this.dying = true; this.dieT = 0.9;
         this.armed = false; this.armT = 0;   // a killed/destroyed kamikaze never keeps or restarts a fuse
-        kills++;                            // total squad kills (player + teammates)
+        kills++;                            // all neutralized hostiles, not player-attributed kills
         if (mode === 'endless' && endlessRun.killHeal > 0 && player && !player.dead) player.hp = Math.min(player.maxHp, player.hp + endlessRun.killHeal);   // VAMPIRIC CIRCUIT
         if (this.type === 'drone') {        // explosion instead of shrinking — burst + pop out fast
             this.dieT = 0.18;
@@ -5880,11 +6160,11 @@ class Infested extends LJS.ThreeJSObject {
             }
             notify('BROOD CARRIER BURSTS — SKITTERS RELEASED', '#ff99cc');
         }
-        const scrapAmount = ChargefrontProgression.scrapReward(this.type);
+        const scrapAmount = ChargefrontProgression.scrapReward(this.type,Math.random,mode);
         if(scrapAmount) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1.4,1.4),rand(-1.4,1.4))),'scrap',scrapAmount);
         if (Math.random() < 0.32) {
             const rainCells = mode === 'endless' && endlessRun.mutator && endlessRun.mutator.id === 'corrosive' ? 0.22 : 0;
-            if (Math.random() < 0.08 + (mode === 'endless' ? endlessRun.cellChance || 0 : 0) + rainCells) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'power');
+            if (Math.random() < ChargefrontProgression.economy[mode].powerChance + (mode === 'endless' ? endlessRun.cellChance || 0 : 0) + rainCells) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'power');
             if (Math.random() < 0.06) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'grenade');
         }
         /* endless roguelike: creatures drop DNA samples (random) — collect for a passive upgrade + milestone score */
@@ -5934,7 +6214,8 @@ class Infested extends LJS.ThreeJSObject {
                 threatRing.material.opacity = 0.35 + 0.55 * (0.5 + 0.5 * Math.sin(LJS.time * (10 + frac * 26)));
                 threatRing.scale.setScalar(1 + frac * 1.2);
             } else {
-                threatRing.material.opacity = 0.18 + 0.12 * (0.5 + 0.5 * Math.sin(LJS.time * 5 + this.animT));
+                const winding=this.attackWindupT>0;
+                threatRing.material.opacity = winding ? .5+.2*Math.sin(LJS.time*16) : 0.18 + 0.12 * (0.5 + 0.5 * Math.sin(LJS.time * 5 + this.animT));
             }
         }
         const dt = LJS.timeDelta;
@@ -5955,6 +6236,7 @@ class Infested extends LJS.ThreeJSObject {
             return;
         }
         if (this.stunT > 0) {
+            this.attackWindupT=0;this.attackVictim=null;this.reactionT=Math.max(this.reactionT,.25);
             this.stunT -= dt;
             this.z = this.type==='screecher'?this.hoverHeight(dt):terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : 0);
             animateInfestedVisuals(this, false, dt);
@@ -6003,17 +6285,21 @@ class Infested extends LJS.ThreeJSObject {
             super.update();
             return;
         }
+        if(!debugNoAggro)this.perceive(dt);
         this.specialT -= dt;
         if (this.type === 'support' && this.specialT <= 0) {
             this.specialT = 2.2;
-            for (const ally of enemies) if (!ally.dead && !ally.dying && ally !== this && Math.hypot(ally.pos.x - this.pos.x, ally.pos.y - this.pos.y) < 12) ally.hp = Math.min(ally.maxHp || ally.hp, ally.hp + 20);
+            for (const ally of enemies) if (!ally.dead && !ally.dying && ally !== this && Math.hypot(ally.pos.x - this.pos.x, ally.pos.y - this.pos.y) < 12 && enemySight(this,ally)) ally.hp = Math.min(ally.maxHp || ally.hp, ally.hp + 20);
             const aura = this.mesh.userData.detail.getObjectByName('supportAura');
             if (aura) aura.scale.setScalar(1.6);
             notify('SUPPORT ORGANISM REPAIRS THE HORDE', '#77e8cf');
         } else if (this.type === 'tunneler' && this.specialT <= 0) {
             this.specialT = 6 + rand(3);
-            const p = findSpawnPoint(player.pos, 5, 13, 2);
-            if (p) { this.pos.x = p.x; this.pos.y = p.y; this.unburrowing = true; this.unburrowT = this.unburrowDur; this.mesh.scale.setScalar(0.01); playFileSfx('unburrow', 0.5, 1.15, p.x, p.y); }
+            const p = !debugNoAggro && this.canSeeTarget && this.lastSeen ? findSpawnPoint(this.lastSeen, 5, 13, 2) : null;
+            if (p && enemyWalkClear(this.pos,p) && [player,...squadMembers].every(a=>a.downed||Math.hypot(a.pos.x-p.x,a.pos.y-p.y)>=10)) {
+                this.pos.x = p.x; this.pos.y = p.y; this.unburrowing = true; this.unburrowT = this.unburrowDur; this.mesh.scale.setScalar(0.01);this.navT=0;
+                playFileSfx('unburrow', 0.5, 1.15, p.x, p.y);super.update();return;
+            }
         }
         if (debugNoAggro) {               // playtest: visible + facing the player, but no chase/attack
             this.z = this.type==='screecher'?this.hoverHeight(dt):terrainHeight(this.pos.x, this.pos.y) + (this.type === 'drone' ? 3.2 : 0);
@@ -6023,11 +6309,15 @@ class Infested extends LJS.ThreeJSObject {
             return;
         }
         let tx, ty;
+        const attackTg = enemyTargetAlive(this.focus)?this.focus:null;
+        const isSolidTg = !!attackTg?.R;
+        const stopDist = this.attackRange + (isSolidTg ? 2.4 : .5);
+        let intent;
         if (this.scatter) {               // horde broken: run away (NEVER despawn)
             this.fleeT += dt;
             tx = this.scatter.x; ty = this.scatter.y;
             if (Math.hypot(tx - this.pos.x, ty - this.pos.y) < 2.5) this.scatter = null;   // reached flee point → resume behavior
-        } else if (this.ambient && this.aggroT <= 0) {   // wild wanderer: patrol until spooked
+        } else if (this.ambient && this.aggroT <= 0 && !this.canSeeTarget && (!this.lastSeen||this.searchT<=0)) {
             this.wanderT -= dt;
             if (this.wanderT <= 0) {
                 this.wanderT = 3 + rand(4);
@@ -6036,64 +6326,32 @@ class Infested extends LJS.ThreeJSObject {
             }
             tx = this.wanderPos.x; ty = this.wanderPos.y;
         } else {
-            const tf = this.focus || player;
-            const tfDown = tf !== player && (tf.downed || tf.dead);
-            const tgt = tfDown ? player : tf;
-            tx = tgt.pos.x; ty = tgt.pos.y;
+            const known=this.knownGoal(dt);
+            intent=ChargefrontEnemyTactics.engagement(this.role,this.pos,known,this.rangedRange,stopDist,this.canSeeTarget,this.tacticalSide);
+            // Tactical offsets are preferences, never permission to occupy a
+            // wall. A pinched flank falls back to the observed target; flyers
+            // can choose the other strafe side rather than freezing on it.
+            if(this.canSeeTarget&&isInsideSolid(intent.x,intent.y,.5)){
+                if(intent.mode==='flank')intent={x:known.x,y:known.y,mode:'advance',stop:stopDist};
+                else{
+                    const alternate=ChargefrontEnemyTactics.engagement(this.role,this.pos,known,this.rangedRange,stopDist,true,-this.tacticalSide);
+                    intent=!isInsideSolid(alternate.x,alternate.y,.5)?alternate:{x:this.pos.x,y:this.pos.y,mode:'hold-range',stop:.65};
+                }
+            }
+            tx=intent.x;ty=intent.y;
         }
-        /* aggro to player when close or recently shot */
-        if (this.aggroT > 0) this.aggroT -= dt;
-        const dPlayer = Math.hypot(player.pos.x - this.pos.x, player.pos.y - this.pos.y);
-        if (this.ambient && this.aggroT <= 0 && dPlayer < 26) {
-            this.aggroT = 5;
-            if (this.type === 'drone') playFileSfx('droneHit', 0.4, rand(0.95, 1.05), this.pos.x, this.pos.y);
-            else playFileSfx('creature', 0.35, rand(0.9, 1.1), this.pos.x, this.pos.y);
-            if (wildAlertT <= 0 && this.type !== 'drone') { wildAlertT = 6; logCombat('WILD CREATURE ATTACK', '#ff8866'); }
-        }
-        if (this.ambient && this.aggroT > 0) { tx = player.pos.x; ty = player.pos.y; }
-        else if (this.focus === player && this.aggroT > 0 && dPlayer < 45) { tx = player.pos.x; ty = player.pos.y; }
-
-        /* last-seen memory: when hunting a target the AI can't see right now, pathfind
-           to where it last saw them (routes around walls instead of beelining) */
         const chasing = !this.scatter && !(this.ambient && this.aggroT <= 0);
-        if (chasing) {
-            this.losT -= dt;
-            if (this.losT <= 0) {
-                this.losT = 0.3 + rand(0.2);
-                this.canSeeTarget = hasLOS(this.pos.x, this.pos.y, tx, ty, 0.8);
-                if (this.canSeeTarget) this.lastSeen = LJS.vec2(tx, ty);
-            }
-            if (!this.canSeeTarget && this.lastSeen) {
-                const dLS = Math.hypot(this.lastSeen.x - this.pos.x, this.lastSeen.y - this.pos.y);
-                if (dLS < 3) this.lastSeen = null;   // searched the last-seen spot, fall back to beelining
-                else { tx = this.lastSeen.x; ty = this.lastSeen.y; }
-            }
-        }
-        const navigationWaypoint = chasing ? facilityNavigationWaypoint(this.pos.x, this.pos.y, tx, ty) : null;
-        if (navigationWaypoint) { tx = navigationWaypoint.x; ty = navigationWaypoint.y; }
-
+        const waypoint=enemyNavigationGoal(this,{x:tx,y:ty},dt);tx=waypoint.x;ty=waypoint.y;
         const dTarget = Math.hypot(tx - this.pos.x, ty - this.pos.y);
         const facing = Math.atan2(ty - this.pos.y, tx - this.pos.x);
-        this.angle = -facing;
-
-        // Spawn-assigned focus commits the approach and attack to one victim.
-        // Ambient aggro deliberately hunts the player; downed victims invalidate focus.
-        let attackTg = this.ambient && this.aggroT > 0 ? player : (this.focus || player);
-        if (attackTg !== player && (attackTg.downed || attackTg.dead)) attackTg = player;
-        const isSolidTg = !!(attackTg && attackTg !== player && attackTg.takeDamage && attackTg.R);   // relays only — squadmates get fair melee range
-        const stopDist = this.attackRange + (isSolidTg ? 2.4 : 0.5);
+        this.angle = -(this.canSeeTarget&&this.lastSeen?Math.atan2(this.lastSeen.y-this.pos.y,this.lastSeen.x-this.pos.x):facing);
         let moveFacing = facing;
-        let wantsToMove = dTarget > stopDist;
-        if (this.rangedRange && !this.scatter) {
-            if (dTarget > this.rangedRange + 2) wantsToMove = true;
-            else if (dTarget < this.rangedRange - 3) { wantsToMove = true; moveFacing = facing + Math.PI; }
-            else wantsToMove = false;
-        }
+        const wantsToMove = dTarget > (this.navMode==='detour'?.15:this.navMode==='direct'&&intent?intent.stop:.65);
         /* Both Runner silhouettes commit at a valid victim position, before
            movement/separation. All subsequent updates bypass navigation/specials. */
-        if (RUNNER_ATTACKS[this.type] && !this.scatter && chasing) {
+        if (RUNNER_ATTACKS[this.type] && attackTg && !this.scatter && chasing) {
             const armDist = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
-            if (!this.armed && armDist <= RUNNER_ARM_RADIUS && hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
+            if (!this.armed && armDist <= RUNNER_ARM_RADIUS && enemySight(this,attackTg,true)) {
                 this.armed = true; this.armT = RUNNER_FUSE; this.armBeep = 0;
                 this.armPosition = { x: this.pos.x, y: this.pos.y, z: this.z };
                 this.scatter = null; this.sep.set(0, 0); this.stuckT = 0; this.stuckSide = undefined;
@@ -6101,20 +6359,6 @@ class Infested extends LJS.ThreeJSObject {
                 this.updateArming(0);
                 super.update();
                 return;
-            }
-        }
-
-        /* The Harvester cannot be safely focus-fired while it closes: it spits a heavy
-           tracking glob from mid-range, then transitions to its faster melee attacks. */
-        if (this.type === 'boss' && !this.scatter) {
-            this.spitT -= dt;
-            if (this.spitT <= 0 && dTarget > stopDist + 1 && dTarget < 38 && this.canSeeTarget) {
-                this.spitT = 2.2 + rand(0.5);
-                const glob = spawnAcid(this.pos.x, this.pos.y, this.z + 1.6, attackTg, { homing: false });
-                glob.dmg = 18;
-                glob.scale.setScalar(1.45);
-                playSnd(sfx.spit, 0.75, rand(0.82, 0.92));
-                logCombat('HARVESTER SPIT', '#ff66dd');
             }
         }
 
@@ -6152,7 +6396,7 @@ class Infested extends LJS.ThreeJSObject {
             if (moved < sp * dt * 0.35) {
                 this.stuckT += dt;
                 if (this.stuckT > 0.25) {
-                    if (this.stuckSide === undefined) this.stuckSide = Math.random() < 0.5 ? 1 : -1;
+                    if (this.stuckSide === undefined) this.stuckSide = this.tacticalSide;
                     const a2 = moveFacing + this.stuckSide * Math.PI / 2;
                     const sx2 = this.pos.x + Math.cos(a2) * sp * dt;
                     const sy2 = this.pos.y + Math.sin(a2) * sp * dt;
@@ -6160,7 +6404,7 @@ class Infested extends LJS.ThreeJSObject {
                         this.pos.x = sx2; this.pos.y = sy2;
                         resolveCircle(this.pos, 0.4);
                     }
-                    if (this.stuckT > 0.7) { this.stuckT = 0.25; this.stuckSide = undefined; }
+                    if (this.stuckT > 0.7) { this.navT=0;this.stuckT=.25; }
                 }
             } else {
                 this.stuckT = 0; this.stuckSide = undefined;
@@ -6188,41 +6432,8 @@ class Infested extends LJS.ThreeJSObject {
         } else {
             const egh = terrainHeight(this.pos.x, this.pos.y);
             this.z = this.type === 'drone' ? egh + 3.2 + Math.sin(LJS.time * 3 + this.animT) * 0.6 : this.type === 'screecher' ? this.hoverHeight(dt) : egh;
-            /* attack target */
-            this.attackT -= dt;
-            const attackDistance = Math.hypot(attackTg.pos.x - this.pos.x, attackTg.pos.y - this.pos.y);
-            if (this.attackT <= 0 && !RUNNER_ATTACKS[this.type] &&
-                attackDistance < (this.rangedRange ? this.rangedRange + 3 : stopDist + 0.4) &&
-                hasLOS(this.pos.x, this.pos.y, attackTg.pos.x, attackTg.pos.y, 0.6)) {
-                this.attackT = this.attackCd + rand(0.3);
-                if (this.ambient && this.aggroT <= 0) {
-                    /* calm wild creature: postures, but won't attack until spooked */
-                    this.attackPose = 0.35;
-                } else if (this.type === 'artillery') {
-                    const stg = attackTg && !attackTg.R ? attackTg : player;
-                    spawnEnemyShot(this.pos.x, this.pos.y, this.z + 1.35, stg, { kind: 'mortar', color: 0xff8844, dmg: this.dmg, speed: 17, size: 0.34, ring: false, homing: false, splash: 5.5 });
-                    playFileSfx('explode', 0.35, 0.75, this.pos.x, this.pos.y);
-                } else if (this.type === 'spitter') {
-                    const stg = attackTg && !attackTg.R ? attackTg : player;
-                    spawnAcid(this.pos.x, this.pos.y, this.z + 0.9, stg, { homing: false, poolOnGround: true, poolDamage: 8 });
-                    playSnd(sfx.spit, 0.5, rand(0.9, 1.1));
-                } else if (this.type === 'screecher') {
-                    const stg = attackTg && !attackTg.R ? attackTg : player;
-                    spawnEnemyShot(this.pos.x, this.pos.y, this.z + 0.4, stg, { kind: 'screechRing', color: 0xff3de8, dmg: this.dmg, speed: 20, size: 0.23, ring: true, homing: false });
-                    playFileSfx('screech', 0.55, rand(0.95, 1.05), this.pos.x, this.pos.y);
-                } else if (this.type === 'drone') {
-                    const stg = attackTg && !attackTg.R ? attackTg : player;
-                    spawnEnemyShot(this.pos.x, this.pos.y, this.z + 0.2, stg, { kind: 'droneLaser', color: 0x55cfff, dmg: this.dmg, speed: 31, size: 0.12, ring: false, homing: false });
-                    playFileSfx('laserShot', 0.32, rand(1.12, 1.25), this.pos.x, this.pos.y);
-                } else if (attackTg === player) {
-                    playerTakeDamage(this.dmg, true); noteAttacker(this.pos.x, this.pos.y, this.type);
-                } else if (attackTg && attackTg.takeDamage) {
-                    attackTg.takeDamage(this.dmg);
-                    if (attackTg.R) playFileSfx('armorHit', 0.4, 1, attackTg.pos.x, attackTg.pos.y);
-                }
-                this.attackPose = 0.35;   // visual envelope; damage/hit timing is unchanged
-            }
         }
+        this.updateAttack(dt,attackTg,stopDist);
         animateInfestedVisuals(this, Math.hypot(this.pos.x - animationStartX, this.pos.y - animationStartY) > 0.002, dt);
         super.update();
     }
@@ -6434,6 +6645,9 @@ class EnemyShot extends THREE.Group {
         this.rotation.z += dt * (this.style.ring ? 9 : 18);
         if (this.position.z < terrainHeight(this.position.x, this.position.y) + 0.08
             || solidBlocksSegment(prevX, prevY, prevZ, this.position.x, this.position.y, this.position.z, 0.05, null)) {
+            // A mortar explodes on the incoming side of cover, not inside the
+            // volume reached by this frame's integration step.
+            if(this.style.splash)this.position.set(prevX,prevY,prevZ);
             explodeEnemyShot(this, null);
             this.removeSelf(); return;
         }
@@ -6650,7 +6864,7 @@ function spawnGroup(center, rMin, rMax, n, scale, diff, targetOverride, options 
         if (targetOverride && targetOverride !== player) e.focus = targetOverride;
         e.setSpawnScale(scale);   // preserve the model's built-in size boost + start unburrow
         resolveCircle(e.pos, 0.6);   // nudge out of any wall edge it spawned on
-        if (squadMembers.length && Math.random() < 0.4) {   // the horde sometimes hunts a squadmate
+        if ((!targetOverride||targetOverride===player) && squadMembers.length && Math.random() < 0.4) {
             const sq = squadMembers[randInt(squadMembers.length)];
             if (sq && !sq.downed) e.focus = sq;
         }
@@ -7629,7 +7843,8 @@ function explodeEnemyShot(shot, directTarget) {
         const hitUnit = (unit) => {
             if (!unit || unit.downed || unit.dead) return;
             const d = Math.hypot(unit.pos.x - shot.position.x, unit.pos.y - shot.position.y);
-            if (d < radius) {
+            if (d < radius && !solidBlocksSegment(shot.position.x,shot.position.y,shot.position.z,
+                unit.pos.x,unit.pos.y,enemyTargetHeight(unit),0,null)) {
                 const dmg = shot.dmg * (1 - d / radius * 0.55);
                 if (unit === player) { playerTakeDamage(dmg, true); noteAttacker(shot.position.x, shot.position.y, shot.style.kind); }
                 else if (unit.takeDamage) unit.takeDamage(dmg);
@@ -8297,6 +8512,7 @@ let pointerLockGestureFn = null;
 let missionAnalysisTimer = 0;
 
 function resetCampaignRun() {
+    clearResultState();
     resetRelayGuide();
     objectiveHUD.clear(); clearOptionalMarkerState();
     stopIntroSfx();
@@ -8305,6 +8521,7 @@ function resetCampaignRun() {
     pickups.length = 0;
     squadCommand = 'assist';
     mode = 'campaign';
+    if(campaignContent.extraction)campaignContent.extraction.cache.used=false;
     const snapshot = campaignSnapshot();
     kills = 0; cacheFound = 0; missionTime = 0; totalAmmoCrafted = 0; totalMedkitsCrafted = 0;
     craft.scraps = 0; craft.powerCells = 0; craft.medkits = snapshot.combat.medkits;
@@ -8403,7 +8620,7 @@ function initializeCampaignMission() {
     applyCampaignWorldSnapshot();
     // Persist only after initialization/restore has produced a stable checkpoint.
 }
-function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign = false, continuedState = null, fresh = false) {
+function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SELECT, newCampaign = false, continuedState = null, fresh = false, retryChapters = []) {
     if (newCampaign) resetCampaignProfile();
     const mission = CAMPAIGN_MISSION_BY_ID[missionId];
     if (!mission) return false;
@@ -8416,6 +8633,8 @@ function startCampaignMission(missionId, origin = CAMPAIGN_RUN_ORIGIN.MISSION_SE
     resetCampaignRun();
     if (!campaignWorldBuilt) buildCampaignWorld();
     initializeCampaignMission();
+    // Fresh retry resets this attempt's actors/counters, not completed chapters.
+    if (fresh) campaignRun.chapterStats = ChargefrontResults.history(CAMPAIGN_MISSIONS,missionId,retryChapters);
     if (!savedContinuation && !pickups.length) spawnPickups();
     if (savedContinuation) {
         if (missionId === 'break_contact') applyContinuedMission4Snapshot(savedContinuation);
@@ -9085,6 +9304,7 @@ function recordCampaignMissionCompletion(mission = campaignMission()) {
             campaignProfile.operation = { worldSnapshot: mission.nextMission, spacecraftState: campaignSnapshot(mission.nextMission).spacecraftState, continuedState: null };
         } else {
             campaignProfile.campaignComplete = true; campaignProfile.lastMission = mission.id;
+            campaignProfile.completionRecord = {...ChargefrontProgression.completionRecord};
             for (const entry of CAMPAIGN_MISSIONS) campaignProfile.missions[entry.id].unlocked = true;
             campaignProfile.operation = { worldSnapshot: mission.id, spacecraftState: ship.campaignState, continuedState: null };
         }
@@ -9147,8 +9367,8 @@ function beginCampaignChapterTransition(completion) {
     const fromId = completion.missionId, toId = completion.nextMission;
     const carriedTurret = fromId === 'sample_zero' && !!campaignRun.worldState.securityTurret;
     const rewards = { ...(campaignRun.rewards || {}) };
-    const chapterStats = (campaignRun.chapterStats || []).filter(s => s.missionId !== fromId).concat({ missionId:fromId,
-        kills, activeSeconds:missionTime, cartridgesCrafted:totalAmmoCrafted, medkitsCrafted:totalMedkitsCrafted });
+    const chapterStats = ChargefrontResults.history(CAMPAIGN_MISSIONS,fromId,campaignRun.chapterStats)
+        .concat(ChargefrontResults.chapter(campaignMission(fromId),currentResultCounters(),campaignRun.optional));
     campaignRun.encounter.active = false;
     clearCampaignTransitionCombat();
     playerCombat.cancelActions(); // preserve magazines, cancel transient actions at the checkpoint boundary
@@ -9871,10 +10091,10 @@ function updateCampaignOptionalInteract(dt) {
 }
 
 function completedOptionalCount() {
-    return Object.values(campaignRun.optional).filter(Boolean).length;
+    return campaignMission().optionalObjectives.filter(o=>!!campaignRun.optional[o.id]).length;
 }
 function completeCampaignMission() {
-    if (phase === P.DONE) return;
+    if (mode !== 'campaign' || phase === P.DONE || phase === P.DEAD) return;
     const mission = campaignMission();
     const completion = recordCampaignMissionCompletion(mission);
     if (mission.nextMission) {
@@ -10598,7 +10818,7 @@ function drawHUD(W, H) {
     if (!(mode === 'endless' && upgradeMenu)) drawCrosshair(W, H);
 }
 
-/* result screen state — counts up each stat, fading them in one by one with a chime */
+/* One terminal payload per attempt; cleared only when starting/leaving a run. */
 let resultScreen = null;
 let resultInputHandler = null;
 let menuLaunchTimer = 0;
@@ -10974,7 +11194,7 @@ function applyContinuedMission4Snapshot(snapshot) {
 function clearResultInputHandler() {
     if (!resultInputHandler) return;
     document.removeEventListener('pointerdown', resultInputHandler);
-    document.removeEventListener('keydown', resultInputHandler);
+    document.removeEventListener('keydown', resultInputHandler, true);
     resultInputHandler = null;
 }
 function clearEndlessCombatEntities() {
@@ -11003,6 +11223,7 @@ function focusGameCanvas() {
     try { canvas.focus({ preventScroll: true }); } catch (e) { canvas.focus(); }
 }
 function restartEndlessRun() {
+    if (mode !== 'endless' || !canStartEndless()) return false;
     invalidateEndlessResume();
     focusGameCanvas();
     requestLock();
@@ -11020,6 +11241,7 @@ function restartEndlessRun() {
     LJS.setPaused(false);
     beginEndless(false);
     saveEndlessBoundary();
+    return true;
 }
 function restartCurrentRun() {
     if (mode === 'endless') {
@@ -11028,98 +11250,90 @@ function restartCurrentRun() {
     }
     try {
         const restartOrigin = isPersistentCampaignRun() ? CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN : CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
-        sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, origin: restartOrigin, fresh:phase===P.DEAD, continuedState:phase===P.DEAD?null:campaignRun.restartSnapshot || null });
+        sessionStorage.cf_campaign_autostart = JSON.stringify({ missionId: activeMissionId, origin: restartOrigin, fresh:phase===P.DEAD, continuedState:phase===P.DEAD?null:campaignRun.restartSnapshot || null, chapterStats:campaignRun.chapterStats || [] });
     } catch (e) { }
     location.reload();
 }
-function enterResultScreen() {
-    resetRelayGuide();
-    if(mode==='endless'&&(phase===P.DEAD||phase===P.DONE))invalidateEndlessResume();
+function currentResultCounters() {
+    return {activeSeconds:missionTime,kills,cartridgesCrafted:totalAmmoCrafted,medkitsCrafted:totalMedkitsCrafted};
+}
+function clearResultState() {
     clearResultInputHandler();
-    resultScreen = { startMs: performance.now(), chimed: {} };
-    LJS.setPaused(true);                       // the mission result screen pauses the game
-    if (mode === 'campaign' && phase === P.DONE) {
-        LJS.setInputPreventDefault(false);
-        showCampaignResultPanel();
-        return;
+    resultScreen = null;
+    document.getElementById('campaign-result-screen')?.classList.add('hidden');
+}
+function enterResultScreen() {
+    if (phase !== P.DEAD && phase !== P.DONE || resultScreen) return;
+    resetRelayGuide();
+    clearPointerLockGesture();
+    LJS.pointerLockExit();
+    const success = phase === P.DONE;
+    // Capture once at the terminal event, before another callback or reset can
+    // touch live state. Both modes render exactly this immutable payload.
+    const payload = mode === 'endless'
+        ? ChargefrontResults.endless({success,run:endlessRun,current:currentResultCounters()})
+        : ChargefrontResults.campaign({missions:CAMPAIGN_MISSIONS,missionId:activeMissionId,origin:campaignRunOrigin,success,
+            profileComplete:campaignProfile.campaignComplete,
+            rows:campaignRun.chapterStats,current:currentResultCounters(),optional:campaignRun.optional,mainIndex:campaignRun.mainIndex});
+    if (mode === 'endless') invalidateEndlessResume();
+    clearResultInputHandler();
+    clearTimeout(missionAnalysisTimer); missionAnalysisTimer = 0;
+    chapterDialogue = null; upgradeMenu = false;
+    resultScreen = {startMs:performance.now(),payload};
+    LJS.setPaused(true);
+    LJS.setInputPreventDefault(false);
+    showResultPanel();
+    // Preserve the existing Space replay shortcut without turning arbitrary
+    // keys, menu clicks or focus navigation into a second restart handler.
+    if (payload.replay) {
+        resultInputHandler = event => {
+            if (event.code !== 'Space' || event.repeat || event.target.closest?.('button') || performance.now()-resultScreen.startMs<2000) return;
+            event.preventDefault();
+            restartCurrentRun();
+        };
+        document.addEventListener('keydown',resultInputHandler,true);
     }
-    const minDelay = phase === P.DEAD ? 2000 : 3000;
-    const startMs = performance.now();
-    resultInputHandler = () => {
-        if (performance.now() - startMs < minDelay) return;
-        clearResultInputHandler();
-        restartCurrentRun();
-    };
-    document.addEventListener('pointerdown', resultInputHandler);
-    document.addEventListener('keydown', resultInputHandler);
 }
-const RESULT_STATS = [
-    { label: 'TIME',       fmt: (p) => formatClock(missionTime * p) },
-    { label: 'KILLS',      fmt: (p) => Math.round(kills * p) },
-    { label: 'CARTRIDGES', fmt: (p) => Math.round(totalAmmoCrafted * p) },
-    { label: 'MEDKITS',    fmt: (p) => Math.round(totalMedkitsCrafted * p) },
-];
-function resultStatsList() {
-    if (mode === 'endless') return [
-        { label: 'TIME',  fmt: (p) => formatClock(missionTime * p) },
-        { label: 'WAVES', fmt: (p) => Math.round(endlessRun.wave * p) },
-        { label: 'DNA',   fmt: (p) => Math.round(endlessRun.dnaBanked * p) },
-        { label: 'KILLS', fmt: (p) => Math.round(kills * p) },
-    ];
-    return RESULT_STATS.concat([{ label: 'OPTIONAL', fmt: (p) => Math.round(completedOptionalCount() * p) + ' / ' + campaignMission().optionalObjectives.length }]);
-}
-function campaignResultLine(missionId = activeMissionId) {
-    if (missionId === 'dead_signal') return 'RELAY LOCKOUT IDENTIFIED';
-    if (missionId === 'power_through') return 'BIO-LAB ACCESS RESTORED';
-    if (missionId === 'sample_zero') return 'DNA SAMPLE SECURED';
-    return 'SAMPLE ZERO EXTRACTED — BIOSPHERE DATA SECURED';
-}
-function showCampaignResultPanel() {
-    const panel = document.getElementById('campaign-result-screen');
-    if (!panel || !campaignRun.completion) return;
-    const completion = campaignRun.completion;
-    const mission = campaignMission(completion.missionId);
-    const nextMission = completion.nextMission ? campaignMission(completion.nextMission) : null;
-    const standalone = completion.origin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT;
-    document.getElementById('campaign-result-title').textContent = standalone || nextMission ? 'MISSION ' + mission.number + ' COMPLETE' : 'CAMPAIGN COMPLETE';
-    document.getElementById('campaign-result-name').textContent = mission.name;
-    document.getElementById('campaign-result-summary').innerHTML =
-        '<b>' + campaignResultLine(mission.id) + '</b><br>' +
-        'Time: ' + formatClock(missionTime) + ' &nbsp; • &nbsp; Kills: ' + kills + '<br>' +
-        'Crafted: ' + totalAmmoCrafted + ' cartridges &nbsp; • &nbsp; ' + totalMedkitsCrafted + ' medkits<br>' +
-        (completion.optionalTotal ? 'Optional objectives: ' + completion.optionalCount + ' / ' + completion.optionalTotal + '<br>' : '') +
-        (standalone ? 'Standalone mission complete' : nextMission ? 'Mission ' + nextMission.number + ' — ' + nextMission.name + (completion.nextUnlocked ? ' unlocked' : ' available') : 'Campaign complete');
-    document.getElementById('btn-result-endless').classList.toggle('hidden', !!nextMission);
-    document.getElementById('btn-result-missions').textContent = standalone ? 'RETURN TO MISSION SELECT' : 'SELECT MISSION';
+function showResultPanel() {
+    const payload = resultScreen.payload, panel = document.getElementById('campaign-result-screen');
+    const el = id => document.getElementById(id);
+    panel.dataset.mode = payload.mode;
+    panel.dataset.outcome = payload.success ? 'success' : 'failure';
+    el('result-kicker').textContent = payload.mode === 'campaign' ? 'CHARGE FRONT / OPERATION DEBRIEF' : 'CHARGE FRONT / SURVIVAL RECORD';
+    el('campaign-result-title').textContent = payload.title;
+    el('campaign-result-name').textContent = payload.identity;
+    el('campaign-result-summary').textContent = payload.summary;
+    el('result-scope').textContent = payload.scope;
+    el('result-stats').replaceChildren(...payload.stats.map(stat=>{
+        const box = document.createElement('div'),label = document.createElement('dt'),value = document.createElement('dd');
+        box.className = 'cf-result-stat'; box.dataset.stat = stat.id;
+        label.textContent = stat.label; value.textContent = stat.value; box.append(label,value); return box;
+    }));
+    el('result-objectives').classList.toggle('hidden',!payload.chapters.length);
+    el('result-objective-rows').replaceChildren(...payload.chapters.map(chapter=>{
+        const row = document.createElement('tr'),name = document.createElement('th');
+        name.scope = 'row'; name.textContent = chapter.number+' / '+chapter.name; row.append(name);
+        for (const text of [chapter.mainCompleted+' / '+chapter.mainTotal,chapter.optionalCount===null?'Not recorded':chapter.optionalCount+' / '+chapter.optionalTotal,chapter.success?'Complete':'Interrupted']) {
+            const cell = document.createElement('td'); cell.textContent = text; row.append(cell);
+        }
+        return row;
+    }));
+    const notes = payload.notes.concat(payload.mode==='endless'&&!canStartEndless()?[ENDLESS_UNLOCK_REQUIREMENT+' Play Again starts a new run.']:[]);
+    el('result-notes').replaceChildren(...notes.map(text=>{const p=document.createElement('p');p.textContent=text;return p;}));
+    el('btn-result-retry').classList.toggle('hidden',!payload.replay);
+    el('btn-result-retry').disabled = payload.mode==='endless'&&!canStartEndless();
+    el('btn-result-retry').textContent = payload.mode === 'endless' ? 'PLAY AGAIN' : 'RETRY MISSION';
+    el('btn-result-missions').classList.toggle('hidden',!payload.selectMission);
+    el('btn-result-missions').textContent = payload.origin === CAMPAIGN_RUN_ORIGIN.MISSION_SELECT ? 'RETURN TO MISSION SELECT' : 'SELECT MISSION';
     panel.classList.remove('hidden');
+    // Focus the heading so held input cannot activate a navigation button.
+    el('campaign-result-title').focus({preventScroll:true});
+    el('result-card').scrollTop = 0;
 }
 function drawResultScreen(W, H) {
-    LJS.drawRect(LJS.vec2(W / 2, H / 2), LJS.vec2(W, H), LJS.rgb(0.02, 0.01, 0.04, 0.88), 0, false, true);
-    const title = phase === P.DEAD ? (mode === 'endless' ? 'RUN OVER' : 'SQUAD WIPED OUT') : 'MISSION COMPLETE';
-    hudText(title, LJS.vec2(W / 2, H / 2 - 34), 52, phase === P.DEAD ? LJS.rgb(1, 0.3, 0.35) : LJS.rgb(0.4, 1, 0.7), 'center');
-    /* each stat fades in one by one and its score counts up; a chime plays as each count finishes */
-    if (!resultScreen) resultScreen = { startMs: performance.now(), chimed: {} };
-    const elapsed = (performance.now() - resultScreen.startMs) / 1000;
-    const y0 = H / 2 + 14;
-    const stats = resultStatsList();
-    for (let i = 0; i < stats.length; i++) {
-        const appearAt = i * 0.6;                       // staggered fade-in
-        const local = elapsed - appearAt;
-        if (local <= 0) continue;
-        const fade = smooth(clamp(local / 0.35, 0, 1));
-        const p = clamp(local / 0.9, 0, 1);             // count-up progress
-        const value = stats[i].fmt(p);
-        if (p >= 1 && !resultScreen.chimed[i]) {
-            resultScreen.chimed[i] = true;
-            playFileSfx('resultCount', 0.55);           // chime when the count finishes
-        }
-        hudText(stats[i].label + '   ' + value, LJS.vec2(W / 2, y0 + i * 24), 18, LJS.rgb(0.9, 0.9, 1, fade), 'center');
-    }
-    if (phase === P.DONE) {
-        const campaignResult = campaignResultLine();
-        hudText(mode === 'endless' ? 'DNA EXTRACTION SECURED' : campaignResult, LJS.vec2(W / 2, H / 2 + 122), 24, LJS.rgb(0.6, 1, 0.85), 'center');
-    }
-    if (!(mode === 'campaign' && phase === P.DONE)) hudText('CLICK TO RESTART', LJS.vec2(W / 2, H / 2 + 152), 18, LJS.rgb(1, 1, 1, 0.6), 'center');
+    // Terminal UI is DOM-backed for readable, scrollable, keyboard-accessible
+    // results in both modes. Keep the underlying gameplay canvas quiet.
+    LJS.drawRect(LJS.vec2(W/2,H/2),LJS.vec2(W,H),LJS.rgb(0.02,0.01,0.04,0.88),0,false,true);
 }
 
 function colorStr(c) { const m = /^#([0-9a-f]{6})$/i.exec(c); if (!m) return LJS.rgb(1, 1, 1); return LJS.rgb(parseInt(m[1].slice(0, 2), 16) / 255, parseInt(m[1].slice(2, 4), 16) / 255, parseInt(m[1].slice(4, 6), 16) / 255); }
@@ -11491,7 +11705,9 @@ function buildOverlays() {
 
         <div class="cf-menu" id="menu-buttons">
             <button class="cf-menu-btn" id="btn-campaign">CAMPAIGN</button>
-            <button class="cf-menu-btn" id="btn-endless">ENDLESS HORDE</button>
+            <button class="cf-menu-btn" id="btn-endless" aria-describedby="endless-unlock-requirement">ENDLESS HORDE</button>
+            <p class="cf-endless-requirement" id="endless-unlock-requirement" role="status"></p>
+            <button class="cf-menu-btn hidden" id="btn-endless-legacy-continue">CONTINUE SAVED ENDLESS RUN</button>
             <button class="cf-menu-btn" id="btn-options">OPTIONS</button>
             <button class="cf-menu-btn" id="btn-guide">CONTROLS &amp; GUIDE</button>
             <button class="cf-menu-btn" id="btn-credits">CREDITS</button>
@@ -11666,16 +11882,27 @@ function buildOverlays() {
     result.id = 'campaign-result-screen';
     result.className = 'cf-overlay hidden';
     result.innerHTML = `
-        <div class="cf-panel-box">
-            <h2 id="campaign-result-title">MISSION COMPLETE</h2>
+        <section class="cf-panel-box cf-debrief" id="result-card" role="dialog" aria-modal="true" aria-labelledby="campaign-result-title" aria-describedby="campaign-result-name campaign-result-summary">
+            <div class="cf-debrief-kicker" id="result-kicker"></div>
+            <h2 id="campaign-result-title" tabindex="-1">OPERATION DEBRIEF</h2>
             <div class="cf-sub" id="campaign-result-name"></div>
             <div class="cf-result-summary" id="campaign-result-summary"></div>
+            <div class="cf-result-body">
+                <h3 class="cf-result-scope" id="result-scope"></h3>
+                <dl class="cf-result-stats" id="result-stats"></dl>
+                <table class="cf-result-objectives" id="result-objectives">
+                    <caption>Objective completion</caption>
+                    <thead><tr><th scope="col">Mission</th><th scope="col">Main</th><th scope="col">Optional</th><th scope="col">Status</th></tr></thead>
+                    <tbody id="result-objective-rows"></tbody>
+                </table>
+                <div class="cf-result-notes" id="result-notes"></div>
+            </div>
             <div class="cf-result-actions">
-                <button class="cf-menu-btn hidden" id="btn-result-endless">ENTER ENDLESS HORDE</button>
+                <button class="cf-menu-btn cf-result-primary hidden" id="btn-result-retry">RETRY MISSION</button>
                 <button class="cf-menu-btn" id="btn-result-missions">SELECT MISSION</button>
                 <button class="cf-menu-btn" id="btn-result-menu">RETURN TO MAIN MENU</button>
             </div>
-        </div>`;
+        </section>`;
     ROOT.appendChild(result);
     return start;
 }
@@ -11740,6 +11967,7 @@ async function boot() {
         if (id) el(id).classList.remove('hidden');
         start.classList.toggle('panel-open', id === 'guide-panel' || id === 'options-panel');
         if (id === 'guide-panel') { el(id).querySelector('.cf-guide').scrollTop = 0; el(id).querySelector('.cf-guide').focus(); }
+        if (id === 'menu-buttons') refreshEndlessMenu();
     };
     // Native controls/scroll defaults still work, but menu input never reaches
     // LittleJS's document-level gameplay listeners (including held-key state).
@@ -11748,6 +11976,15 @@ async function boot() {
             overlay.addEventListener(type, event => event.stopPropagation());
     }
     let pendingLaunch = { mode: 'campaign', missionId: 'dead_signal', origin: CAMPAIGN_RUN_ORIGIN.NEW_CAMPAIGN, newCampaign: true };
+    const authorizeEndless = (saved = null) => {
+        if (canLaunchEndless(saved)) return true;
+        pendingLaunch = {mode:'locked'};
+        start.classList.remove('hidden'); showPanel('menu-buttons');
+        return false;
+    };
+    refreshEndlessMenu();
+    window.addEventListener('storage',event=>{if(!event.key||[CAMPAIGN_SAVE_KEY,CAMPAIGN_SAVE_KEY+'.backup',ENDLESS_SAVE_KEY,ENDLESS_SAVE_KEY+'.backup'].includes(event.key))refreshEndlessMenu();});
+    document.addEventListener('visibilitychange',()=>{if(!document.hidden)refreshEndlessMenu();});
     const continueMissionId = campaignContinueMissionId();
     const continueButton = el('btn-continue-campaign');
     continueButton.disabled = !continueMissionId;
@@ -11775,6 +12012,8 @@ async function boot() {
     el('btn-mission-back').addEventListener('click', () => showPanel('campaign-panel'));
     el('btn-sound-start').addEventListener('click', () => {
         if (menuLaunchTimer) return;
+        if (pendingLaunch.mode==='locked') {showPanel('menu-buttons');return;}
+        if (pendingLaunch.mode==='endless'&&!authorizeEndless(pendingLaunch.saved||null)) return;
         if (opts.soundMode !== 'music') { activateSfxPlayback(); playFileSfx('accessOk', 0.5); }
         if (pendingLaunch.mode === 'campaign') { focusGameCanvas(); requestLock(); }
         start.classList.add('hidden');
@@ -11787,7 +12026,9 @@ async function boot() {
             menuLaunchTimer = 0;
             if (menuLaunchFade && menuLaunchFade.parentNode) menuLaunchFade.parentNode.removeChild(menuLaunchFade);
             menuLaunchFade = null;
-            if (pendingLaunch.mode === 'endless') startEndless(pendingLaunch.configuration,pendingLaunch.saved || null);
+            if (pendingLaunch.mode === 'endless') {
+                if (!startEndless(pendingLaunch.configuration,pendingLaunch.saved || null)) authorizeEndless(pendingLaunch.saved||null);
+            }
             else startCampaignMission(pendingLaunch.missionId, pendingLaunch.origin, pendingLaunch.newCampaign);
         }, 2000);
     });
@@ -11802,13 +12043,16 @@ async function boot() {
     };
     for (const id of ['endless-slot1', 'endless-slot2']) el(id).addEventListener('change', event => synchronizeSlots(event.target));
     synchronizeSlots(el('endless-slot1'));
-    const openEndlessSetup = () => { pendingLaunch = { mode: 'endless' }; showPanel('endless-setup-panel'); el('endless-slot1').focus(); };
-    el('btn-endless').addEventListener('click',()=>{const saved=loadEndlessBoundary();if(saved)showPanel('endless-resume-panel');else {openEndlessSetup();el('endless-save-status').textContent=saveFeedback;}});
-    el('btn-endless-continue').addEventListener('click',()=>{const saved=loadEndlessBoundary();if(!saved){openEndlessSetup();return;}pendingLaunch={mode:'endless',configuration:ChargefrontCombat.endlessConfig(saved.configuration),saved};refreshSoundModeButtons();showPanel('sound-panel');});
-    el('btn-endless-new').addEventListener('click',()=>confirmNew('This will replace the saved Endless run when your new deployment begins.','endless-resume-panel',openEndlessSetup));
+    const openEndlessSetup = () => { if(!authorizeEndless())return;pendingLaunch = { mode: 'endless' }; showPanel('endless-setup-panel'); el('endless-slot1').focus(); };
+    el('btn-endless').addEventListener('click',()=>{if(!authorizeEndless())return;const saved=loadEndlessBoundary();if(saved)showPanel('endless-resume-panel');else {openEndlessSetup();el('endless-save-status').textContent=saveFeedback;}});
+    const continueSavedEndless = () => {const saved=loadEndlessBoundary();if(!saved){openEndlessSetup();return;}if(!authorizeEndless(saved))return;pendingLaunch={mode:'endless',configuration:ChargefrontCombat.endlessConfig(saved.configuration),saved};refreshSoundModeButtons();showPanel('sound-panel');};
+    el('btn-endless-continue').addEventListener('click',continueSavedEndless);
+    el('btn-endless-legacy-continue').addEventListener('click',continueSavedEndless);
+    el('btn-endless-new').addEventListener('click',()=>{if(authorizeEndless())confirmNew('This will replace the saved Endless run when your new deployment begins.','endless-resume-panel',openEndlessSetup);});
     el('btn-endless-resume-back').addEventListener('click',()=>showPanel('menu-buttons'));
     el('btn-endless-back').addEventListener('click', () => showPanel('menu-buttons'));
     el('btn-endless-ready').addEventListener('click', () => {
+        if(!authorizeEndless())return;
         const squad = {};
         for (const id of ['rook', 'vex', 'kade']) squad[id] = { weapon: el('endless-' + id + '-weapon').value, ability: el('endless-' + id + '-ability').value };
         pendingLaunch = { mode: 'endless', configuration: ChargefrontCombat.endlessConfig({ player: { slot1: el('endless-slot1').value, slot2: el('endless-slot2').value, ability:el('endless-player-ability').value }, squad, posture: el('endless-squad-posture').value }) };
@@ -11835,7 +12079,7 @@ async function boot() {
     el('btn-credits-back').addEventListener('click', () => showPanel('menu-buttons'));
 
     el('btn-result-missions').addEventListener('click', () => reloadToMainMenu(true));
-    el('btn-result-endless').addEventListener('click', () => { try { sessionStorage.cf_endless_autostart = '1'; } catch (e) { } clearTransientSessionState(); location.reload(); });
+    el('btn-result-retry').addEventListener('click', () => restartCurrentRun());
     el('btn-result-menu').addEventListener('click', () => reloadToMainMenu());
 
     /* UI click feedback on every menu button (Soundly interface tap) */
@@ -11900,6 +12144,7 @@ async function boot() {
         // Losing lock while a shared settings/guide panel is open keeps that panel.
         if (!start.classList.contains('hidden') && start.classList.contains('panel-open')) return;
         LJS.inputClear(); player.firePending = false; player.sprinting = false;
+        el('btn-restart').disabled = mode==='endless'&&!canStartEndless();
         pauseEl.classList.remove('hidden');
         LJS.setPaused(true);
         LJS.setSoundVolume(0.18);
@@ -11931,13 +12176,12 @@ async function boot() {
     });
 
     try {
+        // Retired Campaign-result shortcut: stale requests never open deployment.
+        delete sessionStorage.cf_endless_autostart;
         const queued = JSON.parse(sessionStorage.cf_campaign_autostart || 'null');
         if (queued && queued.missionId) {
             delete sessionStorage.cf_campaign_autostart;
-            startCampaignMission(queued.missionId, queued.origin || CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, false, queued.continuedState || null,!!queued.fresh);
-        } else if (sessionStorage.cf_endless_autostart === '1') {
-            delete sessionStorage.cf_endless_autostart;
-            openEndlessSetup();
+            startCampaignMission(queued.missionId, queued.origin || CAMPAIGN_RUN_ORIGIN.CONTINUE_CAMPAIGN, false, queued.continuedState || null,!!queued.fresh,queued.chapterStats || []);
         } else if (sessionStorage.cf_open_mission_select === '1') {
             delete sessionStorage.cf_open_mission_select;
             renderMissionSelect(); showPanel('mission-panel');
@@ -12296,7 +12540,8 @@ window.__cf = {
     createCheckpointForTest() {return createCampaignCheckpointSnapshot();},
     restoreCheckpointForTest(saved) {return applyCampaignCheckpointSnapshot(saved);},
     endlessSaveInfo() {return loadEndlessBoundary();},
-    continueEndless() {const saved=loadEndlessBoundary();if(saved)startEndless(saved.configuration,saved);return !!saved;},
+    continueEndless() {const saved=loadEndlessBoundary();return saved?startEndless(saved.configuration,saved):false;},
+    endlessAccessInfo() {return {unlocked:endlessCampaignUnlocked(),fixture:ENDLESS_TEST_FIXTURE,canStart:canStartEndless()};},
     relayRouteInfo() {return {id:relayGuide.id,path:enhancedRelayPath().map(p=>[p.x,p.y]),solvedOrigin:relayGuide.solvedPath.length?[relayGuide.solvedPath[0].x,relayGuide.solvedPath[0].y]:null,connectorUpdates:relayGuide.connectorUpdates,connectorOrigin:[relayGuide.connectorX,relayGuide.connectorY],timer:relayGuide.timer,arrived:{alpha:!!campaignRun.rewards?.alphaRouteArrived,gamma:!!campaignRun.rewards?.gammaRouteArrived},stats:relayRouteSolver.stats(),vertices:relayGuide.line?.geometry.drawRange.count||0,visible:!!relayGuide.line?.visible};},
     advanceRelayGuide(dt=0) {updateIntelRouteProgress(dt);},
     relaySegmentClear(a,b) {return relayGuideSegmentClear({x:a[0],y:a[1]},{x:b[0],y:b[1]});},
@@ -12397,6 +12642,15 @@ window.__cf = {
     spawnTestEnemy(type = 'skitter', xOffset = 8, yOffset = 0) { const enemy = new Infested(ENEMY_STATS[type] ? type : 'skitter', player.pos.copy().add(LJS.vec2(xOffset, yOffset)), player); recordEncounterSpawn(enemy, 'debug'); enemy.aggroT = 10; enemy.setSpawnScale(1); enemy.unburrowing = false; enemy.mesh.scale.setScalar(enemy.finalScale); return enemy; },
     clearTestEnemies() { for (let i = enemies.length - 1; i >= 0; i--) { enemies[i].dead = true; enemies[i].destroy(); } for (const member of squadMembers) member.target = null; encounterDirector.tacticalT = 0; updateEncounterDirector(0); return enemies.length; },
     get craft() { return craft; },
+    enemyTacticalInfo() {return enemies.map(e=>({id:e.tacticalId,type:e.type,role:e.role.style,awareness:e.awareness,visible:e.canSeeTarget,
+        focus:e.focus===player?'COMMANDER':e.focus?.def?.name||e.focus?.type||(e.focus?.R?'RELAY':null),lastSeen:e.lastSeen?{...e.lastSeen}:null,
+        goal:e.navRequest?{...e.navRequest}:null,waypoint:e.navGoal?{...e.navGoal}:null,navMode:e.navMode,pos:[e.pos.x,e.pos.y,e.z],windup:e.attackWindupT,
+        attacks:e.attackCount,perceptionChecks:e.perceptionChecks,navPlans:e.navPlans,advanceReplans:e.advanceReplans,
+        relayGoal:e.relayGoal?{...e.relayGoal}:null,dead:e.dead}));},
+    enemySightForTest(enemy,target) {return enemySight(enemy,target,true);},
+    enemyWalkClearForTest(a,b) {return enemyWalkClear(a,b);},
+    labTurretInfo() {const t=campaignContent.lab?.turret;return t?{active:t.active,reason:t.reason||'uninitialized',scan:t.scan?{...t.scan}:null,shots:t.shots||0,cooldown:t.fireT,target:t.target?.type||null,muzzle:t.muzzleWorld?.toArray(),lastShot:t.events?.length?structuredClone(t.events[t.events.length-1]):null}:null;},
+    resultInfo() { return {payload:resultScreen?structuredClone(resultScreen.payload):null,current:{...currentResultCounters()}}; },
     get scrap() { return craft.scraps; },
     get cells() { return craft.powerCells; },
     get combatLog() { return combatLog; },

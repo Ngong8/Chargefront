@@ -21,6 +21,7 @@ const page = await browser.newPage({ viewport: { width: 1280, height: 720 } });
 const results = [], errors = [];
 page.on('pageerror', e => errors.push(e.message));
 const url = pathToFileURL(resolve('chargefront.html')); url.searchParams.set('perfDiagnostics', '1');
+url.searchParams.set('endlessFixture','1'); // Isolated traversal fixture, no persisted unlock.
 const load = async () => {
     await page.goto(url.href); await page.waitForFunction(() => __cf?.renderer && __cfPerf, undefined, { timeout: 120000 });
     await page.evaluate(() => {

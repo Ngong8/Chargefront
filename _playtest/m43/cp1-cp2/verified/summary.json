@@ -1,0 +1,463 @@
+{
+  "htmlHash": "2deba026a72573bc81863704c27b97d2dfe74e9b075768131e93397e21f6b936",
+  "browserExecutions": [
+    {
+      "browser": "edge",
+      "suite": "tactical-ai",
+      "status": "PASS",
+      "receipt": "tactics-final/edge/tactical-ai.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "campaign-tactics",
+      "status": "PASS",
+      "receipt": "campaign-01/edge/campaign-tactics.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "tactical-performance",
+      "status": "PASS",
+      "receipt": "performance-01/edge/performance.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "enemy-cover",
+      "status": "PASS",
+      "receipt": "mortar-final/edge/cover.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-e0",
+      "status": "PASS",
+      "receipt": "facility-e0/edge/manifest.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "sample-lockdown-live",
+      "status": "PASS",
+      "receipt": "live-defence/live-edge/manifest.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "results-flow",
+      "status": "PASS",
+      "receipt": "results-compatibility/edge/results.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-unlock",
+      "status": "PASS",
+      "receipt": "unlock-compatibility/edge/unlock.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "tactical-ai",
+      "status": "PASS",
+      "receipt": "tactics-final/firefox/tactical-ai.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "campaign-tactics",
+      "status": "PASS",
+      "receipt": "campaign-01/firefox/campaign-tactics.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "tactical-performance",
+      "status": "PASS",
+      "receipt": "performance-01/firefox/performance.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "enemy-cover",
+      "status": "PASS",
+      "receipt": "mortar-firefox-verified/firefox/cover.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-e0",
+      "status": "PASS",
+      "receipt": "facility-e0/firefox/manifest.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "sample-lockdown-live",
+      "status": "PASS",
+      "receipt": "live-defence/live-firefox/manifest.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "results-flow",
+      "status": "PASS",
+      "receipt": "results-compatibility/firefox/results.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-unlock",
+      "status": "PASS",
+      "receipt": "unlock-compatibility/firefox/unlock.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "m2-progression",
+      "status": "PASS",
+      "seconds": 112.988,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "facility-playthrough",
+      "status": "PASS",
+      "seconds": 67.391,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "transition-diagnose",
+      "status": "PASS",
+      "seconds": 38.93,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "m2-progression",
+      "status": "PASS",
+      "seconds": 172.77,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "facility-playthrough",
+      "status": "PASS",
+      "seconds": 87.792,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "transition-diagnose",
+      "status": "PASS",
+      "seconds": 41.985,
+      "receipt": "regression-progression/results-edge-firefox.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "traversal-performance",
+      "status": "PASS",
+      "seconds": 155.722,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "runner-kamikaze",
+      "status": "PASS",
+      "seconds": 26.7,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "combat-squad",
+      "status": "PASS",
+      "seconds": 100.799,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "combat-playtest",
+      "status": "PASS",
+      "seconds": 94.091,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "endless-hud",
+      "status": "PASS",
+      "seconds": 156.3,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "edge",
+      "suite": "additional-refinement",
+      "status": "PASS",
+      "seconds": 130.89,
+      "receipt": "regression-edge/results-edge.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "traversal-performance",
+      "status": "PASS",
+      "seconds": 158.017,
+      "receipt": "regression-firefox/results-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "runner-kamikaze",
+      "status": "PASS",
+      "seconds": 28.622,
+      "receipt": "regression-firefox/results-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "combat-squad",
+      "status": "PASS",
+      "seconds": 163.375,
+      "receipt": "regression-firefox/results-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "combat-playtest",
+      "status": "PASS",
+      "seconds": 107.643,
+      "receipt": "regression-firefox/results-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "endless-hud",
+      "status": "PASS",
+      "seconds": 131.071,
+      "receipt": "regression-firefox/results-firefox.json"
+    },
+    {
+      "browser": "firefox",
+      "suite": "additional-refinement",
+      "status": "PASS",
+      "seconds": 164.064,
+      "receipt": "regression-firefox/results-firefox.json"
+    }
+  ],
+  "performance": {
+    "edge": [
+      {
+        "protocol": "stationary-policy",
+        "p95Before": 16.8,
+        "p95After": 16.8,
+        "worstBefore": 17.7,
+        "worstAfter": 33.4,
+        "actorUpdateBefore": 0.016204666171621356,
+        "actorUpdateAfter": 0.02126357128697803,
+        "extra18ActorMs": 0.09106029207642014
+      },
+      {
+        "protocol": "live-combat",
+        "p95Before": 49.9,
+        "p95After": 33.5,
+        "worstBefore": 67.1,
+        "worstAfter": 83.3,
+        "actorUpdateBefore": 0.011804111823387966,
+        "actorUpdateAfter": 0.02255717262739286,
+        "extra18ActorMs": 0.19355509447208813
+      }
+    ],
+    "firefox": [
+      {
+        "protocol": "stationary-policy",
+        "p95Before": 50,
+        "p95After": 50,
+        "worstBefore": 83.3,
+        "worstAfter": 66.7,
+        "actorUpdateBefore": 0.010292397660818714,
+        "actorUpdateAfter": 0.013249651324965132,
+        "extra18ActorMs": 0.053230565954635545
+      },
+      {
+        "protocol": "live-combat",
+        "p95Before": 83.3,
+        "p95After": 50,
+        "worstBefore": 133.3,
+        "worstAfter": 66.7,
+        "actorUpdateBefore": 0.013349514563106795,
+        "actorUpdateAfter": 0.015162037037037036,
+        "extra18ActorMs": 0.032625404530744334
+      }
+    ]
+  },
+  "normalSpeedDefence": {
+    "edge": {
+      "wallSeconds": 97.463,
+      "samples": [
+        {
+          "label": "defence-start",
+          "phase": "M3_STABILIZE",
+          "time": 0.05,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 0
+        },
+        {
+          "label": "live-15",
+          "phase": "M3_STABILIZE",
+          "time": 15.000000000000325,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 9
+        },
+        {
+          "label": "live-30",
+          "phase": "M3_STABILIZE",
+          "time": 30.06666666666624,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 17
+        },
+        {
+          "label": "live-45",
+          "phase": "M3_STABILIZE",
+          "time": 45.016666666665394,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 29
+        },
+        {
+          "label": "live-60",
+          "phase": "M3_STABILIZE",
+          "time": 60.03333333333121,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 35
+        },
+        {
+          "label": "live-75",
+          "phase": "M3_STABILIZE",
+          "time": 75.04999999999703,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 42
+        },
+        {
+          "label": "live-89",
+          "phase": "M3_STABILIZE",
+          "time": 89.03333333332957,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 45
+        },
+        {
+          "label": "transfer-start",
+          "phase": "M3_STABILIZE",
+          "time": 90,
+          "state": "transfer",
+          "droneCount": 1,
+          "turretShots": 45
+        },
+        {
+          "label": "transfer-mid",
+          "phase": "M3_STABILIZE",
+          "time": 90,
+          "state": "transfer",
+          "droneCount": 0,
+          "turretShots": 45
+        },
+        {
+          "label": "completed",
+          "phase": "M4_BREAK_CONTACT",
+          "time": 0,
+          "droneCount": 1,
+          "turretShots": 45
+        },
+        {
+          "label": "exit-after",
+          "phase": "M4_REACH_LZ",
+          "time": 0,
+          "droneCount": 0,
+          "turretShots": 45
+        }
+      ]
+    },
+    "firefox": {
+      "wallSeconds": 96.328,
+      "samples": [
+        {
+          "label": "defence-start",
+          "phase": "M3_STABILIZE",
+          "time": 0.03333333333333333,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 0
+        },
+        {
+          "label": "live-15",
+          "phase": "M3_STABILIZE",
+          "time": 15.000000000000325,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 11
+        },
+        {
+          "label": "live-30",
+          "phase": "M3_STABILIZE",
+          "time": 30.03333333333291,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 20
+        },
+        {
+          "label": "live-45",
+          "phase": "M3_STABILIZE",
+          "time": 45.03333333333206,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 21
+        },
+        {
+          "label": "live-60",
+          "phase": "M3_STABILIZE",
+          "time": 60.01666666666454,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 28
+        },
+        {
+          "label": "live-75",
+          "phase": "M3_STABILIZE",
+          "time": 75.03333333333036,
+          "state": "defence",
+          "droneCount": 0,
+          "turretShots": 36
+        },
+        {
+          "label": "live-89",
+          "phase": "M3_STABILIZE",
+          "time": 89.03333333332957,
+          "state": "defence",
+          "droneCount": 1,
+          "turretShots": 39
+        },
+        {
+          "label": "transfer-start",
+          "phase": "M3_STABILIZE",
+          "time": 90,
+          "state": "transfer",
+          "droneCount": 2,
+          "turretShots": 40
+        },
+        {
+          "label": "transfer-mid",
+          "phase": "M3_STABILIZE",
+          "time": 90,
+          "state": "transfer",
+          "droneCount": 2,
+          "turretShots": 41
+        },
+        {
+          "label": "completed",
+          "phase": "M4_BREAK_CONTACT",
+          "time": 0,
+          "droneCount": 1,
+          "turretShots": 42
+        },
+        {
+          "label": "exit-after",
+          "phase": "M4_REACH_LZ",
+          "time": 0,
+          "droneCount": 0,
+          "turretShots": 42
+        }
+      ]
+    }
+  },
+  "sourceProtection": {
+    "src/world/facility.js": "a3d31339c7972a9a366b5ae823dd0c792568b41ff3c396e8ec73f77fe0c308e1",
+    "src/progression.js": "f017313c5b113303593b615f0e9bf2d6ba981385f6a4b5308d00cd9fc7a79385",
+    "src/combat.js": "a950fb7ccea8e227879164ba8f3196549933928971a6ff50c4e1c4a790223dff"
+  },
+  "passed": true
+}

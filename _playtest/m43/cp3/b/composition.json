@@ -1,0 +1,2115 @@
+{
+  "passed": true,
+  "seedCount": 6,
+  "waves": [
+    1,
+    2,
+    3,
+    4,
+    5,
+    6,
+    8,
+    10,
+    12,
+    16,
+    20,
+    32
+  ],
+  "rows": [
+    {
+      "seed": 430012,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 2,
+      "before": {
+        "skitter": 5,
+        "brute": 11
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 39.75,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 3,
+      "before": {
+        "skitter": 2,
+        "brute": 18,
+        "runner": 1
+      },
+      "after": {
+        "skitter": 6,
+        "spitter": 9,
+        "brute": 3
+      },
+      "pattern": "pressure",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 60.900000000000006,
+        "after": 28.724999999999998
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 4,
+      "before": {
+        "skitter": 4,
+        "brute": 3,
+        "runner": 4,
+        "tunneler": 8,
+        "spitter": 7
+      },
+      "after": {
+        "skitter": 5,
+        "shielded": 4,
+        "brute": 3,
+        "spitter": 6,
+        "runner": 2
+      },
+      "pattern": "assault",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 48.775,
+        "after": 32.800000000000004
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 5,
+        "drone": 11,
+        "spitter": 6
+      },
+      "pattern": "airborne",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 30.775
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 6,
+      "before": {
+        "skitter": 3,
+        "runner": 7,
+        "carrier": 11,
+        "spitter": 10,
+        "tunneler": 3,
+        "brute": 1,
+        "screecher": 1
+      },
+      "after": {
+        "skitter": 7,
+        "drone": 7,
+        "spitter": 3,
+        "carrier": 1,
+        "screecher": 3,
+        "shielded": 2,
+        "brute": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 79.02499999999999,
+        "after": 37.175000000000004
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 8,
+      "before": {
+        "skitter": 5,
+        "carrier": 4,
+        "support": 6,
+        "runner": 7,
+        "spitter": 9,
+        "tunneler": 7,
+        "brute": 7,
+        "screecher": 1,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 6,
+        "shielded": 7,
+        "drone": 3,
+        "spitter": 4,
+        "carrier": 1,
+        "boss": 1,
+        "brute": 3,
+        "support": 2,
+        "runner": 1,
+        "screecher": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 109.25,
+        "after": 62.75000000000001
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 2,
+        "support": 2,
+        "screecher": 5,
+        "drone": 16,
+        "runner": 2,
+        "artillery": 2,
+        "spitter": 2,
+        "carrier": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 54.725
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 12,
+      "before": {
+        "skitter": 12,
+        "tunneler": 8,
+        "brute": 6,
+        "runner": 9,
+        "carrier": 7,
+        "screecher": 10,
+        "artillery": 8,
+        "spitter": 4,
+        "support": 2
+      },
+      "after": {
+        "skitter": 8,
+        "support": 2,
+        "artillery": 2,
+        "spitter": 2,
+        "screecher": 2,
+        "shielded": 8,
+        "carrier": 2,
+        "drone": 3,
+        "brute": 4,
+        "runner": 1,
+        "tunneler": 2
+      },
+      "pattern": "tactical",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 137.85,
+        "after": 71.77499999999999
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 16,
+      "before": {
+        "skitter": 12,
+        "spitter": 15,
+        "brute": 15,
+        "carrier": 12,
+        "tunneler": 6,
+        "artillery": 13,
+        "screecher": 7,
+        "runner": 5,
+        "support": 1,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 17,
+        "spitter": 5,
+        "runner": 3,
+        "carrier": 2,
+        "boss": 1,
+        "artillery": 1,
+        "shielded": 3,
+        "tunneler": 5,
+        "screecher": 2,
+        "drone": 1,
+        "support": 2,
+        "brute": 3
+      },
+      "pattern": "rush",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 216.12499999999997,
+        "after": 85.75000000000001
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 14,
+        "shielded": 7,
+        "runner": 7,
+        "tunneler": 1,
+        "spitter": 7,
+        "screecher": 2,
+        "drone": 6,
+        "support": 2,
+        "carrier": 2,
+        "brute": 2,
+        "artillery": 2
+      },
+      "pattern": "assault",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 82.775
+      }
+    },
+    {
+      "seed": 430012,
+      "wave": 32,
+      "before": {
+        "runner": 31,
+        "support": 14,
+        "brute": 19,
+        "skitter": 25,
+        "spitter": 15,
+        "tunneler": 21,
+        "screecher": 15,
+        "artillery": 11,
+        "carrier": 15,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 13,
+        "carrier": 2,
+        "brute": 9,
+        "drone": 5,
+        "boss": 1,
+        "shielded": 9,
+        "tunneler": 4,
+        "support": 2,
+        "spitter": 5,
+        "runner": 1,
+        "artillery": 2,
+        "screecher": 2
+      },
+      "pattern": "tactical",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 350.65,
+        "after": 119.30000000000001
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 2,
+      "before": {
+        "skitter": 3,
+        "brute": 13
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 44.650000000000006,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 3,
+      "before": {
+        "skitter": 3,
+        "brute": 14,
+        "runner": 4
+      },
+      "after": {
+        "skitter": 7,
+        "brute": 3,
+        "spitter": 5,
+        "runner": 3
+      },
+      "pattern": "assault",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 51.1,
+        "after": 25.625
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 4,
+      "before": {
+        "skitter": 4,
+        "brute": 4,
+        "spitter": 5,
+        "tunneler": 12,
+        "runner": 1
+      },
+      "after": {
+        "skitter": 8,
+        "runner": 3,
+        "shielded": 1,
+        "spitter": 7,
+        "brute": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 57.27499999999999,
+        "after": 25.075000000000003
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 5,
+        "shielded": 2,
+        "drone": 11,
+        "spitter": 4
+      },
+      "pattern": "airborne",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 31.625
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 6,
+      "before": {
+        "skitter": 6,
+        "carrier": 11,
+        "spitter": 7,
+        "runner": 5,
+        "brute": 2,
+        "tunneler": 4,
+        "screecher": 1
+      },
+      "after": {
+        "skitter": 9,
+        "drone": 4,
+        "runner": 3,
+        "spitter": 3,
+        "shielded": 2,
+        "brute": 2,
+        "carrier": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 81.04999999999998,
+        "after": 34.975
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 8,
+      "before": {
+        "skitter": 7,
+        "tunneler": 6,
+        "runner": 9,
+        "carrier": 5,
+        "support": 3,
+        "screecher": 2,
+        "spitter": 7,
+        "brute": 7,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 4,
+        "screecher": 2,
+        "support": 2,
+        "shielded": 6,
+        "brute": 5,
+        "boss": 1,
+        "drone": 4,
+        "tunneler": 1,
+        "spitter": 3,
+        "carrier": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 104.6,
+        "after": 69.12499999999999
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 3,
+        "carrier": 1,
+        "shielded": 3,
+        "spitter": 10,
+        "artillery": 2,
+        "screecher": 3,
+        "drone": 9,
+        "support": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 55.875
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 12,
+      "before": {
+        "skitter": 13,
+        "artillery": 5,
+        "brute": 9,
+        "spitter": 10,
+        "tunneler": 8,
+        "screecher": 5,
+        "carrier": 8,
+        "support": 4,
+        "runner": 4
+      },
+      "after": {
+        "skitter": 7,
+        "drone": 12,
+        "artillery": 2,
+        "carrier": 2,
+        "support": 2,
+        "screecher": 5,
+        "spitter": 3,
+        "runner": 2,
+        "brute": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 145.025,
+        "after": 61.10000000000001
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 16,
+      "before": {
+        "skitter": 10,
+        "brute": 14,
+        "tunneler": 6,
+        "spitter": 14,
+        "runner": 13,
+        "artillery": 11,
+        "carrier": 6,
+        "screecher": 6,
+        "support": 6,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 19,
+        "runner": 6,
+        "boss": 1,
+        "artillery": 1,
+        "tunneler": 2,
+        "shielded": 6,
+        "carrier": 2,
+        "support": 1,
+        "screecher": 2,
+        "drone": 3,
+        "brute": 1,
+        "spitter": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 197.29999999999998,
+        "after": 75.52499999999999
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 19,
+        "spitter": 7,
+        "screecher": 2,
+        "drone": 6,
+        "runner": 3,
+        "artillery": 2,
+        "shielded": 8,
+        "brute": 1,
+        "support": 1,
+        "tunneler": 1,
+        "carrier": 2
+      },
+      "pattern": "assault",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 79.85
+      }
+    },
+    {
+      "seed": 430013,
+      "wave": 32,
+      "before": {
+        "runner": 21,
+        "carrier": 21,
+        "tunneler": 17,
+        "artillery": 19,
+        "support": 13,
+        "skitter": 22,
+        "spitter": 20,
+        "brute": 21,
+        "screecher": 12,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 15,
+        "artillery": 2,
+        "shielded": 3,
+        "spitter": 16,
+        "boss": 1,
+        "drone": 5,
+        "support": 2,
+        "brute": 3,
+        "carrier": 2,
+        "tunneler": 1,
+        "screecher": 3,
+        "runner": 2
+      },
+      "pattern": "assault",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 385.72499999999997,
+        "after": 101
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 2,
+      "before": {
+        "skitter": 4,
+        "brute": 12
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 42.2,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 3,
+      "before": {
+        "skitter": 3,
+        "brute": 15,
+        "runner": 3
+      },
+      "after": {
+        "skitter": 6,
+        "spitter": 5,
+        "brute": 3,
+        "runner": 4
+      },
+      "pattern": "pressure",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 53.55,
+        "after": 25.625
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 4,
+      "before": {
+        "skitter": 2,
+        "runner": 5,
+        "tunneler": 10,
+        "spitter": 8,
+        "brute": 1
+      },
+      "after": {
+        "skitter": 12,
+        "tunneler": 2,
+        "runner": 3,
+        "spitter": 3
+      },
+      "pattern": "rush",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 48.45,
+        "after": 22.125
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 4,
+        "drone": 11,
+        "spitter": 3,
+        "runner": 3,
+        "shielded": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 29.65
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 6,
+      "before": {
+        "skitter": 6,
+        "brute": 5,
+        "runner": 5,
+        "carrier": 8,
+        "tunneler": 4,
+        "screecher": 6,
+        "spitter": 2
+      },
+      "after": {
+        "skitter": 8,
+        "carrier": 1,
+        "drone": 7,
+        "spitter": 3,
+        "runner": 2,
+        "shielded": 2,
+        "screecher": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 79.25,
+        "after": 33.175000000000004
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 8,
+      "before": {
+        "skitter": 6,
+        "screecher": 2,
+        "spitter": 11,
+        "runner": 7,
+        "support": 5,
+        "carrier": 6,
+        "tunneler": 3,
+        "brute": 6,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 7,
+        "tunneler": 2,
+        "screecher": 2,
+        "runner": 5,
+        "support": 2,
+        "shielded": 2,
+        "boss": 1,
+        "spitter": 4,
+        "drone": 2,
+        "brute": 1,
+        "carrier": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 105.94999999999999,
+        "after": 55.64999999999999
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 6,
+        "spitter": 3,
+        "drone": 16,
+        "screecher": 3,
+        "brute": 1,
+        "support": 1,
+        "carrier": 1,
+        "artillery": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 52.275000000000006
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 12,
+      "before": {
+        "skitter": 10,
+        "artillery": 7,
+        "brute": 4,
+        "runner": 9,
+        "carrier": 5,
+        "support": 8,
+        "spitter": 8,
+        "tunneler": 11,
+        "screecher": 4
+      },
+      "after": {
+        "skitter": 3,
+        "spitter": 12,
+        "drone": 10,
+        "screecher": 3,
+        "artillery": 2,
+        "carrier": 2,
+        "support": 2,
+        "brute": 1,
+        "shielded": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 138.6,
+        "after": 66.175
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 16,
+      "before": {
+        "skitter": 9,
+        "brute": 12,
+        "artillery": 5,
+        "spitter": 15,
+        "runner": 11,
+        "screecher": 5,
+        "tunneler": 12,
+        "support": 12,
+        "carrier": 5,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 7,
+        "artillery": 2,
+        "carrier": 2,
+        "spitter": 5,
+        "drone": 6,
+        "brute": 6,
+        "boss": 1,
+        "runner": 2,
+        "shielded": 10,
+        "support": 2,
+        "tunneler": 1,
+        "screecher": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 196.10000000000002,
+        "after": 99.45
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 20,
+        "runner": 6,
+        "shielded": 3,
+        "spitter": 10,
+        "brute": 3,
+        "carrier": 1,
+        "artillery": 2,
+        "support": 2,
+        "drone": 2,
+        "tunneler": 2,
+        "screecher": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 77.72500000000001
+      }
+    },
+    {
+      "seed": 430014,
+      "wave": 32,
+      "before": {
+        "runner": 18,
+        "carrier": 23,
+        "artillery": 16,
+        "spitter": 17,
+        "skitter": 18,
+        "tunneler": 31,
+        "brute": 25,
+        "support": 10,
+        "screecher": 8,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 15,
+        "spitter": 11,
+        "brute": 5,
+        "shielded": 8,
+        "boss": 1,
+        "tunneler": 2,
+        "support": 1,
+        "artillery": 2,
+        "screecher": 3,
+        "runner": 4,
+        "carrier": 2,
+        "drone": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 410.425,
+        "after": 105.15
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 2,
+      "before": {
+        "brute": 13,
+        "skitter": 3
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 44.650000000000006,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 3,
+      "before": {
+        "brute": 18,
+        "runner": 2,
+        "skitter": 1
+      },
+      "after": {
+        "skitter": 8,
+        "spitter": 6,
+        "brute": 3,
+        "runner": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 60.900000000000006,
+        "after": 26.400000000000002
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 4,
+      "before": {
+        "tunneler": 11,
+        "spitter": 6,
+        "runner": 4,
+        "brute": 4,
+        "skitter": 1
+      },
+      "after": {
+        "skitter": 6,
+        "spitter": 12,
+        "brute": 2
+      },
+      "pattern": "pressure",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 56.15,
+        "after": 30.200000000000003
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 8,
+        "spitter": 2,
+        "drone": 11,
+        "brute": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 30.125
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 6,
+      "before": {
+        "carrier": 11,
+        "tunneler": 7,
+        "spitter": 6,
+        "brute": 5,
+        "runner": 3,
+        "screecher": 1,
+        "skitter": 3
+      },
+      "after": {
+        "skitter": 6,
+        "shielded": 6,
+        "spitter": 2,
+        "tunneler": 3,
+        "drone": 1,
+        "brute": 4,
+        "screecher": 1,
+        "carrier": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 93.32500000000002,
+        "after": 48.050000000000004
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 8,
+      "before": {
+        "carrier": 6,
+        "brute": 1,
+        "support": 8,
+        "tunneler": 5,
+        "runner": 6,
+        "screecher": 8,
+        "spitter": 5,
+        "skitter": 7,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 10,
+        "spitter": 3,
+        "runner": 4,
+        "brute": 2,
+        "shielded": 4,
+        "drone": 3,
+        "boss": 1,
+        "carrier": 1,
+        "support": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 102.52499999999998,
+        "after": 53.475
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 4,
+        "screecher": 5,
+        "spitter": 3,
+        "drone": 11,
+        "runner": 2,
+        "brute": 2,
+        "artillery": 2,
+        "carrier": 1,
+        "support": 1,
+        "shielded": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 56.050000000000004
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 12,
+      "before": {
+        "carrier": 6,
+        "tunneler": 12,
+        "artillery": 8,
+        "brute": 10,
+        "runner": 7,
+        "support": 7,
+        "spitter": 7,
+        "screecher": 5,
+        "skitter": 4
+      },
+      "after": {
+        "skitter": 14,
+        "drone": 2,
+        "runner": 4,
+        "screecher": 3,
+        "tunneler": 4,
+        "artillery": 1,
+        "support": 2,
+        "spitter": 5,
+        "carrier": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 159.025,
+        "after": 53.00000000000001
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 16,
+      "before": {
+        "carrier": 10,
+        "tunneler": 10,
+        "spitter": 14,
+        "brute": 9,
+        "runner": 6,
+        "skitter": 12,
+        "support": 5,
+        "artillery": 12,
+        "screecher": 8,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 5,
+        "brute": 7,
+        "drone": 4,
+        "spitter": 9,
+        "boss": 1,
+        "runner": 1,
+        "carrier": 2,
+        "shielded": 9,
+        "artillery": 2,
+        "support": 2,
+        "tunneler": 3
+      },
+      "pattern": "tactical",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 207.17499999999998,
+        "after": 105.27499999999999
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 9,
+        "drone": 13,
+        "spitter": 13,
+        "runner": 1,
+        "artillery": 2,
+        "support": 2,
+        "brute": 4,
+        "shielded": 3,
+        "screecher": 4,
+        "carrier": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 89.55
+      }
+    },
+    {
+      "seed": 7,
+      "wave": 32,
+      "before": {
+        "carrier": 18,
+        "runner": 19,
+        "spitter": 31,
+        "support": 13,
+        "tunneler": 17,
+        "screecher": 12,
+        "brute": 23,
+        "artillery": 14,
+        "skitter": 19,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 8,
+        "screecher": 5,
+        "spitter": 14,
+        "shielded": 3,
+        "boss": 1,
+        "drone": 15,
+        "runner": 2,
+        "brute": 2,
+        "support": 2,
+        "carrier": 1,
+        "artillery": 2
+      },
+      "pattern": "pressure",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 377.75,
+        "after": 101.35
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 2,
+      "before": {
+        "brute": 11,
+        "skitter": 5
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 39.75,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 3,
+      "before": {
+        "brute": 13,
+        "skitter": 6,
+        "runner": 2
+      },
+      "after": {
+        "skitter": 7,
+        "runner": 4,
+        "spitter": 6,
+        "brute": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 48.650000000000006,
+        "after": 21.5
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 4,
+      "before": {
+        "tunneler": 12,
+        "spitter": 8,
+        "runner": 1,
+        "skitter": 2,
+        "brute": 3
+      },
+      "after": {
+        "skitter": 5,
+        "spitter": 12,
+        "runner": 1,
+        "brute": 1,
+        "shielded": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 57.15,
+        "after": 28.950000000000003
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 7,
+        "drone": 11,
+        "spitter": 2,
+        "brute": 2
+      },
+      "pattern": "airborne",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 32.575
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 6,
+      "before": {
+        "carrier": 10,
+        "skitter": 6,
+        "tunneler": 6,
+        "brute": 4,
+        "spitter": 3,
+        "runner": 4,
+        "screecher": 3
+      },
+      "after": {
+        "skitter": 4,
+        "spitter": 4,
+        "shielded": 6,
+        "brute": 4,
+        "tunneler": 3,
+        "runner": 1,
+        "drone": 1,
+        "carrier": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 85.14999999999999,
+        "after": 48.825
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 8,
+      "before": {
+        "carrier": 4,
+        "tunneler": 7,
+        "support": 11,
+        "skitter": 6,
+        "runner": 6,
+        "spitter": 6,
+        "brute": 6,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 4,
+        "spitter": 8,
+        "runner": 2,
+        "drone": 6,
+        "screecher": 3,
+        "boss": 1,
+        "brute": 2,
+        "support": 2,
+        "carrier": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 112.075,
+        "after": 58.87500000000001
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 3,
+        "brute": 5,
+        "shielded": 8,
+        "runner": 2,
+        "tunneler": 2,
+        "support": 2,
+        "drone": 4,
+        "spitter": 3,
+        "carrier": 1,
+        "artillery": 2
+      },
+      "pattern": "tactical",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 67.975
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 12,
+      "before": {
+        "carrier": 6,
+        "brute": 12,
+        "runner": 11,
+        "artillery": 9,
+        "screecher": 5,
+        "spitter": 3,
+        "skitter": 9,
+        "tunneler": 3,
+        "support": 8
+      },
+      "after": {
+        "skitter": 10,
+        "spitter": 8,
+        "tunneler": 4,
+        "carrier": 1,
+        "screecher": 3,
+        "support": 1,
+        "brute": 2,
+        "drone": 1,
+        "runner": 4,
+        "artillery": 1,
+        "shielded": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 147.85,
+        "after": 58.97500000000001
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 16,
+      "before": {
+        "carrier": 8,
+        "spitter": 7,
+        "runner": 7,
+        "artillery": 12,
+        "skitter": 11,
+        "tunneler": 8,
+        "support": 13,
+        "screecher": 9,
+        "brute": 11,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 6,
+        "carrier": 2,
+        "tunneler": 2,
+        "spitter": 11,
+        "brute": 5,
+        "boss": 1,
+        "screecher": 2,
+        "support": 2,
+        "shielded": 6,
+        "drone": 3,
+        "artillery": 2,
+        "runner": 3
+      },
+      "pattern": "assault",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 210.925,
+        "after": 97.2
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 6,
+        "spitter": 10,
+        "tunneler": 4,
+        "shielded": 11,
+        "brute": 7,
+        "runner": 4,
+        "support": 2,
+        "drone": 3,
+        "artillery": 2,
+        "carrier": 2,
+        "screecher": 1
+      },
+      "pattern": "tactical",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 104.75
+      }
+    },
+    {
+      "seed": 42,
+      "wave": 32,
+      "before": {
+        "carrier": 21,
+        "brute": 17,
+        "artillery": 22,
+        "support": 15,
+        "runner": 17,
+        "spitter": 22,
+        "tunneler": 18,
+        "screecher": 11,
+        "skitter": 23,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 11,
+        "shielded": 2,
+        "screecher": 9,
+        "brute": 2,
+        "spitter": 13,
+        "boss": 1,
+        "carrier": 1,
+        "drone": 10,
+        "runner": 2,
+        "artillery": 2,
+        "support": 2
+      },
+      "pattern": "pressure",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 389.2999999999999,
+        "after": 98.6
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 1,
+      "before": {
+        "skitter": 11
+      },
+      "after": {
+        "skitter": 8
+      },
+      "pattern": "arrival",
+      "beforeTotal": 11,
+      "total": 8,
+      "activeCap": 5,
+      "threatCap": 12,
+      "baseExpectedScrap": {
+        "before": 8.8,
+        "after": 6.4
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 2,
+      "before": {
+        "brute": 9,
+        "skitter": 7
+      },
+      "after": {
+        "skitter": 6,
+        "runner": 2,
+        "spitter": 2
+      },
+      "pattern": "contact",
+      "beforeTotal": 16,
+      "total": 10,
+      "activeCap": 7,
+      "threatCap": 17,
+      "baseExpectedScrap": {
+        "before": 34.85,
+        "after": 9.55
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 3,
+      "before": {
+        "brute": 20,
+        "runner": 1
+      },
+      "after": {
+        "skitter": 12,
+        "spitter": 2,
+        "runner": 3,
+        "brute": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 21,
+      "total": 18,
+      "activeCap": 10,
+      "threatCap": 24,
+      "baseExpectedScrap": {
+        "before": 65.8,
+        "after": 18.4
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 4,
+      "before": {
+        "spitter": 6,
+        "brute": 6,
+        "tunneler": 10,
+        "skitter": 2,
+        "runner": 2
+      },
+      "after": {
+        "skitter": 7,
+        "spitter": 12,
+        "shielded": 1
+      },
+      "pattern": "pressure",
+      "beforeTotal": 26,
+      "total": 20,
+      "activeCap": 11,
+      "threatCap": 27,
+      "baseExpectedScrap": {
+        "before": 59.150000000000006,
+        "after": 26.500000000000004
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 5,
+      "before": {
+        "drone": 31
+      },
+      "after": {
+        "skitter": 8,
+        "shielded": 1,
+        "spitter": 4,
+        "tunneler": 2,
+        "runner": 2,
+        "brute": 1,
+        "drone": 4
+      },
+      "pattern": "assault",
+      "beforeTotal": 31,
+      "total": 22,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 48.825,
+        "after": 31.25
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 6,
+      "before": {
+        "spitter": 6,
+        "brute": 7,
+        "carrier": 5,
+        "runner": 8,
+        "screecher": 3,
+        "tunneler": 6,
+        "skitter": 1
+      },
+      "after": {
+        "skitter": 5,
+        "spitter": 3,
+        "carrier": 1,
+        "drone": 11,
+        "shielded": 1,
+        "screecher": 3
+      },
+      "pattern": "airborne",
+      "beforeTotal": 36,
+      "total": 24,
+      "activeCap": 12,
+      "threatCap": 29,
+      "baseExpectedScrap": {
+        "before": 79.575,
+        "after": 36.625
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 8,
+      "before": {
+        "spitter": 7,
+        "runner": 5,
+        "screecher": 7,
+        "brute": 4,
+        "carrier": 4,
+        "tunneler": 10,
+        "support": 4,
+        "skitter": 5,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 5,
+        "brute": 5,
+        "carrier": 1,
+        "support": 2,
+        "shielded": 7,
+        "boss": 1,
+        "spitter": 4,
+        "screecher": 1,
+        "runner": 1,
+        "drone": 2
+      },
+      "pattern": "tactical",
+      "beforeTotal": 47,
+      "total": 29,
+      "activeCap": 14,
+      "threatCap": 34,
+      "baseExpectedScrap": {
+        "before": 107.35,
+        "after": 66.875
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 10,
+      "before": {
+        "drone": 56
+      },
+      "after": {
+        "skitter": 7,
+        "support": 2,
+        "shielded": 4,
+        "spitter": 9,
+        "screecher": 1,
+        "carrier": 1,
+        "runner": 2,
+        "brute": 3,
+        "drone": 1,
+        "tunneler": 1,
+        "artillery": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 56,
+      "total": 32,
+      "activeCap": 16,
+      "threatCap": 39,
+      "baseExpectedScrap": {
+        "before": 88.2,
+        "after": 57.02500000000001
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 12,
+      "before": {
+        "spitter": 11,
+        "carrier": 10,
+        "skitter": 6,
+        "runner": 5,
+        "artillery": 5,
+        "support": 7,
+        "brute": 11,
+        "tunneler": 9,
+        "screecher": 2
+      },
+      "after": {
+        "skitter": 3,
+        "spitter": 13,
+        "carrier": 2,
+        "brute": 2,
+        "drone": 6,
+        "shielded": 5,
+        "artillery": 2,
+        "support": 1,
+        "runner": 2
+      },
+      "pattern": "pressure",
+      "beforeTotal": 66,
+      "total": 36,
+      "activeCap": 17,
+      "threatCap": 41,
+      "baseExpectedScrap": {
+        "before": 161.4,
+        "after": 67.1
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 16,
+      "before": {
+        "spitter": 14,
+        "brute": 9,
+        "artillery": 6,
+        "runner": 10,
+        "carrier": 7,
+        "tunneler": 11,
+        "skitter": 11,
+        "screecher": 9,
+        "support": 9,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 3,
+        "screecher": 9,
+        "runner": 3,
+        "spitter": 3,
+        "brute": 2,
+        "drone": 17,
+        "boss": 1,
+        "shielded": 3,
+        "support": 1,
+        "carrier": 2,
+        "artillery": 1
+      },
+      "pattern": "airborne",
+      "beforeTotal": 87,
+      "total": 45,
+      "activeCap": 20,
+      "threatCap": 48,
+      "baseExpectedScrap": {
+        "before": 192.70000000000002,
+        "after": 88.39999999999999
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 20,
+      "before": {
+        "drone": 106
+      },
+      "after": {
+        "skitter": 14,
+        "carrier": 2,
+        "spitter": 11,
+        "shielded": 9,
+        "screecher": 3,
+        "drone": 3,
+        "runner": 4,
+        "tunneler": 1,
+        "support": 2,
+        "brute": 2,
+        "artillery": 1
+      },
+      "pattern": "assault",
+      "beforeTotal": 106,
+      "total": 52,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 166.95000000000002,
+        "after": 84.275
+      }
+    },
+    {
+      "seed": 913,
+      "wave": 32,
+      "before": {
+        "spitter": 30,
+        "skitter": 13,
+        "runner": 21,
+        "brute": 20,
+        "carrier": 13,
+        "screecher": 17,
+        "tunneler": 23,
+        "artillery": 17,
+        "support": 12,
+        "boss": 1
+      },
+      "after": {
+        "skitter": 25,
+        "runner": 6,
+        "tunneler": 2,
+        "carrier": 2,
+        "boss": 1,
+        "artillery": 1,
+        "screecher": 5,
+        "brute": 2,
+        "spitter": 5,
+        "drone": 3,
+        "shielded": 2,
+        "support": 1
+      },
+      "pattern": "rush",
+      "beforeTotal": 167,
+      "total": 55,
+      "activeCap": 24,
+      "threatCap": 58,
+      "baseExpectedScrap": {
+        "before": 375.325,
+        "after": 86.6
+      }
+    }
+  ]
+}

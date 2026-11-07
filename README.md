@@ -50,6 +50,14 @@ The [consolidated implementation snapshot](_playtest/m43/implementation-snapshot
 lists curated text receipts, the portable quick-test baseline, locally retained
 evidence and outstanding manual-review qualifications.
 
+**CP3-A terrain review:** the existing Lumen Valley, Impact Crater and Shattered
+Ridges arenas now have smooth lowland, impact-basin and crossing-ridge geometry,
+with the accepted mossy-earth, mineral/ash and weathered-scree surfaces. The old
+occasionally flat crater floor is corrected. Random arena selection and v1 saves
+retain the selected profile; scenery and actors are grounded to the rendered mesh.
+See [CP3-A implementation and focused checks](MILESTONE-4.3-CP3-A.md)
+and the [three representative captures](_playtest/m43/cp3/README.md).
+
 ---
 
 ## ▶ Play it
@@ -138,8 +146,13 @@ Native lifeforms burrow up from the ground and attack on sight. Automated securi
 Fresh Campaign player reserves are **4 / 4 / 4 / 3** cartridges in Missions 1–4;
 each operator starts with **3 / 2 / 2 / 2**. Magazines remain full. Continue keeps
 earned ammunition. Stronger hostiles offer better scrap bundles; ordinary enemy
-deaths do not spawn reserve-cartridge objects. Endless still starts with 8 player
-cartridges and 4 per squadmate.
+deaths do not spawn reserve-cartridge objects. Fresh Endless runs and Replay start
+with 6 player cartridges and 3 per squadmate; Continue keeps saved ammunition.
+
+The Endless **RELAY TURRET** costs **24 scrap** and joins the Tier 3 random offer
+pool at **wave 10**. Open the central relay terminal with `U` nearby between waves;
+when offered, buy its card with `1`, `2` or `3`. Only three weighted offers appear
+per intermission, so this epic upgrade is not guaranteed at the unlock wave.
 
 Sprint interrupts held fire. Clicking fire while sprinting returns to weapon-ready
 movement and retains that shot until the weapon is eligible; release Shift before

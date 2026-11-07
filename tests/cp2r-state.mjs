@@ -26,9 +26,23 @@ const center={x:400,y:400},ring=T.relayObjective({x:550,y:400},center,p=>!(p.x>4
 const html=readFileSync('chargefront.html','utf8').replaceAll('\r\n','\n');
 const fixture=JSON.parse(readFileSync('tests/fixtures/m43/protected-sections.json','utf8'));
 const cut=(text,start,end)=>{const from=text.indexOf(start),to=text.indexOf(end,from);assert(from>=0&&to>from,'Protected source markers exist');return text.slice(from,to);};
+// CP3-C changes only material dividends; retain the historical banking control,
+// gene application and transfer digest around that authorized substitution.
+const normalizeBank=text=>text.replace('        const dividend = ChargefrontProgression.endlessDnaReward(oldMilestone,endlessRun.milestone,endlessRun.dnaSyncMult || 1);\n        const scrapBonus = dividend.scrap;\n        const cellBonus = dividend.cells;',
+ '        const scrapBonus = Math.round((6 + endlessRun.milestone * 2) * (endlessRun.dnaSyncMult || 1));\n        const cellBonus = endlessRun.milestone % 2 === 0 ? Math.round(1 * (endlessRun.dnaSyncMult || 1)) : 0;')
+ // CP3-D isolates the generic Endless bundle roll; Campaign still uses randInt.
+  .replace("(mode === 'endless' ? Math.floor(endlessRand(2,5)) : randInt(2, 5))",'randInt(2, 5)')
+  // CP3-R only changes fresh Endless reserves and removes the drone alarm cue.
+  .replace('loadout: endlessConfiguration.player, cartridges: 6','loadout: endlessConfiguration.player, cartridges: 8')
+  .replace('m.mag = m.def.magSize; m.magSize = m.def.magSize; m.reserve = 3;', 'm.mag = m.def.magSize; m.magSize = m.def.magSize; m.reserve = m.def.reserve;')
+  .replace("if(this.ambient&&this.aggroT<=0&&this.type!=='drone')playFileSfx('creature'", "if(this.ambient&&this.aggroT<=0)playFileSfx(this.type==='drone'?'droneAlert':'creature'");
 for(const section of fixture.sections){
+ // CP3-B deliberately replaces these two Director sections. Their seeded
+ // composition/lifecycle contract is covered by endless-director-state.mjs;
+ // enemy attacks, reset, banking, crafting and drop rolls stay byte-protected.
+ if(['endless_spawn','endless_wave'].includes(section.id))continue;
  const end=section.id==='campaign_search'?'    endlessGoal(dt) {':section.end;
- const body=cut(html,section.start,end).replace("        if(mode==='endless')return this.endlessGoal(dt);\n",'');
+ const body=normalizeBank(cut(html,section.start,end).replace("        if(mode==='endless')return this.endlessGoal(dt);\n",''));
  assert.equal(createHash('sha256').update(body).digest('hex'),section.sha256,'Preserve accepted '+section.id);
 }
 if(process.env.CF_CP2R_BASELINE){
@@ -37,7 +51,7 @@ assert.equal(cut(html,'    perceive(dt) {','    knownGoal(dt) {'),cut(before,'  
 assert.equal(cut(html,'    knownGoal(dt) {','    endlessGoal(dt) {').replace("        if(mode==='endless')return this.endlessGoal(dt);\n",''),cut(before,'    knownGoal(dt) {','    updateAttack(dt,victim,reach) {'),'Campaign lost-contact code remains exact');
 assert.equal(cut(html,'    updateAttack(dt,victim,reach) {','    setSpawnScale(scale)'),cut(before,'    updateAttack(dt,victim,reach) {','    setSpawnScale(scale)'),'Attack wind-ups/damage untouched');
 for(const [start,end] of [['function applyPickup','/* ─── crafting'],['const CRAFT_COSTS','function craftMedkit'],['function currentResultCounters','function colorStr'],['function defaultCampaignProfile','/* ─── engine settings']])assert.equal(cut(html,start,end),cut(before,start,end),'Preserve '+start);
-for(const [start,end] of [['function resetEndlessRun','function placeEndlessSquad'],['function spawnEndlessGroup','function updateEndlessWaves'],['function updateEndlessWaves','function updateEndlessInteract'],['function bankDna','function updateEndless(dt)']])assert.equal(cut(html,start,end),cut(before,start,end),'Keep Endless initialization, waves and payouts: '+start);
+for(const [start,end] of [['function resetEndlessRun','function placeEndlessSquad'],['function bankDna','function updateEndless(dt)'],['        /* COMBAT MEDICS (relay)','/* ── interact (E)']])assert.equal(normalizeBank(cut(html,start,end)),normalizeBank(cut(before,start,end)),'Keep Endless initialization and non-CP3-C payouts: '+start);
 }
 const syntax=spawnSync(process.execPath,['--check','--input-type=module'],{encoding:'utf8',input:html.match(/<script type="module">([\s\S]*?)<\/script>/)[1]});assert.equal(syntax.status,0,syntax.stderr);
-console.log('PASS CP2-R state: separate Campaign economy, exact Endless rolls/RNG, owned-magazine cost, saved reserves, relay perimeter and unchanged Campaign/attack/gate/results code',JSON.stringify(summary));
+console.log('PASS CP2-R state: protected Campaign economy, exact default/intro drop RNG, owned-magazine cost, saved reserves, relay perimeter and unchanged Campaign/attack/gate/results code',JSON.stringify(summary));

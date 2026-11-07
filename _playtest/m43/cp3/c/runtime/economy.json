@@ -1,0 +1,275 @@
+{
+  "browser": "Edge",
+  "cases": [
+    {
+      "label": "normal-speed-native-wave-and-real-input-collection",
+      "combatSeconds": 25.363,
+      "initial": {
+        "craft": {
+          "scraps": 0,
+          "powerCells": 0,
+          "medkits": 3
+        },
+        "cartridges": 8,
+        "shots": 0,
+        "kills": 0,
+        "dna": 0,
+        "banked": 0,
+        "squad": [
+          {
+            "mag": 20,
+            "reserve": 4
+          },
+          {
+            "mag": 32,
+            "reserve": 4
+          },
+          {
+            "mag": 50,
+            "reserve": 4
+          }
+        ],
+        "remaining": []
+      },
+      "postCombat": {
+        "craft": {
+          "scraps": 0,
+          "powerCells": 0,
+          "medkits": 3
+        },
+        "cartridges": 5,
+        "shots": 195,
+        "kills": 8,
+        "dna": 0,
+        "banked": 0,
+        "squad": [
+          {
+            "mag": 19,
+            "reserve": 4
+          },
+          {
+            "mag": 30,
+            "reserve": 4
+          },
+          {
+            "mag": 45,
+            "reserve": 4
+          }
+        ],
+        "remaining": [
+          {
+            "kind": "power",
+            "quantity": 0,
+            "x": 398.64441923605386,
+            "y": 414.0695073035044
+          },
+          {
+            "kind": "dna",
+            "quantity": 0,
+            "x": 398.2288455897394,
+            "y": 413.3458757566718
+          },
+          {
+            "kind": "scrap",
+            "quantity": 3,
+            "x": 404.1547342101991,
+            "y": 395.2695054387379
+          },
+          {
+            "kind": "scrap",
+            "quantity": 3,
+            "x": 410.0463002357545,
+            "y": 397.39829333640677
+          },
+          {
+            "kind": "dna",
+            "quantity": 0,
+            "x": 408.9099042091431,
+            "y": 398.3909524937351
+          }
+        ]
+      },
+      "generated": {
+        "scrap": 6,
+        "power": 1,
+        "dna": 2,
+        "grenade": 0
+      },
+      "collected": {
+        "scrap": 6,
+        "cells": 1,
+        "dna": 2
+      },
+      "uncollected": [],
+      "playerCartridgesConsumed": 3,
+      "playerShots": 195,
+      "craft": {
+        "before": {
+          "s": 6,
+          "reserve": 5,
+          "n": 0
+        },
+        "after": {
+          "s": 2,
+          "reserve": 6,
+          "n": 1
+        }
+      }
+    },
+    {
+      "label": "native-Carrier-and-brood-reward-fixture",
+      "children": 3,
+      "drops": [
+        {
+          "kind": "scrap",
+          "quantity": 5,
+          "x": 461.12,
+          "y": 401.12,
+          "source": "endless_wave",
+          "enemy": "carrier"
+        },
+        {
+          "kind": "power",
+          "quantity": 0,
+          "x": 460.8,
+          "y": 400.8,
+          "source": "endless_wave",
+          "enemy": "carrier"
+        },
+        {
+          "kind": "dna",
+          "quantity": 0,
+          "x": 460.8,
+          "y": 400.8,
+          "source": "endless_wave",
+          "enemy": "carrier"
+        },
+        {
+          "kind": "scrap",
+          "quantity": 1,
+          "x": 466.4190613131559,
+          "y": 404.9699934025157,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "power",
+          "quantity": 0,
+          "x": 466.0990613131559,
+          "y": 404.6499934025157,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "dna",
+          "quantity": 0,
+          "x": 466.0990613131559,
+          "y": 404.6499934025157,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "scrap",
+          "quantity": 1,
+          "x": 465.87,
+          "y": 401.12,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "power",
+          "quantity": 0,
+          "x": 465.55,
+          "y": 400.8,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "dna",
+          "quantity": 0,
+          "x": 465.55,
+          "y": 400.8,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "scrap",
+          "quantity": 1,
+          "x": 465.50842777942864,
+          "y": 402.9377463037342,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "power",
+          "quantity": 0,
+          "x": 465.18842777942865,
+          "y": 402.6177463037342,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        },
+        {
+          "kind": "dna",
+          "quantity": 0,
+          "x": 465.18842777942865,
+          "y": 402.6177463037342,
+          "source": "carrier_spawn",
+          "enemy": "skitter"
+        }
+      ]
+    },
+    {
+      "label": "old-quantities-and-pickup-bundles-Continue-future-dividend-and-native-Replay",
+      "restored": {
+        "craft": {
+          "scraps": 5000,
+          "powerCells": 75,
+          "medkits": 3
+        },
+        "cartridges": 11,
+        "pickups": [
+          {
+            "kind": "scrap",
+            "quantity": 11,
+            "x": 420,
+            "y": 420
+          },
+          {
+            "kind": "scrap",
+            "quantity": 0,
+            "x": 425,
+            "y": 420
+          },
+          {
+            "kind": "power",
+            "quantity": 1,
+            "x": 430,
+            "y": 420
+          }
+        ]
+      },
+      "bank": {
+        "craft": {
+          "scraps": 5012,
+          "powerCells": 75,
+          "medkits": 3
+        },
+        "milestone": 21
+      },
+      "replay": {
+        "craft": {
+          "scraps": 0,
+          "powerCells": 0,
+          "medkits": 3
+        },
+        "cartridges": 8
+      },
+      "identity": [
+        "valley",
+        430012
+      ]
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

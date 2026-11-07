@@ -1,0 +1,23 @@
+{
+  "description": "Mean Rec.709-weighted display RGB (0–255), fixed overview ground crop x=0..1279 y=430..699; comparative metric, not a substitute for visual inspection.",
+  "metrics": [
+    {
+      "arena": "valley",
+      "beforeLuma": 52.10862449941388,
+      "afterLuma": 20.041381142356588,
+      "reductionPercent": 61.539224389655466
+    },
+    {
+      "arena": "crater",
+      "beforeLuma": 59.714571178927955,
+      "afterLuma": 17.70454296874729,
+      "reductionPercent": 70.35138556769063
+    },
+    {
+      "arena": "ridges",
+      "beforeLuma": 65.73831558603015,
+      "afterLuma": 17.511895734376377,
+      "reductionPercent": 73.36120407365932
+    }
+  ]
+}

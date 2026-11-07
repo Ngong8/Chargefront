@@ -1,0 +1,116 @@
+{
+  "browser": "Edge",
+  "scope": "lifecycle",
+  "cases": [
+    {
+      "label": "failed-location-retry-exact-queue-boss-and-clear",
+      "types": [
+        "skitter",
+        "brute",
+        "spitter",
+        "runner",
+        "carrier",
+        "tunneler",
+        "boss",
+        "spitter",
+        "skitter",
+        "spitter",
+        "spitter",
+        "skitter",
+        "shielded",
+        "skitter",
+        "runner",
+        "support",
+        "skitter",
+        "spitter",
+        "support",
+        "tunneler",
+        "skitter",
+        "brute",
+        "skitter",
+        "spitter",
+        "shielded",
+        "spitter",
+        "skitter",
+        "skitter",
+        "tunneler"
+      ],
+      "expected": [
+        "skitter",
+        "brute",
+        "spitter",
+        "runner",
+        "carrier",
+        "tunneler",
+        "boss",
+        "spitter",
+        "skitter",
+        "spitter",
+        "spitter",
+        "skitter",
+        "shielded",
+        "skitter",
+        "runner",
+        "support",
+        "skitter",
+        "spitter",
+        "support",
+        "tunneler",
+        "skitter",
+        "brute",
+        "skitter",
+        "spitter",
+        "shielded",
+        "spitter",
+        "skitter",
+        "skitter",
+        "tunneler"
+      ],
+      "invalid": [],
+      "rest": 12,
+      "active": false,
+      "boss": true
+    },
+    {
+      "label": "Carrier-live-count-and-pressure-gate",
+      "children": 3,
+      "active": true,
+      "alive": 3,
+      "before": 12,
+      "after": 12,
+      "cap": 12,
+      "remaining": {
+        "count": 12,
+        "cost": 12,
+        "counts": {
+          "skitter": 12
+        }
+      }
+    },
+    {
+      "label": "unseen-stalled-outlier-no-kill-or-resource-reward",
+      "removed": true,
+      "active": false,
+      "before": {
+        "kills": 2,
+        "pickups": 0
+      },
+      "after": {
+        "kills": 2,
+        "pickups": 0
+      }
+    },
+    {
+      "label": "survival-debrief-active-wave-and-replay-no-world-rebuild",
+      "wave": 9,
+      "cleared": 8,
+      "identity": [
+        "valley",
+        430012
+      ],
+      "passed": true
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

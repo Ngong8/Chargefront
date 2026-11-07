@@ -1,0 +1,361 @@
+{
+  "browser": "Edge",
+  "cases": [
+    {
+      "label": "fresh-v2-custom-loadout-native-early-wave",
+      "seconds": 26.502,
+      "arena": "ridges",
+      "worldSeed": 1269707506,
+      "encounterSeed": 1269707506,
+      "configuration": {
+        "player": {
+          "slot1": "arc",
+          "slot2": "plasma",
+          "ability": "medic_pulse"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "plasma",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "escort"
+      },
+      "kills": 8,
+      "cartridges": 8,
+      "craft": {
+        "scraps": 0,
+        "powerCells": 0,
+        "medkits": 3
+      }
+    },
+    {
+      "label": "high-uint32-active-and-intermission-Continue-exact-spawn-drops-offers",
+      "mutator": "corrosive",
+      "first": {
+        "actors": [
+          {
+            "type": "skitter",
+            "home": [
+              516.5882450276929,
+              302.11913502753896
+            ],
+            "focus": "KADE"
+          },
+          {
+            "type": "brute",
+            "home": [
+              312.7045618959321,
+              344.9611571112585
+            ],
+            "focus": "COMMANDER"
+          },
+          {
+            "type": "support",
+            "home": [
+              324.8018935013565,
+              347.46487553137814
+            ],
+            "focus": "COMMANDER"
+          }
+        ],
+        "drops": [
+          {
+            "kind": "scrap",
+            "quantity": 5,
+            "x": 325.4719214681539,
+            "y": 348.70531856948037
+          }
+        ],
+        "offers": [
+          "r_reload:Reload time −15% (player + squad)",
+          "r_sarray:50% less damage for first 10s of each wave",
+          "r_stam:Sprint drain −25%, regen +25%"
+        ],
+        "decisionRng": 2151846795,
+        "eventRng": 2081823097,
+        "craft": {
+          "scraps": 5000,
+          "powerCells": 76,
+          "medkits": 3
+        },
+        "rest": 8,
+        "kills": 3
+      },
+      "passed": true
+    },
+    {
+      "label": "native-GameOver-debrief-and-Replay-fresh-encounters-same-world-deployment",
+      "wave": 13,
+      "cleared": 12,
+      "replayCount": 1,
+      "encounterSeed": 1505728296,
+      "sequence": [
+        "assault",
+        "rush",
+        "airborne",
+        "pressure",
+        "rush",
+        "tactical",
+        "assault",
+        "rush",
+        "tactical",
+        "airborne",
+        "assault",
+        "pressure"
+      ],
+      "geometryRetained": true
+    },
+    {
+      "label": "legacy-v1-roster-active-mutator-and-wallet-retained",
+      "expected": [
+        "skitter",
+        "drone"
+      ],
+      "types": [
+        "skitter",
+        "drone"
+      ],
+      "mutator": "storm",
+      "passed": true
+    },
+    {
+      "label": "normal-speed-native-Director-advancement-and-pressure",
+      "arena": "valley",
+      "seed": 430012,
+      "configuration": {
+        "player": {
+          "slot1": "arc",
+          "slot2": "plasma",
+          "ability": "medic_pulse"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "plasma",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "escort"
+      },
+      "family": "tactical",
+      "mutator": "corrosive",
+      "roles": {
+        "skitter": 8,
+        "support": 2,
+        "artillery": 2,
+        "spitter": 2,
+        "screecher": 2,
+        "shielded": 8,
+        "carrier": 2,
+        "drone": 3,
+        "brute": 4,
+        "runner": 1,
+        "tunneler": 2
+      },
+      "cap": 17,
+      "threat": 41,
+      "first": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "start": 152.22838962031526,
+          "after": 32.38838962031939,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 1,
+          "type": "support",
+          "start": 69.77334071090445,
+          "after": 8.621340710901187,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 2,
+          "type": "skitter",
+          "start": 105.31268270500004,
+          "after": 8.432682704993145,
+          "attacks": 0,
+          "inside": false
+        }
+      ],
+      "maxLive": 12,
+      "maxThreat": 29
+    },
+    {
+      "label": "normal-speed-native-Director-advancement-and-pressure",
+      "arena": "crater",
+      "seed": 430013,
+      "configuration": {
+        "player": {
+          "slot1": "rifle",
+          "slot2": "scatter",
+          "ability": "surge"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "plasma",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "escort"
+      },
+      "family": "airborne",
+      "mutator": "storm",
+      "roles": {
+        "skitter": 7,
+        "drone": 12,
+        "artillery": 2,
+        "carrier": 2,
+        "support": 2,
+        "screecher": 5,
+        "spitter": 3,
+        "runner": 2,
+        "brute": 1
+      },
+      "cap": 17,
+      "threat": 41,
+      "first": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "start": 152.22838962031526,
+          "after": 27.348389620319338,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 1,
+          "type": "drone",
+          "start": 69.77334071090445,
+          "after": 8.621340710906779,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 2,
+          "type": "artillery",
+          "start": 105.31268270500004,
+          "after": 49.36868270498901,
+          "attacks": 0,
+          "inside": false
+        }
+      ],
+      "maxLive": 12,
+      "maxThreat": 29
+    },
+    {
+      "label": "normal-speed-native-Director-advancement-and-pressure",
+      "arena": "ridges",
+      "seed": 430014,
+      "configuration": {
+        "player": {
+          "slot1": "arc",
+          "slot2": "plasma",
+          "ability": "medic_pulse"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "plasma",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "escort"
+      },
+      "family": "pressure",
+      "mutator": "corrosive",
+      "roles": {
+        "skitter": 3,
+        "spitter": 12,
+        "drone": 10,
+        "screecher": 3,
+        "artillery": 2,
+        "carrier": 2,
+        "support": 2,
+        "brute": 1,
+        "shielded": 1
+      },
+      "cap": 17,
+      "threat": 41,
+      "first": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "start": 152.22838962031526,
+          "after": 30.988389620319364,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 1,
+          "type": "spitter",
+          "start": 69.77334071090445,
+          "after": 8.492540710912708,
+          "attacks": 0,
+          "inside": false
+        },
+        {
+          "id": 2,
+          "type": "drone",
+          "start": 105.31268270500004,
+          "after": 17.280682704999936,
+          "attacks": 0,
+          "inside": false
+        }
+      ],
+      "maxLive": 9,
+      "maxThreat": 17
+    },
+    {
+      "label": "24-actor-native-CPU-smoke-not-GPU-certification",
+      "actors": 24,
+      "frames": 224,
+      "averageMs": 17.8,
+      "p95Ms": 18.5,
+      "worstMs": 18.7,
+      "counters": {
+        "shadowRefresh": 41
+      },
+      "cost": {
+        "calls": 5784,
+        "ms": 55.39999973773956
+      },
+      "perActorMs": 0.009578146565999233
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

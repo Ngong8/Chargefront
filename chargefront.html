@@ -226,11 +226,13 @@
 <script src="src/world/facility.js"></script>
 <script src="src/world/environment-placement.js"></script>
 <script src="src/world/campaign-terrain.js"></script>
+<script src="src/world/endless-terrain.js"></script>
 <script src="src/world/campaign-exterior.js"></script>
 <script src="src/combat.js"></script>
 <script src="src/progression.js"></script>
 <script src="src/results.js"></script>
 <script src="src/enemy-tactics.js"></script>
+<script src="src/endless-director.js"></script>
 <script src="src/relay-routing.js"></script>
 <script src="src/fps-reload.js"></script>
 <script src="src/presentation-ribbons.js"></script>
@@ -639,13 +641,16 @@ const campaignTerrain = ChargefrontCampaignTerrain.create({
 });
 let campaignGroundGrid = null;
 let campaignRearGrid = null;
+let endlessGroundGrid = null;
 const campaignExterior=ChargefrontCampaignExterior.create({THREE,terrainHeight,removeSolids:solids=>{
     for(const solid of solids){const i=SOLIDS.indexOf(solid);if(i>=0)SOLIDS.splice(i,1);for(const relay of relays){const j=relay.siteSolids.indexOf(solid);if(j>=0)relay.siteSolids.splice(j,1);}}
     solidGridCount=-1;
 }});
 function worldMaxY(x, margin=2) { return (mode==='campaign'?ChargefrontCampaignTerrain.maxY(x):WORLD)-margin; }
 function terrainHeight(x, y, routeDistance) {
-    if (mode === 'endless') return endlessTerrainHeight(x, y);
+    if (mode === 'endless') return endlessGroundGrid
+        ? ChargefrontCampaignTerrain.sampleGrid(endlessGroundGrid,x,y)
+        : endlessTerrainHeight(x,y);
     if (y>WORLD) return campaignRearGrid
         ? ChargefrontCampaignTerrain.sampleGrid(campaignRearGrid,x,y-WORLD,WORLD,320,100,40)
         : ChargefrontCampaignTerrain.rearHeight(x,y,terrainHeight(x,WORLD));
@@ -1109,7 +1114,7 @@ function buildTerrainBoundary(material) {
     const maxY=mode==='campaign'?ChargefrontCampaignTerrain.REAR.end:WORLD, rows=Math.round((maxY+margin*2)/step);
     const vertexCount = (cells + 1) * (rows + 1);
     const positions = new Float32Array(vertexCount * 3), uvs = new Float32Array(vertexCount * 2);
-    const colors=mode==='campaign'?new Float32Array(vertexCount*3):null;
+    const colors=new Float32Array(vertexCount*3);
     let vertex = 0;
     for (let iy = 0; iy <= rows; iy++) {
         const y = -margin + iy * step;
@@ -1125,7 +1130,8 @@ function buildTerrainBoundary(material) {
             positions[vertex * 3 + 2] = terrainHeight(edgeX, edgeY) + rise;
             uvs[vertex * 2] = x / TERRAIN_TEXTURE_WORLD_SIZE;
             uvs[vertex * 2 + 1] = y / TERRAIN_TEXTURE_WORLD_SIZE;
-            if(colors)colors.set(campaignTerrain.color(edgeX,edgeY,distToRoute(edgeX,edgeY)),vertex*3);
+            colors.set(mode==='campaign'?campaignTerrain.color(edgeX,edgeY,distToRoute(edgeX,edgeY)):
+                ChargefrontEndlessTerrain.color(endlessRun.arena.id,edgeX,edgeY,positions[vertex*3+2]),vertex*3);
         }
     }
     const indices = [];
@@ -1150,17 +1156,20 @@ function buildTerrainBoundary(material) {
 function buildTerrain() {
     campaignGroundGrid = null;
     campaignRearGrid = null;
+    endlessGroundGrid = null;
     const seg = 320;
     const geo = new THREE.PlaneGeometry(WORLD, WORLD, seg, seg);
     const pos = geo.attributes.position;
     const uvs = new Float32Array(pos.count * 2);
-    const groundColors = mode === 'campaign' ? new Float32Array(pos.count * 3) : null;
+    const campaignGround = mode === 'campaign';
+    const groundColors = new Float32Array(pos.count * 3);
     for (let i = 0; i < pos.count; i++) {
         const wx = pos.getX(i) + WORLD / 2, wy = pos.getY(i) + WORLD / 2;
-        const routeDistance = groundColors ? distToRoute(wx, wy) : null;
+        const routeDistance = campaignGround ? distToRoute(wx, wy) : null;
         const h = terrainHeight(wx, wy, routeDistance);
         pos.setZ(i, h);
-        if (groundColors) groundColors.set(campaignTerrain.color(wx, wy, routeDistance), i * 3);
+        groundColors.set(campaignGround ? campaignTerrain.color(wx, wy, routeDistance) :
+            ChargefrontEndlessTerrain.color(endlessRun.arena.id,wx,wy,h), i * 3);
         /* world-space UVs: u/v = world coords / tile size, so the seamless tile
            repeats evenly over the whole map with no per-chunk seams */
         uvs[i * 2] = wx / TERRAIN_TEXTURE_WORLD_SIZE;
@@ -1169,10 +1178,16 @@ function buildTerrain() {
     geo.computeVertexNormals();
     geo.setAttribute('uv', new THREE.BufferAttribute(uvs, 2));
     if (groundColors) geo.setAttribute('color', new THREE.BufferAttribute(groundColors, 3));
-    /* Retain the source aggregate pattern. Campaign colors mark worked routes
-       and relay soil identities, not broad low-frequency noise/dark blobs. */
+    /* Surface zoning uses the existing vertices and aggregate tile in both
+       modes. It adds no overlay meshes, collision or runtime terrain updates. */
     const m = new THREE.Mesh(geo, new THREE.MeshStandardMaterial({ color: 0xffffff, roughness: 0.96, metalness: 0.0, vertexColors: !!groundColors }));
     m.name = mode === 'campaign' ? 'CampaignGround' : 'EndlessGround';
+    if (!campaignGround) {
+        // Low violet/magenta ground-only bounce preserves detail in night
+        // shadows without flattening the contours into a sunlit neutral floor.
+        m.material.emissive.setRGB(...ChargefrontEndlessTerrain.profiles[endlessRun.arena.id].fill);
+        m.material.emissiveIntensity = .25;
+    }
     /* Purple-spot terrain texture.  The fallback is deliberately deterministic
        and uses many small spots, so a failed file:///blob: load never produces
        the old oversized random circles. */
@@ -1200,10 +1215,9 @@ function buildTerrain() {
         cv.width = cv.height = sourceSize * 2;
         const g = cv.getContext('2d');
         g.imageSmoothingEnabled = false;
-        // Campaign's worked industrial soil uses the existing credited artwork
-        // as neutral aggregate; per-vertex zoning supplies restrained earth tones.
-        // Endless retains its original tile and material exactly.
-        if (groundColors) g.filter = 'grayscale(1) brightness(1.8)';
+        // Campaign keeps its accepted neutral aggregate. Endless retains a
+        // little of the source's violet hue beneath its arena-specific zoning.
+        g.filter = campaignGround ? 'grayscale(1) brightness(1.8)' : 'grayscale(.7) brightness(1.65)';
         g.drawImage(image, 0, 0, sourceSize, sourceSize);
         g.save(); g.translate(sourceSize * 2, 0); g.scale(-1, 1);
         g.drawImage(image, 0, 0, sourceSize, sourceSize); g.restore();
@@ -1267,6 +1281,7 @@ function buildTerrain() {
     };
     const fallbackTexture = makeSpotTexture();
     m.material.map = fallbackTexture;
+    if (!campaignGround) m.material.emissiveMap = fallbackTexture;
     m.material.needsUpdate = true;
     const terrainTextureUrl = TERRAIN_TEXTURE_EMBEDDED_URL;
     new THREE.TextureLoader().load(
@@ -1274,12 +1289,14 @@ function buildTerrain() {
         (terrainTex) => {
             fallbackTexture.dispose();
             m.material.map = normalizeTerrainTexture(terrainTex);
+            if (!campaignGround) m.material.emissiveMap = m.material.map;
             m.material.needsUpdate = true;
         },
         undefined,
         () => { /* PNG failed to load on file:// — keep the procedural spot texture already applied */ }
     );
-    if(groundColors) {
+    if (!campaignGround) endlessGroundGrid = pos.array;
+    if(campaignGround) {
         campaignGroundGrid=pos.array;
         // Typed data only here: additional Three constructors must wait until
         // legacy scenery/facility population has consumed its accepted stream.
@@ -1295,7 +1312,7 @@ function buildTerrain() {
     m.receiveShadow = true;
     scene.add(m);
     terrain = m;
-    if (groundColors) campaignGroundGrid = pos.array;
+    if (campaignGround) campaignGroundGrid = pos.array;
 }
 
 function buildCampaignRearGround() {
@@ -3568,6 +3585,8 @@ const ENDLESS_ARENAS = [
 const endlessRun = {
     wave: 0, waveActive: false, waveT: 0,
     budgetLeft: 0, spawnT: 0, alive: 0, bossSpawned: false,
+    directorVersion: 0, intermissionT: 0,
+    encounterSeed: 0, replayCount: 0, decisionRng: 0, eventRng: 0,
     dna: 0, dnaBanked: 0, milestone: 0, upgrades: [],
     /* ladder / relay-upgrade state (reset each run in resetEndlessRun) */
     dnaRegen: 0, hunterMult: 0,
@@ -3587,22 +3606,7 @@ let endlessUpgradeOffers = [];           // 1-3 upgrade offers shown in the term
 let endlessHeldDone = false;             // debounce the hold-E action
 
 function endlessTerrainHeight(x, y) {
-    const dx = x - ENDLESS_CENTER.x, dy = y - ENDLESS_CENTER.y;
-    const d = Math.hypot(dx, dy);
-    let h = 0;
-    h += LJS.noise2D(x * 0.006, y * 0.006) * 2.6;
-    h += LJS.noise2D(x * 0.02 + 9, y * 0.02 + 4) * 0.9;
-    h += LJS.noise2D(x * 0.09 + 30, y * 0.09 + 17) * 0.3;
-    const arena = endlessRun.arena || ENDLESS_ARENAS[0];
-    if (arena.id === 'crater') h -= gaussWeight(x, y, ENDLESS_CENTER.x, ENDLESS_CENTER.y, 135) * 18;
-    else if (arena.id === 'ridges') h += Math.sin((x + y) * 0.035) * 8 + Math.sin((x - y) * 0.055) * 4;
-    /* valley bowl — rolling floor near the centre, steep walls past ~185 m */
-    const rim = smooth((d - 185) / 65);
-    h += rim * rim * 120 + rim * 8;
-    /* flatten a clear pad under the relay + vial so the arena centre is walkable */
-    const pad = gaussWeight(x, y, ENDLESS_CENTER.x, ENDLESS_CENTER.y, 70);
-    if (pad > 0.01) h *= (1 - pad);
-    return clamp(h, 0, 130);
+    return ChargefrontEndlessTerrain.height((endlessRun.arena || ENDLESS_ARENAS[0]).id,x,y);
 }
 
 /* ── endless relay: indestructible landmark + upgrade terminal (roguelike meta) ── */
@@ -3904,7 +3908,7 @@ function refreshEndlessUpgradeOffers() {
     let total = weighted.reduce((s, x) => s + x.w, 0);
     const offers = [];
     while (offers.length < 3 && weighted.length > 0 && total > 0) {
-        let r = Math.random() * total, i = 0;
+        let r = endlessRandom("decisionRng") * total, i = 0;
         for (; i < weighted.length; i++) { r -= weighted[i].w; if (r <= 0) break; }
         if (i >= weighted.length) i = weighted.length - 1;
         offers.push(weighted[i].u);
@@ -3936,15 +3940,57 @@ function buyEndlessUpgrade(i) {
     playFileSfx('accessOk', 0.6);
 }
 /* ── waves ── */
+const endlessDirectorState = { plan: null, auditT: 0, failedSpawns: 0, retired: 0 };
+function endlessRandom(field = 'eventRng') {
+    // Same LCG as seedRandom, with explicit serializable state. Cosmetic/AI
+    // randomness never consumes these boundary-owned decision/material streams.
+    const state = (Math.imul(endlessRun[field] >>> 0,1664525)+1013904223) >>> 0;
+    endlessRun[field] = state;
+    return state/4294967296;
+}
+function endlessRand(a = 1,b = 0) { return b+endlessRandom()*(a-b); }
+function initializeEndlessVariation(saved = null,replay = 0) {
+    const validState = value => Number.isInteger(value) && value >= 0 && value <= 4294967295;
+    if (!saved) {
+        endlessRun.directorVersion = 2;
+        endlessRun.replayCount = replay;
+        endlessRun.encounterSeed = ChargefrontEndlessDirector.replaySeed(endlessRun.worldSeed,replay);
+    } else if (!validState(saved.run.encounterSeed)) {
+        // Old saves cannot restore a global RNG that was never serialized.
+        // Adopt a deterministic continuation without changing their v1 roster.
+        endlessRun.encounterSeed = endlessRun.worldSeed >>> 0;
+    }
+    if (!saved || !validState(saved.run.decisionRng)) endlessRun.decisionRng = ChargefrontEndlessDirector.replaySeed(endlessRun.encounterSeed,0xd31+endlessRun.wave);
+    if (!saved || !validState(saved.run.eventRng)) endlessRun.eventRng = ChargefrontEndlessDirector.replaySeed(endlessRun.encounterSeed,0xe71+endlessRun.wave);
+    endlessDirectorState.plan = null;
+}
+function endlessPlan() {
+    const version = endlessRun.directorVersion === 2 ? 2 : 1;
+    if (!endlessDirectorState.plan || endlessDirectorState.plan.wave !== Math.max(1,endlessRun.wave) || endlessDirectorState.plan.version !== version) {
+        endlessDirectorState.plan = ChargefrontEndlessDirector.plan(endlessRun.wave, endlessRun.encounterSeed,version);
+        // Legacy v1 saves are wave-start boundaries, not partly emitted queues.
+        // Replan them once; new saves replay the exact seeded plan and mutator.
+        if (endlessRun.waveActive && ![1,2].includes(endlessRun.directorVersion)) {
+            endlessRun.budgetLeft = endlessDirectorState.plan.queue.length;
+            endlessRun.spawnT = endlessDirectorState.plan.initialDelay;
+            endlessRun.directorVersion = 1;
+        }
+    }
+    return endlessDirectorState.plan;
+}
 function startEndlessWave() {
-    if (endlessRun.waveActive) return;
+    if (endlessRun.waveActive || endlessRun.intermissionT > 0) return;
     endlessRun.wave++;
     endlessRun.waveActive = true;
     endlessRun.waveT = 0;
-    endlessRun.budgetLeft = 6 + endlessRun.wave * 5;
-    endlessRun.spawnT = 0.8;
+    const plan = endlessPlan();
+    endlessRun.directorVersion = plan.version;
+    endlessRun.budgetLeft = plan.queue.length;
+    endlessRun.spawnT = plan.initialDelay;
+    endlessRun.alive = 0;
     endlessRun.bossSpawned = false;
-    endlessRun.mutator = ChargefrontCombat.chooseMutator(endlessRun.wave, endlessRun.previousMutatorId, ENDLESS_MUTATORS);
+    endlessRun.mutator = ChargefrontCombat.chooseMutator(endlessRun.wave, endlessRun.previousMutatorId,
+        ChargefrontEndlessDirector.eligibleMutators(ENDLESS_MUTATORS,endlessConfiguration),() => endlessRandom('decisionRng'));
     endlessRun.previousMutatorId = endlessRun.mutator?.id || null;
     if (endlessRun.mutator?.id === 'storm') {
         player.shield = 0;
@@ -3956,71 +4002,80 @@ function startEndlessWave() {
     if (endlessRun.shieldArrayOwned) endlessRun.shieldArrayT = 10;
     endlessRun.bastionUsed = false;
     saveEndlessBoundary(); // post-refresh, pre-spawn: replaying this boundary never grants refresh/rewards twice
-    music.play(endlessRun.wave % 5 === 0 || endlessRun.wave % 8 === 0 ? 'combat' : 'relayCombat', 0.85);   // corrupt_data_stream for drone swarm / Harvester waves
-    if (!endlessRun.mutator) notify('WAVE ' + endlessRun.wave + (endlessRun.wave % 5 === 0 ? ' — DRONE SWARM' : ''), '#ffcc66');
+    music.play(plan.pattern === 'airborne' || endlessRun.wave % 8 === 0 ? 'combat' : 'relayCombat', 0.85);   // existing airborne / Harvester cue follows the selected family
+    if (!endlessRun.mutator) notify('WAVE ' + endlessRun.wave + ' — ' + plan.pattern.toUpperCase(), '#ffcc66');
     playFileSfx('bossRoar', 0.5, 1, ENDLESS_RELAY_POS.x, ENDLESS_RELAY_POS.y);
 }
 function endlessDiff() {
     return Math.min(2.2, Math.floor((endlessRun.wave - 1) / 3) * 0.35);
 }
-function endlessWaveType(diff) {
-    const roll = Math.random(), w = endlessRun.wave;
-    if (w % 5 === 0) return 'drone';            // every 5th wave is a drone swarm
-    if (w >= 10 && roll < 0.08) return 'artillery';
-    if (w >= 8 && roll < 0.16) return 'support';
-    if (w >= 6 && roll < 0.27) return 'carrier';
-    if (w >= 4 && roll < 0.40) return 'tunneler';
-    if (w >= 6 && roll < 0.48) return 'screecher';
-    if (w >= 4 && roll < 0.62) return 'spitter';
-    if (w >= 2 && roll < 0.76) return 'brute';
-    if (w >= 3 && roll < 0.88) return 'runner';
-    return 'skitter';
-}
 function spawnEndlessGroup(center, rMin, rMax, n, scale) {
+    const plan = endlessPlan();
+    let spawned = 0;
     for (let i = 0; i < n; i++) {
-        if (enemies.length >= 80) return;
-        const p = findSpawnPoint(center, rMin, rMax, 4.5);
-        if (!p) continue;
-        const type = endlessWaveType(endlessDiff());
-        requestEncounter('endless_wave', [type], { essential: true });
+        const index = plan.queue.length - endlessRun.budgetLeft;
+        const type = plan.queue[index];
+        if (!type || (type === 'boss' && endlessRun.waveT < 6)) break;
+        const source = type === 'boss' ? 'endless_boss' : 'endless_wave';
+        if (!requestEncounter(source, [type], { essential: true })) break;
+        const p = findEndlessSpawnPoint(center, rMin, rMax, 4.5, { radius: type === 'boss' ? 3.4 : 1.4 });
+        if (!p) { endlessDirectorState.failedSpawns++; break; }
         const e = new Infested(type, p, player);
-        recordEncounterSpawn(e, 'endless_wave');
-        e.setSpawnScale(scale);
+        recordEncounterSpawn(e, source);
+        e.setSpawnScale(type === 'boss' ? 1 : scale);
         resolveCircle(e.pos, 0.6);
-        if (squadMembers.length && Math.random() < 0.35) {
-            const sq = squadMembers[randInt(squadMembers.length)];
-            if (sq && !sq.downed) e.focus = sq;
+        const living = squadMembers.filter(m => !m.downed && !m.dead);
+        if (living.length && endlessRandom() < 0.35) e.focus = living[Math.floor(endlessRandom()*living.length)];
+        if (type === 'boss') {
+            endlessRun.bossSpawned = true;
+            notify('THE HARVESTER JOINS WAVE ' + endlessRun.wave, '#ff55ff');
+        }
+        endlessRun.budgetLeft--; spawned++;
+    }
+    return spawned;
+}
+function auditEndlessStragglers(dt) {
+    endlessDirectorState.auditT -= dt;
+    if (endlessDirectorState.auditT > 0) return;
+    endlessDirectorState.auditT = 2;
+    for (const e of [...enemies]) {
+        if (e.dead || e.dying || !['endless_wave','endless_boss','carrier_spawn'].includes(e.encounterSource)) continue;
+        const valid = Number.isFinite(e.pos.x) && Number.isFinite(e.pos.y) && e.pos.x >= 0 && e.pos.x <= WORLD && e.pos.y >= 0 && e.pos.y <= WORLD;
+        const previous = e.endlessProgress || { x:e.pos.x, y:e.pos.y, idle:0 };
+        const protectedContact = e.canSeeTarget || e.memoryT > 0 || e.armed || e.unburrowing || e.skySpawnT > 0 || Math.hypot(e.pos.x-400,e.pos.y-400) < 20;
+        const idle = protectedContact || Math.hypot(e.pos.x-previous.x,e.pos.y-previous.y) > .6 ? 0 : previous.idle + 2;
+        e.endlessProgress = { x:e.pos.x, y:e.pos.y, idle };
+        // Never retire a fighting/visible contact, a legitimate relay arrival or
+        // an ordinary stationary ranged role. Only unrecoverable unseen outliers
+        // that have repeatedly failed CP2-R's existing replan path may time out.
+        if (!valid || (idle >= 90 && e.advanceReplans >= 3 && !protectedContact && !isObviousSpawnPopIn(e.pos.x,e.pos.y,95))) {
+            e.destroy(true); endlessDirectorState.retired++;
         }
     }
 }
 function updateEndlessWaves(dt) {
-    if (!endlessRun.waveActive) return;
+    if (!endlessRun.waveActive) { endlessRun.intermissionT = Math.max(0,endlessRun.intermissionT-dt); return; }
+    const plan = endlessPlan();
     endlessRun.waveT += dt;
+    auditEndlessStragglers(dt);
     if (endlessRun.budgetLeft > 0) {
         endlessRun.spawnT -= dt;
         if (endlessRun.spawnT <= 0) {
-            endlessRun.spawnT = clamp(14 / Math.max(3, endlessRun.budgetLeft), 0.8, 2.6);
-            const n = Math.min(endlessRun.budgetLeft, 1 + randInt(2));
-            const diff = endlessDiff();
-            spawnEndlessGroup(ENDLESS_RELAY_POS, 38, 210, n, 1 + diff * 0.35);
-            endlessRun.budgetLeft -= n;
+            const index = plan.queue.length-endlessRun.budgetLeft;
+            const recovering = player.hp/player.maxHp < .35 || squadMembers.filter(m=>m.downed).length >= 2;
+            const n = Math.min(endlessRun.budgetLeft,recovering?1:plan.batchSize);
+            const spawned = spawnEndlessGroup(ENDLESS_RELAY_POS, plan.minRadius, plan.maxRadius, n, 1 + endlessDiff() * 0.35);
+            // Missed locations/cap waits retain their exact queued archetypes.
+            // One bounded retry per second, no catch-up burst after a slow frame.
+            endlessRun.spawnT = spawned ? (plan.delays[index] || 2)*(recovering?1.6:1) : 1;
         }
-    }
-    /* a Harvester joins every 8th wave */
-    if (endlessRun.wave % 8 === 0 && !endlessRun.bossSpawned && endlessRun.waveT > 3) {
-        endlessRun.bossSpawned = true;
-        const bp = findSpawnPoint(ENDLESS_RELAY_POS, 70, 120, 8) || LJS.vec2(400, 210);
-        requestEncounter('endless_boss', ['boss'], { essential: true });
-        const be = new Infested('boss', bp, player);
-        recordEncounterSpawn(be, 'endless_boss');
-        be.setSpawnScale(1.0);
-        notify('THE HARVESTER JOINS WAVE ' + endlessRun.wave, '#ff55ff');
     }
     let alive = 0;
     for (const e of enemies) if (!e.dead && !e.dying) alive++;
     endlessRun.alive = alive;
     if (endlessRun.budgetLeft <= 0 && alive === 0) {
         endlessRun.waveActive = false;
+        endlessRun.intermissionT = plan.rest;
         music.play('safe', 0.7);
         refreshEndlessUpgradeOffers();   // new random offers for this intermission
         /* COMBAT MEDICS (relay) — clearing a wave patches up the squad */
@@ -4032,7 +4087,7 @@ function updateEndlessWaves(dt) {
         }
         if (endlessRun.supplyDrop > 0) {
             for (let i = 0; i < endlessRun.supplyDrop; i++) {
-                const a = rand(TAU), r = rand(4, 12);
+                const a = endlessRand(TAU), r = endlessRand(4, 12);
                 spawnPickup(LJS.vec2(ENDLESS_RELAY_POS.x + Math.cos(a) * r, ENDLESS_RELAY_POS.y + Math.sin(a) * r), 'scrap');
             }
             notify('SUPPLY DROP — +' + endlessRun.supplyDrop + ' SCRAP', '#ffcc66');
@@ -4063,7 +4118,9 @@ function updateEndlessInteract(dt) {
     interactProgress = 0;
     if (dRelay < 8) {
         if (endlessRun.waveActive) {
-            interactPrompt = 'WAVE ' + endlessRun.wave + ' ACTIVE — ' + endlessRun.alive + ' HOSTILES LEFT';
+            interactPrompt = 'WAVE ' + endlessRun.wave + ' — ' + endlessRun.alive + ' ACTIVE / ' + endlessRun.budgetLeft + ' INCOMING';
+        } else if (endlessRun.intermissionT > 0) {
+            interactPrompt = 'RECOVERY — ' + Math.ceil(endlessRun.intermissionT) + 's    [U] UPGRADES';
         } else {
             interactPrompt = 'HOLD [E] — START NEXT WAVE    [U] UPGRADES' + (endlessRun.extractionReady ? '  [K] EXTRACT' : '');
             if (heldInteract > 1.0 && !endlessHeldDone) { endlessHeldDone = true; startEndlessWave(); }
@@ -4091,8 +4148,9 @@ function bankDna() {
             g.apply();
             notify('MILESTONE ' + ms + ' — ' + g.name.toUpperCase(), '#88ffcc');
         }
-        const scrapBonus = Math.round((6 + endlessRun.milestone * 2) * (endlessRun.dnaSyncMult || 1));
-        const cellBonus = endlessRun.milestone % 2 === 0 ? Math.round(1 * (endlessRun.dnaSyncMult || 1)) : 0;
+        const dividend = ChargefrontProgression.endlessDnaReward(oldMilestone,endlessRun.milestone,endlessRun.dnaSyncMult || 1);
+        const scrapBonus = dividend.scrap;
+        const cellBonus = dividend.cells;
         craft.scraps += scrapBonus;
         if (cellBonus) craft.powerCells += cellBonus;
         notify('MILESTONE REWARD: +' + scrapBonus + ' scrap' + (cellBonus ? '  +' + cellBonus + ' cell' : ''), '#ffcc66');
@@ -4178,7 +4236,7 @@ function resetEndlessRun() {
     player.speed = 5.2;   // endless walk = 5.2 * 1.3 (movePlayer endlessBoost), sprint ≈ 11
     player.dmgTakenMult = 1; player.staminaDrainMult = 1; player.staminaRegenMult = 1; player.critChance = 0; player.dnaDelayT = 0; player.acidDelayT = 0;
     player.reloadMult = 1; player.jumpMult = 1; player.grenadeDmgMult = 1; player.critMult = 2; player.abilityCd = 0;player.bulwarkT=0;
-    playerCombat.reset({ loadout: endlessConfiguration.player, cartridges: 8 }); setViewmodelWeapon(player.weapon);
+    playerCombat.reset({ loadout: endlessConfiguration.player, cartridges: 6 }); setViewmodelWeapon(player.weapon);
     player.holsterT = 0; player.grenadeCd = 0; player.sprintBlend = 0; player.adsBlend = 0;
     player.swayX = 0; player.swayY = 0; player.swayRoll = 0; player.swayPosX = 0; player.swayPosY = 0;
     player.moveAmount = 0; player.moveBlend = 0; player.moveBobX = 0; player.moveBobY = 0; player.moveBobVX = 0; player.moveBobVY = 0;
@@ -4191,7 +4249,7 @@ function resetEndlessRun() {
         m.dmgMult = 1; m.rateMult = 1; m.dmgTakenMult = 1; m.critChance = 0; m.dnaDelayT = 0; m.acidDelayT = 0;
         m.reloadMult = 1; m.speedMult = 1; m.critMult = 2; m.abilityCd = 0; m.bulwarkT = 0;
         m.shieldDelayT = 0; m.hpDelayT = 0; m.fireT = 0; m.evadeCd = 0.5;
-        m.mag = m.def.magSize; m.magSize = m.def.magSize; m.reserve = m.def.reserve;
+        m.mag = m.def.magSize; m.magSize = m.def.magSize; m.reserve = 3;
         m.downed = false; m.reloading = false; m.reloadT = 0;
         m.target = null; m.lastSeenTarget = null; m.engageTarget = null; m.engageT = 0; m.breakT = 0;
         m.mesh.rotation.x = 0; m.mesh.visible = true;
@@ -4217,6 +4275,7 @@ function placeEndlessSquad() {
     }
 }
 function buildEndlessWorld() {
+    endlessGroundGrid = null;
     const random=Math.random;
     Math.random=ChargefrontProgression.seedRandom(endlessRun.worldSeed);
     try {
@@ -4256,7 +4315,7 @@ function applyEndlessBoundary(saved) {
     for (const key of Object.keys(endlessRun)) {
         if (key==='arena'||key==='mutator'||key==='upgrades'||key==='upgradeStacks') continue;
         const value = saved.run[key];
-        if (typeof endlessRun[key]==='number'&&Number.isFinite(value)) endlessRun[key]=ChargefrontProgression.bounded(value,0,key==='worldSeed'?4294967295:1e6);
+        if (typeof endlessRun[key]==='number'&&Number.isFinite(value)) endlessRun[key]=ChargefrontProgression.bounded(value,0,['worldSeed','encounterSeed','decisionRng','eventRng'].includes(key)?4294967295:1e6);
         else if (typeof endlessRun[key]==='boolean'&&typeof value==='boolean') endlessRun[key]=value;
     }
     endlessRun.mutator = ENDLESS_MUTATORS.find(m=>m.id===saved.run.mutator?.id)||null;
@@ -4293,6 +4352,7 @@ function startEndless(configuration = {}, saved = null) {
     buildEndlessWorld();
     placeEndlessSquad();
     if (saved) applyEndlessBoundary(saved);
+    initializeEndlessVariation(saved);
     if (menuBackdrop) menuBackdrop.group.visible = false;
     beginEndless();
     if (!saved) saveEndlessBoundary();
@@ -4315,7 +4375,7 @@ function beginEndless(waitForLockGesture = true) {
     prewarmCombatEffects();
     notify(endlessRun.waveActive?'RESUMED WAVE '+endlessRun.wave+' — wave-start checkpoint':endlessRun.wave>0?'WAVE '+endlessRun.wave+' CLEARED — rest, upgrade, go again':'Hold E at the relay to start wave 1', '#d6a6ff');
     if (waitForLockGesture) lockOnNextGesture();
-    if (endlessRun.waveActive) music.play(endlessRun.wave%5===0||endlessRun.wave%8===0?'combat':'relayCombat',.85);
+    if (endlessRun.waveActive) music.play(endlessPlan().pattern==='airborne'||endlessRun.wave%8===0?'combat':'relayCombat',.85);
 }
 /* ── endless HUD extras ── */
 function drawEndlessMarkers(W, H) {
@@ -4544,6 +4604,11 @@ function encounterDirectorPhase() {
     return 'TRAVERSAL';
 }
 function resetEncounterDirector() {
+    if (mode === 'endless') {
+        endlessDirectorState.plan = null; endlessDirectorState.auditT = 0; endlessDirectorState.failedSpawns = 0; endlessDirectorState.retired = 0;
+        endlessRun.directorVersion = 0; endlessRun.intermissionT = 0;
+        endlessRun.encounterSeed = 0; endlessRun.replayCount = 0; endlessRun.decisionRng = 0; endlessRun.eventRng = 0;
+    }
     encounterDirector.phase = encounterDirectorPhase(); encounterDirector.pressure = 'LOW'; encounterDirector.activeHostiles = 0; encounterDirector.engagedHostiles = 0;
     encounterDirector.budgetUsed = 0; encounterDirector.budgetAvailable = 16; encounterDirector.activeCap = 12;
     encounterDirector.recoveryT = 0; encounterDirector.stateT = 0; encounterDirector.tacticalT = 0; encounterDirector.retireT = 0;
@@ -4558,7 +4623,13 @@ function directorReject(reason) {
 }
 function requestEncounter(source, types, options = {}) {
     encounterDirector.requests++;
-    if (mode === 'endless') { encounterDirector.spawnAccepted++; encounterDirector.lastSpawnSource = source; return true; }
+    if (mode === 'endless') {
+        if (!endlessRun.waveActive) return directorReject('intermission');
+        const state = ChargefrontEndlessDirector.live(enemies);
+        if (!ChargefrontEndlessDirector.permits(endlessPlan(),state,types,source)) return directorReject('endless_pressure');
+        if (source === 'carrier_spawn' && enemies.filter(e=>!e.dead&&!e.dying&&e.encounterSource===source).length+types.length > 6) return directorReject('source_cap');
+        encounterDirector.spawnAccepted++; encounterDirector.lastSpawnSource = source; encounterDirector.lastRejectReason = null; return true;
+    }
     // Authoritative encounter gate, including essential/authored/carrier requests.
     // Normal directors resume automatically once this local operation releases.
     if (sampleLockdownActive() && (campaignRun.encounter.state !== 'defence' || source !== 'm3_stabilization' || types.some(type => type !== 'drone'))) return directorReject('sample_lockdown');
@@ -4615,8 +4686,8 @@ function updateEncounterDirector(dt) {
     const missionNumber = mode === 'campaign' ? campaignMission().number : 1;
     const baseBudget = context === 'TRAVERSAL' ? 8 : context === 'FACILITY' ? 11 : context === 'PURSUIT' ? 14 : 16;
     encounterDirector.phase = context;
-    encounterDirector.budgetAvailable = mode === 'endless' ? Math.max(12, endlessRun.budgetLeft + encounterDirector.budgetUsed) : baseBudget + missionNumber * 2;
-    encounterDirector.activeCap = mode === 'endless' ? Math.min(30, 14 + Math.floor(endlessRun.wave / 2)) : context === 'TRAVERSAL' ? 10 : context === 'FACILITY' ? 12 : context === 'PURSUIT' ? 14 : 18;
+    encounterDirector.budgetAvailable = mode === 'endless' ? endlessPlan().threatCap : baseBudget + missionNumber * 2;
+    encounterDirector.activeCap = mode === 'endless' ? endlessPlan().activeCap : context === 'TRAVERSAL' ? 10 : context === 'FACILITY' ? 12 : context === 'PURSUIT' ? 14 : 18;
     let active = 0, engaged = 0, cost = 0;
     const sourceCounts = {};
     for (const enemy of enemies) {
@@ -4818,7 +4889,7 @@ function objectiveLine() {
         case P.MOVE_FAC: return 'Advance to the abandoned facility vault';
         case P.SEARCH: return 'Locate and recover the CLONE DNA vial-pendrive';
         case P.FINALE: return 'EVACUATE TO THE LANDING ZONE';
-        case P.ENDLESS: return endlessRun.waveActive ? 'WAVE ' + endlessRun.wave + ' — ' + endlessRun.alive + ' HOSTILES LEFT' : 'WAVE ' + (endlessRun.wave + 1) + ' READY — HOLD E AT THE RELAY';
+        case P.ENDLESS: return endlessRun.waveActive ? 'WAVE ' + endlessRun.wave + ' — ' + endlessRun.alive + ' ACTIVE / ' + endlessRun.budgetLeft + ' INCOMING' : endlessRun.intermissionT > 0 ? 'WAVE ' + endlessRun.wave + ' CLEARED — RECOVER / UPGRADE' : 'WAVE ' + (endlessRun.wave + 1) + ' READY — HOLD E AT THE RELAY';
         case P.DONE: return 'MISSION COMPLETE';
         case P.DEAD: return 'SQUAD WIPED OUT';
         default: return '';
@@ -6026,7 +6097,7 @@ class Infested extends LJS.ThreeJSObject {
             if(selected!==previous||!wasVisible){this.reactionT=.3;this.attackWindupT=0;this.attackVictim=null;this.commitT=1.2;this.navT=0;}
             this.focus=selected;this.target=selected;this.observedFocus=selected;
             this.lastSeen={x:selected.pos.x,y:selected.pos.y};this.memoryT=5;this.searchT=3;this.searchClock=0;
-            if(this.ambient&&this.aggroT<=0)playFileSfx(this.type==='drone'?'droneAlert':'creature',.35,1,this.pos.x,this.pos.y);
+            if(this.ambient&&this.aggroT<=0&&this.type!=='drone')playFileSfx('creature',.35,1,this.pos.x,this.pos.y);
             this.aggroT=5;this.awareness='ENGAGE';
         }else{
             if(!enemyTargetAlive(previous)){this.focus=null;this.target=null;this.observedFocus=null;this.lastSeen=null;this.spawnGoal=null;this.navT=0;}
@@ -6117,7 +6188,6 @@ class Infested extends LJS.ThreeJSObject {
         this.skySpawnDur = this.skySpawnT = 1.6;
         this.z = terrainHeight(this.pos.x, this.pos.y) + 52;
         if (freshSpawn && this.type === 'screecher') playFileSfx('wingFlap', 0.65, rand(0.88, 1.08), this.pos.x, this.pos.y);
-        else if (freshSpawn) playFileSfx('droneAlert', 0.45, 1.15, this.pos.x, this.pos.y);
     }
     takeDamage(dmg) {
         if (this.dead || this.dying) return;
@@ -6160,16 +6230,18 @@ class Infested extends LJS.ThreeJSObject {
             }
             notify('BROOD CARRIER BURSTS — SKITTERS RELEASED', '#ff99cc');
         }
-        const scrapAmount = ChargefrontProgression.scrapReward(this.type,Math.random,mode);
-        if(scrapAmount) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1.4,1.4),rand(-1.4,1.4))),'scrap',scrapAmount);
-        if (Math.random() < 0.32) {
-            const rainCells = mode === 'endless' && endlessRun.mutator && endlessRun.mutator.id === 'corrosive' ? 0.22 : 0;
-            if (Math.random() < ChargefrontProgression.economy[mode].powerChance + (mode === 'endless' ? endlessRun.cellChance || 0 : 0) + rainCells) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'power');
-            if (Math.random() < 0.06) spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'grenade');
+        const rewardRandom = mode === 'endless' ? endlessRandom : Math.random;
+        const rewardRand = mode === 'endless' ? endlessRand : rand;
+        const scrapAmount = ChargefrontProgression.scrapReward(this.type,rewardRandom,mode,mode === 'endless' ? endlessRun.wave : 0,this.encounterSource);
+        if(scrapAmount) spawnPickup(this.pos.copy().add(LJS.vec2(rewardRand(-1.4,1.4),rewardRand(-1.4,1.4))),'scrap',scrapAmount);
+        if (rewardRandom() < 0.32) {
+            const rainCells = mode === 'endless' && endlessRun.mutator && endlessRun.mutator.id === 'corrosive' ? ChargefrontProgression.economy.endless.corrosiveBonus : 0;
+            if (rewardRandom() < ChargefrontProgression.economy[mode].powerChance + (mode === 'endless' ? endlessRun.cellChance || 0 : 0) + rainCells) spawnPickup(this.pos.copy().add(LJS.vec2(rewardRand(-1, 1), rewardRand(-1, 1))), 'power');
+            if (rewardRandom() < 0.06) spawnPickup(this.pos.copy().add(LJS.vec2(rewardRand(-1, 1), rewardRand(-1, 1))), 'grenade');
         }
         /* endless roguelike: creatures drop DNA samples (random) — collect for a passive upgrade + milestone score */
-        if (mode === 'endless' && Math.random() < 0.14) {
-            spawnPickup(this.pos.copy().add(LJS.vec2(rand(-1, 1), rand(-1, 1))), 'dna');
+        if (mode === 'endless' && rewardRandom() < 0.14) {
+            spawnPickup(this.pos.copy().add(LJS.vec2(rewardRand(-1, 1), rewardRand(-1, 1))), 'dna');
         }
     }
     detonate() {
@@ -6759,7 +6831,6 @@ function updateDrones(dt) {
     recordEncounterSpawn(e, 'facility_patrol');
     e.ambient = true;                      // patrol the facility (around and within it)
     logCombat('Drone detected near the facility', '#88ccff');
-    playFileSfx('droneAlert', 0.6, 1, p.x, p.y);   // audible drone-detected alert (spatial)
 }
 
 /* FINALE evacuation: security drones chase the fleeing squad in periodic waves */
@@ -6789,7 +6860,6 @@ function spawnDroneWave() {
     }
     if (spawned > 0) {
         logCombat('Security drones inbound (' + spawned + ')', '#88ccff');
-        playFileSfx('droneAlert', 0.65, 1, FACILITY.x, FACILITY.y);   // alert when the drone wave spawns
     }
 }
 
@@ -6817,7 +6887,29 @@ const RELAY_SPAWN_LANES = {
     2: [Math.PI, -Math.PI / 2, 0],
     3: [0, Math.PI / 2, -Math.PI / 2],
 };
+function findEndlessSpawnPoint(center, rMin, rMax, minDist, options = {}) {
+    const radius = options.radius || 1.4, brood = rMax <= 10;
+    // Same bounded candidate budget for ordinary and fallback attempts. Never
+    // relax terrain, body clearance, separation or squad pop-in protection.
+    for (let tries=0;tries<80;tries++) {
+        const a = tries<48 ? endlessRand(TAU) : (tries-48)*TAU/32;
+        const r = tries<48 ? endlessRand(rMin,rMax) : (rMin+rMax)*.5;
+        const x=center.x+Math.cos(a)*r,y=center.y+Math.sin(a)*r;
+        if (Math.hypot(x-400,y-400)>180 || isInsideSolid(x,y,radius)) continue;
+        const h=terrainHeight(x,y);
+        if (!Number.isFinite(h)||h<0||h>32) continue;
+        const slope=Math.hypot(terrainHeight(x+1,y)-h,terrainHeight(x,y+1)-h);
+        if (!Number.isFinite(slope)||slope>.72) continue;
+        const safety=brood?18:Math.max(32,radius*10);
+        if ([player,...squadMembers].some(m=>!m.dead&&!m.downed&&Math.hypot(x-m.pos.x,y-m.pos.y)<safety)) continue;
+        if (!options.allowVisible && isObviousSpawnPopIn(x,y,brood?36:48)) continue;
+        if (enemies.some(e=>!e.dead&&!e.dying&&Math.hypot(x-e.pos.x,y-e.pos.y)<Math.max(minDist,radius))) continue;
+        return LJS.vec2(x,y);
+    }
+    return null;
+}
 function findSpawnPoint(center, rMin, rMax, minDist, options = {}) {
+    if (mode === 'endless') return findEndlessSpawnPoint(center,rMin,rMax,minDist,options);
     const relaySite = relays.find((relay) => relay.pos.distance(center) < 1);
     for (let tries = 0; tries < 60; tries++) {
         const lanes = relaySite && RELAY_SPAWN_LANES[relaySite.R.id];
@@ -8372,7 +8464,7 @@ function applyPickup(kind, quantity = 0) {
     cacheFound++;
     playSnd(sfx.pickup, 0.8);
     if (kind === 'scrap') {
-        const n = quantity || randInt(2, 5);   // enemy bundle quantity resolves once at death
+        const n = quantity || (mode === 'endless' ? Math.floor(endlessRand(2,5)) : randInt(2, 5));   // enemy bundle quantity resolves once at death
         craft.scraps += n;
         notify('+ SCRAP x' + n, '#e8c060');
     } else if (kind === 'power') {
@@ -9390,6 +9482,13 @@ function beginCampaignChapterTransition(completion) {
     if (toId === 'break_contact') {
         sanitizeContinuedMission4State();
         checkpointMission4State();
+        // The facility alarm belongs to the secured-sample M4 start, never to
+        // individual drones. Persist its latch with the chapter checkpoint.
+        if (mode === 'campaign' && activeMissionId === 'break_contact' && phase === P.M4_BREAK_CONTACT &&
+            campaignRun.worldState.dnaSecured && campaignRun.worldState.emergency && !campaignRun.worldState.m4AlarmPlayed) {
+            campaignRun.worldState.m4AlarmPlayed = true;
+            playFileSfx('droneAlert', 0.65);
+        }
     }
     if (toId === 'power_through') {
         spawnInitialFacilityDrones();
@@ -11231,9 +11330,11 @@ function restartEndlessRun() {
     clearEndlessCombatEntities();
     const currentArena = endlessRun.arena;
     const currentSeed = endlessRun.worldSeed;
+    const replay = Math.min(1e6,(endlessRun.replayCount || 0)+1);
     resetEndlessRun();
     endlessRun.arena = currentArena;
     endlessRun.worldSeed = currentSeed;
+    initializeEndlessVariation(null,replay);
     placeEndlessSquad();
     resultScreen = null; doneT = 0; lastAttackerPos = null; lastAttackerT = 0; damageFlashT = 0;
     document.getElementById('campaign-result-screen').classList.add('hidden');

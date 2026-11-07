@@ -1,0 +1,1633 @@
+{
+  "passed": true,
+  "plans": 8192,
+  "seedCount": 64,
+  "legacyOrders": 6,
+  "newOrders": 63,
+  "rawScrapRatio": 1.0008602790829924,
+  "compatibility": [
+    {
+      "setup": 0,
+      "configuration": {
+        "player": {
+          "slot1": "rifle",
+          "slot2": "scatter",
+          "ability": "surge"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "arc",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "balanced"
+      },
+      "mutators": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "armored",
+        "corrosive",
+        "storm",
+        "armored",
+        "storm",
+        "armored",
+        "storm",
+        "armored",
+        "storm",
+        null,
+        "storm",
+        "armored",
+        null,
+        "blackout",
+        null,
+        null,
+        "blackout",
+        "armored"
+      ]
+    },
+    {
+      "setup": 1,
+      "configuration": {
+        "player": {
+          "slot1": "scatter",
+          "slot2": "plasma",
+          "ability": "bulwark"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "scatter",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "plasma",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "arc",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "screen"
+      },
+      "mutators": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "armored",
+        "blackout",
+        "corrosive",
+        "armored",
+        "corrosive",
+        "armored",
+        null,
+        "armored",
+        "corrosive",
+        null,
+        null,
+        "armored",
+        null,
+        "blackout",
+        null,
+        null,
+        "blackout",
+        "armored"
+      ]
+    },
+    {
+      "setup": 2,
+      "configuration": {
+        "player": {
+          "slot1": "arc",
+          "slot2": "plasma",
+          "ability": "medic_pulse"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "plasma",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "arc",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "arc",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "escort"
+      },
+      "mutators": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "armored",
+        "blackout",
+        "corrosive",
+        "armored",
+        "corrosive",
+        "armored",
+        null,
+        "armored",
+        "corrosive",
+        null,
+        null,
+        "armored",
+        null,
+        "blackout",
+        null,
+        null,
+        "blackout",
+        "armored"
+      ]
+    },
+    {
+      "setup": 3,
+      "configuration": {
+        "player": {
+          "slot1": "plasma",
+          "slot2": "rifle",
+          "ability": "target_designator"
+        },
+        "squad": {
+          "rook": {
+            "weapon": "rifle",
+            "ability": "bulwark"
+          },
+          "vex": {
+            "weapon": "rifle",
+            "ability": "medic_pulse"
+          },
+          "kade": {
+            "weapon": "rifle",
+            "ability": "target_designator"
+          }
+        },
+        "posture": "balanced"
+      },
+      "mutators": [
+        null,
+        null,
+        null,
+        null,
+        null,
+        null,
+        "armored",
+        "corrosive",
+        "storm",
+        "armored",
+        "storm",
+        "armored",
+        "storm",
+        "armored",
+        "storm",
+        null,
+        "storm",
+        "armored",
+        null,
+        "blackout",
+        null,
+        null,
+        "blackout",
+        "armored"
+      ]
+    }
+  ],
+  "representatives": [
+    {
+      "seed": 430012,
+      "arena": "valley",
+      "waves": [
+        {
+          "wave": 1,
+          "before": "arrival",
+          "after": "arrival",
+          "mutator": null,
+          "roles": {
+            "skitter": 8
+          },
+          "budget": 8,
+          "live": 5,
+          "threat": 12
+        },
+        {
+          "wave": 2,
+          "before": "contact",
+          "after": "contact",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "runner": 2,
+            "spitter": 2
+          },
+          "budget": 10,
+          "live": 7,
+          "threat": 17
+        },
+        {
+          "wave": 3,
+          "before": "rush",
+          "after": "pressure",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "spitter": 9,
+            "brute": 3
+          },
+          "budget": 18,
+          "live": 10,
+          "threat": 24
+        },
+        {
+          "wave": 4,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 5,
+            "shielded": 4,
+            "brute": 3,
+            "spitter": 6,
+            "runner": 2
+          },
+          "budget": 20,
+          "live": 11,
+          "threat": 27
+        },
+        {
+          "wave": 5,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": null,
+          "roles": {
+            "skitter": 5,
+            "drone": 11,
+            "spitter": 6
+          },
+          "budget": 22,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 6,
+          "before": "pressure",
+          "after": "pressure",
+          "mutator": null,
+          "roles": {
+            "skitter": 7,
+            "drone": 7,
+            "spitter": 3,
+            "carrier": 1,
+            "screecher": 3,
+            "shielded": 2,
+            "brute": 1
+          },
+          "budget": 24,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 7,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 7,
+            "shielded": 5,
+            "carrier": 1,
+            "spitter": 2,
+            "runner": 3,
+            "brute": 3,
+            "tunneler": 3,
+            "drone": 2
+          },
+          "budget": 26,
+          "live": 13,
+          "threat": 32
+        },
+        {
+          "wave": 8,
+          "before": "assault",
+          "after": "tactical",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 6,
+            "shielded": 7,
+            "drone": 3,
+            "spitter": 4,
+            "carrier": 1,
+            "boss": 1,
+            "brute": 3,
+            "support": 2,
+            "runner": 1,
+            "screecher": 1
+          },
+          "budget": 29,
+          "live": 14,
+          "threat": 34
+        },
+        {
+          "wave": 9,
+          "before": "pressure",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 10,
+            "brute": 1,
+            "spitter": 3,
+            "drone": 2,
+            "support": 2,
+            "tunneler": 2,
+            "runner": 6,
+            "screecher": 2,
+            "carrier": 1,
+            "shielded": 1
+          },
+          "budget": 30,
+          "live": 15,
+          "threat": 36
+        },
+        {
+          "wave": 10,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 2,
+            "support": 2,
+            "screecher": 5,
+            "drone": 16,
+            "runner": 2,
+            "artillery": 2,
+            "spitter": 2,
+            "carrier": 1
+          },
+          "budget": 32,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 11,
+          "before": "assault",
+          "after": "pressure",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 6,
+            "drone": 5,
+            "carrier": 1,
+            "spitter": 10,
+            "support": 2,
+            "shielded": 3,
+            "artillery": 2,
+            "runner": 5
+          },
+          "budget": 34,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 12,
+          "before": "pressure",
+          "after": "tactical",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 8,
+            "support": 2,
+            "artillery": 2,
+            "spitter": 2,
+            "screecher": 2,
+            "shielded": 8,
+            "carrier": 2,
+            "drone": 3,
+            "brute": 4,
+            "runner": 1,
+            "tunneler": 2
+          },
+          "budget": 36,
+          "live": 17,
+          "threat": 41
+        },
+        {
+          "wave": 13,
+          "before": "rush",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 15,
+            "carrier": 2,
+            "runner": 3,
+            "tunneler": 5,
+            "shielded": 3,
+            "artillery": 1,
+            "support": 2,
+            "drone": 3,
+            "brute": 1,
+            "spitter": 2,
+            "screecher": 1
+          },
+          "budget": 38,
+          "live": 18,
+          "threat": 44
+        },
+        {
+          "wave": 14,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 13,
+            "support": 1,
+            "runner": 4,
+            "drone": 3,
+            "shielded": 4,
+            "carrier": 2,
+            "screecher": 3,
+            "brute": 2,
+            "spitter": 6,
+            "artillery": 2
+          },
+          "budget": 40,
+          "live": 19,
+          "threat": 46
+        },
+        {
+          "wave": 15,
+          "before": "airborne",
+          "after": "tactical",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 7,
+            "artillery": 2,
+            "screecher": 1,
+            "drone": 3,
+            "support": 2,
+            "shielded": 9,
+            "brute": 6,
+            "carrier": 2,
+            "spitter": 6,
+            "runner": 1,
+            "tunneler": 3
+          },
+          "budget": 42,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 16,
+          "before": "rush",
+          "after": "rush",
+          "mutator": null,
+          "roles": {
+            "skitter": 17,
+            "spitter": 5,
+            "runner": 3,
+            "carrier": 2,
+            "boss": 1,
+            "artillery": 1,
+            "shielded": 3,
+            "tunneler": 5,
+            "screecher": 2,
+            "drone": 1,
+            "support": 2,
+            "brute": 3
+          },
+          "budget": 45,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 17,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 12,
+            "runner": 4,
+            "artillery": 2,
+            "carrier": 2,
+            "support": 2,
+            "drone": 6,
+            "shielded": 3,
+            "spitter": 6,
+            "brute": 5,
+            "tunneler": 1,
+            "screecher": 3
+          },
+          "budget": 46,
+          "live": 21,
+          "threat": 51
+        },
+        {
+          "wave": 18,
+          "before": "assault",
+          "after": "airborne",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 11,
+            "spitter": 4,
+            "drone": 18,
+            "shielded": 3,
+            "brute": 1,
+            "screecher": 3,
+            "runner": 2,
+            "carrier": 2,
+            "artillery": 2,
+            "support": 2
+          },
+          "budget": 48,
+          "live": 22,
+          "threat": 53
+        },
+        {
+          "wave": 19,
+          "before": "rush",
+          "after": "pressure",
+          "mutator": null,
+          "roles": {
+            "skitter": 10,
+            "spitter": 13,
+            "brute": 4,
+            "screecher": 4,
+            "drone": 12,
+            "artillery": 2,
+            "carrier": 2,
+            "shielded": 1,
+            "support": 2
+          },
+          "budget": 50,
+          "live": 23,
+          "threat": 56
+        },
+        {
+          "wave": 20,
+          "before": "airborne",
+          "after": "assault",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 14,
+            "shielded": 7,
+            "runner": 7,
+            "tunneler": 1,
+            "spitter": 7,
+            "screecher": 2,
+            "drone": 6,
+            "support": 2,
+            "carrier": 2,
+            "brute": 2,
+            "artillery": 2
+          },
+          "budget": 52,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 21,
+          "before": "assault",
+          "after": "rush",
+          "mutator": null,
+          "roles": {
+            "skitter": 23,
+            "spitter": 6,
+            "shielded": 2,
+            "runner": 5,
+            "support": 2,
+            "tunneler": 3,
+            "drone": 5,
+            "screecher": 3,
+            "carrier": 2,
+            "brute": 2,
+            "artillery": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 22,
+          "before": "pressure",
+          "after": "tactical",
+          "mutator": null,
+          "roles": {
+            "skitter": 9,
+            "shielded": 12,
+            "spitter": 9,
+            "tunneler": 3,
+            "screecher": 2,
+            "artillery": 2,
+            "brute": 5,
+            "carrier": 2,
+            "runner": 5,
+            "drone": 3,
+            "support": 2
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 23,
+          "before": "tactical",
+          "after": "airborne",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 10,
+            "artillery": 2,
+            "spitter": 4,
+            "drone": 25,
+            "brute": 3,
+            "screecher": 4,
+            "runner": 2,
+            "shielded": 1,
+            "carrier": 2,
+            "support": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 24,
+          "before": "assault",
+          "after": "pressure",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 7,
+            "runner": 3,
+            "spitter": 17,
+            "shielded": 7,
+            "boss": 1,
+            "artillery": 2,
+            "drone": 11,
+            "screecher": 1,
+            "brute": 2,
+            "carrier": 2,
+            "support": 2
+          },
+          "budget": 55,
+          "live": 24,
+          "threat": 58
+        }
+      ]
+    },
+    {
+      "seed": 430013,
+      "arena": "crater",
+      "waves": [
+        {
+          "wave": 1,
+          "before": "arrival",
+          "after": "arrival",
+          "mutator": null,
+          "roles": {
+            "skitter": 8
+          },
+          "budget": 8,
+          "live": 5,
+          "threat": 12
+        },
+        {
+          "wave": 2,
+          "before": "contact",
+          "after": "contact",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "runner": 2,
+            "spitter": 2
+          },
+          "budget": 10,
+          "live": 7,
+          "threat": 17
+        },
+        {
+          "wave": 3,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 7,
+            "brute": 3,
+            "spitter": 5,
+            "runner": 3
+          },
+          "budget": 18,
+          "live": 10,
+          "threat": 24
+        },
+        {
+          "wave": 4,
+          "before": "rush",
+          "after": "pressure",
+          "mutator": null,
+          "roles": {
+            "skitter": 8,
+            "runner": 3,
+            "shielded": 1,
+            "spitter": 7,
+            "brute": 1
+          },
+          "budget": 20,
+          "live": 11,
+          "threat": 27
+        },
+        {
+          "wave": 5,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": null,
+          "roles": {
+            "skitter": 5,
+            "shielded": 2,
+            "drone": 11,
+            "spitter": 4
+          },
+          "budget": 22,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 6,
+          "before": "pressure",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 9,
+            "drone": 4,
+            "runner": 3,
+            "spitter": 3,
+            "shielded": 2,
+            "brute": 2,
+            "carrier": 1
+          },
+          "budget": 24,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 7,
+          "before": "rush",
+          "after": "pressure",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 5,
+            "runner": 1,
+            "drone": 8,
+            "screecher": 3,
+            "spitter": 6,
+            "carrier": 1,
+            "shielded": 2
+          },
+          "budget": 26,
+          "live": 13,
+          "threat": 32
+        },
+        {
+          "wave": 8,
+          "before": "assault",
+          "after": "tactical",
+          "mutator": null,
+          "roles": {
+            "skitter": 4,
+            "screecher": 2,
+            "support": 2,
+            "shielded": 6,
+            "brute": 5,
+            "boss": 1,
+            "drone": 4,
+            "tunneler": 1,
+            "spitter": 3,
+            "carrier": 1
+          },
+          "budget": 29,
+          "live": 14,
+          "threat": 34
+        },
+        {
+          "wave": 9,
+          "before": "pressure",
+          "after": "rush",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 15,
+            "screecher": 2,
+            "tunneler": 3,
+            "runner": 5,
+            "support": 2,
+            "spitter": 2,
+            "carrier": 1
+          },
+          "budget": 30,
+          "live": 15,
+          "threat": 36
+        },
+        {
+          "wave": 10,
+          "before": "airborne",
+          "after": "pressure",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 3,
+            "carrier": 1,
+            "shielded": 3,
+            "spitter": 10,
+            "artillery": 2,
+            "screecher": 3,
+            "drone": 9,
+            "support": 1
+          },
+          "budget": 32,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 11,
+          "before": "assault",
+          "after": "tactical",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 5,
+            "support": 2,
+            "brute": 4,
+            "spitter": 4,
+            "shielded": 8,
+            "tunneler": 6,
+            "artillery": 2,
+            "runner": 1,
+            "carrier": 1,
+            "screecher": 1
+          },
+          "budget": 34,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 12,
+          "before": "pressure",
+          "after": "airborne",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 7,
+            "drone": 12,
+            "artillery": 2,
+            "carrier": 2,
+            "support": 2,
+            "screecher": 5,
+            "spitter": 3,
+            "runner": 2,
+            "brute": 1
+          },
+          "budget": 36,
+          "live": 17,
+          "threat": 41
+        },
+        {
+          "wave": 13,
+          "before": "tactical",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 17,
+            "shielded": 4,
+            "artillery": 1,
+            "tunneler": 6,
+            "spitter": 3,
+            "carrier": 2,
+            "brute": 2,
+            "support": 1,
+            "runner": 2
+          },
+          "budget": 38,
+          "live": 18,
+          "threat": 44
+        },
+        {
+          "wave": 14,
+          "before": "rush",
+          "after": "assault",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 12,
+            "spitter": 9,
+            "shielded": 3,
+            "support": 2,
+            "drone": 2,
+            "runner": 3,
+            "screecher": 2,
+            "carrier": 2,
+            "brute": 1,
+            "artillery": 1,
+            "tunneler": 3
+          },
+          "budget": 40,
+          "live": 19,
+          "threat": 46
+        },
+        {
+          "wave": 15,
+          "before": "airborne",
+          "after": "tactical",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 5,
+            "drone": 3,
+            "screecher": 2,
+            "shielded": 10,
+            "brute": 6,
+            "artillery": 2,
+            "tunneler": 3,
+            "spitter": 7,
+            "carrier": 2,
+            "support": 2
+          },
+          "budget": 42,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 16,
+          "before": "tactical",
+          "after": "rush",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 19,
+            "runner": 6,
+            "boss": 1,
+            "artillery": 1,
+            "tunneler": 2,
+            "shielded": 6,
+            "carrier": 2,
+            "support": 1,
+            "screecher": 2,
+            "drone": 3,
+            "brute": 1,
+            "spitter": 1
+          },
+          "budget": 45,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 17,
+          "before": "rush",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 9,
+            "runner": 4,
+            "spitter": 7,
+            "brute": 5,
+            "drone": 5,
+            "artillery": 2,
+            "screecher": 3,
+            "shielded": 6,
+            "support": 2,
+            "carrier": 2,
+            "tunneler": 1
+          },
+          "budget": 46,
+          "live": 21,
+          "threat": 51
+        },
+        {
+          "wave": 18,
+          "before": "assault",
+          "after": "airborne",
+          "mutator": null,
+          "roles": {
+            "skitter": 8,
+            "drone": 24,
+            "brute": 1,
+            "shielded": 1,
+            "spitter": 5,
+            "screecher": 3,
+            "artillery": 2,
+            "runner": 1,
+            "support": 1,
+            "carrier": 2
+          },
+          "budget": 48,
+          "live": 22,
+          "threat": 53
+        },
+        {
+          "wave": 19,
+          "before": "tactical",
+          "after": "pressure",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 7,
+            "drone": 12,
+            "screecher": 4,
+            "spitter": 13,
+            "brute": 2,
+            "shielded": 3,
+            "runner": 3,
+            "support": 2,
+            "artillery": 2,
+            "carrier": 2
+          },
+          "budget": 50,
+          "live": 23,
+          "threat": 56
+        },
+        {
+          "wave": 20,
+          "before": "airborne",
+          "after": "assault",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 19,
+            "spitter": 7,
+            "screecher": 2,
+            "drone": 6,
+            "runner": 3,
+            "artillery": 2,
+            "shielded": 8,
+            "brute": 1,
+            "support": 1,
+            "tunneler": 1,
+            "carrier": 2
+          },
+          "budget": 52,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 21,
+          "before": "assault",
+          "after": "tactical",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 9,
+            "spitter": 11,
+            "drone": 3,
+            "shielded": 12,
+            "support": 2,
+            "tunneler": 5,
+            "carrier": 2,
+            "artillery": 2,
+            "brute": 6,
+            "runner": 2
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 22,
+          "before": "pressure",
+          "after": "rush",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 21,
+            "shielded": 6,
+            "spitter": 7,
+            "tunneler": 6,
+            "screecher": 6,
+            "drone": 2,
+            "runner": 2,
+            "artillery": 1,
+            "support": 1,
+            "carrier": 2
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 23,
+          "before": "rush",
+          "after": "airborne",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 6,
+            "drone": 24,
+            "screecher": 5,
+            "carrier": 2,
+            "brute": 3,
+            "spitter": 6,
+            "artillery": 2,
+            "shielded": 3,
+            "support": 2,
+            "runner": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 24,
+          "before": "assault",
+          "after": "pressure",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 5,
+            "screecher": 9,
+            "runner": 3,
+            "spitter": 15,
+            "boss": 1,
+            "drone": 12,
+            "artillery": 2,
+            "support": 2,
+            "carrier": 2,
+            "brute": 3,
+            "shielded": 1
+          },
+          "budget": 55,
+          "live": 24,
+          "threat": 58
+        }
+      ]
+    },
+    {
+      "seed": 430014,
+      "arena": "ridges",
+      "waves": [
+        {
+          "wave": 1,
+          "before": "arrival",
+          "after": "arrival",
+          "mutator": null,
+          "roles": {
+            "skitter": 8
+          },
+          "budget": 8,
+          "live": 5,
+          "threat": 12
+        },
+        {
+          "wave": 2,
+          "before": "contact",
+          "after": "contact",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "runner": 2,
+            "spitter": 2
+          },
+          "budget": 10,
+          "live": 7,
+          "threat": 17
+        },
+        {
+          "wave": 3,
+          "before": "assault",
+          "after": "pressure",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "spitter": 5,
+            "brute": 3,
+            "runner": 4
+          },
+          "budget": 18,
+          "live": 10,
+          "threat": 24
+        },
+        {
+          "wave": 4,
+          "before": "tactical",
+          "after": "rush",
+          "mutator": null,
+          "roles": {
+            "skitter": 12,
+            "tunneler": 2,
+            "runner": 3,
+            "spitter": 3
+          },
+          "budget": 20,
+          "live": 11,
+          "threat": 27
+        },
+        {
+          "wave": 5,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": null,
+          "roles": {
+            "skitter": 4,
+            "drone": 11,
+            "spitter": 3,
+            "runner": 3,
+            "shielded": 1
+          },
+          "budget": 22,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 6,
+          "before": "pressure",
+          "after": "pressure",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 8,
+            "carrier": 1,
+            "drone": 7,
+            "spitter": 3,
+            "runner": 2,
+            "shielded": 2,
+            "screecher": 1
+          },
+          "budget": 24,
+          "live": 12,
+          "threat": 29
+        },
+        {
+          "wave": 7,
+          "before": "tactical",
+          "after": "tactical",
+          "mutator": null,
+          "roles": {
+            "skitter": 6,
+            "spitter": 3,
+            "brute": 3,
+            "shielded": 5,
+            "drone": 5,
+            "carrier": 1,
+            "runner": 1,
+            "tunneler": 2
+          },
+          "budget": 26,
+          "live": 13,
+          "threat": 32
+        },
+        {
+          "wave": 8,
+          "before": "rush",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 7,
+            "tunneler": 2,
+            "screecher": 2,
+            "runner": 5,
+            "support": 2,
+            "shielded": 2,
+            "boss": 1,
+            "spitter": 4,
+            "drone": 2,
+            "brute": 1,
+            "carrier": 1
+          },
+          "budget": 29,
+          "live": 14,
+          "threat": 34
+        },
+        {
+          "wave": 9,
+          "before": "pressure",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 12,
+            "spitter": 2,
+            "support": 1,
+            "shielded": 1,
+            "tunneler": 3,
+            "runner": 5,
+            "screecher": 3,
+            "drone": 1,
+            "brute": 1,
+            "carrier": 1
+          },
+          "budget": 30,
+          "live": 15,
+          "threat": 36
+        },
+        {
+          "wave": 10,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": "corrosive",
+          "roles": {
+            "skitter": 6,
+            "spitter": 3,
+            "drone": 16,
+            "screecher": 3,
+            "brute": 1,
+            "support": 1,
+            "carrier": 1,
+            "artillery": 1
+          },
+          "budget": 32,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 11,
+          "before": "rush",
+          "after": "tactical",
+          "mutator": null,
+          "roles": {
+            "skitter": 8,
+            "tunneler": 3,
+            "runner": 2,
+            "shielded": 8,
+            "brute": 6,
+            "support": 2,
+            "artillery": 2,
+            "carrier": 1,
+            "spitter": 2
+          },
+          "budget": 34,
+          "live": 16,
+          "threat": 39
+        },
+        {
+          "wave": 12,
+          "before": "pressure",
+          "after": "pressure",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 3,
+            "spitter": 12,
+            "drone": 10,
+            "screecher": 3,
+            "artillery": 2,
+            "carrier": 2,
+            "support": 2,
+            "brute": 1,
+            "shielded": 1
+          },
+          "budget": 36,
+          "live": 17,
+          "threat": 41
+        },
+        {
+          "wave": 13,
+          "before": "assault",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 14,
+            "brute": 1,
+            "drone": 1,
+            "tunneler": 4,
+            "spitter": 5,
+            "shielded": 2,
+            "runner": 4,
+            "screecher": 3,
+            "carrier": 2,
+            "artillery": 1,
+            "support": 1
+          },
+          "budget": 38,
+          "live": 18,
+          "threat": 44
+        },
+        {
+          "wave": 14,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 12,
+            "brute": 6,
+            "shielded": 6,
+            "spitter": 6,
+            "drone": 3,
+            "carrier": 2,
+            "runner": 3,
+            "support": 1,
+            "artillery": 1
+          },
+          "budget": 40,
+          "live": 19,
+          "threat": 46
+        },
+        {
+          "wave": 15,
+          "before": "airborne",
+          "after": "airborne",
+          "mutator": null,
+          "roles": {
+            "skitter": 7,
+            "drone": 21,
+            "artillery": 2,
+            "spitter": 5,
+            "carrier": 2,
+            "screecher": 2,
+            "runner": 2,
+            "support": 1
+          },
+          "budget": 42,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 16,
+          "before": "assault",
+          "after": "tactical",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 7,
+            "artillery": 2,
+            "carrier": 2,
+            "spitter": 5,
+            "drone": 6,
+            "brute": 6,
+            "boss": 1,
+            "runner": 2,
+            "shielded": 10,
+            "support": 2,
+            "tunneler": 1,
+            "screecher": 1
+          },
+          "budget": 45,
+          "live": 20,
+          "threat": 48
+        },
+        {
+          "wave": 17,
+          "before": "tactical",
+          "after": "assault",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 13,
+            "brute": 1,
+            "tunneler": 4,
+            "spitter": 6,
+            "drone": 10,
+            "carrier": 1,
+            "artillery": 2,
+            "support": 1,
+            "shielded": 2,
+            "runner": 4,
+            "screecher": 2
+          },
+          "budget": 46,
+          "live": 21,
+          "threat": 51
+        },
+        {
+          "wave": 18,
+          "before": "rush",
+          "after": "rush",
+          "mutator": null,
+          "roles": {
+            "skitter": 18,
+            "drone": 1,
+            "spitter": 7,
+            "carrier": 2,
+            "runner": 5,
+            "screecher": 5,
+            "shielded": 1,
+            "brute": 3,
+            "tunneler": 3,
+            "support": 2,
+            "artillery": 1
+          },
+          "budget": 48,
+          "live": 22,
+          "threat": 53
+        },
+        {
+          "wave": 19,
+          "before": "assault",
+          "after": "pressure",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 9,
+            "spitter": 17,
+            "artillery": 2,
+            "screecher": 6,
+            "support": 2,
+            "drone": 9,
+            "brute": 2,
+            "shielded": 1,
+            "carrier": 2
+          },
+          "budget": 50,
+          "live": 23,
+          "threat": 56
+        },
+        {
+          "wave": 20,
+          "before": "airborne",
+          "after": "assault",
+          "mutator": null,
+          "roles": {
+            "skitter": 20,
+            "runner": 6,
+            "shielded": 3,
+            "spitter": 10,
+            "brute": 3,
+            "carrier": 1,
+            "artillery": 2,
+            "support": 2,
+            "drone": 2,
+            "tunneler": 2,
+            "screecher": 1
+          },
+          "budget": 52,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 21,
+          "before": "rush",
+          "after": "airborne",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 9,
+            "support": 2,
+            "carrier": 2,
+            "drone": 21,
+            "screecher": 12,
+            "spitter": 3,
+            "brute": 2,
+            "artillery": 2,
+            "runner": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 22,
+          "before": "pressure",
+          "after": "tactical",
+          "mutator": "blackout",
+          "roles": {
+            "skitter": 11,
+            "brute": 9,
+            "shielded": 9,
+            "carrier": 2,
+            "spitter": 13,
+            "artillery": 2,
+            "support": 2,
+            "tunneler": 4,
+            "drone": 1,
+            "runner": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 23,
+          "before": "tactical",
+          "after": "rush",
+          "mutator": "storm",
+          "roles": {
+            "skitter": 22,
+            "shielded": 4,
+            "screecher": 4,
+            "spitter": 8,
+            "carrier": 2,
+            "runner": 3,
+            "artillery": 1,
+            "support": 2,
+            "tunneler": 5,
+            "brute": 2,
+            "drone": 1
+          },
+          "budget": 54,
+          "live": 24,
+          "threat": 58
+        },
+        {
+          "wave": 24,
+          "before": "rush",
+          "after": "pressure",
+          "mutator": "armored",
+          "roles": {
+            "skitter": 9,
+            "artillery": 2,
+            "brute": 1,
+            "spitter": 19,
+            "screecher": 7,
+            "boss": 1,
+            "runner": 2,
+            "support": 2,
+            "drone": 9,
+            "carrier": 2,
+            "shielded": 1
+          },
+          "budget": 55,
+          "live": 24,
+          "threat": 58
+        }
+      ]
+    }
+  ]
+}

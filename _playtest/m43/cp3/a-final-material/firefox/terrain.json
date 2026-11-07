@@ -1,0 +1,107 @@
+{
+  "browser": "firefox",
+  "scope": "CP3-A material/capture follow-up",
+  "cases": [
+    {
+      "arena": "valley",
+      "initial": {
+        "arena": "valley",
+        "seed": 286331153,
+        "positions": "6bc5f7af",
+        "colors": "e9098bd7",
+        "solids": "2f7f5efa",
+        "solidCount": 46,
+        "trees": "6c1b2d51",
+        "vertices": 103041,
+        "colorVertices": 103041,
+        "vertexColors": true,
+        "rimColors": 9409,
+        "sharedMaterial": true,
+        "textureSize": 2048,
+        "groundFill": [
+          0.32,
+          0.43,
+          0.22
+        ],
+        "fillIntensity": 0.45,
+        "sharedTexture": true,
+        "heights": [
+          0,
+          0.029151470840353775,
+          0.22758580539961373,
+          0.9201553158101969,
+          1.9488309706577218
+        ]
+      },
+      "legs": []
+    },
+    {
+      "arena": "crater",
+      "initial": {
+        "arena": "crater",
+        "seed": 1717986917,
+        "positions": "f66fdeed",
+        "colors": "6024a523",
+        "solids": "8c0516f8",
+        "solidCount": 21,
+        "trees": "9b3911a3",
+        "vertices": 103041,
+        "colorVertices": 103041,
+        "vertexColors": true,
+        "rimColors": 9409,
+        "sharedMaterial": true,
+        "textureSize": 2048,
+        "groundFill": [
+          0.6,
+          0.43,
+          0.26
+        ],
+        "fillIntensity": 0.45,
+        "sharedTexture": true,
+        "heights": [
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "legs": []
+    },
+    {
+      "arena": "ridges",
+      "initial": {
+        "arena": "ridges",
+        "seed": 3149642683,
+        "positions": "82687e46",
+        "colors": "3f150d0e",
+        "solids": "106de876",
+        "solidCount": 46,
+        "trees": "cd52e5ef",
+        "vertices": 103041,
+        "colorVertices": 103041,
+        "vertexColors": true,
+        "rimColors": 9409,
+        "sharedMaterial": true,
+        "textureSize": 2048,
+        "groundFill": [
+          0.51,
+          0.53,
+          0.5
+        ],
+        "fillIntensity": 0.45,
+        "sharedTexture": true,
+        "heights": [
+          0,
+          0.049411320391802876,
+          0,
+          0,
+          3.1312034037564134
+        ]
+      },
+      "legs": []
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

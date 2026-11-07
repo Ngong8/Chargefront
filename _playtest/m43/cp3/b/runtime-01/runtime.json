@@ -1,0 +1,358 @@
+{
+  "browser": "Edge",
+  "scope": "focused CP3-B",
+  "cases": [
+    {
+      "label": "native-hold-E-normal-speed-early-wave",
+      "seconds": 24.791,
+      "maximum": 3,
+      "final": {
+        "wave": 1,
+        "active": false,
+        "pending": 0,
+        "alive": 0,
+        "rest": 5.616666666666668,
+        "hp": 100,
+        "dead": false,
+        "kills": 8,
+        "count": 0,
+        "cost": 0,
+        "counts": {},
+        "cap": 5,
+        "threatCap": 12
+      }
+    },
+    {
+      "label": "intermission-wave-start-Continue-and-legacy-migration",
+      "passed": true
+    },
+    {
+      "label": "failed-location-retry-exact-queue-boss-and-clear",
+      "types": [
+        "skitter",
+        "brute",
+        "spitter",
+        "runner",
+        "carrier",
+        "tunneler",
+        "boss",
+        "spitter",
+        "skitter",
+        "spitter",
+        "spitter",
+        "skitter",
+        "shielded",
+        "skitter",
+        "runner",
+        "support",
+        "skitter",
+        "spitter",
+        "support",
+        "tunneler",
+        "skitter",
+        "brute",
+        "skitter",
+        "spitter",
+        "shielded",
+        "spitter",
+        "skitter",
+        "skitter",
+        "tunneler"
+      ],
+      "expected": [
+        "skitter",
+        "brute",
+        "spitter",
+        "runner",
+        "carrier",
+        "tunneler",
+        "boss",
+        "spitter",
+        "skitter",
+        "spitter",
+        "spitter",
+        "skitter",
+        "shielded",
+        "skitter",
+        "runner",
+        "support",
+        "skitter",
+        "spitter",
+        "support",
+        "tunneler",
+        "skitter",
+        "brute",
+        "skitter",
+        "spitter",
+        "shielded",
+        "spitter",
+        "skitter",
+        "skitter",
+        "tunneler"
+      ],
+      "invalid": [],
+      "rest": 12,
+      "active": false,
+      "boss": true
+    },
+    {
+      "label": "Carrier-live-count-and-pressure-gate",
+      "children": 3,
+      "active": true,
+      "alive": 3,
+      "before": 12,
+      "after": 12,
+      "cap": 12,
+      "remaining": {
+        "count": 12,
+        "cost": 12,
+        "counts": {
+          "skitter": 12
+        }
+      }
+    },
+    {
+      "label": "unseen-stalled-outlier-no-kill-or-resource-reward",
+      "removed": true,
+      "active": false,
+      "before": {
+        "kills": 10,
+        "pickups": 6
+      },
+      "after": {
+        "kills": 10,
+        "pickups": 6
+      }
+    },
+    {
+      "label": "survival-debrief-active-wave-and-replay-no-world-rebuild",
+      "wave": 9,
+      "cleared": 8,
+      "identity": [
+        "valley",
+        430012
+      ],
+      "passed": true
+    },
+    {
+      "label": "native-Director-spawn-validity-advance-and-pressure",
+      "arena": "valley",
+      "initial": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "d": 86.77471290526387,
+          "after": 8.374712905260552,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 1,
+          "type": "artillery",
+          "d": 112.94846612407514,
+          "after": 59.65046612406667,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 2,
+          "type": "skitter",
+          "d": 86.55042229438482,
+          "after": 8.430422294388487,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        }
+      ],
+      "validHomes": true,
+      "state": {
+        "count": 9,
+        "cost": 21,
+        "counts": {
+          "skitter": 4,
+          "artillery": 1,
+          "support": 2,
+          "spitter": 1,
+          "carrier": 1
+        }
+      },
+      "capped": {
+        "state": {
+          "count": 17,
+          "cost": 39,
+          "counts": {
+            "skitter": 5,
+            "artillery": 1,
+            "support": 2,
+            "spitter": 1,
+            "carrier": 1,
+            "drone": 4,
+            "brute": 1,
+            "screecher": 1,
+            "shielded": 1
+          }
+        },
+        "cap": 17,
+        "threat": 41,
+        "pending": 19
+      }
+    },
+    {
+      "label": "native-Director-spawn-validity-advance-and-pressure",
+      "arena": "crater",
+      "initial": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "d": 68.56896136641913,
+          "after": 8.648961366417318,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 1,
+          "type": "spitter",
+          "d": 73.9183173471597,
+          "after": 8.502462963768629,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 2,
+          "type": "support",
+          "d": 66.85144299603905,
+          "after": 8.55544299603346,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        }
+      ],
+      "validHomes": true,
+      "state": {
+        "count": 12,
+        "cost": 27,
+        "counts": {
+          "skitter": 2,
+          "spitter": 5,
+          "support": 2,
+          "brute": 1,
+          "shielded": 1,
+          "screecher": 1
+        }
+      },
+      "capped": {
+        "state": {
+          "count": 17,
+          "cost": 37,
+          "counts": {
+            "skitter": 4,
+            "spitter": 6,
+            "support": 2,
+            "brute": 1,
+            "shielded": 1,
+            "screecher": 1,
+            "artillery": 1,
+            "drone": 1
+          }
+        },
+        "cap": 17,
+        "threat": 41,
+        "pending": 19
+      }
+    },
+    {
+      "label": "native-Director-spawn-validity-advance-and-pressure",
+      "arena": "ridges",
+      "initial": [
+        {
+          "id": 0,
+          "type": "skitter",
+          "d": 97.87674363921597,
+          "after": 8.556743639222057,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 1,
+          "type": "spitter",
+          "d": 141.3959336564574,
+          "after": 66.22713365646189,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        },
+        {
+          "id": 2,
+          "type": "drone",
+          "d": 69.23286105903192,
+          "after": 8.528861059036865,
+          "inside": false,
+          "awareness": "ADVANCE",
+          "attacks": 0
+        }
+      ],
+      "validHomes": true,
+      "state": {
+        "count": 9,
+        "cost": 17,
+        "counts": {
+          "skitter": 1,
+          "spitter": 5,
+          "drone": 3
+        }
+      },
+      "capped": {
+        "state": {
+          "count": 17,
+          "cost": 40,
+          "counts": {
+            "skitter": 1,
+            "spitter": 8,
+            "drone": 4,
+            "screecher": 1,
+            "artillery": 2,
+            "carrier": 1
+          }
+        },
+        "cap": 17,
+        "threat": 41,
+        "pending": 19
+      }
+    },
+    {
+      "label": "24-actor-normal-speed-CPU-smoke-not-FPS-certification",
+      "actors": 24,
+      "frames": 224,
+      "averageMs": 17.8,
+      "p95Ms": 18.3,
+      "worstMs": 36.3,
+      "counters": {
+        "shadowRefresh": 40
+      },
+      "actorCost": {
+        "calls": 5784,
+        "ms": 96,
+        "maxMs": 1.600000023841858
+      },
+      "entities": {
+        "enemies": 24,
+        "squad": 3,
+        "pickups": 0,
+        "shots": 0,
+        "enemyShots": 0,
+        "acid": 0,
+        "acidPools": 0,
+        "grenades": 0,
+        "impacts": 0
+      },
+      "perActorMs": 0.016597510373443983
+    }
+  ],
+  "errors": [],
+  "passed": true
+}

@@ -1,0 +1,17 @@
+{
+  "passed": true,
+  "campaignRolls": 120000,
+  "introRolls": 24000,
+  "heavyRolls": 9000,
+  "rates": {
+    "ordinary": 0.0256,
+    "refinery": 0.0512,
+    "rainBefore": 0.096,
+    "rainAfter": 0.0576,
+    "rainRefineryBefore": 0.1216,
+    "rainRefineryAfter": 0.08320000000000001
+  },
+  "bankSplittingCases": 800,
+  "htmlAllowedEdits": 3,
+  "savedQuantities": "No clamps, migrations or rerolls; material and passive bulk/split results match"
+}
